@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sport-type-list>
+	<sport-type>
+		<id>1</id>
+		<name>Cycling</name>
+		<icon>cycling.png</icon>
+		<!-- Here's a bug :-) -->
+		<color red="0" green="0" blue="256" />
+		<sport-subtype-list>
+			<sport-subtype>
+				<!-- Here's another bug :-) -->
+				<id>abc</id>
+				<name>MTB tour</name>
+			</sport-subtype>
+			<sport-subtype>
+				<id>2</id>
+				<name>MTB race</name>
+				<!-- Here's another bug :-) -->
+				<name>Second name is not allowed</name>
+			</sport-subtype>
+			<sport-subtype>
+				<id>3</id>
+				<name>Road tour</name>
+			</sport-subtype>
+			<sport-subtype>
+				<id>4</id>
+				<name>Road race</name>
+			</sport-subtype>
+		</sport-subtype-list>
+	</sport-type>
+	<sport-type>
+		<id>2</id>
+		<name>Running</name>
+		<icon>running.png</icon>
+		<!-- Here's another bug :-) -->
+		<color green="60" blue="0" />
+		<sport-subtype-list>
+			<sport-subtype>
+				<id>1</id>
+				<name>Jogging</name>
+			</sport-subtype>
+			<sport-subtype>
+				<id>2</id>
+				<name>Competition</name>
+			</sport-subtype>
+		</sport-subtype-list>
+	</sport-type>
+</sport-type-list>

@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.saring</groupId>
+    <artifactId>st-exerciseviewer</artifactId>
+    <name>st-exerciseviewer</name>
+    <version>4.3.0</version>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>de.saring</groupId>
+        <artifactId>st-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+
+    <dependencies>
+        <!-- Additional dependencies -->
+        <dependency>
+            <groupId>de.saring</groupId>
+            <artifactId>st-util</artifactId>
+            <version>${sportstracker.version}</version>
+        </dependency>
+    </dependencies>
+    
+</project>

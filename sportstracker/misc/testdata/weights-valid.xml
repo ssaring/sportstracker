@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weight-list>
+    <weight>
+        <id>1</id>
+        <date>2009-01-02T09:10:11</date>
+        <value>70.2</value>
+        <comment>Weight 1</comment>
+    </weight>
+    <weight>
+        <id>2</id>
+        <date>2009-01-05T13:14:15</date>
+        <value>72.3</value>
+        <comment>Weight 2</comment>
+    </weight>
+    <!-- Optional elements are missing here, but it is still valid. -->
+    <weight>
+        <id>3</id>
+        <date>2009-01-07T20:21:22</date>
+        <value>74.4</value>
+    </weight>
+</weight-list>

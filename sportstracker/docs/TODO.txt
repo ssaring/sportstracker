@@ -1,0 +1,104 @@
+SportsTracker-TODO
+==================
+
+Garmin TCX support:
+-------------------
+- initial implementation is done, remaining TODO's
+  - refactor big parser method, split to multiple methods
+  - no sample data from trackpoints available yet (only exercise and lap data)
+    - Problem: there is no fixed sample rate, the time between 2 trackpoints is dynamic.
+    - Solution: Add the trackpoint timestamp to the PV ExerciseSample class
+      as offset from exercise start (big refactoring needed)
+
+
+Location data and Map viewer support - Initial design:
+------------------------------------------------------
+- Rename PolarViewer component to ExerciseViewer
+  (it can much more now than just viewing Polar files).
+- Exercise object: Add optional locationFile (better name?) attribut, similar to hrmFile
+- ExerciseDialog:
+  - Add below HRM file selection an optional Location file selection entry and file chooser button.
+  - Rename "View HRM file" button to "View exercise details".
+- New MapViewer subproject, similar to PolarViewer.
+  - It contains the MapViewer widget, which will be displayed as an extra tab in PolarViewer
+    (new last tab "Map").
+  - It contains parsers for different Location file formats, e.g. GPX, KML, ....
+    The parser list must use the ServiceLoader API to be extensible (similar to
+    ExerciseParser in PolarViewer)
+  - The LocationParser must return a Track (better name?) object which contains a list of
+    all parsed trackpoints. Each TrackPoint has these attys:
+    - location (how to store)
+    - timestamp (optional)
+    - comment (optional, e.g. for Lap split names)
+  - The MapViewer subproject MUST NOT have any dependencies to SportsTracker
+    or PolarViewer classes! Only PolarViewer uses the MapViewer classes!
+- PolarViewer:
+  - PVExercise class: add new optional property "track", which is a list of trackpoints (see above)
+  - PV gets the hrm filename on startup and the optional location filename.
+  - Location data can also be part of the hrm file (e.g. in Garmin TCX format), then only
+    the HRM filename will be passed on PolarViewer startup.
+  - PolarViewer parses the location data if available and stores it in the PVExercise object,
+    which will then be displayed.
+  - The new "Map" tab displays the location data of the exercise, if available.
+  - PolarViewer must be able to display the Map data only, when the user does not has a HRM file.
+
+
+General TODOs:
+--------------
+- "Copy exercise" feature, see request:
+  https://sourceforge.net/tracker/?func=detail&aid=2927194&group_id=133110&atid=726273
+- Exercise Dialog (and all others): use JFormatedTextField for entering
+  distance, duration etc.
+- Exercise list view: right mouse click on the column header should open the
+  Options Dialog tab for the list view
+- translation updates (german, french and czech are up to date)
+- close all dialogs with the Escape key => see TaskList application
+- manual starting of Tasks (background) will be simpler in future AFW's,
+  improve STController:startActionManually() then
+  => https://appframework.dev.java.net/issues/show_bug.cgi?id=39
+- Batch import for multiple exercise files (e.g. when migrating from Windows 
+  Polar software): In the Import dialog the user needs to select the the sport 
+  type, the subtype, the intensity and which value from distance, AVG speed or 
+  duration needs to be recalculated (because these 3 values in the exercise 
+  files does not fit together in most cases) first. Then all selected files 
+  will be imported as exercises into SportsTracker. 
+- FilterDialog should also make possible to show e.g. all bicycle
+  sport subtypes, except those from "ergometer" (hint from Steffen Rehn)
+
+Calendar view/widget:
+- horizontal or vertical animation for scrolling through the months
+  => create bitmaps of old and new month view and move those (much faster)
+  => alternative: fade out and in via alpha channel
+- draw small shadows?
+
+
+Training route/lap support:
+- requested by Bernd Mirbach and other users, see mail from Bernd:
+- we need a dialog for editing possible routes/laps and the appropriate
+  length, ascent and description
+- the user can select a predefined route in the exercise dialog and
+  the appropriate widgets will be pre-filled
+- it should be possible to filter for specific routes for evaluation
+
+
+PolarViewer-TODO
+================
+
+Diagram panel:
+- there's no space at the left side when the bottom axis displays "by distance"
+  (between left axis and graph start)
+
+Parser:
+- PolarHsrRawParser and PolarSRawParser:
+  - Refactor: Extract duplicate methods/code
+- HAC4 Parser:
+  - more exercise data checks for parser in unit tests
+- HRM Parser: 
+  - recalculate average heartrate, speed, times within ranges ... from samples,
+    there are often wrong values in the appropriate HRM fields (hint from 
+    Steffen Rehn) - (Polar Windows software seems to recalculate this too :-)
+  - When the monitor displays heartrate and ranges in percent instead in bpm
+    the heartrate limit ranges in the HRM files are also stored in percent. 
+    But it's not possible yet to determine whether it's bpm (default) or 
+    percent. That's why the parses always assumes bpm values.
+    (Calculate the BPM values with help of max. heartrate should work ...)  

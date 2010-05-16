@@ -1,0 +1,43 @@
+How to distribute SportStracker by JavaWebStart
+===============================================
+
+1. Build the jars and sign all of them (see below)
+2. Upload these files to "http://www.saring.de/sportstracker/webstart"
+   (make sure to use the signed Jar files from the "dist" directory):
+   - SportsTracker.jar
+   - sportstracker.jnlp
+   - st-logo.png
+   - lib/*.jar
+3. Create a Install-link (<a href="...>) in the website to the file 
+   "webstart/sportstracker.jnlp".
+4. Test it :-)
+
+
+Signing the SportsTracker Jar files
+===================================
+
+When JavaWebStart apps need to run out of the sandbox then all jars need to be
+signed. Here's how to do it:
+
+First create a kestore with a key alias for this application. The generation 
+command is (valid for around 5 years):
+  keytool -genkey -keystore ss_keystore -alias sportstracker_key -validity 2000
+
+Key listing command:
+  keytool -list -keystore ss_keystore
+
+Everytime the application will be uploaded to the website for WebStart all the
+Jar files in the "dist" directory must be signed before. This can be done 
+easily by the custom Ant target "sign-jars". This target requires the following
+environment variables, so these need to be set before the target is invoked at
+the command line:
+  KEYSTORE_FILE = filename of the keystore
+  KEYSTORE_PASSWORD = password for the specified keystore
+
+The Jars can also be signed manually by using this command line (must be 
+executed for each Jar):
+  jarsigner -keystore ss_keystore SportsTracker.jar sportstracker_key  
+
+
+Stefan Saring
+2008/01/13

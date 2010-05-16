@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.saring</groupId>
+    <artifactId>sportstracker</artifactId>
+    <name>sportstracker</name>
+    <version>4.3.0</version>
+    <packaging>jar</packaging>
+    <url>http://www.saring.de/sportstracker</url>
+
+    <parent>
+        <groupId>de.saring</groupId>
+        <artifactId>st-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <build>
+        <plugins>
+            <!-- Configuration for Jar file creation with Main-Class and Classpath in MANIFEST (executed by "mvn package") -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>                         
+                            <mainClass>de.saring.sportstracker.gui.STMain</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- Copies all required runtime dependencies to target/lib folder on packaging -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <includeScope>compile</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- Additional dependencies -->
+        <dependency>
+            <groupId>de.saring</groupId>
+            <artifactId>st-exerciseviewer</artifactId>
+            <version>${sportstracker.version}</version>
+        </dependency>
+    </dependencies>
+    
+</project>

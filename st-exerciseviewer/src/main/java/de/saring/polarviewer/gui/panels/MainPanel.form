@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.4" maxVersion="1.4" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+      <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+        <EmptyBorder bottom="10" left="10" right="10" top="10"/>
+      </Border>
+    </Property>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-116,0,0,2,28"/>
+  </AuxValues>
+
+  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+    <Property name="columns" type="int" value="2"/>
+    <Property name="horizontalGap" type="int" value="20"/>
+    <Property name="rows" type="int" value="1"/>
+    <Property name="verticalGap" type="int" value="20"/>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="pLeft">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="laRange" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laTimeBelow" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laTimeWithin" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laTimeAbove" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="laAverageValue" alignment="0" pref="141" max="32767" attributes="0"/>
+                              <Component id="laMaximumValue" alignment="0" pref="141" max="32767" attributes="0"/>
+                              <Component id="laEnergyValue" alignment="0" pref="141" max="32767" attributes="0"/>
+                              <Component id="laDurationValue" alignment="0" pref="141" max="32767" attributes="0"/>
+                              <Component id="laDateValue" alignment="0" pref="141" max="32767" attributes="0"/>
+                              <Component id="laUserValue" alignment="0" pref="141" max="32767" attributes="0"/>
+                              <Component id="laTypeValue" alignment="0" pref="141" max="32767" attributes="0"/>
+                              <Component id="laTimeBelowValue" alignment="0" pref="141" max="32767" attributes="0"/>
+                              <Component id="laTimeWithinValue" alignment="0" pref="141" max="32767" attributes="0"/>
+                              <Component id="laTimeAboveValue" alignment="0" pref="141" max="32767" attributes="0"/>
+                              <Component id="cbRange" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="laGeneralData" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="laHeartRateData" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="laHeartRateLimits" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="laMaximum" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laAverage" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="164" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="laType" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laUser" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laDate" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laDuration" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laEnergy" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="172" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="laGeneralData" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="laType" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="laUser" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="laDate" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="laDuration" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="laEnergy" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="laTypeValue" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="laUserValue" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="laDateValue" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="laDurationValue" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="laEnergyValue" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="laHeartRateData" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="laAverage" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="laMaximum" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="laAverageValue" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="laMaximumValue" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="laHeartRateLimits" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="laTimeWithin" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="laTimeAbove" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="cbRange" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="laRange" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="laTimeBelowValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="laTimeBelow" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="laTimeWithinValue" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="laTimeAboveValue" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="laHeartRateLimits">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+              <FontInfo relative="true">
+                <Font bold="true" component="laHeartRateLimits" property="font" relativeSize="true" size="0"/>
+              </FontInfo>
+            </Property>
+            <Property name="text" type="java.lang.String" value="_Heart Rate Limits"/>
+            <Property name="name" type="java.lang.String" value="pv.main.heartrate_limits" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laHeartRateData">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+              <FontInfo relative="true">
+                <Font bold="true" component="laHeartRateData" property="font" relativeSize="true" size="0"/>
+              </FontInfo>
+            </Property>
+            <Property name="text" type="java.lang.String" value="_Heart Rate Data"/>
+            <Property name="name" type="java.lang.String" value="pv.main.heartrate_data" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laDuration">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Duration:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.duration" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laDate">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Date:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.date" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laEnergy">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Energy:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.energy" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laUser">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_User:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.user" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laType">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Type:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.type" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laMaximum">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Maximum:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.maximum" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laAverage">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Average:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.average" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTimeBelow">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Time below:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.time_below" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laRange">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Range:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.range" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTimeWithin">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Time within:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.time_within" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTimeAbove">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Time above:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.time_above" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTypeValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laUserValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laDateValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laDurationValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laEnergyValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laMaximumValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laAverageValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTimeBelowValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTimeAboveValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTimeWithinValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cbRange">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laGeneralData">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+              <FontInfo relative="true">
+                <Font bold="true" component="laGeneralData" property="font" relativeSize="true" size="0"/>
+              </FontInfo>
+            </Property>
+            <Property name="text" type="java.lang.String" value="_General Data"/>
+            <Property name="name" type="java.lang.String" value="pv.main.general_data" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="pRight">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="laStatistics" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="laRecordingMode" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="laTotalExerciseTime" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laTotalRidingTime" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laTotalEnergy" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laOdometer" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laAltitude" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laSpeed" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laCadence" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="laPower" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="laAltitudeValue" alignment="0" pref="88" max="32767" attributes="0"/>
+                              <Component id="laSpeedValue" alignment="0" pref="88" max="32767" attributes="0"/>
+                              <Component id="laCadenceValue" alignment="0" pref="88" max="32767" attributes="0"/>
+                              <Component id="laPowerValue" alignment="0" pref="88" max="32767" attributes="0"/>
+                              <Component id="laTotalExerciseTimeValue" alignment="0" pref="88" max="32767" attributes="0"/>
+                              <Component id="laTotalRidingTimeValue" alignment="0" pref="88" max="32767" attributes="0"/>
+                              <Component id="laTotalEnergyValue" alignment="0" pref="88" max="32767" attributes="0"/>
+                              <Component id="laOdometerValue" alignment="0" pref="88" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="laRecordingMode" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="laAltitude" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="laAltitudeValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="laSpeed" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="laSpeedValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="laCadence" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="laCadenceValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="laPower" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="laPowerValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="laStatistics" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="laTotalExerciseTime" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="laTotalExerciseTimeValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="laTotalRidingTime" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="laTotalRidingTimeValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="laTotalEnergy" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="laTotalEnergyValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="laOdometer" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="laOdometerValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="133" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="laRecordingMode">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+              <FontInfo relative="true">
+                <Font bold="true" component="laRecordingMode" property="font" relativeSize="true" size="0"/>
+              </FontInfo>
+            </Property>
+            <Property name="text" type="java.lang.String" value="_Recording Mode"/>
+            <Property name="name" type="java.lang.String" value="pv.main.recording_mode" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laAltitude">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Altitude:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.altitude" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laSpeed">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Speed:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.speed" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laCadence">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Cadence:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.cadence" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laPower">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Power:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.power" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laStatistics">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+              <FontInfo relative="true">
+                <Font bold="true" component="laStatistics" property="font" relativeSize="true" size="0"/>
+              </FontInfo>
+            </Property>
+            <Property name="text" type="java.lang.String" value="_Statistics"/>
+            <Property name="name" type="java.lang.String" value="pv.main.statistics" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTotalExerciseTime">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Total exercise time:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.total_exercise_time" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTotalRidingTime">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Total riding time:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.total_riding_time" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTotalEnergy">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Total energy:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.total_energy" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laOdometer">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_Odometer:"/>
+            <Property name="name" type="java.lang.String" value="pv.main.odometer" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laAltitudeValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_disabled"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laSpeedValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_disabled"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laCadenceValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_disabled"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laPowerValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_disabled"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTotalExerciseTimeValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTotalRidingTimeValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laTotalEnergyValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="laOdometerValue">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="_n.a."/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>

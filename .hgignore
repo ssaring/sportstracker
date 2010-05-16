@@ -1,0 +1,21 @@
+# use glob syntax
+syntax: glob
+
+*.class
+*.log
+*.swp
+.#*
+
+# ignore Maven build directories and Eclipse project files
+target
+.classpath
+.project
+.settings
+
+# switch to regexp syntax
+syntax: regexp
+\.orig$
+\.orig\..*$
+\.chg\..*$
+\.rej$
+\.conflict\~$

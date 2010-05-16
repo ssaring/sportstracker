@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.saring</groupId>
+    <artifactId>st-parent</artifactId>
+    <packaging>pom</packaging>
+    <name>st-parent</name>
+    <version>1.0.0</version>
+
+    <properties>
+        <sportstracker.version>4.3.0</sportstracker.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <modules>
+        <module>st-util</module>
+        <module>st-exerciseviewer</module>
+        <module>sportstracker</module>
+    </modules>
+
+    <repositories>
+        <!-- Contains recent JFreeChart (missing in Maven central repo) --> 
+        <repository>
+            <id>JBoss repository</id>
+            <url>http://repository.jboss.com/maven2/</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <plugins>
+            <!-- Compiler plugin configuration -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <!-- GMaven plugin for mixed Groovy / Java compilation -->
+            <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <version>1.2</version>
+                <configuration> 
+                    <providerSelection>1.7</providerSelection> 
+                </configuration> 
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.gmaven.runtime</groupId>
+                        <artifactId>gmaven-runtime-1.7</artifactId>
+                        <version>1.2</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generateStubs</goal>
+                            <goal>compile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- Common compile dependencies -->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <!-- Must be deployed to local repository, missing in Maven repo (see README.txt) -->
+            <groupId>org.jdesktop.bsaf</groupId>
+            <artifactId>bsaf</artifactId>
+            <version>1.9RC4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout</artifactId>
+            <version>3.7.3.1</version>
+        </dependency>        
+        <dependency>
+            <groupId>org.swinglabs</groupId>
+            <artifactId>swingx</artifactId>
+            <version>1.6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.swinglabs</groupId>
+                    <artifactId>swing-worker</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.jhlabs</groupId>
+                    <artifactId>filters</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Common test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>2.5.2</version>
+            <scope>test</scope>
+        </dependency>        
+    </dependencies>
+
+</project>

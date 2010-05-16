@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="sport-type-list">
+		<xs:annotation>
+			<xs:documentation>This element contains all sport-type elements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="sport-type" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>This element contains all informations about one sport type (e.g. cycling).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:int">
+								<xs:annotation>
+									<xs:documentation>The unique ID of the sport type.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="name" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>The name of the sport type.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="icon" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Filename of icon for this sport type.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="color">
+								<xs:annotation>
+									<xs:documentation>Color for this sport type for visualization in GUI.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="red" type="xs:unsignedByte" use="required"/>
+									<xs:attribute name="green" type="xs:unsignedByte" use="required"/>
+									<xs:attribute name="blue" type="xs:unsignedByte" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="sport-subtype-list">
+								<xs:annotation>
+									<xs:documentation>List of subtypes of this sport.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="sport-subtype" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Subtype of the sport (e.g. MTB or road-tour for cycling).</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="id" type="xs:int">
+														<xs:annotation>
+															<xs:documentation>The unique id of this sport subtype.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="name" type="xs:string">
+														<xs:annotation>
+															<xs:documentation>The name of this sport subtype.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="equipment-list" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>List of equipments of this sport (optional).</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="equipment" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Equipment of the sport (e.g. a specific road bike for cycling).</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="id" type="xs:int">
+														<xs:annotation>
+															<xs:documentation>The unique id of this equipment.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="name" type="xs:string">
+														<xs:annotation>
+															<xs:documentation>The name of this equipment.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="record-distance" type="xs:boolean" use="optional" default="true" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

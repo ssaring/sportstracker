@@ -1,0 +1,37 @@
+Main Developer:
+
+  Stefan Saring <projects@saring.de>
+
+
+Contributors for the new Java version (alphabetical order):
+
+  Kai Pastor <dg0yt@users.sourceforge.net>
+  Mathias Obst <luettfite@users.sourceforge.net>
+  Remco den Breeje <remco@vioco.nl>
+  Roland Hostettler <r.hostettler@gmx.ch>
+
+
+Contributors for the C# version (before ported to Java) in alphabetical order:
+
+  Berend De Schouwer <berend.deschouwer@ucs-software.co.za>
+  Frank Besler <besfred@gmx.net>
+  Gary Ekker <gekker@users.sourceforge.net>
+  Ilja Booij <ibooij@gmail.com>
+  Jacob Ilsø Christensen <jacobilsoe@gmail.com>
+  Jos Dehaes <joske@users.sourceforge.net>
+  Stefan Meissner <stefmeissner@gmx.de>
+  Stephane Raimbault <stephane.raimbault@free.fr>
+
+  Eugenia Loli-Queru <eloli@hotmail.com> (help on icons)
+
+
+Translators (alphabetical order):
+
+  Basque:  Asier Urio Larrea <asieriko@gmail.com>
+  Czech:   Petr Marcik <marcikp@seznam.cz>
+  Danish:  Jacob Ilsø Christensen <jacobilsoe@gmail.com>
+  Dutch:   Eric Spierings <ericspierings@netscape.net>
+  French:  Nicolas Ollivier <nicollivier@gmail.com>
+  German:  Stefan Saring <projects@saring.de>
+  Polish:  Zbigniew Ogledzki <zgibek@gazeta.pl>
+  Spanish: Asier Urio Larrea <asieriko@gmail.com>

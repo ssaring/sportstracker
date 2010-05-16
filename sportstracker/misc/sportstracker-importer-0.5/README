@@ -1,0 +1,94 @@
+The SportsTracker Importer 0.5 
+------------------------------
+
+Overview:
+
+This tool comes handy if you want to import a lot of Polar HRM files in the
+SportsTracker (http://www.saring.de/sportstracker/index.html).
+
+The Sportstracker is  pretty cool tool to control your trainning. It's not
+done for importing mass data: the Sportstracker can import HRM file one by one
+what it is very slow and boring. With this tool you can import all HRM files
+at ones.
+
+
+How does it works:
+
+
+The SportsTrackes stores key information about sport activities in the simple
+XML file ($HOME/exercises.xml). There are stored information about kind of
+sport activity, date, time, duration, distance, avg speed and also the path to
+appropriate HRM file. The SportsTrackes Importer reads given HRM files and
+update XML file with information read from HRM files.
+
+
+
+Background:
+
+The SportsTracker Importer consits of two Python scripts:
+
+	hrm2st.py
+	hrmparser.py
+
+The hrmparser.py is called from hrm2st.py for parsing HRM files. The
+hrmparser.py scripts must be located in the same directory as hrm2st.py and
+can be used separately.  See ./hrmparser.py --help for brief help.
+
+
+
+Prerequisite:
+
+The SportsTracker Importer is written in Python. It uses standard modules
+which comes with python distribution except one: matplotlib. This module can
+be obtained commonly (depends on operating system). For example in Ubuntu:
+ 
+  sudo apt-get install python-matplotlib
+
+
+  
+Installation:
+ 
+  wget http://physics.muni.cz/~polcar/sportstracker-importer-0.5.tgz
+  tar -xzvf sportstracker-importer-0.5.tgz
+  cd sportstracker-importer-0.5
+
+
+
+Usage:
+
+
+General usage can be described by:
+
+   ./hrm2st.py [ OPTIONS ] FILE1.HRM [ FILE2.HRM  [...]]
+
+Key options of the Sportstracker Importer are
+
+    --output OUTPUT ..................... which file is used for output (SportsTracke XML)
+    --force ............................. rewrite already existing OUTPUT file
+    --sportType=SPORTTYPE ............... used SportsTrack sport type id
+    --sportSubType=SPORTSUBTYPE ......... used SportsTrack subtype id
+    --append ............................ add importerd data to old one (already present in OUTPUT)
+
+
+Example of usage:
+
+    ./hrm2st.py --verbose --append --force --output $HOME/.sportstracker/exercises.xml /PATH_TO_HRM_FILES/*.hrm
+
+
+This command adds information from HRM files located in /PATH_TO_HRM_FILES/
+directory to $HOME/.sportstracker/exercises.xml file. Skips already presented
+files.  Note that the needed sport type and subtype ID's can be seen in the
+sport-types.xml (located in $HOME/.sportstracker/).
+
+
+
+Disclaimer:
+
+The SportsTracker Importer was tested on Ubuntu 9.10. Use on your own
+responsibility.  Always backup your $HOME/.sportstracker/exercises.xml before
+use SportsTracker Importer.
+
+
+  
+Enjoy,
+Jiri Polcar <polcar@physics.muni.cz>

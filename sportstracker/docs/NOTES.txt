@@ -1,0 +1,37 @@
+Development Notes
+==================
+
+Groovy notes:
+- Some of the parsers and their tests are implemented in Groovy, the text- and 
+  XML-processing is much better there.
+- All module tests implemented in Groovy will also be executed inside the ANT 
+  test run (ant test) or inside the NetBeans IDE test run. This is done by the
+  class AllGroovyTest.
+- The Groovy classes will be compiled to bytecode during the build, although
+  the ExerciseParserFactory could also use GroovyClassLoader for starting the
+  script files directly. The advantage of the compilation is much better 
+  performance and a complete syntax check during compilation.
+- Groovy development was done in the Eclipse IDE 3.2 by using the Groovy plugin
+  (version 20070601), syntax highlighting, code-completion, unit testing and
+  debugging works fine (unit tests can also be debugged inside the IDE).
+- Since NetBeans 6.0 Beta2 there's also a plugin for Groovy support at:
+  https://nbgroovysupport.dev.java.net. This plugin provides basic syntax
+  highlighting, (limited) code completion, script execution and even debugging
+  (the Groovy script must be accessed from a Java class, just step into). 
+  Very helpfull, now everything can be done inside the NetBeans IDE.
+- Since Groovy 1.1beta2 the compiler provides a joint compilation for Java and 
+  Groovy source files, so cyclic dependencies are not a problem anymore (see 
+  http://blackdragsview.blogspot.com/2007/07/joint-compilation-in-groovy.html).
+  This is not urgently needed here, only the ClassLoader could then get removed
+  in the ExerciseParserFactory. At the moment it's still a little bit buggy.
+
+XMLStorage notes:
+- the storage uses JDOM 1.1, the performance is fast enough => reading of 1400 
+  exercises takes about 0.5 sec incl. validation (when using the client JVM)
+- use of StAX (or StAX2) doesn't make sense, the speed with validation is the
+  same as with JDOM and schema validation is very tricky in StAX(2)
+
+Links for JFreeChart:
+- http://www.java2s.com/Code/Java/Chart/JFreeChartTimeSeriesDemo13twochartsthatuseweeklydata.htm (tutorials)
+- http://www.koders.com/java/fidBBD0DCA9F441E2104E9AD8909E0C93DCDDA29F06.aspx (demo sources)
+- http://www.jfree.org/phpBB2/viewtopic.php?p=55350&sid=da3d0363ce1f02f8a86964e8c4480c40 (time axis for bike trips)

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sport-type-list>
+    <sport-type record-distance="true">
+        <id>1</id>
+        <name>Cycling</name>
+        <icon>cycling.png</icon>
+        <color red="30" green="50" blue="180" />
+        <sport-subtype-list>
+            <sport-subtype>
+                <id>1</id>
+                <name>MTB tour</name>
+            </sport-subtype>
+            <sport-subtype>
+                <id>2</id>
+                <name>MTB race</name>
+            </sport-subtype>
+            <sport-subtype>
+                <id>3</id>
+                <name>Road tour</name>
+            </sport-subtype>
+            <sport-subtype>
+                <id>4</id>
+                <name>Road race</name>
+            </sport-subtype>
+        </sport-subtype-list>
+        <equipment-list>
+            <equipment>
+                <id>1</id>
+                <name>Cannondale Jekyll</name>
+            </equipment>
+            <equipment>
+                <id>2</id>
+                <name>Cannondale R800</name>
+            </equipment>
+        </equipment-list>
+    </sport-type>
+    <sport-type record-distance="false">
+        <id>2</id>
+        <name>Running</name>
+        <icon>running.png</icon>
+        <color red="210" green="60" blue="0" />
+        <sport-subtype-list>
+            <sport-subtype>
+                <id>1</id>
+                <name>Jogging</name>
+            </sport-subtype>
+            <sport-subtype>
+                <id>2</id>
+                <name>Competition</name>
+            </sport-subtype>
+        </sport-subtype-list>
+        <equipment-list />
+    </sport-type>
+</sport-type-list>
+

@@ -1,0 +1,157 @@
+<rs200_session id="Free2022006165411">
+    <user>
+        <weight>75</weight>
+        <height>182</height>
+        <birth_date>24.07.1975</birth_date>
+        <max_hr>200</max_hr>
+        <vo_max>55</vo_max>
+        <sitting_hr>60</sitting_hr>
+        <gender>Male</gender>
+        <activity_level>High</activity_level>
+    </user>
+    <session_data>
+        <name>Free</name>
+        <day>20</day>
+        <month>2</month>
+        <year>2006</year>
+        <start_hour>16</start_hour>
+        <start_minute>54</start_minute>
+        <start_second>11</start_second>
+        <has_pace_data>True</has_pace_data>
+        <summary>
+            <number_of_laps>6</number_of_laps>
+            <total_distance>5680</total_distance>
+            <max_pace>261.9</max_pace>
+            <avg_pace>304.8</avg_pace>
+            <best_lap>4</best_lap>
+            <best_laptime>290.0</best_laptime>
+            <length>1731.6</length>
+            <avg_hr>161</avg_hr>
+            <max_hr>181</max_hr>
+            <max_set_hr>200</max_set_hr>
+            <calories>404</calories>
+        </summary>
+        <limiterzones>
+            <limiter_type>0</limiter_type>
+            <limiterzone zoneno="1">
+                <limit_zone>0</limit_zone>
+                <time_below>0.0</time_below>
+                <time_on>0.0</time_on>
+                <time_above>0.0</time_above>
+            </limiterzone>
+            <limiterzone zoneno="2">
+                <limit_zone>0</limit_zone>
+                <time_below>0.0</time_below>
+                <time_on>0.0</time_on>
+                <time_above>0.0</time_above>
+            </limiterzone>
+            <limiterzone zoneno="3">
+                <limit_zone>0</limit_zone>
+                <time_below>0.0</time_below>
+                <time_on>0.0</time_on>
+                <time_above>0.0</time_above>
+            </limiterzone>
+            <limiterzone zoneno="4">
+                <limit_zone>0</limit_zone>
+                <time_below>0.0</time_below>
+                <time_on>0.0</time_on>
+                <time_above>0.0</time_above>
+            </limiterzone>
+        </limiterzones>
+        <sportzones>
+            <sportzone zoneno="1">
+                <low_percent>50</low_percent>
+                <high_percent>59</high_percent>
+                <time_on>25.0</time_on>
+            </sportzone>
+            <sportzone zoneno="2">
+                <low_percent>60</low_percent>
+                <high_percent>69</high_percent>
+                <time_on>28.0</time_on>
+            </sportzone>
+            <sportzone zoneno="3">
+                <low_percent>70</low_percent>
+                <high_percent>79</high_percent>
+                <time_on>485.0</time_on>
+            </sportzone>
+            <sportzone zoneno="4">
+                <low_percent>80</low_percent>
+                <high_percent>89</high_percent>
+                <time_on>1161.0</time_on>
+            </sportzone>
+            <sportzone zoneno="5">
+                <low_percent>90</low_percent>
+                <high_percent>99</high_percent>
+                <time_on>15.0</time_on>
+            </sportzone>
+        </sportzones>
+        <laps>
+            <lap lap_no="6">
+                <lap_end_time>1731.6</lap_end_time>
+                <laptime>209.7</laptime>
+                <autolap>0</autolap>
+                <end_hr>181</end_hr>
+                <avg_hr>172</avg_hr>
+                <max_hr>181</max_hr>
+                <end_pace>280.6</end_pace>
+                <avg_pace>305.6</avg_pace>
+                <lap_length>680</lap_length>
+            </lap>
+            <lap lap_no="5">
+                <lap_end_time>1521.9</lap_end_time>
+                <laptime>314.0</laptime>
+                <autolap>1</autolap>
+                <end_hr>160</end_hr>
+                <avg_hr>157</avg_hr>
+                <max_hr>163</max_hr>
+                <end_pace>317.3</end_pace>
+                <avg_pace>314.0</avg_pace>
+                <lap_length>1000</lap_length>
+            </lap>
+            <lap lap_no="4">
+                <lap_end_time>1207.9</lap_end_time>
+                <laptime>290.0</laptime>
+                <autolap>1</autolap>
+                <end_hr>158</end_hr>
+                <avg_hr>161</avg_hr>
+                <max_hr>170</max_hr>
+                <end_pace>298.8</end_pace>
+                <avg_pace>290.0</avg_pace>
+                <lap_length>1000</lap_length>
+            </lap>
+            <lap lap_no="3">
+                <lap_end_time>917.9</lap_end_time>
+                <laptime>304.0</laptime>
+                <autolap>1</autolap>
+                <end_hr>165</end_hr>
+                <avg_hr>165</avg_hr>
+                <max_hr>174</max_hr>
+                <end_pace>271.7</end_pace>
+                <avg_pace>304.0</avg_pace>
+                <lap_length>1000</lap_length>
+            </lap>
+            <lap lap_no="2">
+                <lap_end_time>613.9</lap_end_time>
+                <laptime>298.0</laptime>
+                <autolap>1</autolap>
+                <end_hr>168</end_hr>
+                <avg_hr>165</avg_hr>
+                <max_hr>173</max_hr>
+                <end_pace>304.7</end_pace>
+                <avg_pace>298.0</avg_pace>
+                <lap_length>1000</lap_length>
+            </lap>
+            <lap lap_no="1">
+                <lap_end_time>315.9</lap_end_time>
+                <laptime>315.9</laptime>
+                <autolap>1</autolap>
+                <end_hr>173</end_hr>
+                <avg_hr>151</avg_hr>
+                <max_hr>173</max_hr>
+                <end_pace>282.2</end_pace>
+                <avg_pace>315.0</avg_pace>
+                <lap_length>1000</lap_length>
+            </lap>
+        </laps>
+    </session_data>
+</rs200_session>

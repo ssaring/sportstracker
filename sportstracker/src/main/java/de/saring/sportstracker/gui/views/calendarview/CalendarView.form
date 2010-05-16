@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+      <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+        <EmptyBorder bottom="5" left="10" right="10" top="5"/>
+      </Border>
+    </Property>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="btPreviousMonth" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <Component id="laMonth" min="-2" pref="100" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <Component id="btNextMonth" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+              <Component id="btPreviousYear" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <Component id="laYear" min="-2" pref="50" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <Component id="btNextYear" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="101" max="32767" attributes="0"/>
+              <Component id="btToday" min="-2" max="-2" attributes="0"/>
+          </Group>
+          <Component id="paCalendar" alignment="0" pref="533" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="btNextMonth" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="laMonth" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="btPreviousMonth" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="btPreviousYear" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="laYear" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="btNextYear" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="btToday" alignment="2" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="paCalendar" pref="296" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="de.saring.util.gui.RolloverButton" name="btPreviousMonth">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="_PM"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="laMonth">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="_Month"/>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="de.saring.util.gui.RolloverButton" name="btNextMonth">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="_NM"/>
+      </Properties>
+    </Component>
+    <Component class="de.saring.util.gui.RolloverButton" name="btToday">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="_TD"/>
+      </Properties>
+    </Component>
+    <Component class="de.saring.util.gui.RolloverButton" name="btPreviousYear">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="_PY"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="laYear">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="_Year"/>
+      </Properties>
+    </Component>
+    <Component class="de.saring.util.gui.RolloverButton" name="btNextYear">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="_NY"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JPanel" name="paCalendar">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+    </Container>
+  </SubComponents>
+</Form>
