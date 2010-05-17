@@ -301,13 +301,9 @@ The SportsTracker project uses the following libraries:
   - EasyMock 2.5.2 (http://www.easymock.org)
       License: MIT License
 
-All dependencies will be downloaded automatically by Maven, except BSAF (it's
-not included in any official Maven repository yet).
-So you need to download the Jar "bsaf-1.9RC4.jar" from the BSAF homepage
-and install it manually in your local Maven repository with this command:
-
-  mvn install:install-file -DgroupId=org.jdesktop.bsaf -DartifactId=bsaf
-    -Dversion=1.9RC4 -Dpackaging=jar -DgeneratePom=true -Dfile=bsaf-1.9RC4.jar
+All dependencies will be downloaded automatically by Maven. BSAF and JFreeChart
+are missing in the Maven centrol repository, so I've created my own repository
+for them. It's available at: http://saring.de/st-maven-repo/
 
 
 If you're wondering why the complete application has been ported from the .NET
@@ -374,4 +370,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2010/05/16
+2010/05/17

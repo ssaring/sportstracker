@@ -18,7 +18,8 @@ v4.3.0:
         Parent component with common plugin configuration and dependencies
     - Dependency Jars are not part of the source archive anymore, they
       will be downloaded automatically in the build process
-      (BSAF needs to be downloaded and installed manually, see README.txt)
+    - Setup of a Maven repository at http://saring.de/st-maven-repo/ for BSAF
+      and current JFreeChart (they are missing in Maven central repository)
     - GMaven plugin in build process:
       - Groovy classes can be used in all modules, also for tests
       - Groovy classes are now stored in own groovy source directories
