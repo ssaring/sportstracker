@@ -9,7 +9,7 @@ import javax.swing.JTable;
  * @author  Stefan Saring
  * @version 1.0
  */
-public class ListUtils {
+public final class ListUtils {
 
     /**
      * Increases the default cell height of the specified list by using a prototype (2 pixels).

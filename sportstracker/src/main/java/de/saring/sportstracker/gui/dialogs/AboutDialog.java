@@ -1,11 +1,15 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import com.google.inject.Inject;
-import de.saring.sportstracker.gui.STContext;
 import javax.swing.ActionMap;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
+
 import org.jdesktop.application.Action;
+
+import com.google.inject.Inject;
+
+import de.saring.sportstracker.gui.STContext;
+import de.saring.util.gui.DialogUtils;
 
 /**
  * This is the "About" dialog of the SportsTracker application.
@@ -37,7 +41,9 @@ public class AboutDialog extends JDialog {
         
         // setup actions
         ActionMap actionMap = context.getSAFContext ().getActionMap (getClass (), this);
-        btClose.setAction (actionMap.get (ACTION_CLOSE));        
+        javax.swing.Action aClose = actionMap.get (ACTION_CLOSE);
+        btClose.setAction(aClose);        
+        DialogUtils.setDialogEscapeKeyAction(this, aClose);
     }
 
     /**

@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.dialogs;
 import com.google.inject.Inject;
 import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;
+import de.saring.util.gui.DialogUtils;
 import de.saring.util.unitcalc.FormatUtils;
 import javax.swing.ActionMap;
 import javax.swing.JDialog;
@@ -35,7 +36,9 @@ public class StatisticResultsDialog extends JDialog {
         
         // setup actions
         ActionMap actionMap = context.getSAFContext ().getActionMap (getClass (), this);
-        btClose.setAction (actionMap.get (ACTION_CLOSE));
+        javax.swing.Action aClose = actionMap.get(ACTION_CLOSE);
+        btClose.setAction(aClose);
+        DialogUtils.setDialogEscapeKeyAction(this, aClose);
     }
    
     /**

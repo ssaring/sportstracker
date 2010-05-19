@@ -11,6 +11,7 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.ResourceReader;
 import de.saring.util.data.IdObjectList;
+import de.saring.util.gui.DialogUtils;
 import de.saring.util.gui.jfreechart.ChartUtils;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
@@ -108,7 +109,9 @@ public class OverviewDialog extends JDialog {
         
         // setup actions
         ActionMap actionMap = context.getSAFContext ().getActionMap (getClass (), this);
-        btClose.setAction (actionMap.get (ACTION_CLOSE));
+        javax.swing.Action aClose = actionMap.get(ACTION_CLOSE);
+        btClose.setAction(aClose);
+        DialogUtils.setDialogEscapeKeyAction(this, aClose);
         
         setInitialValues ();
         updateDiagram ();

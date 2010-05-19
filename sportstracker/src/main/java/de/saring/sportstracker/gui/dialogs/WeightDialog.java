@@ -25,6 +25,7 @@ import net.miginfocom.swing.MigLayout;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.gui.DialogUtils;
 import de.saring.util.gui.GuiCreateUtils;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
@@ -72,7 +73,10 @@ public class WeightDialog extends JDialog {
         // setup actions
         ActionMap actionMap = context.getSAFContext ().getActionMap (getClass (), this);
         btOK.setAction (actionMap.get (ACTION_OK));
-        btCancel.setAction (actionMap.get (ACTION_CANCEL));
+        
+        javax.swing.Action aCancel = actionMap.get(ACTION_CANCEL);
+        btCancel.setAction(aCancel);
+        DialogUtils.setDialogEscapeKeyAction(this, aCancel);
     }
 
     private void initGUI () {

@@ -24,7 +24,7 @@ import net.miginfocom.swing.MigLayout;
  * 
  * @author Stefan Saring
  */
-public class GuiCreateUtils {
+public final class GuiCreateUtils {
 
     private GuiCreateUtils () {
     }

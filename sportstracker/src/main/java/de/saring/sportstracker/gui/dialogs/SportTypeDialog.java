@@ -8,6 +8,7 @@ import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.ResourceReader;
+import de.saring.util.gui.DialogUtils;
 import de.saring.util.gui.ListCellRendererOddEven;
 import de.saring.util.gui.ListUtils;
 import java.awt.Color;
@@ -85,7 +86,10 @@ public class SportTypeDialog extends JDialog {
         btEditEquipment.setAction (actionMap.get (ACTION_EDIT_EQUIPMENT));
         btDeleteEquipment.setAction (actionMap.get (ACTION_DELETE_EQUIPMENT));
         btOK.setAction (actionMap.get (ACTION_OK));
-        btCancel.setAction (actionMap.get (ACTION_CANCEL));
+        
+        javax.swing.Action aCancel = actionMap.get(ACTION_CANCEL);
+        btCancel.setAction(aCancel);
+        DialogUtils.setDialogEscapeKeyAction(this, aCancel);
         
         // add list selection listener 
         // => fire property change events for updating the action status

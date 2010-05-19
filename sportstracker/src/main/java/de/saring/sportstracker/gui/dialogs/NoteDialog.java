@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.gui.DialogUtils;
 import de.saring.util.gui.GuiCreateUtils;
 import java.awt.Container;
 import java.util.Calendar;
@@ -63,7 +64,10 @@ public class NoteDialog extends JDialog {
         // setup actions
         ActionMap actionMap = context.getSAFContext ().getActionMap (getClass (), this);
         btOK.setAction (actionMap.get (ACTION_OK));
-        btCancel.setAction (actionMap.get (ACTION_CANCEL));
+        
+        javax.swing.Action aCancel = actionMap.get(ACTION_CANCEL);
+        btCancel.setAction(aCancel);
+        DialogUtils.setDialogEscapeKeyAction(this, aCancel);
     }
 
     private void initGUI () {

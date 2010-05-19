@@ -8,6 +8,7 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.ResourceReader;
+import de.saring.util.gui.DialogUtils;
 import de.saring.util.gui.ListCellRendererOddEven;
 import de.saring.util.gui.ListUtils;
 import java.awt.Component;
@@ -65,7 +66,10 @@ public class SportTypeListDialog extends JDialog {
         btAdd.setAction (actionMap.get (ACTION_ADD));
         btEdit.setAction (actionMap.get (ACTION_EDIT));
         btDelete.setAction (actionMap.get (ACTION_DELETE));
-        btClose.setAction (actionMap.get (ACTION_CLOSE));
+        
+        javax.swing.Action aClose = actionMap.get(ACTION_CLOSE);
+        btClose.setAction(aClose);
+        DialogUtils.setDialogEscapeKeyAction(this, aClose);
 
         // add list selection listener 
         // => fire sportTypeSelected property change for updating the action status

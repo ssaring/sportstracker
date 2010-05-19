@@ -8,6 +8,7 @@ import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.data.IdObjectList;
+import de.saring.util.gui.DialogUtils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.ActionMap;
@@ -55,7 +56,10 @@ public class StatisticDialog extends JDialog {
         ActionMap actionMap = context.getSAFContext ().getActionMap (getClass (), this);
         btChange.setAction (actionMap.get (ACTION_CHANGE_FILTER));
         btCalculate.setAction (actionMap.get (ACTION_CALCULATE));
-        btClose.setAction (actionMap.get (ACTION_CLOSE));
+        
+        javax.swing.Action aClose = actionMap.get(ACTION_CLOSE);
+        btClose.setAction(aClose);
+        DialogUtils.setDialogEscapeKeyAction(this, aClose);
 
         // start with current filter criterias stored in document => user can change them
         statFilter = document.getCurrentFilter ();

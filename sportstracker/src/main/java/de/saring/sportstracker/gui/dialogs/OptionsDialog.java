@@ -8,6 +8,7 @@ import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.core.STOptions.AutoCalculation;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.gui.DialogUtils;
 import de.saring.util.unitcalc.FormatUtils.SpeedView;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 import javax.swing.ActionMap;
@@ -50,7 +51,10 @@ public class OptionsDialog extends JDialog {
         // setup actions
         ActionMap actionMap = context.getSAFContext ().getActionMap (getClass (), this);
         btOK.setAction (actionMap.get (ACTION_OK));
-        btCancel.setAction (actionMap.get (ACTION_CANCEL));
+        
+        javax.swing.Action aCancel = actionMap.get(ACTION_CANCEL);
+        btCancel.setAction(aCancel);
+        DialogUtils.setDialogEscapeKeyAction(this, aCancel);
 
         setInitialValues ();
     }

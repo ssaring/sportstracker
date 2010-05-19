@@ -15,6 +15,7 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.gui.DialogUtils;
 import de.saring.util.gui.GuiCreateUtils;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
@@ -125,7 +126,10 @@ public class ExerciseDialog extends JDialog {
         btHRMImport.setAction (actionMap.get (ACTION_HRM_IMPORT));
         btCopyComment.setAction (actionMap.get (ACTION_COPY_COMMENT));
         btOK.setAction (actionMap.get (ACTION_OK));
-        btCancel.setAction (actionMap.get (ACTION_CANCEL));
+        
+        javax.swing.Action aCancel = actionMap.get(ACTION_CANCEL);
+        btCancel.setAction(aCancel);
+        DialogUtils.setDialogEscapeKeyAction(this, aCancel);
 
         // fill the comoboxes with all sport types and intensity types
         cbSportType.removeAllItems ();

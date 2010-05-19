@@ -37,7 +37,9 @@ v4.3.0:
       history revisions
     - future commits will go all to Mercurial repository, not to SVN anymore
     - SCM documentation in README.txt
-
+ SportsTracker changes:
+  - All dialogs can now be closed by pressing the Escape key
+    
 v4.2.1 (no public release, internal marker only):
  SportsTracker changes:
   - Better Swing Application Framework 1.9 RC4 replaces Swing Application
