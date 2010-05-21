@@ -1,7 +1,7 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
-import de.saring.polarviewer.core.PVException;
-import de.saring.polarviewer.parser.ExerciseParserFactory;
+import de.saring.exerciseviewer.core.PVException;
+import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;

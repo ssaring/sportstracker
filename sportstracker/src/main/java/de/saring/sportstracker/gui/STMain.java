@@ -3,7 +3,7 @@ package de.saring.sportstracker.gui;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import de.saring.polarviewer.gui.PVContext;
+import de.saring.exerciseviewer.gui.PVContext;
 import de.saring.sportstracker.core.STException;
 import java.util.EventObject;
 import java.util.logging.Level;

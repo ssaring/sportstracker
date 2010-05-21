@@ -1,8 +1,8 @@
 package de.saring.sportstracker.gui.dialogs;
 
 import com.google.inject.Inject;
-import de.saring.polarviewer.parser.ExerciseParserFactory;
-import de.saring.polarviewer.parser.ExerciseParserInfo;
+import de.saring.exerciseviewer.parser.ExerciseParserFactory;
+import de.saring.exerciseviewer.parser.ExerciseParserInfo;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.util.ResourceReader;

@@ -3,7 +3,7 @@ package de.saring.sportstracker.gui;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import de.saring.polarviewer.gui.PVMain;
+import de.saring.exerciseviewer.gui.PVMain;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;

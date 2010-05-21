@@ -1,7 +1,7 @@
 package de.saring.sportstracker.gui;
 
 import com.google.inject.ImplementedBy;
-import de.saring.polarviewer.gui.PVContext;
+import de.saring.exerciseviewer.gui.PVContext;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**

@@ -37,8 +37,14 @@ v4.3.0:
       history revisions
     - future commits will go all to Mercurial repository, not to SVN anymore
     - SCM documentation in README.txt
+
  SportsTracker changes:
   - All dialogs can now be closed by pressing the Escape key
+ 
+ PolarViewer changes:
+  - PolarViewer has been renamed to ExerciseViewer, because it supports much more 
+    heart rate monitor manufacturers than Polar (was the case at beginning)
+    - changed package name de.saring.polarviewer to de.saring.exerciseviewer
     
 v4.2.1 (no public release, internal marker only):
  SportsTracker changes:

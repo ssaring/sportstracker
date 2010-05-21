@@ -1,6 +1,10 @@
 SportsTracker-TODO
 ==================
 
+PolarViewer to ExerciseViewer rename:
+- rename all PV* classes
+- rename all pv* resources
+
 Garmin TCX support:
 -------------------
 - initial implementation is done, remaining TODO's
@@ -13,8 +17,6 @@ Garmin TCX support:
 
 Location data and Map viewer support - Initial design:
 ------------------------------------------------------
-- Rename PolarViewer component to ExerciseViewer
-  (it can much more now than just viewing Polar files).
 - Exercise object: Add optional locationFile (better name?) attribut, similar to hrmFile
 - ExerciseDialog:
   - Add below HRM file selection an optional Location file selection entry and file chooser button.

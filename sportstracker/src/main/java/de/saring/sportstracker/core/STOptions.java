@@ -2,7 +2,7 @@ package de.saring.sportstracker.core;
 
 import java.io.Serializable;
 
-import de.saring.polarviewer.core.PVOptions;
+import de.saring.exerciseviewer.core.PVOptions;
 import de.saring.util.unitcalc.FormatUtils.SpeedView;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 

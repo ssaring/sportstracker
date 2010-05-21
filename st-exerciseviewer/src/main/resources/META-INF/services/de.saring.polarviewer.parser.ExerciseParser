@@ -1,8 +1,0 @@
-de.saring.polarviewer.parser.impl.PolarSRawParser
-de.saring.polarviewer.parser.impl.PolarHsrRawParser
-de.saring.polarviewer.parser.impl.PolarHRMParser
-de.saring.polarviewer.parser.impl.PolarRS200SDParser
-de.saring.polarviewer.parser.impl.PolarF6RawParser
-de.saring.polarviewer.parser.impl.HAC4TURParser
-de.saring.polarviewer.parser.impl.SmartsyncCSVParser
-de.saring.polarviewer.parser.impl.GarminTcxParser

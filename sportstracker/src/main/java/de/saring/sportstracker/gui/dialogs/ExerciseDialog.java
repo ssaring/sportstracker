@@ -2,11 +2,11 @@ package de.saring.sportstracker.gui.dialogs;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import de.saring.polarviewer.core.PVException;
-import de.saring.polarviewer.data.PVExercise;
-import de.saring.polarviewer.gui.PVMain;
-import de.saring.polarviewer.parser.ExerciseParser;
-import de.saring.polarviewer.parser.ExerciseParserFactory;
+import de.saring.exerciseviewer.core.PVException;
+import de.saring.exerciseviewer.data.PVExercise;
+import de.saring.exerciseviewer.gui.PVMain;
+import de.saring.exerciseviewer.parser.ExerciseParser;
+import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
 import de.saring.sportstracker.data.Equipment;
