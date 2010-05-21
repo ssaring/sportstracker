@@ -10,7 +10,6 @@
     <version>1.0.0</version>
 
     <properties>
-        <sportstracker.version>4.3.0</sportstracker.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
