@@ -21,28 +21,28 @@ Location data and Map viewer support - Initial design:
 - ExerciseDialog:
   - Add below HRM file selection an optional Location file selection entry and file chooser button.
   - Rename "View HRM file" button to "View exercise details".
-- New MapViewer subproject, similar to PolarViewer.
-  - It contains the MapViewer widget, which will be displayed as an extra tab in PolarViewer
+- New MapViewer subproject, similar to ExerciseViewer.
+  - It contains the MapViewer widget, which will be displayed as an extra tab in ExerciseViewer
     (new last tab "Map").
   - It contains parsers for different Location file formats, e.g. GPX, KML, ....
     The parser list must use the ServiceLoader API to be extensible (similar to
-    ExerciseParser in PolarViewer)
+    ExerciseParser in ExerciseViewer)
   - The LocationParser must return a Track (better name?) object which contains a list of
     all parsed trackpoints. Each TrackPoint has these attys:
     - location (how to store)
     - timestamp (optional)
     - comment (optional, e.g. for Lap split names)
   - The MapViewer subproject MUST NOT have any dependencies to SportsTracker
-    or PolarViewer classes! Only PolarViewer uses the MapViewer classes!
-- PolarViewer:
+    or ExerciseViewer classes! Only ExerciseViewer uses the MapViewer classes!
+- ExerciseViewer:
   - PVExercise class: add new optional property "track", which is a list of trackpoints (see above)
   - PV gets the hrm filename on startup and the optional location filename.
   - Location data can also be part of the hrm file (e.g. in Garmin TCX format), then only
-    the HRM filename will be passed on PolarViewer startup.
-  - PolarViewer parses the location data if available and stores it in the PVExercise object,
+    the HRM filename will be passed on ExerciseViewer startup.
+  - ExerciseViewer parses the location data if available and stores it in the PVExercise object,
     which will then be displayed.
   - The new "Map" tab displays the location data of the exercise, if available.
-  - PolarViewer must be able to display the Map data only, when the user does not has a HRM file.
+  - ExerciseViewer must be able to display the Map data only, when the user does not has a HRM file.
 
 
 General TODOs:
@@ -84,8 +84,8 @@ Training route/lap support:
 - it should be possible to filter for specific routes for evaluation
 
 
-PolarViewer-TODO
-================
+ExerciseViewer-TODO
+===================
 
 Diagram panel:
 - there's no space at the left side when the bottom axis displays "by distance"
