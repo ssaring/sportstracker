@@ -174,7 +174,7 @@ public class STControllerImpl implements STController {
     /**
      * Action for open the exercise HRM file in the PolarViewer sub-application (dialog).
      */
-    @Action(name=ACTION_OPEN_POLARVIEWER)
+    @Action(name=ACTION_OPEN_EXERCISEVIEWER)
     public void openPolarViewer () {
 
         // show file open dialog for HRM file selection

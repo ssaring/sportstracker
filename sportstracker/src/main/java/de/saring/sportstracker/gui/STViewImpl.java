@@ -147,7 +147,7 @@ public class STViewImpl extends FrameView implements STView {
         // create toolbar
         this.setToolBar (new JToolBar ());
         createToolBarButtons (new String[] {
-            STController.ACTION_OPEN_POLARVIEWER, 
+            STController.ACTION_OPEN_EXERCISEVIEWER, 
             STController.ACTION_SAVE, 
             STController.ACTION_PRINT, 
             SEPARATOR,
@@ -190,7 +190,7 @@ public class STViewImpl extends FrameView implements STView {
         this.getFrame ().setJMenuBar (menuBar);
 
         String[] fileMenuItems = {
-            STController.ACTION_OPEN_POLARVIEWER,
+            STController.ACTION_OPEN_EXERCISEVIEWER,
             STController.ACTION_SAVE,
             SEPARATOR,
             STController.ACTION_PRINT,

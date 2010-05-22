@@ -3,7 +3,7 @@ SportsTracker-TODO
 
 PolarViewer to ExerciseViewer rename:
 - rename all PV* classes
-- rename all pv* resources
+
 
 Garmin TCX support:
 -------------------

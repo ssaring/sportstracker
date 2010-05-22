@@ -66,7 +66,7 @@ public class OptionsDialog extends JDialog {
         tabbedPane.setTitleAt (0, context.getResReader ().getString ("st.dlg.options.main.title"));
         tabbedPane.setTitleAt (1, context.getResReader ().getString ("st.dlg.options.units.title"));
         tabbedPane.setTitleAt (2, context.getResReader ().getString ("st.dlg.options.listview.title"));
-        tabbedPane.setTitleAt (3, context.getResReader ().getString ("st.dlg.options.polarviewer.title"));
+        tabbedPane.setTitleAt (3, context.getResReader ().getString ("st.dlg.options.exerciseviewer.title"));
     }
     
     /**

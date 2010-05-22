@@ -17,7 +17,7 @@ import javax.swing.ActionMap;
 public interface STController {
 
     /** Constants for action names. */
-    String ACTION_OPEN_POLARVIEWER = "st.view.open_polarviewer";
+    String ACTION_OPEN_EXERCISEVIEWER = "st.view.open_exerciseviewer";
     String ACTION_LOAD = "st.view.load";
     String ACTION_SAVE = "st.view.save";
     String ACTION_PRINT = "st.view.print";
