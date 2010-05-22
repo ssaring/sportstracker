@@ -17,12 +17,12 @@ applications.
 
 If you own a heartrate monitor with a computer interface you can display
 the recorded exercise files and evaluate the diagrams with the integrated
-PolarViewer application. 
+ExerciseViewer application. 
 You can organize them by attaching the recorded files to the exercise 
 entries. When adding new exercises you can import the data from the 
 recorded exercise files.
 
-PolarViewer supports Polar, CicloSport, Garmin and Oregon heartrate 
+ExerciseViewer supports Polar, CicloSport, Garmin and Oregon heartrate 
 monitors. This is the current compatibility list (other monitors might 
 work too, but I can't test them, user feedback is welcome):
 
@@ -182,7 +182,7 @@ using sorting and filters.
 Users of heartrate monitors (HRM) can assign the recorded file to the exercise.
 Most of the exercise data can be imported from this file, so it does
 not need to be entered manually. The exercise files can also be viewed with 
-the integrated PolarViewer application, which displays all the recorded
+the integrated ExerciseViewer application, which displays all the recorded
 data and diagrams for it (except power data).
 
 HRM exercise files can be easily imported by drag & drop. The user must drag
@@ -213,12 +213,12 @@ SportsTracker, can import all HRM files at once by using the external tool
 Notes for Garmin users
 ----------------------
 
-The current PolarViewer version displays only exercise and lap data for
+The current ExerciseViewer version displays only exercise and lap data for
 Garmin TCX files. The support for sample (or trackpoint) data will come 
 in a future version.  
 
 The data stored in the recorded TCX files is sometimes wrong or imprecise.
-PolarViewer can only display the stored data, it can't decide whether the
+ExerciseViewer can only display the stored data, it can't decide whether the
 recorded data makes sense or not.
 
 The speed calculated by the distance between two trackpoints is sometimes
