@@ -3,7 +3,7 @@ package de.saring.sportstracker.gui;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import de.saring.exerciseviewer.gui.PVMain;
+import de.saring.exerciseviewer.gui.EVMain;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
@@ -59,7 +59,7 @@ public class STControllerImpl implements STController {
     @Inject private Provider<OverviewDialog> prOverviewDialog;    
     @Inject private Provider<AboutDialog> prAboutDialog;
     @Inject private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;    
-    @Inject private Provider<PVMain> prExerciseViewer;
+    @Inject private Provider<EVMain> prExerciseViewer;
     
     /** The action map of the controller class. */
     private ActionMap actionMap;
@@ -182,7 +182,7 @@ public class STControllerImpl implements STController {
         if (selectedFile != null) {
             
             // start ExerciseViewer 
-            PVMain pv = prExerciseViewer.get ();
+            EVMain pv = prExerciseViewer.get ();
             pv.showExercise (selectedFile.getAbsolutePath (), document.getOptions (), false);
         }
     }
@@ -356,7 +356,7 @@ public class STControllerImpl implements STController {
         // (special checks not needed here, done by the STView:updateExerciseActions() method)
         int exerciseID = view.getCurrentView ().getSelectedExerciseIDs ()[0];
         Exercise exercise = document.getExerciseList ().getByID (exerciseID);
-        PVMain pv = prExerciseViewer.get ();
+        EVMain pv = prExerciseViewer.get ();
         pv.showExercise (exercise.getHrmFile (), document.getOptions (), false);
     }
     

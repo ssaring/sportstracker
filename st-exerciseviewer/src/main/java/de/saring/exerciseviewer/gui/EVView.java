@@ -17,13 +17,13 @@ import org.jdesktop.application.Action;
  * @author Stefan Saring
  * @version 1.0
  */
-public class PVView extends JDialog {
+public class EVView extends JDialog {
     
     private static final String APPLICATION_NAME = "ExerciseViewer";
     private static final String ACTION_CLOSE = "pv.view.close";
     
-    private PVContext context;
-    private PVDocument document;
+    private EVContext context;
+    private EVDocument document;
 
     private MainPanel mainPanel;
     private OptionalPanel optionalPanel;
@@ -42,7 +42,7 @@ public class PVView extends JDialog {
      * @param diagramPanel the diagram panel
      */
     @Inject
-    public PVView (PVContext context, MainPanel mainPanel, OptionalPanel optionalPanel,
+    public EVView (EVContext context, MainPanel mainPanel, OptionalPanel optionalPanel,
         LapPanel lapPanel, SamplePanel samplePanel, DiagramPanel diagramPanel) {
         
         super (context.getMainFrame ());
@@ -58,7 +58,7 @@ public class PVView extends JDialog {
      * Initializes the PVView and all contained components.
      * @param the ExerciseViewer document
      */
-    public void initView (PVDocument document) {
+    public void initView (EVDocument document) {
         initComponents ();
 
         // The PVDocument can't be injected in this class and all panels, Guice would

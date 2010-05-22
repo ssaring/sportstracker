@@ -1,8 +1,8 @@
 package de.saring.exerciseviewer.gui.panels;
 
 import com.google.inject.Inject;
-import de.saring.exerciseviewer.data.PVExercise;
-import de.saring.exerciseviewer.gui.PVContext;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**
@@ -19,7 +19,7 @@ public class OptionalPanel extends BasePanel {
      * @param context the ExerciseViewer context
      */
     @Inject
-    public OptionalPanel (PVContext context) {
+    public OptionalPanel (EVContext context) {
         super (context);
         initComponents ();        
     }
@@ -27,7 +27,7 @@ public class OptionalPanel extends BasePanel {
     /** {@inheritDoc} */
     @Override
     public void displayExercise () {
-        PVExercise exercise = getDocument ().getExercise ();
+        EVExercise exercise = getDocument ().getExercise ();
         FormatUtils formatUtils = getContext ().getFormatUtils ();
 
         // set default text for all value labels first
@@ -55,7 +55,7 @@ public class OptionalPanel extends BasePanel {
             laDistanceValue.setText (formatUtils.distanceToString (exercise.getSpeed ().getDistance () / 1000f, 2));
             
             // bike number can't be displayed for HRM files
-            if (exercise.getFileType () != PVExercise.ExerciseFileType.HRM) {
+            if (exercise.getFileType () != EVExercise.ExerciseFileType.HRM) {
                 laBikeNrValue.setText (String.valueOf (exercise.getRecordingMode ().getBikeNumber ()));
             }
         }

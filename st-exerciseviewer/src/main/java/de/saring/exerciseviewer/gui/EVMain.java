@@ -5,8 +5,8 @@ import java.util.logging.Logger;
 
 import com.google.inject.Inject;
 import javax.swing.JOptionPane;
-import de.saring.exerciseviewer.core.PVException;
-import de.saring.exerciseviewer.core.PVOptions;
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.core.EVOptions;
 
 /**
  * This is the main class of the ExerciseViewer which start the "sub-application" 
@@ -16,12 +16,12 @@ import de.saring.exerciseviewer.core.PVOptions;
  * @author  Stefan Saring
  * @version 1.0
  */
-public class PVMain {
-    private static final Logger LOGGER = Logger.getLogger (PVMain.class.getName ()); 
+public class EVMain {
+    private static final Logger LOGGER = Logger.getLogger (EVMain.class.getName ()); 
     
-    private PVContext context;
-    private PVDocument document;
-    private PVView view;
+    private EVContext context;
+    private EVDocument document;
+    private EVView view;
 
     /**
      * Standard c'tor.
@@ -30,7 +30,7 @@ public class PVMain {
      * @param view the ExerciseViewer view component
      */
     @Inject
-    public PVMain (PVContext context, PVDocument document, PVView view) {
+    public EVMain (EVContext context, EVDocument document, EVView view) {
         this.context = context;
         this.document = document;
         this.view = view;
@@ -42,14 +42,14 @@ public class PVMain {
      * @param options the options to be used in ExerciseViewer 
      * @param modal pass true when the dialog must be modal
      */
-    public void showExercise (String exerciseFilename, PVOptions options, boolean modal) {
+    public void showExercise (String exerciseFilename, EVOptions options, boolean modal) {
         
         // init document and load exercise file
         document.setOptions (options);        
         try {
             document.openExerciseFile (exerciseFilename);
         } 
-        catch (PVException pe) {
+        catch (EVException pe) {
             LOGGER.log (Level.SEVERE, "Failed to open exercise file " + exerciseFilename + "!", pe);
             JOptionPane.showMessageDialog (context.getMainFrame (),
                 context.getResReader ().getString ("pv.error.read_exercise", exerciseFilename),

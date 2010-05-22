@@ -41,12 +41,13 @@ v4.3.0:
  SportsTracker changes:
   - All dialogs can now be closed by pressing the Escape key
  
- PolarViewer changes:
+ PolarViewer/ExcerciseViewer changes:
   - PolarViewer has been renamed to ExerciseViewer, because it supports much more 
     heart rate monitor manufacturers than Polar (was the case at beginning)
     - changed package name de.saring.polarviewer to de.saring.exerciseviewer
     - all PolarViewer resource keys and texts/translation has been renamed
-    - rename in all documentations (also in source code) 
+    - rename in all documentations (also in source code)
+    - all PV* classes has been renamed to EV* (e.g. PVDocument -> EVDocument) 
     
 v4.2.1 (no public release, internal marker only):
  SportsTracker changes:

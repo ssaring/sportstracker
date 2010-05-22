@@ -1,10 +1,6 @@
 SportsTracker-TODO
 ==================
 
-PolarViewer to ExerciseViewer rename:
-- rename all PV* classes
-
-
 Garmin TCX support:
 -------------------
 - initial implementation is done, remaining TODO's

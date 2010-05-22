@@ -1,7 +1,7 @@
 package de.saring.exerciseviewer.parser.impl;
 
 import de.saring.exerciseviewer.parser.*;
-import de.saring.exerciseviewer.core.PVException;
+import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,9 +56,9 @@ public class HAC4TURParser extends AbstractExerciseParser {
          * Construct a new sample with the sample bytes. This will initialize
          * all sample values.
          */
-        public Sample (int[] contents) throws PVException {
+        public Sample (int[] contents) throws EVException {
             if (contents.length != 20) {
-                throw new PVException ("Length of a sample should be 20 bytes!");
+                throw new EVException ("Length of a sample should be 20 bytes!");
             }
             this.contents = contents;
             initializeValues ();
@@ -171,7 +171,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
      * {@inheritDoc}
      */
     @Override
-    public PVExercise parseExercise (String filename) throws PVException {
+    public EVExercise parseExercise (String filename) throws EVException {
         
         // read file to array of strings and to array of bytes.
         // we'll need both as the tur file contains both text (header)
@@ -180,13 +180,13 @@ public class HAC4TURParser extends AbstractExerciseParser {
         fileContentsBytes = readFileToByteArray (filename);
         
         // Create a new exercise file and give it the right type
-        PVExercise exercise = new PVExercise ();
-        exercise.setFileType (PVExercise.ExerciseFileType.HAC4TUR);
+        EVExercise exercise = new EVExercise ();
+        exercise.setFileType (EVExercise.ExerciseFileType.HAC4TUR);
         
         // check the first line to see if we're really dealing with a HAC4 TUR file
         String strVersion = fileContents[FilePosition.VERSION_HEADER];
         if (strVersion == null || !strVersion.equals (VERSION_HEADER_STRING)) {
-            throw new PVException ("Failed to read HAC4 TUR File. Can't find correct header in file");
+            throw new EVException ("Failed to read HAC4 TUR File. Can't find correct header in file");
         }
         
         // get the nr of lines there are in the note. This is important,
@@ -207,7 +207,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
             exercise.setDate (new SimpleDateFormat ("dd.MM.yyy-HH:mm").parse (strDateAndTime));
         }
         catch (Exception e) {
-            throw new PVException ("Failed to read exercise date and time from string '" + strDateAndTime + "'...", e);
+            throw new EVException ("Failed to read exercise date and time from string '" + strDateAndTime + "'...", e);
         }
         
         // get duration of exercise. The duration is recorded in seconds, so this one is easy.
@@ -251,7 +251,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
     /**
      * Calculate the altitude information.
      */
-    private ExerciseAltitude calculateAltitudes (PVExercise exercise) {
+    private ExerciseAltitude calculateAltitudes (EVExercise exercise) {
         
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
@@ -283,7 +283,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
     /**
      * Calculates the cadence information.
      */
-    private ExerciseCadence calculateCadence (PVExercise exercise) {
+    private ExerciseCadence calculateCadence (EVExercise exercise) {
         int maximum = Integer.MIN_VALUE;
         long total = 0;
         
@@ -302,7 +302,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
     /**
      * Calculates the speed information.
      */
-    private ExerciseSpeed calculateSpeed (PVExercise exercise) {
+    private ExerciseSpeed calculateSpeed (EVExercise exercise) {
         
         float max = Float.MIN_VALUE;
         int nrMovingIntervals = 0; // nr of intervals bike was moving
@@ -329,7 +329,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
     /**
      * Calculates the temperature information.
      */
-    private ExerciseTemperature calculateTemperature (PVExercise exercise) {        
+    private ExerciseTemperature calculateTemperature (EVExercise exercise) {        
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
         long total = 0;
@@ -350,7 +350,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
     /**
      * Calculates the heartrate range information.
      */
-    private HeartRateLimit calculateHeartRate (PVExercise exercise) throws PVException {
+    private HeartRateLimit calculateHeartRate (EVExercise exercise) throws EVException {
         
         short upper = (short) readInteger (FilePosition.HR_LIMIT_UPPER + nrOfLinesInNote);
         short lower = (short) readInteger (FilePosition.HR_LIMIT_LOWER + nrOfLinesInNote);
@@ -388,7 +388,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
      * I cannot do anything with this yet. Maybe later.. For now I'll just fill 
      * a Lap object with values from the complete exercise.
      */
-    private Lap[] getLaps (PVExercise exercise) {        
+    private Lap[] getLaps (EVExercise exercise) {        
         ExerciseSample lastSample = exercise.getSampleList ()[exercise.getSampleList ().length - 1];
         
         Lap lap = new Lap ();
@@ -417,7 +417,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
      * Returns the sample interval in seconds.
      * @param fpBeginSamples file position at which the sample data begins
      */
-    private int readSampleInterval (int fpBeginSamples) throws PVException {
+    private int readSampleInterval (int fpBeginSamples) throws EVException {
         
         // find length of all strings to this point
         int lengthUntilSamples = 0;
@@ -440,7 +440,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
      * @param fpBeginSamples file position for the begin of sample data
      * @return the created array of exercise samples
      */
-    private ExerciseSample[] readSamples (int fpNrSamples, int fpBeginSamples) throws PVException {
+    private ExerciseSample[] readSamples (int fpNrSamples, int fpBeginSamples) throws EVException {
         
         int nrSamples = readInteger (fpNrSamples);
         // find length of all strings to this point
@@ -478,24 +478,24 @@ public class HAC4TURParser extends AbstractExerciseParser {
     /**
      * Read a float from the file contents.
      */
-    private float readFloat (int pos) throws PVException {
+    private float readFloat (int pos) throws EVException {
         try {
             return Float.parseFloat (readLine (pos));
         } 
         catch (Exception e) {
-            throw new PVException ("Invalid value for float at position " + pos, e);
+            throw new EVException ("Invalid value for float at position " + pos, e);
         }
     }
     
     /**
      * Read an integer from the file contents.
      */
-    private int readInteger (int pos) throws PVException {
+    private int readInteger (int pos) throws EVException {
         try {
             return Integer.parseInt (readLine (pos));
         } 
         catch (Exception e) {
-            throw new PVException ("Invalid value for integer at position " + pos, e);
+            throw new EVException ("Invalid value for integer at position " + pos, e);
         }
     }
     

@@ -11,7 +11,7 @@ import java.util.Date;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class PVExercise implements Serializable
+public final class EVExercise implements Serializable
 {    
     /** File type of an exercise (see enums). */
     private ExerciseFileType fileType;
@@ -283,7 +283,7 @@ public final class PVExercise implements Serializable
     {
         StringBuilder sBuilder = new StringBuilder ();
 
-        sBuilder.append (PVExercise.class.getName () + ":\n");
+        sBuilder.append (EVExercise.class.getName () + ":\n");
         sBuilder.append (" [fileType=" + this.fileType + "\n");
         sBuilder.append ("  userID=" + this.userID + "\n");
         sBuilder.append ("  date=" + this.date + "\n");

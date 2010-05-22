@@ -3,7 +3,7 @@ package de.saring.sportstracker.gui;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import de.saring.exerciseviewer.gui.PVContext;
+import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.sportstracker.core.STException;
 import java.util.EventObject;
 import java.util.logging.Level;
@@ -59,7 +59,7 @@ public class STMain extends SportsTracker {
                 // create and bind SportsTracker GUI context, which can be used everywhere
                 context = new STContextImpl (getContext ());
                 bind (STContext.class).toInstance (context);
-                bind (PVContext.class).toInstance (context);
+                bind (EVContext.class).toInstance (context);
             }
         });
         

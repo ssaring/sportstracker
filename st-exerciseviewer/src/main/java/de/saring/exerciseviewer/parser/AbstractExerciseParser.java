@@ -1,8 +1,8 @@
 package de.saring.exerciseviewer.parser;
 
-import de.saring.exerciseviewer.core.PVException;
+import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.Lap;
-import de.saring.exerciseviewer.data.PVExercise;
+import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.util.unitcalc.CalculationUtils;
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,9 +28,9 @@ public abstract class AbstractExerciseParser implements ExerciseParser {
      *
      * @param filename filename of exercise file to read
      * @return byte buffer with the file content
-     * @throws PVException thrown on read problems
+     * @throws EVException thrown on read problems
      */
-    protected int[] readFileToByteArray (String filename) throws PVException
+    protected int[] readFileToByteArray (String filename) throws EVException
     {
         try {
             // open exercise file and create buffer with same length
@@ -55,7 +55,7 @@ public abstract class AbstractExerciseParser implements ExerciseParser {
             return intBuffer;                
         }
         catch (Exception e) {
-            throw new PVException ("Failed to read binary content from exercise file '" + filename + "' ...", e);
+            throw new EVException ("Failed to read binary content from exercise file '" + filename + "' ...", e);
         }
     }
 
@@ -66,9 +66,9 @@ public abstract class AbstractExerciseParser implements ExerciseParser {
      *
      * @param filename filename of exercise file to read
      * @return String array with the file content
-     * @throws PVException thrown on read problems
+     * @throws EVException thrown on read problems
      */
-    protected String[] readFileToStringArray (String filename) throws PVException
+    protected String[] readFileToStringArray (String filename) throws EVException
     {
         try {
             // open a BufferedReader from file
@@ -86,7 +86,7 @@ public abstract class AbstractExerciseParser implements ExerciseParser {
             return lLines.toArray (new String[lLines.size ()]);
         } 
         catch (Exception e) {
-            throw new PVException ("Failed to read text content from exercise file '" + filename + "' ...", e);
+            throw new EVException ("Failed to read text content from exercise file '" + filename + "' ...", e);
         }
     }
     
@@ -110,7 +110,7 @@ public abstract class AbstractExerciseParser implements ExerciseParser {
      *
      * @param exercise the exercise for calculation
      */
-    protected void calculateAverageLapSpeed (PVExercise exercise)
+    protected void calculateAverageLapSpeed (EVExercise exercise)
     {
         // abort calculation when speed or lap data was not recorded
         if (!exercise.getRecordingMode ().isSpeed () || exercise.getLapList () == null) {

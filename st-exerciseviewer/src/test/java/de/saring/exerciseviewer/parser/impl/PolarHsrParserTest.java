@@ -1,8 +1,8 @@
 package de.saring.exerciseviewer.parser.impl;
 
 import de.saring.exerciseviewer.parser.*;
-import de.saring.exerciseviewer.core.PVException;
-import de.saring.exerciseviewer.data.PVExercise;
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.EVExercise;
 import java.util.Calendar;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class PolarHsrParserTest {
             parser.parseExercise ("missing-file.srd");
             fail ("Parse of the missing file must fail ...");
         } 
-        catch (PVException e) {}
+        catch (EVException e) {}
     }
     
     /**
@@ -47,13 +47,13 @@ public class PolarHsrParserTest {
      * This test is taken from the C# test class so the code could be better :-)
      */
     @Test
-    public void testParseS510ExerciseCyclingWithMetricUnits () throws PVException
+    public void testParseS510ExerciseCyclingWithMetricUnits () throws EVException
     {
         // parse exercise file
-        PVExercise exercise = parser.parseExercise ("misc/testdata/s510/cycling-metric.hsr");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/s510/cycling-metric.hsr");
         
         // check exercise data
-        assertEquals (exercise.getFileType (), PVExercise.ExerciseFileType.S510RAW);
+        assertEquals (exercise.getFileType (), EVExercise.ExerciseFileType.S510RAW);
         assertEquals (exercise.getUserID (), (byte) 1);
         Calendar date = Calendar.getInstance ();
         date.setTime (exercise.getDate ());
@@ -162,13 +162,13 @@ public class PolarHsrParserTest {
      * This test is taken from the C# test class so the code could be better :-)
      */
     @Test
-    public void testParseS510ExerciseRunningIntervaltrainingWithMetricUnits () throws PVException
+    public void testParseS510ExerciseRunningIntervaltrainingWithMetricUnits () throws EVException
     {
         // parse exercise file
-        PVExercise exercise = parser.parseExercise ("misc/testdata/s510/running-interval-metric.hsr");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/s510/running-interval-metric.hsr");
         
         // check exercise data
-        assertEquals (exercise.getFileType (), PVExercise.ExerciseFileType.S510RAW);
+        assertEquals (exercise.getFileType (), EVExercise.ExerciseFileType.S510RAW);
         assertEquals (exercise.getUserID (), (byte) 1);
         Calendar date = Calendar.getInstance ();
         date.setTime (exercise.getDate ());

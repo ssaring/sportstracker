@@ -1,7 +1,7 @@
 package de.saring.exerciseviewer.parser.impl;
 
 import de.saring.exerciseviewer.parser.*;
-import de.saring.exerciseviewer.core.PVException;
+import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.ExerciseAltitude;
 import de.saring.exerciseviewer.data.ExerciseCadence;
 import de.saring.exerciseviewer.data.ExerciseSample;
@@ -12,7 +12,7 @@ import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.LapAltitude;
 import de.saring.exerciseviewer.data.LapSpeed;
 import de.saring.exerciseviewer.data.LapTemperature;
-import de.saring.exerciseviewer.data.PVExercise;
+import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.util.unitcalc.ConvertUtils;
 import java.util.Calendar;
@@ -56,7 +56,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
      * {@inheritDoc}
      */
     @Override
-    public PVExercise parseExercise (String filename) throws PVException
+    public EVExercise parseExercise (String filename) throws EVException
     {
         // read binary file content to array
         fileContent = readFileToByteArray (filename);
@@ -66,18 +66,18 @@ public class PolarSRawParser extends AbstractExerciseParser {
         boolean fS610 = (fileContent[34] == 0) && (fileContent[36] == 251);
         
         // create an PVExercise object from this data and set file type
-        PVExercise exercise = new PVExercise ();
+        EVExercise exercise = new EVExercise ();
         if (fS610 == false) {
-            exercise.setFileType (PVExercise.ExerciseFileType.S710RAW);
+            exercise.setFileType (EVExercise.ExerciseFileType.S710RAW);
         } 
         else {
-            exercise.setFileType (PVExercise.ExerciseFileType.S610RAW);
+            exercise.setFileType (EVExercise.ExerciseFileType.S610RAW);
         }
         
         // get bytes in file
         int bytesInFile = (fileContent[1] * 0x100) + fileContent[0];
         if (bytesInFile != fileContent.length) {
-            throw new PVException ("The exercise file is not valid, the file length is not correct ...");
+            throw new EVException ("The exercise file is not valid, the file length is not correct ...");
         }
         
         // get exercise type
@@ -160,7 +160,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
             case 0: recInterval =  5; break;
             case 1: recInterval = 15; break;
             case 2: recInterval = 60; break;
-            default: throw new PVException ("Recording interval '" + fileContent[indexRecInt] + "' not valid ...");
+            default: throw new EVException ("Recording interval '" + fileContent[indexRecInt] + "' not valid ...");
         }
         exercise.setRecordingInterval (recInterval);
         

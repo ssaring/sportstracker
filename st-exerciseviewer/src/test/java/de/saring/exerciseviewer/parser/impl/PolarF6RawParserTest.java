@@ -1,8 +1,8 @@
 package de.saring.exerciseviewer.parser.impl;
 
 import de.saring.exerciseviewer.parser.*;
-import de.saring.exerciseviewer.core.PVException;
-import de.saring.exerciseviewer.data.PVExercise;
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.EVExercise;
 import java.util.Calendar;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,20 +38,20 @@ public class PolarF6RawParserTest {
             parser.parseExercise ("missing-file.frd");
             fail ("Parse of the missing file must fail ...");
         } 
-        catch (PVException e) {}
+        catch (EVException e) {}
     }
     
     /**
      * This method tests the parser with a Polar F6 raw exercise file.
      */
     @Test
-    public void testParseF6 () throws PVException
+    public void testParseF6 () throws EVException
     {
         // parse exercise file
-        PVExercise exercise = parser.parseExercise ("misc/testdata/f6-test.frd");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/f6-test.frd");
         
         // check exercise data
-        assertEquals (exercise.getFileType (), PVExercise.ExerciseFileType.F6RAW);
+        assertEquals (exercise.getFileType (), EVExercise.ExerciseFileType.F6RAW);
         assertEquals (exercise.getUserID (), (byte) 0);
         Calendar date = Calendar.getInstance ();
         date.setTime (exercise.getDate ());

@@ -1,7 +1,7 @@
 package de.saring.sportstracker.gui;
 
 import com.google.inject.ImplementedBy;
-import de.saring.exerciseviewer.gui.PVContext;
+import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**
@@ -14,7 +14,7 @@ import de.saring.util.unitcalc.FormatUtils;
  * @version 1.0
  */
 @ImplementedBy(STContextImpl.class)
-public interface STContext extends PVContext {
+public interface STContext extends EVContext {
 
     /**
      * Sets the format utils class for the current unit system which needs to be used

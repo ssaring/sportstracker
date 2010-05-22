@@ -1,7 +1,7 @@
 package de.saring.exerciseviewer.gui.panels;
 
-import de.saring.exerciseviewer.gui.PVContext;
-import de.saring.exerciseviewer.gui.PVDocument;
+import de.saring.exerciseviewer.gui.EVContext;
+import de.saring.exerciseviewer.gui.EVDocument;
 import javax.swing.JPanel;
 
 /**
@@ -15,15 +15,15 @@ import javax.swing.JPanel;
  */
 public abstract class BasePanel extends JPanel {
 
-    private PVContext context;
-    private PVDocument document;
+    private EVContext context;
+    private EVDocument document;
 
     /**
      * Standard c'tor.
      * @param context the ExerciseViewer context
      * @param document the ExerciseViewer document
      */
-    public BasePanel (PVContext context) {
+    public BasePanel (EVContext context) {
         this.context = context;
     }
 
@@ -36,7 +36,7 @@ public abstract class BasePanel extends JPanel {
      * Returns the ExerciseViewer context.
      * @return the ExerciseViewer context
      */
-    protected PVContext getContext () {
+    protected EVContext getContext () {
         return context;
     }
     
@@ -44,7 +44,7 @@ public abstract class BasePanel extends JPanel {
      * Returns the ExerciseViewer document component (MVC).
      * @return the ExerciseViewer document
      */
-    protected PVDocument getDocument () {
+    protected EVDocument getDocument () {
         return document;
     }
 
@@ -52,7 +52,7 @@ public abstract class BasePanel extends JPanel {
      * Sets the ExerciseViewer document component (MVC).
      * @param document the ExerciseViewer document
      */
-    public void setDocument (PVDocument document) {
+    public void setDocument (EVDocument document) {
         this.document = document;
     }
 }

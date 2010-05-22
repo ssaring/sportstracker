@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import de.saring.exerciseviewer.data.ExerciseSample;
 import de.saring.exerciseviewer.data.HeartRateLimit;
 import de.saring.exerciseviewer.data.Lap;
-import de.saring.exerciseviewer.data.PVExercise;
-import de.saring.exerciseviewer.gui.PVContext;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.ResourceReader;
 import de.saring.util.gui.jfreechart.ChartUtils;
 import de.saring.util.unitcalc.ConvertUtils;
@@ -76,7 +76,7 @@ public class DiagramPanel extends BasePanel {
      * @param context the ExerciseViewer context
      */
     @Inject
-    public DiagramPanel (PVContext context) {
+    public DiagramPanel (EVContext context) {
         super (context);
         initComponents ();
         
@@ -104,7 +104,7 @@ public class DiagramPanel extends BasePanel {
     /** {@inheritDoc} */
     @Override
     public void displayExercise () {
-        PVExercise exercise = getDocument ().getExercise ();
+        EVExercise exercise = getDocument ().getExercise ();
         
         // fill axis comboboxes with possible axis types 
         // (disable event handling while filling)
@@ -175,7 +175,7 @@ public class DiagramPanel extends BasePanel {
             return;
         }
         
-        PVExercise exercise = getDocument ().getExercise ();
+        EVExercise exercise = getDocument ().getExercise ();
         
         AxisType axisTypeLeft = (AxisType) cbLeft.getSelectedItem ();
         AxisType axisTypeRight = (AxisType) cbRight.getSelectedItem ();

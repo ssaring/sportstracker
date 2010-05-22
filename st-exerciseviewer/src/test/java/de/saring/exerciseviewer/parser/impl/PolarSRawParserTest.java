@@ -1,8 +1,8 @@
 package de.saring.exerciseviewer.parser.impl;
 
 import de.saring.exerciseviewer.parser.*;
-import de.saring.exerciseviewer.core.PVException;
-import de.saring.exerciseviewer.data.PVExercise;
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.EVExercise;
 import java.util.Calendar;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +36,7 @@ public class PolarSRawParserTest {
             parser.parseExercise ("missing-file.srd");
             fail ("Parse of the missing file must fail ...");
         } 
-        catch (PVException e) {}
+        catch (EVException e) {}
     }
     
     /**
@@ -45,13 +45,13 @@ public class PolarSRawParserTest {
      * This test is taken from the C# test class so the code could be better :-)
      */
     @Test
-    public void testParseS610ExerciseWithMetricUnits () throws PVException
+    public void testParseS610ExerciseWithMetricUnits () throws EVException
     {
         // parse exercise file
-        PVExercise exercise = parser.parseExercise ("misc/testdata/s610/ma_br_20040912T072607.srd");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/s610/ma_br_20040912T072607.srd");
         
         // check exercise data
-        assertEquals (exercise.getFileType (), PVExercise.ExerciseFileType.S610RAW);
+        assertEquals (exercise.getFileType (), EVExercise.ExerciseFileType.S610RAW);
         assertEquals (exercise.getUserID (), (byte) 1);
         Calendar date = Calendar.getInstance ();
         date.setTime (exercise.getDate ());
@@ -154,13 +154,13 @@ public class PolarSRawParserTest {
      * recorded in metric units from Polar S710.
      */
     @Test
-    public void testParseS710CyclingExerciseWithMetricUnits () throws PVException {
+    public void testParseS710CyclingExerciseWithMetricUnits () throws EVException {
         
         // parse exercise file
-        PVExercise exercise = parser.parseExercise ("misc/testdata/s710/cycling-metric.srd");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/s710/cycling-metric.srd");
         
         // check exercise data
-        assertEquals (PVExercise.ExerciseFileType.S710RAW, exercise.getFileType ());
+        assertEquals (EVExercise.ExerciseFileType.S710RAW, exercise.getFileType ());
         assertEquals ((byte) 0, exercise.getUserID ());
         Calendar date = Calendar.getInstance ();
         date.setTime (exercise.getDate ());
@@ -291,13 +291,13 @@ public class PolarSRawParserTest {
      * This test is taken from the C# test class so the code could be better :-)
      */
     @Test
-    public void testParseS710CyclingExerciseWithEnglishUnits () throws PVException {
+    public void testParseS710CyclingExerciseWithEnglishUnits () throws EVException {
         
         // parse exercise file
-        PVExercise exercise = parser.parseExercise ("misc/testdata/s710/cycling-english.srd");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/s710/cycling-english.srd");
         
         // check exercise data
-        assertEquals (exercise.getFileType (), PVExercise.ExerciseFileType.S710RAW);
+        assertEquals (exercise.getFileType (), EVExercise.ExerciseFileType.S710RAW);
         assertEquals (exercise.getUserID (), (byte) 0);
         Calendar date = Calendar.getInstance ();
         date.setTime (exercise.getDate ());
@@ -428,13 +428,13 @@ public class PolarSRawParserTest {
      * This test is taken from the C# test class so the code could be better :-)
      */
     @Test
-    public void testParseS710RunningExerciseWithMetricUnits () throws PVException {
+    public void testParseS710RunningExerciseWithMetricUnits () throws EVException {
 
         // parse exercise file
-        PVExercise exercise = parser.parseExercise ("misc/testdata/s710/running-metric.srd");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/s710/running-metric.srd");
         
         // check exercise data
-        assertEquals (exercise.getFileType (), PVExercise.ExerciseFileType.S710RAW);
+        assertEquals (exercise.getFileType (), EVExercise.ExerciseFileType.S710RAW);
         assertEquals (exercise.getUserID (), (byte) 0);
         Calendar date = Calendar.getInstance ();
         date.setTime (exercise.getDate ());
@@ -536,13 +536,13 @@ public class PolarSRawParserTest {
      * This test is taken from the C# test class so the code could be better :-)
      */
     @Test
-    public void testParseS725CyclingExerciseWithMetricUnits () throws PVException {
+    public void testParseS725CyclingExerciseWithMetricUnits () throws EVException {
 
         // parse exercise file
-        PVExercise exercise = parser.parseExercise ("misc/testdata/s725/cycling-metric.srd");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/s725/cycling-metric.srd");
         
         // check exercise data
-        assertEquals (exercise.getFileType (), PVExercise.ExerciseFileType.S710RAW);
+        assertEquals (exercise.getFileType (), EVExercise.ExerciseFileType.S710RAW);
         assertEquals (exercise.getUserID (), (byte) 1);
         Calendar date = Calendar.getInstance ();
         date.setTime (exercise.getDate ());
@@ -661,13 +661,13 @@ public class PolarSRawParserTest {
      * This test is taken from the C# test class so the code could be better :-)
      */
     @Test
-    public void testParseS725NoSpeedExerciseWithMetricUnits () throws PVException {
+    public void testParseS725NoSpeedExerciseWithMetricUnits () throws EVException {
 
         // parse exercise file
-        PVExercise exercise = parser.parseExercise ("misc/testdata/s725/nospeed-metric.srd");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/s725/nospeed-metric.srd");
         
         // check exercise data
-        assertEquals (exercise.getFileType (), PVExercise.ExerciseFileType.S710RAW);
+        assertEquals (exercise.getFileType (), EVExercise.ExerciseFileType.S710RAW);
         assertEquals (exercise.getUserID (), (byte) 1);
         Calendar date = Calendar.getInstance ();
         date.setTime (exercise.getDate ());
@@ -777,10 +777,10 @@ public class PolarSRawParserTest {
      * This test is taken from the C# test class so the code could be better :-)
      */
     @Test
-    public void testParseS625PercentualHeartRateRanges () throws PVException {
+    public void testParseS625PercentualHeartRateRanges () throws EVException {
 
         // parse exercise file
-        PVExercise exercise = parser.parseExercise ("misc/testdata/s625x/20080224T113030-percentual_ranges.srd");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/s625x/20080224T113030-percentual_ranges.srd");
         
         // check exercise data (only the relevant heartrate range values)
         assertEquals (exercise.getHeartRateAVG (), (short) 146);

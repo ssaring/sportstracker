@@ -1,6 +1,6 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
-import de.saring.exerciseviewer.core.PVException;
+import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.STContext;
@@ -149,7 +149,7 @@ public class HrmDndTransferHandler extends TransferHandler {
             ExerciseParserFactory.getParser (dropFilename);
             return dropFilename;
         }
-        catch (PVException pe) {
+        catch (EVException pe) {
             return null;
         }
     }

@@ -1,8 +1,8 @@
 package de.saring.exerciseviewer.parser.impl;
 
 import de.saring.exerciseviewer.parser.*;
-import de.saring.exerciseviewer.core.PVException;
-import de.saring.exerciseviewer.data.PVExercise;
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.EVExercise;
 import java.util.Calendar;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,19 +36,19 @@ public class HAC4TURParserTest {
             parser.parseExercise ("missing-file.tur");
             fail ("Parse of the missing file must fail ...");
         } 
-        catch (PVException e) {}
+        catch (EVException e) {}
     }
     
     /**
      * This method test the parser by using a HAC4 cycling exercise file.
      */
     @Test
-    public void testParseCyclingExercise () throws PVException {
+    public void testParseCyclingExercise () throws EVException {
 
         // parse exercise
-        PVExercise exercise = parser.parseExercise ("misc/testdata/hac4/pailheres.tur");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/hac4/pailheres.tur");
         
-        assertEquals (PVExercise.ExerciseFileType.HAC4TUR, exercise.getFileType ());
+        assertEquals (EVExercise.ExerciseFileType.HAC4TUR, exercise.getFileType ());
         assertEquals ((short) 20, exercise.getRecordingInterval ());
         // check recording mode
         assertTrue (exercise.getRecordingMode ().isSpeed ());
@@ -107,11 +107,11 @@ public class HAC4TURParserTest {
      * This method test the parser by using a HAC5 cycling exercise file.
      */
     @Test
-    public void testParseHAC5CyclingExercise () throws PVException {
+    public void testParseHAC5CyclingExercise () throws EVException {
         
-        PVExercise exercise = parser.parseExercise ("misc/testdata/hac4/hac5.tur");
+        EVExercise exercise = parser.parseExercise ("misc/testdata/hac4/hac5.tur");
         
-        assertEquals (PVExercise.ExerciseFileType.HAC4TUR, exercise.getFileType ());
+        assertEquals (EVExercise.ExerciseFileType.HAC4TUR, exercise.getFileType ());
         assertEquals ((short) 5, exercise.getRecordingInterval ());
         // check recording mode
         assertTrue (exercise.getRecordingMode ().isSpeed ());

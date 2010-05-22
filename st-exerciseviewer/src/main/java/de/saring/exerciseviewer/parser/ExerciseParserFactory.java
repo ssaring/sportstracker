@@ -1,6 +1,6 @@
 package de.saring.exerciseviewer.parser;
 
-import de.saring.exerciseviewer.core.PVException;
+import de.saring.exerciseviewer.core.EVException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
@@ -45,9 +45,9 @@ public class ExerciseParserFactory {
      *
      * @param filename name of the exercise file to parse
      * @return instance of the appropriate exercise parser 
-     * @throws PVException when no proper parser has been found
+     * @throws EVException when no proper parser has been found
      */
-    public static ExerciseParser getParser (String filename) throws PVException {        
+    public static ExerciseParser getParser (String filename) throws EVException {        
         createInstance ();
         
         // return the parser implementation which matches the filename suffix
@@ -59,7 +59,7 @@ public class ExerciseParserFactory {
             }
         }
         
-        throw new PVException ("No parser has been found for filename '" + filename + "' ...");
+        throw new EVException ("No parser has been found for filename '" + filename + "' ...");
     }
     
     /**

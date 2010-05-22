@@ -10,7 +10,7 @@ import de.saring.util.unitcalc.FormatUtils.UnitSystem;
  * @author  Stefan Saring
  * @version 1.0
  */
-public interface PVOptions
+public interface EVOptions
 {
     /** 
      * Returns the unit system to be used in the GUI. 

@@ -14,7 +14,7 @@ import org.jdesktop.application.ApplicationContext;
  * @author  Stefan Saring
  * @version 1.0
  */
-public interface PVContext {
+public interface EVContext {
 
     /**
      * Returns the ApplicationContext of the Swing Application Framework.

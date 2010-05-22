@@ -1,7 +1,7 @@
 package de.saring.exerciseviewer.parser;
 
 import de.saring.exerciseviewer.parser.impl.PolarSRawParser;
-import de.saring.exerciseviewer.core.PVException;
+import de.saring.exerciseviewer.core.EVException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,7 +16,7 @@ public class ExerciseParserFactoryTest {
      * Tests of getParser() method.
      */
     @Test
-    public void testGetParser () throws PVException {
+    public void testGetParser () throws EVException {
         
         // tests for SRD parser
         ExerciseParser parser = ExerciseParserFactory.getParser ("exercises/exercise1.srd");
@@ -37,6 +37,6 @@ public class ExerciseParserFactoryTest {
             parser = ExerciseParserFactory.getParser ("exercises/exercise1.xyz");
             fail ("Parser for suffix xyz must not be found!");
         }
-        catch (PVException e) {}
+        catch (EVException e) {}
     }    
 }

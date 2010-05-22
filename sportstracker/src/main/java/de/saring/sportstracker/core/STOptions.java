@@ -2,7 +2,7 @@ package de.saring.sportstracker.core;
 
 import java.io.Serializable;
 
-import de.saring.exerciseviewer.core.PVOptions;
+import de.saring.exerciseviewer.core.EVOptions;
 import de.saring.util.unitcalc.FormatUtils.SpeedView;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 
@@ -17,7 +17,7 @@ import de.saring.util.unitcalc.FormatUtils.UnitSystem;
  * @author  Stefan Saring
  * @version 1.0
  */
-public class STOptions implements PVOptions, Serializable {
+public class STOptions implements EVOptions, Serializable {
     
     /** This is the list of possible views. */
     public enum View { Calendar, List }               

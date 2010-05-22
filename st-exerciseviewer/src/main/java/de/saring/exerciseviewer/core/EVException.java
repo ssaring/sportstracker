@@ -8,12 +8,12 @@ package de.saring.exerciseviewer.core;
  * @author  Stefan Saring
  * @version 1.0
  */
-public class PVException extends Exception 
+public class EVException extends Exception 
 {
     /**
      * Overrides base class constructor.
      */
-    public PVException () {
+    public EVException () {
         super ();
     }
     
@@ -21,7 +21,7 @@ public class PVException extends Exception
      * Overrides base class constructor.
      * @param message the exception message
      */
-    public PVException (String message) {
+    public EVException (String message) {
         super (message);
     }
     
@@ -30,7 +30,7 @@ public class PVException extends Exception
      * @param message the exception message
      * @param cause the inner (previous) exception
      */
-    public PVException (String message, Exception cause) {
+    public EVException (String message, Exception cause) {
         super (message, cause);
     }
 }

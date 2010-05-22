@@ -1,7 +1,7 @@
 package de.saring.exerciseviewer.parser;
 
-import de.saring.exerciseviewer.core.PVException;
-import de.saring.exerciseviewer.data.PVExercise;
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.EVExercise;
 
 /**
  * This interface defines the functionality of any parser implementation,
@@ -24,7 +24,7 @@ public interface ExerciseParser {
      *
      * @param filename name of exercise file to parse
      * @return the parsed PVExercise object
-     * @throws PVException thrown on read/parse problems
+     * @throws EVException thrown on read/parse problems
      */
-    public PVExercise parseExercise (String filename) throws PVException;
+    public EVExercise parseExercise (String filename) throws EVException;
 }

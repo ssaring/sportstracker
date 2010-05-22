@@ -2,8 +2,8 @@ package de.saring.exerciseviewer.gui.panels;
 
 import com.google.inject.Inject;
 import de.saring.exerciseviewer.data.HeartRateLimit;
-import de.saring.exerciseviewer.data.PVExercise;
-import de.saring.exerciseviewer.gui.PVContext;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.unitcalc.FormatUtils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,7 +29,7 @@ public class MainPanel extends BasePanel {
      * @param context the ExerciseViewer context
      */
     @Inject
-    public MainPanel (PVContext context) {
+    public MainPanel (EVContext context) {
         super (context);
         initComponents ();
         
@@ -41,7 +41,7 @@ public class MainPanel extends BasePanel {
     /** {@inheritDoc} */
     @Override
     public void displayExercise () {
-        PVExercise exercise = getDocument ().getExercise ();
+        EVExercise exercise = getDocument ().getExercise ();
         FormatUtils formatUtils = getContext ().getFormatUtils ();
 
         // set default text for all value labels first
@@ -76,7 +76,7 @@ public class MainPanel extends BasePanel {
         laTotalRidingTimeValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
         laTotalEnergyValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
 
-        if (exercise.getFileType () != PVExercise.ExerciseFileType.HRM) {
+        if (exercise.getFileType () != EVExercise.ExerciseFileType.HRM) {
             
             // fill type and user data
             laTypeValue.setText ("" + exercise.getType () + " (" + exercise.getTypeLabel () + ")");
@@ -90,7 +90,7 @@ public class MainPanel extends BasePanel {
             laTotalEnergyValue.setText (formatUtils.caloriesToString (exercise.getEnergyTotal ()));
             
             // fill total riding time (available only in S710 exercises)
-            if (exercise.getFileType () == PVExercise.ExerciseFileType.S710RAW) {
+            if (exercise.getFileType () == EVExercise.ExerciseFileType.S710RAW) {
                 laTotalRidingTimeValue.setText (formatUtils.minutes2TimeString (exercise.getSumRideTime ()));
             }
         }
@@ -144,7 +144,7 @@ public class MainPanel extends BasePanel {
      */
     private void fillHeartRateRanges () 
     {        
-        PVExercise exercise = getDocument ().getExercise ();
+        EVExercise exercise = getDocument ().getExercise ();
         
         // add all ranges (if there are some) to the combobox
         if ((exercise.getHeartRateLimits () != null) &&
@@ -172,7 +172,7 @@ public class MainPanel extends BasePanel {
     public void updateHeartRateRangeTimes ()
     {
         int index = cbRange.getSelectedIndex ();
-        PVExercise exercise = getDocument ().getExercise ();
+        EVExercise exercise = getDocument ().getExercise ();
         FormatUtils formatUtils = getContext ().getFormatUtils ();
         
         HeartRateLimit limit = exercise.getHeartRateLimits ()[index];

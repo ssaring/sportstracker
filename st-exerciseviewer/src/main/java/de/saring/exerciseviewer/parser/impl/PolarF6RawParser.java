@@ -1,9 +1,9 @@
 package de.saring.exerciseviewer.parser.impl;
 
 import de.saring.exerciseviewer.parser.*;
-import de.saring.exerciseviewer.core.PVException;
+import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.HeartRateLimit;
-import de.saring.exerciseviewer.data.PVExercise;
+import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.ExerciseSample;
@@ -55,18 +55,18 @@ public class PolarF6RawParser extends AbstractExerciseParser {
      * {@inheritDoc}
      */
     @Override
-    public PVExercise parseExercise (String filename) throws PVException
+    public EVExercise parseExercise (String filename) throws EVException
     {
         // read binary file content to array
         fileContent = readFileToByteArray (filename);
     
         // create an PVExercise object from this data and set file type
-        PVExercise exercise = new PVExercise ();
-        exercise.setFileType (PVExercise.ExerciseFileType.F6RAW);
+        EVExercise exercise = new EVExercise ();
+        exercise.setFileType (EVExercise.ExerciseFileType.F6RAW);
         
         // check wheter the read data fits the expected data length
         if (fileContent.length != F6ExerciseFileLength && fileContent.length != F11ExerciseFileLength) {
-            throw new PVException ("The exercise file is not valid, the file length is not correct ...");
+            throw new EVException ("The exercise file is not valid, the file length is not correct ...");
         }
         
         // read the exercise name

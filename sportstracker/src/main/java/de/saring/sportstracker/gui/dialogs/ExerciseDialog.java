@@ -2,9 +2,9 @@ package de.saring.sportstracker.gui.dialogs;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import de.saring.exerciseviewer.core.PVException;
-import de.saring.exerciseviewer.data.PVExercise;
-import de.saring.exerciseviewer.gui.PVMain;
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.gui.EVMain;
 import de.saring.exerciseviewer.parser.ExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 import de.saring.sportstracker.core.STException;
@@ -54,7 +54,7 @@ public class ExerciseDialog extends JDialog {
     private STDocument document;
     
     @Inject private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
-    @Inject private Provider<PVMain> prExerciseViewer;
+    @Inject private Provider<EVMain> prExerciseViewer;
     
     /** This is the exercises object edited in this dialog. */
     private Exercise exercise;
@@ -416,7 +416,7 @@ public class ExerciseDialog extends JDialog {
         // start ExerciseViewer sub-application when the filename is available
         String hrmFile = getHRMFile ();
         if (hrmFile != null) {
-            PVMain pv = prExerciseViewer.get ();
+            EVMain pv = prExerciseViewer.get ();
             pv.showExercise (hrmFile, document.getOptions (), true);
         }
     }
@@ -434,12 +434,12 @@ public class ExerciseDialog extends JDialog {
         }
         
         // parse exercise file
-        PVExercise pvExercise = null;
+        EVExercise pvExercise = null;
         try {
             ExerciseParser parser = ExerciseParserFactory.getParser (hrmFile);
             pvExercise = parser.parseExercise (hrmFile);
         }
-        catch (PVException pe) {
+        catch (EVException pe) {
             LOGGER.log (Level.SEVERE, "Failed to parse exercise file!", pe);
             context.showMessageDialog (this, JOptionPane.ERROR_MESSAGE, 
                 "common.error", "st.dlg.exercise.error.import", hrmFile);

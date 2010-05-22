@@ -1,13 +1,13 @@
 package de.saring.exerciseviewer.parser.impl;
 
 import de.saring.exerciseviewer.parser.*;
-import de.saring.exerciseviewer.core.PVException;
+import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.ExerciseSample;
 import de.saring.exerciseviewer.data.ExerciseSpeed;
 import de.saring.exerciseviewer.data.HeartRateLimit;
 import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.LapSpeed;
-import de.saring.exerciseviewer.data.PVExercise;
+import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.util.unitcalc.ConvertUtils;
 import java.util.Calendar;
@@ -49,18 +49,18 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         return info;
     }
     
-    private int sdata(int section, int index) throws PVException
+    private int sdata(int section, int index) throws EVException
     {
         section += index/60;
         index %= 60;
         
         if(section >= s.length)
         {
-            throw new PVException(String.format("Error! Section %d does not exist", section));
+            throw new EVException(String.format("Error! Section %d does not exist", section));
         }
         if(index >= s[section].length)
         {
-            throw new PVException(String.format("Error! Byte %d in section %d does not exist (%d)",
+            throw new EVException(String.format("Error! Byte %d in section %d does not exist (%d)",
                     index, section, s[section].length));
         }
         
@@ -71,7 +71,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
      * {@inheritDoc}
      */
     @Override
-    public PVExercise parseExercise (String filename) throws PVException
+    public EVExercise parseExercise (String filename) throws EVException
     {
         // interval values used by Polar
         short[] interval = { 5, 15, 30, 60, 120, 240, 300, 480 };
@@ -81,13 +81,13 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         
         // create an PVExercise object from this data and set file type
         // TODO - support S410 and S520
-        PVExercise exercise = new PVExercise ();
-        exercise.setFileType (PVExercise.ExerciseFileType.S510RAW);
+        EVExercise exercise = new EVExercise ();
+        exercise.setFileType (EVExercise.ExerciseFileType.S510RAW);
         
         // get bytes in file
         int bytesInFile = (fileContent[1] * 0x100) + fileContent[0];
         if (bytesInFile != fileContent.length) {
-            throw new PVException ("The exercise file is not valid, the file length is not correct ...");
+            throw new EVException ("The exercise file is not valid, the file length is not correct ...");
         }
         
         // get data bytes
@@ -117,7 +117,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
                    continue;
                }
                else {
-                    throw new PVException ("The exercise file is not valid, the first section could not be found");
+                    throw new EVException ("The exercise file is not valid, the first section could not be found");
                }
             }
             else {
@@ -125,7 +125,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
                 if(data[ii] == 85) {
                     // check section number
                     if(data[ii + 1] != sectionIx) {
-                        throw new PVException ("Wrong section index in file");   
+                        throw new EVException ("Wrong section index in file");   
                     }
 
                     // allocate memory for this section
@@ -147,10 +147,10 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
 
             // done. check for no-more-sections byte at the end of the file
             if((sectionIx - 1) != sectionsInData) {
-                throw new PVException ("Could not find all sections");
+                throw new EVException ("Could not find all sections");
             }
             if(data[ii] != 7) {
-                throw new PVException ("Could not find no-more-sections byte in file");
+                throw new EVException ("Could not find no-more-sections byte in file");
             }
             // ok, all set
             break;
@@ -163,7 +163,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         // get recording interval
         int intix = sdata(1,1) - 95;
         if(intix >= interval.length)
-            throw new PVException ("Recording interval is not valid ...");
+            throw new EVException ("Recording interval is not valid ...");
         exercise.setRecordingInterval (interval[intix]);
         
         // TODO does the heartrate ranges are specified by absolute or percentual values?
@@ -356,7 +356,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
 
         // check section size
         if(s[lapsec+lapseccnt-1].length != (numberOfMeas * lapSize) % 60 ) {
-            throw new PVException(String.format("Lap-data section (%d) has wrong size (%d instead of %d)",
+            throw new EVException(String.format("Lap-data section (%d) has wrong size (%d instead of %d)",
                     lapsec+lapseccnt-1, s[lapsec+lapseccnt-1].length, (numberOfMeas * lapSize) % 60));
         }
         
@@ -539,7 +539,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
      * @param offsetTimes offset in fileContent, where the times data starts
      * @return the filled HeartRateLimit object
      */
-    private HeartRateLimit decodeHeartRateLimit (int offsetLimits, int offsetTimes) throws PVException
+    private HeartRateLimit decodeHeartRateLimit (int offsetLimits, int offsetTimes) throws EVException
     {
         HeartRateLimit hrLimit = new HeartRateLimit ();
         hrLimit.setLowerHeartRate ((short) sdata(1, offsetLimits + 0));

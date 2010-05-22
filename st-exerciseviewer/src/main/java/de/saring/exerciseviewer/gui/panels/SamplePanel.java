@@ -2,8 +2,8 @@ package de.saring.exerciseviewer.gui.panels;
 
 import com.google.inject.Inject;
 import de.saring.exerciseviewer.data.ExerciseSample;
-import de.saring.exerciseviewer.data.PVExercise;
-import de.saring.exerciseviewer.gui.PVContext;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.ResourceReader;
 import de.saring.util.gui.ListUtils;
 import de.saring.util.gui.TableCellRendererOddEven;
@@ -39,7 +39,7 @@ public class SamplePanel extends BasePanel {
      * @param context the ExerciseViewer context
      */
     @Inject
-    public SamplePanel (PVContext context) {
+    public SamplePanel (EVContext context) {
         super (context);
         initComponents ();
         
@@ -60,7 +60,7 @@ public class SamplePanel extends BasePanel {
     /** {@inheritDoc} */
     @Override
     public void displayExercise () {
-        final PVExercise exercise = getDocument ().getExercise ();
+        final EVExercise exercise = getDocument ().getExercise ();
         
         // create a new table model for the exercise samples
         tbSamples.setModel (new AbstractTableModel () {
