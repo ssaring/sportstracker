@@ -44,6 +44,11 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 4.3.0:
+
+- All texts with "PolarViewer" has been renamed to "ExerciseViewer"
+  (also updated in all translations)
+
 SportsTracker 4.0.1:
 
 - st.exerciselistview.ascen (new)
