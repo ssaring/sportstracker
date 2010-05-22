@@ -64,7 +64,7 @@ class GarminTcxParser extends AbstractExerciseParser {
         double altitudeMetersTotal = 0
         		        
         // no summary data, everything is stored in laps
-        // parse each lap and create a PolarViewer Lap object
+        // parse each lap and create a ExerciseViewer Lap object
         def pvLaps = []
         
         for (lap in activity.Lap) {

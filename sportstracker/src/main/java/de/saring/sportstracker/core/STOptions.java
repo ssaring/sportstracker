@@ -8,7 +8,7 @@ import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 
 /**
  * This class contains all options of the SportsTracker application. 
- * It also implements the PolarViewer options interface.
+ * It also implements the ExerciseViewer options interface.
  * These options will be persisted by using LocalStorage (which uses the 
  * Java Beans Persistence classes XMLEncoder and XMLDecoder), so only
  * the attributes will be stored when their values are not the default 
@@ -45,7 +45,7 @@ public class STOptions implements PVOptions, Serializable {
 
     /** 
      * If this flag is true, then the second diagram graph will always be 
-     * displayed in the PolarViewer diagram panel (data must be available).
+     * displayed in the ExerciseViewer diagram panel (data must be available).
      */
     private boolean displaySecondDiagram;
 

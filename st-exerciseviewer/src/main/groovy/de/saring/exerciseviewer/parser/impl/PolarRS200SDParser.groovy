@@ -89,7 +89,7 @@ class PolarRS200SDParser extends AbstractExerciseParser {
         def distance = summary.total_distance.toInteger ()
         
         // "has_pace_data" can also be true, when no speed data was recorded and "total_distance" is 0
-        // => then the speed needs to be disabled in exercise, PolarViewer will have problems to display
+        // => then the speed needs to be disabled in exercise, ExerciseViewer will have problems to display
         //    the inconsistent data (see SourceForge bug #1524834)
         if (hasSpeedData && distance > 0) {
             exercise.speed = new ExerciseSpeed ()

@@ -250,7 +250,7 @@ public class OptionsDialog extends JDialog {
         cbShowEnergy = new javax.swing.JCheckBox();
         cbShowEquipment = new javax.swing.JCheckBox();
         cbShowComment = new javax.swing.JCheckBox();
-        paPolarViewer = new javax.swing.JPanel();
+        paExerciseViewer = new javax.swing.JPanel();
         laDiagram = new javax.swing.JLabel();
         cbSecondGraph = new javax.swing.JCheckBox();
         btOK = new javax.swing.JButton();
@@ -501,7 +501,7 @@ public class OptionsDialog extends JDialog {
 
         tabbedPane.addTab("_List View", paListView);
 
-        paPolarViewer.setName("paPolarViewer"); // NOI18N
+        paExerciseViewer.setName("paExerciseViewer"); // NOI18N
 
         laDiagram.setFont(laDiagram.getFont().deriveFont(laDiagram.getFont().getStyle() | java.awt.Font.BOLD));
         laDiagram.setText("_Diagram");
@@ -510,22 +510,22 @@ public class OptionsDialog extends JDialog {
         cbSecondGraph.setText("_Show two graphs initially on available data");
         cbSecondGraph.setName("st.dlg.options.second_graph"); // NOI18N
 
-        javax.swing.GroupLayout paPolarViewerLayout = new javax.swing.GroupLayout(paPolarViewer);
-        paPolarViewer.setLayout(paPolarViewerLayout);
-        paPolarViewerLayout.setHorizontalGroup(
-            paPolarViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paPolarViewerLayout.createSequentialGroup()
+        javax.swing.GroupLayout paExerciseViewerLayout = new javax.swing.GroupLayout(paExerciseViewer);
+        paExerciseViewer.setLayout(paExerciseViewerLayout);
+        paExerciseViewerLayout.setHorizontalGroup(
+            paExerciseViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paExerciseViewerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(paPolarViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(paPolarViewerLayout.createSequentialGroup()
+                .addGroup(paExerciseViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paExerciseViewerLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(cbSecondGraph))
                     .addComponent(laDiagram))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
-        paPolarViewerLayout.setVerticalGroup(
-            paPolarViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paPolarViewerLayout.createSequentialGroup()
+        paExerciseViewerLayout.setVerticalGroup(
+            paExerciseViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paExerciseViewerLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(laDiagram)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -533,7 +533,7 @@ public class OptionsDialog extends JDialog {
                 .addContainerGap())
         );
 
-        tabbedPane.addTab("_PolarViewer", paPolarViewer);
+        tabbedPane.addTab("_ExerciseViewer", paExerciseViewer);
 
         btOK.setText("_OK");
         btOK.setName("btOK"); // NOI18N
@@ -600,7 +600,7 @@ public class OptionsDialog extends JDialog {
     private javax.swing.JLabel laWeekStart;
     private javax.swing.JPanel paListView;
     private javax.swing.JPanel paMain;
-    private javax.swing.JPanel paPolarViewer;
+    private javax.swing.JPanel paExerciseViewer;
     private javax.swing.JPanel paUnits;
     private javax.swing.JRadioButton rbCalendar;
     private javax.swing.JRadioButton rbDistanceHour;

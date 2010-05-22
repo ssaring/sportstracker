@@ -106,7 +106,7 @@ public class HRMFileOpenDialog {
             }
         }
         
-        // append a file filter for all PolarViewer file extensions
+        // append a file filter for all ExerciseViewer file extensions
         fChooser.addChoosableFileFilter (new FileNameExtensionFilter (
             resReader.getString ("st.dlg.hrm_file_open.filter_all"), lAllExtensions.toArray(new String[0])));
     }

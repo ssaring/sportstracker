@@ -6,7 +6,7 @@ import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * This is the GUI context of the SportsTracker application, it enhances the context
- * of the PolarViewer sub-application. It contains the ApplicationContext of the Swing 
+ * of the ExerciseViewer sub-application. It contains the ApplicationContext of the Swing 
  * Application Framework and some helper methods, e.g. displaying dialogs and for 
  * accessing the main frame.
  * 

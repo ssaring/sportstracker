@@ -137,7 +137,7 @@ public class PolarF6RawParser extends AbstractExerciseParser {
         exercise.setSampleList(new ExerciseSample[0]);
         
         // Note: the following data is appended from the totals section to each
-        // exercise by the f6-split-tool to enhance the PolarViewer display
+        // exercise by the f6-split-tool to enhance the ExerciseViewer display
         
         // set the offset if the file is a 50 byte F11 file
         int offset = 0;
