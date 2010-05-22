@@ -12,7 +12,7 @@ import org.jdesktop.application.Action;
 
 /**
  * This class contains all view (MVC) related data and functionality of the 
- * PolarViewer application.
+ * ExerciseViewer application.
  *
  * @author Stefan Saring
  * @version 1.0
@@ -34,7 +34,7 @@ public class PVView extends JDialog {
     
     /**
      * Standard c'tor.
-     * @param context the PolarViewer context
+     * @param context the ExerciseViewer context
      * @param mainPanel the main panel
      * @param optionalPanel the optional panel
      * @param lapPanel the lap panel
@@ -56,14 +56,14 @@ public class PVView extends JDialog {
 
     /**
      * Initializes the PVView and all contained components.
-     * @param the PolarViewer document
+     * @param the ExerciseViewer document
      */
     public void initView (PVDocument document) {
         initComponents ();
 
         // The PVDocument can't be injected in this class and all panels, Guice would
         // create new instances for it. The declaration of PVDocument as @Singleton does
-        // not help here, because the user can open multiple PolarViewer instances at 
+        // not help here, because the user can open multiple ExerciseViewer instances at 
         // the same time. So the dependency injection must be done manually :-(
         this.document = document;
         mainPanel.setDocument (document);
@@ -106,7 +106,7 @@ public class PVView extends JDialog {
     }
         
     /**
-     * Action for closing the PolarViewer dialog.
+     * Action for closing the ExerciseViewer dialog.
      */
     @Action(name=ACTION_CLOSE)
     public void close () {
@@ -144,7 +144,7 @@ public class PVView extends JDialog {
         tabbedPane = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("PolarViewer");
+        setTitle("ExerciseViewer");
         setName("pv.dialog"); // NOI18N
 
         btClose.setText("_Close");

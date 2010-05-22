@@ -9,9 +9,9 @@ import de.saring.exerciseviewer.core.PVException;
 import de.saring.exerciseviewer.core.PVOptions;
 
 /**
- * This is the main class of the PolarViewer which start the "sub-application" 
+ * This is the main class of the ExerciseViewer which start the "sub-application" 
  * (is a child-dialog of the parent frame). It creates the document and the view 
- * instances of PolarViewer.
+ * instances of ExerciseViewer.
  *
  * @author  Stefan Saring
  * @version 1.0
@@ -25,9 +25,9 @@ public class PVMain {
 
     /**
      * Standard c'tor.
-     * @param context the PolarViewer context
-     * @param document the PolarViewer document component
-     * @param view the PolarViewer view component
+     * @param context the ExerciseViewer context
+     * @param document the ExerciseViewer document component
+     * @param view the ExerciseViewer view component
      */
     @Inject
     public PVMain (PVContext context, PVDocument document, PVView view) {
@@ -37,9 +37,9 @@ public class PVMain {
     }
     
     /**
-     * Displays the exercise specified by the filename in the PolarViewer dialog.
+     * Displays the exercise specified by the filename in the ExerciseViewer dialog.
      * @param exerciseFilename exercise file to display
-     * @param options the options to be used in PolarViewer 
+     * @param options the options to be used in ExerciseViewer 
      * @param modal pass true when the dialog must be modal
      */
     public void showExercise (String exerciseFilename, PVOptions options, boolean modal) {
@@ -62,7 +62,7 @@ public class PVMain {
         view.setModal (modal);
         view.displayExercise ();
 
-        // display PolarViewer dialog
+        // display ExerciseViewer dialog
         context.showDialog (view);
     }
 }

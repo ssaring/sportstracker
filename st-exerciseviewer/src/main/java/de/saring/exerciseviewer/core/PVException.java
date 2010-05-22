@@ -1,7 +1,7 @@
 package de.saring.exerciseviewer.core;
 
 /** 
- * This is the base Excpetion class for the whole PolarViewer application.
+ * This is the base Excpetion class for the whole ExerciseViewer application.
  * It doesn't contain additional functionality right now, but it can be
  * added simply in future.
  * 

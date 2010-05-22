@@ -20,8 +20,8 @@ public abstract class BasePanel extends JPanel {
 
     /**
      * Standard c'tor.
-     * @param context the PolarViewer context
-     * @param document the PolarViewer document
+     * @param context the ExerciseViewer context
+     * @param document the ExerciseViewer document
      */
     public BasePanel (PVContext context) {
         this.context = context;
@@ -33,24 +33,24 @@ public abstract class BasePanel extends JPanel {
     public abstract void displayExercise ();
     
     /**
-     * Returns the PolarViewer context.
-     * @return the PolarViewer context
+     * Returns the ExerciseViewer context.
+     * @return the ExerciseViewer context
      */
     protected PVContext getContext () {
         return context;
     }
     
     /**
-     * Returns the PolarViewer document component (MVC).
-     * @return the PolarViewer document
+     * Returns the ExerciseViewer document component (MVC).
+     * @return the ExerciseViewer document
      */
     protected PVDocument getDocument () {
         return document;
     }
 
     /**
-     * Sets the PolarViewer document component (MVC).
-     * @param document the PolarViewer document
+     * Sets the ExerciseViewer document component (MVC).
+     * @param document the ExerciseViewer document
      */
     public void setDocument (PVDocument document) {
         this.document = document;

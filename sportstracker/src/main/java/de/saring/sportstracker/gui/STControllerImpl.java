@@ -59,7 +59,7 @@ public class STControllerImpl implements STController {
     @Inject private Provider<OverviewDialog> prOverviewDialog;    
     @Inject private Provider<AboutDialog> prAboutDialog;
     @Inject private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;    
-    @Inject private Provider<PVMain> prPolarViewer;
+    @Inject private Provider<PVMain> prExerciseViewer;
     
     /** The action map of the controller class. */
     private ActionMap actionMap;
@@ -172,17 +172,17 @@ public class STControllerImpl implements STController {
     }
     
     /**
-     * Action for open the exercise HRM file in the PolarViewer sub-application (dialog).
+     * Action for open the exercise HRM file in the ExerciseViewer sub-application (dialog).
      */
     @Action(name=ACTION_OPEN_EXERCISEVIEWER)
-    public void openPolarViewer () {
+    public void openExerciseViewer () {
 
         // show file open dialog for HRM file selection
         File selectedFile = prHRMFileOpenDialog.get ().selectHRMFile (document.getOptions (), null);
         if (selectedFile != null) {
             
-            // start PolarViewer 
-            PVMain pv = prPolarViewer.get ();
+            // start ExerciseViewer 
+            PVMain pv = prExerciseViewer.get ();
             pv.showExercise (selectedFile.getAbsolutePath (), document.getOptions (), false);
         }
     }
@@ -352,11 +352,11 @@ public class STControllerImpl implements STController {
     @Action(name=ACTION_VIEW_HRM)
     public void viewHRMFile () {
         
-        // get selected exercise and start PolarViewer for it's HRM file
+        // get selected exercise and start ExerciseViewer for it's HRM file
         // (special checks not needed here, done by the STView:updateExerciseActions() method)
         int exerciseID = view.getCurrentView ().getSelectedExerciseIDs ()[0];
         Exercise exercise = document.getExerciseList ().getByID (exerciseID);
-        PVMain pv = prPolarViewer.get ();
+        PVMain pv = prExerciseViewer.get ();
         pv.showExercise (exercise.getHrmFile (), document.getOptions (), false);
     }
     

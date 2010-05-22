@@ -26,7 +26,7 @@ public class MainPanel extends BasePanel {
     
     /**
      * Standard c'tor.
-     * @param context the PolarViewer context
+     * @param context the ExerciseViewer context
      */
     @Inject
     public MainPanel (PVContext context) {
@@ -120,7 +120,7 @@ public class MainPanel extends BasePanel {
     }
     
     /**
-     * Sets the diagram panel of PolarViewer (needed for hertrage range updates).
+     * Sets the diagram panel of ExerciseViewer (needed for hertrage range updates).
      * @param diagramPanel the diagram panel
      */
     public void setDiagramPanel (DiagramPanel diagramPanel) {

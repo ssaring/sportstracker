@@ -42,7 +42,7 @@ public class LapPanel extends BasePanel {
     
     /**
      * Standard c'tor.
-     * @param context the PolarViewer context
+     * @param context the ExerciseViewer context
      */
     @Inject
     public LapPanel (PVContext context) {

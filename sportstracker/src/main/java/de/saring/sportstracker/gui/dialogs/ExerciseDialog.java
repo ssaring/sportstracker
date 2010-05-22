@@ -54,7 +54,7 @@ public class ExerciseDialog extends JDialog {
     private STDocument document;
     
     @Inject private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
-    @Inject private Provider<PVMain> prPolarViewer;
+    @Inject private Provider<PVMain> prExerciseViewer;
     
     /** This is the exercises object edited in this dialog. */
     private Exercise exercise;
@@ -413,10 +413,10 @@ public class ExerciseDialog extends JDialog {
     @Action(name=ACTION_HRM_VIEW)
     public void viewHRMFile () {        
 
-        // start PolarViewer sub-application when the filename is available
+        // start ExerciseViewer sub-application when the filename is available
         String hrmFile = getHRMFile ();
         if (hrmFile != null) {
-            PVMain pv = prPolarViewer.get ();
+            PVMain pv = prExerciseViewer.get ();
             pv.showExercise (hrmFile, document.getOptions (), true);
         }
     }

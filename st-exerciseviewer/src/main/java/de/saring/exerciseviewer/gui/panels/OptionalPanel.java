@@ -16,7 +16,7 @@ public class OptionalPanel extends BasePanel {
     
     /**
      * Standard c'tor.
-     * @param context the PolarViewer context
+     * @param context the ExerciseViewer context
      */
     @Inject
     public OptionalPanel (PVContext context) {

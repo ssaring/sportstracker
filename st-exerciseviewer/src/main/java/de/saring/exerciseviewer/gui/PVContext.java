@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import org.jdesktop.application.ApplicationContext;
 
 /**
- * This is the GUI context of the PolarViewer sub-application. It contains the 
+ * This is the GUI context of the ExerciseViewer sub-application. It contains the 
  * ApplicationContext of the Swing Application Framework and some helper methods.
  * 
  * @author  Stefan Saring

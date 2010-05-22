@@ -8,7 +8,7 @@ import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 
 /**
  * This class contains all document (MVC) related data and functionality of the 
- * PolarViewer application.
+ * ExerciseViewer application.
  *
  * @author Stefan Saring
  * @version 1.0
@@ -21,7 +21,7 @@ public class PVDocument {
     /** The filename of the current exercise. */
     private String exerciseFilename;
 
-    /** The PolarViewer options. */
+    /** The ExerciseViewer options. */
     private PVOptions options;
     
 
