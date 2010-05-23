@@ -55,6 +55,7 @@ General TODOs:
 - manual starting of Tasks (background) will be simpler in future AFW's,
   improve STController:startActionManually() then
   => https://appframework.dev.java.net/issues/show_bug.cgi?id=39
+  => http://kenai.com/jira/browse/BSAF-92 (I've created a new issue in BSAF)
 - Batch import for multiple exercise files (e.g. when migrating from Windows 
   Polar software): In the Import dialog the user needs to select the the sport 
   type, the subtype, the intensity and which value from distance, AVG speed or 
