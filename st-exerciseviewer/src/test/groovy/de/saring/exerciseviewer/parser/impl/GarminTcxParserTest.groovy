@@ -1,7 +1,7 @@
 package de.saring.exerciseviewer.parser.impl
 
-import de.saring.exerciseviewer.core.PVException
-import de.saring.exerciseviewer.data.PVExercise
+import de.saring.exerciseviewer.core.EVException
+import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
 
 /**
@@ -25,7 +25,7 @@ class GarminTcxParserTest extends GroovyTestCase {
      * This method must fail on parsing an exerise file which doesn't exists.
      */
     void testParseExerciseMissingFile () {
-        shouldFail (PVException) {
+        shouldFail (EVException) {
             parser.parseExercise ('misc/testdata/garmin-tcx/unknown-file.tcx')
         }
     }
@@ -36,7 +36,7 @@ class GarminTcxParserTest extends GroovyTestCase {
     void testForerunner305_Running_NoHeartrate_1Lap () {        
         
         def exercise = parser.parseExercise ('misc/testdata/garmin-tcx/Forerunner305-Running-NoHeartrate-1Lap.tcx')
-        assertEquals (PVExercise.ExerciseFileType.GARMIN_TCX, exercise.fileType)
+        assertEquals (EVExercise.ExerciseFileType.GARMIN_TCX, exercise.fileType)
         
         def calDate = Calendar.getInstance ()        
         calDate.set (2007, 8-1, 7, 2, 42, 41)
@@ -82,7 +82,7 @@ class GarminTcxParserTest extends GroovyTestCase {
     void testEdge705_Running_Heartrate_2Laps () {
         
         def exercise = parser.parseExercise ('misc/testdata/garmin-tcx/Edge705-Running-Heartrate-2Laps.tcx')        
-        assertEquals (PVExercise.ExerciseFileType.GARMIN_TCX, exercise.fileType)
+        assertEquals (EVExercise.ExerciseFileType.GARMIN_TCX, exercise.fileType)
         
         def calDate = Calendar.getInstance ()        
         calDate.set (2009, 12-1, 9, 6, 54, 25)

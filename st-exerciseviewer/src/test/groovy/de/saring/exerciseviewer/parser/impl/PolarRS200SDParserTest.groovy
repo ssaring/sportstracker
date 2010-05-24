@@ -1,7 +1,7 @@
 package de.saring.exerciseviewer.parser.impl
 
-import de.saring.exerciseviewer.core.PVException
-import de.saring.exerciseviewer.data.PVExercise
+import de.saring.exerciseviewer.core.EVException
+import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
 
 /**
@@ -25,7 +25,7 @@ class PolarRS200SDParserTest extends GroovyTestCase {
      * This method must fail on parsing an exerise file which doesn't exists.
      */
     void testParseExerciseMissingFile () {
-        shouldFail (PVException) {
+        shouldFail (EVException) {
             parser.parseExercise ('misc/testdata/rs200sd-sample-123.xml')
         }
     }
@@ -39,7 +39,7 @@ class PolarRS200SDParserTest extends GroovyTestCase {
         def exercise = parser.parseExercise ('misc/testdata/rs200sd-sample.xml')
         
         // check exercise data
-        assertEquals (PVExercise.ExerciseFileType.RS200SDRAW, exercise.fileType)
+        assertEquals (EVExercise.ExerciseFileType.RS200SDRAW, exercise.fileType)
         
         def calDate = Calendar.getInstance ()
         calDate.set (2006, 2-1, 20, 16, 54, 11)

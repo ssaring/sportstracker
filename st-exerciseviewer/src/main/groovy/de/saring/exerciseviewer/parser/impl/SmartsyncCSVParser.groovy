@@ -1,6 +1,6 @@
 package de.saring.exerciseviewer.parser.impl
 
-import de.saring.exerciseviewer.core.PVException
+import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.*
 import de.saring.exerciseviewer.parser.*
 import de.saring.util.unitcalc.ConvertUtils
@@ -35,32 +35,32 @@ class SmartsyncCSVParser extends AbstractExerciseParser {
 		
     /**
      * This method parses the specified exercise file and creates an
-     * PVExercise object from it.
+     * EVExercise object from it.
      *
      * @param filename name of exercise file to parse
-     * @return the parsed PVExercise object
-     * @throws PVException thrown on read/parse problems
+     * @return the parsed EVExercise object
+     * @throws EVException thrown on read/parse problems
      */
     @Override
-    PVExercise parseExercise (String filename) throws PVException
+    EVExercise parseExercise (String filename) throws EVException
     {
         try {
             fileContent = new File (filename).readLines ()
             return parseExerciseFromContent ()
         }
         catch (Exception e) {
-            throw new PVException ("Failed to read the CSV activity file '${filename}' ...", e)
+            throw new EVException ("Failed to read the CSV activity file '${filename}' ...", e)
         }
     }
     
     /**
      * Parses the exercise data from the file content.
      */
-    private PVExercise parseExerciseFromContent ()
+    private EVExercise parseExerciseFromContent ()
     {
         // parse basic exercise data
-        PVExercise exercise = new PVExercise ()
-        exercise.fileType = PVExercise.ExerciseFileType.SSCSV // FIXME
+        EVExercise exercise = new EVExercise ()
+        exercise.fileType = EVExercise.ExerciseFileType.SSCSV // FIXME
         exercise.recordingMode = new RecordingMode ()
         exercise.lapList = []
 
@@ -83,10 +83,10 @@ class SmartsyncCSVParser extends AbstractExerciseParser {
                 sampleList.add (exeSample)
             }
             else if (line.startsWith ("Name,")) {
-                // not supported in PVExercise
+                // not supported in EVExercise
             }
             else if (line.startsWith ("Description,")) {
-                // not supported in PVExercise
+                // not supported in EVExercise
             }
             else if (line.startsWith ("Date,")) {
                 // parse exercise date (mm/dd/yyyy)
@@ -98,7 +98,7 @@ class SmartsyncCSVParser extends AbstractExerciseParser {
                 // parse exercise start time (can be either h:mm:ss or hh:mm:ss !)
                 def startTimeSplitted = line.substring (5).tokenize (':.')
                 if (startTimeSplitted.size () != 3) {
-                    throw new PVException ("Failed to read CSV file, can't parse exercise start time (wrong format) ...");
+                    throw new EVException ("Failed to read CSV file, can't parse exercise start time (wrong format) ...");
                 }
 
                 // parse start time

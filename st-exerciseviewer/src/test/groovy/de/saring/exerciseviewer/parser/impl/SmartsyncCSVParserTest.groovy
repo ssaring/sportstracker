@@ -1,7 +1,7 @@
 package de.saring.exerciseviewer.parser.impl
 
-import de.saring.exerciseviewer.core.PVException
-import de.saring.exerciseviewer.data.PVExercise
+import de.saring.exerciseviewer.core.EVException
+import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
 
 /**
@@ -25,7 +25,7 @@ class SmartsyncCSVParserTest extends GroovyTestCase {
      * This method must fail on parsing an exerise file which doesn't exists.
      */
     void testParseExerciseMissingFile () {
-        shouldFail (PVException) {
+        shouldFail (EVException) {
             parser.parseExercise ('misc/testdata/sample-123.csv')
         }
     }
@@ -40,7 +40,7 @@ class SmartsyncCSVParserTest extends GroovyTestCase {
         def exercise = parser.parseExercise ('misc/testdata/smartsync-sample.csv')
         
         // check exercise data
-        assertEquals (PVExercise.ExerciseFileType.SSCSV, exercise.fileType)
+        assertEquals (EVExercise.ExerciseFileType.SSCSV, exercise.fileType)
         assertEquals (0, exercise.userID)
         assertFalse (exercise.recordingMode.altitude)
         assertFalse (exercise.recordingMode.speed)

@@ -1,6 +1,6 @@
 package de.saring.exerciseviewer.parser.impl
 
-import de.saring.exerciseviewer.core.PVException
+import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.*
 import de.saring.exerciseviewer.parser.*
 import de.saring.util.unitcalc.ConvertUtils
@@ -34,32 +34,32 @@ class PolarHRMParser extends AbstractExerciseParser {
 		
     /**
      * This method parses the specified exercise file and creates an
-     * PVExercise object from it.
+     * EVExercise object from it.
      *
      * @param filename name of exercise file to parse
-     * @return the parsed PVExercise object
-     * @throws PVException thrown on read/parse problems
+     * @return the parsed EVExercise object
+     * @throws EVException thrown on read/parse problems
      */
     @Override
-    PVExercise parseExercise (String filename) throws PVException
+    EVExercise parseExercise (String filename) throws EVException
     {
         try {
             fileContent = new File (filename).readLines ()
             return parseExerciseFromContent ()
         }
         catch (Exception e) {
-            throw new PVException ("Failed to read the HRM exercise file '${filename}' ...", e)
+            throw new EVException ("Failed to read the HRM exercise file '${filename}' ...", e)
         }
     }
     
     /**
      * Parses the exercise data from the file content.
      */
-    private PVExercise parseExerciseFromContent ()
+    private EVExercise parseExerciseFromContent ()
     {
         // parse basic exercise data
-        PVExercise exercise = new PVExercise ()
-        exercise.fileType = PVExercise.ExerciseFileType.HRM
+        EVExercise exercise = new EVExercise ()
+        exercise.fileType = EVExercise.ExerciseFileType.HRM
         
         //////////////////////////////////////////////////////////////////////
         // parse 'Params' block
@@ -70,7 +70,7 @@ class PolarHRMParser extends AbstractExerciseParser {
         // check HRM file version
         def strVersion = getValueFromBlock (lParamsBlock, "Version")
         if (strVersion != '106' && strVersion != '107') {
-            throw new PVException ("Failed to read HRM file, the version needs to be '106' or '107' ...")
+            throw new EVException ("Failed to read HRM file, the version needs to be '106' or '107' ...")
         }
             
         // parse recording mode informations
@@ -96,7 +96,7 @@ class PolarHRMParser extends AbstractExerciseParser {
         def strStartTime = getValueFromBlock (lParamsBlock, 'StartTime')
         def startTimeSplitted = strStartTime.tokenize (':.')
         if (startTimeSplitted.size () != 4) {
-            throw new PVException ("Failed to read HRM file, can't parse exercise start time (wrong format) ...");
+            throw new EVException ("Failed to read HRM file, can't parse exercise start time (wrong format) ...");
         }
         
         // parse start time (the 1/10th second part will be ignored)
@@ -111,7 +111,7 @@ class PolarHRMParser extends AbstractExerciseParser {
         def strDuration = getValueFromBlock (lParamsBlock, 'Length')
         def durationSplitted = strDuration.tokenize (':.')
         if (durationSplitted.size () != 4)  {
-            throw new PVException ("Failed to read HRM file, can't parse exercise duration (wrong format) ...")
+            throw new EVException ("Failed to read HRM file, can't parse exercise duration (wrong format) ...")
         }
         
         // parse start time (the 1/10th second part will be ignored)
@@ -134,7 +134,7 @@ class PolarHRMParser extends AbstractExerciseParser {
         // get lines of 'IntTimes' block (can be empty when 0 laps, e.g. for Polar S510)
         def lIntTimesBlock = getBlockLines ('IntTimes', false)
         if (lIntTimesBlock.size () % 5 != 0) {
-            throw new PVException ("Failed to read HRM file, invalid number of lines in block 'IntTimes' ...")          
+            throw new EVException ("Failed to read HRM file, invalid number of lines in block 'IntTimes' ...")          
         }
         
         // parse all laps of exercise (each lap consists of 5 lines)
@@ -148,13 +148,13 @@ class PolarHRMParser extends AbstractExerciseParser {
             // 1. lap line needs to be of 5 parts
             def currLapLineSplitted = lIntTimesBlock[i * 5].tokenize ('\t')
             if (currLapLineSplitted.size () != 5) {
-                throw new PVException ("Failed to read HRM file, can't parse 1. line of current lap in block 'IntTimes' ...")           
+                throw new EVException ("Failed to read HRM file, can't parse 1. line of current lap in block 'IntTimes' ...")           
             }
             
             // parse lap split time (1. part) (can be either h:mm:ss.d or hh:mm:ss.d !)
             def lapSplitTimeSplitted = currLapLineSplitted[0].tokenize (':.')
             if (lapSplitTimeSplitted.size () != 4)  {
-                throw new PVException ("Failed to read HRM file, can't parse lap split time of current lap (wrong format) ...")
+                throw new EVException ("Failed to read HRM file, can't parse lap split time of current lap (wrong format) ...")
             }
             
             def lapSplitTimeHour = lapSplitTimeSplitted[0].toInteger ()
@@ -172,7 +172,7 @@ class PolarHRMParser extends AbstractExerciseParser {
             // parse 2. lap line (needs to be of 6 parts)
             currLapLineSplitted = lIntTimesBlock[(i * 5) + 1].tokenize ('\t')
             if (currLapLineSplitted.size () != 6) {
-                throw new PVException ("Failed to read HRM file, can't parse 2. line of current lap in block 'IntTimes' ...")           
+                throw new EVException ("Failed to read HRM file, can't parse 2. line of current lap in block 'IntTimes' ...")           
             }
                             
             // parse speed and cadence at lap split
@@ -204,7 +204,7 @@ class PolarHRMParser extends AbstractExerciseParser {
             // parse 4. lap line (needs to be of 6 parts)
             currLapLineSplitted = lIntTimesBlock[(i * 5) + 3].tokenize ('\t')
             if (currLapLineSplitted.size () != 6) {
-                throw new PVException ("Failed to read HRM file, can't parse 4. line of current lap in block 'IntTimes' ...")           
+                throw new EVException ("Failed to read HRM file, can't parse 4. line of current lap in block 'IntTimes' ...")           
             }
             
             // get lap distance
@@ -247,7 +247,7 @@ class PolarHRMParser extends AbstractExerciseParser {
         // (mostly 7 lines, 8 lines for Polar CS600, data of last line is unknown)
         def lSummary123Block = getBlockLines ("Summary-123", true)
         if (lSummary123Block.size () < 7) {
-            throw new PVException ("Failed to read HRM file, can't find block 'Summary-123' or block is not valid ...")         
+            throw new EVException ("Failed to read HRM file, can't find block 'Summary-123' or block is not valid ...")         
         }
         
         // parse data for 3 heartrate limit ranges
@@ -258,7 +258,7 @@ class PolarHRMParser extends AbstractExerciseParser {
             // 1. heratrate limits info line needs to be of 6 parts
             def firstHRLLineSplitted = lSummary123Block[i * 2].tokenize ('\t')
             if (firstHRLLineSplitted.size () != 6) {
-                throw new PVException ("Failed to read HRM file, can't parse 1. line of current heartrate limits in block 'Summary-123' ...")           
+                throw new EVException ("Failed to read HRM file, can't parse 1. line of current heartrate limits in block 'Summary-123' ...")           
             }
             
             // get seconds below, within and above current heartrate range
@@ -270,7 +270,7 @@ class PolarHRMParser extends AbstractExerciseParser {
             // 2. heratrate limits info line needs to be of 4 parts
             def secondHRLLineSplitted = lSummary123Block[(i * 2) + 1].tokenize ('\t')
             if (secondHRLLineSplitted.size () != 4) {
-                throw new PVException ("Failed to read HRM file, can't parse 2. line of current heartrate limits in block 'Summary-123' ...")           
+                throw new EVException ("Failed to read HRM file, can't parse 2. line of current heartrate limits in block 'Summary-123' ...")           
             }
             
             exercise.heartRateLimits[i].upperHeartRate = secondHRLLineSplitted[1].toInteger ()                
@@ -479,10 +479,10 @@ class PolarHRMParser extends AbstractExerciseParser {
      * block in the exercise file (e.g. when blockName="Params" it returns
      * all lines after the line "[Params]" and before next block start.
      * An empty list will be returned when the block can't be found or is empty.
-     * When the fRequired flag is true and nothing was found then a PVException 
+     * When the fRequired flag is true and nothing was found then a EVException 
      * will be thrown.
      */
-    private def getBlockLines (blockName, fRequired) throws PVException
+    private def getBlockLines (blockName, fRequired) throws EVException
     {
         def strBlockLine = "[$blockName]"
         def lFoundLines = []
@@ -507,7 +507,7 @@ class PolarHRMParser extends AbstractExerciseParser {
         }
         
         if (fRequired && lFoundLines.size () == 0) {
-            throw new PVException ("Failed to read HRM file, can't find block '$blockName' ...")
+            throw new EVException ("Failed to read HRM file, can't find block '$blockName' ...")
         }
         return lFoundLines
     }
@@ -516,14 +516,14 @@ class PolarHRMParser extends AbstractExerciseParser {
      * Searches for the specified value in the passed list of block lines 
      * (Strings). Example: if name is "Version" this method return "106" 
      * if the line "Version=106" is in blockLines.
-     * A PVException will be thrown when the value can't be found.
+     * A EVException will be thrown when the value can't be found.
      */
-    private def getValueFromBlock (def blockLines, def name) throws PVException {
+    private def getValueFromBlock (def blockLines, def name) throws EVException {
         for (line in blockLines) {
             if (line.startsWith ("$name=")) {
                 return line.substring (name.length () + 1)
             }
         }
-        throw new PVException ("Failed to read HRM file, can't find value for '$name' ...")
+        throw new EVException ("Failed to read HRM file, can't find value for '$name' ...")
     }        
 }

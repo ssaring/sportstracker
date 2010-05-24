@@ -1,6 +1,6 @@
 package de.saring.exerciseviewer.parser.impl
 
-import de.saring.exerciseviewer.core.PVException
+import de.saring.exerciseviewer.core.EVException
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.exerciseviewer.data.*
 import de.saring.exerciseviewer.parser.*
@@ -31,7 +31,7 @@ class GarminTcxParser extends AbstractExerciseParser {
 		
     /** {@inheritDoc} */
     @Override
-    PVExercise parseExercise (String filename) throws PVException {
+    EVExercise parseExercise (String filename) throws EVException {
         
         try {
             // get GPathResult object by using the XmlSlurper parser
@@ -39,18 +39,18 @@ class GarminTcxParser extends AbstractExerciseParser {
             return parseExercisePath (path)
         }
         catch (Exception e) {
-            throw new PVException ("Failed to read the Garmin TCX exercise file '${filename}' ...", e)
+            throw new EVException ("Failed to read the Garmin TCX exercise file '${filename}' ...", e)
         }
     }
     
     /**
      * Parses the exercise data from the specified path (root element).
      */
-    private PVExercise parseExercisePath (path) {
+    private EVExercise parseExercisePath (path) {
         
         // parse basic exercise data
-        PVExercise exercise = new PVExercise ()
-        exercise.fileType = PVExercise.ExerciseFileType.GARMIN_TCX
+        EVExercise exercise = new EVExercise ()
+        exercise.fileType = EVExercise.ExerciseFileType.GARMIN_TCX
         exercise.recordingMode = new RecordingMode ()
 		exercise.recordingMode.speed = true
         exercise.speed = new ExerciseSpeed()

@@ -1,7 +1,7 @@
 package de.saring.exerciseviewer.parser.impl
 
-import de.saring.exerciseviewer.core.PVException
-import de.saring.exerciseviewer.data.PVExercise
+import de.saring.exerciseviewer.core.EVException
+import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
 
 /**
@@ -25,7 +25,7 @@ class PolarHRMParserTest extends GroovyTestCase {
      * This method must fail on parsing an exerise file which doesn't exists.
      */
     void testParseExerciseMissingFile () {
-        shouldFail (PVException) {
+        shouldFail (EVException) {
             parser.parseExercise ('misc/testdata/sample-123.hrm')
         }
     }
@@ -40,7 +40,7 @@ class PolarHRMParserTest extends GroovyTestCase {
         def exercise = parser.parseExercise ('misc/testdata/s710/cycling-metric.hrm')
         
         // check exercise data
-        assertEquals (PVExercise.ExerciseFileType.HRM, exercise.fileType)
+        assertEquals (EVExercise.ExerciseFileType.HRM, exercise.fileType)
         assertEquals (0, exercise.userID)
         assertTrue (exercise.recordingMode.altitude)
         assertTrue (exercise.recordingMode.speed)
@@ -170,7 +170,7 @@ class PolarHRMParserTest extends GroovyTestCase {
         def exercise = parser.parseExercise ('misc/testdata/s710/cycling-english.hrm')
 
         // check exercise data
-        assertEquals (exercise.fileType, PVExercise.ExerciseFileType.HRM)
+        assertEquals (exercise.fileType, EVExercise.ExerciseFileType.HRM)
         assertEquals (exercise.userID, 0)
         // assertEquals (exercise.Type, 1) // (not in HRM file)
         // assertEquals (exercise.TypeLabel, "ExeSet1") // (not in HRM file)
@@ -298,7 +298,7 @@ class PolarHRMParserTest extends GroovyTestCase {
         def exercise = parser.parseExercise ('misc/testdata/s710/running-metric.hrm')
 
         // check exercise data
-        assertEquals (exercise.fileType, PVExercise.ExerciseFileType.HRM)
+        assertEquals (exercise.fileType, EVExercise.ExerciseFileType.HRM)
         assertEquals (exercise.userID, 0)
         // assertEquals (exercise.type, 2) // (not in HRM file)
         // assertEquals (exercise.typeLabel, "ExeSet2") // (not in HRM file)

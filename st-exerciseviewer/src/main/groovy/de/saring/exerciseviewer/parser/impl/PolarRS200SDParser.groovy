@@ -1,6 +1,6 @@
 package de.saring.exerciseviewer.parser.impl
 
-import de.saring.exerciseviewer.core.PVException
+import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.*
 import de.saring.exerciseviewer.parser.*
 
@@ -27,14 +27,14 @@ class PolarRS200SDParser extends AbstractExerciseParser {
 		
     /**
      * This method parses the specified exercise file and creates an
-     * PVExercise object from it.
+     * EVExercise object from it.
      *
      * @param filename name of exercise file to parse
-     * @return the parsed PVExercise object
-     * @throws PVException thrown on read/parse problems
+     * @return the parsed EVExercise object
+     * @throws EVException thrown on read/parse problems
      */
     @Override
-    PVExercise parseExercise (String filename) throws PVException
+    EVExercise parseExercise (String filename) throws EVException
     {
         try {
             // get GPathResult object by using the XML slurper parser
@@ -42,18 +42,18 @@ class PolarRS200SDParser extends AbstractExerciseParser {
             return parseExercisePath (path)
         }
         catch (Exception e) {
-            throw new PVException ("Failed to read the RS200SD exercise file '${filename}' ...", e)
+            throw new EVException ("Failed to read the RS200SD exercise file '${filename}' ...", e)
         }
     }
     
     /**
      * Parses the exercise data from the specified rs200_session element.
      */
-    private PVExercise parseExercisePath (path)
+    private EVExercise parseExercisePath (path)
     {
         // parse basic exercise data
-        PVExercise exercise = new PVExercise ()
-        exercise.fileType = PVExercise.ExerciseFileType.RS200SDRAW
+        EVExercise exercise = new EVExercise ()
+        exercise.fileType = EVExercise.ExerciseFileType.RS200SDRAW
         exercise.recordingMode = new RecordingMode ()
         
         def calDate = Calendar.getInstance ()
