@@ -78,6 +78,10 @@ method to detect the S725 exercise file type, because it needs different
 parsing compared to other S7XX models (this is not necessary for parsing
 HRM files of S725).
 
+Users of the website PolarPersonalTrainer.com can open their exported exercise
+files (.ped extension) in ExerciseViewer. It's also possible to import all
+exported exercises with the included PolarPersonalTrainer-Importer utility.
+
 
 Requirements
 ------------
@@ -296,6 +300,8 @@ The SportsTracker project uses the following libraries:
       License: Lesser General Public License (LGPL)
   - MiG Layout 3.7.3.1 (http://www.miglayout.com/)
       License: BSD License
+  - commons-cli 1.2 (http://commons.apache.org/cli/)
+      License: Apache License v2.0
   - JUnit 4.8.1 (http://www.junit.org)
       License: Common Public License v1.0
   - EasyMock 2.5.2 (http://www.easymock.org)
@@ -370,4 +376,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2010/05/17
+2010/05/27

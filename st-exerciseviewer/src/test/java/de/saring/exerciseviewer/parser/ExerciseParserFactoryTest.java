@@ -31,6 +31,9 @@ public class ExerciseParserFactoryTest {
 
         parser = ExerciseParserFactory.getParser ("C:\\Test 123\\Exercise2.XML");
         assertEquals ("de.saring.exerciseviewer.parser.impl.PolarRS200SDParser", parser.getClass ().getName ());
+
+        parser = ExerciseParserFactory.getParser("exercise1.ped");
+        assertEquals("de.saring.exerciseviewer.parser.impl.PolarPedParser", parser.getClass().getName());
         
         try {
             // this parser is unknown, must fail

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sport-type-list>
+    <sport-type record-distance="true">
+        <id>1</id>
+        <name>Bicycling</name>
+        <icon />
+        <color red="0" green="0" blue="0" />
+        <sport-subtype-list>
+            <sport-subtype>
+                <id>1</id>
+                <name>Exercise Bike</name>
+            </sport-subtype>
+        </sport-subtype-list>
+        <equipment-list>
+            <equipment>
+                <id>1</id>
+                <name>VM 590</name>
+            </equipment>
+        </equipment-list>
+    </sport-type>
+    <sport-type record-distance="true">
+        <id>2</id>
+        <name>Hiking</name>
+        <icon />
+        <color red="0" green="0" blue="0" />
+        <sport-subtype-list>
+            <sport-subtype>
+                <id>1</id>
+                <name>hike</name>
+            </sport-subtype>
+        </sport-subtype-list>
+        <equipment-list />
+    </sport-type>
+</sport-type-list>
+

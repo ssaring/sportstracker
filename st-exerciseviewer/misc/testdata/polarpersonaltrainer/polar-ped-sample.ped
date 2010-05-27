@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<polar-exercise-data xmlns="http://www.polarpersonaltrainer.com" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.polarpersonaltrainer.com http://www.polarpersonaltrainer.com/schemas/ped-1.0.xsd">  
+    <calendar-items count="2">
+        <exercise>
+            <created>2010-04-02 18:17:06.0</created>
+            <time>2010-04-02 19:19:00.0</time>
+            <sport>Exercise Bike</sport>
+            <result>
+                <distance>12800.0</distance>
+                <calories>367</calories>
+                <duration>00:52:36</duration>
+                <user-settings>
+                    <heart-rate>
+                        <maximum>184</maximum>
+                    </heart-rate>
+                    <vo2max>35</vo2max>
+                    <weight>89.5</weight>
+                    <height>179.0</height>
+                </user-settings>
+                <zones>
+                    <zone index="0">
+                        <upper>128</upper>
+                        <lower>110</lower>
+                        <in-zone>00:18:25</in-zone>
+                    </zone>
+                    <zone index="1">
+                        <upper>146</upper>
+                        <lower>129</lower>
+                        <in-zone>00:32:32</in-zone>
+                    </zone>
+                    <zone index="2">
+                        <upper>166</upper>
+                        <lower>147</lower>
+                        <in-zone>00:00</in-zone>
+                    </zone>
+                </zones>
+                <heart-rate>
+                    <average>127</average>
+                    <maximum>141</maximum>
+                </heart-rate>
+                <fat-consumption>23</fat-consumption>
+                <speed>
+                    <type>CYCLING</type>
+                </speed>
+            </result>
+        </exercise>
+        <exercise>
+            <created>2010-04-06 18:51:22.0</created>
+            <time>2010-04-06 19:55:00.0</time>
+            <sport>Exercise Bike</sport>
+            <name>Exercise Bike</name>
+            <result>
+                <distance>12300.0</distance>
+                <calories>403</calories>
+                <duration>00:50</duration>
+                <user-settings>
+                    <heart-rate>
+                        <maximum>184</maximum>
+                    </heart-rate>
+                    <vo2max>35</vo2max>
+                    <weight>89.5</weight>
+                    <height>179.0</height>
+                </user-settings>
+                <zones>
+                    <zone index="0">
+                        <upper>128</upper>
+                        <lower>110</lower>
+                        <in-zone>00:08:46</in-zone>
+                    </zone>
+                    <zone index="1">
+                        <upper>146</upper>
+                        <lower>129</lower>
+                        <in-zone>00:40:36</in-zone>
+                    </zone>
+                    <zone index="2">
+                        <upper>166</upper>
+                        <lower>147</lower>
+                        <in-zone>00:00:25</in-zone>
+                    </zone>
+                </zones>
+                <heart-rate>
+                    <average>132</average>
+                    <maximum>148</maximum>
+                </heart-rate>
+                <fat-consumption>19</fat-consumption>
+                <speed>
+                    <type>CYCLING</type>
+                </speed>
+            </result>
+        </exercise>
+        <fitness-data>
+            <created>2010-04-02 15:59:57.0</created>
+            <time>2010-04-02 15:37:00.0</time>
+            <own-index>35</own-index>
+            <own-index-from-wrist-unit>false</own-index-from-wrist-unit>
+            <own-relax-from-wrist-unit>false</own-relax-from-wrist-unit>
+        </fitness-data>
+    </calendar-items>
+</polar-exercise-data>

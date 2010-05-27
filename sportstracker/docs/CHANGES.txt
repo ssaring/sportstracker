@@ -40,6 +40,10 @@ v4.3.0:
 
  SportsTracker changes:
   - All dialogs can now be closed by pressing the Escape key
+  - PolarPersonalTrainer-Importer (command line utility in misc-directory),
+    contributed by Philippe Marzouk <philm@users.sourceforge.net>
+    - users of PolarPersonalTrainer.com can import the exercises of export
+      files (extension .ped) into the SportsTracker exercises.xml database
  
  PolarViewer/ExcerciseViewer changes:
   - PolarViewer has been renamed to ExerciseViewer, because it supports much more 
@@ -48,6 +52,9 @@ v4.3.0:
     - all PolarViewer resource keys and texts/translation has been renamed
     - rename in all documentations (also in source code)
     - all PV* classes has been renamed to EV* (e.g. PVDocument -> EVDocument) 
+  - PolarPedParser, contributed by Philippe Marzouk <philm@users.sourceforge.net>:
+    - ExerciseParser for export files (.ped extension) from PolarPersonalTrainer.com
+      (imports basic exercise data, no laps and sample data)
     
 v4.2.1 (no public release, internal marker only):
  SportsTracker changes:

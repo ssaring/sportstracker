@@ -60,7 +60,7 @@ public final class EVExercise implements Serializable
     private ExerciseSample[] sampleList;
     
     /** This is the list of possible file types of an exercise. */
-    public enum ExerciseFileType { S710RAW, S610RAW, S510RAW, HRM, HAC4TUR, RS200SDRAW, F6RAW, SSCSV, GARMIN_TCX }
+    public enum ExerciseFileType { S710RAW, S610RAW, S510RAW, HRM, HAC4TUR, RS200SDRAW, F6RAW, SSCSV, GARMIN_TCX, PED }
 
 
     /***** BEGIN: Generated Getters and Setters *****/

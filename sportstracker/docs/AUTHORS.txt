@@ -7,6 +7,7 @@ Contributors for the new Java version (alphabetical order):
 
   Kai Pastor <dg0yt@users.sourceforge.net>
   Mathias Obst <luettfite@users.sourceforge.net>
+  Philippe Marzouk <philm@users.sourceforge.net>
   Remco den Breeje <remco@vioco.nl>
   Roland Hostettler <r.hostettler@gmx.ch>
 
