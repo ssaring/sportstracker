@@ -41,7 +41,7 @@ public class PedImporterTest {
      */
     @Test
     public void testWrongSportType() {
-        String[] args = {"-n", "-f", "../st-exerciseviewer/mist/testdata/polarpersonaltrainer/polar-ped-sample.ped", "-d", "misc/polarpersonaltrainer-importer/testdata", "-sportType", "5"};
+        String[] args = {"-n", "-f", "../st-exerciseviewer/misc/testdata/polarpersonaltrainer/polar-ped-sample.ped", "-d", "misc/polarpersonaltrainer-importer/testdata", "-sportType", "5"};
         PedImporter.main(args);
         assertTrue(outContent.toString().startsWith("sport-type id 5 not found"));
     }
@@ -51,20 +51,18 @@ public class PedImporterTest {
      */
     @Test
     public void testWrongSportSubType() {
-        String[] args = {"-n", "-f", "../st-exerciseviewer/mist/testdata/polarpersonaltrainer/polar-ped-sample.ped", "-d", "misc/polarpersonaltrainer-importer/testdata", "-sportSubType", "6"};
+        String[] args = {"-n", "-f", "../st-exerciseviewer/misc/testdata/polarpersonaltrainer/polar-ped-sample.ped", "-d", "misc/polarpersonaltrainer-importer/testdata", "-sportSubType", "6"};
         PedImporter.main(args);
         assertTrue(outContent.toString().startsWith("sport-subtype id 6 not found"));
     }
-
-    // TODO: This test must be fixed !!!!
-    // Uncommented meanwhile, it's just an external utility. Otherwise the build fails :-(
+    
     /**
      * Test of main method, of class PedImporter.
      */
-//    @Test
-//    public void testAdded() {
-//        String[] args = {"-n", "-f", "../st-exerciseviewer/mist/testdata/polarpersonaltrainer/polar-ped-sample.ped", "-d", "misc/polarpersonaltrainer-importer/testdata"};
-//        PedImporter.main(args);
-//        assertTrue(outContent.toString().contains("added 1"));
-//    }
+    @Test
+    public void testAdded() {
+        String[] args = {"-n", "-f", "../st-exerciseviewer/misc/testdata/polarpersonaltrainer/polar-ped-sample.ped", "-d", "misc/polarpersonaltrainer-importer/testdata"};
+        PedImporter.main(args);
+        assertTrue(outContent.toString().contains("added 1"));
+    }
 }

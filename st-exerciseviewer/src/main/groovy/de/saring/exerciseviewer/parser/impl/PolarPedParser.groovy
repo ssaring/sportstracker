@@ -34,8 +34,6 @@ class PolarPedParser extends AbstractExerciseParser {
 
     private def int exerciseCount = 0
 
-    private def int exerciseIndex = -1
-
     private final def formatUtils = new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour)
 
     private def path
@@ -64,23 +62,32 @@ class PolarPedParser extends AbstractExerciseParser {
      */
     @Override
     EVExercise parseExercise (String filename) throws EVException {
-        if (exerciseCount == 0) {
-            path = readPedFile(filename)
+        path = readPedFile(filename)
+        def EVExercise exercise = null
+
+        if (exerciseCount >= 1) {
+            exercise = parseExercisePath (path, 0)
+        } else {
+            throw new EVException ("No exercise in file '${filename}' ...")
         }
-        exerciseIndex++
-        return parseExercisePath (path, exerciseIndex)
+        
+        return exercise
+
     }
 
     /**
      * This method parses the specified exercise file with a specific exerciseIdx
      * and creates an PVExercise object from it.
      *
+     * It is only intended to be called by PedImporter after a first call to parseExercise(String)
+     * to be able to get the ExerciseCount.
+     * 
      * @param filename name of exercise file to parse
      * @param exerciseIdx the exercise record index (starting with 0) in the file
      * @return the parsed PVExercise object
      * @throws PVException thrown on read/parse problems
      */
-    private EVExercise parseExercise (String filename, Integer exerciseIdx) throws EVException {
+    public EVExercise parseExercise (String filename, Integer exerciseIdx) throws EVException {
         return parseExercisePath (path, exerciseIdx)
     }
 
@@ -178,7 +185,7 @@ class PolarPedParser extends AbstractExerciseParser {
      *
      * @return the number of exercise records in the file
      */
-    private int getExerciseCount() {
+    public int getExerciseCount() {
         return exerciseCount
     }
 

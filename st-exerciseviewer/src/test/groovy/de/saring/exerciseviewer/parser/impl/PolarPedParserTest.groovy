@@ -33,9 +33,9 @@ public class PolarPedParserTest extends GroovyTestCase {
     public void testPedtooManyCalls() throws Exception {
         def filename = 'misc/testdata/polarpersonaltrainer/polar-ped-sample.ped'
         def exercise = parser.parseExercise(filename)
-        exercise = parser.parseExercise(filename)
+        def exerciseCount = parser.getExerciseCount();
         shouldFail (EVException) {
-            exercise = parser.parseExercise(filename)
+            exercise = parser.parseExercise(filename, exerciseCount)
         }
     }
 

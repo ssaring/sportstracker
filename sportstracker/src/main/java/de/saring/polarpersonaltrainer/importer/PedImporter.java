@@ -2,8 +2,7 @@ package de.saring.polarpersonaltrainer.importer;
 
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
-import de.saring.exerciseviewer.parser.ExerciseParser;
-import de.saring.exerciseviewer.parser.ExerciseParserFactory;
+import de.saring.exerciseviewer.parser.impl.PolarPedParser;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.ExerciseList;
@@ -130,11 +129,15 @@ public class PedImporter {
             return;
         }
 
-        ExerciseParser parser = ExerciseParserFactory.getParser(filename);
+        PolarPedParser parser = new PolarPedParser();
 
-        while (true) {
+        // first read to get the exercise count
+        parser.parseExercise(filename);
+        int exerciseCount = parser.getExerciseCount();
+
+        for (int exerciseIndex = 0; exerciseIndex < exerciseCount; exerciseIndex++) {
             try {
-                EVExercise pedExercise = parser.parseExercise(filename);
+                EVExercise pedExercise = parser.parseExercise(filename, exerciseIndex);
 
                 Boolean found = false;
                 Iterator<Exercise> it = exerciseList.iterator();

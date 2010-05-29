@@ -1,14 +1,6 @@
 SportsTracker-TODO
 ==================
 
-PolarPedParser:
----------------
-- Bug: PolarPedParser must be stateless! Otherwise the parser fails,
-  when opening exercise files multiple times.
-  => must be fixed by Philippe Marzouk
-- Unit test PedImporterTest.testAdded() failes
-  => must be fixed by Philippe Marzouk
-
 Garmin TCX support:
 -------------------
 - initial implementation is done, remaining TODO's
