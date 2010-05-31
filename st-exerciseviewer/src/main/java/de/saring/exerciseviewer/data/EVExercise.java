@@ -27,7 +27,7 @@ public final class EVExercise implements Serializable
     private RecordingMode recordingMode;
     /** Duration of exercise in tenths of a second. */
     private int duration;
-    /** Recording interval in seconds (5s, 15s, or 60s). */
+    /** Recording interval in seconds (e.g. 5s, 15s, 60s or DYNAMIC_RECORDING_INTERVAL). */
     private short recordingInterval;
     /** Average heart rate of exercise. */
     private short heartRateAVG;
@@ -62,6 +62,8 @@ public final class EVExercise implements Serializable
     /** This is the list of possible file types of an exercise. */
     public enum ExerciseFileType { S710RAW, S610RAW, S510RAW, HRM, HAC4TUR, RS200SDRAW, F6RAW, SSCSV, GARMIN_TCX, PED }
 
+    /** Constant for dynamic exercise sample recording interval (e.g. in Garmin TCX files). */
+    public static final short DYNAMIC_RECORDING_INTERVAL = -1;
 
     /***** BEGIN: Generated Getters and Setters *****/
     

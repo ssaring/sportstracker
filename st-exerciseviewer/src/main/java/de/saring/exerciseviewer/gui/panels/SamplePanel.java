@@ -107,7 +107,7 @@ public class SamplePanel extends BasePanel {
 
                 switch (col) {                
                     case COLUMN_TIME:
-                        return Integer.valueOf (row * exercise.getRecordingInterval ());
+                        return Integer.valueOf((int) (sample.getTimestamp() / 1000));
                     case COLUMN_HEARTRATE:
                         return Short.valueOf (sample.getHeartRate ());
                     case COLUMN_ALTITUDE:

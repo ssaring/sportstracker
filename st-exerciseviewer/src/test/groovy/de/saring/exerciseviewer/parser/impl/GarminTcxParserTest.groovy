@@ -37,6 +37,7 @@ class GarminTcxParserTest extends GroovyTestCase {
         
         def exercise = parser.parseExercise ('misc/testdata/garmin-tcx/Forerunner305-Running-NoHeartrate-1Lap.tcx')
         assertEquals (EVExercise.ExerciseFileType.GARMIN_TCX, exercise.fileType)
+        assertEquals (EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         
         def calDate = Calendar.getInstance ()        
         calDate.set (2007, 8-1, 7, 2, 42, 41)
@@ -83,6 +84,7 @@ class GarminTcxParserTest extends GroovyTestCase {
         
         def exercise = parser.parseExercise ('misc/testdata/garmin-tcx/Edge705-Running-Heartrate-2Laps.tcx')        
         assertEquals (EVExercise.ExerciseFileType.GARMIN_TCX, exercise.fileType)
+        assertEquals (EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         
         def calDate = Calendar.getInstance ()        
         calDate.set (2009, 12-1, 9, 6, 54, 25)

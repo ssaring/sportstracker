@@ -201,7 +201,7 @@ public class DiagramPanel extends BasePanel {
 
                 if (fDomainAxisTime) {                
                     // calculate current second 
-                    int timeSeconds = i * exercise.getRecordingInterval ();
+                    int timeSeconds = (int) (sample.getTimestamp() / 1000);
                     Second second = createJFreeChartSecond (timeSeconds);
                     fillDataInTimeSeries ((TimeSeries) sLeft, (TimeSeries) sRight, second, valueLeft, valueRight);
                 }

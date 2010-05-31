@@ -51,6 +51,7 @@ class GarminTcxParser extends AbstractExerciseParser {
         // parse basic exercise data
         EVExercise exercise = new EVExercise ()
         exercise.fileType = EVExercise.ExerciseFileType.GARMIN_TCX
+        exercise.recordingInterval = EVExercise.DYNAMIC_RECORDING_INTERVAL
         exercise.recordingMode = new RecordingMode ()
 		exercise.recordingMode.speed = true
         exercise.speed = new ExerciseSpeed()
