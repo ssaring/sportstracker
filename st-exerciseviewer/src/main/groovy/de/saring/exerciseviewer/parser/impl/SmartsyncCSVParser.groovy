@@ -78,7 +78,7 @@ class SmartsyncCSVParser extends AbstractExerciseParser {
         for (line in fileContent) {
             // most frequent element first
             if (line.startsWith (",") ) {
-                ExerciseSample exeSample = new ExerciseSample ()
+                ExerciseSample exeSample = new ExerciseSample()
                 exeSample.heartRate = line.substring (1).toInteger ()
                 sampleList.add (exeSample)
             }
@@ -133,6 +133,11 @@ class SmartsyncCSVParser extends AbstractExerciseParser {
         // calculate AVG heartrate
         exercise.heartRateAVG = Math.round (avgHeartrateSum / (float) exercise.sampleList.size ())
   
+        // compute timestamps for all recorded exercise samples
+        for (i in 0..sampleList.size-1) {
+            sampleList[i].timestamp = i * exercise.recordingInterval * 1000L
+        }
+        
         // done :-)
         return exercise
     }    

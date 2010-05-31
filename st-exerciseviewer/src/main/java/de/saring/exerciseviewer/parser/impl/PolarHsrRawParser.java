@@ -432,8 +432,8 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         
         // process all recorded samples
         for (int i = 0; i < numberOfSamples; i++) {
-            // store sample in list in reverse order
-            ExerciseSample exeSample = new ExerciseSample ();
+            ExerciseSample exeSample = new ExerciseSample();
+            exeSample.setTimestamp(i * exercise.getRecordingInterval() * 1000L);
             exercise.getSampleList ()[i] = exeSample;
             
             // get sample heartrate

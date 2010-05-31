@@ -1,6 +1,16 @@
 SportsTracker-TODO
 ==================
 
+ExerciseSample with dynamic timestamps:
+- remove EVExercise.recordingInterval?
+  => use ExerciseSample.timestamp in ExerciseViewers Sample and Diagram panels
+- check that displayed ExerciseSample.timestamp is OK for all parsers!
+- add to CHANGES.txt
+  - new atty ExerciseSample.timestamp
+  - set sample timestamp in all ExerciseParsers
+- use dynamic timestamps in Garmin-TCX-Parser, see below
+
+
 Garmin TCX support:
 -------------------
 - initial implementation is done, remaining TODO's

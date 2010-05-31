@@ -9,8 +9,10 @@ import java.io.Serializable;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class ExerciseSample implements Serializable
-{
+public final class ExerciseSample implements Serializable {
+    
+    /** Timestamp since exercise start of this sample (in 1/1000 sec). */
+    private long timestamp;
     /** Heartrate at record moment. */
     private short heartRate;
     /** Altitude at record moment. */
@@ -25,6 +27,14 @@ public final class ExerciseSample implements Serializable
     private short temperature;
     
     /***** BEGIN: Generated Getters and Setters *****/
+    
+    public long getTimestamp() {
+        return timestamp;
+    }
+    
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
     
     public short getHeartRate () {
         return heartRate;
@@ -86,7 +96,8 @@ public final class ExerciseSample implements Serializable
         StringBuilder sBuilder = new StringBuilder ();
 
         sBuilder.append (ExerciseSample.class.getName () + ":\n");
-        sBuilder.append (" [heartRate=" + this.heartRate + "\n");
+        sBuilder.append (" [timestamp=" + this.timestamp + "\n");
+        sBuilder.append ("  heartRate=" + this.heartRate + "\n");
         sBuilder.append ("  altitude=" + this.altitude + "\n");
         sBuilder.append ("  speed=" + this.speed + "\n");
         sBuilder.append ("  cadence=" + this.cadence + "\n");

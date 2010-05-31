@@ -359,7 +359,8 @@ class PolarHRMParser extends AbstractExerciseParser {
         for (i in 0..<lHRDataBlock.size ()) 
         {
             def tokenIndex = 0
-            exercise.sampleList[i] = new ExerciseSample ()
+            exercise.sampleList[i] = new ExerciseSample()
+            exercise.sampleList[i].timestamp = i * exercise.recordingInterval * 1000L
             
             // split sample line into parts
             def currSampleSplitted = lHRDataBlock[i].tokenize ('\t')

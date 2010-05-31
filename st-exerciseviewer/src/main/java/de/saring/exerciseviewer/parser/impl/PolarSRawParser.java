@@ -440,9 +440,11 @@ public class PolarSRawParser extends AbstractExerciseParser {
         for (int i = 0; i < numberOfSamples; i++) 
         {
             // store sample in list in reverse order
-            ExerciseSample exeSample = new ExerciseSample ();
-            exercise.getSampleList ()[numberOfSamples - i - 1] = exeSample;
-            
+            int sampleIndex = numberOfSamples - i - 1;
+            ExerciseSample exeSample = new ExerciseSample();
+            exeSample.setTimestamp(sampleIndex * exercise.getRecordingInterval() * 1000L);
+            exercise.getSampleList ()[sampleIndex] = exeSample;
+
             // get sample heartrate
             exeSample.setHeartRate ((short) fileContent[sampleOffset]);
             sampleOffset++;
