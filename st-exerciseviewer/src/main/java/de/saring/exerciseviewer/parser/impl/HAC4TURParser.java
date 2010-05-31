@@ -459,10 +459,12 @@ public class HAC4TURParser extends AbstractExerciseParser {
         
         ExerciseSample[] eSamples = new ExerciseSample[nrSamples];
         int previousDistance = 0;
+        long firstTimestamp = nrSamples > 0 ? samples.get(0).getTime() : 0;
+        
         for (int i = 0; i < nrSamples; i++) {
             Sample sample = (Sample) samples.get (i);
             eSamples[i] = new ExerciseSample ();
-            eSamples[i].setTimestamp(sample.getTime());
+            eSamples[i].setTimestamp((sample.getTime() - firstTimestamp) * 1000L);
             eSamples[i].setHeartRate ((short) sample.getHeartRate ());
             eSamples[i].setAltitude ((short) sample.getAltitude ());
             eSamples[i].setCadence ((short) sample.getCadence ());

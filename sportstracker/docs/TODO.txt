@@ -2,8 +2,8 @@ SportsTracker-TODO
 ==================
 
 ExerciseSample with dynamic timestamps:
-- check that displayed ExerciseSample.timestamp is OK for all parsers!
-  => not OK in HAC4 parser, all others are fine
+- add unit test checks for ExerciseSample.timestamp for all ExerciseParsers 
+  (seem to work all fine)
 - add to CHANGES.txt
   - new atty ExerciseSample.timestamp
   - set sample timestamp in all ExerciseParsers
