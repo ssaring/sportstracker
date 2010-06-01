@@ -1,5 +1,6 @@
 package de.saring.exerciseviewer.parser.impl
 
+import static org.junit.Assert.assertEquals;
 import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
@@ -135,24 +136,28 @@ class PolarHRMParserTest extends GroovyTestCase {
 
         // check sample data (first, two from middle and last only)
         assertEquals (294, exercise.sampleList.size ())
+        assertEquals (0, exercise.sampleList[0].timestamp)        
         assertEquals (101, exercise.sampleList[0].heartRate)
         assertEquals (240, exercise.sampleList[0].altitude)
         assertEquals (42, Math.round (exercise.sampleList[0].speed * 10))
         assertEquals (0, exercise.sampleList[0].cadence)
         assertEquals (0, exercise.sampleList[0].distance)
 
+        assertEquals (100*15*1000, exercise.sampleList[100].timestamp)        
         assertEquals (147, exercise.sampleList[100].heartRate)
         assertEquals (278, exercise.sampleList[100].altitude)
         assertEquals (171, Math.round (exercise.sampleList[100].speed * 10))
         assertEquals (0, exercise.sampleList[100].cadence)
         assertEquals (9499, exercise.sampleList[100].distance)
 
+        assertEquals (200*15*1000, exercise.sampleList[200].timestamp)        
         assertEquals (166, exercise.sampleList[200].heartRate)
         assertEquals (275, exercise.sampleList[200].altitude)
         assertEquals (141, Math.round (exercise.sampleList[200].speed * 10))
         assertEquals (0, exercise.sampleList[200].cadence)
         assertEquals (19296, exercise.sampleList[200].distance)
 
+        assertEquals (293*15*1000, exercise.sampleList[293].timestamp)        
         assertEquals (121, exercise.sampleList[293].heartRate)
         assertEquals (228, exercise.sampleList[293].altitude)
         assertEquals (153, Math.round (exercise.sampleList[293].speed * 10))
@@ -270,18 +275,21 @@ class PolarHRMParserTest extends GroovyTestCase {
         assertEquals (exercise.sampleList[0].cadence, 0)
         assertEquals (exercise.sampleList[0].distance, 0)
 
+        assertEquals (100*15*1000, exercise.sampleList[100].timestamp)        
         assertEquals (exercise.sampleList[100].heartRate, 124)
         assertEquals (exercise.sampleList[100].altitude, 270)
         assertEquals (Math.round (exercise.sampleList[100].speed * 10), 351)
         assertEquals (exercise.sampleList[100].cadence, 0)
         assertEquals (exercise.sampleList[100].distance, 9970)
 
+        assertEquals (200*15*1000, exercise.sampleList[200].timestamp)        
         assertEquals (exercise.sampleList[200].heartRate, 138)
         assertEquals (exercise.sampleList[200].altitude, 242)
         assertEquals (Math.round (exercise.sampleList[200].speed * 10), 291)
         assertEquals (exercise.sampleList[200].cadence, 0)
         assertEquals (exercise.sampleList[200].distance, 20452)
 
+        assertEquals (204*15*1000, exercise.sampleList[204].timestamp)        
         assertEquals (exercise.sampleList[204].heartRate, 121)
         assertEquals (exercise.sampleList[204].altitude, 241)
         assertEquals (Math.round (exercise.sampleList[204].speed * 10), 0)
@@ -363,27 +371,31 @@ class PolarHRMParserTest extends GroovyTestCase {
 
         // check sample data (first, two from middle and last only)
         assertEquals (exercise.sampleList.size (), 170)
+        assertEquals (0, exercise.sampleList[0].timestamp)        
         assertEquals (exercise.sampleList[0].heartRate, 0)
         assertEquals (exercise.sampleList[0].altitude, 91)
-        assertEquals (exercise.sampleList[0].speed, 0f)
+        assertEquals (exercise.sampleList[0].speed, 0f, 0f)
         assertEquals (exercise.sampleList[0].cadence, 0)
         assertEquals (exercise.sampleList[0].distance, 0)
 
+        assertEquals (100*15*1000, exercise.sampleList[100].timestamp)        
         assertEquals (exercise.sampleList[100].heartRate, 149)
         assertEquals (exercise.sampleList[100].altitude, 98)
-        assertEquals (exercise.sampleList[100].speed, 0f)
+        assertEquals (exercise.sampleList[100].speed, 0f, 0.0001f)
         assertEquals (exercise.sampleList[100].cadence, 0)
         assertEquals (exercise.sampleList[100].distance, 0)
 
+        assertEquals (150*15*1000, exercise.sampleList[150].timestamp)        
         assertEquals (exercise.sampleList[150].heartRate, 142)
         assertEquals (exercise.sampleList[150].altitude, 89)
-        assertEquals (exercise.sampleList[150].speed, 0f)
+        assertEquals (exercise.sampleList[150].speed, 0f, 0.0001f)
         assertEquals (exercise.sampleList[150].cadence, 0)
         assertEquals (exercise.sampleList[150].distance, 0)
 
+        assertEquals (169*15*1000, exercise.sampleList[169].timestamp)        
         assertEquals (exercise.sampleList[169].heartRate, 147)
         assertEquals (exercise.sampleList[169].altitude, 88)
-        assertEquals (exercise.sampleList[169].speed, 0f)
+        assertEquals (exercise.sampleList[169].speed, 0f, 0.0001f)
         assertEquals (exercise.sampleList[169].cadence, 0)
         assertEquals (exercise.sampleList[169].distance, 0) 
     }

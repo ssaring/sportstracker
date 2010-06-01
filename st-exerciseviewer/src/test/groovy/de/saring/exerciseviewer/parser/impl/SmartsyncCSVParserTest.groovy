@@ -61,9 +61,16 @@ class SmartsyncCSVParserTest extends GroovyTestCase {
         
         // check sample data (first, two from middle and last only)
         assertEquals (294, exercise.sampleList.size ())
+        assertEquals (0, exercise.sampleList[0].timestamp)        
         assertEquals (71, exercise.sampleList[0].heartRate)
+        
+        assertEquals (100*2*1000, exercise.sampleList[100].timestamp)        
         assertEquals (152, exercise.sampleList[100].heartRate)
+        
+        assertEquals (200*2*1000, exercise.sampleList[200].timestamp)        
         assertEquals (156, exercise.sampleList[200].heartRate)
+        
+        assertEquals (293*2*1000, exercise.sampleList[293].timestamp)        
         assertEquals (163, exercise.sampleList[293].heartRate)
     }
 }

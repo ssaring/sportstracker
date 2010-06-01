@@ -1,24 +1,14 @@
 SportsTracker-TODO
 ==================
 
-ExerciseSample with dynamic timestamps:
-- add unit test checks for ExerciseSample.timestamp for all ExerciseParsers 
-  (seem to work all fine)
-- add to CHANGES.txt
-  - new atty ExerciseSample.timestamp
-  - set sample timestamp in all ExerciseParsers
-  - display stored timestamp in Sample and Diagram Panel 
-- use dynamic timestamps in Garmin-TCX-Parser, see below
-
-
 Garmin TCX support:
 -------------------
 - initial implementation is done, remaining TODO's
   - refactor big parser method, split to multiple methods
   - no sample data from trackpoints available yet (only exercise and lap data)
     - Problem: there is no fixed sample rate, the time between 2 trackpoints is dynamic.
-    - Solution: Add the trackpoint timestamp to the PV ExerciseSample class
-      as offset from exercise start (big refactoring needed)
+    - Solution: can now be solved with the new dynamic timestamps in ExerciseSample class
+      (refactoring is done)
 
 
 Location data and Map viewer support - Initial design:

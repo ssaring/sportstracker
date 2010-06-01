@@ -55,6 +55,13 @@ v4.3.0:
   - PolarPedParser, contributed by Philippe Marzouk <philm@users.sourceforge.net>:
     - ExerciseParser for export files (.ped extension) from PolarPersonalTrainer.com
       (imports basic exercise data, no laps and sample data)
+  - Exercise samples with dynamic timestamps (needed for support of many 
+    heratrate monitors, e.g. for Garmin TCX exercises):
+    - new atty ExerciseSample.timestamp 
+      => offset in 1/1000 sec from Exercise start
+    - ExerciseSample.timestamp is set in all ExerciseParser implementations
+    - Sample and Diagram panel are using the ExerciseSample.timestamp for 
+      displaying sample data
     
 v4.2.1 (no public release, internal marker only):
  SportsTracker changes:
