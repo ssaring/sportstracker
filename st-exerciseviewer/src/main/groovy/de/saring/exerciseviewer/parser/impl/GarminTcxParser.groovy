@@ -63,18 +63,22 @@ class GarminTcxParser extends AbstractExerciseParser {
 						
 		long totalHeartRateSum = 0        
         double altitudeMetersTotal = 0
+        
+        int cadenceCount = 0
+        long cadenceSum = 0
         		        
         // no summary data, everything is stored in laps
         // parse each lap and create a ExerciseViewer Lap object
-        def pvLaps = []
+        def evLaps = []
+        def evSamples = []
         
         for (lap in activity.Lap) {
-            def pvLap = parseLapData(exercise, lap)
-            pvLaps << pvLap
+            def evLap = parseLapData(exercise, lap)
+            evLaps << evLap
             
-            if (pvLap.heartRateAVG > 0) {
+            if (evLap.heartRateAVG > 0) {
                 double lapDurationSeconds = lap.TotalTimeSeconds.toDouble()
-                totalHeartRateSum += pvLap.heartRateAVG * lapDurationSeconds                
+                totalHeartRateSum += evLap.heartRateAVG * lapDurationSeconds                
             }
 			
             double lapAscentMeters = 0
@@ -85,42 +89,49 @@ class GarminTcxParser extends AbstractExerciseParser {
             // parse all Track elements
 			for (track in lap.Track) {
 				
-				// parse all Trackpoint elements
+				// parse all Trackpoint elements (= ExerciseSamples)
 				for (trackpoint in track.Trackpoint) {
                     trackpointCount++
-					
+
+                    def evSample = new ExerciseSample()
+                    evSamples << evSample
+                    
+                    // calculate sample timestamp
+                    long tpTimestamp = sdFormat.parse(trackpoint.Time.text()).time
+                    evSample.setTimestamp(tpTimestamp - exercise.date.time)
+                    
                     // get optional heartrate data
 					if (!trackpoint.HeartRateBpm.isEmpty()) {
-						pvLap.heartRateSplit = trackpoint.HeartRateBpm.Value.toInteger()
+					    evSample.heartRate = trackpoint.HeartRateBpm.Value.toInteger()
+						evLap.heartRateSplit = evSample.heartRate
 					}
 										
-					// calculate speed between current and previous trackpoint
-                    // (sometimes single trackpoint don't have distance data!)                    
-                    if (!trackpoint.DistanceMeters.isEmpty()) {
+                    // get distance data (some trackpoints might not have distance data!)                    
+                    if (!trackpoint.DistanceMeters.isEmpty()) {                        
+                        double tpDistanceMeters = trackpoint.DistanceMeters.toDouble()                        
+                        evSample.distance = Math.round(tpDistanceMeters)
                         
-                        long tpTimestamp = sdFormat.parse(trackpoint.Time.text()).time
-                        double tpDistanceMeters = trackpoint.DistanceMeters.toDouble()
-                        double tpSpeed = 0                    
-                        
+                        // calculate speed between current and previous trackpoint
+                        evSample.speed = 0                    
                         if (previousTrackpointTimestamp > Long.MIN_VALUE) { 
                             long tpTimestampDiff = tpTimestamp - previousTrackpointTimestamp                        
                             // sometimes computed difference is < 0 => impossible, use 0 instead
                             double tpDistanceDiff = Math.max(tpDistanceMeters - previousTrackpointDistanceMeters, 0d)
                             
-                            tpSpeed = CalculationUtils.calculateAvgSpeed(
+                            evSample.speed = CalculationUtils.calculateAvgSpeed(
                                 (float) (tpDistanceDiff / 1000f), (int) Math.round(tpTimestampDiff / 1000f))
                         }
                         previousTrackpointTimestamp = tpTimestamp
                         previousTrackpointDistanceMeters = tpDistanceMeters
                         
-                        pvLap.speed.speedEnd = tpSpeed
-                        exercise.speed.speedMax = Math.max(tpSpeed, exercise.speed.speedMax)
+                        evLap.speed.speedEnd = evSample.speed
+                        exercise.speed.speedMax = Math.max(evSample.speed, exercise.speed.speedMax)
                     }
-                    
                     
                     // get optional altitude data
                     if (!trackpoint.AltitudeMeters.isEmpty()) {        
                         double tpAltitude = trackpoint.AltitudeMeters.toDouble()
+                        evSample.altitude = tpAltitude.shortValue()
                         altitudeMetersTotal += Math.round(tpAltitude)
 
 						// create altitude objects for exercise and current lap if not done yet
@@ -134,10 +145,10 @@ class GarminTcxParser extends AbstractExerciseParser {
 						    exercise.altitude.ascent = 0
 						}
                         
-                        if (pvLap.altitude == null) {
-                        	pvLap.altitude = new LapAltitude()
+                        if (evLap.altitude == null) {
+                        	evLap.altitude = new LapAltitude()
                         }                        
-                        pvLap.altitude.altitude = Math.round(tpAltitude)
+                        evLap.altitude.altitude = Math.round(tpAltitude)
                                                 
                         exercise.altitude.altitudeMin = Math.min(tpAltitude, exercise.altitude.altitudeMin)
                     	exercise.altitude.altitudeMax = Math.max(tpAltitude, exercise.altitude.altitudeMax)
@@ -147,20 +158,35 @@ class GarminTcxParser extends AbstractExerciseParser {
                 			tpAltitude > previousTrackpointAltitudeMeters) {
                             double tpAscent = tpAltitude - previousTrackpointAltitudeMeters                           
                             lapAscentMeters += tpAscent
-                        	pvLap.altitude.ascent = Math.round(lapAscentMeters)
+                        	evLap.altitude.ascent = Math.round(lapAscentMeters)
                         }
                         previousTrackpointAltitudeMeters = tpAltitude
                     }
-					
-					// TODO: parse all missing sample data from trackpoints
-					// Problem: In Garmin there is no fixed sample rate, the time between
-					// 2 samples is dynamic.
-					// Solution: Add the timestamp to the PV Sample class.
+                    
+                    // get optional cadence data
+                    if (!trackpoint.Cadence.isEmpty()) {
+                        evSample.cadence = trackpoint.Cadence.toInteger()
+                        evLap.speed.cadence = evSample.cadence
+
+                        // create cadence object for exercise if not done yet
+                        if (exercise.cadence == null) {
+                            exercise.cadence = new ExerciseCadence()
+                            exercise.recordingMode.cadence = true
+                        }
+                            
+                        // compute max and average cadence
+                        exercise.cadence.cadenceMax = Math.max(evSample.cadence, exercise.cadence.cadenceMax)
+                        if (evSample.cadence > 0) {
+                            cadenceSum += evSample.cadence
+                            exercise.cadence.cadenceAVG = Math.round(cadenceSum / ++cadenceCount)
+                        }
+                    }
 				}
 			}
         }
 		
-    	exercise.lapList = pvLaps as Lap[]        
+    	exercise.lapList = evLaps as Lap[]        
+        exercise.sampleList = evSamples as ExerciseSample[]        
 
 		calculateAvgSpeed(exercise)
 		calculateAvgHeartrate(exercise, totalHeartRateSum)

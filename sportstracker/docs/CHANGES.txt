@@ -62,6 +62,11 @@ v4.3.0:
     - ExerciseSample.timestamp is set in all ExerciseParser implementations
     - Sample and Diagram panel are using the ExerciseSample.timestamp for 
       displaying sample data
+  - Garmin TCX Parser:
+    - support for parsing lap (Lap) and sample (Trackpoint) data, including
+      unit tests (parses the speed, distance, altitude and cadence)
+    - added some cadence test data to Edge705-Running-Heartrate-2Laps.tcx
+      (doesn't make sense for running exercises, but test data is needed)
     
 v4.2.1 (no public release, internal marker only):
  SportsTracker changes:

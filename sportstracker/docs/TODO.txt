@@ -3,12 +3,13 @@ SportsTracker-TODO
 
 Garmin TCX support:
 -------------------
-- initial implementation is done, remaining TODO's
-  - refactor big parser method, split to multiple methods
-  - no sample data from trackpoints available yet (only exercise and lap data)
-    - Problem: there is no fixed sample rate, the time between 2 trackpoints is dynamic.
-    - Solution: can now be solved with the new dynamic timestamps in ExerciseSample class
-      (refactoring is done)
+- add unit tests for parsed ExerciseSamples 
+- add unit tests for ExerciseCadence, Lap.Speed.Cadence and RecordingMode.Cadence 
+  => added cadence data in 705 file for lap 1: first trackpoint: 90, then: 88, last  of lap: 86
+  => implementation seems to work
+- checked displayed parsed data in ExerciseViewer (why is there sample data after end of lap 1?)
+- commit and push to SF
+- refactor big parser method, split to multiple methods
 
 
 Location data and Map viewer support - Initial design:
@@ -39,6 +40,7 @@ Location data and Map viewer support - Initial design:
     which will then be displayed.
   - The new "Map" tab displays the location data of the exercise, if available.
   - ExerciseViewer must be able to display the Map data only, when the user does not has a HRM file.
+- GarminTcxParser: add suport for parsing location data
 
 
 General TODOs:
