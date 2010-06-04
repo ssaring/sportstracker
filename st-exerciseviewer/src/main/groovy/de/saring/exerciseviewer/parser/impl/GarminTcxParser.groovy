@@ -131,7 +131,7 @@ class GarminTcxParser extends AbstractExerciseParser {
                     // get optional altitude data
                     if (!trackpoint.AltitudeMeters.isEmpty()) {        
                         double tpAltitude = trackpoint.AltitudeMeters.toDouble()
-                        evSample.altitude = tpAltitude.shortValue()
+                        evSample.altitude = Math.round(tpAltitude)
                         altitudeMetersTotal += Math.round(tpAltitude)
 
 						// create altitude objects for exercise and current lap if not done yet

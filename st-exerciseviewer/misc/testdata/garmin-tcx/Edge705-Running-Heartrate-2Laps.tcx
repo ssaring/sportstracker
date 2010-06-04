@@ -269,6 +269,7 @@
             <HeartRateBpm>
               <Value>121</Value>
             </HeartRateBpm>
+            <Cadence>88</Cadence>
           </Trackpoint>
           <Trackpoint>
             <Time>2009-12-09T06:55:42Z</Time>
@@ -8367,7 +8368,6 @@
             <HeartRateBpm>
               <Value>168</Value>
             </HeartRateBpm>
-            <Cadence>88</Cadence>
           </Trackpoint>
           <Trackpoint>
             <Time>2009-12-09T07:50:45Z</Time>

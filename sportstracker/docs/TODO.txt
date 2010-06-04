@@ -3,7 +3,6 @@ SportsTracker-TODO
 
 Garmin TCX support:
 -------------------
-- add unit tests for parsed ExerciseSamples 
 - add unit tests for ExerciseCadence, Lap.Speed.Cadence and RecordingMode.Cadence 
   => added cadence data in 705 file for lap 1: first trackpoint: 90, then: 88, last  of lap: 86
   => implementation seems to work

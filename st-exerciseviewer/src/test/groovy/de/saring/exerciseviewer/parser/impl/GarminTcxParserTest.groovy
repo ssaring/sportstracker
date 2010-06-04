@@ -75,6 +75,31 @@ class GarminTcxParserTest extends GroovyTestCase {
 		assertEquals (0, exercise.lapList[0].speed.speedEnd)        
         assertEquals (10, exercise.lapList[0].altitude.altitude)
         assertEquals (149, exercise.lapList[0].altitude.ascent)
+
+        // sample data
+        assertEquals(379, exercise.sampleList.size())
+        
+        assertEquals(0*1000, exercise.sampleList[0].timestamp)
+        assertEquals(0, exercise.sampleList[0].heartRate)
+        assertEquals(4, exercise.sampleList[0].altitude)
+        assertEquals(0, exercise.sampleList[0].speed)
+        assertEquals(0, exercise.sampleList[0].cadence)
+        assertEquals(0, exercise.sampleList[0].distance)
+        
+        assertEquals(129*1000, exercise.sampleList[20].timestamp)
+        assertEquals(0, exercise.sampleList[20].heartRate)
+        assertEquals(6, exercise.sampleList[20].altitude)
+        assertEquals(5.9811f, exercise.sampleList[20].speed, 0.001f)
+        assertEquals(0, exercise.sampleList[20].cadence)
+        assertEquals(301, exercise.sampleList[20].distance)
+
+        assertEquals(((39*60) + 5) * 1000, exercise.sampleList[378].timestamp)
+        assertEquals(0, exercise.sampleList[378].heartRate)
+        assertEquals(10, exercise.sampleList[378].altitude)
+        // speed must be 0 (corrected, because distance is decreased in the last sample)
+        assertEquals(0, exercise.sampleList[378].speed, 0.001f)
+        assertEquals(0, exercise.sampleList[378].cadence)
+        assertEquals(8349, exercise.sampleList[378].distance)
     }
     
     /**
@@ -132,5 +157,29 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals (12.568, exercise.lapList[1].speed.speedEnd, 0.01)  
         assertEquals (112, exercise.lapList[1].altitude.altitude)
         assertEquals (175, exercise.lapList[1].altitude.ascent)
+        
+        // sample data
+        assertEquals(1254, exercise.sampleList.size())
+        
+        assertEquals(1*1000, exercise.sampleList[0].timestamp)
+        assertEquals(81, exercise.sampleList[0].heartRate)
+        assertEquals(110, exercise.sampleList[0].altitude)
+        assertEquals(0, exercise.sampleList[0].speed)
+        assertEquals(90, exercise.sampleList[0].cadence)
+        assertEquals(0, exercise.sampleList[0].distance)
+        
+        assertEquals(72*1000, exercise.sampleList[20].timestamp)
+        assertEquals(121, exercise.sampleList[20].heartRate)
+        assertEquals(108, exercise.sampleList[20].altitude)
+        assertEquals(13.739f, exercise.sampleList[20].speed, 0.001f)
+        assertEquals(88, exercise.sampleList[20].cadence)
+        assertEquals(168, exercise.sampleList[20].distance)
+
+        assertEquals(((9*3600) + (51*60) + 45)*1000, exercise.sampleList[1253].timestamp)
+        assertEquals(160, exercise.sampleList[1253].heartRate)
+        assertEquals(112, exercise.sampleList[1253].altitude)
+        assertEquals(12.5676f, exercise.sampleList[1253].speed, 0.001f)
+        assertEquals(0, exercise.sampleList[1253].cadence)
+        assertEquals(18990, exercise.sampleList[1253].distance)
     }
 }
