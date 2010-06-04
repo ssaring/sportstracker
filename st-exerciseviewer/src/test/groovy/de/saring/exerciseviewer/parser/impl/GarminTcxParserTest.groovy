@@ -38,6 +38,9 @@ class GarminTcxParserTest extends GroovyTestCase {
         def exercise = parser.parseExercise ('misc/testdata/garmin-tcx/Forerunner305-Running-NoHeartrate-1Lap.tcx')
         assertEquals (EVExercise.ExerciseFileType.GARMIN_TCX, exercise.fileType)
         assertEquals (EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
+        assertTrue(exercise.recordingMode.altitude)
+        assertTrue(exercise.recordingMode.speed)
+        assertFalse(exercise.recordingMode.cadence)
         
         def calDate = Calendar.getInstance ()        
         calDate.set (2007, 8-1, 7, 2, 42, 41)
@@ -63,6 +66,9 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals (21, exercise.altitude.altitudeMax)
         assertEquals (149, exercise.altitude.ascent)
         
+        // cadence
+        assertNull (exercise.cadence)
+        
         // lap data
         assertEquals  (1, exercise.lapList.size())
 
@@ -72,7 +78,8 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals (0, exercise.lapList[0].heartRateMax)
         assertEquals (8349, exercise.lapList[0].speed.distance)
 	    assertEquals (12.926d, exercise.lapList[0].speed.speedAVG, 0.001d)
-		assertEquals (0, exercise.lapList[0].speed.speedEnd)        
+        assertEquals (0, exercise.lapList[0].speed.speedEnd)        
+        assertEquals (0, exercise.lapList[0].speed.cadence)        
         assertEquals (10, exercise.lapList[0].altitude.altitude)
         assertEquals (149, exercise.lapList[0].altitude.ascent)
 
@@ -110,6 +117,9 @@ class GarminTcxParserTest extends GroovyTestCase {
         def exercise = parser.parseExercise ('misc/testdata/garmin-tcx/Edge705-Running-Heartrate-2Laps.tcx')        
         assertEquals (EVExercise.ExerciseFileType.GARMIN_TCX, exercise.fileType)
         assertEquals (EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
+        assertTrue(exercise.recordingMode.altitude)
+        assertTrue(exercise.recordingMode.speed)
+        assertTrue(exercise.recordingMode.cadence)
         
         def calDate = Calendar.getInstance ()        
         calDate.set (2009, 12-1, 9, 6, 54, 25)
@@ -134,7 +144,11 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals (115, exercise.altitude.altitudeAVG)
         assertEquals (153, exercise.altitude.altitudeMax)
         assertEquals (388, exercise.altitude.ascent)
-        
+
+        // cadence
+        assertEquals(88, exercise.cadence.cadenceAVG)
+        assertEquals(90, exercise.cadence.cadenceMax)
+
         // lap data
         assertEquals  (2, exercise.lapList.size())
         
@@ -147,6 +161,7 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals (135, exercise.lapList[0].altitude.altitude)
         assertEquals (213, exercise.lapList[0].altitude.ascent)
         assertEquals (9.009, exercise.lapList[0].speed.speedEnd, 0.001d)  
+        assertEquals (86, exercise.lapList[0].speed.cadence)  
         
         assertEquals ((3166.3 + 2645.6) * 10, exercise.lapList[1].timeSplit)        
         assertEquals (160, exercise.lapList[1].heartRateSplit)        
@@ -157,6 +172,7 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals (12.568, exercise.lapList[1].speed.speedEnd, 0.01)  
         assertEquals (112, exercise.lapList[1].altitude.altitude)
         assertEquals (175, exercise.lapList[1].altitude.ascent)
+        assertEquals (0, exercise.lapList[1].speed.cadence)  
         
         // sample data
         assertEquals(1254, exercise.sampleList.size())

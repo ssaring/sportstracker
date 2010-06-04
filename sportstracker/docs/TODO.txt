@@ -3,9 +3,6 @@ SportsTracker-TODO
 
 Garmin TCX support:
 -------------------
-- add unit tests for ExerciseCadence, Lap.Speed.Cadence and RecordingMode.Cadence 
-  => added cadence data in 705 file for lap 1: first trackpoint: 90, then: 88, last  of lap: 86
-  => implementation seems to work
 - checked displayed parsed data in ExerciseViewer (why is there sample data after end of lap 1?)
 - commit and push to SF
 - refactor big parser method, split to multiple methods
