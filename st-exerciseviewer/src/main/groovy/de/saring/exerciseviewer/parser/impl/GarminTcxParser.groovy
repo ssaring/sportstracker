@@ -66,6 +66,9 @@ class GarminTcxParser extends AbstractExerciseParser {
         
         int cadenceCount = 0
         long cadenceSum = 0
+        
+        int totalTimeGapBetweenLaps = 0
+        long lastTrackpointTimestamp = 0
         		        
         // no summary data, everything is stored in laps
         // parse each lap and create a ExerciseViewer Lap object
@@ -75,6 +78,12 @@ class GarminTcxParser extends AbstractExerciseParser {
         for (lap in activity.Lap) {
             def evLap = parseLapData(exercise, lap)
             evLaps << evLap
+            
+            // compute the total time gap between all laps
+            if (lastTrackpointTimestamp > 0) {
+                long lapStartTimestamp = sdFormat.parse(lap.@StartTime.text()).time
+                totalTimeGapBetweenLaps += lapStartTimestamp - lastTrackpointTimestamp
+            }
             
             double lapAscentMeters = 0
             long previousTrackpointTimestamp = Long.MIN_VALUE
@@ -91,9 +100,10 @@ class GarminTcxParser extends AbstractExerciseParser {
                     def evSample = new ExerciseSample()
                     evSamples << evSample
                     
-                    // calculate sample timestamp
+                    // calculate sample timestamp (time gap between laps must be substracted here)
                     long tpTimestamp = sdFormat.parse(trackpoint.Time.text()).time
-                    evSample.setTimestamp(tpTimestamp - exercise.date.time)
+                    lastTrackpointTimestamp = tpTimestamp
+                    evSample.setTimestamp(tpTimestamp - exercise.date.time - totalTimeGapBetweenLaps)
                     
                     // get optional heartrate data
 					if (!trackpoint.HeartRateBpm.isEmpty()) {
@@ -199,7 +209,8 @@ class GarminTcxParser extends AbstractExerciseParser {
         def evLap = new Lap()
         evLap.speed = new LapSpeed()
         
-        double lapDurationSeconds = calculateLapDuration(lapElement) // lapElement.TotalTimeSeconds.toDouble()
+        // stored lap duration in XML is often wrong, needs to be calculated
+        double lapDurationSeconds = calculateLapDuration(lapElement)
         double distanceMeters = lapElement.DistanceMeters.toDouble()
         exercise.duration += Math.round(lapDurationSeconds * 10)
         evLap.timeSplit = exercise.duration
@@ -220,9 +231,8 @@ class GarminTcxParser extends AbstractExerciseParser {
     }
     
     /**
-     * Calculates the duration of the specified lap in seconds. The stored XML element 
-     * Lap.TotalTimeSeconds can't be used, it's value is often wrong. 
-     * So it needs to be computed: "Last TrackPoint of Lap".Time - Lap.StartTime   
+     * Calculates the duration of the specified lap in seconds: 
+     * "Last TrackPoint of Lap".Time - Lap.StartTime   
      */
     def calculateLapDuration(lapElement) {
         def lastTrackpoint = null        
