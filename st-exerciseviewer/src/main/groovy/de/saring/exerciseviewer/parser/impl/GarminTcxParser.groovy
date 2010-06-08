@@ -76,11 +76,6 @@ class GarminTcxParser extends AbstractExerciseParser {
             def evLap = parseLapData(exercise, lap)
             evLaps << evLap
             
-            if (evLap.heartRateAVG > 0) {
-                double lapDurationSeconds = lap.TotalTimeSeconds.toDouble()
-                totalHeartRateSum += evLap.heartRateAVG * lapDurationSeconds                
-            }
-			
             double lapAscentMeters = 0
             long previousTrackpointTimestamp = Long.MIN_VALUE
             double previousTrackpointDistanceMeters = Double.MIN_VALUE
@@ -183,6 +178,12 @@ class GarminTcxParser extends AbstractExerciseParser {
                     }
 				}
 			}
+            
+            // sum heartrate data of current lap
+            if (evLap.heartRateAVG > 0) {
+                double lapDurationSeconds = lap.TotalTimeSeconds.toDouble()
+                totalHeartRateSum += evLap.heartRateAVG * lapDurationSeconds                
+            }
         }
 		
     	exercise.lapList = evLaps as Lap[]        
@@ -195,36 +196,54 @@ class GarminTcxParser extends AbstractExerciseParser {
     }
     
     def parseLapData(exercise, lapElement) {
-        def pvLap = new Lap()
-        pvLap.speed = new LapSpeed()
+        def evLap = new Lap()
+        evLap.speed = new LapSpeed()
         
-        double lapDurationSeconds = lapElement.TotalTimeSeconds.toDouble()
+        double lapDurationSeconds = calculateLapDuration(lapElement) // lapElement.TotalTimeSeconds.toDouble()
         double distanceMeters = lapElement.DistanceMeters.toDouble()
         exercise.duration += Math.round(lapDurationSeconds * 10)
-        pvLap.timeSplit = exercise.duration
+        evLap.timeSplit = exercise.duration
         exercise.speed.distance += Math.round(distanceMeters)
-        pvLap.speed.distance = exercise.speed.distance
+        evLap.speed.distance = exercise.speed.distance
         exercise.energy += lapElement.Calories.toInteger()
         
         // stored maximum lap speed in XML is wrong, will be calculated
         
         // calculate average speed of lap
-        pvLap.speed.speedAVG = CalculationUtils.calculateAvgSpeed(
+        evLap.speed.speedAVG = CalculationUtils.calculateAvgSpeed(
 	        (float) (distanceMeters / 1000f), 
 	        (int) Math.round(lapDurationSeconds))
         
         // parse optional heartrate data of lap
-        parseLapHeartRateData(exercise, pvLap, lapElement)
-        pvLap
+        parseLapHeartRateData(exercise, evLap, lapElement)
+        evLap
     }
     
-    def parseLapHeartRateData(exercise, pvLap, lapElement) {        
+    /**
+     * Calculates the duration of the specified lap in seconds. The stored XML element 
+     * Lap.TotalTimeSeconds can't be used, it's value is often wrong. 
+     * So it needs to be computed: "Last TrackPoint of Lap".Time - Lap.StartTime   
+     */
+    def calculateLapDuration(lapElement) {
+        def lastTrackpoint = null        
+        for (track in lapElement.Track) {
+            for (trackpoint in track.Trackpoint) {
+                lastTrackpoint = trackpoint
+            }
+        }
+
+        long lapStartTimestamp = sdFormat.parse(lapElement.@StartTime.text()).time
+        long lastTpTimestamp = sdFormat.parse(lastTrackpoint.Time.text()).time
+        (lastTpTimestamp - lapStartTimestamp) / 1000
+    }    
+    
+    def parseLapHeartRateData(exercise, evLap, lapElement) {        
 	    if (!lapElement.AverageHeartRateBpm.isEmpty()) {
-	        pvLap.heartRateAVG = lapElement.AverageHeartRateBpm.Value.toInteger()   
+	        evLap.heartRateAVG = lapElement.AverageHeartRateBpm.Value.toInteger()   
 	    }
 	    if (!lapElement.MaximumHeartRateBpm.isEmpty()) {
-	        pvLap.heartRateMax = lapElement.MaximumHeartRateBpm.Value.toInteger()
-	        exercise.heartRateMax = Math.max(pvLap.heartRateMax, exercise.heartRateMax)
+	        evLap.heartRateMax = lapElement.MaximumHeartRateBpm.Value.toInteger()
+	        exercise.heartRateMax = Math.max(evLap.heartRateMax, exercise.heartRateMax)
 	    }
     }    
         
