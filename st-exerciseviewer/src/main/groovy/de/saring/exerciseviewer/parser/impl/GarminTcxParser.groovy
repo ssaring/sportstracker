@@ -61,7 +61,6 @@ class GarminTcxParser extends AbstractExerciseParser {
 		int timeSplitPreviousLap = 0
         int trackpointCount = 0
 						
-		long totalHeartRateSum = 0        
         double altitudeMetersTotal = 0
         
         int cadenceCount = 0
@@ -187,20 +186,14 @@ class GarminTcxParser extends AbstractExerciseParser {
                         }
                     }
 				}
-			}
-            
-            // sum heartrate data of current lap
-            if (evLap.heartRateAVG > 0) {
-                double lapDurationSeconds = lap.TotalTimeSeconds.toDouble()
-                totalHeartRateSum += evLap.heartRateAVG * lapDurationSeconds                
-            }
+			}            
         }
 		
     	exercise.lapList = evLaps as Lap[]        
         exercise.sampleList = evSamples as ExerciseSample[]        
 
 		calculateAvgSpeed(exercise)
-		calculateAvgHeartrate(exercise, totalHeartRateSum)
+		calculateAvgHeartrate(exercise)
         calculateAvgAltitude(exercise, altitudeMetersTotal, trackpointCount)        
         exercise        
     }
@@ -262,11 +255,28 @@ class GarminTcxParser extends AbstractExerciseParser {
             (float) (exercise.speed.distance / 1000f), (int) Math.round(exercise.duration / 10f))
     }
     
-    def calculateAvgHeartrate(exercise, totalHeartRateSum) {
-        // calculate average heartrate for full exercise if available
+    /**
+     * Calculates the average heartrate for the specified exercise (if available). It's computed 
+     * as the average of all laps average heartrates. Laps without heartrate data will be ignored.   
+     */
+    def calculateAvgHeartrate(exercise) {
+        long totalHeartRateSum = 0
+        int previousLapTimeSplit = 0
+        int totalHeartRateDuration = 0 
+        
+        for (evLap in exercise.lapList) {
+            int lapDuration = evLap.timeSplit - previousLapTimeSplit
+            previousLapTimeSplit = evLap.timeSplit
+            
+            if (evLap.heartRateAVG > 0) {
+                totalHeartRateDuration += lapDuration
+                totalHeartRateSum += evLap.heartRateAVG * lapDuration
+            }
+        }            
+        
         if (totalHeartRateSum > 0) {
-            exercise.heartRateAVG = Math.round(totalHeartRateSum / (exercise.duration / 10d))
-        }        
+            exercise.heartRateAVG = Math.round(totalHeartRateSum / totalHeartRateDuration)
+        }    
     }
             
     def calculateAvgAltitude(exercise, altitudeMetersTotal, trackpointCount) {
@@ -274,8 +284,8 @@ class GarminTcxParser extends AbstractExerciseParser {
         if (exercise.altitude != null) {
             exercise.altitude.altitudeAVG = Math.round(altitudeMetersTotal / trackpointCount)
             
-            for (pvLap in exercise.lapList) {
-                exercise.altitude.ascent += pvLap.altitude.ascent
+            for (evLap in exercise.lapList) {
+                exercise.altitude.ascent += evLap.altitude.ascent
             }
         }                
     }
