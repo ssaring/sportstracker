@@ -1,25 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Garmin TCX support:
--------------------
-- checked displayed parsed data in ExerciseViewer (why is there sample data after end of lap 1?)
-  - Lap-Element TotalTimeSeconds is often shorter than the last trackpoints of the lap
-    => ignore TotalTimeSeconds and compute lap duration from lap start to last trackpoint of the lap
-    => good example: Edge705-Running...tcx test file
-    => DONE
-       => repair the unit tests for the 705 file
-  - stored/computed lap split times and duration does not match the sample time offset
-    => good example: 2009-07-13-...tcx
-    => remove the time offset of breaks between laps
-    => DONE, seems to work fine, but test with exercises with multiple laps and time gaps
-       => fix the unit tests here!
-  - BUG: calculated sample speed (and max speed) is wrong (much to high) when 
-         the exercise has multiple laps and time gaps within 
-- commit and push to SF
-- refactor big parser method, split to multiple methods
-
-
 Location data and Map viewer support - Initial design:
 ------------------------------------------------------
 - Exercise object: Add optional locationFile (better name?) attribut, similar to hrmFile
@@ -98,7 +79,9 @@ Diagram panel:
 - there's no space at the left side when the bottom axis displays "by distance"
   (between left axis and graph start)
 
-Parser:
+ExerciseParsers:
+- GarminTcxParser:
+  - refactor big method parseExercisePath(...), split into multiple methods
 - PolarHsrRawParser and PolarSRawParser:
   - Refactor: Extract duplicate methods/code
 - HAC4 Parser:

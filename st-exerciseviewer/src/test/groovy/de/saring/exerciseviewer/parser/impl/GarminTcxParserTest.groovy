@@ -124,7 +124,7 @@ class GarminTcxParserTest extends GroovyTestCase {
         def calDate = Calendar.getInstance ()        
         calDate.set (2009, 12-1, 9, 6, 54, 25)
         assertEquals ((int) (calDate.time.time / 1000), (int) (exercise.date.time / 1000))
-        assertEquals (5811,9 * 10, exercise.duration)            
+        assertEquals (6086 * 10, exercise.duration)            
         
         // heart rates
         assertEquals (157, exercise.heartRateAVG) 
@@ -137,7 +137,7 @@ class GarminTcxParserTest extends GroovyTestCase {
         // distance & speed & odometer
         assertEquals (18990, exercise.speed.distance)
         assertEquals (164.425d, exercise.speed.speedMax, 0.001d)
-        assertEquals (11.762d, exercise.speed.speedAVG, 0.001d)
+        assertEquals (11.232d, exercise.speed.speedAVG, 0.001d)
         
         // altitude
         assertEquals (94, exercise.altitude.altitudeMin)
@@ -152,23 +152,23 @@ class GarminTcxParserTest extends GroovyTestCase {
         // lap data
         assertEquals  (2, exercise.lapList.size())
         
-        assertEquals (3166.3 * 10, exercise.lapList[0].timeSplit)        
+        assertEquals ((56*60 + 20) * 10, exercise.lapList[0].timeSplit)        
         assertEquals (168, exercise.lapList[0].heartRateSplit)        
         assertEquals (158, exercise.lapList[0].heartRateAVG)
         assertEquals (173, exercise.lapList[0].heartRateMax)
         assertEquals (10618, exercise.lapList[0].speed.distance)
-        assertEquals (12.074d, exercise.lapList[0].speed.speedAVG, 0.001d)
+        assertEquals (11.310d, exercise.lapList[0].speed.speedAVG, 0.001d)
         assertEquals (135, exercise.lapList[0].altitude.altitude)
         assertEquals (213, exercise.lapList[0].altitude.ascent)
         assertEquals (9.009, exercise.lapList[0].speed.speedEnd, 0.001d)  
         assertEquals (86, exercise.lapList[0].speed.cadence)  
-        
-        assertEquals ((3166.3 + 2645.6) * 10, exercise.lapList[1].timeSplit)        
+
+        assertEquals (((56*60 + 20) + (45*60 + 6)) * 10, exercise.lapList[1].timeSplit)        
         assertEquals (160, exercise.lapList[1].heartRateSplit)        
         assertEquals (155, exercise.lapList[1].heartRateAVG)
         assertEquals (166, exercise.lapList[1].heartRateMax)
         assertEquals (10618 + 8372, exercise.lapList[1].speed.distance)
-        assertEquals (11.390d, exercise.lapList[1].speed.speedAVG, 0.001d)
+        assertEquals (11.138d, exercise.lapList[1].speed.speedAVG, 0.001d)
         assertEquals (12.568, exercise.lapList[1].speed.speedEnd, 0.01)  
         assertEquals (112, exercise.lapList[1].altitude.altitude)
         assertEquals (175, exercise.lapList[1].altitude.ascent)
@@ -191,7 +191,8 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals(88, exercise.sampleList[20].cadence)
         assertEquals(168, exercise.sampleList[20].distance)
 
-        assertEquals(((9*3600) + (51*60) + 45)*1000, exercise.sampleList[1253].timestamp)
+        // last sample of last lap
+        assertEquals(6086*1000, exercise.sampleList[1253].timestamp) 
         assertEquals(160, exercise.sampleList[1253].heartRate)
         assertEquals(112, exercise.sampleList[1253].altitude)
         assertEquals(12.5676f, exercise.sampleList[1253].speed, 0.001f)
