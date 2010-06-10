@@ -1,35 +1,36 @@
 SportsTracker-TODO
 ==================
 
-Location data and Map viewer support - Initial design:
-------------------------------------------------------
-- Exercise object: Add optional locationFile (better name?) attribut, similar to hrmFile
+GPS track data and viewer support - Initial design:
+---------------------------------------------------
+- Exercise object: Add optional trackFile attribut, similar to hrmFile
 - ExerciseDialog:
-  - Add below HRM file selection an optional Location file selection entry and file chooser button.
+  - Add below HRM file selection an optional GPS track file selection entry and file chooser button.
   - Rename "View HRM file" button to "View exercise details".
-- New MapViewer subproject, similar to ExerciseViewer.
-  - It contains the MapViewer widget, which will be displayed as an extra tab in ExerciseViewer
-    (new last tab "Map").
-  - It contains parsers for different Location file formats, e.g. GPX, KML, ....
+- New TrackViewer subproject, similar to ExerciseViewer.
+  - It contains the TrackViewer widget, which will be displayed as an extra tab in ExerciseViewer
+    (new last tab "Track" or "Map").
+  - It contains parsers for different track file formats, e.g. GPX, KML, ....
     The parser list must use the ServiceLoader API to be extensible (similar to
     ExerciseParser in ExerciseViewer)
-  - The LocationParser must return a Track (better name?) object which contains a list of
+  - The LocationParser must return a Track object which contains a list of
     all parsed trackpoints. Each TrackPoint has these attys:
-    - location (how to store)
+    - latitude: double (degrees)
+    - longitude: double (degrees)
     - timestamp (optional)
     - comment (optional, e.g. for Lap split names)
-  - The MapViewer subproject MUST NOT have any dependencies to SportsTracker
-    or ExerciseViewer classes! Only ExerciseViewer uses the MapViewer classes!
+  - The TrackViewer subproject MUST NOT have any dependencies to SportsTracker
+    or ExerciseViewer classes! Only ExerciseViewer uses the TrackViewer classes!
 - ExerciseViewer:
-  - PVExercise class: add new optional property "track", which is a list of trackpoints (see above)
-  - PV gets the hrm filename on startup and the optional location filename.
-  - Location data can also be part of the hrm file (e.g. in Garmin TCX format), then only
+  - PVExercise class: add new optional property "track" of type Track (see above)
+  - PV gets the hrm filename on startup and the optional track filename.
+  - GPS Track data can also be part of the hrm file (e.g. in Garmin TCX format), then only
     the HRM filename will be passed on ExerciseViewer startup.
-  - ExerciseViewer parses the location data if available and stores it in the PVExercise object,
+  - ExerciseViewer parses the GPS track data if available and stores it in the PVExercise object,
     which will then be displayed.
-  - The new "Map" tab displays the location data of the exercise, if available.
-  - ExerciseViewer must be able to display the Map data only, when the user does not has a HRM file.
-- GarminTcxParser: add suport for parsing location data
+  - The new "Track" tab displays the track data of the exercise, if available.
+  - ExerciseViewer must be able to display the Track data only, when the user does not has a HRM file.
+- GarminTcxParser: add suport for parsing track data
 
 
 General TODOs:
