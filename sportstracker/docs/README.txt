@@ -217,10 +217,6 @@ SportsTracker, can import all HRM files at once by using the external tool
 Notes for Garmin users
 ----------------------
 
-The current ExerciseViewer version displays only exercise and lap data for
-Garmin TCX files. The support for sample (or trackpoint) data will come 
-in a future version.  
-
 The data stored in the recorded TCX files is sometimes wrong or imprecise.
 ExerciseViewer can only display the stored data, it can't decide whether the
 recorded data makes sense or not.
