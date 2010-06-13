@@ -22,6 +22,8 @@ public final class RecordingMode implements Serializable
     private byte bikeNumber;
     /** Has the temperature been recorded ? (Only in HAC4 devices). */
     private boolean temperature = false;
+    /** Has the location of the trackpoints been recorded? (GPS data) */
+    private boolean location = false;
     /** Is the exercise an interval trainging (S510 only?) */
     private boolean intervalExercise = false;
 
@@ -75,6 +77,14 @@ public final class RecordingMode implements Serializable
         this.temperature = temperature;
     }
     
+    public boolean isLocation() {
+        return location;
+    }
+    
+    public void setLocation(boolean location) {
+        this.location = location;
+    }
+    
     public boolean isIntervalExercise () {
         return intervalExercise;
     }
@@ -85,13 +95,9 @@ public final class RecordingMode implements Serializable
     
     /***** END: Generated Getters and Setters *****/
     
-    /** 
-     * Returns a string representation of this object. 
-     * @return string with object content
-     */
+    /** {@inheritDoc} */
     @Override
-    public String toString ()
-    {
+    public String toString() {
         StringBuilder sBuilder = new StringBuilder ();
 
         sBuilder.append (RecordingMode.class.getName () + ":\n");
@@ -100,7 +106,8 @@ public final class RecordingMode implements Serializable
         sBuilder.append ("  cadence=" + this.cadence + "\n");
         sBuilder.append ("  power=" + this.power + "\n");
         sBuilder.append ("  bikeNumber=" + this.bikeNumber + "\n");
-        sBuilder.append ("  temperature=" + this.temperature + "]\n");
+        sBuilder.append ("  temperature=" + this.temperature + "\n");
+        sBuilder.append ("  location=" + this.location + "\n");
         sBuilder.append ("  intervalExercise=" + this.intervalExercise + "]\n");
 
         return sBuilder.toString ();

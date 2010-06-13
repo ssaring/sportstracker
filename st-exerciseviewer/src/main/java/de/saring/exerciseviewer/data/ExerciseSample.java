@@ -23,8 +23,10 @@ public final class ExerciseSample implements Serializable {
     private short cadence;
     /** Distance at record moment (in meters). */
     private int distance;
-    /** Temperature at record moment (in degrees celcius). (Relevant for HAC4.) */
+    /** Temperature at record moment (in degrees celcius, optional). (Relevant for HAC4.) */
     private short temperature;
+    /** The geographical location of this sample in the exercise track (optional). */
+    private Position position;
     
     /***** BEGIN: Generated Getters and Setters *****/
     
@@ -75,7 +77,7 @@ public final class ExerciseSample implements Serializable {
     public void setDistance (int distance) {
         this.distance = distance;
     }
-
+    
     public short getTemperature () {
         return temperature;
     }
@@ -84,15 +86,19 @@ public final class ExerciseSample implements Serializable {
         this.temperature = temperature;
     }
     
+    public Position getPosition() {
+        return position;
+    }
+    
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     /***** END: Generated Getters and Setters *****/
 
-    /** 
-     * Returns a string representation of this object. 
-     * @return string with object content
-     */
+    /** {@inheritDoc} */
     @Override
-    public String toString ()
-    {
+    public String toString() {
         StringBuilder sBuilder = new StringBuilder ();
 
         sBuilder.append (ExerciseSample.class.getName () + ":\n");
@@ -102,7 +108,8 @@ public final class ExerciseSample implements Serializable {
         sBuilder.append ("  speed=" + this.speed + "\n");
         sBuilder.append ("  cadence=" + this.cadence + "\n");
         sBuilder.append ("  distance=" + this.distance + "\n");
-        sBuilder.append ("  temperature=" + this.temperature + "]\n");
+        sBuilder.append ("  temperature=" + this.temperature + "\n");
+        sBuilder.append ("  position=" + this.position + "]\n");
 
         return sBuilder.toString ();
     }

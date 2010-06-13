@@ -41,6 +41,7 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)
         assertFalse(exercise.recordingMode.cadence)
+        assertTrue(exercise.recordingMode.location)
         
         def calDate = Calendar.getInstance ()        
         calDate.set (2007, 8-1, 7, 2, 42, 41)
@@ -87,6 +88,8 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals(379, exercise.sampleList.size())
         
         assertEquals(0*1000, exercise.sampleList[0].timestamp)
+        assertEquals(37.8959665d, exercise.sampleList[0].position.latitude, 0.001d)
+        assertEquals(-122.4896709d, exercise.sampleList[0].position.longitude, 0.001d)
         assertEquals(0, exercise.sampleList[0].heartRate)
         assertEquals(4, exercise.sampleList[0].altitude)
         assertEquals(0, exercise.sampleList[0].speed)
@@ -94,6 +97,8 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals(0, exercise.sampleList[0].distance)
         
         assertEquals(129*1000, exercise.sampleList[20].timestamp)
+        assertEquals(37.8943428d, exercise.sampleList[20].position.latitude, 0.001d)
+        assertEquals(-122.4870681d, exercise.sampleList[20].position.longitude, 0.001d)
         assertEquals(0, exercise.sampleList[20].heartRate)
         assertEquals(6, exercise.sampleList[20].altitude)
         assertEquals(5.9811f, exercise.sampleList[20].speed, 0.001f)
@@ -101,12 +106,14 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals(301, exercise.sampleList[20].distance)
 
         assertEquals(((39*60) + 5) * 1000, exercise.sampleList[378].timestamp)
+        assertEquals(37.8765614d, exercise.sampleList[378].position.latitude, 0.001d)
+        assertEquals(-122.4601646d, exercise.sampleList[378].position.longitude, 0.001d)
         assertEquals(0, exercise.sampleList[378].heartRate)
         assertEquals(10, exercise.sampleList[378].altitude)
         // speed must be 0 (corrected, because distance is decreased in the last sample)
         assertEquals(0, exercise.sampleList[378].speed, 0.001f)
         assertEquals(0, exercise.sampleList[378].cadence)
-        assertEquals(8349, exercise.sampleList[378].distance)
+        assertEquals(8349, exercise.sampleList[378].distance)        
     }
     
     /**
@@ -120,6 +127,7 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)
         assertTrue(exercise.recordingMode.cadence)
+        assertTrue(exercise.recordingMode.location)
         
         def calDate = Calendar.getInstance ()        
         calDate.set (2009, 12-1, 9, 6, 54, 25)
@@ -178,6 +186,8 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals(1254, exercise.sampleList.size())
         
         assertEquals(1*1000, exercise.sampleList[0].timestamp)
+        assertEquals(51.045824d, exercise.sampleList[0].position.latitude, 0.001d)
+        assertEquals(13.809552d, exercise.sampleList[0].position.longitude, 0.001d)        
         assertEquals(81, exercise.sampleList[0].heartRate)
         assertEquals(110, exercise.sampleList[0].altitude)
         assertEquals(0, exercise.sampleList[0].speed)
@@ -185,6 +195,8 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals(0, exercise.sampleList[0].distance)
         
         assertEquals(72*1000, exercise.sampleList[20].timestamp)
+        assertEquals(51.044963d, exercise.sampleList[20].position.latitude, 0.001d)
+        assertEquals(13.807715d, exercise.sampleList[20].position.longitude, 0.001d)        
         assertEquals(121, exercise.sampleList[20].heartRate)
         assertEquals(108, exercise.sampleList[20].altitude)
         assertEquals(13.739f, exercise.sampleList[20].speed, 0.001f)
@@ -193,6 +205,8 @@ class GarminTcxParserTest extends GroovyTestCase {
 
         // last sample of last lap
         assertEquals(6086*1000, exercise.sampleList[1253].timestamp) 
+        assertEquals(51.045960d, exercise.sampleList[1253].position.latitude, 0.001d)
+        assertEquals(13.809391d, exercise.sampleList[1253].position.longitude, 0.001d)        
         assertEquals(160, exercise.sampleList[1253].heartRate)
         assertEquals(112, exercise.sampleList[1253].altitude)
         assertEquals(12.5676f, exercise.sampleList[1253].speed, 0.001f)

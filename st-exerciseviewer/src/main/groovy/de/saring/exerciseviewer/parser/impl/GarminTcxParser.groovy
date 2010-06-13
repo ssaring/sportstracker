@@ -103,13 +103,10 @@ class GarminTcxParser extends AbstractExerciseParser {
                     long tpTimestamp = sdFormat.parse(trackpoint.Time.text()).time
                     lastTrackpointTimestamp = tpTimestamp
                     evSample.setTimestamp(tpTimestamp - exercise.date.time - totalTimeGapBetweenLaps)
-                    
-                    // get optional heartrate data
-					if (!trackpoint.HeartRateBpm.isEmpty()) {
-					    evSample.heartRate = trackpoint.HeartRateBpm.Value.toInteger()
-						evLap.heartRateSplit = evSample.heartRate
-					}
-										
+
+                    parseTrackpointPositionData(exercise, evSample, trackpoint)        
+                    parseTrackpointHeartRateData(evLap, evSample, trackpoint)        
+
                     // get distance data (some trackpoints might not have distance data!)                    
                     if (!trackpoint.DistanceMeters.isEmpty()) {                        
                         double tpDistanceMeters = trackpoint.DistanceMeters.toDouble()                        
@@ -250,6 +247,22 @@ class GarminTcxParser extends AbstractExerciseParser {
 	    }
     }    
         
+    def parseTrackpointPositionData(exercise, evSample, tpElement) {        
+        if (!tpElement.Position.isEmpty()) {
+            exercise.recordingMode.location = true
+            def latitude = tpElement.Position.LatitudeDegrees.toDouble()
+            def longitude = tpElement.Position.LongitudeDegrees.toDouble()
+            evSample.position = new Position(latitude, longitude)
+        }
+    }    
+    
+    def parseTrackpointHeartRateData(evLap, evSample, tpElement) {        
+        if (!tpElement.HeartRateBpm.isEmpty()) {
+            evSample.heartRate = tpElement.HeartRateBpm.Value.toInteger()
+            evLap.heartRateSplit = evSample.heartRate
+        }
+    }    
+    
     def calculateAvgSpeed(exercise) {
         exercise.speed.speedAVG = CalculationUtils.calculateAvgSpeed(
             (float) (exercise.speed.distance / 1000f), (int) Math.round(exercise.duration / 10f))
