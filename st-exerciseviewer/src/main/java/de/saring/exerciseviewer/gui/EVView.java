@@ -1,14 +1,18 @@
 package de.saring.exerciseviewer.gui;
 
+import javax.swing.ActionMap;
+import javax.swing.JDialog;
+
+import org.jdesktop.application.Action;
+
 import com.google.inject.Inject;
+
 import de.saring.exerciseviewer.gui.panels.DiagramPanel;
 import de.saring.exerciseviewer.gui.panels.LapPanel;
 import de.saring.exerciseviewer.gui.panels.MainPanel;
 import de.saring.exerciseviewer.gui.panels.OptionalPanel;
 import de.saring.exerciseviewer.gui.panels.SamplePanel;
-import javax.swing.ActionMap;
-import javax.swing.JDialog;
-import org.jdesktop.application.Action;
+import de.saring.exerciseviewer.gui.panels.TrackPanel;
 
 /**
  * This class contains all view (MVC) related data and functionality of the 
@@ -30,6 +34,7 @@ public class EVView extends JDialog {
     private LapPanel lapPanel;
     private SamplePanel samplePanel;
     private DiagramPanel diagramPanel;
+    private TrackPanel trackPanel;
 
     
     /**
@@ -40,10 +45,11 @@ public class EVView extends JDialog {
      * @param lapPanel the lap panel
      * @param samplePanel the sample panel
      * @param diagramPanel the diagram panel
+     * @param trackPanel the track panel
      */
     @Inject
     public EVView (EVContext context, MainPanel mainPanel, OptionalPanel optionalPanel,
-        LapPanel lapPanel, SamplePanel samplePanel, DiagramPanel diagramPanel) {
+        LapPanel lapPanel, SamplePanel samplePanel, DiagramPanel diagramPanel, TrackPanel trackPanel) {
         
         super (context.getMainFrame ());
         this.context = context;
@@ -52,6 +58,7 @@ public class EVView extends JDialog {
         this.lapPanel = lapPanel;
         this.samplePanel = samplePanel;
         this.diagramPanel = diagramPanel;
+        this.trackPanel = trackPanel;
     }
 
     /**
@@ -71,6 +78,7 @@ public class EVView extends JDialog {
         lapPanel.setDocument (document);
         samplePanel.setDocument (document);
         diagramPanel.setDocument (document);
+        trackPanel.setDocument (document);
         
         mainPanel.setDiagramPanel (diagramPanel);
         this.getRootPane ().setDefaultButton (btClose);
@@ -80,6 +88,7 @@ public class EVView extends JDialog {
         tabbedPane.add (context.getResReader ().getString ("pv.view.laps"), lapPanel);
         tabbedPane.add (context.getResReader ().getString ("pv.view.samples"), samplePanel);
         tabbedPane.add (context.getResReader ().getString ("pv.view.diagram"), diagramPanel);
+        tabbedPane.add (context.getResReader ().getString ("pv.view.track"), trackPanel);
 
         // start resource injection for automatic widget internationalization for this
         // component and all subcomponents
@@ -121,11 +130,12 @@ public class EVView extends JDialog {
         // show filename in window title
         this.setTitle (APPLICATION_NAME + " - " + document.getExerciseFilename ());
         
-        mainPanel.displayExercise ();
-        optionalPanel.displayExercise ();
-        lapPanel.displayExercise ();
-        samplePanel.displayExercise ();
-        diagramPanel.displayExercise ();
+        mainPanel.displayExercise();
+        optionalPanel.displayExercise();
+        lapPanel.displayExercise();
+        samplePanel.displayExercise();
+        diagramPanel.displayExercise();
+        trackPanel.displayExercise();
         
         pack ();
     }

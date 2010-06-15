@@ -6,16 +6,23 @@ Current GPS support implementation (prototype):
 - What's done:
   - Position class stores the GPS location data, is an optional atty in ExerciseSample
   - GarminTcxParser: parses and stores the GPS location data (Position), incl. checks in unit tests
-  - EVExercise.RecordMode has now a location-flag, it's true when GPS data is available 
+  - EVExercise.RecordMode has now a location-flag, it's true when GPS data is available
+  - added new "Track" to ExerciseViewer
 - TODOs:
+  - show track (if available) in ExerciseViewer (implementation started, see TODO's there)
+  - check dependency JARs of swing-ws - are they all needed?
+    - declare swingx-ws in pom.xml of ExerciseViewer only? 
   - If a GPS data is in an external file, then store the data in EVExercise.Track class (optional)
     - Track has 1..n TrackPoints
     - TrackPoint has the attys:
       - Timestamp
       - Position
       - Comment
-  - add a LocationData-Flag to EVExercise.RecordingMode
-  - the TackViewer in ExerciseViewer decides which position data must be displayed
+  - the TrackViewer in ExerciseViewer decides which position data must be displayed
+  - add SwingX-WS usage to library list in ReadMe.txt
+- Useful links: 
+  http://www.naxos-software.de/blog/index.php?/archives/92-TracknMash-Openstreetmap-Karten-in-JavaSwing-mit-JXMapViewer.html
+  http://frickelblog.wordpress.com/tag/jxmapviewer/
 
 GPS track data and viewer support - OLD DESIGN:
 ---------------------------------------------------

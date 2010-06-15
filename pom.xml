@@ -115,6 +115,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.swinglabs</groupId>
+            <artifactId>swingx-ws</artifactId>
+            <version>1.0</version>
+        </dependency>
         <!-- Common test dependencies -->
         <dependency>
             <groupId>junit</groupId>
