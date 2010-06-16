@@ -6,7 +6,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.border.EmptyBorder;
 
@@ -27,7 +30,7 @@ import de.saring.exerciseviewer.gui.EVContext;
  * This class is the implementation of the "Track" panel, which displays the recorded location  
  * data of the exercise (if available) in a map.<br>
  * The map component is JXMapKit from the SwingLabs project, the data provider is OpenStreetMap.
- * 
+ *
  * @author Stefan Saring
  * @version 1.0
  */
@@ -59,6 +62,7 @@ public class TrackPanel extends BasePanel {
         // show track in mapviewer if data is available 
         final EVExercise exercise = getDocument ().getExercise ();
         if (exercise.getRecordingMode().isLocation()) {
+            // TODO: is exception handling required? e.g. when there's no internet connection
             setupMapViewer();
             showTrack(exercise);
         }
@@ -81,65 +85,101 @@ public class TrackPanel extends BasePanel {
      * @param exercise the exercise with track data
      */
     private void showTrack(EVExercise exercise) {
-
-        // show start and end position of the track
-        Position startPosition = exercise.getSampleList()[0].getPosition();
-        // Position endPosition = exercise.getSampleList()[exercise.getSampleList().length - 1].getPosition();
-
-        // TODO: only one OverlayPainter can be active - how to display start/end and track?
-//        HashSet<Waypoint> waypoints = new HashSet<Waypoint>();
-//        waypoints.add(new Waypoint(startPosition.getLatitude(), startPosition.getLongitude()));
-//        waypoints.add(new Waypoint(endPosition.getLatitude(), endPosition.getLongitude()));
-//        WaypointPainter<JXMapViewer> painter = new WaypointPainter<JXMapViewer>();
-//        painter.setWaypoints(waypoints);
-//        mapKit.getMainMap().setOverlayPainter(painter);
-
-        // TODO: how to set proper center position and zoom factor? 
-        mapKit.setCenterPosition(new GeoPosition(startPosition.getLatitude(), startPosition.getLongitude()));  
-        mapKit.setZoom(5);  
+        List<GeoPosition> geoPositions = createGeoPositionList(exercise);
         
-        // display track
-        setupTrackPainter(exercise.getSampleList());
+        if (!geoPositions.isEmpty()) {
+            // TODO: how to set proper center position and the fitting zoom factor?
+            // set initial map position and zoom factor
+            GeoPosition startPosition = geoPositions.get(0);
+            mapKit.setCenterPosition(new GeoPosition(startPosition.getLatitude(), startPosition.getLongitude()));  
+            mapKit.setZoom(5);  
+            
+            // display track
+            setupTrackPainter(geoPositions);
+        }
     }
-
-    // TODO: isn't there a predefined painter?
-    // This code is based on the example from 
-    // http://www.naxos-software.de/blog/index.php?/archives/92-TracknMash-Openstreetmap-Karten-in-JavaSwing-mit-JXMapViewer.html
-    private void setupTrackPainter(final ExerciseSample[] exerciseSamples) {
-
+    
+    /**
+     * Creates a custom painter which draws the track.
+     * 
+     * @param geoPositions list of GeoPosition objects of this track
+     */
+    private void setupTrackPainter(final List<GeoPosition> geoPositions) {
+        // This code is based on the example from 
+        // http://www.naxos-software.de/blog/index.php?/archives/92-TracknMash-Openstreetmap-Karten-in-JavaSwing-mit-JXMapViewer.html
+        
         Painter<JXMapViewer> lineOverlay = new Painter<JXMapViewer>() {
             public void paint(Graphics2D g, JXMapViewer map, int w, int h) {
+                
                 g = (Graphics2D) g.create();
+                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
                 // convert from viewport to world bitmap
                 Rectangle rect = mapKit.getMainMap().getViewportBounds();
                 g.translate(-rect.x, -rect.y);
 
-                // do the drawing
-                g.setColor(Color.RED);
-                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g.setStroke(new BasicStroke(2));
-
-                int lastX = -1;
-                int lastY = -1;
-                for (ExerciseSample exerciseSample : exerciseSamples) {
-
-                    Position pos = exerciseSample.getPosition();
-                    if (pos != null) {
-                        // convert geo to world bitmap pixel
-                        GeoPosition geoPosition = new GeoPosition(pos.getLatitude(), pos.getLongitude());
-                        Point2D pt = mapKit.getMainMap().getTileFactory().geoToPixel(geoPosition, mapKit.getMainMap().getZoom());
-                        if (lastX != -1 && lastY != -1) {
-                            g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
-                        }
-                        lastX = (int) pt.getX();
-                        lastY = (int) pt.getY();
-                    }
-                }
+                // draw track line and waypoints for start and end position
+                drawTrackLine(g, geoPositions);
+                drawWaypoint(g, geoPositions.get(0), Color.GREEN);
+                drawWaypoint(g, geoPositions.get(geoPositions.size()-1), Color.BLUE);
 
                 g.dispose();
             }
         };
         mapKit.getMainMap().setOverlayPainter(lineOverlay);
     }
+    
+    /**
+     * Draws a red line which connects all GeoPosition of the track.
+     * 
+     * @param g the Graphics2D context
+     * @param geoPositions list of GeoPosition objects of this track
+     */
+    private void drawTrackLine(Graphics2D g, List<GeoPosition> geoPositions) {
+        g.setColor(Color.RED);
+        g.setStroke(new BasicStroke(2));
+
+        int lastX = -1;
+        int lastY = -1;
+        
+        for (GeoPosition geoPosition : geoPositions) {
+            Point2D pt = convertGeoPosToPixelPos(geoPosition);
+            if (lastX != -1 && lastY != -1) {
+                g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
+            }
+            lastX = (int) pt.getX();
+            lastY = (int) pt.getY();
+        }
+    }
+
+    /**
+     * Draws a waypoint circle at the specified GeoPosition.
+     * 
+     * @param g the Graphics2D context
+     * @param geoPosition position of the waypoint
+     * @param color the color of the circle
+     */
+    private void drawWaypoint(Graphics2D g, GeoPosition geoPosition, Color color) {
+        g.setColor(color);
+        g.setStroke(new BasicStroke(3));
+
+        Point2D pt = convertGeoPosToPixelPos(geoPosition);
+        g.draw(new Ellipse2D.Double(pt.getX() - 5, pt.getY() - 5, 10, 10));
+    }
+    
+    private List<GeoPosition> createGeoPositionList(EVExercise exercise) {
+        ArrayList<GeoPosition> geoPositions = new ArrayList<GeoPosition>();
+        
+        for (ExerciseSample exerciseSample : exercise.getSampleList()) {
+            Position pos = exerciseSample.getPosition();
+            if (pos != null) {
+                geoPositions.add(new GeoPosition(pos.getLatitude(), pos.getLongitude()));
+            }
+        }
+        return geoPositions;
+    }
+
+    private Point2D convertGeoPosToPixelPos(GeoPosition geoPosition) {
+        return mapKit.getMainMap().getTileFactory().geoToPixel(geoPosition, mapKit.getMainMap().getZoom());
+    }    
 }
