@@ -58,11 +58,10 @@ public class TrackPanel extends BasePanel {
     /** {@inheritDoc} */
     @Override
     public void displayExercise () {
-
-        // show track in mapviewer if data is available 
         final EVExercise exercise = getDocument ().getExercise ();
+        
+        // show track in mapviewer if data is available 
         if (exercise.getRecordingMode().isLocation()) {
-            // TODO: is exception handling required? e.g. when there's no internet connection
             setupMapViewer();
             showTrack(exercise);
         }
