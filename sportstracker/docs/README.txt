@@ -294,6 +294,8 @@ The SportsTracker project uses the following libraries:
       License: Apache-style open source license
   - SwingX 1.6 (https://swingx.dev.java.net/)
       License: Lesser General Public License (LGPL)
+  - SwingX-WS 1.0 (https://swingx-ws.dev.java.net/)
+      License: Lesser General Public License (LGPL)
   - MiG Layout 3.7.3.1 (http://www.miglayout.com/)
       License: BSD License
   - commons-cli 1.2 (http://commons.apache.org/cli/)
@@ -372,4 +374,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2010/05/27
+2010/06/17

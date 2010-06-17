@@ -11,8 +11,6 @@ Current GPS support implementation (prototype):
   - TrackPanel displays the track in a map component (JXMapKit with OpenStreetMap backend) 
 - TODOs:
   - see TODO's in TrackPanel
-  - check dependency JARs of swing-ws - are they all needed?
-    - declare swingx-ws in pom.xml of ExerciseViewer only? 
   - If a GPS data is in an external file, then store the data in EVExercise.Track class (optional)
     - Track has 1..n TrackPoints
     - TrackPoint has the attys:
@@ -20,7 +18,7 @@ Current GPS support implementation (prototype):
       - Position
       - Comment
   - the TrackViewer in ExerciseViewer decides which position data must be displayed
-  - add SwingX-WS usage to library list in ReadMe.txt
+  - add to CHANGES.txt and documentation in README.txt
 - Useful links: 
   http://www.naxos-software.de/blog/index.php?/archives/92-TracknMash-Openstreetmap-Karten-in-JavaSwing-mit-JXMapViewer.html
   http://frickelblog.wordpress.com/tag/jxmapviewer/
