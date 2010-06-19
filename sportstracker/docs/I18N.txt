@@ -49,6 +49,7 @@ SportsTracker 4.3.0:
 - All texts and resource keys with "PolarViewer" has been renamed to 
   "ExerciseViewer" (also updated in all translations)
 - pv.view.track (new)
+- pv.track.no_track_data.text (new)
 
 SportsTracker 4.0.1:
 

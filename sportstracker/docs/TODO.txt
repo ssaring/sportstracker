@@ -9,6 +9,7 @@ Current GPS support implementation (prototype):
   - EVExercise.RecordMode has now a location-flag, it's true when GPS data is available
   - added new TrackPanel (named "Track") to ExerciseViewer
   - TrackPanel displays the track in a map component (JXMapKit with OpenStreetMap backend) 
+  - TrackPanel displays a label for missing data if track data is not available 
 - TODOs:
   - see TODO's in TrackPanel
   - If a GPS data is in an external file, then store the data in EVExercise.Track class (optional)

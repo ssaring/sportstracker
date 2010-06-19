@@ -8,9 +8,11 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.swingx.JXMapKit;
@@ -52,7 +54,12 @@ public class TrackPanel extends BasePanel {
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(8, 8, 8, 8));
         
-        // create map viewer later, only when location data is available
+        // create initial label, that track data is not available
+        // (map viewer will be created later)
+        JLabel laNoTrackData = new JLabel();
+        laNoTrackData.setHorizontalAlignment(JLabel.CENTER);
+        laNoTrackData.setName("pv.track.no_track_data");
+        add(laNoTrackData, java.awt.BorderLayout.CENTER);  
     }
     
     /** {@inheritDoc} */
@@ -60,13 +67,10 @@ public class TrackPanel extends BasePanel {
     public void displayExercise () {
         final EVExercise exercise = getDocument ().getExercise ();
         
-        // show track in mapviewer if data is available 
+        // show track in mapviewer (when track data is available) 
         if (exercise.getRecordingMode().isLocation()) {
             setupMapViewer();
             showTrack(exercise);
-        }
-        else {
-            // TODO: show "no track data available" or a disabled map component
         }
     }
     
@@ -77,25 +81,41 @@ public class TrackPanel extends BasePanel {
         removeAll();
         add(mapKit, java.awt.BorderLayout.CENTER);  
     }
-   
+
     /**
      * Displays the track of the specified exercise.
      * 
      * @param exercise the exercise with track data
      */
     private void showTrack(EVExercise exercise) {
-        List<GeoPosition> geoPositions = createGeoPositionList(exercise);
         
-        if (!geoPositions.isEmpty()) {
-            // TODO: how to set proper center position and the fitting zoom factor?
-            // set initial map position and zoom factor
-            GeoPosition startPosition = geoPositions.get(0);
-            mapKit.setCenterPosition(new GeoPosition(startPosition.getLatitude(), startPosition.getLongitude()));  
-            mapKit.setZoom(5);  
+        List<GeoPosition> geoPositions = createGeoPositionList(exercise);        
+        if (!geoPositions.isEmpty()) {            
+            
+            // set center position of track and initial zoom factor            
+            // TODO: mapKit.getMainMap().calculateZoomFrom(positions) does not work properly,
+            // so we need to calculate center position and zoom factor here 
+            mapKit.setCenterPosition(calculateCenterPosition(geoPositions));
+            mapKit.setZoom(6);
             
             // display track
             setupTrackPainter(geoPositions);
         }
+    }
+
+    /**
+     * Calculates the center position of the route.
+     * @param positions list of positions of the route
+     * @return the center position
+     */
+    private GeoPosition calculateCenterPosition(List<GeoPosition> positions) {        
+        Rectangle2D rect = new Rectangle2D.Double(
+            positions.get(0).getLatitude(), positions.get(0).getLongitude(), 0, 0);
+        
+        for (GeoPosition pos : positions) {
+            rect.add(new Point2D.Double(pos.getLatitude(), pos.getLongitude()));
+        }
+        return new GeoPosition(rect.getCenterX(), rect.getCenterY());
     }
     
     /**
