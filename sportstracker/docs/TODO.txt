@@ -3,22 +3,14 @@ SportsTracker-TODO
 
 Current GPS support implementation (prototype):
 -----------------------------------------------
-- What's done:
-  - Position class stores the GPS location data, is an optional atty in ExerciseSample
-  - GarminTcxParser: parses and stores the GPS location data (Position), incl. checks in unit tests
-  - EVExercise.RecordMode has now a location-flag, it's true when GPS data is available
-  - added new TrackPanel (named "Track") to ExerciseViewer
-  - TrackPanel displays the track in a map component (JXMapKit with OpenStreetMap backend) 
-  - TrackPanel displays a label for missing data if track data is not available 
-- TODOs:
-  - If a GPS data is in an external file, then store the data in EVExercise.Track class (optional)
-    - Track has 1..n TrackPoints
-    - TrackPoint has the attys:
-      - Timestamp
-      - Position
-      - Comment
-  - the TrackViewer in ExerciseViewer decides which position data must be displayed
-  - add to CHANGES.txt and documentation in README.txt
+- add track/map documentation in README.txt
+- If a GPS data is in an external file, then store the data in EVExercise.Track class (optional)
+  - Track has 1..n TrackPoints
+  - TrackPoint has the attys:
+    - Timestamp
+    - Position
+    - Comment
+- the TrackViewer in ExerciseViewer decides which position data must be displayed
 - Useful links: 
   http://www.naxos-software.de/blog/index.php?/archives/92-TracknMash-Openstreetmap-Karten-in-JavaSwing-mit-JXMapViewer.html
   http://frickelblog.wordpress.com/tag/jxmapviewer/

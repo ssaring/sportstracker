@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v4.3.0:
+v5.0.0:
  General changes:
   - CHANGE TO MAVEN BUILD SYSTEM (not Ant-based anymore)
     - Maven multi project: split into modules for strict separation,
@@ -67,6 +67,15 @@ v4.3.0:
       unit tests (parses the speed, distance, altitude and cadence)
     - added some cadence test data to Edge705-Running-Heartrate-2Laps.tcx
       (doesn't make sense for running exercises, but test data is needed)
+    - parses and stores the GPS location data  (incl. checks in unit tests)
+  - Track Panel for displaying the track of the exercise inside a map:
+    - new class Position class stores the GPS location data, 
+      is an optional atty in ExerciseSample  
+    - new flag EVExercise.RecordMode.location, it's true when GPS data
+      is available
+    - new class TrackPanel (named "Track"), it displays the track in a map
+      component (JXMapKit from SwingX-WS with OpenStreetMap backend) 
+    - TrackPanel displays a label for missing data if there's no track data 
     
 v4.2.1 (no public release, internal marker only):
  SportsTracker changes:

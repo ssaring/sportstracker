@@ -44,7 +44,7 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
-SportsTracker 4.3.0:
+SportsTracker 5.0.0:
 
 - All texts and resource keys with "PolarViewer" has been renamed to 
   "ExerciseViewer" (also updated in all translations)
