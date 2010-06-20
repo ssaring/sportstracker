@@ -39,6 +39,7 @@ import de.saring.exerciseviewer.gui.EVContext;
 public class TrackPanel extends BasePanel {
     
     private JXMapKit mapKit;
+    private boolean panelWasVisible = false;
     
     /**
      * Standard c'tor.
@@ -64,10 +65,29 @@ public class TrackPanel extends BasePanel {
     
     /** {@inheritDoc} */
     @Override
+    public void setVisible(boolean visible) {
+        
+        // display the track when this panel gets visible for the first time 
+        // (because the needed map viewer dimensions are not set at panel creation)
+        if (visible && !panelWasVisible) {
+            displayTrack();
+            panelWasVisible = true;
+        }
+        super.setVisible(visible);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void displayExercise () {
+        // track will be displayed later
+    }
+
+    /**
+     * Shows the exercise track in the map viewer (if track data is available). 
+     */
+    private void displayTrack() {
         final EVExercise exercise = getDocument ().getExercise ();
         
-        // show track in mapviewer (when track data is available) 
         if (exercise.getRecordingMode().isLocation()) {
             setupMapViewer();
             showTrack(exercise);
@@ -87,35 +107,75 @@ public class TrackPanel extends BasePanel {
      * 
      * @param exercise the exercise with track data
      */
-    private void showTrack(EVExercise exercise) {
+    private void showTrack(EVExercise exercise) {        
+        List<GeoPosition> geoPositions = createGeoPositionList(exercise);
         
-        List<GeoPosition> geoPositions = createGeoPositionList(exercise);        
-        if (!geoPositions.isEmpty()) {            
-            
-            // set center position of track and initial zoom factor            
-            // TODO: mapKit.getMainMap().calculateZoomFrom(positions) does not work properly,
-            // so we need to calculate center position and zoom factor here 
-            mapKit.setCenterPosition(calculateCenterPosition(geoPositions));
-            mapKit.setZoom(6);
-            
+        if (!geoPositions.isEmpty()) {
+            // setup map zoom and position
+            setupZoomAndCenterPosition(geoPositions);            
             // display track
             setupTrackPainter(geoPositions);
         }
     }
-
+    
     /**
-     * Calculates the center position of the route.
+     * Sets the zoom level and map center position. The full track will be visible
+     * with as much details as possible.
+     * This implementations is a workaround for a bug in JXMapViewer.calculateZoomFrom(),
+     * which should do the same.
      * @param positions list of positions of the route
-     * @return the center position
      */
-    private GeoPosition calculateCenterPosition(List<GeoPosition> positions) {        
+    private void setupZoomAndCenterPosition(List<GeoPosition> positions) {
+
+        // calculate and set center position of the track
+        Rectangle2D gpRectangle = createGeoPositionRectangle(positions);
+        GeoPosition gpCenter = new GeoPosition(gpRectangle.getCenterX(), gpRectangle.getCenterY());
+        mapKit.setCenterPosition(gpCenter);
+        
+        // calculate mapKit dimensions based on panel dimensions (with a little offset)
+        // (there's a bug in JXMapKit.getWidth/getHeight)
+        int mapKitWidth = getWidth() - 30;
+        int mapKitHeight = getHeight() - 30;
+
+        // start with zoom level for maximum details
+        boolean fullTrackVisible = false;
+        int currentZoom = 0;
+        int maxZoom = mapKit.getMainMap().getTileFactory().getInfo().getMaximumZoomLevel();
+
+        // stop when the track is completely visible or when the max zoom level has been reached
+        while (!fullTrackVisible && currentZoom < maxZoom) {
+            currentZoom++;
+            mapKit.setZoom(currentZoom);
+
+            // calculate pixel positions of top left and bottom right in the track rectangle  
+            Point2D ptTopLeft = convertGeoPosToPixelPos(new GeoPosition(
+                    gpRectangle.getX(), gpRectangle.getY()));
+            Point2D ptBottomRight = convertGeoPosToPixelPos(new GeoPosition(
+                    gpRectangle.getX() + gpRectangle.getWidth(), 
+                    gpRectangle.getY() + gpRectangle.getHeight()));
+
+            // calculate current track width and height in pixels (can be negative) 
+            int trackPixelWidth = Math.abs((int) (ptBottomRight.getX() - ptTopLeft.getX()));
+            int trackPixelHeight = Math.abs((int) (ptBottomRight.getY() - ptTopLeft.getY()));
+            
+            // track is completely visible when track dimensions are smaller than map viewer dimensions
+            fullTrackVisible = trackPixelWidth < mapKitWidth && trackPixelHeight < mapKitHeight;
+        }        
+    }
+    
+    /**
+     * Creates a rectangle of minimal size which contains all specified GeoPositions.
+     * @param positions list of positions of the route
+     * @return the created Rectangle
+     */
+    private Rectangle2D createGeoPositionRectangle(List<GeoPosition> positions) {        
         Rectangle2D rect = new Rectangle2D.Double(
             positions.get(0).getLatitude(), positions.get(0).getLongitude(), 0, 0);
         
         for (GeoPosition pos : positions) {
             rect.add(new Point2D.Double(pos.getLatitude(), pos.getLongitude()));
         }
-        return new GeoPosition(rect.getCenterX(), rect.getCenterY());
+        return rect;
     }
     
     /**
@@ -124,8 +184,6 @@ public class TrackPanel extends BasePanel {
      * @param geoPositions list of GeoPosition objects of this track
      */
     private void setupTrackPainter(final List<GeoPosition> geoPositions) {
-        // This code is based on the example from 
-        // http://www.naxos-software.de/blog/index.php?/archives/92-TracknMash-Openstreetmap-Karten-in-JavaSwing-mit-JXMapViewer.html
         
         Painter<JXMapViewer> lineOverlay = new Painter<JXMapViewer>() {
             public void paint(Graphics2D g, JXMapViewer map, int w, int h) {

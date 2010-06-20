@@ -11,7 +11,6 @@ Current GPS support implementation (prototype):
   - TrackPanel displays the track in a map component (JXMapKit with OpenStreetMap backend) 
   - TrackPanel displays a label for missing data if track data is not available 
 - TODOs:
-  - see TODO's in TrackPanel
   - If a GPS data is in an external file, then store the data in EVExercise.Track class (optional)
     - Track has 1..n TrackPoints
     - TrackPoint has the attys:
