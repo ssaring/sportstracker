@@ -1,7 +1,10 @@
 SportsTracker-TODO
 ==================
 
+Before next release:
+--------------------
 - add track/map feature documentation in README.txt
+- add Timex support to ST website (also in Metadata)
 
 Support for track data in external GPS files (GPX): 
 ---------------------------------------------------
@@ -82,6 +85,9 @@ Diagram panel:
 ExerciseParsers:
 - GarminTcxParser:
   - refactor big method parseExercisePath(...), split into multiple methods
+  - parse speed data for Trackpoints if available instead of calculation 
+    (available when there's a speed sensor, e.g. on Edge 500 export files) 
+  - average speed is wrong when there are pauses in the exercise (Auto-Stop)
 - PolarHsrRawParser and PolarSRawParser:
   - Refactor: Extract duplicate methods/code
 - HAC4 Parser:

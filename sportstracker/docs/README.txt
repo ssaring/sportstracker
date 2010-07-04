@@ -45,6 +45,7 @@ work too, but I can't test them, user feedback is welcome):
   - CicloSport HAC5    (tested)
   - Garmin Edge        (tested with Edge 705)
   - Garmin Forerunner  (tested with Forerunner 305)
+  - Timex Ironmen Race Trainer (tested)
   - Oregon Scientific SmartSync WM100 (tested)
   - Some Sony Ericsson mobiles (tested with W580i)
 
@@ -237,6 +238,19 @@ The official "Garmin Training Center" software shows similar problems for
 the included test exercise files. 
 
 
+Notes for Timex users
+---------------------
+
+The ExerciseViewer is able to parse and display PWX exercise files. These 
+files can to be downloaded from the watch by using the Timex Device Agent
+software (works only on Windows and Mac OS X systems) or from the
+TrainingPeaks.com website, if the files have been uplaoded there.  
+Windows users can find the downloaded PWX files in the directory 
+%USERDIR%/Documents/TimexDA/Set.
+
+Exercise donwload on Linux systems is not possible yet.
+
+
 Developer Requirements
 ----------------------
 
@@ -374,4 +388,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2010/06/17
+2010/07/04

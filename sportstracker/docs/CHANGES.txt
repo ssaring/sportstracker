@@ -76,6 +76,12 @@ v5.0.0:
     - new class TrackPanel (named "Track"), it displays the track in a map
       component (JXMapKit from SwingX-WS with OpenStreetMap backend) 
     - TrackPanel displays a label for missing data if there's no track data 
+  - Timex PWX exercise file support 
+    - contributed by Robert Schultz <schultzr@users.sourceforge.net>
+    - tested with Timex Ironman Race Trainer, could work with others too
+    - implementation of TimexPwxParser, unit tests and example files
+      (initial release, does not parse all available data yet)
+   
     
 v4.2.1 (no public release, internal marker only):
  SportsTracker changes:

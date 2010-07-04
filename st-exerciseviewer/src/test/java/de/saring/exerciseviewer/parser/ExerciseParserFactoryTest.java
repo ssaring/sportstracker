@@ -1,6 +1,7 @@
 package de.saring.exerciseviewer.parser;
 
 import de.saring.exerciseviewer.parser.impl.PolarSRawParser;
+import de.saring.exerciseviewer.parser.impl.TimexPwxParser;
 import de.saring.exerciseviewer.core.EVException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -24,6 +25,9 @@ public class ExerciseParserFactoryTest {
 
         parser = ExerciseParserFactory.getParser ("C:\\Test 123\\Exercise2.SRD");
         assertTrue (parser instanceof PolarSRawParser);
+
+        parser = ExerciseParserFactory.getParser("exercises/shouldtherebeafile.pwx");
+        assertTrue (parser instanceof TimexPwxParser);
 
         // tests for RS200SD parser (implemented in Groovy)
         parser = ExerciseParserFactory.getParser ("exercises/exercise1.xml");
