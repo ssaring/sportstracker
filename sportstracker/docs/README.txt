@@ -241,14 +241,34 @@ the included test exercise files.
 Notes for Timex users
 ---------------------
 
-The ExerciseViewer is able to parse and display PWX exercise files. These 
-files can to be downloaded from the watch by using the Timex Device Agent
-software (works only on Windows and Mac OS X systems) or from the
-TrainingPeaks.com website, if the files have been uplaoded there.  
-Windows users can find the downloaded PWX files in the directory 
-%USERDIR%/Documents/TimexDA/Set.
+The ExerciseViewer is able to parse and display PWX exercise files. These
+files are generated when the watch data is transferred from the watch to your
+computer using the Timex Device Agent software (available only for Windows
+and Mac OS X systems.)  
+If you are connected to the Internet when transferring data from your watch,
+the files are uploaded to the Training Peaks website and saved on your local
+hard disk.  If you are not connected to to the Internet, the Timex Device
+Agent software will save your PWX files on your hard disk until the next time
+you are connected to the Internet and run Timex Device Agent.
 
-Exercise donwload on Linux systems is not possible yet.
+Windows users can find the PWX files in the following directories:
+- before transfer to trainingpeaks.com: %USERDIR%/Documents/TimexDA/Queued/
+- after transfer to trainingpeaks.com: %USERDIR%/Documents/TimexDA/Sent/
+
+The filenames created by the Timex Data Exchanger are automatically generated
+but can be renamed without effecting usability. 
+The standard format is:  TimexYYYYmmddHHMMSS_1.pwx
+(YYYYmmdd and HHMMSS are the date and time when the exercise was started)
+
+The initial version of the parser only works with data collected in CHRONO
+mode. The watch does allow you to operate in both CHRONO and INTERVAL mode at
+the same time so if you like to use INTERVAL mode on the watch, you can still
+get your heart rate data by simultaneously operating in CHRONO mode.
+
+If you wish to connect to the Internet but not send your data to the Training
+Peaks website, you must block the Timex Device Agent with your Firewall. In
+this case, the data files will be stored as though you were not connected to
+the Internet.
 
 
 Developer Requirements
@@ -388,4 +408,5 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2010/07/04
+2010/07/05
+
