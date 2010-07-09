@@ -22,9 +22,13 @@ You can organize them by attaching the recorded files to the exercise
 entries. When adding new exercises you can import the data from the 
 recorded exercise files.
 
-ExerciseViewer supports Polar, CicloSport, Garmin and Oregon heartrate 
-monitors. This is the current compatibility list (other monitors might 
-work too, but I can't test them, user feedback is welcome):
+Users of heartrate monitors with an integrated GPS receiver (e.g. the Garmin
+Edge series) can also view the track of the recorded exercise on a map viewer
+component.
+
+ExerciseViewer supports Polar, CicloSport, Garmin, Timex and Oregon heartrate 
+monitors. This is the current compatibility list (other monitors might work
+too, but I can't test them, user feedback is welcome):
 
   - Polar S610(i)      (tested)
   - Polar S710(i)      (tested)
@@ -43,8 +47,8 @@ work too, but I can't test them, user feedback is welcome):
   - CicloSport HAC4    (tested)
   - CicloSport HAC4Pro (tested)
   - CicloSport HAC5    (tested)
-  - Garmin Edge        (tested with Edge 705)
-  - Garmin Forerunner  (tested with Forerunner 305)
+  - Garmin Edge        (tested with Edge 705 and Edge 500, TCX files only)
+  - Garmin Forerunner  (tested with Forerunner 305, TCX files only)
   - Timex Ironmen Race Trainer (tested)
   - Oregon Scientific SmartSync WM100 (tested)
   - Some Sony Ericsson mobiles (tested with W580i)
@@ -209,6 +213,14 @@ of a selected year or for a selectable time range of 10 years. The diagram
 will display the summary distance, duration, ascent and average speed for the
 sum of all sport types or splitted for each sport type. It can also display
 the history of your body weight in the selected time range.
+
+If the heartrate monitor has an integrated GPS receiver and stores the 
+location data in the exercise file (e.g. in TCX files from the Garmin Edge 
+series), then ExerciseViewer will show the exercise track inside a map viewer
+component. This interactive map is zoomable and moveable, so it's easy to 
+view all details of the track. 
+The map data will be downloaded on demand from the OpenStreetMap project
+(http://www.openstreetmap.org).
 
 New users, which have many Polar HRM files recorded before switching to
 SportsTracker, can import all HRM files at once by using the external tool
@@ -408,5 +420,5 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2010/07/05
+2010/07/09
 

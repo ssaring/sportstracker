@@ -3,8 +3,8 @@ SportsTracker-TODO
 
 Before next release:
 --------------------
-- add track/map feature documentation in README.txt
-- add Timex support to ST website (also in Metadata)
+- add Timex support to ST website (also in Metadata, already included in ReadMe)
+
 
 Support for track data in external GPS files (GPX): 
 ---------------------------------------------------
@@ -37,6 +37,7 @@ Support for track data in external GPS files (GPX):
 
 General TODOs:
 --------------
+- update to SwingX 1.6.1 when available in Maven repositories (JXDatePicker improvements)
 - Closing dialog with Escape key doesn't work when a JXDatePicker has the focus
 - "Copy exercise" feature, see request:
   https://sourceforge.net/tracker/?func=detail&aid=2927194&group_id=133110&atid=726273
@@ -64,7 +65,6 @@ Calendar view/widget:
   => create bitmaps of old and new month view and move those (much faster)
   => alternative: fade out and in via alpha channel
 - draw small shadows?
-
 
 Training route/lap support:
 - requested by Bernd Mirbach and other users, see mail from Bernd:
