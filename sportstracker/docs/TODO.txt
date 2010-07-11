@@ -3,7 +3,8 @@ SportsTracker-TODO
 
 Before next release:
 --------------------
-- add Timex support to ST website (also in Metadata, already included in ReadMe)
+- sign JARs with maven
+- update version numbers in POM => must be done by maven
 
 
 Support for track data in external GPS files (GPX): 

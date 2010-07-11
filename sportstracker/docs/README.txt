@@ -22,10 +22,6 @@ You can organize them by attaching the recorded files to the exercise
 entries. When adding new exercises you can import the data from the 
 recorded exercise files.
 
-Users of heartrate monitors with an integrated GPS receiver (e.g. the Garmin
-Edge series) can also view the track of the recorded exercise on a map viewer
-component.
-
 ExerciseViewer supports Polar, CicloSport, Garmin, Timex and Oregon heartrate 
 monitors. This is the current compatibility list (other monitors might work
 too, but I can't test them, user feedback is welcome):
@@ -55,6 +51,10 @@ too, but I can't test them, user feedback is welcome):
 
 It's also possible to view HRM exercise files (downloaded with the Polar
 Software for Windows).
+
+Users of heartrate monitors with an integrated GPS receiver (e.g. the Garmin
+Edge series) can also view the track of the recorded exercise in an inter-
+active map viewer component.
 
 SportsTracker itself is not able to download the exercise files from the 
 heartrate monitor. You need to use one of these tools for it:
