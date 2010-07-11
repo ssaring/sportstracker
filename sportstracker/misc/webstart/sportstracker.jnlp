@@ -13,7 +13,7 @@
     </security>
     <resources>
         <j2se version="1.6+"/>
-        <jar href="SportsTracker.jar" main="true" download="eager"/>
+        <jar href="sportstracker-5.0.0.jar" main="true" download="eager"/>
         <jar href="lib/guice-2.0.jar" download="eager"/>
         <jar href="lib/aopalliance-1.0.jar" download="eager"/>
         <jar href="lib/bsaf-1.9RC4.jar" download="eager"/>
@@ -22,6 +22,7 @@
         <jar href="lib/jdom-1.1.jar" download="eager"/>
         <jar href="lib/jfreechart-1.0.13.jar" download="eager"/>
         <jar href="lib/swingx-1.6.jar" download="eager"/>
+        <jar href="lib/swingx-ws-1.0.jar" download="eager"/>
         <jar href="lib/miglayout-3.7.3.1-swing.jar" download="eager"/>
     </resources>
     <application-desc main-class="de.saring.sportstracker.gui.STMain"/>

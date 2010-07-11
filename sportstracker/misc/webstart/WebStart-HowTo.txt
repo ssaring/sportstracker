@@ -27,12 +27,18 @@ Key listing command:
   keytool -list -keystore ss_keystore
 
 Everytime the application will be uploaded to the website for WebStart all the
-Jar files in the "dist" directory must be signed before. This can be done 
-easily by the custom Ant target "sign-jars". This target requires the following
-environment variables, so these need to be set before the target is invoked at
-the command line:
+Jar files in the "target" directory must be signed before. This can be done 
+easily by using the Ant script build.xml in this directory. You need to run a
+successful Maven build ("mvn clean package") before! 
+
+Then you just need to start "ant sign-jars". This script gets the keystore
+file and password from the following environment variables, so these need to
+be set before the target is invoked:
   KEYSTORE_FILE = filename of the keystore
   KEYSTORE_PASSWORD = password for the specified keystore
+
+The signing could also be done by Maven, but the configuration is much more
+complex and it must not be done on every build.
 
 The Jars can also be signed manually by using this command line (must be 
 executed for each Jar):
@@ -40,4 +46,4 @@ executed for each Jar):
 
 
 Stefan Saring
-2008/01/13
+2010/07/11

@@ -3,8 +3,7 @@ SportsTracker-TODO
 
 Before next release:
 --------------------
-- sign JARs with maven
-- update version numbers in POM => must be done by maven
+- update version numbers in POM => must be done by Maven
 
 
 Support for track data in external GPS files (GPX): 
