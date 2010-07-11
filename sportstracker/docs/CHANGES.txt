@@ -44,6 +44,8 @@ v5.0.0:
     contributed by Philippe Marzouk <philm@users.sourceforge.net>
     - users of PolarPersonalTrainer.com can import the exercises of export
       files (extension .ped) into the SportsTracker exercises.xml database
+  - Ant script for signing JAR files for Java WebStart (located in 
+    sportstracker/misc/webstart/build.xml)
  
  PolarViewer/ExcerciseViewer changes:
   - PolarViewer has been renamed to ExerciseViewer, because it supports much more 

@@ -1,11 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Before next release:
---------------------
-- update version numbers in POM => must be done by Maven
-
-
 Support for track data in external GPS files (GPX): 
 ---------------------------------------------------
 - Track data inside Exercise files is already supported (for Garmin TCX files)
@@ -45,8 +40,7 @@ General TODOs:
   distance, duration etc.
 - Exercise list view: right mouse click on the column header should open the
   Options Dialog tab for the list view
-- translation updates (german, french and czech are up to date)
-- close all dialogs with the Escape key => see TaskList application
+- translation updates (german is up to date)
 - manual starting of Tasks (background) will be simpler in future AFW's,
   improve STController:startActionManually() then
   => https://appframework.dev.java.net/issues/show_bug.cgi?id=39
