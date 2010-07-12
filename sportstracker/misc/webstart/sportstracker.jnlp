@@ -25,7 +25,7 @@
         <jar href="lib/jfreechart-1.0.13.jar" download="eager"/>
         <jar href="lib/swingx-1.6.jar" download="eager"/>
         <jar href="lib/swingx-ws-1.0.jar" download="eager"/>
-        <jar href="lib/miglayout-3.7.3.1-swing.jar" download="eager"/>
+        <jar href="lib/miglayout-3.7.3.1.jar" download="eager"/>
     </resources>
     <application-desc main-class="de.saring.sportstracker.gui.STMain"/>
 </jnlp>
