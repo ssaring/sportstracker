@@ -62,6 +62,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.garmin.fit</groupId>
+            <artifactId>fit</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
     
 </project>

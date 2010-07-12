@@ -1,5 +1,6 @@
 package de.saring.exerciseviewer.parser;
 
+import de.saring.exerciseviewer.parser.impl.GarminFitParser;
 import de.saring.exerciseviewer.parser.impl.PolarSRawParser;
 import de.saring.exerciseviewer.parser.impl.TimexPwxParser;
 import de.saring.exerciseviewer.core.EVException;
@@ -29,6 +30,9 @@ public class ExerciseParserFactoryTest {
         parser = ExerciseParserFactory.getParser("exercises/shouldtherebeafile.pwx");
         assertTrue (parser instanceof TimexPwxParser);
 
+        parser = ExerciseParserFactory.getParser ("C:\\Test 123\\Exercise3.fit");
+        assertTrue (parser instanceof GarminFitParser);
+        
         // tests for RS200SD parser (implemented in Groovy)
         parser = ExerciseParserFactory.getParser ("exercises/exercise1.xml");
         assertEquals ("de.saring.exerciseviewer.parser.impl.PolarRS200SDParser", parser.getClass ().getName ());

@@ -81,6 +81,16 @@ public class ConvertUtils {
     }
     
     /**
+     * Converts the speed value from m/s to km/h.
+     *
+     * @param meterPerSecond speed value in m/s
+     * @return speed value in km/h
+     */
+    public static float convertMeterPerSecond2KilometerPerHour(float meterPerSecond) {
+        return meterPerSecond * 3.6f;
+    }
+
+    /**
      * Converts the temperature value from fahrenheit to celsius.
      *
      * @param fahrenheit value in fahrenheit

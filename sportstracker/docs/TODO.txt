@@ -1,6 +1,12 @@
 SportsTracker-TODO
 ==================
 
+Support for Garmin FIT format:
+------------------------------
+- see TODOs in Parser and unit test
+- add FIT support to Changes, ReadMe, ...
+
+  
 Support for track data in external GPS files (GPX): 
 ---------------------------------------------------
 - Track data inside Exercise files is already supported (for Garmin TCX files)

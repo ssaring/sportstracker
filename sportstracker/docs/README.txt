@@ -43,8 +43,8 @@ too, but I can't test them, user feedback is welcome):
   - CicloSport HAC4    (tested)
   - CicloSport HAC4Pro (tested)
   - CicloSport HAC5    (tested)
-  - Garmin Edge        (tested with Edge 705 and Edge 500, TCX files only)
-  - Garmin Forerunner  (tested with Forerunner 305, TCX files only)
+  - Garmin Edge        (tested with Edge 500 and Edge 705, FIT and TCX files)
+  - Garmin Forerunner  (tested with Forerunner 305, FIT and TCX files)
   - Timex Ironmen Race Trainer (tested)
   - Oregon Scientific SmartSync WM100 (tested)
   - Some Sony Ericsson mobiles (tested with W580i)
@@ -350,6 +350,10 @@ The SportsTracker project uses the following libraries:
       License: Common Public License v1.0
   - EasyMock 2.5.2 (http://www.easymock.org)
       License: MIT License
+  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 1.0
+      URL: http://www.thisisant.com/support/
+      License: FIT Protocol License (open source by Dynastream / Garmin)
+      License URL: http://www.thisisant.com/pages/ant/fit-license
 
 All dependencies will be downloaded automatically by Maven. BSAF and JFreeChart
 are missing in the Maven centrol repository, so I've created my own repository

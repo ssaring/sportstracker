@@ -62,6 +62,16 @@ public class ConvertUtilsTest {
      * Tests the appropriate method.
      */
     @Test
+    public void testConvertMeterPerSecond2KilometerPerHour() {
+        assertEquals(0f, ConvertUtils.convertMeterPerSecond2KilometerPerHour(0f), 0f);
+        assertEquals(3.6f, ConvertUtils.convertMeterPerSecond2KilometerPerHour(1f), 0.001f);
+        assertEquals(44.64f, ConvertUtils.convertMeterPerSecond2KilometerPerHour(12.4f), 0.001f);
+    }
+
+     /**
+     * Tests the appropriate method.
+     */
+    @Test
     public void testConvertKilogram2Lbs () {
         assertEquals (0, ConvertUtils.convertKilogram2Lbs (0), 0.0001d);
         assertEquals (2.2046d, ConvertUtils.convertKilogram2Lbs (1), 0.0001d);
