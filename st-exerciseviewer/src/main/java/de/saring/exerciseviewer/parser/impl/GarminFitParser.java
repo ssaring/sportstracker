@@ -117,6 +117,7 @@ public class GarminFitParser extends AbstractExerciseParser {
          * @param mesg Session message
          */
         private void readSessionMessage(SessionMesg mesg) {
+            
             // read time data
             exercise.setDate(mesg.getStartTime().getDate());
             exercise.setDuration(Math.round(mesg.getTotalTimerTime() * 10));
@@ -173,12 +174,12 @@ public class GarminFitParser extends AbstractExerciseParser {
          * @param mesg Record message
          */
         private void readRecordMessage(RecordMesg mesg) {
+            
             ExerciseSample sample = new ExerciseSample();
             lSamples.add(sample);
 
-            // TODO:
-            // long startTime = exercise.getDate().getTime();
-            // sample.setTimeOffset(mesg.getTimestamp().getDate().getTime() - startTime);
+            // sample timestamp must be the offset from start time, will be corrected later 
+            sample.setTimestamp(mesg.getTimestamp().getDate().getTime());
 
             if (mesg.getHeartRate() != null) {
                 sample.setHeartRate(mesg.getHeartRate());
@@ -214,12 +215,23 @@ public class GarminFitParser extends AbstractExerciseParser {
             exercise.setFileType(EVExercise.ExerciseFileType.GARMIN_FIT);
 
             // store lap and sample data
+            fixSampleTimestamps();
             exercise.setLapList(lLaps.toArray(new Lap[0]));
             exercise.setSampleList(lSamples.toArray(new ExerciseSample[0]));
 
             // TODO: compute min, max, avg ascend and temperature if available
 
             return exercise;
+        }
+
+        /**
+         * Fix timestamps in all ExerciseSamples, it must be the offset from the start time.
+         */
+        private void fixSampleTimestamps() {
+            long startTime = exercise.getDate().getTime();
+            for (ExerciseSample sample : lSamples) {
+                sample.setTimestamp(sample.getTimestamp() - startTime);
+            }
         }
     }
 }
