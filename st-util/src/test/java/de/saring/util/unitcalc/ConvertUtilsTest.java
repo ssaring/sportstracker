@@ -87,4 +87,14 @@ public class ConvertUtilsTest {
         assertEquals (1, ConvertUtils.convertLbs2Kilogram (2.2046d), 0.0001d);
         assertEquals (34.12410d, ConvertUtils.convertLbs2Kilogram (75.23d), 0.0001d);
     }
+    
+    /**
+     * Tests the appropriate method.
+     */
+    @Test
+    public void testConvertSemicircle2Degree() {
+        assertEquals(0d, ConvertUtils.convertSemicircle2Degree(0), 0d);
+        assertEquals(51.054392d, ConvertUtils.convertSemicircle2Degree(609102623), 0.0001d);
+        assertEquals(-51.054392d, ConvertUtils.convertSemicircle2Degree(-609102623), 0.0001d);
+    }
 }

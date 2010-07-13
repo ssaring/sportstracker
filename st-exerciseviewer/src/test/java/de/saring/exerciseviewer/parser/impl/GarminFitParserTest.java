@@ -47,10 +47,10 @@ public class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.getFileType());
         assertTrue(exercise.getRecordingMode().isSpeed());
+        assertTrue(exercise.getRecordingMode().isLocation());
         assertTrue(exercise.getRecordingMode().isAltitude());
         assertTrue(exercise.getRecordingMode().isCadence());
 
-        // TODO: check, that test values are OK (speed!)!
         assertDate(exercise.getDate(), 2010, 7-1, 4, 6, 7, 36);
         assertEquals(146499, exercise.getDuration());
 
@@ -62,8 +62,10 @@ public class GarminFitParserTest {
         assertEquals(24.9948, exercise.getSpeed().getSpeedAVG(), 0.001d);
         assertEquals(68.4648, exercise.getSpeed().getSpeedMax(), 0.001d);
 
-        // TODO: min, max, avg are missing
         assertEquals(1115, exercise.getAltitude().getAscent());
+        assertEquals(127, exercise.getAltitude().getAltitudeMin());
+        assertEquals(290, exercise.getAltitude().getAltitudeAVG());
+        assertEquals(419, exercise.getAltitude().getAltitudeMax());
         
         assertEquals(84, exercise.getCadence().getCadenceAVG());
         assertEquals(119, exercise.getCadence().getCadenceMax());

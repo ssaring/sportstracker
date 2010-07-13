@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+v5.1.0:
+ ExerciseViewer changes: 
+  - ConvertUtils: new conversion method from semicircles to degrees
+  
 v5.0.0:
  General changes:
   - CHANGE TO MAVEN BUILD SYSTEM (not Ant-based anymore)

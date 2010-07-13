@@ -8,6 +8,8 @@ package de.saring.util.unitcalc;
  */
 public class ConvertUtils {
 
+    private static final double SEMICIRCLE_2_DEGREES = 180 / Math.pow(2, 31);
+    
     /**
      * Converts the length value from miles to kilometers.
      *
@@ -128,5 +130,16 @@ public class ConvertUtils {
      */
     public static double convertLbs2Kilogram (double pounds) {
         return pounds / 2.2046d;
+    }
+    
+    
+    /**
+     * Converts the position value from semicircles to degrees.
+     *
+     * @param semicircles value in semicircles
+     * @return value in degrees
+     */
+    public static double convertSemicircle2Degree(int semicircles) {
+        return semicircles * SEMICIRCLE_2_DEGREES;       
     }
 }

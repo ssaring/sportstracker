@@ -14,6 +14,7 @@ import de.saring.exerciseviewer.data.ExerciseSample;
 import de.saring.exerciseviewer.data.ExerciseSpeed;
 import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.Position;
 import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
@@ -145,6 +146,11 @@ public class GarminFitParser extends AbstractExerciseParser {
                     ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getMaxSpeed()));
             }
             
+            // read optional speed data
+            if (mesg.getStartPositionLat() != null && mesg.getStartPositionLong() != null) {
+                exercise.getRecordingMode().setLocation(true);
+            }
+            
             // read optional ascent data
             if (mesg.getTotalAscent() != null) {
                 exercise.getRecordingMode().setAltitude(true);
@@ -198,14 +204,19 @@ public class GarminFitParser extends AbstractExerciseParser {
                 sample.setCadence(mesg.getCadence());
             }
             
+            if (mesg.getPositionLat() != null && mesg.getPositionLong() != null) {
+                sample.setPosition(new Position(
+                    ConvertUtils.convertSemicircle2Degree(mesg.getPositionLat()), 
+                    ConvertUtils.convertSemicircle2Degree(mesg.getPositionLong())));
+            }
+            
             // TODO: why is temperature not available or not shown
             if (mesg.getTemperature() != null) {
                 sample.setTemperature(mesg.getTemperature());
             }
 
-            // TODO: get position data
         }
-
+        
         /**
          * Returns the EVExercise created from the received message. It sets
          * up all lap and sample data and calculates the missing data before.
@@ -219,7 +230,8 @@ public class GarminFitParser extends AbstractExerciseParser {
             exercise.setLapList(lLaps.toArray(new Lap[0]));
             exercise.setSampleList(lSamples.toArray(new ExerciseSample[0]));
 
-            // TODO: compute min, max, avg ascend and temperature if available
+            calculateAltitudeSummary();
+            // TODO: compute min, max, avg temperature if available
 
             return exercise;
         }
@@ -231,6 +243,30 @@ public class GarminFitParser extends AbstractExerciseParser {
             long startTime = exercise.getDate().getTime();
             for (ExerciseSample sample : lSamples) {
                 sample.setTimestamp(sample.getTimestamp() - startTime);
+            }
+        }
+
+        /**
+         * Calculates the min, max and average altitude (if available) from the sample data.
+         */
+        private void calculateAltitudeSummary() {
+            if (exercise.getRecordingMode().isAltitude() &&
+                exercise.getSampleList().length > 0) {
+
+                short altMin = Short.MAX_VALUE;
+                short altMax = Short.MIN_VALUE;
+                int altitudeSum = 0;
+
+                for (ExerciseSample sample : exercise.getSampleList()) {
+                    altMin = (short) Math.min(sample.getAltitude(), altMin);
+                    altMax = (short) Math.max(sample.getAltitude(), altMax);
+                    altitudeSum += sample.getAltitude();
+                }
+
+                exercise.getAltitude().setAltitudeMin(altMin);
+                exercise.getAltitude().setAltitudeMax(altMax);
+                exercise.getAltitude().setAltitudeAVG(
+                    (short) (Math.round(altitudeSum / (double) exercise.getSampleList().length)));
             }
         }
     }
