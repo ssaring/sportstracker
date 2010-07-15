@@ -12,6 +12,7 @@ import de.saring.exerciseviewer.data.ExerciseAltitude;
 import de.saring.exerciseviewer.data.ExerciseCadence;
 import de.saring.exerciseviewer.data.ExerciseSample;
 import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.data.ExerciseTemperature;
 import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.Position;
@@ -40,7 +41,6 @@ public class GarminFitParser extends AbstractExerciseParser {
     
     /** Informations about this parser. */
     private final ExerciseParserInfo info = new ExerciseParserInfo("Garmin FIT", new String[] {"fit", "FIT"});
-
 
 
     /** {@inheritDoc} */
@@ -94,7 +94,9 @@ public class GarminFitParser extends AbstractExerciseParser {
         private List<Lap> lLaps = new LinkedList<Lap>();
         /** List of created exercise samples (collected in a LinkedList and not in EVExercise array, much faster). */
         private List<ExerciseSample> lSamples = new LinkedList<ExerciseSample>();
-
+        /** Flag for availability of temperature data. */
+        private boolean temperatureAvailable = false;
+        
         /** {@inheritDoc} */
         @Override
         public void onMesg(Mesg mesg) {
@@ -210,8 +212,8 @@ public class GarminFitParser extends AbstractExerciseParser {
                     ConvertUtils.convertSemicircle2Degree(mesg.getPositionLong())));
             }
             
-            // TODO: why is temperature not available or not shown
             if (mesg.getTemperature() != null) {
+                temperatureAvailable = true;
                 sample.setTemperature(mesg.getTemperature());
             }
 
@@ -231,8 +233,7 @@ public class GarminFitParser extends AbstractExerciseParser {
             exercise.setSampleList(lSamples.toArray(new ExerciseSample[0]));
 
             calculateAltitudeSummary();
-            // TODO: compute min, max, avg temperature if available
-
+            calculateTemperatureSummary();
             return exercise;
         }
 
@@ -269,5 +270,30 @@ public class GarminFitParser extends AbstractExerciseParser {
                     (short) (Math.round(altitudeSum / (double) exercise.getSampleList().length)));
             }
         }
+        
+        /**
+         * Calculates the min, max and average temperature (if available) from the sample data.
+         */
+        private void calculateTemperatureSummary() {
+            if (temperatureAvailable) {
+                exercise.getRecordingMode().setTemperature(true);
+                exercise.setTemperature(new ExerciseTemperature());
+
+                short tempMin = Short.MAX_VALUE;
+                short tempMax = Short.MIN_VALUE;
+                int temperatureSum = 0;
+
+                for (ExerciseSample sample : exercise.getSampleList()) {
+                    tempMin = (short) Math.min(sample.getTemperature(), tempMin);
+                    tempMax = (short) Math.max(sample.getTemperature(), tempMax);
+                    temperatureSum += sample.getTemperature();
+                }
+
+                exercise.getTemperature().setTemperatureMin(tempMin);
+                exercise.getTemperature().setTemperatureMax(tempMax);
+                exercise.getTemperature().setTemperatureAVG(
+                    (short) (Math.round(temperatureSum / (double) exercise.getSampleList().length)));
+            }
+        }        
     }
 }

@@ -50,6 +50,7 @@ public class GarminFitParserTest {
         assertTrue(exercise.getRecordingMode().isLocation());
         assertTrue(exercise.getRecordingMode().isAltitude());
         assertTrue(exercise.getRecordingMode().isCadence());
+        assertTrue(exercise.getRecordingMode().isTemperature());
 
         assertDate(exercise.getDate(), 2010, 7-1, 4, 6, 7, 36);
         assertEquals(146499, exercise.getDuration());
@@ -70,6 +71,10 @@ public class GarminFitParserTest {
         assertEquals(84, exercise.getCadence().getCadenceAVG());
         assertEquals(119, exercise.getCadence().getCadenceMax());
 
+        assertEquals(19, exercise.getTemperature().getTemperatureMin());
+        assertEquals(24, exercise.getTemperature().getTemperatureAVG());
+        assertEquals(32, exercise.getTemperature().getTemperatureMax());
+        
         // TODO: add tests for record/sample data
 
 
