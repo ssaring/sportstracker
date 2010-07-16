@@ -3,7 +3,7 @@ SportsTracker-TODO
 
 Support for Garmin FIT format:
 ------------------------------
-- see TODOs in Parser and unit test
+- parse lap data (all other is done)
 - add FIT support to Changes, ReadMe, ...
 
   

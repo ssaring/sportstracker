@@ -88,8 +88,8 @@ public class GarminFitParser extends AbstractExerciseParser {
      */
     private class FitMesgListener implements MesgListener {
         
-        /** The created exercise. */
-        private EVExercise exercise = new EVExercise();
+        /** The parsed exercise. */
+        private EVExercise exercise = null;
         /** List of created laps (collected in a LinkedList and not in EVExercise array, much faster). */
         private List<Lap> lLaps = new LinkedList<Lap>();
         /** List of created exercise samples (collected in a LinkedList and not in EVExercise array, much faster). */
@@ -122,6 +122,8 @@ public class GarminFitParser extends AbstractExerciseParser {
         private void readSessionMessage(SessionMesg mesg) {
             
             // read time data
+            exercise = new EVExercise();
+            exercise.setFileType(EVExercise.ExerciseFileType.GARMIN_FIT);
             exercise.setDate(mesg.getStartTime().getDate());
             exercise.setDuration(Math.round(mesg.getTotalTimerTime() * 10));
             exercise.setRecordingMode(new RecordingMode());
@@ -216,7 +218,6 @@ public class GarminFitParser extends AbstractExerciseParser {
                 temperatureAvailable = true;
                 sample.setTemperature(mesg.getTemperature());
             }
-
         }
         
         /**
@@ -224,9 +225,13 @@ public class GarminFitParser extends AbstractExerciseParser {
          * up all lap and sample data and calculates the missing data before.
          * @return
          */
-        public EVExercise getExercise() {
-            exercise.setFileType(EVExercise.ExerciseFileType.GARMIN_FIT);
+        public EVExercise getExercise() throws EVException {
 
+            // has activity data been found in the FIT file? (FIT files may contain other data too)
+            if (exercise == null) {
+                throw new EVException("The FIT file does not contain any exercise (activity) data...");
+            }
+            
             // store lap and sample data
             fixSampleTimestamps();
             exercise.setLapList(lLaps.toArray(new Lap[0]));
