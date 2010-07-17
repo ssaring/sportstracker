@@ -15,6 +15,9 @@ import de.saring.exerciseviewer.data.ExerciseSpeed;
 import de.saring.exerciseviewer.data.ExerciseTemperature;
 import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.LapAltitude;
+import de.saring.exerciseviewer.data.LapSpeed;
+import de.saring.exerciseviewer.data.LapTemperature;
 import de.saring.exerciseviewer.data.Position;
 import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
@@ -23,6 +26,7 @@ import de.saring.util.unitcalc.ConvertUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -91,7 +95,7 @@ public class GarminFitParser extends AbstractExerciseParser {
         /** The parsed exercise. */
         private EVExercise exercise = null;
         /** List of created laps (collected in a LinkedList and not in EVExercise array, much faster). */
-        private List<Lap> lLaps = new LinkedList<Lap>();
+        private List<FitLap> lFitLaps = new LinkedList<FitLap>();
         /** List of created exercise samples (collected in a LinkedList and not in EVExercise array, much faster). */
         private List<ExerciseSample> lSamples = new LinkedList<ExerciseSample>();
         /** Flag for availability of temperature data. */
@@ -176,7 +180,31 @@ public class GarminFitParser extends AbstractExerciseParser {
          * @param mesg Lap message
          */
         private void readLapMessage(LapMesg mesg) {
-            // TODO
+            Lap lap = new Lap();
+
+            // read optional heartrate data
+            if (mesg.getAvgHeartRate() != null) {
+                lap.setHeartRateAVG(mesg.getAvgHeartRate());
+            }
+            if (mesg.getMaxHeartRate() != null) {
+                lap.setHeartRateMax(mesg.getMaxHeartRate());
+            }
+
+            // read optional speed data
+            if (mesg.getTotalDistance() != null) {
+                lap.setSpeed(new LapSpeed());
+                lap.getSpeed().setDistance(Math.round(mesg.getTotalDistance()));
+                lap.getSpeed().setSpeedAVG(
+                    ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
+            }
+            
+            // read optional ascent data
+            if (mesg.getTotalAscent() != null) {
+                lap.setAltitude(new LapAltitude());
+                lap.getAltitude().setAscent(mesg.getTotalAscent());
+            }
+
+            lFitLaps.add(new FitLap(lap, mesg.getTimestamp().getDate()));
         }
         
         /**
@@ -232,10 +260,8 @@ public class GarminFitParser extends AbstractExerciseParser {
                 throw new EVException("The FIT file does not contain any exercise (activity) data...");
             }
             
-            // store lap and sample data
-            fixSampleTimestamps();
-            exercise.setLapList(lLaps.toArray(new Lap[0]));
-            exercise.setSampleList(lSamples.toArray(new ExerciseSample[0]));
+            storeSamples();
+            storeLaps();
 
             calculateAltitudeSummary();
             calculateTemperatureSummary();
@@ -243,15 +269,80 @@ public class GarminFitParser extends AbstractExerciseParser {
         }
 
         /**
-         * Fix timestamps in all ExerciseSamples, it must be the offset from the start time.
+         * Stores the sample data in the exercise. It also fixes the timestamps in all 
+         * ExerciseSamples, it must be the offset from the start time.
          */
-        private void fixSampleTimestamps() {
+        private void storeSamples() {            
             long startTime = exercise.getDate().getTime();
             for (ExerciseSample sample : lSamples) {
                 sample.setTimestamp(sample.getTimestamp() - startTime);
             }
+            exercise.setSampleList(lSamples.toArray(new ExerciseSample[0]));
         }
 
+        /**
+         * Stores the lap data in the exercise and calculate the missing values. 
+         */
+        private void storeLaps() {
+            int lapDistanceSum = 0;
+            
+            // convert FitLap to Lap objects
+            List<Lap> lLaps = new LinkedList<Lap>();            
+            long startTime = exercise.getDate().getTime();
+            
+            for (FitLap fitLap : lFitLaps) {
+                Lap lap = fitLap.getLap();
+                lLaps.add(lap);
+                
+                // fix the split time in all Laps, it must be the offset from the start time
+                lap.setTimeSplit((int) ((fitLap.getSplitTime().getTime() - startTime) / 100));
+                
+                // get all the missing lap data from the sample at lap end time
+                ExerciseSample sampleAtLapEnd = getExerciseSampleForLapEnd(lap);
+                lap.setHeartRateSplit(sampleAtLapEnd.getHeartRate());
+                
+                if (lap.getSpeed() != null) {
+                    // fix lap distance, it must be the distance from exercise start (FIT stores from Lap start)
+                    lapDistanceSum += lap.getSpeed().getDistance();
+                    lap.getSpeed().setDistance(lapDistanceSum);
+
+                    lap.getSpeed().setSpeedEnd(sampleAtLapEnd.getSpeed());
+                    lap.getSpeed().setCadence(sampleAtLapEnd.getCadence());
+                }
+                
+                if (lap.getAltitude() != null) {
+                    lap.getAltitude().setAltitude(sampleAtLapEnd.getAltitude());
+                }
+                
+                if (temperatureAvailable) {
+                    lap.setTemperature(new LapTemperature());
+                    lap.getTemperature().setTemperature(sampleAtLapEnd.getTemperature());
+                }
+            }
+
+            exercise.setLapList(lLaps.toArray(new Lap[0]));
+        }
+
+        /**
+         * Returns the closest ExerciseSample for the lap end time.
+         * @param lap the lap for search
+         * @return the closest ExerciseSample
+         */
+        private ExerciseSample getExerciseSampleForLapEnd(Lap lap) {
+            long lapSplitTimestamp = lap.getTimeSplit() * 100L;            
+            ExerciseSample closestSample = null;
+            long closestTimeDistance = Long.MAX_VALUE;
+            
+            for (ExerciseSample sample : exercise.getSampleList()) {
+                long timeDistance = Math.abs(sample.getTimestamp() - lapSplitTimestamp);
+                if (timeDistance < closestTimeDistance) {
+                    closestTimeDistance = timeDistance;
+                    closestSample = sample;
+                }
+            }
+            return closestSample;
+        }
+        
         /**
          * Calculates the min, max and average altitude (if available) from the sample data.
          */
@@ -300,5 +391,28 @@ public class GarminFitParser extends AbstractExerciseParser {
                     (short) (Math.round(temperatureSum / (double) exercise.getSampleList().length)));
             }
         }        
+    }
+    
+    /**
+     * Extension class for Lap data. The lap split time needs to be calculated at the end,
+     * because the exercise start time is not known at time of lap parsing. The timestamp
+     * can't be stores in Lap.timeSplit, it's data type int is too small for full timestamps.
+     */
+    private final class FitLap {
+        private Lap lap;
+        private Date splitTime;
+
+        public FitLap(Lap lap, Date splitTime) {
+            this.lap = lap;
+            this.splitTime = splitTime;
+        }
+        
+        public Lap getLap() {
+            return lap;
+        }
+        
+        public Date getSplitTime() {
+            return splitTime;
+        }
     }
 }

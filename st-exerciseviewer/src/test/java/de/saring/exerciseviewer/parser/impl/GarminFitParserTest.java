@@ -87,6 +87,41 @@ public class GarminFitParserTest {
         assertEquals(19, exercise.getTemperature().getTemperatureMin());
         assertEquals(24, exercise.getTemperature().getTemperatureAVG());
         assertEquals(32, exercise.getTemperature().getTemperatureMax());
+
+        // check lap data
+        assertEquals(5, exercise.getLapList().length);
+        assertEquals(((0*3600) + (29*60) + 15) * 10, exercise.getLapList()[0].getTimeSplit());
+        assertEquals(126, exercise.getLapList()[0].getHeartRateAVG());
+        assertEquals(146, exercise.getLapList()[0].getHeartRateMax());
+        assertEquals(122, exercise.getLapList()[0].getHeartRateSplit());
+        assertEquals(11084, exercise.getLapList()[0].getSpeed().getDistance());
+        assertEquals(22.7334, exercise.getLapList()[0].getSpeed().getSpeedAVG(), 0.001d);
+        assertEquals(22.1364, exercise.getLapList()[0].getSpeed().getSpeedEnd(), 0.001d);
+        assertEquals(151, exercise.getLapList()[0].getAltitude().getAscent());
+        assertEquals(302, exercise.getLapList()[0].getAltitude().getAltitude());
+        assertEquals(20, exercise.getLapList()[0].getTemperature().getTemperature());
+
+        assertEquals(((2*3600) + (11*60) + 46) * 10, exercise.getLapList()[2].getTimeSplit());
+        assertEquals(124, exercise.getLapList()[2].getHeartRateAVG());
+        assertEquals(145, exercise.getLapList()[2].getHeartRateMax());
+        assertEquals(98, exercise.getLapList()[2].getHeartRateSplit());
+        assertEquals(48391, exercise.getLapList()[2].getSpeed().getDistance());
+        assertEquals(21.7080, exercise.getLapList()[2].getSpeed().getSpeedAVG(), 0.001d);
+        assertEquals(1.0440, exercise.getLapList()[2].getSpeed().getSpeedEnd(), 0.001d);
+        assertEquals(342, exercise.getLapList()[2].getAltitude().getAscent());
+        assertEquals(417, exercise.getLapList()[2].getAltitude().getAltitude());
+        assertEquals(24, exercise.getLapList()[2].getTemperature().getTemperature());
+        
+        assertEquals(((4*3600) + (28*60) + 16) * 10, exercise.getLapList()[4].getTimeSplit());
+        assertEquals(120, exercise.getLapList()[4].getHeartRateAVG());
+        assertEquals(144, exercise.getLapList()[4].getHeartRateMax());
+        assertEquals(94, exercise.getLapList()[4].getHeartRateSplit());
+        assertEquals(101711, exercise.getLapList()[4].getSpeed().getDistance());
+        assertEquals(26.0136, exercise.getLapList()[4].getSpeed().getSpeedAVG(), 0.001d);
+        assertEquals(0d, exercise.getLapList()[4].getSpeed().getSpeedEnd(), 0.001d);
+        assertEquals(206, exercise.getLapList()[4].getAltitude().getAscent());
+        assertEquals(237, exercise.getLapList()[4].getAltitude().getAltitude());
+        assertEquals(30, exercise.getLapList()[4].getTemperature().getTemperature());
         
         // check sample data
         assertEquals(8235, exercise.getSampleList().length);

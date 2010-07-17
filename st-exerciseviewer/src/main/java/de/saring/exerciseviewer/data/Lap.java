@@ -22,7 +22,7 @@ public final class Lap implements Serializable
     private LapSpeed speed;
     /** Lap altitude data (if recorded). */
     private LapAltitude altitude;
-    /** Lap temparature. */
+    /** Lap temperature. */
     private LapTemperature temperature;
 
     /***** BEGIN: Generated Getters and Setters *****/

@@ -3,13 +3,13 @@ SportsTracker-TODO
 
 Support for Garmin FIT format:
 ------------------------------
-- parse lap data (all other is done)
+- ist there more interesting data?
 - add FIT support to Changes, ReadMe, ...
 
   
 Support for track data in external GPS files (GPX): 
 ---------------------------------------------------
-- Track data inside Exercise files is already supported (for Garmin TCX files)
+- Track data inside Exercise files is already supported (for Garmin FIT and TCX files)
 - SportsTracker changes:
   - Exercise object: Add optional trackFile attribut, similar to hrmFile
   - ExerciseDialog:
