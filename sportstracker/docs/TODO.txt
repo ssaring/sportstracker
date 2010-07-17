@@ -1,10 +1,9 @@
 SportsTracker-TODO
 ==================
 
-Support for Garmin FIT format:
-------------------------------
-- ist there more interesting data?
-- add FIT support to Changes, ReadMe, ...
+Before next release:
+--------------------
+- add Garmin FIT support to website (also in Metadata)
 
   
 Support for track data in external GPS files (GPX): 

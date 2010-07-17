@@ -1,8 +1,8 @@
 package de.saring.exerciseviewer.parser;
 
-import de.saring.exerciseviewer.parser.impl.GarminFitParser;
 import de.saring.exerciseviewer.parser.impl.PolarSRawParser;
 import de.saring.exerciseviewer.parser.impl.TimexPwxParser;
+import de.saring.exerciseviewer.parser.impl.garminfit.GarminFitParser;
 import de.saring.exerciseviewer.core.EVException;
 import org.junit.Test;
 import static org.junit.Assert.*;

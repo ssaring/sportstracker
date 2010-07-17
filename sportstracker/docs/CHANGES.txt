@@ -2,7 +2,11 @@ Changelog
 ---------
 
 v5.1.0:
- ExerciseViewer changes: 
+ ExerciseViewer changes:
+  - Garmin FIT Parser (support for Garmin FIT activity files):
+    - full support for all data which can be shown in ExerciseViewer
+      (summary, lap data, sample data, track/map data, temperature data)
+    - unit tests for GarminFITParser
   - ConvertUtils: new conversion method from semicircles to degrees
   
 v5.0.0:

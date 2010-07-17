@@ -3,6 +3,7 @@ package de.saring.exerciseviewer.parser.impl;
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
+import de.saring.exerciseviewer.parser.impl.garminfit.GarminFitParser;
 
 import java.io.File;
 import java.util.Calendar;

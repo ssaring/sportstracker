@@ -6,6 +6,6 @@ de.saring.exerciseviewer.parser.impl.PolarF6RawParser
 de.saring.exerciseviewer.parser.impl.PolarPedParser
 de.saring.exerciseviewer.parser.impl.HAC4TURParser
 de.saring.exerciseviewer.parser.impl.SmartsyncCSVParser
-de.saring.exerciseviewer.parser.impl.GarminFitParser
+de.saring.exerciseviewer.parser.impl.garminfit.GarminFitParser
 de.saring.exerciseviewer.parser.impl.GarminTcxParser
 de.saring.exerciseviewer.parser.impl.TimexPwxParser
