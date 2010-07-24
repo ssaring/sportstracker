@@ -339,7 +339,7 @@ The SportsTracker project uses the following libraries:
       License: Lesser General Public License (LGPL)
   - JDOM 1.1 (http://www.jdom.org)
       License: Apache-style open source license
-  - SwingX 1.6 (https://swingx.dev.java.net/)
+  - SwingX 1.6.1 (https://swingx.dev.java.net/)
       License: Lesser General Public License (LGPL)
   - SwingX-WS 1.0 (https://swingx-ws.dev.java.net/)
       License: Lesser General Public License (LGPL)

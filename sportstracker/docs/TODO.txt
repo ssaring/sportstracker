@@ -46,7 +46,6 @@ Support for track data in external GPS files (GPX):
 
 General TODOs:
 --------------
-- update to SwingX 1.6.1 when available in Maven repositories (JXDatePicker improvements)
 - ExerciseViewer Track panel: show way points for laps in map
   - can't be done with the WaypointPainter, it doesn't support any waypoint
     names and is not designed to be mixed with other painters

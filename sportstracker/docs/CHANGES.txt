@@ -2,6 +2,9 @@ Changelog
 ---------
 
 v5.1.0:
+ SportsTracker changes:
+  - updated to SwingX 1.6.1 (DatePicker improvements)
+  
  ExerciseViewer changes:
   - Garmin FIT Parser (support for Garmin FIT activity files):
     - full support for all data which can be shown in ExerciseViewer
