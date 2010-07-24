@@ -5,6 +5,15 @@ Before next release:
 --------------------
 - add Garmin FIT support to website (also in Metadata)
 
+
+TrackPanel improvements:
+------------------------
+- draw text "S" and "E" next to the waypoint circles for start/end position
+- is it possible to resuse the text renderer from JXMapViewer? (check JavaDoc and sources)
+  (black text on white border background)
+- add optional splitPosition attribute to class Lap, fill it in TCX and FIT parser
+- display lap positions in track panel with lap number 
+
   
 Support for track data in external GPS files (GPX): 
 ---------------------------------------------------
