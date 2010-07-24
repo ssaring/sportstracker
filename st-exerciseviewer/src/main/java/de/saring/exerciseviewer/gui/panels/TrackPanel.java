@@ -241,6 +241,7 @@ public class TrackPanel extends BasePanel {
     	
         Point2D pt = convertGeoPosToPixelPos(geoPosition);
         
+        // draw an outer white circle, so it's better visible on backgrounds with same color
         g.setColor(Color.WHITE);
         g.setStroke(new BasicStroke(3));
         g.draw(new Ellipse2D.Double(pt.getX() - (RADIUS+1), pt.getY() - (RADIUS+1), (RADIUS*2)+2, (RADIUS*2)+2));
