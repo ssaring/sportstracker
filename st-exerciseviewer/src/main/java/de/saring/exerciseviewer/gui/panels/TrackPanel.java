@@ -237,11 +237,17 @@ public class TrackPanel extends BasePanel {
      * @param color the color of the circle
      */
     private void drawWaypoint(Graphics2D g, GeoPosition geoPosition, Color color) {
+    	final int RADIUS = 5;
+    	
+        Point2D pt = convertGeoPosToPixelPos(geoPosition);
+        
+        g.setColor(Color.WHITE);
+        g.setStroke(new BasicStroke(3));
+        g.draw(new Ellipse2D.Double(pt.getX() - (RADIUS+1), pt.getY() - (RADIUS+1), (RADIUS*2)+2, (RADIUS*2)+2));
+        
         g.setColor(color);
         g.setStroke(new BasicStroke(3));
-
-        Point2D pt = convertGeoPosToPixelPos(geoPosition);
-        g.draw(new Ellipse2D.Double(pt.getX() - 5, pt.getY() - 5, 10, 10));
+        g.draw(new Ellipse2D.Double(pt.getX() - RADIUS, pt.getY() - RADIUS, RADIUS*2, RADIUS*2));
     }
     
     private List<GeoPosition> createGeoPositionList(EVExercise exercise) {
