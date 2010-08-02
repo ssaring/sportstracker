@@ -143,6 +143,13 @@ class FitMessageListener implements MesgListener {
             lap.getAltitude().setAscent(mesg.getTotalAscent());
         }
 
+        // read optional position data
+        if (mesg.getEndPositionLat() != null && mesg.getEndPositionLong() != null) {
+            lap.setPositionSplit(new Position(
+                ConvertUtils.convertSemicircle2Degree(mesg.getEndPositionLat()), 
+                ConvertUtils.convertSemicircle2Degree(mesg.getEndPositionLong())));
+        }
+        
         lFitLaps.add(new FitLap(lap, mesg.getTimestamp().getDate()));
     }
     

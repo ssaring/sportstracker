@@ -24,6 +24,9 @@ public final class Lap implements Serializable
     private LapAltitude altitude;
     /** Lap temperature. */
     private LapTemperature temperature;
+    /** The geographical location at lap split time (optional). */
+    private Position positionSplit;
+
 
     /***** BEGIN: Generated Getters and Setters *****/
 
@@ -83,6 +86,14 @@ public final class Lap implements Serializable
         this.temperature = temperature;
     }
     
+    public Position getPositionSplit() {
+	    return positionSplit;
+    }
+    
+    public void setPositionSplit(Position positionSplit) {
+	    this.positionSplit = positionSplit;
+    }
+    
     /***** END: Generated Getters and Setters *****/
 
     /** 
@@ -90,8 +101,7 @@ public final class Lap implements Serializable
      * @return string with object content
      */
     @Override
-    public String toString ()
-    {
+    public String toString () {
         StringBuilder sBuilder = new StringBuilder ();
 
         sBuilder.append (Lap.class.getName () + ":\n");
@@ -101,7 +111,8 @@ public final class Lap implements Serializable
         sBuilder.append ("  heartRateMax=" + this.heartRateMax + "\n");
         sBuilder.append ("  speed=" + this.speed + "\n");
         sBuilder.append ("  altitude=" + this.altitude + "\n");
-        sBuilder.append ("  temperature=" + this.temperature + "]\n");
+        sBuilder.append ("  temperature=" + this.temperature + "\n");
+        sBuilder.append ("  positionSplit=" + this.positionSplit + "]\n");
 
         return sBuilder.toString ();
     }

@@ -25,6 +25,7 @@ import com.google.inject.Inject;
 
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.ExerciseSample;
+import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.Position;
 import de.saring.exerciseviewer.gui.EVContext;
 
@@ -40,6 +41,11 @@ public class TrackPanel extends BasePanel {
     
     private JXMapKit mapKit;
     private boolean panelWasVisible = false;
+    
+    private static final Color COLOR_START = Color.GREEN; 
+    private static final Color COLOR_END = new Color(255, 100, 100); 
+    private static final Color COLOR_LAP = Color.LIGHT_GRAY; 
+    private static final Color COLOR_TRACK = Color.RED; 
     
     /**
      * Standard c'tor.
@@ -108,13 +114,14 @@ public class TrackPanel extends BasePanel {
      * @param exercise the exercise with track data
      */
     private void showTrack(EVExercise exercise) {        
-        List<GeoPosition> geoPositions = createGeoPositionList(exercise);
+        List<GeoPosition> sampleGeoPositions = createSampleGeoPositionList(exercise);
+        List<GeoPosition> lapGeoPositions = createLapGeoPositionList(exercise);
         
-        if (!geoPositions.isEmpty()) {
+        if (!sampleGeoPositions.isEmpty()) {
             // setup map zoom and position
-            setupZoomAndCenterPosition(geoPositions);            
+            setupZoomAndCenterPosition(sampleGeoPositions);            
             // display track
-            setupTrackPainter(geoPositions);
+            setupTrackPainter(sampleGeoPositions, lapGeoPositions);
         }
     }
     
@@ -181,9 +188,10 @@ public class TrackPanel extends BasePanel {
     /**
      * Creates a custom painter which draws the track.
      * 
-     * @param geoPositions list of GeoPosition objects of this track
+     * @param sampleGeoPositions list of GeoPosition objects of all samples of this track
+     * @param lapGeoPositions list of GeoPosition objects of all lap splits this track
      */
-    private void setupTrackPainter(final List<GeoPosition> geoPositions) {
+    private void setupTrackPainter(final List<GeoPosition> sampleGeoPositions, final List<GeoPosition> lapGeoPositions) {
         
         Painter<JXMapViewer> lineOverlay = new Painter<JXMapViewer>() {
             public void paint(Graphics2D g, JXMapViewer map, int w, int h) {
@@ -195,10 +203,17 @@ public class TrackPanel extends BasePanel {
                 Rectangle rect = mapKit.getMainMap().getViewportBounds();
                 g.translate(-rect.x, -rect.y);
 
-                // draw track line and waypoints for start and end position
-                drawTrackLine(g, geoPositions);
-                drawWaypoint(g, geoPositions.get(0), Color.GREEN);
-                drawWaypoint(g, geoPositions.get(geoPositions.size()-1), Color.BLUE);
+                // draw track line 
+                drawTrackLine(g, sampleGeoPositions);
+
+                // draw waypoints for all lap split positions                
+                for (GeoPosition geoPosition : lapGeoPositions) {
+                    drawWaypoint(g, geoPosition, COLOR_LAP);
+                }
+                
+                // draw waypoints for start and end position                
+                drawWaypoint(g, sampleGeoPositions.get(0), COLOR_START);
+                drawWaypoint(g, sampleGeoPositions.get(sampleGeoPositions.size()-1), COLOR_END);
 
                 g.dispose();
             }
@@ -213,7 +228,7 @@ public class TrackPanel extends BasePanel {
      * @param geoPositions list of GeoPosition objects of this track
      */
     private void drawTrackLine(Graphics2D g, List<GeoPosition> geoPositions) {
-        g.setColor(Color.RED);
+        g.setColor(COLOR_TRACK);
         g.setStroke(new BasicStroke(2));
 
         int lastX = -1;
@@ -251,7 +266,7 @@ public class TrackPanel extends BasePanel {
         g.draw(new Ellipse2D.Double(pt.getX() - RADIUS, pt.getY() - RADIUS, RADIUS*2, RADIUS*2));
     }
     
-    private List<GeoPosition> createGeoPositionList(EVExercise exercise) {
+    private List<GeoPosition> createSampleGeoPositionList(EVExercise exercise) {
         ArrayList<GeoPosition> geoPositions = new ArrayList<GeoPosition>();
         
         for (ExerciseSample exerciseSample : exercise.getSampleList()) {
@@ -263,6 +278,21 @@ public class TrackPanel extends BasePanel {
         return geoPositions;
     }
 
+    private List<GeoPosition> createLapGeoPositionList(EVExercise exercise) {
+        ArrayList<GeoPosition> geoPositions = new ArrayList<GeoPosition>();
+
+        // ignore last lap split position, it's the exercise end position 
+        for (int i = 0; i < exercise.getLapList().length-1; i++) {
+        	Lap lap = exercise.getLapList()[i];
+            Position pos = lap.getPositionSplit();
+            if (pos != null) {
+                geoPositions.add(new GeoPosition(pos.getLatitude(), pos.getLongitude()));
+            }
+        }
+        return geoPositions;
+    }
+
+    
     private Point2D convertGeoPosToPixelPos(GeoPosition geoPosition) {
         return mapKit.getMainMap().getTileFactory().geoToPixel(geoPosition, mapKit.getMainMap().getZoom());
     }    

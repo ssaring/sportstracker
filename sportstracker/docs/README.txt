@@ -1,4 +1,3 @@
-
 About SportsTracker
 -------------------
 
@@ -219,7 +218,9 @@ If the heartrate monitor has an integrated GPS receiver and stores the
 location data in the exercise file (e.g. in TCX files from the Garmin Edge 
 series), then ExerciseViewer will show the exercise track inside a map viewer
 component. This interactive map is zoomable and moveable, so it's easy to 
-view all details of the track. 
+view all details of the track.
+The green waypoint is the start, the red is the end position and the gray
+waypoints are the lap split positions. 
 The map data will be downloaded on demand from the OpenStreetMap project
 (http://www.openstreetmap.org).
 
@@ -425,5 +426,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2010/07/09
-
+2010/08/02

@@ -3,6 +3,9 @@ SportsTracker-TODO
 
 Before next release:
 --------------------
+- improve rendering for waypoints, use marker pins instead of circles
+  - can the WaypointRenderer from SwingX be reused of enhanced?
+  - draw "S", "E" and "1" in start, end and laps waypoints
 - add Garmin FIT support to website (also in Metadata)
 
 

@@ -83,7 +83,9 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals (0, exercise.lapList[0].speed.cadence)        
         assertEquals (10, exercise.lapList[0].altitude.altitude)
         assertEquals (149, exercise.lapList[0].altitude.ascent)
-
+		assertEquals (37.8765614d, exercise.lapList[0].positionSplit.latitude, 0.001d)
+		assertEquals (-122.4601646d, exercise.lapList[0].positionSplit.longitude, 0.001d)
+		
         // sample data
         assertEquals(379, exercise.sampleList.size())
         
@@ -170,6 +172,8 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals (213, exercise.lapList[0].altitude.ascent)
         assertEquals (9.009, exercise.lapList[0].speed.speedEnd, 0.001d)  
         assertEquals (86, exercise.lapList[0].speed.cadence)  
+		assertEquals (51.030515d, exercise.lapList[0].positionSplit.latitude, 0.001d)
+		assertEquals (13.730152d, exercise.lapList[0].positionSplit.longitude, 0.001d)
 
         assertEquals (((56*60 + 20) + (45*60 + 6)) * 10, exercise.lapList[1].timeSplit)        
         assertEquals (160, exercise.lapList[1].heartRateSplit)        
@@ -181,7 +185,9 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals (112, exercise.lapList[1].altitude.altitude)
         assertEquals (175, exercise.lapList[1].altitude.ascent)
         assertEquals (0, exercise.lapList[1].speed.cadence)  
-        
+		assertEquals (51.045960d, exercise.lapList[1].positionSplit.latitude, 0.001d)
+		assertEquals (13.809391d, exercise.lapList[1].positionSplit.longitude, 0.001d)
+
         // sample data
         assertEquals(1254, exercise.sampleList.size())
         

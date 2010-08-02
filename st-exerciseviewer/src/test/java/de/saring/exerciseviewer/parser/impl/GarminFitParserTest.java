@@ -101,6 +101,8 @@ public class GarminFitParserTest {
         assertEquals(151, exercise.getLapList()[0].getAltitude().getAscent());
         assertEquals(302, exercise.getLapList()[0].getAltitude().getAltitude());
         assertEquals(20, exercise.getLapList()[0].getTemperature().getTemperature());
+        assertEquals(51.05553d, exercise.getLapList()[0].getPositionSplit().getLatitude(), 0.001d);
+        assertEquals(13.93589d, exercise.getLapList()[0].getPositionSplit().getLongitude(), 0.001d);
 
         assertEquals(((2*3600) + (11*60) + 46) * 10, exercise.getLapList()[2].getTimeSplit());
         assertEquals(124, exercise.getLapList()[2].getHeartRateAVG());
@@ -112,6 +114,8 @@ public class GarminFitParserTest {
         assertEquals(342, exercise.getLapList()[2].getAltitude().getAscent());
         assertEquals(417, exercise.getLapList()[2].getAltitude().getAltitude());
         assertEquals(24, exercise.getLapList()[2].getTemperature().getTemperature());
+        assertEquals(51.00746d, exercise.getLapList()[2].getPositionSplit().getLatitude(), 0.001d);
+        assertEquals(14.20151d, exercise.getLapList()[2].getPositionSplit().getLongitude(), 0.001d);
         
         assertEquals(((4*3600) + (28*60) + 16) * 10, exercise.getLapList()[4].getTimeSplit());
         assertEquals(120, exercise.getLapList()[4].getHeartRateAVG());
@@ -123,6 +127,8 @@ public class GarminFitParserTest {
         assertEquals(206, exercise.getLapList()[4].getAltitude().getAscent());
         assertEquals(237, exercise.getLapList()[4].getAltitude().getAltitude());
         assertEquals(30, exercise.getLapList()[4].getTemperature().getTemperature());
+        assertEquals(51.05450d, exercise.getLapList()[4].getPositionSplit().getLatitude(), 0.001d);
+        assertEquals(13.83227d, exercise.getLapList()[4].getPositionSplit().getLongitude(), 0.001d);
         
         // check sample data
         assertEquals(8235, exercise.getSampleList().length);

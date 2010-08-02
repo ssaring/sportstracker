@@ -183,7 +183,12 @@ class GarminTcxParser extends AbstractExerciseParser {
                         }
                     }
 				}
-			}            
+			}
+
+			// store position of last sample as lap split position			
+			if (!evSamples.isEmpty()) {
+				evLap.positionSplit = evSamples.last().position
+			}
         }
 		
     	exercise.lapList = evLaps as Lap[]        

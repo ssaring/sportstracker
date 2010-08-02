@@ -11,7 +11,10 @@ v5.1.0:
       (summary, lap data, sample data, track/map data, temperature data)
     - unit tests for GarminFITParser
   - ConvertUtils: new conversion method from semicircles to degrees
-  - TrackPanel: start and end trackpoints (circles) have a white border,
+  - Lap class extension: atty for geographical position at lap split
+    - parsed and stored in the Garmin FIT and TCX parser  
+  - TrackPanel: draw gray waypoint circles for each lap split position
+  - TrackPanel: waypoint circles (start, end, laps) have a white border,
     so they are also visible on backgrounds with same color
   
 v5.0.0:
