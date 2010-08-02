@@ -49,11 +49,6 @@ Support for track data in external GPS files (GPX):
 
 General TODOs:
 --------------
-- ExerciseViewer Track panel: show way points for laps in map
-  - can't be done with the WaypointPainter, it doesn't support any waypoint
-    names and is not designed to be mixed with other painters
-  => paint lap points and names in my custome track painter, maybe the
-     WaypointRenderer can be reused
 - Closing dialog with Escape key doesn't work when a JXDatePicker has the focus
 - "Copy exercise" feature, see request:
   https://sourceforge.net/tracker/?func=detail&aid=2927194&group_id=133110&atid=726273
