@@ -1,23 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Before next release:
---------------------
-- improve rendering for waypoints, use marker pins instead of circles
-  - can the WaypointRenderer from SwingX be reused of enhanced?
-  - draw "S", "E" and "1" in start, end and laps waypoints
-- add Garmin FIT support to website (also in Metadata)
-
-
-TrackPanel improvements:
-------------------------
-- draw text "S" and "E" next to the waypoint circles for start/end position
-- is it possible to resuse the text renderer from JXMapViewer? (check JavaDoc and sources)
-  (black text on white border background)
-- add optional splitPosition attribute to class Lap, fill it in TCX and FIT parser
-- display lap positions in track panel with lap number 
-
-  
 Support for track data in external GPS files (GPX): 
 ---------------------------------------------------
 - Track data inside Exercise files is already supported (for Garmin FIT and TCX files)
@@ -91,6 +74,10 @@ ExerciseViewer-TODO
 Diagram panel:
 - there's no space at the left side when the bottom axis displays "by distance"
   (between left axis and graph start)
+
+Track panel:
+- improve rendering for waypoints, use marker pins instead of circles
+  (can the WaypointRenderer from SwingX be reused and enhanced?)
 
 ExerciseParsers:
 - GarminTcxParser:

@@ -3,6 +3,7 @@ package de.saring.exerciseviewer.gui.panels;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -42,9 +43,9 @@ public class TrackPanel extends BasePanel {
     private JXMapKit mapKit;
     private boolean panelWasVisible = false;
     
-    private static final Color COLOR_START = Color.GREEN; 
-    private static final Color COLOR_END = new Color(255, 100, 100); 
-    private static final Color COLOR_LAP = Color.LIGHT_GRAY; 
+    private static final Color COLOR_START = new Color(180, 255, 180);
+    private static final Color COLOR_END = new Color(255, 180, 180); 
+    private static final Color COLOR_LAP = Color.WHITE; 
     private static final Color COLOR_TRACK = Color.RED; 
     
     /**
@@ -207,13 +208,14 @@ public class TrackPanel extends BasePanel {
                 drawTrackLine(g, sampleGeoPositions);
 
                 // draw waypoints for all lap split positions                
-                for (GeoPosition geoPosition : lapGeoPositions) {
-                    drawWaypoint(g, geoPosition, COLOR_LAP);
+                for (int i = 0; i < lapGeoPositions.size(); i++) {
+                	GeoPosition geoPosition = lapGeoPositions.get(i);
+                    drawWaypoint(g, geoPosition, String.valueOf(i+1), COLOR_LAP);
                 }
                 
                 // draw waypoints for start and end position                
-                drawWaypoint(g, sampleGeoPositions.get(0), COLOR_START);
-                drawWaypoint(g, sampleGeoPositions.get(sampleGeoPositions.size()-1), COLOR_END);
+                drawWaypoint(g, sampleGeoPositions.get(0), "S", COLOR_START);
+                drawWaypoint(g, sampleGeoPositions.get(sampleGeoPositions.size()-1), "E", COLOR_END);
 
                 g.dispose();
             }
@@ -245,13 +247,14 @@ public class TrackPanel extends BasePanel {
     }
 
     /**
-     * Draws a waypoint circle at the specified GeoPosition.
+     * Draws a waypoint circle and a description text at the specified GeoPosition.
      * 
      * @param g the Graphics2D context
      * @param geoPosition position of the waypoint
+     * @param text the description text (right to the circle)
      * @param color the color of the circle
      */
-    private void drawWaypoint(Graphics2D g, GeoPosition geoPosition, Color color) {
+    private void drawWaypoint(Graphics2D g, GeoPosition geoPosition, String text, Color color) {
     	final int RADIUS = 5;
     	
         Point2D pt = convertGeoPosToPixelPos(geoPosition);
@@ -264,6 +267,17 @@ public class TrackPanel extends BasePanel {
         g.setColor(color);
         g.setStroke(new BasicStroke(3));
         g.draw(new Ellipse2D.Double(pt.getX() - RADIUS, pt.getY() - RADIUS, RADIUS*2, RADIUS*2));
+
+        // draw the text right from the circle with a gray shadow
+        float textPosX = (float) (pt.getX() + RADIUS*2.2);
+        float textPosY = (float) pt.getY() + 3;
+        
+        g.setFont(new Font("Dialog.bold", Font.BOLD, 12));
+        
+        g.setColor(Color.DARK_GRAY);
+        g.drawString(text, textPosX + 1f, textPosY + 1f);
+        g.setColor(color);
+        g.drawString(text, textPosX, textPosY);
     }
     
     private List<GeoPosition> createSampleGeoPositionList(EVExercise exercise) {

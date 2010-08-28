@@ -13,8 +13,10 @@ v5.1.0:
   - ConvertUtils: new conversion method from semicircles to degrees
   - Lap class extension: atty for geographical position at lap split
     - parsed and stored in the Garmin FIT and TCX parser  
-  - TrackPanel: draw gray waypoint circles for each lap split position
-  - TrackPanel: waypoint circles (start, end, laps) have a white border,
+  - TrackPanel: draw "S" next to start and "E" next to end waypoint
+  - TrackPanel: draw white waypoint circles for each lap split position
+  - TrackPanel: draw lap number next to each lap split waypoint
+  - TrackPanel: waypoint circles and their texts have a dark border,
     so they are also visible on backgrounds with same color
   
 v5.0.0:

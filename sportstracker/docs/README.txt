@@ -219,7 +219,7 @@ location data in the exercise file (e.g. in TCX files from the Garmin Edge
 series), then ExerciseViewer will show the exercise track inside a map viewer
 component. This interactive map is zoomable and moveable, so it's easy to 
 view all details of the track.
-The green waypoint is the start, the red is the end position and the gray
+The green waypoint is the start, the red is the end position and the white
 waypoints are the lap split positions. 
 The map data will be downloaded on demand from the OpenStreetMap project
 (http://www.openstreetmap.org).
@@ -426,4 +426,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2010/08/02
+2010/08/28
