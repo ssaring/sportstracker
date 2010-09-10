@@ -8,6 +8,9 @@ import de.saring.exerciseviewer.parser.impl.garminfit.GarminFitParser;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -27,6 +30,10 @@ public class GarminFitParserTest {
      */
     @Before
     public void setUp() throws Exception {
+    	// change locale/timezone to Germany (files recorded there), otherwise the datetime comparision fails 
+    	Locale.setDefault(Locale.GERMANY);
+    	TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
+    	
         parser = new GarminFitParser();
     }
     

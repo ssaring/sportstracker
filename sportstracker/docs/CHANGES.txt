@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+v5.2.0:
+ ExerciseViewer changes:
+  - bugfix in GarminFitParserTest (date comparision fails on other timezones
+    than Europe/Berlin)
+    
 v5.1.0:
  SportsTracker changes:
   - updated to SwingX 1.6.1 (DatePicker improvements)
