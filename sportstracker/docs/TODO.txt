@@ -1,6 +1,14 @@
 SportsTracker-TODO
 ==================
 
+Timex PWX parser:
+-----------------
+- Bugfixes for Global Trainer PWX files:
+  - Cadence mode is enabled (RecordingMode), but no cadence data available
+  - The times for below/in/above heartrate ranges are not correct for Global Trainer files
+- add support for Timex Ironman Global Trainer to ST website 
+
+
 Support for track data in external GPS files (GPX): 
 ---------------------------------------------------
 - Track data inside Exercise files is already supported (for Garmin FIT and TCX files)

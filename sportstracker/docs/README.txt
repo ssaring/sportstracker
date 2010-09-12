@@ -46,6 +46,7 @@ too, but I can't test them, user feedback is welcome):
   - Garmin Edge        (tested with Edge 500 and Edge 705, FIT and TCX files)
   - Garmin Forerunner  (tested with Forerunner 305, FIT and TCX files)
   - Timex Ironmen Race Trainer (tested)
+  - Timex Ironman Global Trainer  (tested)
   - Oregon Scientific SmartSync WM100 (tested)
   - Some Sony Ericsson mobiles (tested with W580i)
 

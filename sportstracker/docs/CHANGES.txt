@@ -5,7 +5,11 @@ v5.2.0:
  ExerciseViewer changes:
   - bugfix in GarminFitParserTest (date comparision fails on other timezones
     than Europe/Berlin)
-    
+  - Timex PWX support (by Robert Schultz <schultzr@users.sourceforge.net>):
+    - added support for Timex Ironman Global Trainer PWX exercises, including
+      GPS data (displayed in Track panel)
+    - unit test for Timex Ironman Global Trainer PWX files
+
 v5.1.0:
  SportsTracker changes:
   - updated to SwingX 1.6.1 (DatePicker improvements)
