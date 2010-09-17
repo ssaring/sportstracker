@@ -1,10 +1,8 @@
 SportsTracker-TODO
 ==================
 
-Timex PWX parser:
------------------
-- Bugfixes for Global Trainer PWX files:
-  - Cadence mode is enabled (RecordingMode), but no cadence data available
+Before next release:
+--------------------
 - add support for Timex Ironman Global Trainer to ST website 
 
 

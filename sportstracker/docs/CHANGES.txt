@@ -7,7 +7,7 @@ v5.2.0:
     than Europe/Berlin)
   - Timex PWX support (by Robert Schultz <schultzr@users.sourceforge.net>):
     - added support for Timex Ironman Global Trainer PWX exercises, including
-      GPS data (displayed in Track panel)
+      GPS data (displayed in Track panel) and cadence data
     - unit test for Timex Ironman Global Trainer PWX files
 
 v5.1.0:

@@ -283,7 +283,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
 
         recMode.setPower(true);
         recMode.setLocation(true);
-        recMode.setCadence(true);
+        recMode.setCadence(false);
         recMode.setAltitude(true);
         recMode.setSpeed(true);
         recMode.setBikeNumber((byte) 0);
@@ -601,6 +601,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
                         // Not implemented in ExerciseSample class
                     }else if (childName.equals("cad")){
                         sample.setCadence((short) Short.valueOf(sampleChildren.item(j).getTextContent()));
+                        exercise.getRecordingMode().setCadence(true);
                     }else if (childName.equals("dist")){
                         sample.setDistance(Integer.valueOf(sampleChildren.item(j).getTextContent()));
                         distanceinsample=true;

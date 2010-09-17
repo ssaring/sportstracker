@@ -224,7 +224,7 @@ public class TimexPwxParserTest {
         assertEquals ("Bike",exercise.getTypeLabel ());
         assertEquals (true,exercise.getRecordingMode ().isAltitude ());
         assertEquals (true,exercise.getRecordingMode ().isSpeed ());
-        assertEquals (true,exercise.getRecordingMode ().isCadence ());
+        assertEquals (false,exercise.getRecordingMode ().isCadence ());
         assertEquals (true,exercise.getRecordingMode ().isPower ());
         assertEquals ((byte)0,exercise.getRecordingMode ().getBikeNumber ());
         assertEquals ( 10*((0*60*60) + (10*60) + 06) + 0,exercise.getDuration ());
