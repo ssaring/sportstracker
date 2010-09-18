@@ -3,7 +3,10 @@ SportsTracker-TODO
 
 Before next release:
 --------------------
-- add support for Timex Ironman Global Trainer to ST website 
+- add support for Timex Ironman Global Trainer to ST website
+- update to BSAF 1.9 RC5 and remove the Mac-Workarounds for Command+Q-Shutdown 
+- Feature Request #3070066: use bar graph instead of line plot in Overview dialog
+  => it the diagram more readable with bars? (test with all diagram options) 
 
 
 Support for track data in external GPS files (GPX): 
@@ -37,8 +40,6 @@ Support for track data in external GPS files (GPX):
 
 General TODOs:
 --------------
-- Remove the Mac-Workarounds for Command+Q-Shutdown when the next BSAF version
-  will be released (http://kenai.com/jira/browse/BSAF-96)
 - Closing dialog with Escape key doesn't work when a JXDatePicker has the focus
 - "Copy exercise" feature, see request:
   https://sourceforge.net/tracker/?func=detail&aid=2927194&group_id=133110&atid=726273
