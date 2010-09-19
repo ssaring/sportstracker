@@ -83,7 +83,7 @@
         <dependency>
             <groupId>org.jdesktop.bsaf</groupId>
             <artifactId>bsaf</artifactId>
-            <version>1.9RC4</version>
+            <version>1.9RC5</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>

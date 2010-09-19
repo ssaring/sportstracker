@@ -4,7 +4,7 @@ SportsTracker-TODO
 Before next release:
 --------------------
 - add support for Timex Ironman Global Trainer to ST website
-- update to BSAF 1.9 RC5 and remove the Mac-Workarounds for Command+Q-Shutdown 
+- remove the Mac-Workarounds for Command+Q-Shutdown (works now correctly in BSAF 1.9 RC5) 
 - Feature Request #3070066: use bar graph instead of line plot in Overview dialog
   => it the diagram more readable with bars? (test with all diagram options) 
 
