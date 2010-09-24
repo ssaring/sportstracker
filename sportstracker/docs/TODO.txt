@@ -4,7 +4,6 @@ SportsTracker-TODO
 Before next release:
 --------------------
 - add support for Timex Ironman Global Trainer to ST website
-- remove the Mac-Workarounds for Command+Q-Shutdown (works now correctly in BSAF 1.9 RC5) 
 
 
 Support for track data in external GPS files (GPX): 

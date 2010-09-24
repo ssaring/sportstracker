@@ -317,13 +317,12 @@ public class STViewImpl extends FrameView implements STView {
             ImageIcon appIcon = new ImageIcon(getClass().getResource("/icons/st-logo.png"));
             MacSpecials.getInstance().setDockIcon(appIcon.getImage());
 
-            // Set Mac application menu about/preferences/quit actions
+            // Set Mac application menu about/preferences actions
+            // (correct Quit handling is done by BSAF since version 1.9RC5)
             Action aboutAction = controller.getActionMap().get(STController.ACTION_ABOUT);
             MacSpecials.getInstance().setAboutAction(aboutAction);
             Action prefsAction = controller.getActionMap().get(STController.ACTION_PREFERENCES);
             MacSpecials.getInstance().setPreferencesAction(prefsAction);
-            Action quitAction = controller.getActionMap().get(STController.ACTION_QUIT);
-            MacSpecials.getInstance().setQuitAction(quitAction);
         }
     }
 
