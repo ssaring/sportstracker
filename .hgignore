@@ -6,11 +6,15 @@ syntax: glob
 *.swp
 .#*
 
-# ignore Maven build directories and Eclipse project files
+# ignore Maven build directories and Eclipse and IDEA project files
 target
 .classpath
 .project
 .settings
+*.iml
+*.ipr
+*.iws
+.idea
 
 # switch to regexp syntax
 syntax: regexp
