@@ -3,6 +3,7 @@ SportsTracker-TODO
 
 Before next release:
 --------------------
+- update to Guice 3.0 (RC1, not in Maven Repos yet)
 - add support for Timex Ironman Global Trainer to ST website
 
 
