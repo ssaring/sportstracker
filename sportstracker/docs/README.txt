@@ -334,8 +334,8 @@ The SportsTracker project uses the following libraries:
       License: Lesser General Public License 2.1 (LGPL)
   - Groovy 1.7.2 (http://groovy.codehaus.org)
       License: Apache License v2.0
-  - Guice 2.0 (http://code.google.com/p/google-guice/)
-      Includes: aopalliance-1.0.jar
+  - Guice 3.0 RC1 (http://code.google.com/p/google-guice/)
+      Includes: aopalliance-1.0.jar, javax.inject-1.jar
       License: Apache License v2.0
   - JFreeChart 1.0.13 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
@@ -427,4 +427,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2010/08/28
+2010/12/12

@@ -3,7 +3,8 @@ SportsTracker-TODO
 
 Before next release:
 --------------------
-- update to Guice 3.0 (RC1, not in Maven Repos yet)
+- Guice 3.0 (RC1):
+  - use of standardized javax.inject annotations (JSR 330) 
 - add support for Timex Ironman Global Trainer to ST website
 
 

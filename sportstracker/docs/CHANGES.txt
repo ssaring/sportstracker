@@ -13,6 +13,9 @@ v5.2.0:
     (IDEA can now also be used for development)
   - update to BSAF 1.9 GA (final), which contains many bugfixes, also for the 
     Command+Q-Shutdown problem on MacOS X
+  - update to JUnit 4.8.2
+  - update to Guice 3.0 (RC1)
+    - use of standardized javax.inject annotations (JSR 330) 
 
  Translations:
   - updated spanish translation by Luis Llorente Campo
