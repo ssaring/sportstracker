@@ -1,12 +1,11 @@
 package de.saring.sportstracker.gui.dialogs;
 
+import javax.inject.Inject;
 import javax.swing.ActionMap;
 import javax.swing.JDialog;
 import javax.swing.JTextField;
 
 import org.jdesktop.application.Action;
-
-import com.google.inject.Inject;
 
 import de.saring.sportstracker.gui.STContext;
 import de.saring.util.gui.DialogUtils;

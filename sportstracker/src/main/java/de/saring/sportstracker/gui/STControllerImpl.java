@@ -1,8 +1,21 @@
 package de.saring.sportstracker.gui;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+import javax.swing.ActionMap;
+import javax.swing.JOptionPane;
+
+import org.jdesktop.application.Action;
+import org.jdesktop.application.Task;
+
 import de.saring.exerciseviewer.gui.EVMain;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Exercise;
@@ -22,17 +35,6 @@ import de.saring.sportstracker.gui.dialogs.WeightDialog;
 import de.saring.sportstracker.gui.views.EntryView;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.ActionMap;
-import javax.swing.JOptionPane;
-import org.jdesktop.application.Action;
-import org.jdesktop.application.Task;
 
 /**
  * This class contains all controller (MVC) related functionality of the SportsTracker 

@@ -3,8 +3,6 @@ SportsTracker-TODO
 
 Before next release:
 --------------------
-- Guice 3.0 (RC1):
-  - use of standardized javax.inject annotations (JSR 330) 
 - add support for Timex Ironman Global Trainer to ST website
 
 
@@ -12,7 +10,7 @@ Support for track data in external GPS files (GPX):
 ---------------------------------------------------
 - Track data inside Exercise files is already supported (for Garmin FIT and TCX files)
 - SportsTracker changes:
-  - Exercise object: Add optional trackFile attribut, similar to hrmFile
+  - Exercise object: Add optional trackFile attribute, similar to hrmFile
   - ExerciseDialog:
     - Add below HRM file selection an optional Track file selection
     - Rename "View HRM file" button to "View exercise details".

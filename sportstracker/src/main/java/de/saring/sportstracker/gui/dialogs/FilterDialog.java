@@ -1,6 +1,20 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import com.google.inject.Inject;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
+
+import javax.inject.Inject;
+import javax.swing.ActionMap;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
+import org.jdesktop.application.Action;
+
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.ExerciseFilter;
@@ -9,18 +23,6 @@ import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.DialogUtils;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
-import javax.swing.ActionMap;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import org.jdesktop.application.Action;
 
 /**
  * This class is the implementation of the dialog for setting filter criterias

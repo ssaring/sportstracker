@@ -1,17 +1,20 @@
 package de.saring.sportstracker.gui;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import de.saring.exerciseviewer.gui.EVContext;
-import de.saring.sportstracker.core.STException;
 import java.util.EventObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+
 import org.jdesktop.application.View;
+
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import de.saring.exerciseviewer.gui.EVContext;
+import de.saring.sportstracker.core.STException;
 
 /**
  * This is the main class of SportsTracker which starts the entire application.
@@ -51,20 +54,26 @@ public class STMain extends SportsTracker {
      * Starts up the SportsTracker application.
      */
     @Override 
-    protected void startup () {
+    protected void startup() {
         
         // create and configure the Guice injector 
-        Injector injector = Guice.createInjector (new AbstractModule () {
-            public void configure () {
+        Injector injector = Guice.createInjector(new AbstractModule() {
+            public void configure() {
+            	
                 // create and bind SportsTracker GUI context, which can be used everywhere
-                context = new STContextImpl (getContext ());
-                bind (STContext.class).toInstance (context);
-                bind (EVContext.class).toInstance (context);
+                context = new STContextImpl(getContext());
+                bind(STContext.class).toInstance(context);
+                bind(EVContext.class).toInstance(context);
+                
+                // bind the component interfaces to implementations
+                bind(STDocument.class).to(STDocumentImpl.class);
+                bind(STView.class).to(STViewImpl.class);
+                bind(STController.class).to(STControllerImpl.class);
             }
         });
         
         // create and initialize the document
-        document = injector.getInstance (STDocument.class);
+        document = injector.getInstance(STDocument.class);
         document.evaluateCommandLineParameters (cmdLineParameters);
         document.loadOptions ();
         initLookAndFeel (document.getOptions ().getLookAndFeelClassName ());        

@@ -1,6 +1,6 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.Weight;

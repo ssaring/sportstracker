@@ -2,7 +2,6 @@ package de.saring.sportstracker.gui;
 
 import java.util.Date;
 
-import com.google.inject.ImplementedBy;
 import de.saring.sportstracker.data.Exercise;
 import javax.swing.ActionMap;
 
@@ -13,7 +12,6 @@ import javax.swing.ActionMap;
  * @author  Stefan Saring
  * @version 1.0
  */
-@ImplementedBy(STControllerImpl.class)
 public interface STController {
 
     /** Constants for action names. */

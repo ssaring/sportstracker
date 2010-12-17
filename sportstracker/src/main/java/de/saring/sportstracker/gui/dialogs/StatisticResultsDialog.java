@@ -1,13 +1,15 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
+import javax.swing.ActionMap;
+import javax.swing.JDialog;
+
+import org.jdesktop.application.Action;
+
 import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.util.gui.DialogUtils;
 import de.saring.util.unitcalc.FormatUtils;
-import javax.swing.ActionMap;
-import javax.swing.JDialog;
-import org.jdesktop.application.Action;
 
 /**
  * This dialog class displays the results for the calculated exercise statistics.

@@ -5,7 +5,7 @@ import javax.swing.JDialog;
 
 import org.jdesktop.application.Action;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import de.saring.exerciseviewer.gui.panels.DiagramPanel;
 import de.saring.exerciseviewer.gui.panels.LapPanel;

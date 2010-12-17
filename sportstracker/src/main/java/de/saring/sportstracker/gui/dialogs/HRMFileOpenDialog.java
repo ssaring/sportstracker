@@ -1,16 +1,18 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import com.google.inject.Inject;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.util.ResourceReader;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * File Open dialog for HRM file selection.

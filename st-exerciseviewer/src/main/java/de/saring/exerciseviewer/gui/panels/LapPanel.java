@@ -1,6 +1,6 @@
 package de.saring.exerciseviewer.gui.panels;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.gui.EVContext;

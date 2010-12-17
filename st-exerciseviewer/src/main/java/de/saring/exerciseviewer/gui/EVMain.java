@@ -3,7 +3,7 @@ package de.saring.exerciseviewer.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import javax.swing.JOptionPane;
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.core.EVOptions;

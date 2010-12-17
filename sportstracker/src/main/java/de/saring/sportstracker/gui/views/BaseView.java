@@ -1,6 +1,6 @@
 package de.saring.sportstracker.gui.views;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;

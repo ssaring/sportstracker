@@ -1,7 +1,22 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.swing.ActionMap;
+import javax.swing.JDialog;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import org.jdesktop.application.Action;
+
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.SportTypeList;
@@ -11,18 +26,6 @@ import de.saring.util.ResourceReader;
 import de.saring.util.gui.DialogUtils;
 import de.saring.util.gui.ListCellRendererOddEven;
 import de.saring.util.gui.ListUtils;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.ActionMap;
-import javax.swing.JDialog;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import org.jdesktop.application.Action;
 
 /**
  * This class is the implementation of the dialog for editing the sport type list.

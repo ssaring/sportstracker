@@ -1,7 +1,13 @@
 package de.saring.sportstracker.gui;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
 import de.saring.sportstracker.core.STOptions;
@@ -13,10 +19,6 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.util.data.IdDateObjectList;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class contains all document (MVC) related data and functionality of the 

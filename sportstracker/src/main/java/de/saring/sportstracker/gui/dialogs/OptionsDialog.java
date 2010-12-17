@@ -3,7 +3,15 @@ package de.saring.sportstracker.gui.dialogs;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
+import javax.swing.ActionMap;
+import javax.swing.JDialog;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+
+import org.jdesktop.application.Action;
+
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.core.STOptions.AutoCalculation;
 import de.saring.sportstracker.gui.STContext;
@@ -11,12 +19,6 @@ import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.DialogUtils;
 import de.saring.util.unitcalc.FormatUtils.SpeedView;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
-import javax.swing.ActionMap;
-import javax.swing.JDialog;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import org.jdesktop.application.Action;
 
 /**
  * This class is the implementation of the Options dialog.

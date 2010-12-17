@@ -1,13 +1,9 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import com.google.inject.Inject;
-import de.saring.sportstracker.data.Note;
-import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.gui.DialogUtils;
-import de.saring.util.gui.GuiCreateUtils;
 import java.awt.Container;
 import java.util.Calendar;
+
+import javax.inject.Inject;
 import javax.swing.ActionMap;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,9 +15,17 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+
 import net.miginfocom.swing.MigLayout;
+
 import org.jdesktop.application.Action;
 import org.jdesktop.swingx.JXDatePicker;
+
+import de.saring.sportstracker.data.Note;
+import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.gui.DialogUtils;
+import de.saring.util.gui.GuiCreateUtils;
 
 /**
  * This class is the implementation of the dialog for editing / adding 

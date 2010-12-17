@@ -1,7 +1,26 @@
 package de.saring.sportstracker.gui;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import java.awt.BorderLayout;
+import java.awt.Toolkit;
+import java.util.Arrays;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
+import javax.swing.border.EmptyBorder;
+
+import org.jdesktop.application.FrameView;
+
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.views.BaseView;
@@ -14,22 +33,6 @@ import de.saring.util.data.IdDateObjectList;
 import de.saring.util.gui.mac.MacSpecials;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.FormatUtils;
-import java.awt.BorderLayout;
-import java.awt.Toolkit;
-import java.util.Arrays;
-import javax.swing.Action;
-import javax.swing.KeyStroke;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JToolBar;
-import javax.swing.border.EmptyBorder;
-import org.jdesktop.application.FrameView;
 
 /**
  * This class contains all view (MVC) related data and functionality of the 

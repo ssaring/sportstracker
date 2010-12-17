@@ -1,6 +1,6 @@
 package de.saring.sportstracker.gui.views.listview;
 
-import com.google.inject.Singleton;
+import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Weight;
 import de.saring.util.unitcalc.FormatUtils;

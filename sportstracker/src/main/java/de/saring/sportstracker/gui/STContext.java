@@ -1,6 +1,5 @@
 package de.saring.sportstracker.gui;
 
-import com.google.inject.ImplementedBy;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.unitcalc.FormatUtils;
 
@@ -13,7 +12,6 @@ import de.saring.util.unitcalc.FormatUtils;
  * @author  Stefan Saring
  * @version 1.0
  */
-@ImplementedBy(STContextImpl.class)
 public interface STContext extends EVContext {
 
     /**

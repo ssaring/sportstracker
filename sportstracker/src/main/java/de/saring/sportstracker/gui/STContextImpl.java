@@ -1,13 +1,17 @@
 package de.saring.sportstracker.gui;
 
-import de.saring.util.ResourceReader;
-import de.saring.util.unitcalc.FormatUtils;
 import java.awt.Component;
+
+import javax.inject.Singleton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.SingleFrameApplication;
+
+import de.saring.util.ResourceReader;
+import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * Implementation of the GUI context of the SportsTracker application. It contains 
@@ -17,6 +21,7 @@ import org.jdesktop.application.SingleFrameApplication;
  * @author  Stefan Saring
  * @version 1.0
  */
+@Singleton
 public class STContextImpl implements STContext {
 
     private ApplicationContext appContext;

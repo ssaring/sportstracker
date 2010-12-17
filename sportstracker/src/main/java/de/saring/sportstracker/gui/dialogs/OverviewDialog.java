@@ -1,22 +1,5 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import com.google.inject.Inject;
-import de.saring.util.gui.jfreechart.StackedRenderer;
-import de.saring.sportstracker.core.STOptions;
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
-import de.saring.sportstracker.data.SportType;
-import de.saring.sportstracker.data.Weight;
-import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.ResourceReader;
-import de.saring.util.data.IdObjectList;
-import de.saring.util.gui.DialogUtils;
-import de.saring.util.gui.jfreechart.ChartUtils;
-import de.saring.util.unitcalc.ConvertUtils;
-import de.saring.util.unitcalc.FormatUtils;
-import de.saring.util.unitcalc.FormatUtils.SpeedView;
-import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,11 +10,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import javax.inject.Inject;
 import javax.swing.ActionMap;
 import javax.swing.JDialog;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import org.jdesktop.application.Action;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -46,12 +32,29 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.time.Month;
 import org.jfree.data.time.RegularTimePeriod;
-import org.jfree.data.time.Year;
 import org.jfree.data.time.TimeTableXYDataset;
+import org.jfree.data.time.Year;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.TextAnchor;
+
+import de.saring.sportstracker.core.STOptions;
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.ExerciseFilter;
+import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.data.Weight;
+import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.ResourceReader;
+import de.saring.util.data.IdObjectList;
+import de.saring.util.gui.DialogUtils;
+import de.saring.util.gui.jfreechart.ChartUtils;
+import de.saring.util.gui.jfreechart.StackedRenderer;
+import de.saring.util.unitcalc.ConvertUtils;
+import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.FormatUtils.SpeedView;
+import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 
 /**
  * This class is the "Overview diagram" dialog of the SportsTracker application,

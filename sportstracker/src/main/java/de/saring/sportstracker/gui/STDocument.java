@@ -1,6 +1,5 @@
 package de.saring.sportstracker.gui;
 
-import com.google.inject.ImplementedBy;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
@@ -19,7 +18,6 @@ import de.saring.util.data.IdObjectListChangeListener;
  * @author  Stefan Saring
  * @version 1.0
  */
-@ImplementedBy(STDocumentImpl.class)
 public interface STDocument extends IdObjectListChangeListener {
     
     /** Command line parameter for a specific data directory (optional). */

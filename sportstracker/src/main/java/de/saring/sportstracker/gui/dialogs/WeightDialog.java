@@ -1,8 +1,10 @@
 package de.saring.sportstracker.gui.dialogs;
 
 import java.awt.Container;
+import java.text.NumberFormat;
 import java.util.Calendar;
 
+import javax.inject.Inject;
 import javax.swing.ActionMap;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,12 +17,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
+import net.miginfocom.swing.MigLayout;
+
 import org.jdesktop.application.Action;
 import org.jdesktop.swingx.JXDatePicker;
-
-import com.google.inject.Inject;
-
-import net.miginfocom.swing.MigLayout;
 
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STContext;
@@ -29,7 +29,6 @@ import de.saring.util.gui.DialogUtils;
 import de.saring.util.gui.GuiCreateUtils;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
-import java.text.NumberFormat;
 
 /**
  * This class is the implementation of the dialog for editing / adding

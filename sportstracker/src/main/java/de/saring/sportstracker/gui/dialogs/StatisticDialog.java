@@ -1,7 +1,16 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.swing.ActionMap;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
+import org.jdesktop.application.Action;
+
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.ExerciseFilter;
 import de.saring.sportstracker.data.statistic.StatisticCalculator;
@@ -9,12 +18,6 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.data.IdObjectList;
 import de.saring.util.gui.DialogUtils;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import javax.swing.ActionMap;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import org.jdesktop.application.Action;
 
 /**
  * This class is the implementation of the Statistics dialog.

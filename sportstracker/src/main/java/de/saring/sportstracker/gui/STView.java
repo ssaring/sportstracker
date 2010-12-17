@@ -1,6 +1,5 @@
 package de.saring.sportstracker.gui;
 
-import com.google.inject.ImplementedBy;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.views.EntryView;
 import de.saring.util.data.IdDateObjectList;
@@ -12,7 +11,6 @@ import de.saring.util.data.IdDateObjectList;
  * @author  Stefan Saring
  * @version 1.0
  */
-@ImplementedBy(STViewImpl.class)
 public interface STView {
 
     /**

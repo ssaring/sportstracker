@@ -1,6 +1,6 @@
 package de.saring.sportstracker.storage;
 
-import com.google.inject.Singleton;
+import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.NoteList;

@@ -22,7 +22,7 @@ import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.painter.Painter;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.ExerciseSample;
