@@ -71,16 +71,9 @@
     <dependencies>
         <!-- Common compile dependencies -->
         <dependency>
-            <!-- get from saring.de, not in central Maven repository yet -->
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <version>3.0-rc1</version>
-        </dependency>
-        <dependency>
-            <!-- needed for Guice, can be removed when Guice is in central Maven repo -->
-            <groupId>aopalliance</groupId>
-            <artifactId>aopalliance</artifactId>
-            <version>1.0</version>
+            <version>3.0-rc2</version>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
