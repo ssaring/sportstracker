@@ -18,6 +18,7 @@ v5.2.0:
     - use of standardized javax.inject annotations (JSR 330) for Dependency 
       Injection (so the DI Container could be easily exchanged)
     - Guice API is only used for DI Container setup
+  - Groovy updated to version 1.7.6
 
  Translations:
   - updated spanish translation by Luis Llorente Campo

@@ -292,7 +292,7 @@ Developer Requirements
 For compilation of the SportsTracker sources you need:
   - Java SE Development Kit (JDK) 6 or greater
     (from http://java.sun.com/javase/downloads)
-  - Maven 2.2.1 (also successfully tested with Maven 3.0pre)
+  - Maven 3.0 or 2.2.1
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
@@ -332,7 +332,7 @@ The SportsTracker project uses the following libraries:
   - BSAF 1.9 GA (Better Swing Application Framework)
     (http://kenai.com/projects/bsaf)
       License: Lesser General Public License 2.1 (LGPL)
-  - Groovy 1.7.2 (http://groovy.codehaus.org)
+  - Groovy 1.7.6 (http://groovy.codehaus.org)
       License: Apache License v2.0
   - Guice 3.0 RC2 (http://code.google.com/p/google-guice/)
       Includes: aopalliance-1.0.jar, javax.inject-1.jar
