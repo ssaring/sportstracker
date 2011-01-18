@@ -9,3 +9,4 @@ de.saring.exerciseviewer.parser.impl.SmartsyncCSVParser
 de.saring.exerciseviewer.parser.impl.garminfit.GarminFitParser
 de.saring.exerciseviewer.parser.impl.GarminTcxParser
 de.saring.exerciseviewer.parser.impl.TimexPwxParser
+de.saring.exerciseviewer.parser.impl.TopoGrafixGpxParser

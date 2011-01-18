@@ -49,6 +49,7 @@ too, but I can't test them, user feedback is welcome):
   - Timex Ironman Global Trainer  (tested)
   - Oregon Scientific SmartSync WM100 (tested)
   - Some Sony Ericsson mobiles (tested with W580i)
+  - All devices recording GMX files (tested)  
 
 It's also possible to view HRM exercise files (downloaded with the Polar
 Software for Windows).
@@ -427,4 +428,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2010/12/12
+2011/01/16

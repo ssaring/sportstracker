@@ -19,6 +19,7 @@ v5.2.0:
       Injection (so the DI Container could be easily exchanged)
     - Guice API is only used for DI Container setup
   - Groovy updated to version 1.7.6
+  - TopoGrafix GPX v1.1 support (contains mostly track data only) 
 
  Translations:
   - updated spanish translation by Luis Llorente Campo

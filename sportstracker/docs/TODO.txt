@@ -3,7 +3,12 @@ SportsTracker-TODO
 
 Before next release:
 --------------------
-- add support for Timex Ironman Global Trainer to ST website
+- complete GPX file support (Track panel already works):
+  - see TODOs in TopoGrafixGpxParser
+  - add an unit test for a GPX file without time and altitude data
+  - test views in ExerciseViewer (Main, Diagram and Track panel must work)
+  - test "Import from HRM file"
+- add support for Timex Ironman Global Trainer and GPX format to ST website
 
 
 Support for track data in external GPS files (GPX): 
