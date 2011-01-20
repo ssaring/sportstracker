@@ -2,13 +2,7 @@ Changelog
 ---------
 
 v5.2.0:
- ExerciseViewer changes:
-  - bugfix in GarminFitParserTest (date comparision fails on other timezones
-    than Europe/Berlin)
-  - Timex PWX support (by Robert Schultz <schultzr@users.sourceforge.net>):
-    - added support for Timex Ironman Global Trainer PWX exercises, including
-      GPS data (displayed in Track panel) and cadence data
-    - unit test for Timex Ironman Global Trainer PWX files
+ SportsTracker changes:
   - added IntelliJ IDEA project files to Mercurial ignore list 
     (IDEA can now also be used for development)
   - update to BSAF 1.9 GA (final), which contains many bugfixes, also for the 
@@ -19,8 +13,18 @@ v5.2.0:
       Injection (so the DI Container could be easily exchanged)
     - Guice API is only used for DI Container setup
   - Groovy updated to version 1.7.6
-  - TopoGrafix GPX v1.1 support (contains mostly track data only) 
 
+ ExerciseViewer changes:
+  - bugfix in GarminFitParserTest (date comparision fails on other timezones
+    than Europe/Berlin)
+  - Timex PWX support (by Robert Schultz <schultzr@users.sourceforge.net>):
+    - added support for Timex Ironman Global Trainer PWX exercises, including
+      GPS data (displayed in Track panel) and cadence data
+    - unit test for Timex Ironman Global Trainer PWX files
+  - TopoGrafix GPX v1.1 support (contains mostly track data only) 
+  - Main panel: display only available data and "n.a." otherwise 
+    (instead of 0 when missing)
+  
  Translations:
   - updated spanish translation by Luis Llorente Campo
     <luisllorente@luisllorente.com>

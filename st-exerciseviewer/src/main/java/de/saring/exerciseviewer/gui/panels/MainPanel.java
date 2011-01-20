@@ -79,15 +79,25 @@ public class MainPanel extends BasePanel {
         if (exercise.getFileType () != EVExercise.ExerciseFileType.HRM) {
             
             // fill type and user data
-            laTypeValue.setText ("" + exercise.getType () + " (" + exercise.getTypeLabel () + ")");
-            laUserValue.setText ("" + exercise.getUserID ());
-            
+        	if (exercise.getType() > 0) {
+        		laTypeValue.setText ("" + exercise.getType () + " (" + exercise.getTypeLabel () + ")");
+        	}
+        	if (exercise.getUserID() > 0) {
+        		laUserValue.setText ("" + exercise.getUserID ());
+        	}
+        	
             // fill energy data
-            laEnergyValue.setText (formatUtils.caloriesToString (exercise.getEnergy ()));
-            
+        	if (exercise.getEnergy() > 0) {
+        		laEnergyValue.setText (formatUtils.caloriesToString (exercise.getEnergy ()));
+        	}
+        	
             // fill statistics data
-            laTotalExerciseTimeValue.setText (formatUtils.minutes2TimeString (exercise.getSumExerciseTime ()));
-            laTotalEnergyValue.setText (formatUtils.caloriesToString (exercise.getEnergyTotal ()));
+        	if (exercise.getSumExerciseTime() > 0) {
+        		laTotalExerciseTimeValue.setText (formatUtils.minutes2TimeString (exercise.getSumExerciseTime ()));
+        	}
+        	if (exercise.getEnergyTotal() > 0) {
+        		laTotalEnergyValue.setText (formatUtils.caloriesToString (exercise.getEnergyTotal ()));
+        	}
             
             // fill total riding time (available only in S710 exercises)
             if (exercise.getFileType () == EVExercise.ExerciseFileType.S710RAW) {
@@ -96,14 +106,23 @@ public class MainPanel extends BasePanel {
         }
         
         // fill time data
-        DateFormat sdFormat = SimpleDateFormat.getDateTimeInstance (
-            SimpleDateFormat.MEDIUM, SimpleDateFormat.MEDIUM);
-        laDateValue.setText (sdFormat.format (exercise.getDate ()));
-        laDurationValue.setText (formatUtils.tenthSeconds2TimeString (exercise.getDuration ()));
+        if (exercise.getDate() != null) {
+            DateFormat sdFormat = SimpleDateFormat.getDateTimeInstance (
+                    SimpleDateFormat.MEDIUM, SimpleDateFormat.MEDIUM);
+        	laDateValue.setText (sdFormat.format (exercise.getDate ()));
+        }
+        
+        if (exercise.getDuration() > 0) {
+        	laDurationValue.setText (formatUtils.tenthSeconds2TimeString (exercise.getDuration ()));
+        }
         
         // fill heartrate data
-        laAverageValue.setText (formatUtils.heartRateToString (exercise.getHeartRateAVG ()));
-        laMaximumValue.setText (formatUtils.heartRateToString (exercise.getHeartRateMax ()));
+        if (exercise.getHeartRateAVG() > 0) {
+        	laAverageValue.setText (formatUtils.heartRateToString (exercise.getHeartRateAVG ()));
+        }
+        if (exercise.getHeartRateMax() > 0) {
+        	laMaximumValue.setText (formatUtils.heartRateToString (exercise.getHeartRateMax ()));
+        }
         
         // fill recording mode data
         laAltitudeValue.setText (boolean2EnabledString (exercise.getRecordingMode ().isAltitude ()));
