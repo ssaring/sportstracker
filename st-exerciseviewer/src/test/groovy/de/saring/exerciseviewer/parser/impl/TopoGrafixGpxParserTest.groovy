@@ -53,6 +53,12 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertEquals ((int) (calDate.time.time / 1000), (int) (exercise.date.time / 1000))
         assertEquals (0, exercise.duration)            
 
+		// check altitude data
+		assertEquals(236, exercise.altitude.altitudeMin)
+		assertEquals(269, exercise.altitude.altitudeAVG)
+		assertEquals(315, exercise.altitude.altitudeMax)
+		assertEquals(245, exercise.altitude.ascent)
+		
         // check sample data (contains only location data)
         assertEquals(199, exercise.sampleList.size())
 

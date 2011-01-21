@@ -48,25 +48,46 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
 	 */
 	private EVExercise parseExercisePath(gpx) {
 		
-		EVExercise exercise = new EVExercise()
-		exercise.heartRateLimits = new HeartRateLimit[0]
-		exercise.lapList = new Lap[0]
-		def eSamples = []
+		EVExercise exercise = createExercise(gpx)
+		exercise.sampleList = parseSampleTrackpoints(gpx, exercise)
+
+		if (exercise.recordingMode.altitude) {
+			computeAltitudeSummary(exercise)
+		}
 		
-		// TODO: split into multiple methods!
+		exercise
+	}
+
+	/**
+	 * Creates the EVExercise with basic exercise data.	
+	 */
+	private def createExercise(gpx) {		
 		
-		// set basic exercise data
+		EVExercise exercise = new EVExercise()		
 		exercise.fileType = EVExercise.ExerciseFileType.GPX
 		exercise.recordingInterval = EVExercise.DYNAMIC_RECORDING_INTERVAL
 		exercise.recordingMode = new RecordingMode ()
 		exercise.recordingMode.location = true
 	
+		exercise.heartRateLimits = new HeartRateLimit[0]
+		exercise.lapList = new Lap[0]
+		
 		// get date and time (optional)
 		if (!gpx.metadata.time.isEmpty()) {
 			exercise.date = sdFormat.parse(gpx.metadata.time.text())
 		}
-
-		// parse all trackpoints in all tracks and track segments
+		
+		exercise
+	}
+	
+	/**
+	 * Parses all trackpoints in all tracks and track segments under the "gpx" element.
+	 * 
+	 * @return Array of ExerciseSample objects for each trackpoint
+	 */
+	private def parseSampleTrackpoints(gpx, exercise) {
+		def eSamples = []
+		
 		gpx.trk.each { trk ->
 			trk.trkseg.each { trkseg ->
 				trkseg.trkpt.each { trkpt ->
@@ -88,8 +109,34 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
 			}			
 		}			
 
-		exercise.sampleList = eSamples as ExerciseSample[]
-		// TODO: compute min, avg, max altitude and ascent (if available)
-		exercise
+		eSamples as ExerciseSample[]
 	}	
+
+	/**
+	 * Computes the min, avg and max altitude and the ascent of the exercise.
+	 */
+	def computeAltitudeSummary(exercise) {		
+		def altitude = new ExerciseAltitude()
+		
+		exercise.altitude = altitude		
+		altitude.altitudeMin = Short.MAX_VALUE 
+		altitude.altitudeMax = Short.MIN_VALUE
+		
+		long altitudeSum = 0
+		short previousAltitude = exercise.sampleList[0].altitude
+		
+		exercise.sampleList.each { sample ->
+			
+			altitude.altitudeMin = Math.min(sample.altitude, altitude.altitudeMin) 
+			altitude.altitudeMax = Math.max(sample.altitude, altitude.altitudeMax)
+			altitudeSum += sample.altitude
+			
+			if (previousAltitude < sample.altitude) {
+				altitude.ascent += sample.altitude - previousAltitude
+			}
+			previousAltitude = sample.altitude
+		}
+		
+		altitude.altitudeAVG = altitudeSum / exercise.sampleList.size()
+	}
 }
