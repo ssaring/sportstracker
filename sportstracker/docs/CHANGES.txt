@@ -17,14 +17,15 @@ v5.2.0:
  ExerciseViewer changes:
   - bugfix in GarminFitParserTest (date comparision fails on other timezones
     than Europe/Berlin)
+  - TopoGrafix GPX v1.1 support (SourceForge Feature request #1910611)
+    - contains mostly track data only, but also supports optional time and 
+      altitude data 
+  - Main panel: display only available data and "n.a." otherwise 
+    (instead of 0 when missing)
   - Timex PWX support (by Robert Schultz <schultzr@users.sourceforge.net>):
     - added support for Timex Ironman Global Trainer PWX exercises, including
       GPS data (displayed in Track panel) and cadence data
     - unit test for Timex Ironman Global Trainer PWX files
-  - TopoGrafix GPX v1.1 support (contains mostly track data only, but also
-    supports optional time and altitude data) 
-  - Main panel: display only available data and "n.a." otherwise 
-    (instead of 0 when missing)
   
  Translations:
   - updated spanish translation by Luis Llorente Campo
