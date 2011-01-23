@@ -32,6 +32,7 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
 
     /**
      * This test parses a GPX file for a bike tour created by GPSies.com.
+     * It contains track (location), time and altitude data.
      */
     void testGpxBikeTour () {
 
@@ -80,5 +81,50 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertEquals(51.01730000d, exercise.sampleList[198].position.latitude, 0.00001d)
         assertEquals(13.95372000d, exercise.sampleList[198].position.longitude, 0.00001d)
         assertEquals(243, exercise.sampleList[198].altitude)
+    }
+
+    /**
+     * This test parses a GPX file, which contains just the track (location) data.
+     */
+    void testGpxBikeTourLocationDataOnly () {
+
+        def exercise = parser.parseExercise ('misc/testdata/gpx/bike-tour-track_only.gpx')
+
+        // check basic exercise data
+        assertEquals (EVExercise.ExerciseFileType.GPX, exercise.fileType)
+        assertEquals (EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
+        assertFalse(exercise.recordingMode.altitude)
+        assertFalse(exercise.recordingMode.speed)
+        assertFalse(exercise.recordingMode.cadence)
+        assertFalse(exercise.recordingMode.power)
+        assertFalse(exercise.recordingMode.temperature)
+        assertTrue(exercise.recordingMode.location)
+        assertFalse(exercise.recordingMode.intervalExercise)
+
+        assertNull (exercise.date)
+        assertEquals (0, exercise.duration)
+        assertNull(exercise.altitude)
+        
+        // check sample data
+        assertEquals(142, exercise.sampleList.size())
+
+        assertEquals(0, exercise.sampleList[0].timestamp)
+        assertEquals(51.41659034d, exercise.sampleList[0].position.latitude, 0.00001d)
+        assertEquals(14.94992411d, exercise.sampleList[0].position.longitude, 0.00001d)
+        assertEquals(0, exercise.sampleList[0].heartRate)
+        assertEquals(0, exercise.sampleList[0].altitude)
+        assertEquals(0, exercise.sampleList[0].speed)
+        assertEquals(0, exercise.sampleList[0].cadence)
+        assertEquals(0, exercise.sampleList[0].distance)
+
+        assertEquals(0, exercise.sampleList[10].timestamp)
+        assertEquals(51.4178715d, exercise.sampleList[10].position.latitude, 0.00001d)
+        assertEquals(14.94420463d, exercise.sampleList[10].position.longitude, 0.00001d)
+        assertEquals(0, exercise.sampleList[10].altitude)
+
+        assertEquals(0, exercise.sampleList[141].timestamp)
+        assertEquals(51.32114d, exercise.sampleList[141].position.latitude, 0.00001d)
+        assertEquals(14.99391d, exercise.sampleList[141].position.longitude, 0.00001d)
+        assertEquals(0, exercise.sampleList[141].altitude)
     }
 }

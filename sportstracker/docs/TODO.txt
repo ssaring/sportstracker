@@ -4,39 +4,9 @@ SportsTracker-TODO
 Before next release:
 --------------------
 - complete GPX file support (Track panel already works):
-  - add an unit test for a GPX file without time and altitude data
-  - test views in ExerciseViewer (Main, Diagram and Track panel must work), also when no time data
-  - test "Import from HRM file"
+  - test "Import from HRM file", also when GPX has track data only
+  - complete GPX feature reqests
 - add support for Timex Ironman Global Trainer and GPX format to ST website
-
-
-Support for track data in external GPS files (GPX): 
----------------------------------------------------
-- Track data inside Exercise files is already supported (for Garmin FIT and TCX files)
-- SportsTracker changes:
-  - Exercise object: Add optional trackFile attribute, similar to hrmFile
-  - ExerciseDialog:
-    - Add below HRM file selection an optional Track file selection
-    - Rename "View HRM file" button to "View exercise details".
-- ExerciseViewer changes:
-  - If a GPS data is in an external file, then store the data in EVExercise.Track class (optional)
-    - Track has 1..n TrackPoint objects
-    - TrackPoint has the attys:
-      - Position
-      - Timestamp (optional)
-      - Comment (optional, e.g. for Lap split names)
-  - add new Flag EVExercise.RecordingMode.locationExternal
-    => true when location data is in an external file
-  - new Interface TrackParser for loading track files (similar to ExerciseParser)
-    - the parser list must use the ServiceLoader API to be extensible
-    - the trackParser must return a Track object (see above)
-    - initial implementation for GPX files (KML later)
-  - ExerciseViewer gets the hrm filename on startup and the optional track filename
-    => parses the track file when specified
-  - the TrackViewer in ExerciseViewer decides which position data must be displayed
-    (internal or external)
-  - ExerciseViewer must be able to display the Track data only, when the user does 
-    not has a HRM file.
 
 
 General TODOs:

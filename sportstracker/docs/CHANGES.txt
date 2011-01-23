@@ -21,7 +21,8 @@ v5.2.0:
     - added support for Timex Ironman Global Trainer PWX exercises, including
       GPS data (displayed in Track panel) and cadence data
     - unit test for Timex Ironman Global Trainer PWX files
-  - TopoGrafix GPX v1.1 support (contains mostly track data only) 
+  - TopoGrafix GPX v1.1 support (contains mostly track data only, but also
+    supports optional time and altitude data) 
   - Main panel: display only available data and "n.a." otherwise 
     (instead of 0 when missing)
   
