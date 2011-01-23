@@ -3,9 +3,6 @@ SportsTracker-TODO
 
 Before next release:
 --------------------
-- complete GPX file support (Track panel already works):
-  - test "Import from HRM file", also when GPX has track data only
-  - complete GPX feature reqests
 - add support for Timex Ironman Global Trainer and GPX format to ST website
 
 

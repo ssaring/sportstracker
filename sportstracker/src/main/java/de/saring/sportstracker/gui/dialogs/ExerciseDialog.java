@@ -449,11 +449,13 @@ public class ExerciseDialog extends JDialog {
         }            
         
         // fill dialog widgets with values from parsed HRM exercise
-        dpDate.setDate (pvExercise.getDate ());
-        Calendar calTemp = Calendar.getInstance ();
-        calTemp.setTime (pvExercise.getDate ());
-        spHour.setValue (calTemp.get (Calendar.HOUR_OF_DAY));
-        spMinute.setValue (calTemp.get (Calendar.MINUTE));
+        if (pvExercise.getDate () != null) {
+            dpDate.setDate (pvExercise.getDate ());
+            Calendar calTemp = Calendar.getInstance ();
+            calTemp.setTime (pvExercise.getDate ());
+            spHour.setValue (calTemp.get (Calendar.HOUR_OF_DAY));
+            spMinute.setValue (calTemp.get (Calendar.MINUTE));
+        }
         
         tfDuration.setText (formatUtils.seconds2TimeString (pvExercise.getDuration () / 10));
         tfAvgHeartrate.setText (String.valueOf (pvExercise.getHeartRateAVG ()));
