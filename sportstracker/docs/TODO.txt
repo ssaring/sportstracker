@@ -1,11 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Before next release:
---------------------
-- add support for Timex Ironman Global Trainer and GPX format to ST website
-
-
 General TODOs:
 --------------
 - Closing dialog with Escape key doesn't work when a JXDatePicker has the focus

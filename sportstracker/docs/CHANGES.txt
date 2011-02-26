@@ -13,7 +13,9 @@ v5.2.0:
       Injection (so the DI Container could be easily exchanged)
     - Guice API is only used for DI Container setup
   - Groovy updated to version 1.7.6
-
+  - SportsTracker has been successfully tested on Java SE 7 (Developer 
+    preview release), it compiles and runs without any problems
+    
  ExerciseViewer changes:
   - bugfix in GarminFitParserTest (date comparision fails on other timezones
     than Europe/Berlin)
