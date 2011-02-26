@@ -5,7 +5,7 @@
     <groupId>de.saring</groupId>
     <artifactId>st-util</artifactId>
     <name>st-util</name>
-    <version>5.2.0-SNAPSHOT</version>
+    <version>5.2.0</version>
     <packaging>jar</packaging>
 
     <parent>
