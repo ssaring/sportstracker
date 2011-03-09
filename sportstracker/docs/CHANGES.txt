@@ -2,6 +2,11 @@ Changelog
 ---------
 
 v5.2.0:
+ ExerciseViewer changes:
+  - SF Bug #3203396: TopoGrafixGpxParser: parse GPX files with missing 
+    timestamps in track metadata
+
+v5.2.0:
  SportsTracker changes:
   - added IntelliJ IDEA project files to Mercurial ignore list 
     (IDEA can now also be used for development)

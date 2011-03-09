@@ -109,8 +109,14 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
 
                     // get timestamp and calculate sample time offset (optional)
                     if (!trkpt.time.isEmpty()) {
-                        long timestampSample = sdFormat.parse(trkpt.time.text()).time
-                        sample.timestamp = timestampSample - exercise.date.time
+                        Date timestampSample = sdFormat.parse(trkpt.time.text())
+                        
+                        // store first timestamp as exercise start time when missing 
+                        // (track metadata is missing in some GPX files)
+                        if (!exercise.date) {
+                            exercise.date = timestampSample
+                        }                        
+                        sample.timestamp = timestampSample.time - exercise.date.time
                     }
                 }
             }
