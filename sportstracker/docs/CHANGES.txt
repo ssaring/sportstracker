@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v5.2.0:
+v5.3.0:
  ExerciseViewer changes:
   - SF Bug #3203396: TopoGrafixGpxParser: parse GPX files with missing 
     timestamps in track metadata
