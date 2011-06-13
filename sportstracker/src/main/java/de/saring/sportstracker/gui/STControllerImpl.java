@@ -246,6 +246,13 @@ public class STControllerImpl implements STController {
         // start Weight dialog for a new created Weight
         Weight newWeight = new Weight (document.getWeightList ().getNewID ());
         newWeight.setDate (setTimeForDate (dateForNewEntries));
+        
+        // initialize with the weight value of previous entry (if there is some)
+        int weightCount = document.getWeightList().size();
+        if (weightCount > 0) {
+            Weight lastWeight = document.getWeightList().getAt(weightCount - 1);
+            newWeight.setValue(lastWeight.getValue());
+        }
 
         WeightDialog dlg = prWeightDialog.get ();
         dlg.setWeight (newWeight);

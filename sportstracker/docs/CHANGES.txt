@@ -6,6 +6,8 @@ v5.3.0:
   - SF Bug #3203396: TopoGrafixGpxParser: parse GPX files with missing 
     timestamps in track metadata
   - update to Guice 3.0 (final)
+  - Weight dialog: when adding new entries, initialize it with weight
+    from previous entry
 
 v5.2.0:
  SportsTracker changes:
