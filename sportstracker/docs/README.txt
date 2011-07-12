@@ -330,7 +330,7 @@ with the command (inside the project root directory):
 
 The SportsTracker project uses the following libraries:
 
-  - BSAF 1.9 GA (Better Swing Application Framework)
+  - BSAF 1.9.2 (Better Swing Application Framework)
     (http://kenai.com/projects/bsaf)
       License: Lesser General Public License 2.1 (LGPL)
   - Groovy 1.7.6 (http://groovy.codehaus.org)

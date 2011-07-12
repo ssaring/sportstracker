@@ -8,6 +8,7 @@ v5.3.0:
   - update to Guice 3.0 (final)
   - Weight dialog: when adding new entries, initialize it with weight
     from previous entry
+  - update to BSAF 1.9.2 (contains many bugfixes)
 
 v5.2.0:
  SportsTracker changes:

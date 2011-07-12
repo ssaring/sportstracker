@@ -19,7 +19,7 @@
         <jar href="lib/guice-3.0-rc2.jar" download="eager"/>
         <jar href="lib/aopalliance-1.0.jar" download="eager"/>
         <jar href="lib/javax.inject-1.jar" download="eager"/>
-        <jar href="lib/bsaf-1.9.jar" download="eager"/>
+        <jar href="lib/bsaf-1.9.2.jar" download="eager"/>
         <jar href="lib/groovy-all-1.7.6.jar" download="eager"/>
         <jar href="lib/jcommon-1.0.16.jar" download="eager"/>
         <jar href="lib/jdom-1.1.jar" download="eager"/>

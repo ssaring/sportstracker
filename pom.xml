@@ -20,7 +20,7 @@
     </modules>
 
     <repositories>
-        <!-- Own repository for recent BSAF and JFreeChart (missing in Maven central repo) --> 
+        <!-- Own repository for recent JFreeChart (missing in Maven central repo) --> 
         <repository>
             <id>SportsTracker repository</id>
             <url>http://saring.de/st-maven-repo/</url>
@@ -88,7 +88,7 @@
         <dependency>
             <groupId>org.jdesktop.bsaf</groupId>
             <artifactId>bsaf</artifactId>
-            <version>1.9</version>
+            <version>1.9.2</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
