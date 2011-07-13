@@ -333,7 +333,7 @@ The SportsTracker project uses the following libraries:
   - BSAF 1.9.2 (Better Swing Application Framework)
     (http://kenai.com/projects/bsaf)
       License: Lesser General Public License 2.1 (LGPL)
-  - Groovy 1.7.6 (http://groovy.codehaus.org)
+  - Groovy 1.8.0 (http://groovy.codehaus.org)
       License: Apache License v2.0
   - Guice 3.0 RC2 (http://code.google.com/p/google-guice/)
       Includes: aopalliance-1.0.jar, javax.inject-1.jar

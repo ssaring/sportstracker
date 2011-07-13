@@ -9,6 +9,9 @@ v5.3.0:
   - Weight dialog: when adding new entries, initialize it with weight
     from previous entry
   - update to BSAF 1.9.2 (contains many bugfixes)
+  - Groovy updated to 1.8.0
+  - Maven build: use of groovy-eclipse-compiler for mixed Java/Groovy 
+    compilation (GMaven is outdated for Groovy 1.8.0 and m2e)
 
 v5.2.0:
  SportsTracker changes:
