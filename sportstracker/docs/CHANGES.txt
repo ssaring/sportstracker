@@ -8,10 +8,15 @@ v5.3.0:
   - update to Guice 3.0 (final)
   - Weight dialog: when adding new entries, initialize it with weight
     from previous entry
-  - update to BSAF 1.9.2 (contains many bugfixes)
+  - update to BSAF 1.9.2 (contains many bugfixes, comes now from the
+    central Maven repository)
   - Groovy updated to 1.8.0
   - Maven build: use of groovy-eclipse-compiler for mixed Java/Groovy 
     compilation (GMaven is outdated for Groovy 1.8.0 and m2e)
+    => ST project can't be opened in Eclipse 3.7, there are problems with
+       the recent m2e and Groovy-Eclipse plugins
+  - EasyMock updated to version 3.0 (performs class mocking directly)
+  - tested SportsTracker with Java 7, no problems
 
 v5.2.0:
  SportsTracker changes:
@@ -157,7 +162,7 @@ v4.2.1 (no public release, internal marker only):
   - JUnit updated to version 4.8.1
   - MiGLayout updated to version 3.7.3.1 and bugfixes in MigLayout usage
   - Groovy updated to version 1.7.2
-  - EasyMock updated to version 2.5.2 (now finally allows Class mocking)
+  - EasyMock updated to version 2.5.2
   - downgrade to JDOM 1.1 because 1.1.1 is not available in Maven
     repositories (1.1.1 doesn't have critical bugfixes)
   - Eclipse project configuration updates

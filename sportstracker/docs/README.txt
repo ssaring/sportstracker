@@ -293,15 +293,16 @@ Developer Requirements
 For compilation of the SportsTracker sources you need:
   - Java SE Development Kit (JDK) 6 or greater
     (from http://java.sun.com/javase/downloads)
-  - Maven 3.0 or 2.2.1
+  - Maven 3.0.3
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
-  - NetBeans IDE 6.8 (from http://www.netbeans.org)
+  - NetBeans IDE 7.0 (from http://www.netbeans.org)
     (Groovy and Maven support are included)
-  - Eclipse 3.5.2 (from http://eclipse.org) with following plugins:
-    - Groovy-Eclipse 2.0.1 (from http://groovy.codehaus.org/Eclipse+Plugin)
-    - m2eclipse 0.10 (from http://m2eclipse.sonatype.org)
+  - Eclipse 3.7.0 (from http://eclipse.org) with following plugins:
+    - Groovy-Eclipse 2.5.1 (from http://groovy.codehaus.org/Eclipse+Plugin)
+    NOTE: Due to m2e and Groovy-Eclipse plugin problems it's currently not
+    possible to import the Maven SportsTracker project to Eclipse !!!
 
 The Maven build configuration supports all typical goals (clean, compile,
 test, package, ...). The project is splitted into following modules (Maven
@@ -335,7 +336,7 @@ The SportsTracker project uses the following libraries:
       License: Lesser General Public License 2.1 (LGPL)
   - Groovy 1.8.0 (http://groovy.codehaus.org)
       License: Apache License v2.0
-  - Guice 3.0 RC2 (http://code.google.com/p/google-guice/)
+  - Guice 3.0 (http://code.google.com/p/google-guice/)
       Includes: aopalliance-1.0.jar, javax.inject-1.jar
       License: Apache License v2.0
   - JFreeChart 1.0.13 (http://www.jfree.org/)
@@ -350,18 +351,18 @@ The SportsTracker project uses the following libraries:
       License: BSD License
   - commons-cli 1.2 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - JUnit 4.8.1 (http://www.junit.org)
+  - JUnit 4.8.2 (http://www.junit.org)
       License: Common Public License v1.0
-  - EasyMock 2.5.2 (http://www.easymock.org)
-      License: MIT License
+  - EasyMock 3.0 (http://www.easymock.org)
+      License: Apache License v2.0
   - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 1.0
       URL: http://www.thisisant.com/support/
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: http://www.thisisant.com/pages/ant/fit-license
 
-All dependencies will be downloaded automatically by Maven. BSAF and JFreeChart
-are missing in the Maven centrol repository, so I've created my own repository
-for them. It's available at: http://saring.de/st-maven-repo/
+All dependencies will be downloaded automatically by Maven. JFreeChart and the
+FIT library are missing in the Maven centrol repository, so I've created my own
+repository for them. It's available at: http://saring.de/st-maven-repo/
 
 
 If you're wondering why the complete application has been ported from the .NET
@@ -428,4 +429,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2011/01/16
+2011/07/15

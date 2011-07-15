@@ -48,10 +48,10 @@
                         <version>2.5.1-M3</version>
                     </dependency>
                     <dependency>
-						<groupId>org.codehaus.groovy</groupId>
-						<artifactId>groovy-eclipse-batch</artifactId>
-						<version>1.8.0-03</version>
-					</dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-eclipse-batch</artifactId>
+                        <version>1.8.0-03</version>
+                    </dependency>
                 </dependencies>
             </plugin>
             <!-- Add additional source directories to groovy-eclipse-compiler (by default Java and Groovy sources are mixed) -->
@@ -87,6 +87,7 @@
                 </executions>
             </plugin>
             <!-- Add Groovy project nature when importing project to Eclipse IDE -->
+            <!-- TODO: really needed? Test when Eclipse support is more mature...
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -95,7 +96,7 @@
                         <projectnature>org.eclipse.jdt.groovy.core.groovyNature</projectnature>
                     </additionalProjectnatures>
                 </configuration>
-            </plugin>
+            </plugin> -->
         </plugins>
     </build>
 
@@ -162,7 +163,7 @@
         <dependency>
             <groupId>org.easymock</groupId>
             <artifactId>easymock</artifactId>
-            <version>2.5.2</version>
+            <version>3.0</version>
             <scope>test</scope>
         </dependency>        
     </dependencies>
