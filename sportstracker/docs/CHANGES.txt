@@ -9,6 +9,8 @@ v5.4.0:
     => GMaven 1.4 Snapshot support Groovy 1.8 compilation and works fine with 
        Java 7 (uses unofficial Snapshot repository from GitHub)
        (Details: http://jira.codehaus.org/browse/GMAVEN-88)
+  - switch to Java 7 compiler, so new language features can be used
+    (so users also need Java 7 for SportsTracker execution)
 
 v5.3.0:
  ExerciseViewer changes:
