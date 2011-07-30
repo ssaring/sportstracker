@@ -26,77 +26,46 @@
             <url>http://saring.de/st-maven-repo/</url>
         </repository>
     </repositories>
-
+    
+    <pluginRepositories>
+        <!-- Unofficial GMaven 1.4 Snapshot repository for Groovy 1.8 support -->
+        <pluginRepository>
+            <id>kurtharriger-gmaven-snapshots</id>
+            <url>https://github.com/kurtharriger/gmaven/raw/maven/snapshots</url>
+        </pluginRepository>
+    </pluginRepositories>
+        
     <build>
         <plugins>
-            <!-- Compiler plugin configuration: use groovy-eclipse-compiler for mixed Java/Groovy compilation -->
+            <!-- Compiler plugin configuration -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
                 <configuration>
-                    <compilerId>groovy-eclipse-compiler</compilerId>
-                    <verbose>false</verbose>
                     <source>1.6</source>
                     <target>1.6</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-eclipse-compiler</artifactId>
-                        <!-- 2.5.1 final can't be used, it requires an Groovy snapshot release (bug) -->
-                        <version>2.5.1-M3</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-eclipse-batch</artifactId>
-                        <version>1.8.0-03</version>
-                    </dependency>
-                </dependencies>
             </plugin>
-            <!-- Add additional source directories to groovy-eclipse-compiler (by default Java and Groovy sources are mixed) -->
+            <!-- GMaven plugin for mixed Groovy / Java compilation -->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.7</version>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <version>1.4-SNAPSHOT</version>
+                <configuration> 
+                    <providerSelection>1.8</providerSelection> 
+                </configuration> 
                 <executions>
                     <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
                         <goals>
-                            <goal>add-source</goal>
+                            <goal>generateStubs</goal>
+                            <goal>compile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>testCompile</goal>
                         </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/main/groovy</source>
-                            </sources> 
-                        </configuration>
                     </execution>
-                    <execution>
-                        <id>add-test-source</id>
-                        <phase>generate-test-sources</phase>
-                        <goals>
-                            <goal>add-test-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/test/groovy</source>
-                            </sources>
-                        </configuration>
-                    </execution>    
                 </executions>
             </plugin>
-            <!-- Add Groovy project nature when importing project to Eclipse IDE -->
-            <!-- TODO: really needed? Test when Eclipse support is more mature...
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <configuration>
-                    <additionalProjectnatures>
-                        <projectnature>org.eclipse.jdt.groovy.core.groovyNature</projectnature>
-                    </additionalProjectnatures>
-                </configuration>
-            </plugin> -->
         </plugins>
     </build>
 

@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+v5.4.0:
+ ExerciseViewer changes:
+  - Maven build: use of GMaven plugin again for mixed Java/Groovy compilation
+    => groovy-eclipse-compiler has still many bugs and doesn't support mixed
+       compilation with Java 7
+    => GMaven 1.4 Snapshot support Groovy 1.8 compilation and works fine with 
+       Java 7 (uses unofficial Snapshot repository from GitHub)
+       (Details: http://jira.codehaus.org/browse/GMAVEN-88)
+
 v5.3.0:
  ExerciseViewer changes:
   - SF Bug #3203396: TopoGrafixGpxParser: parse GPX files with missing 
