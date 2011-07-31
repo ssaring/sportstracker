@@ -15,6 +15,7 @@ v5.4.0:
     - use of try-with-resources statements, fixes many error handling bugs
     - use of diamond operator for Gernerics type inference
     - use of multicatch for similar exceptions handling
+    - use of new Objects class for hashcode computation
 
 v5.3.0:
  ExerciseViewer changes:

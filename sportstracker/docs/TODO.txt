@@ -1,13 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Java 7 support (work in branch java_7):
-- compiler already switched to Java 7, documentation is updated
-- try-with-resources, diamond operators, multicatch are already used everywhere
-- use of new Java 7 features
-  (list: http://download.oracle.com/javase/7/docs/index.html)
-- update Java WebStart file for Java 7
-
 General TODOs:
 --------------
 - Closing dialog with Escape key doesn't work when a JXDatePicker has the focus
