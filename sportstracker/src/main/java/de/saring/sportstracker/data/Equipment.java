@@ -50,10 +50,6 @@ public final class Equipment extends IdObject implements Cloneable {
         }
     }
     
-    /** 
-     * Returns a string representation of this object. 
-     * @return string with object content
-     */
     @Override
     public String toString () {
         StringBuilder sBuilder = new StringBuilder ();

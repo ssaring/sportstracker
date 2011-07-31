@@ -162,10 +162,6 @@ public final class ExerciseFilter implements Serializable
         }        
     }
 		
-    /** 
-     * Returns a string representation of this object. 
-     * @return string with object content
-     */
     @Override
     public String toString () {
         

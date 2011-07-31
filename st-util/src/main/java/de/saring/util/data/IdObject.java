@@ -1,6 +1,7 @@
 package de.saring.util.data;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Abstract base class for all objects which needs to have an ID for
@@ -46,21 +47,11 @@ public abstract class IdObject implements Serializable {
         }
     }
 
-    /**
-     * Returns the hascode of this instance.
-     * @return the hashcode
-     */
     @Override
     public final int hashCode () {
-        int hash = 5;
-        hash = 13 * hash + this.id;
-        return hash;
+        return Objects.hashCode(this.id);
     }
 
-    /** 
-     * Returns a string representation of this object. 
-     * @return string with object content
-     */
     @Override
     public String toString () {
         StringBuilder sBuilder = new StringBuilder ();

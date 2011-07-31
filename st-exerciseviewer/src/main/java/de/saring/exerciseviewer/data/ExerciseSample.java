@@ -96,7 +96,6 @@ public final class ExerciseSample implements Serializable {
 
     /***** END: Generated Getters and Setters *****/
 
-    /** {@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder sBuilder = new StringBuilder ();

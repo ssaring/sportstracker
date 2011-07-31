@@ -211,10 +211,6 @@ public final class Exercise extends IdDateObject {
 
     /***** END: Generated Getters and Setters *****/
     
-    /** 
-     * Returns a string representation of this object. 
-     * @return string with object content
-     */
     @Override
     public String toString () {
         
