@@ -74,7 +74,7 @@ public class IdDateObjectList<T extends IdDateObject> extends IdObjectList<T> {
             throw new IllegalArgumentException ("Start date is after end date!");
         }
         
-        List<T> lFound = new ArrayList<T> ();
+        List<T> lFound = new ArrayList<> ();
         for (T t : this) {        
             if (!t.getDate ().before (dtStart) &&
                 !t.getDate ().after (dtEnd)) {

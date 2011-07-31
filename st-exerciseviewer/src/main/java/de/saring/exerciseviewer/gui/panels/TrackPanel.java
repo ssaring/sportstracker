@@ -281,7 +281,7 @@ public class TrackPanel extends BasePanel {
     }
     
     private List<GeoPosition> createSampleGeoPositionList(EVExercise exercise) {
-        ArrayList<GeoPosition> geoPositions = new ArrayList<GeoPosition>();
+        ArrayList<GeoPosition> geoPositions = new ArrayList<>();
         
         for (ExerciseSample exerciseSample : exercise.getSampleList()) {
             Position pos = exerciseSample.getPosition();
@@ -293,7 +293,7 @@ public class TrackPanel extends BasePanel {
     }
 
     private List<GeoPosition> createLapGeoPositionList(EVExercise exercise) {
-        ArrayList<GeoPosition> geoPositions = new ArrayList<GeoPosition>();
+        ArrayList<GeoPosition> geoPositions = new ArrayList<>();
 
         // ignore last lap split position, it's the exercise end position 
         for (int i = 0; i < exercise.getLapList().length-1; i++) {

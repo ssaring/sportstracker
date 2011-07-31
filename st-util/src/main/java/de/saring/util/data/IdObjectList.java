@@ -22,10 +22,10 @@ import java.util.List;
 public class IdObjectList<T extends IdObject> implements Iterable<T>, Serializable {
 
     /** Generic list of subclasses of IdObject. */
-    private List<T> lIdObjects = new ArrayList<T> ();
+    private List<T> lIdObjects = new ArrayList<> ();
 
     /** List of listeners which will be notified on each list content change. */
-    private List<IdObjectListChangeListener> listChangelisteners = new ArrayList<IdObjectListChangeListener> ();
+    private List<IdObjectListChangeListener> listChangelisteners = new ArrayList<> ();
 
     /**
      * Returns the IdObject with the specified ID.
@@ -118,7 +118,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T>, Serializab
      */
     public int getNewID () {
         
-        HashSet<Integer> hsIDs = new HashSet<Integer> ();
+        HashSet<Integer> hsIDs = new HashSet<> ();
         for (T t : this.lIdObjects) {
             hsIDs.add (t.getId ());
         }

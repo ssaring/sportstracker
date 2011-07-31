@@ -74,7 +74,7 @@ public class STViewImpl extends FrameView implements STView {
      * cached here, otherwise we need to filter the complete exercise list for 
      * each row in the list view or for each month in the calendar view.
      */
-    private IdDateObjectList<Exercise> displayedExercises = new IdDateObjectList<Exercise> ();
+    private IdDateObjectList<Exercise> displayedExercises = new IdDateObjectList<> ();
     
     /** The statusbar label. */
     private JLabel laStatusBar;

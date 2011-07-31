@@ -13,6 +13,8 @@ v5.4.0:
     (so users also need Java 7 for SportsTracker execution)
   - use of new Java 7 language features (Project coin)
     - use of try-with-resources statements, fixes many error handling bugs
+    - use of diamond operator for Gernerics type inference
+    - use of multicatch for similar exceptions handling
 
 v5.3.0:
  ExerciseViewer changes:

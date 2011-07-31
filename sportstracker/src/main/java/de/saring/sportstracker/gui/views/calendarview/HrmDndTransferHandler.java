@@ -167,11 +167,7 @@ public class HrmDndTransferHandler extends TransferHandler {
             return (List<File>) transferable.getTransferData (
                 DataFlavor.javaFileListFlavor);
         }
-        catch (UnsupportedFlavorException e) {
-            LOGGER.log (Level.WARNING, "Failed to get the list of dragged files!", e);
-            return null;
-        }
-        catch (IOException e) {
+        catch (UnsupportedFlavorException | IOException e) {
             LOGGER.log (Level.WARNING, "Failed to get the list of dragged files!", e);
             return null;
         }

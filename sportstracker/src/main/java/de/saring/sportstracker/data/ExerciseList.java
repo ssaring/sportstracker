@@ -58,7 +58,7 @@ public final class ExerciseList extends IdDateObjectList<Exercise> {
      */
     public IdDateObjectList<Exercise> getExercisesForFilter (ExerciseFilter filter) throws PatternSyntaxException {
 
-        IdDateObjectList<Exercise> foundExercises = new IdDateObjectList<Exercise> ();
+        IdDateObjectList<Exercise> foundExercises = new IdDateObjectList<> ();
 
         // do we need to search in comments ?
         boolean fCommentStringSearch = (filter.getCommentSubString () != null) && (filter.getCommentSubString ().length () > 0);

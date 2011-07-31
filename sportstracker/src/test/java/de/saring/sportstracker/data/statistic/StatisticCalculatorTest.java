@@ -31,7 +31,7 @@ public class StatisticCalculatorTest {
         sportType1.getSportSubTypeList ().set (sportSubType1);
 
         // create some exercises for statistic calculation
-        lExercises = new IdObjectList<Exercise> ();
+        lExercises = new IdObjectList<> ();
 
         Exercise tempExercise = new Exercise (1);
         tempExercise.setSportType (sportType1);
