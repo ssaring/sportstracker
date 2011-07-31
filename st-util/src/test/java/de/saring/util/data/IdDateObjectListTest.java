@@ -20,7 +20,7 @@ public class IdDateObjectListTest {
 
     @Before
     public void setUp () {
-        list = new IdDateObjectList<DateNameObject> ();
+        list = new IdDateObjectList<> ();
         list.set (new DateNameObject (1, createDate (2009, 01, 05, 21, 30, 0), "one"));
         list.set (new DateNameObject (2, createDate (2008, 11, 11, 20, 30, 0), "two"));
         list.set (new DateNameObject (3, createDate (2009, 01, 07, 11, 40, 0), "three"));

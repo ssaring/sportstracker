@@ -450,7 +450,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         }
         
         // start reading samples
-        List<Sample> samples = new ArrayList<Sample> ();
+        List<Sample> samples = new ArrayList<> ();
         for(int i = 0; i < nrSamples; i++) {
             int startFrom = lengthUntilSamples + (i * 20);
             int[] sampleBytes = Arrays.copyOfRange (fileContentsBytes, startFrom, startFrom + 20);

@@ -92,7 +92,7 @@ public class ExerciseListView extends BaseListView {
         tcModel.getColumn (COLUMN_COMMENT).setPreferredWidth (500);
 
         // initialize list of removed columns
-        removedColumns = new ArrayList<TableColumn>();
+        removedColumns = new ArrayList<>();
     }
     
     /** {@inheritDoc} */

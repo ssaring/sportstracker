@@ -79,25 +79,18 @@ public final class XMLUtils {
      * @throws IOException
      */
     public static void writeXMLFile (Element eRoot, String filename) throws IOException {
-        OutputStreamWriter osWriter = null;
 
-        // write (J)DOM document to XML-file 
-        try {
-            Document document = new Document (eRoot);
-            XMLOutputter outputter = new XMLOutputter ();
-            Format format = Format.getPrettyFormat ();
-            format.setLineSeparator (System.getProperty ("line.separator"));
-            format.setIndent ("    ");
-            outputter.setFormat (format);
-            // FileWriter can't be used here, because default encoding on Win32 isn't UTF-8
-            osWriter = new OutputStreamWriter (new FileOutputStream (filename), "UTF-8");
+        Document document = new Document (eRoot);
+        XMLOutputter outputter = new XMLOutputter ();
+        Format format = Format.getPrettyFormat ();
+        format.setLineSeparator (System.getProperty ("line.separator"));
+        format.setIndent ("    ");
+        outputter.setFormat (format);
+        
+        // FileWriter can't be used here, because default encoding on Win32 isn't UTF-8
+        try (OutputStreamWriter osWriter = new OutputStreamWriter(new FileOutputStream(filename), "UTF-8")) {
             outputter.output (document, osWriter);
             osWriter.flush ();
-        }
-        finally {
-            if (osWriter != null) {
-                osWriter.close ();
-            }
         }
     }
 }

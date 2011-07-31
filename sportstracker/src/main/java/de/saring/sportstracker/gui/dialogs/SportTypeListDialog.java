@@ -152,7 +152,7 @@ public class SportTypeListDialog extends JDialog {
         // are there any existing exercises for this sport type?
         int selectedIndex = liSportTypes.getSelectedIndex ();
         SportType sportType = document.getSportTypeList ().getAt (selectedIndex);
-        List<Integer> lRefExerciseIDs = new ArrayList<Integer> ();
+        List<Integer> lRefExerciseIDs = new ArrayList<> ();
         for (Exercise exercise : document.getExerciseList ()) {
             
             if (exercise.getSportType ().getId () == sportType.getId ()) {

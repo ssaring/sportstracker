@@ -244,7 +244,7 @@ public class SportTypeDialog extends JDialog {
         
         // are there any existing exercises for this sport subtype?
         SportSubType selSubType = this.sportType.getSportSubTypeList().getAt (liSubtypes.getSelectedIndex ());
-        List<Integer> lRefExerciseIDs = new ArrayList<Integer> ();
+        List<Integer> lRefExerciseIDs = new ArrayList<> ();
         for (Exercise exercise : document.getExerciseList ()) {
             
             if ((exercise.getSportType ().getId () == this.sportType.getId ()) &&
@@ -310,7 +310,7 @@ public class SportTypeDialog extends JDialog {
         
         // are there any existing exercises for this equipment?
         Equipment selEquipment = this.sportType.getEquipmentList ().getAt (liEquipment.getSelectedIndex ());
-        List<Integer> lRefExerciseIDs = new ArrayList<Integer> ();
+        List<Integer> lRefExerciseIDs = new ArrayList<> ();
         for (Exercise exercise : document.getExerciseList ()) {
             
             if ((exercise.getSportType ().getId () == this.sportType.getId ()) &&

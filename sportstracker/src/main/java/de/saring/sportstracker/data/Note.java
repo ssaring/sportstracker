@@ -34,10 +34,6 @@ public final class Note extends IdDateObject {
 
     /***** END: Generated Getters and Setters *****/
 
-    /** 
-     * Returns a string representation of this object. 
-     * @return string with object content
-     */
     @Override
     public String toString () {
         StringBuilder sBuilder = new StringBuilder ();

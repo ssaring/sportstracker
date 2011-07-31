@@ -95,7 +95,7 @@ public class HRMFileOpenDialog {
         List<ExerciseParserInfo> parserInfos = ExerciseParserFactory.getExerciseParserInfos ();
 
         // append a file filter for each exercise parsers in the registry
-        ArrayList<String> lAllExtensions = new ArrayList<String> ();
+        ArrayList<String> lAllExtensions = new ArrayList<> ();
         for (ExerciseParserInfo parserInfo : parserInfos) {
             
             fChooser.addChoosableFileFilter (new FileNameExtensionFilter (

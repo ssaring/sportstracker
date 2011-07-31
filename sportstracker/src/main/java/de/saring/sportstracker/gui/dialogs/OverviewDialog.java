@@ -201,7 +201,7 @@ public class OverviewDialog extends JDialog {
 
         // create a table of all time series (graphs) and the appropriate colors
         TimeTableXYDataset dataset = new TimeTableXYDataset ();
-        List<Color> lGraphColors = new ArrayList<Color> ();
+        List<Color> lGraphColors = new ArrayList<> ();
         
         // add TimeSeries graph (different ways for Exercise and Weight entries)
         if (getCurrentValueType () != ValueType.WEIGHT) {
@@ -304,7 +304,7 @@ public class OverviewDialog extends JDialog {
 
             // actual dataset
             dataset = new TimeTableXYDataset ();
-            lGraphColors = new ArrayList<Color> ();
+            lGraphColors = new ArrayList<> ();
 
             // create a separate graph for each sport type
             for (SportType sportType : document.getSportTypeList ()) {

@@ -102,10 +102,7 @@ public class PedImporter {
         PedImporter app = new PedImporter();
         try {
             app.initApplication(filename, sportTypeId, sportSubTypeId);
-        } catch (STException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        } catch (EVException ex) {
+        } catch (STException | EVException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }

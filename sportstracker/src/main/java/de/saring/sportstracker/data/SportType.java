@@ -25,13 +25,13 @@ public final class SportType extends IdObject implements Cloneable {
     private Color color = Color.BLACK;
     
     /** This is the list of all subtypes of this sport type. */
-    private IdObjectList<SportSubType> sportSubTypeList = new IdObjectList<SportSubType> ();
+    private IdObjectList<SportSubType> sportSubTypeList = new IdObjectList<> ();
     
     /** 
      * This is the list of all possible equipments of this sport type. 
      * The equipment definition is optional, so this list can be empty.
      */
-    private IdObjectList<Equipment> equipmentList = new IdObjectList<Equipment> ();
+    private IdObjectList<Equipment> equipmentList = new IdObjectList<> ();
     
     
     /**
@@ -98,13 +98,13 @@ public final class SportType extends IdObject implements Cloneable {
             SportType clone = (SportType) super.clone ();
 
             if (this.sportSubTypeList != null) {
-                clone.sportSubTypeList = new IdObjectList<SportSubType> ();
+                clone.sportSubTypeList = new IdObjectList<> ();
                 for (SportSubType subType : this.sportSubTypeList) {
                     clone.sportSubTypeList.set ((SportSubType) subType.clone ());
                 }
             }
             if (this.equipmentList != null) {
-                clone.equipmentList = new IdObjectList<Equipment> ();
+                clone.equipmentList = new IdObjectList<> ();
                 for (Equipment equipment : this.equipmentList) {
                     clone.equipmentList.set ((Equipment) equipment.clone ());
                 }
@@ -117,10 +117,6 @@ public final class SportType extends IdObject implements Cloneable {
         }
     }
 
-    /** 
-     * Returns a string representation of this object. 
-     * @return string with object content
-     */
     @Override
     public String toString () {
         

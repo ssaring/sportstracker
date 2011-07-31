@@ -45,10 +45,6 @@ public final class ExerciseSpeed implements Serializable
     
     /***** END: Generated Getters and Setters *****/
 
-    /** 
-     * Returns a string representation of this object. 
-     * @return string with object content
-     */
     @Override
     public String toString ()
     {

@@ -18,7 +18,7 @@ public class IdObjectListTest {
     public void setUp () {
         
         // create a new list with some content
-        list = new IdObjectList<NameObject> ();
+        list = new IdObjectList<> ();
         list.set (new NameObject (1, "one"));
         list.set (new NameObject (2, "two"));
         list.set (new NameObject (3, "three"));

@@ -34,9 +34,9 @@ class FitMessageListener implements MesgListener {
     /** The parsed exercise. */
     private EVExercise exercise = null;
     /** List of created laps (collected in a LinkedList and not in EVExercise array, much faster). */
-    private List<FitLap> lFitLaps = new LinkedList<FitLap>();
+    private List<FitLap> lFitLaps = new LinkedList<>();
     /** List of created exercise samples (collected in a LinkedList and not in EVExercise array, much faster). */
-    private List<ExerciseSample> lSamples = new LinkedList<ExerciseSample>();
+    private List<ExerciseSample> lSamples = new LinkedList<>();
     /** Flag for availability of temperature data. */
     private boolean temperatureAvailable = false;
     
@@ -233,7 +233,7 @@ class FitMessageListener implements MesgListener {
         int lapDistanceSum = 0;
         
         // convert FitLap to Lap objects
-        List<Lap> lLaps = new LinkedList<Lap>();            
+        List<Lap> lLaps = new LinkedList<>();            
         long startTime = exercise.getDate().getTime();
         
         for (FitLap fitLap : lFitLaps) {

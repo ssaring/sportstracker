@@ -24,7 +24,7 @@ public class CalendarDay {
      */
     public CalendarDay (Calendar date) {
         this.date = date;
-        this.calendarEntries = new ArrayList<CalendarEntry> ();
+        this.calendarEntries = new ArrayList<> ();
     }
 
     /***** BEGIN: Generated Getters and Setters *****/

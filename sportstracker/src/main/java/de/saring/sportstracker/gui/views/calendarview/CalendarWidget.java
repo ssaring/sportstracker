@@ -269,7 +269,7 @@ public class CalendarWidget extends JComponent {
         // draw the content of the calendar cells
         // => process all rows and all columns => all cells
         for (int row = 0; row < 6; row++) {
-            List<Exercise> exercisesOfWeek = new ArrayList<Exercise> ();
+            List<Exercise> exercisesOfWeek = new ArrayList<> ();
 
             for (int column = 0; column < (7+1); column++) {
                 // calculate index and cell position

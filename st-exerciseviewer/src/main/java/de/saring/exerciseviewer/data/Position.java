@@ -30,7 +30,6 @@ public class Position {
     }
     /***** END: Generated Getters and Setters *****/
 
-    /** {@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder sBuilder = new StringBuilder ();

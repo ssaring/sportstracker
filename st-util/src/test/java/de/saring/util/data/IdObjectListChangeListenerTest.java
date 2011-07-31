@@ -19,7 +19,7 @@ public class IdObjectListChangeListenerTest {
 
     @Before
     public void setUp () {
-        idObjectList = new IdObjectList<DummyIdObject> ();
+        idObjectList = new IdObjectList<> ();
         idObjectList.set (new DummyIdObject (1));
         idObjectList.set (new DummyIdObject (2));
         idObjectList.set (new DummyIdObject (3));

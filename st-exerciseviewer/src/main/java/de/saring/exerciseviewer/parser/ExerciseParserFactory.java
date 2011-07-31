@@ -70,7 +70,7 @@ public class ExerciseParserFactory {
     public static List<ExerciseParserInfo> getExerciseParserInfos () {
         createInstance ();
         
-        List<ExerciseParserInfo> lInfos = new ArrayList<ExerciseParserInfo> ();
+        List<ExerciseParserInfo> lInfos = new ArrayList<> ();
         for (ExerciseParser parser : instance.exerciseParserLoader) {
             lInfos.add (parser.getInfo ());
         }
