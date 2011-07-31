@@ -52,22 +52,12 @@ public class GarminFitParser extends AbstractExerciseParser {
      * @param mesgListener listener for creating the exercise from the messages
      */
     private void readFitFile(String filename, MesgListener mesgListener) throws EVException {
-        FileInputStream fis = null;
-
-        try {
-            fis = new FileInputStream(new File(filename));
+        
+        try (FileInputStream fis = new FileInputStream(new File(filename))) {
             new Decode().read(fis, mesgListener);
         }
         catch (IOException ioe) {
             throw new EVException("Failed to read FIT file '" + filename + "'...", ioe);
-        }
-        finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                }
-                catch (IOException e) {}
-            }
         }
     }
 }

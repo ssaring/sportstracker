@@ -185,15 +185,13 @@ public class HrmDndTransferHandler extends TransferHandler {
      * @return list of files or null on errors
      */
     private List<File> getFileListForUnix (Transferable transferable) {
-        List<File> lFiles = new ArrayList<File> ();
-        BufferedReader bReader = null;
+        List<File> lFiles = new ArrayList<> ();
+        DataFlavor textPlainFlavor = DataFlavor.getTextPlainUnicodeFlavor ();
+            
+        try (Reader reader = textPlainFlavor.getReaderForText (transferable);
+             BufferedReader bReader = new BufferedReader (reader)) {
 
-        try {
-            DataFlavor textPlainFlavor = DataFlavor.getTextPlainUnicodeFlavor ();
-            Reader reader = textPlainFlavor.getReaderForText (transferable);
-            bReader = new BufferedReader (reader);
             String line = null;
-
             while ((line = bReader.readLine ()) != null) {
                 // KDE seems to append a 0 char to the reader's end => ignore
                 if ("0".equals (line)) {
@@ -204,14 +202,6 @@ public class HrmDndTransferHandler extends TransferHandler {
         }
         catch (Exception e) {
             LOGGER.log (Level.WARNING, "Failed to get the list of dragged files!", e);
-        }
-        finally {
-            if (bReader != null) {
-                try {
-                    bReader.close ();
-                }
-                catch (IOException e) {}
-            }
         }
         return lFiles;
     }

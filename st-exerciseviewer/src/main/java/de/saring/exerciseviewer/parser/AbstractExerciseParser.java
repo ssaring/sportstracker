@@ -30,13 +30,11 @@ public abstract class AbstractExerciseParser implements ExerciseParser {
      * @return byte buffer with the file content
      * @throws EVException thrown on read problems
      */
-    protected int[] readFileToByteArray (String filename) throws EVException
-    {
-        try {
-            // open exercise file and create buffer with same length
-            File file = new File (filename);
-            FileInputStream fiStream = new FileInputStream (file);
-            
+    protected int[] readFileToByteArray (String filename) throws EVException {
+        File file = new File (filename);
+        
+        // open exercise file and create buffer with same length
+        try (FileInputStream fiStream = new FileInputStream (file)) {
             int fileLength = (int) file.length ();
             byte[] byteBuffer = new byte[fileLength];
             int[] intBuffer = new int[fileLength]; 
@@ -50,8 +48,6 @@ public abstract class AbstractExerciseParser implements ExerciseParser {
             for (int i = 0; i < fileLength; i++) {
                 intBuffer[i] = unsignedByteToInt (byteBuffer[i]);
             }
-            
-            fiStream.close ();
             return intBuffer;                
         }
         catch (Exception e) {
@@ -68,19 +64,16 @@ public abstract class AbstractExerciseParser implements ExerciseParser {
      * @return String array with the file content
      * @throws EVException thrown on read problems
      */
-    protected String[] readFileToStringArray (String filename) throws EVException
-    {
-        try {
-            // open a BufferedReader from file
-            BufferedReader bufReader = new BufferedReader (new FileReader (filename));
-            List<String> lLines = new ArrayList<String> ();
+    protected String[] readFileToStringArray (String filename) throws EVException {
+        
+        try (BufferedReader bufReader = new BufferedReader (new FileReader (filename))) {
+            List<String> lLines = new ArrayList<>();
             String strCurrentLine = null;
             
             // add all lines of file to temporary ArrayList
             while ((strCurrentLine = bufReader.readLine ()) != null)	{
                 lLines.add (strCurrentLine);
             }
-            bufReader.close ();
             
             // return a normal string array
             return lLines.toArray (new String[lLines.size ()]);

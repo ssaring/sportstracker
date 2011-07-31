@@ -3,8 +3,10 @@ SportsTracker-TODO
 
 Java 7 support (work in branch java_7):
 - compiler already switched to Java 7, documentation is updated
+- try-with-resources are already used everywhere
 - use of new Java 7 features
   (list: http://download.oracle.com/javase/7/docs/index.html)
+  - use of Diamond operators
 - update Java WebStart file for Java 7
 
 General TODOs:
