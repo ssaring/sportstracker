@@ -16,6 +16,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SwingUtilities;
 
 import org.jdesktop.swingx.JXDatePicker;
+import org.jdesktop.swingx.plaf.basic.BasicDatePickerUI;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -50,11 +51,19 @@ public final class GuiCreateUtils {
      * medium format (see DateFormat).
      * @return the created JXDatePicker
      */
-    public static JXDatePicker createDatePicker () {
+    public static JXDatePicker createDatePicker () {        
         JXDatePicker datePicker = new JXDatePicker();
         datePicker.setFormats (DateFormat.getDateInstance (DateFormat.MEDIUM));
+        
         // don't show the link panel in date pickers ("today is ...")
         datePicker.setLinkPanel (null);
+        
+        // remove the Cancel Action (started by ESCAPE key) in the picker and 
+        // it's editor, otherwise the user can't close the dialogs with ESCAPE
+        datePicker.getActionMap().remove(JXDatePicker.CANCEL_KEY);        
+        datePicker.getEditor().getActionMap().remove(
+                BasicDatePickerUI.EditorCancelAction.TEXT_CANCEL_KEY);
+        
         return datePicker;
     }
 

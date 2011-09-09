@@ -963,7 +963,7 @@ public class ExerciseDialog extends JDialog {
         tabbedPane = new javax.swing.JTabbedPane();
         pExerciseData = new javax.swing.JPanel();
         laDate = new javax.swing.JLabel();
-        dpDate = new org.jdesktop.swingx.JXDatePicker();
+        dpDate = de.saring.util.gui.GuiCreateUtils.createDatePicker();
         laTime = new javax.swing.JLabel();
         spHour = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();

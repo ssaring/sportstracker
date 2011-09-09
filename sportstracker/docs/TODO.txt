@@ -1,14 +1,8 @@
 SportsTracker-TODO
 ==================
 
-Java 7 transition:
-------------------
-- Use Generics for all JList, JComboBox widgwets, casting not needed anymore
-  => are Generics also available in other Swing widgets?
-
 General TODOs:
 --------------
-- Closing dialog with Escape key doesn't work when a JXDatePicker has the focus
 - "Copy exercise" feature, see request:
   https://sourceforge.net/tracker/?func=detail&aid=2927194&group_id=133110&atid=726273
 - Overview dialog: new display mode for comparing 2 seasons / years:

@@ -16,6 +16,8 @@ v5.4.0:
     - use of diamond operator for Gernerics type inference
     - use of multicatch for similar exceptions handling
     - use of new Objects class for hashcode computation
+  - Exercise, Note and Weight dialog: dialogs can be closed with Escape key
+    when the focus is on the date picker component (initial focus)
 
 v5.3.0:
  ExerciseViewer changes:
