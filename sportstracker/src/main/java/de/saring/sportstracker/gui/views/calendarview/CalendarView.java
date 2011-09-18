@@ -208,12 +208,6 @@ public class CalendarView extends BaseView {
         }
     }
 
-    @Override
-    public void selectEntry(IdDateObject entry) {
-        // TODO: implement this feature
-        updateView();
-    }
-    
     /**
      * Removes the current selection in the page.
      */

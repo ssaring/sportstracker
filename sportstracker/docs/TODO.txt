@@ -8,7 +8,6 @@ SportsTracker-TODO
   - Implement EntryView.selectEntry for all views 
     (is now only a dummy impl. in BaseView)
   - Use EntryView.selectEntry also for added and edited entries (new feature)
-  - Close Feature request
 
 General TODOs:
 --------------
