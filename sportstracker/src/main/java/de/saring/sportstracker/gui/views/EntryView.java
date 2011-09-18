@@ -1,6 +1,7 @@
 package de.saring.sportstracker.gui.views;
 
 import de.saring.sportstracker.core.STException;
+import de.saring.util.data.IdDateObject;
 
 /**
  * This interface defines the view for displaying SportsTracker entries
@@ -60,6 +61,15 @@ public interface EntryView {
      */
     int[] getSelectedWeightIDs ();
 
+    /**
+     * Selects the specified entry (of type Exercise, Weight or Note) in this
+     * view. Not all views support all entry types (e.g. no Weight entry in 
+     * Note list). If not supported, this method does nothing.
+     * 
+     * @param entry 
+     */
+    void selectEntry(IdDateObject entry);
+    
     /**
      * Removes the current selection in the page.
      */

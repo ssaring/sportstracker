@@ -62,6 +62,15 @@ public class IdObjectList<T extends IdObject> implements Iterable<T>, Serializab
     }
     
     /**
+     * Checks whether the specified object is contained in list.
+     * @param t the object to lookup in the list
+     * @return true if the list contains the specified object 
+     */
+    public boolean contains(T t) {
+        return lIdObjects.contains(t);
+    }
+    
+    /**
      * Stores the specified IdObject in the list. If there is allready an
      * IDObject with that ID then the old object will be overwritten.
      * Otherwise the new one will be added to the end of the list.

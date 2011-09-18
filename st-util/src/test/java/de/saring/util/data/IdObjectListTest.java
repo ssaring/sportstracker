@@ -59,6 +59,15 @@ public class IdObjectListTest {
     }
 
     /**
+     * Test of contains method, of class IdObjectList.
+     */
+    @Test
+    public void contains() {
+        assertTrue(list.contains(new NameObject (2, "two")));
+        assertFalse(list.contains(new NameObject (4, "four")));
+    }
+    
+    /**
      * Test of set method set() of class IdObjectList.
      */
     @Test

@@ -44,6 +44,11 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 5.4.0:
+
+- st.view.entry_copy.Action.text (new)
+- st.view.entry_copy.Action.shortDescription (new)
+
 SportsTracker 5.0.0:
 
 - All texts and resource keys with "PolarViewer" has been renamed to 

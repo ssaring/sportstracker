@@ -181,6 +181,12 @@ training plan or descriptions of sport events. You can also track your body
 weight by adding weight entries for special dates. Note and weight entries
 don't need the definition of sport types.
 
+Entries of all types can be simply copied. This is very useful when you have
+many similar exercises or weight entries. You just select the entry to copy 
+and start the copy action from the context or main menu. It displays the Add
+dialog for the copied entry with all data prefilled. You just need to enter the
+new date.
+
 The calendar view displays all exercise, note and weight entries of the 
 selected month. The last column contains the distance and duration summary for
 all exercises of the appropriate week. New exercise entries can be added by
@@ -431,4 +437,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2011/07/30
+2011/09/18

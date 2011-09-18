@@ -266,44 +266,6 @@ public class STControllerImpl implements STController {
     }
 
     /** {@inheritDoc} */
-    @Action(name=ACTION_ENTRY_DELETE)
-    public void deleteEntry () {
-        int[] selectedEntryIDs = null;
-        IdDateObjectList<? extends IdDateObject> entryList = null;
-
-        // get selected entry IDs and the type of their list
-        if (view.getCurrentView ().getSelectedExerciseCount () > 0) {
-            selectedEntryIDs = view.getCurrentView ().getSelectedExerciseIDs ();
-            entryList = document.getExerciseList ();
-        }
-        else if (view.getCurrentView ().getSelectedNoteCount () > 0) {
-            selectedEntryIDs = view.getCurrentView ().getSelectedNoteIDs ();
-            entryList = document.getNoteList ();
-        }
-        else if (view.getCurrentView ().getSelectedWeightCount () > 0) {
-            selectedEntryIDs = view.getCurrentView ().getSelectedWeightIDs ();
-            entryList = document.getWeightList ();
-        }
-
-        // cancel when no selection found
-        if (selectedEntryIDs == null || selectedEntryIDs.length == 0) {
-            return;
-        }
-
-        // show confirmation dialog first
-        if (context.showConfirmDialog (context.getMainFrame (), "st.view.confirm.delete.title", 
-            "st.view.confirm.delete.text") != JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        // finally remove the entries
-        for (int id : selectedEntryIDs) {
-            entryList.removeByID (id);
-        }
-        view.updateView ();
-    }
-        
-    /** {@inheritDoc} */
     @Action(name=ACTION_ENTRY_EDIT)
     public void editEntry () {
 
@@ -355,6 +317,126 @@ public class STControllerImpl implements STController {
         view.updateView ();
     }
 
+    /** {@inheritDoc} */
+    @Action(name=ACTION_ENTRY_COPY)
+    public void copyEntry () {
+
+        // start copy action depending on entry type
+        if (view.getCurrentView ().getSelectedExerciseCount () == 1) {
+            copyExercise (view.getCurrentView ().getSelectedExerciseIDs ()[0]);
+        }
+        else if (view.getCurrentView ().getSelectedNoteCount () == 1) {
+            copyNote (view.getCurrentView ().getSelectedNoteIDs ()[0]);
+        }
+        else if (view.getCurrentView ().getSelectedWeightCount () == 1) {
+            copyWeight (view.getCurrentView ().getSelectedWeightIDs ()[0]);
+        }
+    }
+
+    /**
+     * Creates a copy of the specified Exercise and displays it in the Exercise dialog.
+     * 
+     * @param exerciseID ID of the exercise entry to copy
+     */
+    private void copyExercise (int exerciseID) {
+        
+        Exercise selExercise = document.getExerciseList ().getByID (exerciseID);
+        Exercise copiedExercise = createExerciseCopy(selExercise);
+        
+        // start exercise dialog for the copied exercise
+        ExerciseDialog dlg = prExerciseDialog.get();
+        dlg.setExercise(copiedExercise);
+        context.showDialog (dlg);
+        view.updateView ();        
+
+        // select the copied exercise if it was stored by the user
+        if (document.getExerciseList().contains(copiedExercise)) {
+            view.getCurrentView().selectEntry(copiedExercise);
+        }
+    }
+
+    /**
+     * Creates a copy of the specified Note and displays it in the Note dialog.
+     * 
+     * @param noteID ID of the note entry to copy
+     */
+    private void copyNote (int noteID) {
+
+        Note selNote = document.getNoteList ().getByID (noteID);
+        Note copiedNote = createNoteCopy(selNote);
+        
+        // start note dialog for the copied note
+        NoteDialog dlg = prNoteDialog.get ();
+        dlg.setNote (copiedNote);
+        context.showDialog (dlg);
+        view.updateView ();
+        
+        // select the copied note if it was stored by the user
+        if (document.getNoteList().contains(copiedNote)) {
+            view.getCurrentView().selectEntry(copiedNote);
+        }
+    }
+
+    /**
+     * Creates a copy of the specified Weight and displays it in the Weight dialog.
+     * 
+     * @param weightID ID of the weight entry to copy
+     */
+    private void copyWeight (int weightID) {
+
+        Weight selWeight = document.getWeightList ().getByID (weightID);
+        Weight copiedWeight = createWeightCopy(selWeight);
+        
+        // start weight dialog for the copied weight
+        WeightDialog dlg = prWeightDialog.get ();
+        dlg.setWeight(copiedWeight);
+        context.showDialog (dlg);
+        view.updateView ();
+        
+        // select the copied weight if it was stored by the user
+        if (document.getWeightList().contains(copiedWeight)) {
+            view.getCurrentView().selectEntry(copiedWeight);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Action(name=ACTION_ENTRY_DELETE)
+    public void deleteEntry () {
+        int[] selectedEntryIDs = null;
+        IdDateObjectList<? extends IdDateObject> entryList = null;
+
+        // get selected entry IDs and the type of their list
+        if (view.getCurrentView ().getSelectedExerciseCount () > 0) {
+            selectedEntryIDs = view.getCurrentView ().getSelectedExerciseIDs ();
+            entryList = document.getExerciseList ();
+        }
+        else if (view.getCurrentView ().getSelectedNoteCount () > 0) {
+            selectedEntryIDs = view.getCurrentView ().getSelectedNoteIDs ();
+            entryList = document.getNoteList ();
+        }
+        else if (view.getCurrentView ().getSelectedWeightCount () > 0) {
+            selectedEntryIDs = view.getCurrentView ().getSelectedWeightIDs ();
+            entryList = document.getWeightList ();
+        }
+
+        // cancel when no selection found
+        if (selectedEntryIDs == null || selectedEntryIDs.length == 0) {
+            return;
+        }
+
+        // show confirmation dialog first
+        if (context.showConfirmDialog (context.getMainFrame (), "st.view.confirm.delete.title", 
+            "st.view.confirm.delete.text") != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        // finally remove the entries
+        for (int id : selectedEntryIDs) {
+            entryList.removeByID (id);
+        }
+        view.updateView ();
+    }
+        
     /**
      * Action for viewing the HRM file of the selected exercise.
      */
@@ -597,14 +679,55 @@ public class STControllerImpl implements STController {
     /**
      * Creates a new Exercise. The exercise date will be the specified date at 
      * 12:00:00 or if no date is specified the current day at 12:00.
+     * 
      * @param date the date to be set in the exercise (can be null for the current date)
      * @return the created Exercise
      */
     private Exercise createNewExercise (Date date) {
-        Exercise exercise = new Exercise (
-            document.getExerciseList ().getNewID ());
+        Exercise exercise = new Exercise (document.getExerciseList ().getNewID ());
         exercise.setDate (setTimeForDate (date));
         return exercise;
+    }
+
+    /**
+     * Creates a copy/clone of the specified Exercise. The clone has a new unique 
+     * ID and the date is reseted (it will be the current day at 12:00). The HRM
+     * file in the clone is deleted too, the copy must get a new one.
+     * 
+     * @param exercise the Exercise to copy
+     * @return the created Exercise copy
+     */
+    private Exercise createExerciseCopy(Exercise exercise) {
+        Exercise clonedExercise = exercise.clone(document.getExerciseList().getNewID());
+        clonedExercise.setDate(setTimeForDate(null));
+        clonedExercise.setHrmFile(null);
+        return clonedExercise;
+    }
+    
+    /**
+     * Creates a copy/clone of the specified Note. The clone has a new unique 
+     * ID and the date is reseted (it will be the current day at 12:00). 
+     * 
+     * @param note the Note to copy
+     * @return the created Note copy
+     */
+    private Note createNoteCopy(Note note) {
+        Note clonedNote = note.clone(document.getNoteList().getNewID());
+        clonedNote.setDate(setTimeForDate(null));
+        return clonedNote;
+    }
+
+    /**
+     * Creates a copy/clone of the specified Weight. The clone has a new unique 
+     * ID and the date is reseted (it will be the current day at 12:00). 
+     * 
+     * @param weight the Weight to copy
+     * @return the created Weight copy
+     */
+    private Weight createWeightCopy(Weight weight) {
+        Weight clonedWeight = weight.clone(document.getWeightList().getNewID());
+        clonedWeight.setDate(setTimeForDate(null));
+        return clonedWeight;
     }
 
     /**

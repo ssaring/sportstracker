@@ -113,8 +113,9 @@ public class CalendarView extends BaseView {
         popupMenu.add (getController().getActionMap ().get (STController.ACTION_EXERCISE_ADD));
         popupMenu.add (getController().getActionMap ().get (STController.ACTION_NOTE_ADD));
         popupMenu.add (getController().getActionMap ().get (STController.ACTION_WEIGHT_ADD));
-        popupMenu.add (getController().getActionMap ().get (STController.ACTION_ENTRY_DELETE));
         popupMenu.add (getController().getActionMap ().get (STController.ACTION_ENTRY_EDIT));
+        popupMenu.add (getController().getActionMap ().get (STController.ACTION_ENTRY_COPY));
+        popupMenu.add (getController().getActionMap ().get (STController.ACTION_ENTRY_DELETE));
         
         // register mouse listener for the calendar (check for pressed, not clicked
         // events, otherwise it doen't work when the mouse have been moved meanwhile)
@@ -207,6 +208,12 @@ public class CalendarView extends BaseView {
         }
     }
 
+    @Override
+    public void selectEntry(IdDateObject entry) {
+        // TODO: implement this feature
+        updateView();
+    }
+    
     /**
      * Removes the current selection in the page.
      */

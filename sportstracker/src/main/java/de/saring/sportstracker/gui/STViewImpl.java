@@ -165,8 +165,9 @@ public class STViewImpl extends FrameView implements STView {
             STController.ACTION_EXERCISE_ADD,
             STController.ACTION_NOTE_ADD,
             STController.ACTION_WEIGHT_ADD,
-            STController.ACTION_ENTRY_DELETE,
             STController.ACTION_ENTRY_EDIT,
+            STController.ACTION_ENTRY_COPY,
+            STController.ACTION_ENTRY_DELETE,
             STController.ACTION_VIEW_HRM, 
             SEPARATOR,
             STController.ACTION_SPORTTYPE_EDITOR, 
@@ -212,8 +213,9 @@ public class STViewImpl extends FrameView implements STView {
             STController.ACTION_EXERCISE_ADD,
             STController.ACTION_NOTE_ADD,
             STController.ACTION_WEIGHT_ADD,
-            STController.ACTION_ENTRY_DELETE,
             STController.ACTION_ENTRY_EDIT,
+            STController.ACTION_ENTRY_COPY,
+            STController.ACTION_ENTRY_DELETE,
             SEPARATOR,
             STController.ACTION_VIEW_HRM,
             SEPARATOR,
@@ -298,12 +300,12 @@ public class STViewImpl extends FrameView implements STView {
                 this.getToolBar ().addSeparator ();
             }
             else {
-                    // disable the buttons mnemonic, otherwise menu items with the
-                    // same mnemonic will not work anymore
-                    JButton button = new JButton (controller.getActionMap ().get (actionName));
-                    button.setHideActionText (true);
-                    button.setMnemonic (-1);
-                    this.getToolBar ().add (button);
+                // disable the buttons mnemonic, otherwise menu items with the
+                // same mnemonic will not work anymore
+                JButton button = new JButton (controller.getActionMap ().get (actionName));
+                button.setHideActionText (true);
+                button.setMnemonic (-1);
+                this.getToolBar ().add (button);
             }
         }
     }
@@ -394,8 +396,8 @@ public class STViewImpl extends FrameView implements STView {
         int selNoteCount = currentView.getSelectedNoteCount ();
         int selWeightCount = currentView.getSelectedWeightCount ();
 
-        boolean fDeleteEnabled = selExerciseCount > 0 || selNoteCount > 0 || selWeightCount > 0;
         boolean fEditEnabled = selExerciseCount == 1 || selNoteCount == 1 || selWeightCount == 1;
+        boolean fDeleteEnabled = selExerciseCount > 0 || selNoteCount > 0 || selWeightCount > 0;
         boolean fHRMEnabled = selExerciseCount == 1;
 
         // additional checks for HRM action 
@@ -406,8 +408,9 @@ public class STViewImpl extends FrameView implements STView {
             fHRMEnabled = (selExercise.getHrmFile () != null) && (selExercise.getHrmFile ().trim ().length () > 0);
         }
 
-        controller.getActionMap ().get (STController.ACTION_ENTRY_DELETE).setEnabled (fDeleteEnabled);
         controller.getActionMap ().get (STController.ACTION_ENTRY_EDIT).setEnabled (fEditEnabled);
+        controller.getActionMap ().get (STController.ACTION_ENTRY_COPY).setEnabled (fEditEnabled);
+        controller.getActionMap ().get (STController.ACTION_ENTRY_DELETE).setEnabled (fDeleteEnabled);
         controller.getActionMap ().get (STController.ACTION_VIEW_HRM).setEnabled (fHRMEnabled);
 
         // Exercise Filter is only enabled in Calendar and Exercise List view

@@ -1,5 +1,6 @@
 package de.saring.sportstracker.gui.views;
 
+import de.saring.util.data.IdDateObject;
 import javax.inject.Inject;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
@@ -30,34 +31,40 @@ public abstract class BaseView extends JPanel implements EntryView {
         this.setPreferredSize (new Dimension (770, 500));
     }
 
-    /** {@inheritDoc} */
+    @Override
     public int getSelectedExerciseCount () {
         return 0;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public int[] getSelectedExerciseIDs () {
         return new int[0];
     }
 
-    /** {@inheritDoc} */
+    @Override
     public int getSelectedNoteCount () {
         return 0;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public int[] getSelectedNoteIDs () {
         return new int[0];
     }
 
-    /** {@inheritDoc} */
+    @Override
     public int getSelectedWeightCount () {
         return 0;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public int[] getSelectedWeightIDs () {
         return new int[0];
+    }
+
+    @Override
+    public void selectEntry(IdDateObject entry) {
+        // TODO: implement in all views
+        System.err.println("TODO: not implemented yet !");
     }
 
     protected STContext getContext () {

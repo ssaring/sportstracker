@@ -9,7 +9,7 @@ import de.saring.util.data.IdDateObject;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class Exercise extends IdDateObject {
+public final class Exercise extends IdDateObject implements Cloneable {
     
     /** The related SportType object. */
     private SportType sportType;
@@ -67,8 +67,8 @@ public final class Exercise extends IdDateObject {
         }
         
         public int getValue () {
-			return value;
-		}
+            return value;
+        }
         
         /** 
          * Returns the translated name (to be displayed) for this intensity. 
@@ -211,6 +211,31 @@ public final class Exercise extends IdDateObject {
 
     /***** END: Generated Getters and Setters *****/
     
+    /**
+     * Returns a complete clone of this Exercise object. All the attributes
+     * are the same, but the ID of the clone is the specified one.
+     * 
+     * @param cloneId ID of the cloned Exercise
+     * @return the Exercise clone
+     */
+    public Exercise clone(int cloneId)  {
+        Exercise clone = new Exercise(cloneId);
+        clone.setDate(this.getDate());
+        clone.setSportType(this.getSportType());
+        clone.setSportSubType(this.getSportSubType());
+        clone.setDuration(this.getDuration());
+        clone.setIntensity(this.getIntensity());
+        clone.setDistance(this.getDistance());
+        clone.setAvgSpeed(this.getAvgSpeed());
+        clone.setAvgHeartRate(this.getAvgHeartRate());
+        clone.setAscent(this.getAscent());
+        clone.setCalories(this.getCalories());
+        clone.setHrmFile(this.getHrmFile());
+        clone.setEquipment(this.getEquipment());
+        clone.setComment(this.getComment());
+        return clone;
+    }
+    
     @Override
     public String toString () {
         
@@ -232,4 +257,5 @@ public final class Exercise extends IdDateObject {
         sBuilder.append ("  comment=" + this.comment + "]\n");
         return sBuilder.toString ();
     }
+
 }

@@ -23,8 +23,9 @@ public interface STController {
     String ACTION_EXERCISE_ADD = "st.view.exercise_add";
     String ACTION_NOTE_ADD = "st.view.note_add";
     String ACTION_WEIGHT_ADD = "st.view.weight_add";
-    String ACTION_ENTRY_DELETE = "st.view.entry_delete";
     String ACTION_ENTRY_EDIT = "st.view.entry_edit";
+    String ACTION_ENTRY_COPY = "st.view.entry_copy";
+    String ACTION_ENTRY_DELETE = "st.view.entry_delete";
     String ACTION_VIEW_HRM = "st.view.view_hrm";
     String ACTION_PREFERENCES = "st.view.preferences";
     String ACTION_CALENDAR_VIEW = "st.view.calendar_view";
@@ -66,6 +67,12 @@ public interface STController {
      * Action for editing the selected entry.
      */
     void editEntry ();
+    
+    /**
+     * Action for copying the selected entry. The new entry just needs to get
+     * a different ID and date.
+     */
+    void copyEntry();
     
     /**
      * Action for deleting the selected entry (or entries).

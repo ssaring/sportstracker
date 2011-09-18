@@ -34,6 +34,20 @@ public final class Note extends IdDateObject {
 
     /***** END: Generated Getters and Setters *****/
 
+    /**
+     * Returns a complete clone of this Note object. All the attributes
+     * are the same, but the ID of the clone is the specified one.
+     * 
+     * @param cloneId ID of the cloned Note
+     * @return the Note clone
+     */
+    public Note clone(int cloneId)  {
+        Note clone = new Note(cloneId);
+        clone.setDate(this.getDate());
+        clone.setText(this.getText());
+        return clone;
+    }
+        
     @Override
     public String toString () {
         StringBuilder sBuilder = new StringBuilder ();

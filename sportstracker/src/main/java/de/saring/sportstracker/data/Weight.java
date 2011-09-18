@@ -44,6 +44,21 @@ public final class Weight extends IdDateObject {
 
     /***** END: Generated Getters and Setters *****/
 
+    /**
+     * Returns a complete clone of this Weight object. All the attributes
+     * are the same, but the ID of the clone is the specified one.
+     * 
+     * @param cloneId ID of the cloned Weight
+     * @return the Weight clone
+     */
+    public Weight clone(int cloneId)  {
+        Weight clone = new Weight(cloneId);
+        clone.setDate(this.getDate());
+        clone.setValue(this.getValue());
+        clone.setComment(this.getComment());
+        return clone;
+    }
+        
     @Override
     public String toString () {
         StringBuilder sBuilder = new StringBuilder ();
