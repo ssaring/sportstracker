@@ -208,6 +208,19 @@ public class CalendarView extends BaseView {
         }
     }
 
+    @Override
+    public void selectEntry(IdDateObject entry) {
+
+        // set calendar to month/year of the entry
+        Calendar calEntry = Calendar.getInstance();
+        calEntry.setTime(entry.getDate());
+        currentYear = calEntry.get(Calendar.YEAR);
+        currentMonth = calEntry.get(Calendar.MONTH) + 1;        
+        updateCalendar();
+        
+        calendarWidget.selectEntry(entry);
+    }
+    
     /**
      * Removes the current selection in the page.
      */

@@ -154,8 +154,7 @@ public class CalendarWidget extends JComponent {
         if (selectedCalendarEntry != null) {
             for (CalendarDay calDay : calendarDays) {
                 for (CalendarEntry calEntry : calDay.getCalendarEntries ()) {
-                    if (calEntry.getEntry ().getClass () == selectedCalendarEntry.getEntry ().getClass () &&
-                        calEntry.getEntry ().getId () == selectedCalendarEntry.getEntry ().getId ()) {
+                    if (calEntry.getEntry ().equals(selectedCalendarEntry.getEntry ())) {
                         return calEntry;
                     }
                 }
@@ -170,6 +169,22 @@ public class CalendarWidget extends JComponent {
      */
     public CalendarEntry getSelectedCalendarEntry () {
         return this.selectedCalendarEntry;
+    }
+    
+    /**
+     * Selects the specified entry if it's available in the current displayed month.
+     * 
+     * @param entry the calendar entry object to select
+     */
+    public void selectEntry(IdDateObject entry) {
+        for (CalendarDay calDay : arCalendarDays) {
+            for (CalendarEntry calEntry : calDay.getCalendarEntries()) {
+                if (calEntry.getEntry().equals(entry)) {
+                    this.selectedCalendarEntry = calEntry;
+                    repaint();
+                }
+            }
+        }
     }
     
     /**

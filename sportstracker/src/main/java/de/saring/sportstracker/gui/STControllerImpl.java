@@ -350,8 +350,9 @@ public class STControllerImpl implements STController {
         view.updateView ();        
 
         // select the copied exercise if it was stored by the user
-        if (document.getExerciseList().contains(copiedExercise)) {
-            view.getCurrentView().selectEntry(copiedExercise);
+        Exercise storedExercise = document.getExerciseList().getByID(copiedExercise.getId());
+        if (storedExercise != null) {
+            view.getCurrentView().selectEntry(storedExercise);
         }
     }
 
@@ -372,8 +373,9 @@ public class STControllerImpl implements STController {
         view.updateView ();
         
         // select the copied note if it was stored by the user
-        if (document.getNoteList().contains(copiedNote)) {
-            view.getCurrentView().selectEntry(copiedNote);
+        Note storedNote = document.getNoteList().getByID(copiedNote.getId());
+        if (storedNote != null) {
+            view.getCurrentView().selectEntry(storedNote);
         }
     }
 
@@ -394,8 +396,9 @@ public class STControllerImpl implements STController {
         view.updateView ();
         
         // select the copied weight if it was stored by the user
-        if (document.getWeightList().contains(copiedWeight)) {
-            view.getCurrentView().selectEntry(copiedWeight);
+        Weight storedWeight = document.getWeightList().getByID(copiedWeight.getId());
+        if (storedWeight != null) {
+            view.getCurrentView().selectEntry(storedWeight);
         }
     }
     

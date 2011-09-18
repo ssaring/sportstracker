@@ -64,9 +64,10 @@ public interface EntryView {
     /**
      * Selects the specified entry (of type Exercise, Weight or Note) in this
      * view. Not all views support all entry types (e.g. no Weight entry in 
-     * Note list). If not supported, this method does nothing.
+     * Note list). If not supported or the entry is not displayed, this method 
+     * does nothing.
      * 
-     * @param entry 
+     * @param entry the entry to select
      */
     void selectEntry(IdDateObject entry);
     
