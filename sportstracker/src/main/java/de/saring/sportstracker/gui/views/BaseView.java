@@ -61,12 +61,6 @@ public abstract class BaseView extends JPanel implements EntryView {
         return new int[0];
     }
 
-    @Override
-    public void selectEntry(IdDateObject entry) {
-        // TODO: implement in all views
-        System.err.println("TODO: not implemented yet !");
-    }
-
     protected STContext getContext () {
         return context;
     }

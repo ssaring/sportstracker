@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.views.listview;
 import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Exercise;
+import de.saring.util.data.IdDateObject;
 import de.saring.util.unitcalc.FormatUtils;
 import java.awt.Component;
 import java.util.Date;
@@ -199,6 +200,11 @@ public class ExerciseListView extends BaseListView {
     protected AbstractTableModel getTableModel () {
         return tmExercises;
     }
+    
+    @Override
+    protected int getIdColumnIndex() {
+        return HIDDEN_COLUMN_ID;
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -223,6 +229,13 @@ public class ExerciseListView extends BaseListView {
             selectedIDs[i] = (Integer) tmExercises.getValueAt (modelRow, HIDDEN_COLUMN_ID);
         }
         return selectedIDs;
+    }
+    
+    @Override
+    public void selectEntry(IdDateObject entry) {
+        if (entry instanceof Exercise) {
+            selectRowWithEntryId(entry.getId());
+        }
     }
 
     /** {@inheritDoc} */

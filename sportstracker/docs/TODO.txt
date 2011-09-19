@@ -1,12 +1,10 @@
 SportsTracker-TODO
 ==================
 
-- "Copy entry" feature, see request:
-  https://sourceforge.net/tracker/?func=detail&aid=2927194&group_id=133110&atid=726273
-  - Status: copy action is done
-  - Implement EntryView.selectEntry for all views (is now only a dummy impl. in BaseView)
-    => Implementation in CalendarView is done
-  - Use EntryView.selectEntry also for added and edited entries (new feature)
+- Use EntryView.selectEntry also for added and edited entries (new feature)
+- Refactoring in all *ListView classes:
+  - move the many similar methods to BaseListView class
+  - use @Override for all overwritten methods and remove the inheritDoc-Tag
 
 General TODOs:
 --------------

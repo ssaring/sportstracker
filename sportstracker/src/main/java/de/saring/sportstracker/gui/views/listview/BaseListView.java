@@ -49,6 +49,11 @@ public abstract class BaseListView extends BaseView {
      */
     protected abstract AbstractTableModel getTableModel ();
     
+    /**
+     * Returns the column index which stores the entry ID.
+     * @return 
+     */
+    protected abstract int getIdColumnIndex();
     
     /**
      * Creates and initializes the table. The table model and the column names
@@ -133,6 +138,27 @@ public abstract class BaseListView extends BaseView {
         table.clearSelection ();
     }
 
+    /**
+     * Selects the table row with the specified entry ID. It also makes sure
+     * that the selected row is visible.
+     * 
+     * @param entryId ID of the entry to be selected
+     */
+    protected void selectRowWithEntryId(int entryId) {
+        int idColumnIndex = getIdColumnIndex();
+        
+        for (int i = 0; i < getTableModel().getRowCount(); i++) {
+            int tempEntryId = (Integer) getTableModel().getValueAt (i, idColumnIndex);
+
+            if (tempEntryId == entryId) {
+                int rowIndex = getTable().convertRowIndexToView(i);
+                getTable().setRowSelectionInterval(rowIndex, rowIndex);
+                getTable().scrollRectToVisible(getTable().getCellRect(rowIndex, 0, true));
+                return;
+            }
+        }
+    }
+    
     /**
      * Prints the content of the displayed entry list.
      * @param headerText the header text

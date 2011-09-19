@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.views.listview;
 import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Note;
+import de.saring.util.data.IdDateObject;
 import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -61,6 +62,11 @@ public class NoteListView extends BaseListView {
         return tmNotes;
     }
 
+    @Override
+    protected int getIdColumnIndex() {
+        return HIDDEN_COLUMN_ID;
+    }
+    
     /** {@inheritDoc} */
     @Override
     public int getSelectedNoteCount () {
@@ -78,6 +84,13 @@ public class NoteListView extends BaseListView {
             selectedIDs[i] = (Integer) tmNotes.getValueAt (modelRow, HIDDEN_COLUMN_ID);
         }
         return selectedIDs;
+    }
+    
+    @Override
+    public void selectEntry(IdDateObject entry) {
+        if (entry instanceof Note) {
+            selectRowWithEntryId(entry.getId());
+        }
     }
 
     /** {@inheritDoc} */
