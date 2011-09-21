@@ -1,5 +1,6 @@
 package de.saring.sportstracker.gui;
 
+import de.saring.util.data.IdObject;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.util.Arrays;
@@ -30,6 +31,7 @@ import de.saring.sportstracker.gui.views.listview.ExerciseListView;
 import de.saring.sportstracker.gui.views.listview.NoteListView;
 import de.saring.sportstracker.gui.views.listview.WeightListView;
 import de.saring.util.data.IdDateObjectList;
+import de.saring.util.data.IdObjectListChangeListener;
 import de.saring.util.gui.mac.MacSpecials;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.FormatUtils;
@@ -116,7 +118,7 @@ public class STViewImpl extends FrameView implements STView {
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void initView () {
         createView ();
         
@@ -331,18 +333,18 @@ public class STViewImpl extends FrameView implements STView {
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void postInit () {
         // start with current date in calendar
         calendarView.selectToday ();
     }
     
-    /** {@inheritDoc} */
+    @Override
     public EntryView getCurrentView () {
         return currentView;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void updateView () {
         // update format utils in context (setting may have changed)
         STOptions options = document.getOptions ();
@@ -353,13 +355,29 @@ public class STViewImpl extends FrameView implements STView {
         currentView.updateView ();
         updateEntryActions ();
     }
+
+    @Override
+    public void registerViewForDataChanges() {
+        // register a listener which updates view after each change and selects
+        // the changed object if specified
+        document.registerListChangeListener(new IdObjectListChangeListener() {
+            
+            @Override
+            public void listChanged(IdObject changedObject) {
+                updateView();
+                if (changedObject != null) {
+                    getCurrentView().selectEntry(changedObject);
+                }
+            }
+        });
+    }
     
-    /** {@inheritDoc} */
+    @Override
     public IdDateObjectList<Exercise> getDisplayedExercises () {
         return displayedExercises;
     }
     
-    /** {@inheritDoc} */
+    @Override
     public void switchToView (EntryView.ViewType viewType) {
         
         // get specified view, update it and remove its selections
@@ -388,7 +406,7 @@ public class STViewImpl extends FrameView implements STView {
         currentView.repaint ();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void updateEntryActions () {
         
         // enable/disable the exercise actions depending on current entry selection
@@ -426,7 +444,7 @@ public class STViewImpl extends FrameView implements STView {
         updateSaveAction ();
     }
     
-    /** {@inheritDoc} */
+    @Override
     public void updateSaveAction () {
         controller.getActionMap ().get (STController.ACTION_SAVE).setEnabled (document.isDirtyData ());
     }

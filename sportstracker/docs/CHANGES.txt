@@ -21,7 +21,12 @@ v5.4.0:
   - SF Feature Request 2927194: copy entries (exercises, notes, weights)
     - user can simply copy entries from the context or main menu, he only
       needs to enter the new date
-
+  - All Exercise, Note and Weight actions (add, edit, copy):
+    => select the edited entry in the current view when action is completed
+       (bigger refactoring for automatic view updates after data changes)
+  - Use of @Override annotation instead of {@inheritDoc}, so implementation 
+    errors can be detected by the compiler
+   
 v5.3.0:
  ExerciseViewer changes:
   - SF Bug #3203396: TopoGrafixGpxParser: parse GPX files with missing 

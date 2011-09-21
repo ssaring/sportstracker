@@ -86,4 +86,12 @@ public interface STDocument extends IdObjectListChangeListener {
      * @throws STException thrown on store problems
      */
     void storeApplicationData () throws STException; 
+    
+    /**
+     * Register the specified IdObjectListChangeListener on all stored data lists
+     * (for sport types, exercises, notes and weights).
+     * 
+     * @param listener the IdObjectListChangeListener to register
+     */
+    void registerListChangeListener(IdObjectListChangeListener listener);
 }

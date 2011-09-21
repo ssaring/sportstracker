@@ -98,7 +98,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T>, Serializab
             this.lIdObjects.add (t);
         }
         finally {
-            notifyAllListChangelisteners ();
+            notifyAllListChangelisteners(t);
         }
     }
     
@@ -114,7 +114,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T>, Serializab
         if (t != null) {
             boolean removed = this.lIdObjects.remove (t);
             if (removed) {
-                notifyAllListChangelisteners ();
+                notifyAllListChangelisteners(null);
             }
             return removed;
         }
@@ -178,10 +178,12 @@ public class IdObjectList<T extends IdObject> implements Iterable<T>, Serializab
     /**
      * Notifies all registered listeners that the content of the list has been
      * changed.
+     * 
+     * @param changedObject the added / changed object (or null when removed)
      */
-    protected void notifyAllListChangelisteners () {
+    protected void notifyAllListChangelisteners (IdObject changedObject) {
         for (IdObjectListChangeListener listener : listChangelisteners) {
-            listener.listChanged ();
+            listener.listChanged(changedObject);
         }
     }
 

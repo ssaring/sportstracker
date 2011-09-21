@@ -54,7 +54,7 @@ public class IdDateObjectList<T extends IdDateObject> extends IdObjectList<T> {
             getIDObjects ().add (t);
         }
         finally {
-            notifyAllListChangelisteners ();
+            notifyAllListChangelisteners(t);
         }
     }
 

@@ -35,6 +35,12 @@ public interface STView {
     void updateView ();
     
     /**
+     * Registers the View on all data lists stored in STDocuent. Whenever
+     * the content of the list changes the View will be updated instantly.
+     */
+    void registerViewForDataChanges();
+    
+    /**
      * Returns the list of exercises which needs to be displayed in the view
      * (this can be the filtered list when a filter is active).
      * @return the list of exercises to be displayed

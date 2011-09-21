@@ -124,6 +124,7 @@ public class STControllerImpl implements STController {
         @Override
         protected void finished () {
             view.updateView ();
+            view.registerViewForDataChanges();
             askForDefiningSportTypes ();
         }
     }
@@ -224,7 +225,6 @@ public class STControllerImpl implements STController {
         ExerciseDialog dlg = prExerciseDialog.get ();
         dlg.setExercise (newExercise);
         context.showDialog (dlg);
-        view.updateView ();        
     }
 
     /** {@inheritDoc} */
@@ -237,7 +237,6 @@ public class STControllerImpl implements STController {
         NoteDialog dlg = prNoteDialog.get ();
         dlg.setNote (newNote);
         context.showDialog (dlg);
-        view.updateView ();
     }
 
     /** {@inheritDoc} */
@@ -257,7 +256,6 @@ public class STControllerImpl implements STController {
         WeightDialog dlg = prWeightDialog.get ();
         dlg.setWeight (newWeight);
         context.showDialog (dlg);
-        view.updateView ();
     }
 
     /** {@inheritDoc} */
@@ -290,7 +288,6 @@ public class STControllerImpl implements STController {
         ExerciseDialog dlg = prExerciseDialog.get ();
         dlg.setExercise (selExercise);
         context.showDialog (dlg);
-        view.updateView ();
     }
 
     /**
@@ -302,7 +299,6 @@ public class STControllerImpl implements STController {
         NoteDialog dlg = prNoteDialog.get ();
         dlg.setNote (selNote);
         context.showDialog (dlg);
-        view.updateView ();
     }
 
     /**
@@ -314,7 +310,6 @@ public class STControllerImpl implements STController {
         WeightDialog dlg = prWeightDialog.get ();
         dlg.setWeight (selWeight);
         context.showDialog (dlg);
-        view.updateView ();
     }
 
     /** {@inheritDoc} */
@@ -347,13 +342,6 @@ public class STControllerImpl implements STController {
         ExerciseDialog dlg = prExerciseDialog.get();
         dlg.setExercise(copiedExercise);
         context.showDialog (dlg);
-        view.updateView ();        
-
-        // select the copied exercise if it was stored by the user
-        Exercise storedExercise = document.getExerciseList().getByID(copiedExercise.getId());
-        if (storedExercise != null) {
-            view.getCurrentView().selectEntry(storedExercise);
-        }
     }
 
     /**
@@ -370,13 +358,6 @@ public class STControllerImpl implements STController {
         NoteDialog dlg = prNoteDialog.get ();
         dlg.setNote (copiedNote);
         context.showDialog (dlg);
-        view.updateView ();
-        
-        // select the copied note if it was stored by the user
-        Note storedNote = document.getNoteList().getByID(copiedNote.getId());
-        if (storedNote != null) {
-            view.getCurrentView().selectEntry(storedNote);
-        }
     }
 
     /**
@@ -393,13 +374,6 @@ public class STControllerImpl implements STController {
         WeightDialog dlg = prWeightDialog.get ();
         dlg.setWeight(copiedWeight);
         context.showDialog (dlg);
-        view.updateView ();
-        
-        // select the copied weight if it was stored by the user
-        Weight storedWeight = document.getWeightList().getByID(copiedWeight.getId());
-        if (storedWeight != null) {
-            view.getCurrentView().selectEntry(storedWeight);
-        }
     }
     
     /** {@inheritDoc} */
@@ -437,7 +411,6 @@ public class STControllerImpl implements STController {
         for (int id : selectedEntryIDs) {
             entryList.removeByID (id);
         }
-        view.updateView ();
     }
         
     /**
@@ -594,8 +567,6 @@ public class STControllerImpl implements STController {
             dlg.importHRMFile ();
             context.showDialog (dlg);
         }
-
-        view.updateView ();
         return true;
     }
 

@@ -1,7 +1,7 @@
 package de.saring.sportstracker.gui.views;
 
 import de.saring.sportstracker.core.STException;
-import de.saring.util.data.IdDateObject;
+import de.saring.util.data.IdObject;
 
 /**
  * This interface defines the view for displaying SportsTracker entries
@@ -69,7 +69,7 @@ public interface EntryView {
      * 
      * @param entry the entry to select
      */
-    void selectEntry(IdDateObject entry);
+    void selectEntry(IdObject entry);
     
     /**
      * Removes the current selection in the page.

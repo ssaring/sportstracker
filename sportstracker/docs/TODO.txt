@@ -1,10 +1,12 @@
 SportsTracker-TODO
 ==================
 
-- Use EntryView.selectEntry also for added and edited entries (new feature)
 - Refactoring in all *ListView classes:
   - move the many similar methods to BaseListView class
   - use @Override for all overwritten methods and remove the inheritDoc-Tag
+- All classes which implements interfaces or overwrite base class methods:
+  use @Override instead of {@inheritDoc} 
+
 
 General TODOs:
 --------------

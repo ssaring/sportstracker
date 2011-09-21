@@ -3,7 +3,7 @@ package de.saring.sportstracker.gui.views.listview;
 import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Weight;
-import de.saring.util.data.IdDateObject;
+import de.saring.util.data.IdObject;
 import de.saring.util.unitcalc.FormatUtils;
 import java.util.Date;
 import javax.swing.JTable;
@@ -98,7 +98,7 @@ public class WeightListView extends BaseListView {
     }
     
     @Override
-    public void selectEntry(IdDateObject entry) {
+    public void selectEntry(IdObject entry) {
         if (entry instanceof Weight) {
             selectRowWithEntryId(entry.getId());
         }

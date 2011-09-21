@@ -91,8 +91,8 @@ public class STControllerTest {
 
         // register document mock as list change listener => must be called twice
         exeList.addListChangeListener (documentMock);
-        documentMock.listChanged ();
-        documentMock.listChanged ();
+        documentMock.listChanged (null);
+        documentMock.listChanged (null);
         viewMock.updateView ();
         
         replayMocks ();

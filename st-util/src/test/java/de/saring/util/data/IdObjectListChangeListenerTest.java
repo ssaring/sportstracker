@@ -40,10 +40,11 @@ public class IdObjectListChangeListenerTest {
      */
     @Test
     public void testSetReplace () {
-        listenerMock.listChanged ();
+        DummyIdObject changedObject = new DummyIdObject(2);
+        listenerMock.listChanged(changedObject);
         EasyMock.replay (listenerMock);
 
-        idObjectList.set (new DummyIdObject (2));
+        idObjectList.set (changedObject);
         assertEquals (3, idObjectList.size ());
     }
     
@@ -53,10 +54,11 @@ public class IdObjectListChangeListenerTest {
      */
     @Test
     public void testSetAdd () {
-        listenerMock.listChanged ();
+        DummyIdObject newObject = new DummyIdObject(5);
+        listenerMock.listChanged (newObject);
         EasyMock.replay (listenerMock);
 
-        idObjectList.set (new DummyIdObject (5));
+        idObjectList.set (newObject);
         assertEquals (4, idObjectList.size ());
     }
 
@@ -66,15 +68,17 @@ public class IdObjectListChangeListenerTest {
      */
     @Test
     public void testSetReplaceTwoListeners () {
-        listenerMock.listChanged ();
+        DummyIdObject changedObject = new DummyIdObject(2);
+        
+        listenerMock.listChanged(changedObject);
         EasyMock.replay (listenerMock);
 
         IdObjectListChangeListener listenerMock2  = EasyMock.createMock (IdObjectListChangeListener.class);
         idObjectList.addListChangeListener (listenerMock2);
-        listenerMock2.listChanged ();
+        listenerMock2.listChanged(changedObject);
         EasyMock.replay (listenerMock2);
 
-        idObjectList.set (new DummyIdObject (2));
+        idObjectList.set (changedObject);
         assertEquals (3, idObjectList.size ());
 
         EasyMock.verify (listenerMock2);
@@ -85,7 +89,7 @@ public class IdObjectListChangeListenerTest {
      */
     @Test
     public void testRemoveSuccess () {
-        listenerMock.listChanged ();
+        listenerMock.listChanged(null);
         EasyMock.replay (listenerMock);
 
         assertTrue (idObjectList.removeByID (2));

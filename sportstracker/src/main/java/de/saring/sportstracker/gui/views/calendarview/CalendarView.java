@@ -12,6 +12,7 @@ import de.saring.sportstracker.gui.views.BaseView;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
 
+import de.saring.util.data.IdObject;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -209,16 +210,20 @@ public class CalendarView extends BaseView {
     }
 
     @Override
-    public void selectEntry(IdDateObject entry) {
-
-        // set calendar to month/year of the entry
-        Calendar calEntry = Calendar.getInstance();
-        calEntry.setTime(entry.getDate());
-        currentYear = calEntry.get(Calendar.YEAR);
-        currentMonth = calEntry.get(Calendar.MONTH) + 1;        
-        updateCalendar();
+    public void selectEntry(IdObject entry) {
         
-        calendarWidget.selectEntry(entry);
+        if (entry instanceof IdDateObject) {
+            IdDateObject dateEntry = (IdDateObject) entry;
+
+            // set calendar to month/year of the entry
+            Calendar calEntry = Calendar.getInstance();
+            calEntry.setTime(dateEntry.getDate());
+            currentYear = calEntry.get(Calendar.YEAR);
+            currentMonth = calEntry.get(Calendar.MONTH) + 1;        
+            updateCalendar();
+
+            calendarWidget.selectEntry(dateEntry);
+        }
     }
     
     /**

@@ -3,7 +3,7 @@ package de.saring.sportstracker.gui.views.listview;
 import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Exercise;
-import de.saring.util.data.IdDateObject;
+import de.saring.util.data.IdObject;
 import de.saring.util.unitcalc.FormatUtils;
 import java.awt.Component;
 import java.util.Date;
@@ -232,7 +232,7 @@ public class ExerciseListView extends BaseListView {
     }
     
     @Override
-    public void selectEntry(IdDateObject entry) {
+    public void selectEntry(IdObject entry) {
         if (entry instanceof Exercise) {
             selectRowWithEntryId(entry.getId());
         }

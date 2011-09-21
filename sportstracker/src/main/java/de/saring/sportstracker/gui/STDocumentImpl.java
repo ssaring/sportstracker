@@ -19,6 +19,8 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.util.data.IdDateObjectList;
+import de.saring.util.data.IdObject;
+import de.saring.util.data.IdObjectListChangeListener;
 
 /**
  * This class contains all document (MVC) related data and functionality of the 
@@ -226,7 +228,7 @@ public class STDocumentImpl implements STDocument {
         finally {
             // register this document as a listener for list content changes
             // (also when reading data has failed)
-            registerListChangeListener ();
+            registerListChangeListener(this);
             dirtyData = false;
         }
     }
@@ -241,20 +243,17 @@ public class STDocumentImpl implements STDocument {
         dirtyData = false;
     }
 
-    /** {@inheritDoc} */
-    public void listChanged () {
+    @Override
+    public void listChanged(IdObject changedObject) {
         // one of the data lists has been changed => set dirty data flag
         dirtyData = true;
     }
 
-    /**
-     * Register this document as a listener for content changes in all data
-     * lists.
-     */
-    private void registerListChangeListener () {
-        sportTypeList.addListChangeListener (this);
-        exerciseList.addListChangeListener (this);
-        noteList.addListChangeListener (this);
-        weightList.addListChangeListener (this);
+    @Override
+    public void registerListChangeListener(IdObjectListChangeListener listener) {
+        sportTypeList.addListChangeListener(listener);
+        exerciseList.addListChangeListener(listener);
+        noteList.addListChangeListener(listener);
+        weightList.addListChangeListener(listener);
     }
 }

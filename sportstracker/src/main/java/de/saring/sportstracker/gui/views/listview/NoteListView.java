@@ -3,7 +3,7 @@ package de.saring.sportstracker.gui.views.listview;
 import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Note;
-import de.saring.util.data.IdDateObject;
+import de.saring.util.data.IdObject;
 import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -87,7 +87,7 @@ public class NoteListView extends BaseListView {
     }
     
     @Override
-    public void selectEntry(IdDateObject entry) {
+    public void selectEntry(IdObject entry) {
         if (entry instanceof Note) {
             selectRowWithEntryId(entry.getId());
         }
