@@ -93,7 +93,6 @@ public class STControllerTest {
         exeList.addListChangeListener (documentMock);
         documentMock.listChanged (null);
         documentMock.listChanged (null);
-        viewMock.updateView ();
         
         replayMocks ();
         controller.deleteEntry ();
