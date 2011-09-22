@@ -69,7 +69,6 @@ public class LapPanel extends BasePanel {
         ListUtils.increaseTableRowHeight (tbLaps);        
     }
     
-    /** {@inheritDoc} */
     @Override
     public void displayExercise () {
         final EVExercise exercise = getDocument ().getExercise ();

@@ -159,17 +159,11 @@ public class HAC4TURParser extends AbstractExerciseParser {
     private int nrOfLinesInNote;
     private int sampleInterval;
     
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ExerciseParserInfo getInfo () {
         return info;
     }
     
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public EVExercise parseExercise (String filename) throws EVException {
         

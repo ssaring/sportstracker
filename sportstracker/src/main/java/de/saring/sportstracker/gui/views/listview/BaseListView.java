@@ -218,7 +218,6 @@ public abstract class BaseListView extends BaseView {
                 getContext ().getResReader ().getColor (ResourceReader.COMMON_TABLE_BACKGROUND_EVEN));
         }
 
-        /** {@inheritDoc} */
         @Override
         public Component getTableCellRendererComponent (
             JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex) {

@@ -32,13 +32,11 @@ public class GarminFitParser extends AbstractExerciseParser {
     private final ExerciseParserInfo info = new ExerciseParserInfo("Garmin FIT", new String[] {"fit", "FIT"});
 
 
-    /** {@inheritDoc} */
     @Override
     public ExerciseParserInfo getInfo() {
         return info;
     }
     
-    /** {@inheritDoc} */
     @Override
     public EVExercise parseExercise(String filename) throws EVException {
         FitMessageListener mesgListener = new FitMessageListener();

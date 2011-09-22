@@ -41,9 +41,6 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
     int[][] s;
     
     
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ExerciseParserInfo getInfo () {
         return info;
@@ -67,9 +64,6 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         return s[section][index];
     }
     
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public EVExercise parseExercise (String filename) throws EVException
     {

@@ -33,7 +33,6 @@ public class WeightListView extends BaseListView {
     private WeightsTableModel tmWeights;
 
     
-    /** {@inheritDoc} */
     @Override
     public void initView () {
         
@@ -57,12 +56,12 @@ public class WeightListView extends BaseListView {
         tcModel.getColumn (COLUMN_COMMENT).setPreferredWidth (520);
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected String[] getColumnNames () {
         return columnNames;
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected AbstractTableModel getTableModel () {
         return tmWeights;
     }
@@ -72,19 +71,16 @@ public class WeightListView extends BaseListView {
         return HIDDEN_COLUMN_ID;
     }
 
-    /** {@inheritDoc} */
     @Override
     protected DefaultTableCellRenderer getTableCellRender () {
         return new WeightCellRenderer();
     }
 
-    /** {@inheritDoc} */
     @Override
     public int getSelectedWeightCount () {
         return getTable ().getSelectedRowCount ();
     }
 
-    /** {@inheritDoc} */
     @Override
     public int[] getSelectedWeightIDs () {
         int[] selectedRows = getTable ().getSelectedRows ();
@@ -104,7 +100,6 @@ public class WeightListView extends BaseListView {
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public void print () throws STException {
         if (!getController ().checkForExistingWeights ()) {
@@ -161,7 +156,6 @@ public class WeightListView extends BaseListView {
      */
     class WeightCellRenderer extends BaseListView.BaseListCellRenderer {
 
-        /** {@inheritDoc} */
         @Override
         protected String formatText (Object value, int rowIndex, int columnIndex) {
             FormatUtils formatUtils = getContext ().getFormatUtils ();

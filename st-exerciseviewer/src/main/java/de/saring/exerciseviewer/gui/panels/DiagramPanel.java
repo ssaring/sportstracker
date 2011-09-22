@@ -101,7 +101,6 @@ public class DiagramPanel extends BasePanel {
         cbBottom.setAction (aUpdate);
     }
 
-    /** {@inheritDoc} */
     @Override
     public void displayExercise () {
         EVExercise exercise = getDocument ().getExercise ();

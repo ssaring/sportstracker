@@ -703,7 +703,6 @@ public class CalendarWidget extends JComponent {
         }
     }
     
-    /** {@inheritDoc} */
     @Override
     public String getToolTipText (MouseEvent event) {        
         // return the tooltip of the CalendarEntry at the mouse position (if available)

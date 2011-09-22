@@ -48,7 +48,6 @@ public class ExerciseListView extends BaseListView {
     private ExercisesTableModel tmExercises;
 
     
-    /** {@inheritDoc} */
     @Override
     public void initView () {
         
@@ -96,7 +95,6 @@ public class ExerciseListView extends BaseListView {
         removedColumns = new ArrayList<>();
     }
     
-    /** {@inheritDoc} */
     @Override
     public void updateView () {
         
@@ -191,12 +189,10 @@ public class ExerciseListView extends BaseListView {
         throw new IllegalArgumentException ("Unknown column name: " + columnName);
     }
 
-    /** {@inheritDoc} */
     protected String[] getColumnNames () {
         return columnNames;
     }
 
-    /** {@inheritDoc} */
     protected AbstractTableModel getTableModel () {
         return tmExercises;
     }
@@ -206,19 +202,16 @@ public class ExerciseListView extends BaseListView {
         return HIDDEN_COLUMN_ID;
     }
 
-    /** {@inheritDoc} */
     @Override
     protected DefaultTableCellRenderer getTableCellRender () {
         return new  ExercisesCellRenderer();
     }
 
-    /** {@inheritDoc} */
     @Override
     public int getSelectedExerciseCount () {
         return getTable ().getSelectedRowCount ();
     }
 
-    /** {@inheritDoc} */
     @Override
     public int[] getSelectedExerciseIDs () {
         int[] selectedRows = getTable ().getSelectedRows ();
@@ -238,7 +231,6 @@ public class ExerciseListView extends BaseListView {
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public void print () throws STException {
         if (!getController ().checkForExistingExercises ()) {
@@ -332,7 +324,6 @@ public class ExerciseListView extends BaseListView {
      */
     class ExercisesCellRenderer extends BaseListView.BaseListCellRenderer {
 
-        /** {@inheritDoc} */
         @Override
         public Component getTableCellRendererComponent (
             JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex) {
@@ -345,7 +336,6 @@ public class ExerciseListView extends BaseListView {
             return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, rowIndex, vColIndex);
         }
 
-        /** {@inheritDoc} */
         @Override
         protected String formatText (Object value, int rowIndex, int columnIndex) {
             String colName = getTable().getColumnName(columnIndex);

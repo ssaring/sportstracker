@@ -43,44 +43,44 @@ public class STContextImpl implements STContext {
         this.resReader = new ResourceReader (appContext.getResourceMap ());
     }
 
-    /** {@inheritDoc} */
+    @Override
     public ApplicationContext getSAFContext () {
         return appContext;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public JFrame getMainFrame () {
         return getApplication ().getMainFrame ();
     }
     
-    /** {@inheritDoc} */
+    @Override
     public void showDialog (JDialog dlg) {
         getApplication ().show (dlg);
     }
     
-    /** {@inheritDoc} */
+    @Override
     public void showMessageDialog (Component parent, int msgType, String titleKey, String messageKey, Object... arguments) {
         JOptionPane.showMessageDialog (parent, resReader.getString (messageKey, arguments), 
             resReader.getString (titleKey), msgType);
     }
     
-    /** {@inheritDoc} */
+    @Override
     public int showConfirmDialog (Component parent, String titleKey, String messageKey) {
         return JOptionPane.showConfirmDialog (parent, resReader.getString (messageKey), 
             resReader.getString (titleKey), JOptionPane.YES_NO_OPTION);
     }
     
-    /** {@inheritDoc} */
+    @Override
     public ResourceReader getResReader () {
         return resReader;
     }
     
-    /** {@inheritDoc} */
+    @Override
     public FormatUtils getFormatUtils () {
         return formatUtils;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setFormatUtils (FormatUtils formatUtils) {
         this.formatUtils = formatUtils;
     }

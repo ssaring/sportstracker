@@ -82,7 +82,7 @@ public class STControllerImpl implements STController {
         this.view = view;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public ActionMap getActionMap () {
         if (actionMap == null) {
             actionMap = context.getSAFContext ().getActionMap (STControllerImpl.class, this);
@@ -213,7 +213,7 @@ public class STControllerImpl implements STController {
         context.getSAFContext ().getApplication ().exit ();
     }
     
-    /** {@inheritDoc} */
+    @Override
     @Action(name=ACTION_EXERCISE_ADD)
     public void addExercise () {
         if (!checkForExistingSportTypes ()) {
@@ -227,7 +227,7 @@ public class STControllerImpl implements STController {
         context.showDialog (dlg);
     }
 
-    /** {@inheritDoc} */
+    @Override
     @Action(name=ACTION_NOTE_ADD)
     public void addNote () {        
         // start Note dialog for a new created Note
@@ -239,7 +239,7 @@ public class STControllerImpl implements STController {
         context.showDialog (dlg);
     }
 
-    /** {@inheritDoc} */
+    @Override
     @Action(name=ACTION_WEIGHT_ADD)
     public void addWeight () {
         // start Weight dialog for a new created Weight
@@ -258,12 +258,12 @@ public class STControllerImpl implements STController {
         context.showDialog (dlg);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setDateForNewEntries (Date date) {
         this.dateForNewEntries = date;        
     }
 
-    /** {@inheritDoc} */
+    @Override
     @Action(name=ACTION_ENTRY_EDIT)
     public void editEntry () {
 
@@ -312,7 +312,7 @@ public class STControllerImpl implements STController {
         context.showDialog (dlg);
     }
 
-    /** {@inheritDoc} */
+    @Override
     @Action(name=ACTION_ENTRY_COPY)
     public void copyEntry () {
 
@@ -376,7 +376,7 @@ public class STControllerImpl implements STController {
         context.showDialog (dlg);
     }
     
-    /** {@inheritDoc} */
+    @Override
     @Action(name=ACTION_ENTRY_DELETE)
     public void deleteEntry () {
         int[] selectedEntryIDs = null;
@@ -543,7 +543,7 @@ public class STControllerImpl implements STController {
         context.showDialog (prAboutDialog.get ());
     }
 
-    /** {@inheritDoc} */
+    @Override
     public boolean dropHrmFile (String filename, Exercise exercise) {
         if (!checkForExistingExercises ()) {
             return false;
@@ -570,7 +570,7 @@ public class STControllerImpl implements STController {
         return true;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public boolean checkForExistingSportTypes () {
         if (document.getSportTypeList ().size () == 0) {
             context.showMessageDialog (context.getMainFrame (), JOptionPane.ERROR_MESSAGE, 
@@ -580,7 +580,7 @@ public class STControllerImpl implements STController {
         return true;
     }
     
-    /** {@inheritDoc} */
+    @Override
     public boolean checkForExistingExercises () {
         if (document.getExerciseList ().size () == 0) {
             context.showMessageDialog (context.getMainFrame (), JOptionPane.ERROR_MESSAGE, 
@@ -590,7 +590,7 @@ public class STControllerImpl implements STController {
         return true;
     }
     
-    /** {@inheritDoc} */
+    @Override
     public boolean checkForExistingNotes () {
         if (document.getNoteList ().size () == 0) {
             context.showMessageDialog (context.getMainFrame (), JOptionPane.ERROR_MESSAGE, 
@@ -600,7 +600,7 @@ public class STControllerImpl implements STController {
         return true;
     }
     
-    /** {@inheritDoc} */
+    @Override
     public boolean checkForExistingWeights() {
         if (document.getWeightList ().size () == 0) {
             context.showMessageDialog (context.getMainFrame (), JOptionPane.ERROR_MESSAGE, 
@@ -610,7 +610,7 @@ public class STControllerImpl implements STController {
         return true;
     }
     
-    /** {@inheritDoc} */
+    @Override
     public boolean saveBeforeExit () {        
         if (!document.isDirtyData ()) {
             return true;
@@ -626,7 +626,7 @@ public class STControllerImpl implements STController {
         return executeSave ();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void startActionManually (String actionName) {
         // TODO: right now that's the only way to execute a action (can
         // also be a blocking task) manually, but future application framework 

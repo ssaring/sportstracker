@@ -134,9 +134,6 @@ public class TimexPwxParser extends AbstractExerciseParser {
 //        public float getClimbingElevation(){ return climbingElevation; }
     }
     
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ExerciseParserInfo getInfo() {
         return info;
@@ -670,9 +667,6 @@ public class TimexPwxParser extends AbstractExerciseParser {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public EVExercise parseExercise(String filename) throws EVException {
 

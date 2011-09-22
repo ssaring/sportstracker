@@ -40,7 +40,6 @@ class FitMessageListener implements MesgListener {
     /** Flag for availability of temperature data. */
     private boolean temperatureAvailable = false;
     
-    /** {@inheritDoc} */
     @Override
     public void onMesg(Mesg mesg) {
 

@@ -57,7 +57,6 @@ public class SamplePanel extends BasePanel {
         ListUtils.increaseTableRowHeight (tbSamples);        
     }
     
-    /** {@inheritDoc} */
     @Override
     public void displayExercise () {
         final EVExercise exercise = getDocument ().getExercise ();

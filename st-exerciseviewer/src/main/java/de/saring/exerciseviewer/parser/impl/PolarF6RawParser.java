@@ -43,17 +43,11 @@ public class PolarF6RawParser extends AbstractExerciseParser {
     /** The exercise file length for F11 watches */
     private static int F11ExerciseFileLength = 50;
     
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ExerciseParserInfo getInfo () {
         return info;
     }
     
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public EVExercise parseExercise (String filename) throws EVException
     {

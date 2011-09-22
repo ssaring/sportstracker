@@ -82,7 +82,6 @@ public class CalendarView extends BaseView {
         this.calendarWidget = calendarWidget;
     }
 
-    /** {@inheritDoc} */
     @Override
     public void initView () {
         initComponents ();
@@ -168,25 +167,21 @@ public class CalendarView extends BaseView {
         return getSelectedEntryIDsOfClass(Exercise.class);
     }
 
-    /** {@inheritDoc} */
     @Override
     public int getSelectedNoteCount() {
         return getSelectedNoteIDs().length;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int[] getSelectedNoteIDs() {
         return getSelectedEntryIDsOfClass(Note.class);
     }
 
-    /** {@inheritDoc} */
     @Override
     public int getSelectedWeightCount() {
         return getSelectedWeightIDs().length;
     }
 
-    /** {@inheritDoc} */
     @Override
     public int[] getSelectedWeightIDs() {
         return getSelectedEntryIDsOfClass(Weight.class);
@@ -457,7 +452,6 @@ public class CalendarView extends BaseView {
         getView().updateEntryActions();
     }
 
-    /** {@inheritDoc} */
     @Override
     public void print() throws STException {
 
@@ -651,7 +645,6 @@ public class CalendarView extends BaseView {
      */
     class CalendarPopupMenu extends JPopupMenu {
 
-        /** {@inheritDoc} */
         @Override
         public void setVisible(boolean visible) {
             super.setVisible (visible);

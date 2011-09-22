@@ -35,47 +35,42 @@ public class XMLStorage implements IStorage {
         xmlWeightList = new XMLWeightList ();
     }
 
-    
-    /** {@inheritDoc} */
     @Override
     public SportTypeList readSportTypeList (String source) throws STException {
         return xmlSportTypeList.readSportTypeList (source);
     }
 
-    /** {@inheritDoc} */
     @Override
     public void storeSportTypeList (SportTypeList sportTypeList, String destination) throws STException {
         xmlSportTypeList.storeSportTypeList (sportTypeList, destination);
     }
 
-    /** {@inheritDoc} */
     @Override
     public ExerciseList readExerciseList (String source, SportTypeList sportTypeList) throws STException {
         return xmlExerciseList.readExerciseList (source, sportTypeList);
     }
 
-    /** {@inheritDoc} */
     @Override
     public void storeExerciseList (ExerciseList exerciseList, String destination) throws STException {
         xmlExerciseList.storeExerciseList (exerciseList, destination);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public NoteList readNoteList (String source) throws STException {
         return xmlNoteList.readNoteList (source);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void storeNoteList (NoteList noteList, String destination) throws STException {
         xmlNoteList.storeNoteList (noteList, destination);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public WeightList readWeightList (String source) throws STException {
         return xmlWeightList.readWeightList (source);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void storeWeightList (WeightList weightList, String destination) throws STException {
         xmlWeightList.storeWeightList (weightList, destination);
     }

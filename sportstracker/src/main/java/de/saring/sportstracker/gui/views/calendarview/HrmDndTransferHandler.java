@@ -48,7 +48,6 @@ public class HrmDndTransferHandler extends TransferHandler {
         this.calendarWidget = calendarWidget;
     }
     
-    /** {@inheritDoc} */
     @Override
     public boolean canImport (TransferSupport support) {
         
@@ -69,7 +68,6 @@ public class HrmDndTransferHandler extends TransferHandler {
         return calDayTarget != null;
     }
 
-    /** {@inheritDoc} */
     @Override
     public boolean importData (TransferSupport support) {
         

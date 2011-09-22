@@ -150,7 +150,7 @@ public class STDocumentImpl implements STDocument {
     
     /***** END: Generated Getters and Setters for application data *****/
 
-    /** {@inheritDoc} */
+    @Override
     public void evaluateCommandLineParameters (String[] parameters) {
         if (parameters != null) {
             for (String parameter : parameters) {
@@ -166,7 +166,7 @@ public class STDocumentImpl implements STDocument {
         }
     }
     
-    /** {@inheritDoc} */
+    @Override
     public void loadOptions () {
         try {
             options = (STOptions) context.getSAFContext ().getLocalStorage ().load (FILENAME_OPTIONS);
@@ -181,7 +181,7 @@ public class STDocumentImpl implements STDocument {
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void storeOptions () {        
         try  {
             context.getSAFContext ().getLocalStorage ().save (options, FILENAME_OPTIONS);
@@ -192,7 +192,7 @@ public class STDocumentImpl implements STDocument {
         }
     }
     
-    /** {@inheritDoc} */
+    @Override
     public void createApplicationDirectory () throws STException {        
         File fDataDirectory = new File (dataDirectory);
         if (!fDataDirectory.exists () || !fDataDirectory.isDirectory()) {
@@ -203,7 +203,7 @@ public class STDocumentImpl implements STDocument {
         }
     }
     
-    /** {@inheritDoc} */
+    @Override
     public IdDateObjectList<Exercise> getFilterableExerciseList () {
 
         if ((filterEnabled) && (currentFilter != null)) {
@@ -216,7 +216,7 @@ public class STDocumentImpl implements STDocument {
         }
     }
     
-    /** {@inheritDoc} */
+    @Override
     public void readApplicationData () throws STException {
         try {
             // read application data from XML files
@@ -233,7 +233,7 @@ public class STDocumentImpl implements STDocument {
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void storeApplicationData () throws STException {
         // store application data in XML files
         storage.storeSportTypeList (sportTypeList, dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST);

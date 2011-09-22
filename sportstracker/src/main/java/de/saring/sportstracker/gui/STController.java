@@ -57,6 +57,16 @@ public interface STController {
     void addExercise ();
     
     /**
+     * Action for adding a new note.
+     */
+    void addNote();
+    
+    /**
+     * Action for adding a new weight.
+     */
+    void addWeight();
+    
+    /**
      * Sets the date to be used when new entries (e.g. exercises) will be created.
      * When set to null then the current date will be used instead.
      * @param date the date to be used (the time will be set to 12:00)

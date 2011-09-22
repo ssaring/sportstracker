@@ -24,7 +24,6 @@ public class OptionalPanel extends BasePanel {
         initComponents ();        
     }
     
-    /** {@inheritDoc} */
     @Override
     public void displayExercise () {
         EVExercise exercise = getDocument ().getExercise ();

@@ -30,7 +30,6 @@ public class NoteListView extends BaseListView {
     private NotesTableModel tmNotes;
 
     
-    /** {@inheritDoc} */
     @Override
     public void initView () {
         
@@ -52,12 +51,12 @@ public class NoteListView extends BaseListView {
         tcModel.getColumn (COLUMN_TEXT).setPreferredWidth (600);
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected String[] getColumnNames () {
         return columnNames;
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected AbstractTableModel getTableModel () {
         return tmNotes;
     }
@@ -67,13 +66,11 @@ public class NoteListView extends BaseListView {
         return HIDDEN_COLUMN_ID;
     }
     
-    /** {@inheritDoc} */
     @Override
     public int getSelectedNoteCount () {
         return getTable ().getSelectedRowCount ();
     }
 
-    /** {@inheritDoc} */
     @Override
     public int[] getSelectedNoteIDs () {
         int[] selectedRows = getTable ().getSelectedRows ();
@@ -93,7 +90,6 @@ public class NoteListView extends BaseListView {
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public void print () throws STException {
         if (!getController ().checkForExistingNotes ()) {

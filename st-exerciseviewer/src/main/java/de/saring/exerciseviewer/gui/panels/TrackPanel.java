@@ -70,7 +70,6 @@ public class TrackPanel extends BasePanel {
         add(laNoTrackData, java.awt.BorderLayout.CENTER);  
     }
     
-    /** {@inheritDoc} */
     @Override
     public void setVisible(boolean visible) {
         
@@ -83,7 +82,6 @@ public class TrackPanel extends BasePanel {
         super.setVisible(visible);
     }
     
-    /** {@inheritDoc} */
     @Override
     public void displayExercise () {
         // track will be displayed later

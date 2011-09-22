@@ -44,17 +44,11 @@ public class PolarSRawParser extends AbstractExerciseParser {
     /** The binary data of the exercise file. */
     private int[] fileContent;
     
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ExerciseParserInfo getInfo () {
         return info;
     }
     
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public EVExercise parseExercise (String filename) throws EVException
     {

@@ -38,7 +38,6 @@ public class MainPanel extends BasePanel {
         cbRange.setAction (actionMap.get (ACTION_UPDATE_RANGE_TIMES));
     }
 
-    /** {@inheritDoc} */
     @Override
     public void displayExercise () {
         EVExercise exercise = getDocument ().getExercise ();
