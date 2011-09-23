@@ -68,19 +68,12 @@ public class NoteListView extends BaseListView {
     
     @Override
     public int getSelectedNoteCount () {
-        return getTable ().getSelectedRowCount ();
+        return getSelectedEntryCount();
     }
 
     @Override
     public int[] getSelectedNoteIDs () {
-        int[] selectedRows = getTable ().getSelectedRows ();
-        int[] selectedIDs = new int[selectedRows.length];
-
-        for (int i = 0; i < selectedIDs.length; i++) {
-            int modelRow = getTable ().convertRowIndexToModel (selectedRows[i]);
-            selectedIDs[i] = (Integer) tmNotes.getValueAt (modelRow, HIDDEN_COLUMN_ID);
-        }
-        return selectedIDs;
+        return getSelectedEntryIDs();
     }
     
     @Override

@@ -1,10 +1,6 @@
 SportsTracker-TODO
 ==================
 
-- Refactoring in all *ListView classes:
-  - move the many similar methods to BaseListView class
-
-
 General TODOs:
 --------------
 - Overview dialog: new display mode for comparing 2 seasons / years:

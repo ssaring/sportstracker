@@ -209,19 +209,12 @@ public class ExerciseListView extends BaseListView {
 
     @Override
     public int getSelectedExerciseCount () {
-        return getTable ().getSelectedRowCount ();
+        return getSelectedEntryCount();
     }
 
     @Override
     public int[] getSelectedExerciseIDs () {
-        int[] selectedRows = getTable ().getSelectedRows ();
-        int[] selectedIDs = new int[selectedRows.length];
-        
-        for (int i = 0; i < selectedIDs.length; i++) {
-            int modelRow = getTable ().convertRowIndexToModel (selectedRows[i]);
-            selectedIDs[i] = (Integer) tmExercises.getValueAt (modelRow, HIDDEN_COLUMN_ID);
-        }
-        return selectedIDs;
+        return getSelectedEntryIDs();
     }
     
     @Override

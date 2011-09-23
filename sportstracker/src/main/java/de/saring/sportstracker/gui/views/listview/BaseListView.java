@@ -139,6 +139,31 @@ public abstract class BaseListView extends BaseView {
     }
 
     /**
+     * Returns the number of selected entries/rows.
+     * 
+     * @return number of selected entries/rows
+     */
+    protected int getSelectedEntryCount() {
+        return getTable ().getSelectedRowCount ();
+    }
+    
+    /**
+     * Returns an array of entry IDs for all selected rows.
+     * 
+     * @return array with IDs of all selected rows (empty array when no selection)
+     */
+    protected int[] getSelectedEntryIDs() {
+        int[] selectedRows = getTable ().getSelectedRows ();
+        int[] selectedIDs = new int[selectedRows.length];
+
+        for (int i = 0; i < selectedIDs.length; i++) {
+            int modelRow = getTable ().convertRowIndexToModel (selectedRows[i]);
+            selectedIDs[i] = (Integer) getTableModel().getValueAt (modelRow, getIdColumnIndex());
+        }
+        return selectedIDs;
+    }
+
+    /**
      * Selects the table row with the specified entry ID. It also makes sure
      * that the selected row is visible.
      * 
