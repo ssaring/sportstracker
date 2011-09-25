@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.views.listview;
 import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.gui.STController;
 import de.saring.util.data.IdObject;
 import de.saring.util.unitcalc.FormatUtils;
 import java.awt.Component;
@@ -69,8 +70,9 @@ public class ExerciseListView extends BaseListView {
         // create tablemodel
         tmExercises = new ExercisesTableModel ();
 
-        // create basic view
+        // create table and setup its context menu
         createTable ();
+        getPopupMenu().insert(getController().getActionMap ().get(STController.ACTION_EXERCISE_ADD), 0);
 
         // overwrite option to allow the user to reorder the columns
         getTable().getTableHeader ().setReorderingAllowed (true);

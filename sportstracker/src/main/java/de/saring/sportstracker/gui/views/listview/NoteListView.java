@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.views.listview;
 import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Note;
+import de.saring.sportstracker.gui.STController;
 import de.saring.util.data.IdObject;
 import java.util.Date;
 import javax.swing.JTable;
@@ -41,8 +42,9 @@ public class NoteListView extends BaseListView {
         // create tablemodel
         tmNotes = new NotesTableModel ();
 
-        // create basic view
+        // create table and setup its context menu
         createTable ();
+        getPopupMenu().insert(getController().getActionMap ().get(STController.ACTION_NOTE_ADD), 0);
         
         // set column widths 
         getTable ().setAutoResizeMode (JTable.AUTO_RESIZE_LAST_COLUMN);

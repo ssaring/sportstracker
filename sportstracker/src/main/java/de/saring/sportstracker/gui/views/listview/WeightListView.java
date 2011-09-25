@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.views.listview;
 import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Weight;
+import de.saring.sportstracker.gui.STController;
 import de.saring.util.data.IdObject;
 import de.saring.util.unitcalc.FormatUtils;
 import java.util.Date;
@@ -45,8 +46,9 @@ public class WeightListView extends BaseListView {
         // create tablemodel
         tmWeights = new WeightsTableModel ();
 
-        // create basic view
+        // create table and setup its context menu
         createTable ();
+        getPopupMenu().insert(getController().getActionMap ().get(STController.ACTION_WEIGHT_ADD), 0);
         
         // set column widths 
         getTable ().setAutoResizeMode (JTable.AUTO_RESIZE_LAST_COLUMN);

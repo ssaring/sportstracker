@@ -28,6 +28,8 @@ v5.4.0:
     so implementation errors can be detected by the compiler
   - Refactoring in all Exericse/Notw/WeightListView: move the similar methods
     to BaseListView base class
+  - Exercise / Note / Weight List View: context menu on right mouse click for 
+    adding, editing, copying and deleting the selected table entry
    
 v5.3.0:
  ExerciseViewer changes:

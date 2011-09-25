@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.views.listview;
 import de.saring.sportstracker.gui.views.*;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
+import de.saring.sportstracker.gui.STController;
 import de.saring.util.ResourceReader;
 import de.saring.util.gui.ListUtils;
 import de.saring.util.gui.TableCellRendererOddEven;
@@ -17,9 +18,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.standard.OrientationRequested;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
@@ -36,6 +39,7 @@ public abstract class BaseListView extends BaseView {
 
     private JScrollPane scrollPane;
     private JTable table;
+    private JPopupMenu popupMenu;
 
     /**
      * This method returns the array of the table column names.
@@ -69,6 +73,8 @@ public abstract class BaseListView extends BaseView {
 
         setLayout (new BorderLayout ());
         add (scrollPane, BorderLayout.CENTER);
+
+        createPopupMenu();
         
         // set table model
         AbstractTableModel tableModel = getTableModel ();
@@ -95,16 +101,36 @@ public abstract class BaseListView extends BaseView {
                 getView ().updateEntryActions ();
             }
         });
-
-        // add mouse listener for double clicks => edit entry
+        
+        // add mouse listener 
         table.addMouseListener (new MouseAdapter () {
-            @Override public void mouseClicked (MouseEvent e) {
+            @Override 
+            public void mouseClicked (MouseEvent e) {
+                // for double clicks => edit entry
                 if ((e.getClickCount () == 2) &&
                     (table.getSelectedRowCount () == 1)) {
                     getController ().editEntry ();
                 }
             }
+            
+            @Override 
+            public void mousePressed(MouseEvent e) {
+                // display content menu on right clicks
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    // select row at the mouse position first
+                    int row = table.rowAtPoint(e.getPoint());
+                    table.setRowSelectionInterval(row, row);
+                    popupMenu.show(table, e.getX(), e.getY());
+                }
+            }
         });
+    }
+
+    private void createPopupMenu() {
+        popupMenu = new JPopupMenu ();
+        popupMenu.add (getController().getActionMap ().get (STController.ACTION_ENTRY_EDIT));
+        popupMenu.add (getController().getActionMap ().get (STController.ACTION_ENTRY_COPY));
+        popupMenu.add (getController().getActionMap ().get (STController.ACTION_ENTRY_DELETE));
     }
 
     /**
@@ -115,6 +141,10 @@ public abstract class BaseListView extends BaseView {
         return table;
     }
 
+    protected final JPopupMenu getPopupMenu() {
+        return popupMenu;
+    }
+    
     /**
      * This method returns the table cell renderer to be used.
      * @return the table cell renderer
