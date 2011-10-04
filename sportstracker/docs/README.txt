@@ -305,12 +305,13 @@ For compilation of the SportsTracker sources you need:
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
-  - NetBeans IDE 7.0 (from http://www.netbeans.org)
-    (Groovy and Maven support are included)
-  - Eclipse 3.7.0 (from http://eclipse.org) with following plugins:
-    - Groovy-Eclipse 2.5.1 (from http://groovy.codehaus.org/Eclipse+Plugin)
-    NOTE: Due to m2e and Groovy-Eclipse plugin problems it's currently not
-    possible to import the Maven SportsTracker project to Eclipse !!!
+  - NetBeans IDE 7.0.1 (from http://www.netbeans.org)
+    (Maven support is included, Groovy plugin needs to be installed)
+  - Eclipse 3.7.1 (from http://eclipse.org) with following plugins:
+    - Groovy-Eclipse 2.5.2 (from http://groovy.codehaus.org/Eclipse+Plugin)
+      - with Groovy-Eclipse Feature
+      - with Groovy Compiler 1.8 Feature
+      - with Groovy-Eclipse M2E integration
 
 The Maven build configuration supports all typical goals (clean, compile,
 test, package, ...). The project is splitted into following modules (Maven
@@ -437,4 +438,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2011/09/18
+2011/10/04
