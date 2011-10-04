@@ -20,7 +20,7 @@
     </modules>
 
     <repositories>
-        <!-- Own repository for recent JFreeChart (missing in Maven central repo) --> 
+        <!-- Own repository for libraries missing in Maven central repo (e.g. Garmin FIT) --> 
         <repository>
             <id>SportsTracker repository</id>
             <url>http://saring.de/st-maven-repo/</url>
