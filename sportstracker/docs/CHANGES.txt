@@ -29,6 +29,7 @@ v5.4.0:
     - adds support for Eclipse 3.7.1
     - adds support for Java 7
     - needs less custom configuration in pom.xml
+  - added Windows icon for custom launcher configurations (st-logo.ico) 
 
  Translations:
   - updated spanish and basque translations by Asier Urio Larrea
