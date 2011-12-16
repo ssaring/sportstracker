@@ -1,5 +1,20 @@
 package de.saring.sportstracker.storage;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.Test;
+
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
@@ -11,11 +26,6 @@ import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.data.WeightList;
-import java.util.Calendar;
-import java.util.Date;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * This class contains all unit tests for the XMLStorage class.
@@ -23,7 +33,12 @@ import static org.junit.Assert.*;
  * @author Stefan Saring
  */
 public class XMLStorageTest {
-    
+
+	private static final String EXERCISES_WRITETEST_XML = "misc/testdata/exercises-writetest.xml";
+	private static final String SPORTTYPES_WRITETEST_XML = "misc/testdata/sport-types-writetest.xml";
+	private static final String NOTES_WRITETEST_XML = "misc/testdata/notes-writetest.xml";
+	private static final String WEIGHTS_WRITETEST_XML = "misc/testdata/weights-writetest.xml";
+	
     // the class instance to be tested
     private XMLStorage storage;
 
@@ -35,6 +50,21 @@ public class XMLStorageTest {
         storage = new XMLStorage ();
     }
 
+    /**
+     * This method removes all temporary files after all tests were done.
+     */
+    @AfterClass
+    public static void cleanUpFinal() {
+    	deleteFileIfExists(EXERCISES_WRITETEST_XML);
+    	deleteFileIfExists(SPORTTYPES_WRITETEST_XML);
+    	deleteFileIfExists(NOTES_WRITETEST_XML);
+    	deleteFileIfExists(WEIGHTS_WRITETEST_XML);
+    }
+    
+    private static void deleteFileIfExists(String filename) {
+    	new File(filename).delete();
+    }
+    
     /**
      * This helper methods checks the content of the specified sport type list.
      * It has to be exactly same as in "misc/testdata/sport-types-valid.xml".
@@ -135,12 +165,11 @@ public class XMLStorageTest {
         SportTypeList sportTypes = storage.readSportTypeList ("misc/testdata/sport-types-valid.xml");
 
         // store the read sport type list to a new file
-        String strNewFilename = "misc/testdata/sport-types-writetest.xml";
-        storage.storeSportTypeList (sportTypes, strNewFilename);
+        storage.storeSportTypeList (sportTypes, SPORTTYPES_WRITETEST_XML);
 
         // read the list from the created file again
         // => compare the content, needs to be same
-        SportTypeList sportTypesNew = storage.readSportTypeList (strNewFilename);
+        SportTypeList sportTypesNew = storage.readSportTypeList (SPORTTYPES_WRITETEST_XML);
         checkSportTypeListContent (sportTypesNew);
     }
 
@@ -328,12 +357,11 @@ public class XMLStorageTest {
         ExerciseList exercises = storage.readExerciseList ("misc/testdata/exercises-valid.xml", sportTypeList);
 
         // store the read exercise list to a new file
-        String strNewFilename = "misc/testdata/exercises-writetest.xml";
-        storage.storeExerciseList (exercises, strNewFilename);
+        storage.storeExerciseList (exercises, EXERCISES_WRITETEST_XML);
 
         // read the list from the created file again
         // => compare the content, needs to be same
-        ExerciseList exercisesNew = storage.readExerciseList (strNewFilename, sportTypeList);
+        ExerciseList exercisesNew = storage.readExerciseList (EXERCISES_WRITETEST_XML, sportTypeList);
         checkExerciseListContent (exercisesNew);
     }
 
@@ -372,12 +400,11 @@ public class XMLStorageTest {
         NoteList noteList = storage.readNoteList ("misc/testdata/notes-valid.xml");
 
         // store the read sport type list to a new file
-        String strNewFilename = "misc/testdata/notes-writetest.xml";
-        storage.storeNoteList (noteList, strNewFilename);
+        storage.storeNoteList (noteList, NOTES_WRITETEST_XML);
 
         // read the list from the created file again
         // => compare the content, needs to be same
-        NoteList noteListNew = storage.readNoteList ("misc/testdata/notes-writetest.xml");
+        NoteList noteListNew = storage.readNoteList (NOTES_WRITETEST_XML);
         checkNoteListContent (noteListNew);
     }
 
@@ -441,12 +468,11 @@ public class XMLStorageTest {
         WeightList weightList = storage.readWeightList ("misc/testdata/weights-valid.xml");
 
         // store the read sport type list to a new file
-        String strNewFilename = "misc/testdata/weights-writetest.xml";
-        storage.storeWeightList (weightList, strNewFilename);
+        storage.storeWeightList (weightList, WEIGHTS_WRITETEST_XML);
 
         // read the list from the created file again
         // => compare the content, needs to be same
-        WeightList weightListNew = storage.readWeightList ("misc/testdata/weights-writetest.xml");
+        WeightList weightListNew = storage.readWeightList (WEIGHTS_WRITETEST_XML);
         checkWeightListContent (weightListNew);
     }
 

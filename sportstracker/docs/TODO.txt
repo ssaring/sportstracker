@@ -1,9 +1,6 @@
 SportsTracker-TODO
 ==================
 
-- XML storage unit tests: cleanup the XML files for write tests and remove them from
-  the VCS repository 
-
 General TODOs:
 --------------
 - update to JFreeChart 1.0.14 (see http://www.jroller.com/dgilbert/entry/jfreechart_1_0_14)
