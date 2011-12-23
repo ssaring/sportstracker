@@ -22,9 +22,9 @@ You can organize them by attaching the recorded files to the exercise
 entries. When adding new exercises you can import the data from the 
 recorded exercise files.
 
-ExerciseViewer supports Polar, CicloSport, Garmin, Timex and Oregon heartrate 
-monitors. This is the current compatibility list (other monitors might work
-too, but I can't test them, user feedback is welcome):
+ExerciseViewer supports Polar, CicloSport, Garmin, Timex, Oregon and Kalenji
+heartrate monitors. This is the current compatibility list (other monitors 
+might work too, but I can't test them, user feedback is welcome):
 
   - Polar S610(i)      (tested)
   - Polar S710(i)      (tested)
@@ -49,7 +49,9 @@ too, but I can't test them, user feedback is welcome):
   - Timex Ironman Global Trainer  (tested)
   - Oregon Scientific SmartSync WM100 (tested)
   - Some Sony Ericsson mobiles (tested with W580i)
-  - All devices recording GMX files (tested)  
+  - W Kalenji 300      (tested, GPX imports)
+  - CW Kalenji 700     (tested, GPX imports)
+  - All devices recording GPX files (tested some models)  
 
 It's also possible to view HRM exercise files (downloaded with the Polar
 Software for Windows).
@@ -75,6 +77,8 @@ heartrate monitor. You need to use one of these tools for it:
     URL: http://sourceforge.net/projects/hac4linux
   - SonyEricsson Importer for some Sony Ericsson mobiles
     URL: http://luka.tnode.com/software/sonyericsson-importer-sportstracker
+  - kalenji-gps-watch-reader for Kalenji GPS watches (imports GPX files)
+    URL: http://code.google.com/p/kalenji-gps-watch-reader
 
 Garmin users don't need special transfer software, the exercise files can
 be downloaded by using the USB mass storage support.
