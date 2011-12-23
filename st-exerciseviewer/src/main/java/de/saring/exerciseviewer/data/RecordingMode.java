@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.data;
 
-import java.io.Serializable;
 
 /**
  * This class contains the informations about what was beeing recorded in the
@@ -8,7 +7,7 @@ import java.io.Serializable;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class RecordingMode implements Serializable
+public final class RecordingMode
 {
     /** Is altitude beeing recorded ? */
     private boolean altitude;

@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.data;
 
-import java.io.Serializable;
     
 /**
  * This class stores the altitude informations of a recorded exercise.
@@ -8,7 +7,7 @@ import java.io.Serializable;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class ExerciseAltitude implements Serializable
+public final class ExerciseAltitude
 {
     /** Minimum altitude of exercise. */
     private short altitudeMin;

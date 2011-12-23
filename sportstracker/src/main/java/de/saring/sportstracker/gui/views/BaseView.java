@@ -1,13 +1,14 @@
 package de.saring.sportstracker.gui.views;
 
-import de.saring.util.data.IdDateObject;
+import java.awt.Dimension;
+
 import javax.inject.Inject;
+import javax.swing.JPanel;
+
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.sportstracker.gui.STView;
-import java.awt.Dimension;
-import javax.swing.JPanel;
 
 /**
  * This is the base class of all special entry view classes. It contains all the

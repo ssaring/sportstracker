@@ -19,7 +19,9 @@ import de.saring.util.unitcalc.FormatUtils.UnitSystem;
  */
 public class STOptions implements EVOptions, Serializable {
     
-    /** This is the list of possible views. */
+    private static final long serialVersionUID = 6756725362338738970L;
+
+	/** This is the list of possible views. */
     public enum View { Calendar, List }               
 
     /** This is the list of possible automatic calculation values. */

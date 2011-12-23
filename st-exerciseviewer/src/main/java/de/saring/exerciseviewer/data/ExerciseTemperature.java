@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.data;
 
-import java.io.Serializable;
     
 /**
  * This class stores the temperature informations of a recorded exercise.
@@ -8,7 +7,7 @@ import java.io.Serializable;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class ExerciseTemperature implements Serializable
+public final class ExerciseTemperature 
 {
     /** Minimum temperature of an exercise (in degrees celcius). */
     private short temperatureMin;

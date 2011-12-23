@@ -30,7 +30,8 @@ v5.4.0:
     - adds support for Java 7
     - needs less custom configuration in pom.xml
   - added Windows icon for custom launcher configurations (st-logo.ico)
-  - XMLStorageTest: cleanup of temporary files after test run 
+  - XMLStorageTest: cleanup of temporary files after test run
+  - removed lots of compiler warnings (mostly for serialization issues) 
   - README: documentation for device support of W Kalenji 300 and CW Kalenji 
     700 (when using http://code.google.com/p/kalenji-gps-watch-reader/)
 

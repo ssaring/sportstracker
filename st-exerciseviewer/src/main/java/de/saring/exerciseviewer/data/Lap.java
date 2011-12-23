@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.data;
 
-import java.io.Serializable;
     
 /**
  * This class contains all data of a lap of an exercise.
@@ -8,7 +7,7 @@ import java.io.Serializable;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class Lap implements Serializable
+public final class Lap 
 {
     /** Lap split time (in 1/10 seconds). */
     private int timeSplit;

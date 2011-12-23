@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.data;
 
-import java.io.Serializable;
     
 /**
  * This class stores the speed informations of a recorded exercise.
@@ -8,7 +7,7 @@ import java.io.Serializable;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class ExerciseSpeed implements Serializable
+public final class ExerciseSpeed
 {
     /** Average speed of exercise (in km/h). */
     private float speedAVG;

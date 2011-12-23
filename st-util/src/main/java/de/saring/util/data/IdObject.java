@@ -1,6 +1,5 @@
 package de.saring.util.data;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -10,9 +9,9 @@ import java.util.Objects;
  * @author  Stefan Saring
  * @version 1.0
  */
-public abstract class IdObject implements Serializable {
+public abstract class IdObject {
 
-    /** The ID of the object for referencing. */
+	/** The ID of the object for referencing. */
     private int id;
 
     /**

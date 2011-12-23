@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.data;
 
-import java.io.Serializable;
     
 /**
  * This class contains the heartrate limit data of a recorded exercise. It
@@ -9,7 +8,7 @@ import java.io.Serializable;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class HeartRateLimit implements Serializable {
+public final class HeartRateLimit {
     
     /** Lower heartrate limit. */
     private short lowerHeartRate;

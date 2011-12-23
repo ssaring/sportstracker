@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.data;
 
-import java.io.Serializable;
     
 /**
  * This class contains all data recorded each interval. The altitude, speed,
@@ -9,7 +8,7 @@ import java.io.Serializable;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class ExerciseSample implements Serializable {
+public final class ExerciseSample {
     
     /** Timestamp since exercise start of this sample (in 1/1000 sec). */
     private long timestamp;

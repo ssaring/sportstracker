@@ -37,7 +37,9 @@ import javax.swing.*;
  */
 public class RolloverButton extends JButton {
 
-    /**
+    private static final long serialVersionUID = -420069024598467830L;
+
+	/**
      * Setup the border (invisible initially)
      */
     public RolloverButton () {

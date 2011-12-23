@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.data;
 
-import java.io.Serializable;
     
 /**
  * This class contains all temperature data of a lap of an exercise. It's 
@@ -9,7 +8,7 @@ import java.io.Serializable;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class LapTemperature implements Serializable
+public final class LapTemperature
 {
     /** Temperature at lap (in celcius degrees). */
     private short temperature;

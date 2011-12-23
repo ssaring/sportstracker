@@ -14,7 +14,9 @@ import javax.swing.JList;
  */
 public class ListCellRendererOddEven extends DefaultListCellRenderer {
 
-    private Color colorBackgroundOdd, colorBackgroundEven;
+    private static final long serialVersionUID = -6530870819648810487L;
+    
+	private Color colorBackgroundOdd, colorBackgroundEven;
     
     /**
      * Standard c'tor.
@@ -29,7 +31,7 @@ public class ListCellRendererOddEven extends DefaultListCellRenderer {
     /** Returns the cell component for the specified value and index. */
     @Override
     public Component getListCellRendererComponent (
-        JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
         // use superclass renderer
         Component component = super.getListCellRendererComponent (list, value, index, isSelected, cellHasFocus);

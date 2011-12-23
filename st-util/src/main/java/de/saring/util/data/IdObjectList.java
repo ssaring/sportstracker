@@ -1,6 +1,5 @@
 package de.saring.util.data;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -19,7 +18,7 @@ import java.util.List;
  * @author  Stefan Saring
  * @version 1.0
  */
-public class IdObjectList<T extends IdObject> implements Iterable<T>, Serializable {
+public class IdObjectList<T extends IdObject> implements Iterable<T> {
 
     /** Generic list of subclasses of IdObject. */
     private List<T> lIdObjects = new ArrayList<> ();

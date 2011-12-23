@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.data;
 
-import java.io.Serializable;
     
 /**
  * This class contains all speed data of a lap of an exercise.
@@ -8,7 +7,7 @@ import java.io.Serializable;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class LapSpeed implements Serializable
+public final class LapSpeed
 {
     /** Speed at end of lap (km/h). */
     private float speedEnd;

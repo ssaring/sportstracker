@@ -12,7 +12,7 @@ import org.jfree.chart.plot.XYPlot;
  * 
  * @author Stefan Saring
  */
-public class ChartUtils {
+public final class ChartUtils {
     
     private ChartUtils () {
     }

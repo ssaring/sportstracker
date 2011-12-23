@@ -10,7 +10,9 @@ package de.saring.sportstracker.core;
  */
 public class STException extends Exception 
 {
-    /** ID of exception. */
+    private static final long serialVersionUID = 1839511030013562371L;
+    
+	/** ID of exception. */
     private STExceptionID id;
 
     /**

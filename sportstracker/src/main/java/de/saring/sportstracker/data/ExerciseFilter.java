@@ -1,9 +1,9 @@
 package de.saring.sportstracker.data;
 
-import de.saring.sportstracker.data.Exercise.IntensityType;
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+
+import de.saring.sportstracker.data.Exercise.IntensityType;
 
 /**
  * This class defines the criterias for filtering the exercise list (e.g. for
@@ -12,7 +12,7 @@ import java.util.Date;
  * @author  Stefan Saring
  * @version 1.1
  */
-public final class ExerciseFilter implements Serializable
+public final class ExerciseFilter
 {
     /** The exercise dates needs to be greater or same as this start date. */
     private Date dateStart;

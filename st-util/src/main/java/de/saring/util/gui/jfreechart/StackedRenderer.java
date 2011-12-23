@@ -78,10 +78,9 @@ import org.jfree.ui.RectangleEdge;
  */
 public class StackedRenderer extends StackedXYAreaRenderer2 {
 
-    /** For serialization. */
-    //private static final long serialVersionUID = 7752676509764539182L;
-    
-    /**
+    private static final long serialVersionUID = 7251046217195966375L;
+
+	/**
      * The alpha component to be used for the area (0.0 ... 1.0).
      */
     protected float areaAlpha;

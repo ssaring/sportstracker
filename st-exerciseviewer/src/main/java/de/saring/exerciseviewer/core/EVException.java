@@ -8,9 +8,11 @@ package de.saring.exerciseviewer.core;
  * @author  Stefan Saring
  * @version 1.0
  */
-public class EVException extends Exception 
-{
-    /**
+public class EVException extends Exception {
+	
+    private static final long serialVersionUID = 1300179122574614829L;
+
+	/**
      * Overrides base class constructor.
      */
     public EVException () {

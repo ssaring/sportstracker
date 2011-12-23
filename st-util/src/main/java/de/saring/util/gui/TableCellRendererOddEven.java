@@ -14,7 +14,9 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public class TableCellRendererOddEven extends DefaultTableCellRenderer {
 
-    private Color colorBackgroundOdd, colorBackgroundEven;
+    private static final long serialVersionUID = 6571843026716409646L;
+    
+	private Color colorBackgroundOdd, colorBackgroundEven;
     
     /**
      * Standard c'tor.

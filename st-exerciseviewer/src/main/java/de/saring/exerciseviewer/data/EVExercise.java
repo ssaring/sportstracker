@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +10,7 @@ import java.util.Date;
  * @author  Stefan Saring
  * @version 1.0
  */
-public final class EVExercise implements Serializable
+public final class EVExercise
 {    
     /** File type of an exercise (see enums). */
     private ExerciseFileType fileType;
