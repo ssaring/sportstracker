@@ -3,6 +3,7 @@ SportsTracker-TODO
 
 General TODOs:
 --------------
+- update to SwingX 1.6.3 (see http://weblogs.java.net/blog/kschaefe/archive/2012/02/02/swingx-163-released)
 - update to JFreeChart 1.0.14 (see http://www.jroller.com/dgilbert/entry/jfreechart_1_0_14)
 - Overview dialog: new display mode for comparing 2 seasons / years:
   (https://sourceforge.net/projects/sportstracker/forums/forum/451565/topic/4435642)
