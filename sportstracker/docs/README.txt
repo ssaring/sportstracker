@@ -22,9 +22,9 @@ You can organize them by attaching the recorded files to the exercise
 entries. When adding new exercises you can import the data from the 
 recorded exercise files.
 
-ExerciseViewer supports Polar, CicloSport, Garmin, Timex, Oregon and Kalenji
-heartrate monitors. This is the current compatibility list (other monitors 
-might work too, but I can't test them, user feedback is welcome):
+ExerciseViewer supports Polar, CicloSport, Garmin, Timex, Oregon, HOLUX and
+Kalenji heartrate monitors. This is the current compatibility list (other 
+monitors might work too, but I can't test them, user feedback is welcome):
 
   - Polar S610(i)      (tested)
   - Polar S710(i)      (tested)
@@ -45,9 +45,11 @@ might work too, but I can't test them, user feedback is welcome):
   - CicloSport HAC5    (tested)
   - Garmin Edge        (tested with Edge 500 and Edge 705, FIT and TCX files)
   - Garmin Forerunner  (tested with Forerunner 305, FIT and TCX files)
+  - Garmin Oregon      (tested with Oregon 450, GPX files)
   - Timex Ironmen Race Trainer (tested)
   - Timex Ironman Global Trainer  (tested)
   - Oregon Scientific SmartSync WM100 (tested)
+  - HOLUX FunTrek      (tested with FunTrek 130, GPX files)  
   - Some Sony Ericsson mobiles (tested with W580i)
   - W Kalenji 300      (tested, GPX imports)
   - CW Kalenji 700     (tested, GPX imports)

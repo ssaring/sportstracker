@@ -2,7 +2,7 @@ Changelog
 ---------
 
 v5.4.0:
- ExerciseViewer changes:
+ SportsTracker changes:
   - switch to Java 7 compiler, so new language features can be used
     (so users also need Java 7 for SportsTracker execution)
   - use of new Java 7 language features (Project coin)
@@ -32,6 +32,11 @@ v5.4.0:
   - added Windows icon for custom launcher configurations (st-logo.ico)
   - XMLStorageTest: cleanup of temporary files after test run
   - removed lots of compiler warnings (mostly for serialization issues) 
+ ExerciseViewer changes:
+  - GPX parser (TopoGrafixGpxParser) extensions provided by Alex Wulms 
+    <awulms@users.sourceforge.net>: 
+    - added heartrate support and speed & distance calculation
+    - added support and unit tests for Garmin Oregon and HOLUX FunTrek devices
   - README: documentation for device support of W Kalenji 300 and CW Kalenji 
     700 (when using http://code.google.com/p/kalenji-gps-watch-reader/)
 
@@ -43,6 +48,7 @@ v5.3.0:
  ExerciseViewer changes:
   - SF Bug #3203396: TopoGrafixGpxParser: parse GPX files with missing 
     timestamps in track metadata
+ SportsTracker changes:
   - update to Guice 3.0 (final)
   - Weight dialog: when adding new entries, initialize it with weight
     from previous entry

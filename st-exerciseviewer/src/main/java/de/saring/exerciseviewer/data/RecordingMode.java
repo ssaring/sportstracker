@@ -25,6 +25,8 @@ public final class RecordingMode
     private boolean location = false;
     /** Is the exercise an interval trainging (S510 only?) */
     private boolean intervalExercise = false;
+    /** Is heartRate beeing recorded ? */
+    private boolean heartRate;
 
     /***** BEGIN: Generated Getters and Setters *****/
 
@@ -92,6 +94,14 @@ public final class RecordingMode
         this.intervalExercise = IntervalExercise;
     }
     
+    public boolean isHeartRate () {
+        return heartRate;
+    }
+
+    public void setHeartRate (boolean heartRate) {
+        this.heartRate = heartRate;
+    }
+
     /***** END: Generated Getters and Setters *****/
     
     @Override
@@ -106,7 +116,8 @@ public final class RecordingMode
         sBuilder.append ("  bikeNumber=" + this.bikeNumber + "\n");
         sBuilder.append ("  temperature=" + this.temperature + "\n");
         sBuilder.append ("  location=" + this.location + "\n");
-        sBuilder.append ("  intervalExercise=" + this.intervalExercise + "]\n");
+        sBuilder.append ("  intervalExercise=" + this.intervalExercise + "\n");
+        sBuilder.append ("  heartRate=" + this.heartRate + "]\n");
 
         return sBuilder.toString ();
     }

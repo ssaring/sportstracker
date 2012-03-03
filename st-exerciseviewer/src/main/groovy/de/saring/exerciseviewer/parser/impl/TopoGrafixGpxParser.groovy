@@ -1,6 +1,7 @@
 package de.saring.exerciseviewer.parser.impl
 
 import de.saring.exerciseviewer.core.EVException
+import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.exerciseviewer.data.*
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
@@ -13,7 +14,8 @@ import java.text.SimpleDateFormat
  * ( http://www.topografix.com/gpx.asp ).
  *
  * @author  Stefan Saring
- * @version 1.0
+ * @author  Alex Wulms
+ * @version 2.0
  */
 class TopoGrafixGpxParser extends AbstractExerciseParser {
 
@@ -50,14 +52,19 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
 
         EVExercise exercise = createExercise(gpx)
         exercise.sampleList = parseSampleTrackpoints(gpx, exercise)
-
+        exercise.speed = null;
         if (exercise.recordingMode.altitude) {
             calculateAltitudeSummary(exercise)
         }
         if (exercise.date) {
             calculateDuration(exercise)
         }
-
+        if (exercise.recordingMode.speed) {
+            calculateSpeedSummary(exercise)
+        }
+        if (exercise.recordingMode.heartRate) {
+            calculateHeartRateSummary(exercise)
+        }
         exercise
     }
 
@@ -91,6 +98,10 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
     private def parseSampleTrackpoints(gpx, exercise) {
         def eSamples = []
 
+        float totalDistanceInMeter = 0f
+        Position prevPosition = null
+        Date prevTime = null
+
         gpx.trk.each { trk ->
             trk.trkseg.each { trkseg ->
                 trkseg.trkpt.each { trkpt ->
@@ -100,6 +111,22 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
 
                     // get position
                     sample.position = new Position(trkpt.@lat.text().toDouble(), trkpt.@lon.text().toDouble())
+
+                    // calculate distance, based on position (so-far I have seen no gpx files containing distance data)
+                    double distanceInMeter
+                    if (prevPosition != null) { // A = lattitude, B = longitude
+                        distanceInMeter = 111222.5789d*Math.sqrt(
+                            Math.pow(sample.position.latitude-prevPosition.latitude, 2)
+                            +Math.pow(
+                                (sample.position.longitude-prevPosition.longitude)
+                                *Math.cos(prevPosition.latitude/57.3d)
+                                ,2
+                            )
+                        )
+                        totalDistanceInMeter += distanceInMeter;
+                    }
+                    sample.distance = totalDistanceInMeter
+                    prevPosition = sample.position
 
                     // get altitude (optional)
                     if (!trkpt.ele.isEmpty()) {
@@ -112,16 +139,54 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
                         Date timestampSample = sdFormat.parse(trkpt.time.text())
                         
                         // store first timestamp as exercise start time when missing 
-                        // (track metadata is missing in some GPX files)
-                        if (!exercise.date) {
+                        // or when exercise timestamp larger then (first) track time stamp
+                        // (In some GPX files track metadata is missing, while in some other
+                        //  GPX file, the time stamp in the meta data is the time the track
+                        //  was saved -thus after the exercise- and not the time the track
+                        //  was started)
+                        if (!exercise.date || exercise.date.time > timestampSample.time) {
                             exercise.date = timestampSample
                         }                        
                         sample.timestamp = timestampSample.time - exercise.date.time
+
+                        // calculate speed based on delta-distance and delta-time
+                        // (Speed tag does not seem to be part of the GPX standard. Some GPS devices do log the speed
+                        //  but they don't indicate the unit used, like km/h our mile/hour and as such, those speed
+                        //  data are useless anyway)
+                        if (prevTime != null) {
+                             exercise.recordingMode.speed = true
+                             // Calculate speed. Don't use CalculateUtils.calculateAvgSpeed, because
+                             // that one gives 'infinity' when rounded time-difference is 0
+                             // (e.g. when two timestamps are less then half a second apart)
+                             // Note that speed is in km/h
+                             // Note that one of the test files contains two consecutive records
+                             // with same timestamp. Don't know if it can also happen with a real GPS
+                             // or if it's due to test data. Either way, set speed to 0 when this happens
+                             long deltaTime = timestampSample.time-prevTime.time
+                             sample.speed = (deltaTime == 0) ? 0 : 3600*distanceInMeter/deltaTime
+                        }
+                        else {
+                            // First sample point; speed not known yet. Assume person did not start
+                            // the training yet and is standing still
+                            sample.speed = 0
+                        }
+                        prevTime = timestampSample
+                    }
+
+                    // get heartrate in Garmin Oregon format if present
+                    if (!trkpt.extensions.TrackPointExtension.hr.isEmpty()) {
+                        exercise.recordingMode.heartRate = true
+                        sample.heartRate = trkpt.extensions.TrackPointExtension.hr.text().toShort();
+                    }
+
+                    // get heartrate in Holux FunTrek 130 pro format if present
+                    if (!trkpt.extensions.bpm.isEmpty()) {
+                        exercise.recordingMode.heartRate = true
+                        sample.heartRate = trkpt.extensions.bpm.text().toShort();
                     }
                 }
             }
         }
-
         eSamples as ExerciseSample[]
     }
 
@@ -154,7 +219,8 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
     }
 
     /**
-     * Calculates the exercise duration (only when samples contain timestamps).
+     * Calculates the exercise duration
+     * (only when samples contain timestamps).
      */
     def calculateDuration(exercise) {
         def sampleCount = exercise.sampleList.size()
@@ -165,5 +231,54 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
                 exercise.duration = lastSampleTimestamp / 100
             }
         }
+    }
+
+    /**
+     * Calculates the speed summary
+     * (only when samples contain timestamps, from which speed is derived)
+     */
+    def calculateSpeedSummary(exercise) {
+        exercise.speed = new ExerciseSpeed()
+
+        // Determine maximum speed
+        exercise.speed.speedMax = 0;
+        exercise.sampleList.each { sample ->
+            if (sample.speed > exercise.speed.speedMax) {
+                exercise.speed.speedMax = sample.speed
+            }
+        }
+
+        // Determine total duration and average speed
+        def sampleCount = exercise.sampleList.size()
+        if (sampleCount > 0) {
+            def lastSample = exercise.sampleList[sampleCount - 1]
+            exercise.speed.distance = Math.round(lastSample.distance)
+            exercise.speed.speedAVG = CalculationUtils.calculateAvgSpeed(
+                (float)(exercise.speed.distance/1000f), (int)Math.round(lastSample.timestamp/1000f)
+            )
+        }
+        else {
+            exercise.speed.distance = 0;
+            exercise.speed.speedAVG = 0;
+        }
+
+    }
+
+    /**
+     * Calculates heart rate summary data of the exercise 
+     * (only when samples contain heart rate data).
+     */
+    def calculateHeartRateSummary(exercise) {
+        long heartRateSum = 0
+        exercise.heartRateMax = Short.MIN_VALUE
+
+        exercise.sampleList.each { sample ->
+            heartRateSum += sample.heartRate
+            if (sample.heartRate > exercise.heartRateMax) {
+                exercise.heartRateMax = sample.heartRate
+            }
+        }
+
+        exercise.heartRateAVG  = heartRateSum / exercise.sampleList.size()
     }
 }
