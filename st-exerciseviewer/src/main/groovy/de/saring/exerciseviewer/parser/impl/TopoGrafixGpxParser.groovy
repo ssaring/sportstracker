@@ -25,6 +25,9 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
     /** The date and time parser instance for XML date standard. */
     private def sdFormat = new SimpleDateFormat ("yyyy-MM-dd'T'HH:mm:ss");
 
+    private final double DEGREE_TO_RADIAN_DIVIDER=57.29577951d
+    private final double EARTH_RADIUS_IN_METER=6371000d
+
     /** {@inheritDoc} */
     @Override
     ExerciseParserInfo getInfo() {
@@ -52,6 +55,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
 
         EVExercise exercise = createExercise(gpx)
         exercise.sampleList = parseSampleTrackpoints(gpx, exercise)
+        calculateDistanceAndSpeedPerPoint(exercise)
         exercise.speed = null;
         if (exercise.recordingMode.altitude) {
             calculateAltitudeSummary(exercise)
@@ -90,6 +94,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
         exercise
     }
 
+
     /**
      * Parses all trackpoints in all tracks and track segments under the "gpx" element.
      * 
@@ -97,10 +102,6 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
      */
     private def parseSampleTrackpoints(gpx, exercise) {
         def eSamples = []
-
-        float totalDistanceInMeter = 0f
-        Position prevPosition = null
-        Date prevTime = null
 
         gpx.trk.each { trk ->
             trk.trkseg.each { trkseg ->
@@ -111,22 +112,6 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
 
                     // get position
                     sample.position = new Position(trkpt.@lat.text().toDouble(), trkpt.@lon.text().toDouble())
-
-                    // calculate distance, based on position (so-far I have seen no gpx files containing distance data)
-                    double distanceInMeter
-                    if (prevPosition != null) { // A = lattitude, B = longitude
-                        distanceInMeter = 111222.5789d*Math.sqrt(
-                            Math.pow(sample.position.latitude-prevPosition.latitude, 2)
-                            +Math.pow(
-                                (sample.position.longitude-prevPosition.longitude)
-                                *Math.cos(prevPosition.latitude/57.3d)
-                                ,2
-                            )
-                        )
-                        totalDistanceInMeter += distanceInMeter;
-                    }
-                    sample.distance = totalDistanceInMeter
-                    prevPosition = sample.position
 
                     // get altitude (optional)
                     if (!trkpt.ele.isEmpty()) {
@@ -149,28 +134,6 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
                         }                        
                         sample.timestamp = timestampSample.time - exercise.date.time
 
-                        // calculate speed based on delta-distance and delta-time
-                        // (Speed tag does not seem to be part of the GPX standard. Some GPS devices do log the speed
-                        //  but they don't indicate the unit used, like km/h our mile/hour and as such, those speed
-                        //  data are useless anyway)
-                        if (prevTime != null) {
-                             exercise.recordingMode.speed = true
-                             // Calculate speed. Don't use CalculateUtils.calculateAvgSpeed, because
-                             // that one gives 'infinity' when rounded time-difference is 0
-                             // (e.g. when two timestamps are less then half a second apart)
-                             // Note that speed is in km/h
-                             // Note that one of the test files contains two consecutive records
-                             // with same timestamp. Don't know if it can also happen with a real GPS
-                             // or if it's due to test data. Either way, set speed to 0 when this happens
-                             long deltaTime = timestampSample.time-prevTime.time
-                             sample.speed = (deltaTime == 0) ? 0 : 3600*distanceInMeter/deltaTime
-                        }
-                        else {
-                            // First sample point; speed not known yet. Assume person did not start
-                            // the training yet and is standing still
-                            sample.speed = 0
-                        }
-                        prevTime = timestampSample
                     }
 
                     // get heartrate in Garmin Oregon format if present
@@ -188,6 +151,64 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
             }
         }
         eSamples as ExerciseSample[]
+    }
+
+    /**
+     * Calculates the distance and speed for each sample point,
+     * based on the GPS coordinates and timestamp
+     *
+     * Speed and distance tags do not seem to be part of GPX standard.
+     * Some GPS devices do log for example the speed but they don't
+     * indicate the unit used, like km/h our mile/hour and as such,
+     * those speed data are useless anyway.
+     */
+    def calculateDistanceAndSpeedPerPoint(exercise) {
+        float totalDistanceInMeter = 0f
+        Position prevPosition = null
+        long prevTimestamp = -1
+
+        exercise.sampleList.each { sample ->
+            double distanceInMeter
+            if (prevPosition != null) {
+                // Calculate distance based on GPS coordinates, using haversine formula
+                double dLat = (sample.position.latitude-prevPosition.latitude)/DEGREE_TO_RADIAN_DIVIDER
+                double dLon = (sample.position.longitude-prevPosition.longitude)/DEGREE_TO_RADIAN_DIVIDER 
+                double prevLat = prevPosition.latitude/DEGREE_TO_RADIAN_DIVIDER
+                double currLat = sample.position.latitude/DEGREE_TO_RADIAN_DIVIDER
+                double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(prevLat) * Math.cos(currLat)
+                distanceInMeter = EARTH_RADIUS_IN_METER * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+                totalDistanceInMeter += distanceInMeter;
+            }
+            sample.distance = totalDistanceInMeter
+            prevPosition = sample.position
+    
+            if (prevTimestamp != -1) {
+                 // Calculate speed. Don't use CalculateUtils.calculateAvgSpeed, because
+                 // that one gives 'infinity' when rounded time-difference is 0
+                 // (e.g. when two timestamps are less then 500 milliseconds apart)
+                 // Note that timestamps are in milliseconds
+                 // Note that speed is in km/h
+                 long deltaTime = sample.timestamp - prevTimestamp
+                 // Note that deltaTime can be 0, either when GPX file contains two
+                 // consecutive points with same timestamp or when it does not contain
+                 // any timestamps at all. In both cases, speed will be set to 0 for
+                 // the sample
+                 if (deltaTime != 0) {
+                     exercise.recordingMode.speed = true
+                     sample.speed = 3600*distanceInMeter/deltaTime
+                 }
+                 else {
+                     sample.speed = 0
+                 }
+            }
+            else {
+                // First sample point; speed not known yet. Assume person did not start
+                // the training yet and is standing still
+                sample.speed = 0
+            }
+            prevTimestamp = sample.timestamp
+        }
     }
 
     /**
@@ -215,7 +236,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
             previousAltitude = sample.altitude
         }
 
-        altitude.altitudeAVG = altitudeSum / exercise.sampleList.size()
+        altitude.altitudeAVG = (short)Math.round(altitudeSum / exercise.sampleList.size())
     }
 
     /**
@@ -279,6 +300,6 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
             }
         }
 
-        exercise.heartRateAVG  = heartRateSum / exercise.sampleList.size()
+        exercise.heartRateAVG  = (short)Math.round(heartRateSum / exercise.sampleList.size())
     }
 }

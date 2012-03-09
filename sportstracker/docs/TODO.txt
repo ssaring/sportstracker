@@ -2,12 +2,6 @@ SportsTracker-TODO
 ==================
 
 Before next release:
-- TopoGrafixGpxParser.parseSampleTrackpoints() => can this be done by Alex Wulms? 
-  - refactorings needed, too much special logic in one method => extract functionality
-  - use constants for computation
-  - can the bike-tour-holux-funtrek-130-pro-with-heartrate.gpx be shortened, it's very 
-    large for a test file in the repository (similar to the Oregon test file)
-  - is the parsed data from the Oregon test file OK (track and altitude looks strange)
 - add support for Garmin Oregon and HOLUX FunTrek devices in the website (done in ReadMe)
 - test: does SportsTracker and Webstart installation work in the JDK7-preview for Mac OS X Lion?
 

@@ -58,14 +58,14 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
 
         // check altitude data
         assertEquals(236, exercise.altitude.altitudeMin)
-        assertEquals(269, exercise.altitude.altitudeAVG)
+        assertEquals(270, exercise.altitude.altitudeAVG)
         assertEquals(315, exercise.altitude.altitudeMax)
         assertEquals(245, exercise.altitude.ascent)
 
         // check speed summary data
-        assertEquals(39.39968f, exercise.speed.speedMax)
-        assertEquals(16489, exercise.speed.distance)
-        assertEquals(21.005095f, exercise.speed.speedAVG)
+        assertEquals(39.38832f, exercise.speed.speedMax)
+        assertEquals(16484, exercise.speed.distance)
+        assertEquals(20.998724f, exercise.speed.speedAVG)
 
         // check sample data
         assertEquals(199, exercise.sampleList.size())
@@ -83,13 +83,13 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertEquals(51.05160000d, exercise.sampleList[10].position.latitude, 0.00001d)
         assertEquals(13.82978000d, exercise.sampleList[10].position.longitude, 0.00001d)
         assertEquals(255, exercise.sampleList[10].altitude)
-        assertEquals(22.806398f, exercise.sampleList[10].speed)
+        assertEquals(22.800179f, exercise.sampleList[10].speed)
 
         assertEquals(2826000, exercise.sampleList[198].timestamp)
         assertEquals(51.01730000d, exercise.sampleList[198].position.latitude, 0.00001d)
         assertEquals(13.95372000d, exercise.sampleList[198].position.longitude, 0.00001d)
         assertEquals(243, exercise.sampleList[198].altitude)
-        assertEquals(21.255596f, exercise.sampleList[198].speed)
+        assertEquals(21.250275f, exercise.sampleList[198].speed)
     }
 
     /**
@@ -113,50 +113,50 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
 
         // Check exercise time and duration
         def calDate = Calendar.getInstance ()
-        calDate.set (2012, 2-1, 16, 06, 37, 07)
+        calDate.set (2012, 3-1, 2, 6, 53, 51)
         assertEquals ((int) (calDate.time.time / 1000), (int) (exercise.date.time / 1000))
-        assertEquals (610, exercise.duration)
+        assertEquals (6090, exercise.duration)
 
         // check altitude data
-        assertEquals(41, exercise.altitude.altitudeMin)
-        assertEquals(48, exercise.altitude.altitudeAVG)
-        assertEquals(52, exercise.altitude.altitudeMax)
-        assertEquals(17, exercise.altitude.ascent)
+        assertEquals(32, exercise.altitude.altitudeMin)
+        assertEquals(41, exercise.altitude.altitudeAVG)
+        assertEquals(53, exercise.altitude.altitudeMax)
+        assertEquals(41, exercise.altitude.ascent)
 
         // check speed summary data
-        assertEquals(31.854105f, exercise.speed.speedMax)
-        assertEquals(377, exercise.speed.distance)
-        assertEquals(22.249182f, exercise.speed.speedAVG)
+        assertEquals(37.978153f, exercise.speed.speedMax)
+        assertEquals(4494, exercise.speed.distance)
+        assertEquals(26.565517f, exercise.speed.speedAVG)
 
         // check heartRate data
-        assertEquals(136, exercise.heartRateAVG)
-        assertEquals(144, exercise.heartRateMax)
+        assertEquals(152, exercise.heartRateAVG)
+        assertEquals(169, exercise.heartRateMax)
 
         // check sample data
-        assertEquals(18, exercise.sampleList.size())
+        assertEquals(204, exercise.sampleList.size())
 
         assertEquals(0, exercise.sampleList[0].timestamp)
-        assertEquals(48.174979d, exercise.sampleList[0].position.latitude, 0.00001d)
-        assertEquals(8.124356d, exercise.sampleList[0].position.longitude, 0.00001d)
-        assertEquals(41, exercise.sampleList[0].altitude)
+        assertEquals(50.823521d, exercise.sampleList[0].position.latitude, 0.00001d)
+        assertEquals(4.672067d, exercise.sampleList[0].position.longitude, 0.00001d)
+        assertEquals(52, exercise.sampleList[0].altitude)
         assertEquals(0, exercise.sampleList[0].speed)
-        assertEquals(103, exercise.sampleList[0].heartRate)
+        assertEquals(158, exercise.sampleList[0].heartRate)
         assertEquals(0, exercise.sampleList[0].cadence)
         assertEquals(0, exercise.sampleList[0].distance)
 
-        assertEquals(48000, exercise.sampleList[10].timestamp)
-        assertEquals(48.176585d, exercise.sampleList[10].position.latitude, 0.00001d)
-        assertEquals(8.120153d, exercise.sampleList[10].position.longitude, 0.00001d)
-        assertEquals(50, exercise.sampleList[10].altitude)
-        assertEquals(9.1799345f, exercise.sampleList[10].speed)
-        assertEquals(144, exercise.sampleList[10].heartRate)
+        assertEquals(303000, exercise.sampleList[101].timestamp)
+        assertEquals(50.816284d, exercise.sampleList[101].position.latitude, 0.00001d)
+        assertEquals(4.65173d, exercise.sampleList[101].position.longitude, 0.00001d)
+        assertEquals(45, exercise.sampleList[101].altitude)
+        assertEquals(36.26108f, exercise.sampleList[101].speed)
+        assertEquals(156, exercise.sampleList[101].heartRate)
 
-        assertEquals(61000, exercise.sampleList[17].timestamp)
-        assertEquals(48.176650d, exercise.sampleList[17].position.latitude, 0.00001d)
-        assertEquals(8.120041d, exercise.sampleList[17].position.longitude, 0.00001d)
-        assertEquals(52, exercise.sampleList[17].altitude)
-        assertEquals(7.833878f, exercise.sampleList[17].speed)
-        assertEquals(142, exercise.sampleList[17].heartRate)
+        assertEquals(609000, exercise.sampleList[203].timestamp)
+        assertEquals(50.802288d, exercise.sampleList[203].position.latitude, 0.00001d)
+        assertEquals(4.639261d, exercise.sampleList[203].position.longitude, 0.00001d)
+        assertEquals(33, exercise.sampleList[203].altitude)
+        assertEquals(32.644943f, exercise.sampleList[203].speed)
+        assertEquals(154, exercise.sampleList[203].heartRate)
     }
 
     /**
@@ -184,25 +184,25 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         def calDate = Calendar.getInstance ()
         calDate.set (2011, 11-1, 3, 9, 9, 25)
         assertEquals ((int) (calDate.time.time / 1000), (int) (exercise.date.time / 1000))
-        assertEquals (23440, exercise.duration)
+        assertEquals (1780, exercise.duration)
 
         // check altitude data
-        assertEquals(99, exercise.altitude.altitudeMin)
-        assertEquals(142, exercise.altitude.altitudeAVG)
+        assertEquals(212, exercise.altitude.altitudeMin)
+        assertEquals(221, exercise.altitude.altitudeAVG)
         assertEquals(226, exercise.altitude.altitudeMax)
-        assertEquals(382, exercise.altitude.ascent)
+        assertEquals(22, exercise.altitude.ascent)
 
         // check speed summary data
-        assertEquals(52.30528f, exercise.speed.speedMax)
-        assertEquals(13990, exercise.speed.distance)
-        assertEquals(21.486347f, exercise.speed.speedAVG)
+        assertEquals(39.3484f, exercise.speed.speedMax)
+        assertEquals(1055, exercise.speed.distance)
+        assertEquals(21.337078f, exercise.speed.speedAVG)
 
         // check heartRate data
-        assertEquals(153, exercise.heartRateAVG)
-        assertEquals(184, exercise.heartRateMax)
+        assertEquals(140, exercise.heartRateAVG)
+        assertEquals(166, exercise.heartRateMax)
 
         // check sample data
-        assertEquals(2345, exercise.sampleList.size())
+        assertEquals(179, exercise.sampleList.size())
 
         assertEquals(0, exercise.sampleList[0].timestamp)
         assertEquals(49.990125d, exercise.sampleList[0].position.latitude, 0.00001d)
@@ -213,19 +213,19 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertEquals(0, exercise.sampleList[0].cadence)
         assertEquals(0, exercise.sampleList[0].distance)
 
-        assertEquals(1000000, exercise.sampleList[1000].timestamp)
-        assertEquals(50.00348667d, exercise.sampleList[1000].position.latitude, 0.00001d)
-        assertEquals(36.26712500d, exercise.sampleList[1000].position.longitude, 0.00001d)
-        assertEquals(100, exercise.sampleList[1000].altitude)
-        assertEquals(25.760117f, exercise.sampleList[1000].speed)
-        assertEquals(168, exercise.sampleList[1000].heartRate)
+        assertEquals(90000, exercise.sampleList[90].timestamp)
+        assertEquals(49.98855833d, exercise.sampleList[90].position.latitude, 0.00001d)
+        assertEquals(36.34222333d, exercise.sampleList[90].position.longitude, 0.00001d)
+        assertEquals(220, exercise.sampleList[90].altitude)
+        assertEquals(25.607729f, exercise.sampleList[90].speed)
+        assertEquals(157, exercise.sampleList[90].heartRate)
 
-        assertEquals(2344000, exercise.sampleList[2344].timestamp)
-        assertEquals(50.03874833d, exercise.sampleList[2344].position.latitude, 0.00001d)
-        assertEquals(36.22104139d, exercise.sampleList[2344].position.longitude, 0.00001d)
-        assertEquals(149, exercise.sampleList[2344].altitude)
-        assertEquals(1.2139143f, exercise.sampleList[2344].speed)
-        assertEquals(114, exercise.sampleList[2344].heartRate)
+        assertEquals(178000, exercise.sampleList[178].timestamp)
+        assertEquals(49.98728833d, exercise.sampleList[178].position.latitude, 0.00001d)
+        assertEquals(36.33563333d, exercise.sampleList[178].position.longitude, 0.00001d)
+        assertEquals(212, exercise.sampleList[178].altitude)
+        assertEquals(38.86589f, exercise.sampleList[178].speed)
+        assertEquals(165, exercise.sampleList[178].heartRate)
     }
 
     /**
