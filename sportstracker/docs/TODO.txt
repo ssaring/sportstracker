@@ -1,10 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Before next release:
-- add support for Garmin Oregon and HOLUX FunTrek devices in the website (done in ReadMe)
-- test: does SportsTracker and Webstart installation work in the JDK7-preview for Mac OS X Lion?
-
 General TODOs:
 --------------
 - Overview dialog: new display mode for comparing 2 seasons / years:
