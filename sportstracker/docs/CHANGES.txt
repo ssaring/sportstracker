@@ -24,7 +24,6 @@ v5.4.0:
     to BaseListView base class
   - Exercise / Note / Weight List View: context menu on right mouse click for 
     adding, editing, copying and deleting the selected table entry
-  - Groovy updated to 1.8.2
   - Maven build: update to groovy-eclipse-compiler 2.5.2 which
     - adds support for Eclipse 3.7.1
     - adds support for Java 7
@@ -32,6 +31,12 @@ v5.4.0:
   - added Windows icon for custom launcher configurations (st-logo.ico)
   - XMLStorageTest: cleanup of temporary files after test run
   - removed lots of compiler warnings (mostly for serialization issues) 
+  - update of JFreeChart to version 1.0.14
+  - update of Groovy to version 1.8.6
+  - update of SwingX to version 1.6.3
+  - update of JDOM to version 1.1.3
+  - update of MiGLayout to version 3.7.4
+  - update of JUnit to version 4.10  
  ExerciseViewer changes:
   - GPX parser (TopoGrafixGpxParser) extensions provided by Alex Wulms 
     <awulms@users.sourceforge.net>: 

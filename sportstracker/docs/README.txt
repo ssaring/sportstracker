@@ -349,24 +349,24 @@ The SportsTracker project uses the following libraries:
   - BSAF 1.9.2 (Better Swing Application Framework)
     (http://kenai.com/projects/bsaf)
       License: Lesser General Public License 2.1 (LGPL)
-  - Groovy 1.8.0 (http://groovy.codehaus.org)
+  - Groovy 1.8.6 (http://groovy.codehaus.org)
       License: Apache License v2.0
   - Guice 3.0 (http://code.google.com/p/google-guice/)
       Includes: aopalliance-1.0.jar, javax.inject-1.jar
       License: Apache License v2.0
-  - JFreeChart 1.0.13 (http://www.jfree.org/)
+  - JFreeChart 1.0.14 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
-  - JDOM 1.1 (http://www.jdom.org)
+  - JDOM 1.1.3 (http://www.jdom.org)
       License: Apache-style open source license
-  - SwingX 1.6.1 (https://swingx.dev.java.net/)
+  - SwingX 1.6.3 (https://swingx.dev.java.net/)
       License: Lesser General Public License (LGPL)
   - SwingX-WS 1.0 (https://swingx-ws.dev.java.net/)
       License: Lesser General Public License (LGPL)
-  - MiG Layout 3.7.3.1 (http://www.miglayout.com/)
+  - MiG Layout 3.7.4 (http://www.miglayout.com/)
       License: BSD License
   - commons-cli 1.2 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - JUnit 4.8.2 (http://www.junit.org)
+  - JUnit 4.10 (http://www.junit.org)
       License: Common Public License v1.0
   - EasyMock 3.0 (http://www.easymock.org)
       License: Apache License v2.0
