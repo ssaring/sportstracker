@@ -112,8 +112,9 @@ need one of the download tools listed above.
 The application was tested on GNU/Linux (e.g. Ubuntu 10.04), Windows (XP,
 Vista, 7) and Mac OS X (10.6), although it should work on all systems with
 the required Java Runtime Environment.
-The Mac OS X version of Java 7 is currently not stable yet, the project can
-be found at: http://java.net/jira/browse/MACOSX_PORT
+Currently there is no stable Java 7 for Mac OS X yet (it's in work), but you 
+can use the developer preview available here:
+http://jdk7.java.net/macportpreview/
 
 
 Installation and Start
@@ -444,4 +445,4 @@ created based on icons from those projects.
 
 
 Stefan Saring
-2011/10/04
+2012/03/18
