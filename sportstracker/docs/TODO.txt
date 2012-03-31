@@ -1,6 +1,9 @@
 SportsTracker-TODO
 ==================
 
+THE KEY FOR SIGNING THE WEBSTART JARS EXPIRES IN 2013!!!
+=> CREATE A FRESH KEY NEXT TIME !!!
+
 General TODOs:
 --------------
 - Overview dialog: new display mode for comparing 2 seasons / years:
