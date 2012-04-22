@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+v5.5.0:
+ ExerciseViewer changes:
+  - Bugfix in the Timex PWX exercise parser (occurs e.g. on Timex Ironman GPS 
+    T5K444 after installing a firmware update)
+
 v5.4.0:
  SportsTracker changes:
   - switch to Java 7 compiler, so new language features can be used

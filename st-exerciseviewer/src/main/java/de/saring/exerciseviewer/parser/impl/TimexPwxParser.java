@@ -600,7 +600,8 @@ public class TimexPwxParser extends AbstractExerciseParser {
                         sample.setCadence((short) Short.valueOf(sampleChildren.item(j).getTextContent()));
                         exercise.getRecordingMode().setCadence(true);
                     }else if (childName.equals("dist")){
-                        sample.setDistance(Integer.valueOf(sampleChildren.item(j).getTextContent()));
+                        double dist = Double.valueOf(sampleChildren.item(j).getTextContent());
+                        sample.setDistance((int) Math.round(dist));
                         distanceinsample=true;
                     }else if (childName.equals("lat")){
                         latitude = Double.valueOf(sampleChildren.item(j).getTextContent()).doubleValue();
