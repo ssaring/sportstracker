@@ -3,8 +3,8 @@ package de.saring.sportstracker.storage;
 import java.io.File;
 import java.util.List;
 
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
@@ -34,7 +34,6 @@ public class XMLNoteList
      * @return the created NoteList
      * @throws STException thrown on read problems
      */
-    @SuppressWarnings("unchecked")
 	public NoteList readNoteList (String source) throws STException {
 
         try {

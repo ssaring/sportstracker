@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -38,7 +38,7 @@ public final class XMLUtils {
     public static Document getJDOMDocument (final File xmlFile, final String xsdFilename) throws IOException, JDOMException {
 
         // create a SAX parser with XSD validation
-        SAXBuilder builder = new SAXBuilder (true);
+        SAXBuilder builder = new SAXBuilder(true);
         builder.setFeature ("http://apache.org/xml/features/validation/schema", true);
         builder.setProperty ("http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation", "file://" + xsdFilename);
 

@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.io.File;
 import java.util.List;
 
-import org.jdom.Attribute;
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
@@ -35,7 +35,6 @@ public class XMLSportTypeList
      * @return the created SportTypeList
      * @throws STException thrown on read problems
      */
-    @SuppressWarnings("unchecked")
 	public SportTypeList readSportTypeList (String source) throws STException {
 
         try {
@@ -71,7 +70,6 @@ public class XMLSportTypeList
      * @param eSportType sport-type JDOM element
      * @return the created SportType object
      */    
-    @SuppressWarnings("unchecked")
 	private SportType readSportType (Element eSportType) throws Exception {
         
         SportType sportType = new SportType (Integer.parseInt (eSportType.getChildText ("id")));
