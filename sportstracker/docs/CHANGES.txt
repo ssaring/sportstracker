@@ -8,6 +8,8 @@ v5.5.0:
   - update of JDOM library from version 1.1.3 to 2.0.1, (API changes)
     - supports generics now, unchecked-warnings doesn't need to be suppressed 
       anymore
+  - Maven project in Eclipse IDE: ignoring the maven-dependency-plugin in the
+    Eclipse lifecycle => no more error messages
 
 v5.4.0:
  SportsTracker changes:
