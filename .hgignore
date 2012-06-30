@@ -5,6 +5,7 @@ syntax: glob
 *.log
 *.swp
 .#*
+.DS_Store
 
 # ignore Maven build directories and Eclipse, Netbeans and IDEA project files
 target

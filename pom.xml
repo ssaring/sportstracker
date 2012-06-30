@@ -78,6 +78,13 @@
             <groupId>org.jdesktop.bsaf</groupId>
             <artifactId>bsaf</artifactId>
             <version>1.9.2</version>
+            <exclusions>
+                <!-- Java WebStart dependency not needed -->
+                <exclusion>
+                    <groupId>javax.jnlp</groupId>
+                    <artifactId>jnlp</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>

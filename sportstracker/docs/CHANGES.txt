@@ -10,6 +10,8 @@ v5.5.0:
       anymore
   - Maven project in Eclipse IDE: ignoring the maven-dependency-plugin in the
     Eclipse lifecycle => no more error messages
+  - exclusion of Java WebStart (javaws.jar) dependency in BSAF, so Maven build
+    now works for JDK 7 on Mac OS X
 
 v5.4.0:
  SportsTracker changes:
