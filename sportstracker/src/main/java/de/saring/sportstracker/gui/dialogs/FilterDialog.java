@@ -64,6 +64,7 @@ public class FilterDialog extends JDialog {
         this.context = context;
         this.document = document;
         initComponents ();
+        setLocationRelativeTo(getParent());
         this.getRootPane ().setDefaultButton (btOK);
         
         // set date format in date pickers

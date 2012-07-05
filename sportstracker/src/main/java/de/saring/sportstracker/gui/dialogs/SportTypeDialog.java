@@ -67,6 +67,7 @@ public class SportTypeDialog extends JDialog {
         this.document = document;
         
         initComponents ();
+        setLocationRelativeTo(getParent());
         this.getRootPane ().setDefaultButton (btOK);
         
         // set custom list cell renderer

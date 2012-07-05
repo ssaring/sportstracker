@@ -155,6 +155,15 @@ public class WeightDialog extends JDialog {
         }
     }
 
+    @Override
+    public void setVisible(boolean visible) {
+        if (visible) {
+            // must be done before displaying, otherwise it's not placed centered
+            setLocationRelativeTo(getParent());
+        }
+        super.setVisible(visible);
+    }
+    
     /**
      * Sets the initial exercise values for all controls.
      */

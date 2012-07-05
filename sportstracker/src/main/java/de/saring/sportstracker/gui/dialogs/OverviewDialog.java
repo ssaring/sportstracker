@@ -104,6 +104,7 @@ public class OverviewDialog extends JDialog {
         OverviewType.setResReader (context.getResReader ());
         
         initComponents ();
+        setLocationRelativeTo(getParent());
         this.getRootPane ().setDefaultButton (btClose);
         
         // add chart panel

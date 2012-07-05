@@ -12,6 +12,12 @@ v5.5.0:
     Eclipse lifecycle => no more error messages
   - exclusion of Java WebStart (javaws.jar) dependency in BSAF, so Maven build
     now works for JDK 7 on Mac OS X
+  - all Dialogs are now always placed centered relative to their parent 
+    windows (doesn't make sense to restore the previous position when the 
+    parent has been moved)
+  - Bugfix for Mac OS X: all Dialogs were always placed in upper left corner,
+    now centered relative to their parents
+     
 
 v5.4.0:
  SportsTracker changes:

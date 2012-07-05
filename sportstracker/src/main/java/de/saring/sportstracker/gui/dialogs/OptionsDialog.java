@@ -47,6 +47,7 @@ public class OptionsDialog extends JDialog {
         this.context = context;
         this.document = document;
         initComponents ();
+        setLocationRelativeTo(getParent());
         setTextTranslations ();
         this.getRootPane ().setDefaultButton (btOK);        
         

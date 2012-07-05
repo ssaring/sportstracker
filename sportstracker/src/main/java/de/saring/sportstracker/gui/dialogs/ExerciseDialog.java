@@ -106,6 +106,7 @@ public class ExerciseDialog extends JDialog {
         formatUtils = context.getFormatUtils ();
         
         initComponents ();
+        setLocationRelativeTo(getParent());
         setTextTranslations ();        
         this.getRootPane ().setDefaultButton (btOK);
         // use same font in textarea as in textfield (not default on Win32)

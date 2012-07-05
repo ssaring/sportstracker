@@ -34,6 +34,7 @@ public class StatisticResultsDialog extends JDialog {
         super (context.getMainFrame (), true);
         this.context = context;
         initComponents ();
+        setLocationRelativeTo(getParent());
         this.getRootPane ().setDefaultButton (btClose);      
         
         // setup actions

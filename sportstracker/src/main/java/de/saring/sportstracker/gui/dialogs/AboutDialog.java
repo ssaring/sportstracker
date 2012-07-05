@@ -28,6 +28,7 @@ public class AboutDialog extends JDialog {
     public AboutDialog (STContext context) {
         super (context.getMainFrame (), true);
         initComponents ();
+        setLocationRelativeTo(getParent());
         this.getRootPane ().setDefaultButton (btClose);
         
         tpAuthors.setTitleAt (0, context.getResReader ().getString ("st.dlg.about.title.authors"));
