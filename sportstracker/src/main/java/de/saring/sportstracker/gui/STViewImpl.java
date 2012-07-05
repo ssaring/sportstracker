@@ -306,7 +306,11 @@ public class STViewImpl extends FrameView implements STView {
                 // same mnemonic will not work anymore
                 JButton button = new JButton (controller.getActionMap ().get (actionName));
                 button.setHideActionText (true);
-                button.setMnemonic (-1);
+                button.setMnemonic (-1);                
+                if (MacSpecials.isMacOSX()) {
+                    // remove button borders in OS X 
+                    button.putClientProperty("JButton.buttonType", "toolbar");
+                }
                 this.getToolBar ().add (button);
             }
         }
