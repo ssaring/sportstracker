@@ -20,6 +20,7 @@ v5.5.0:
   - Toolbars in Mac OS X: 
     - all buttons are now displayed in OS X toolbar style
     - rollover effects in Calendar view are disabled
+  - Ant script for Mac OS X App bundle creation (located in misc/appbundler)
 
 v5.4.0:
  SportsTracker changes:

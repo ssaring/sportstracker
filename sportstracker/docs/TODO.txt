@@ -5,28 +5,11 @@ THE KEY FOR SIGNING THE WEBSTART JARS EXPIRES IN 2013!!!
 => CREATE A FRESH KEY NEXT TIME !!!
 
 Mac OS X integration:
-- Create a installable .app bundle, see http://java.net/projects/appbundler
 - Application name is not displayed in MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
   => Known bug, maybe it will be fixed in next JDK release
 - test in Windows and with Nimbus L&F (toolbar, window positions, ...)
 
-Documentation for App bundle creation:
---------------------------------------
-- Install appbundler library in Ant directory. Copy file appbundler-1.0ea.jar
-  to directory /usr/share/ant/lib.
-- Open Terminal and go to directory sportstracker/misc/appbundler
-- Run "export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home"
-- Run "ant", the first attempt will fail due to an appbundler bug (references
-  to wrong directories). Workaround is:
-  - Run "ln -s SportsTracker.app/Contents/MacOS MacOS"
-  - Run "ln -s SportsTracker.app/Contents/Info.plist Info.plist"
-
-Open Issues:
-- Icon not set, must it have a special format?
-- Mail bug to appbundler project?
-- add clean task, always run before bundle
-- Improve Ant script
 
 General TODOs:
 --------------

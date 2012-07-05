@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="SportsTracker" default="bundle" basedir=".">
+	
+    <!-- Define the appbundler task -->
+    <taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask"/>
+
+	<property name="java_home.dir" value="/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home" />
+	<property name="jar.dir" value="../../target"/>
+           
+    <!-- Creates the App bundle. YOU NEED TO RUN A SUCCESSFULL BUILD BEFORE! -->
+     <target name="bundle" description="Creates Mac application bundle"> 
+        <bundleapp outputdirectory="."
+            name="SportsTracker" 
+            displayname="SportsTracker"
+            identifier="de.saring.sportstracker"
+            mainclassname="de.saring.sportstracker.gui.STMain"
+            icon="st-logo.icns">
+            <!-- When JDK 7u6 is available, we don't need to embed the JRE anymore, just remove it. -->
+            <runtime dir="${java_home.dir}">
+                <exclude name="db/"/>
+                <exclude name="lib/"/>
+            </runtime>
+            <classpath dir="${jar.dir}" includes="sportstracker*.jar" />
+            <classpath dir="${jar.dir}/lib" includes="*.jar" />            
+        </bundleapp>
+    </target>
+    
+</project>
