@@ -21,7 +21,8 @@
                 <exclude name="lib/"/>
             </runtime>
             <classpath dir="${jar.dir}" includes="sportstracker*.jar" />
-            <classpath dir="${jar.dir}/lib" includes="*.jar" />            
+            <classpath dir="${jar.dir}/lib" includes="*.jar" />
+            <option value="-Xdock:name=SportsTracker" />            
         </bundleapp>
     </target>
     
