@@ -15,9 +15,11 @@ v5.5.0:
   - all Dialogs are now always placed centered relative to their parent 
     windows (doesn't make sense to restore the previous position when the 
     parent has been moved)
-  - Bugfix for Mac OS X: all Dialogs were always placed in upper left corner,
+  - Bugfix for Mac OS X: all Dialogs were always placed in upper left corner
     now centered relative to their parents
-  - Toolbars in Mac OS X: all buttons are now displayed in OS X toolbar style
+  - Toolbars in Mac OS X: 
+    - all buttons are now displayed in OS X toolbar style
+    - rollover effects in Calendar view are disabled
 
 v5.4.0:
  SportsTracker changes:

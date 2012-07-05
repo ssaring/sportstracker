@@ -25,6 +25,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import de.saring.util.gui.mac.MacSpecials;
+
 /**
  * If you wish to have rollovers on your buttons, use this class.
  *
@@ -34,16 +36,26 @@ import javax.swing.*;
  *
  * Note: You should not call <code>setBorder()</code> on your buttons,
  * as they probably won't work properly.
+ * 
+ * When running on Mac OS X the button will just have the typical 
+ * toolbar behaviour, rollovers are not commomn there. 
  */
 public class RolloverButton extends JButton {
 
     private static final long serialVersionUID = -420069024598467830L;
 
+    private boolean isMacOSX = MacSpecials.isMacOSX();
+    
 	/**
      * Setup the border (invisible initially)
      */
     public RolloverButton () {
-        addMouseListener (new MouseOverHandler ());
+        if (isMacOSX) {
+            putClientProperty("JButton.buttonType", "toolbar");
+        }
+        else {
+            addMouseListener (new MouseOverHandler ());
+        }
     }
 
     /**
@@ -59,26 +71,35 @@ public class RolloverButton extends JButton {
     @Override
     public void updateUI () {
         super.updateUI ();
-        setBorderPainted (false);
-        setRequestFocusEnabled (false);
+        if (!isMacOSX) {
+            setBorderPainted (false);
+            setRequestFocusEnabled (false);
+        }
     }
 
     @Override
     public void setEnabled (boolean b) {
         super.setEnabled (b);
-        setBorderPainted (false);
-        repaint ();
+        if (!isMacOSX) {
+            setBorderPainted (false);
+            repaint ();
+        }
     }
 
     @Override
     public void setBorderPainted (boolean b) {
-        try {
-            revalidateBlocked = true;
-            super.setBorderPainted (b);
-            setContentAreaFilled (b);
-        } 
-        finally {
-            revalidateBlocked = false;
+        if (isMacOSX) {
+            super.setBorderPainted(b);
+        }
+        else {
+            try {
+                revalidateBlocked = true;
+                super.setBorderPainted (b);
+                setContentAreaFilled (b);
+            } 
+            finally {
+                revalidateBlocked = false;
+            }
         }
     }
 
@@ -88,19 +109,29 @@ public class RolloverButton extends JButton {
      */
     @Override
     public void revalidate () {
-        if (!revalidateBlocked) {
-            super.revalidate ();
+        if (isMacOSX) {
+            super.revalidate();
+        }
+        else {
+            if (!revalidateBlocked) {
+                super.revalidate ();
+            }
         }
     }
 
     @Override
     public void paint (Graphics g) {
-        if (isEnabled ()) {
-            super.paint (g);
-        } else {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setComposite (alphaComposite);
-            super.paint (g2);
+        if (isMacOSX) {
+            super.paint(g);
+        }
+        else {
+            if (isEnabled ()) {
+                super.paint (g);
+            } else {
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setComposite (alphaComposite);
+                super.paint (g2);
+            }
         }
     }
     
