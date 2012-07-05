@@ -8,7 +8,6 @@ Mac OS X integration:
 - Application name is not displayed in MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
   => Known bug, maybe it will be fixed in next JDK release
-- test in Windows and with Nimbus L&F (toolbar, window positions, ...)
 
 
 General TODOs:
