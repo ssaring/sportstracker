@@ -441,8 +441,8 @@ the Free Software Foundation; either version 2 of the License, or
 
 All the application icons are taken from the open source projects GTK+ 
 (http://www.gtk.org) and Tango (http://tango.freedesktop.org) or they are
-created based on icons from those projects.
+created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2012/07/04
+2012/07/17

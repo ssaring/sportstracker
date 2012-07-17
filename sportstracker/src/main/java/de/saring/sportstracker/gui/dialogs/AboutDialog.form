@@ -77,7 +77,7 @@
     <Component class="javax.swing.JLabel" name="laLogo">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icons/st-logo.png"/>
+          <Image iconType="3" name="/icons/st-logo-64.png"/>
         </Property>
         <Property name="name" type="java.lang.String" value="laLogo" noResource="true"/>
       </Properties>

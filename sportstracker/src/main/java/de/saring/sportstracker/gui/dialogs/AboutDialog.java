@@ -95,7 +95,7 @@ public class AboutDialog extends JDialog {
         setName("st.dlg.about"); // NOI18N
         setResizable(false);
 
-        laLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/st-logo.png"))); // NOI18N
+        laLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/st-logo-64.png"))); // NOI18N
         laLogo.setName("laLogo"); // NOI18N
 
         laSportsTracker.setFont(laSportsTracker.getFont().deriveFont(laSportsTracker.getFont().getStyle() | java.awt.Font.BOLD));

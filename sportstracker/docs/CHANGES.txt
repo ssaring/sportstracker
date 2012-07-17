@@ -21,6 +21,11 @@ v5.5.0:
     - all buttons are now displayed in OS X toolbar style
     - rollover effects in Calendar view are disabled
   - Ant script for Mac OS X App bundle creation (located in misc/appbundler)
+  - New HiRes SportsTracker application icon, old LowRes icon looked ugly in
+    larger toolbars or application switchers (mostly on Mac OS X, Windows 7)
+  - SportsTracker icon is available in many sizes, it's needed for different
+    window and dock sizes depending on the operating system and user settings
+    (automatic scaling looks ugly)
 
 v5.4.0:
  SportsTracker changes:

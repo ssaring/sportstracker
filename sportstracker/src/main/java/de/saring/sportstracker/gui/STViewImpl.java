@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui;
 
 import de.saring.util.data.IdObject;
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.Arrays;
 
@@ -120,8 +121,8 @@ public class STViewImpl extends FrameView implements STView {
 
     @Override
     public void initView () {
-        createView ();
-        
+        createView();
+       
         // set format utils for current configuration in the context
         STOptions options = document.getOptions ();
         context.setFormatUtils (new FormatUtils (options.getUnitSystem (), options.getSpeedView()));
@@ -186,7 +187,28 @@ public class STViewImpl extends FrameView implements STView {
         statusPanel.setBorder (new EmptyBorder (2, 2, 2, 2));
         this.setStatusBar (statusPanel);
     }
+    
+    /**
+     * Set application window icons in all available sizes, this can't be done by SAF resource
+     * loader. The multiple sizes are needed for the different window and dock sizes depending 
+     * on the operating system and user settings (automatic scaling looks ugly).
+     */
+    private void setupWindowIcons() {
+        getFrame().setIconImages(Arrays.asList(
+                loadImage("/icons/st-logo-512.png"),
+                loadImage("/icons/st-logo-256.png"),
+                loadImage("/icons/st-logo-128.png"),
+                loadImage("/icons/st-logo-64.png"),
+                loadImage("/icons/st-logo-48.png"),
+                loadImage("/icons/st-logo-32.png"),
+                loadImage("/icons/st-logo-24.png")
+        ));
+    }   
 
+    private Image loadImage(String filename) {
+        return new ImageIcon(getClass().getResource(filename)).getImage();
+    }
+    
     /**
      * Creates the applications menu bar.
      * @return the menu bar
@@ -325,7 +347,7 @@ public class STViewImpl extends FrameView implements STView {
             MacSpecials.useScreenMenuBar(true);
 
             // Set Mac application dock icon
-            ImageIcon appIcon = new ImageIcon(getClass().getResource("/icons/st-logo.png"));
+            ImageIcon appIcon = new ImageIcon(getClass().getResource("/icons/st-logo-512.png"));
             MacSpecials.getInstance().setDockIcon(appIcon.getImage());
 
             // Set Mac application menu about/preferences actions
@@ -339,8 +361,10 @@ public class STViewImpl extends FrameView implements STView {
 
     @Override
     public void postInit () {
+        setupWindowIcons();
+
         // start with current date in calendar
-        calendarView.selectToday ();
+        calendarView.selectToday ();        
     }
     
     @Override
