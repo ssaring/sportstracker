@@ -44,6 +44,10 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 5.5.0:
+- common.warning
+- st.main.error.missing_exercise_files
+
 SportsTracker 5.4.0:
 
 - st.view.entry_copy.Action.text (new)

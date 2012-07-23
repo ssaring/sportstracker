@@ -9,6 +9,24 @@ Mac OS X integration:
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
   => Known bug, maybe it will be fixed in next JDK release
 
+New TODOs:
+----------
+- Hover border for toolbar icons in OS X?
+- Import feature for devices connected via USB
+  - New Tab in Options dialog with these settings:
+    - Device directory/drive
+    - Import directory
+    - Default sport type / subtype
+    - Default equipment (optional)
+- View Track in Google Maps (browser)
+  => create temporary file, see example
+- Map tab in Exercise Viewer:
+  - improve icons for start/end/lap points
+  - display data for each track point (hover?)
+  - slider for progress which shows position and details
+- Statistic dialog for equipment usage, not possible yet
+  - User selection for sport type and time range => cake or chart diagram?
+
 
 General TODOs:
 --------------

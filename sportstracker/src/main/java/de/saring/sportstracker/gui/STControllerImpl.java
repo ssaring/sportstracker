@@ -35,6 +35,9 @@ import de.saring.sportstracker.gui.dialogs.WeightDialog;
 import de.saring.sportstracker.gui.views.EntryView;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * This class contains all controller (MVC) related functionality of the SportsTracker 
@@ -100,9 +103,13 @@ public class STControllerImpl implements STController {
     }
     
     /**
-     * This class executes the loading action inside a background task.
+     * This class executes the loading action inside a background task. It also
+     * checks the existence of all attached exercise files.
      */
     class LoadTask extends org.jdesktop.application.Task<Void, Void> {
+        
+        private List<Exercise> corruptExercises;
+        
         public LoadTask () {
             super (context.getSAFContext ().getApplication ());
             setUserCanCancel (false);
@@ -111,6 +118,7 @@ public class STControllerImpl implements STController {
         @Override
         protected Void doInBackground () throws Exception {
             document.readApplicationData ();
+            corruptExercises = document.checkExerciseFiles();
             return null;
         }
 
@@ -125,7 +133,31 @@ public class STControllerImpl implements STController {
         protected void finished () {
             view.updateView ();
             view.registerViewForDataChanges();
+            displayCorruptExercises();
             askForDefiningSportTypes ();
+        }
+    
+        private void displayCorruptExercises() {
+            if (corruptExercises != null && !corruptExercises.isEmpty()) {
+               
+                StringBuilder sb = new StringBuilder();
+                DateFormat dFormat = SimpleDateFormat.getDateTimeInstance(
+                        SimpleDateFormat.MEDIUM, SimpleDateFormat.MEDIUM);
+
+                for (int i = 0; i < corruptExercises.size(); i++) {
+                    if (i > 15) {
+                        sb.append("...\n");
+                        break;
+                    }
+                    
+                    sb.append(dFormat.format(corruptExercises.get(i).getDate()));
+                    sb.append("\n");
+                }
+
+                context.showMessageDialog(context.getMainFrame (), 
+                        JOptionPane.WARNING_MESSAGE, "common.warning",
+                        "st.main.error.missing_exercise_files", sb.toString());
+            }
         }
     }
 

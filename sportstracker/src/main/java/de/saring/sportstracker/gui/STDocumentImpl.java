@@ -21,6 +21,8 @@ import de.saring.sportstracker.storage.IStorage;
 import de.saring.util.data.IdDateObjectList;
 import de.saring.util.data.IdObject;
 import de.saring.util.data.IdObjectListChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class contains all document (MVC) related data and functionality of the 
@@ -241,6 +243,19 @@ public class STDocumentImpl implements STDocument {
         storage.storeNoteList (noteList, dataDirectory + "/" + FILENAME_NOTE_LIST);
         storage.storeWeightList (weightList, dataDirectory + "/" + FILENAME_WEIGHT_LIST);
         dirtyData = false;
+    }
+    
+    @Override
+    public List<Exercise> checkExerciseFiles() {
+        List<Exercise> corruptExercises = new ArrayList<>();
+        
+        for (Exercise exercise : exerciseList) {
+            if (exercise.getHrmFile() != null &&
+                !new File(exercise.getHrmFile()).exists()) {
+                corruptExercises.add(exercise);
+            }
+        }
+        return corruptExercises;
     }
 
     @Override

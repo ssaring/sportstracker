@@ -10,6 +10,7 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.util.data.IdDateObjectList;
 import de.saring.util.data.IdObjectListChangeListener;
+import java.util.List;
 
 /**
  * This interface provides all document (MVC) related data and functionality of the 
@@ -86,6 +87,14 @@ public interface STDocument extends IdObjectListChangeListener {
      * @throws STException thrown on store problems
      */
     void storeApplicationData () throws STException; 
+
+    /**
+     * Checks all exercises for the existence of the attached exercise files
+     * (if there is one).
+     * 
+     * @return List of Exercise objects, where the specified file is missing
+     */
+    List<Exercise> checkExerciseFiles();
     
     /**
      * Register the specified IdObjectListChangeListener on all stored data lists
