@@ -28,6 +28,7 @@ v5.5.0:
     (automatic scaling looks ugly)
   - Execise file existence check after application startup. A warning dialog 
     displays all exercises where the attached files can't be found.
+  - Toolbars: no focus painted for buttons anymore, was strange behavior  
 
 v5.4.0:
  SportsTracker changes:

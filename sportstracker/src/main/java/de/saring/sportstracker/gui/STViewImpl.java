@@ -314,6 +314,7 @@ public class STViewImpl extends FrameView implements STView {
                 // disable the buttons mnemonic, otherwise menu items with the
                 // same mnemonic will not work anymore
                 JButton button = new JButton (controller.getActionMap ().get (actionName));
+                button.setFocusable(false);
                 button.setHideActionText (true);
                 button.setMnemonic (-1);                
                 if (MacSpecials.isMacOSX()) {
