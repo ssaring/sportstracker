@@ -50,6 +50,8 @@ public class RolloverButton extends JButton {
      * Setup the border (invisible initially)
      */
     public RolloverButton () {
+        setFocusable(false);
+        
         if (isMacOSX) {
             putClientProperty("JButton.buttonType", "toolbar");
         }
