@@ -58,6 +58,7 @@ public class STMain extends SportsTracker {
         
         // create and configure the Guice injector 
         Injector injector = Guice.createInjector(new AbstractModule() {
+            @Override
             public void configure() {
             	
                 // create and bind SportsTracker GUI context, which can be used everywhere
@@ -81,9 +82,11 @@ public class STMain extends SportsTracker {
         // create the controller and add the exit listener
         controller = injector.getInstance (STController.class);
         addExitListener (new ExitListener() { 
+            @Override
             public boolean canExit (EventObject e) {
                 return controller.saveBeforeExit ();
             }
+            @Override
             public void willExit (EventObject e) {}            
         });
         
