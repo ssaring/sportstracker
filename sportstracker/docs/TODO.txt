@@ -7,6 +7,8 @@ Mac OS X integration:
   => Known bug, maybe it will be fixed in next JDK release
 - SportsTracker.app works properly, the name is set via JVM parameter there
 
+- Findbugs tests in modules sportstracker and st-exerciseviewer (in NetBeans) 
+
 General TODOs:
 --------------
 - Import feature for devices connected via USB

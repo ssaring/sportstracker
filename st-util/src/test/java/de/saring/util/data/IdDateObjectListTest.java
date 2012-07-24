@@ -158,7 +158,7 @@ public class IdDateObjectListTest {
     /** 
      * Subclass of abstract class IdDateObject for testing.
      */
-    class DateNameObject extends IdDateObject {
+    static class DateNameObject extends IdDateObject {
         private String name;
 
         public DateNameObject (int id, Date date, String name) {

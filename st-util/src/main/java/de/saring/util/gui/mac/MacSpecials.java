@@ -3,6 +3,7 @@ package de.saring.util.gui.mac;
 import java.awt.event.ActionEvent;
 import java.awt.Image;
 import java.lang.reflect.*;
+import java.util.Locale;
 
 import javax.swing.Action;
 
@@ -67,7 +68,7 @@ public final class MacSpecials {
      * Check if running operating system is MacOS X
      */
     public static boolean isMacOSX() {
-        String os = System.getProperty("os.name").toUpperCase();
+        String os = System.getProperty("os.name").toUpperCase(Locale.getDefault());
         return os.startsWith("MAC OS X");
     }
 

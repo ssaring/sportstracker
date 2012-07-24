@@ -125,7 +125,7 @@ public class IdObjectListChangeListenerTest {
     /**
      * Subclass of abstract class IdObject for testing.
      */
-    class DummyIdObject extends IdObject {
+    static class DummyIdObject extends IdObject {
         public DummyIdObject (int id) {
             super (id);
         }

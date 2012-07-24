@@ -543,10 +543,15 @@ public class StackedRenderer extends StackedXYAreaRenderer2 {
         if (this.roundXCoordinates != that.roundXCoordinates) {
             return false;
         }
-        if (this.areaAlpha != that.areaAlpha) {
+        if (Math.abs(this.areaAlpha - that.areaAlpha) > 0.0000001) {
             return false;
         }
         return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return 42;
     }
     
     /**

@@ -28,13 +28,13 @@ public class IdObjectTest {
     }
 
     // Subclasses of abstract class IdObject for testing.
-    class SubClass1 extends IdObject {
+    static class SubClass1 extends IdObject {
         public SubClass1 (int id) {
             super (id);
         }
     }
 
-    class SubClass2 extends IdObject {
+    static class SubClass2 extends IdObject {
         public SubClass2 (int id) {
             super (id);
         }

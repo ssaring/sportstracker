@@ -138,7 +138,7 @@ public class IdObjectListTest {
     /** 
      * Subclass of abstract class IdObject for testing.
      */
-    class NameObject extends IdObject {
+    static class NameObject extends IdObject {
         private String name;
 
         public NameObject (int id, String name) {
