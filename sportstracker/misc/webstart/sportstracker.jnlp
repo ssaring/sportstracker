@@ -5,7 +5,8 @@
         <vendor>Stefan Saring</vendor>
         <homepage href="http://www.saring.de/sportstracker"/>
         <description kind="short">A tool for recording your sport activities and viewing exercise files.</description>
-        <icon href="st-logo-512.png"/>
+        <icon href="st-logo-64.png" width="64" height="64"/>
+        <icon href="st-logo-32.png" width="32" height="32"/>
         <offline-allowed/>
     </information>
     <security>

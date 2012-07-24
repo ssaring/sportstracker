@@ -6,7 +6,7 @@ How to distribute SportStracker by JavaWebStart
    (make sure to use the signed Jar files from the "dist" directory):
    - SportsTracker.jar
    - sportstracker.jnlp
-   - st-logo-512.png
+   - st-logo-64.png, st-logo-32.png
    - lib/*.jar
 3. Create a Install-link (<a href="...>) in the website to the file 
    "webstart/sportstracker.jnlp".
