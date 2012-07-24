@@ -149,7 +149,8 @@ on Ubuntu Linux), so the performance of all Java desktop applications will be
 improved.
 
 Java WebStart for Mac OS X will be available with JDK 7u6. Until then you
-need to install JDK 7u4 and the SportsTracker binary package.
+need to install JDK 7u4 and the SportsTracker app bundle for Mac OS X or the 
+binary package for all platforms.
 
 
 Usage
@@ -445,4 +446,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2012/07/17
+2012/07/24
