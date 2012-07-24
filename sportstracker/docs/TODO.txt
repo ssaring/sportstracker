@@ -1,16 +1,14 @@
 SportsTracker-TODO
 ==================
 
-THE KEY FOR SIGNING THE WEBSTART JARS EXPIRES IN 2013!!!
-=> CREATE A FRESH KEY NEXT TIME !!!
-
 Mac OS X integration:
 - Application name is not displayed in MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
   => Known bug, maybe it will be fixed in next JDK release
+- SportsTracker.app works properly, the name is set via JVM parameter there
 
-New TODOs:
-----------
+General TODOs:
+--------------
 - Import feature for devices connected via USB
   - New Tab in Options dialog with these settings:
     - Device directory/drive
@@ -18,17 +16,13 @@ New TODOs:
     - Default sport type / subtype
     - Default equipment (optional)
 - View Track in Google Maps (browser)
-  => create temporary file, see example
+  => create local temporary file, see example
 - Map tab in Exercise Viewer:
   - improve icons for start/end/lap points
   - display data for each track point (hover?)
   - slider for progress which shows position and details
 - Statistic dialog for equipment usage, not possible yet
   - User selection for sport type and time range => cake or chart diagram?
-
-
-General TODOs:
---------------
 - Overview dialog: new display mode for comparing 2 seasons / years:
   (https://sourceforge.net/projects/sportstracker/forums/forum/451565/topic/4435642)
   - add a new diagram option in the selection combobox called "Compare two seasons"
