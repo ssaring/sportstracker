@@ -115,7 +115,7 @@ public class SamplePanel extends BasePanel {
                         } break;
                     case COLUMN_SPEED:
                         if (exercise.getRecordingMode ().isSpeed ()) {                    
-                            return new Float (sample.getSpeed ());
+                            return Float.valueOf(sample.getSpeed ());
                         } break;
                     case COLUMN_DISTANCE:
                         if (exercise.getRecordingMode ().isSpeed ()) {                    
@@ -254,6 +254,8 @@ public class SamplePanel extends BasePanel {
                     if (value != null) {                    
                         text = formatUtils.temperatureToString ((Short) value);
                     } break;
+                default:
+                    throw new IllegalArgumentException("Invalid column index " + vColIndex);
             }
             
             setText (text);

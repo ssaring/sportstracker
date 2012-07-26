@@ -26,8 +26,8 @@ public class EVView extends JDialog {
     private static final String APPLICATION_NAME = "ExerciseViewer";
     private static final String ACTION_CLOSE = "pv.view.close";
     
-    private EVContext context;
-    private EVDocument document;
+    private transient EVContext context;
+    private transient EVDocument document;
 
     private MainPanel mainPanel;
     private OptionalPanel optionalPanel;

@@ -43,7 +43,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
     /**
      * Private inner class which is used for reading samples from the file.
      */
-    private class Sample {
+    private static class Sample {
         private int[] contents = new int[20];
         private int distance = 0;
         private int altitude;

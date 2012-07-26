@@ -147,7 +147,7 @@ public class LapPanel extends BasePanel {
                     
                     case COLUMN_END_SPEED: // speed at lap split
                         if (lap.getSpeed () != null) {
-                            return new Float (lap.getSpeed ().getSpeedEnd ());
+                            return Float.valueOf(lap.getSpeed ().getSpeedEnd ());
                         } break;
                     
                     case COLUMN_AVG_SPEED: // average speed of lap
@@ -320,6 +320,8 @@ public class LapPanel extends BasePanel {
                     if (value != null) {
                         text = formatUtils.temperatureToString ((Short) value);
                     } break;
+                default:
+                    throw new IllegalArgumentException("Invalid column index " + vColIndex);
             }
             
             setText (text);

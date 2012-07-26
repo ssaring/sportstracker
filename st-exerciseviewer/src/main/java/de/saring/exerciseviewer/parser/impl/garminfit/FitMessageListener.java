@@ -222,7 +222,7 @@ class FitMessageListener implements MesgListener {
         for (ExerciseSample sample : lSamples) {
             sample.setTimestamp(sample.getTimestamp() - startTime);
         }
-        exercise.setSampleList(lSamples.toArray(new ExerciseSample[0]));
+        exercise.setSampleList(lSamples.toArray(new ExerciseSample[lSamples.size()]));
     }
 
     /**
@@ -265,7 +265,7 @@ class FitMessageListener implements MesgListener {
             }
         }
 
-        exercise.setLapList(lLaps.toArray(new Lap[0]));
+        exercise.setLapList(lLaps.toArray(new Lap[lLaps.size()]));
     }
 
     /**

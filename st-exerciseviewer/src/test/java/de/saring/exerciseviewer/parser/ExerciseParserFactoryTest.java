@@ -45,7 +45,7 @@ public class ExerciseParserFactoryTest {
         
         try {
             // this parser is unknown, must fail
-            parser = ExerciseParserFactory.getParser ("exercises/exercise1.xyz");
+            ExerciseParserFactory.getParser ("exercises/exercise1.xyz");
             fail ("Parser for suffix xyz must not be found!");
         }
         catch (EVException e) {}

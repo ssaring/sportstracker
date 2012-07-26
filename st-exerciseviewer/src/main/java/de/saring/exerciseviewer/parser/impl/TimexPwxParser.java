@@ -51,10 +51,8 @@ public class TimexPwxParser extends AbstractExerciseParser {
 
     /** Informations about this parser. */
     private final ExerciseParserInfo info = new ExerciseParserInfo("Timex PWX", new String[]{"pwx", "PWX"});
-    /** section data */
-    int[][] s;
 
-    private class MinMaxAvg {
+    private static class MinMaxAvg {
         private float min=0;
         private float max=0;
         private float avg=0;
@@ -67,7 +65,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         public float getAvg(){ return avg; }
     }
 
-    private MinMaxAvg Node2MinMaxAvg(Node inNode) {
+    private MinMaxAvg node2MinMaxAvg(Node inNode) {
         MinMaxAvg result = new MinMaxAvg();
         NamedNodeMap attributes = inNode.getAttributes();
         for (int i = 0; i < attributes.getLength(); i++) {
@@ -82,7 +80,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         return result;
     }
 
-    private class SummaryData {
+    private static class SummaryData {
         private double beginning = 0;
         private double duration = 0;
         private int work = 0;
@@ -443,16 +441,16 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 nodeSummaryData.setDuration(Double.valueOf(children.item(i).getTextContent()));
             } else if (childName.equals("hr")) {
                 // obtain hr (MinMaxAvg)  (bpm)
-                nodeSummaryData.setHr(Node2MinMaxAvg(children.item(i)));
+                nodeSummaryData.setHr(node2MinMaxAvg(children.item(i)));
             } else if (childName.equals("work")) {
                 // obtain work (Apparently Not used in Laps) (kJ)
                 nodeSummaryData.setWork(Integer.valueOf(children.item(i).getTextContent()));
             } else if (childName.equals("spd")) {
                 // obtain spd (MinMaxAvg) (meters/second)
-                nodeSummaryData.setSpeed(Node2MinMaxAvg(children.item(i)));
+                nodeSummaryData.setSpeed(node2MinMaxAvg(children.item(i)));
             } else if (childName.equals("alt")) {
                 // obtain altitude (MinMaxAvg) (meters)
-                nodeSummaryData.setAltitude(Node2MinMaxAvg(children.item(i)));
+                nodeSummaryData.setAltitude(node2MinMaxAvg(children.item(i)));
             } else if (childName.equals("dist")) {
                 // obtain distance (meters)
                 nodeSummaryData.setDistance(Float.valueOf(children.item(i).getTextContent()));
@@ -604,9 +602,9 @@ public class TimexPwxParser extends AbstractExerciseParser {
                         sample.setDistance((int) Math.round(dist));
                         distanceinsample=true;
                     }else if (childName.equals("lat")){
-                        latitude = Double.valueOf(sampleChildren.item(j).getTextContent()).doubleValue();
+                        latitude = Double.valueOf(sampleChildren.item(j).getTextContent());
                     }else if (childName.equals("lon")){
-                        longitude = Double.valueOf(sampleChildren.item(j).getTextContent()).doubleValue();
+                        longitude = Double.valueOf(sampleChildren.item(j).getTextContent());
                     }else if (childName.equals("alt")){
                         sample.setAltitude(Float.valueOf(sampleChildren.item(j).getTextContent()).shortValue());
                     }else if (childName.equals("temp")){
