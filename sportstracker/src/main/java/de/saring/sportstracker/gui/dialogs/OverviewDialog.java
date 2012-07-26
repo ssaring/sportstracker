@@ -423,10 +423,9 @@ public class OverviewDialog extends JDialog {
      * @return name of the current ValueType
      */
     private String getCurrentValueTypeName () {
-        ValueType vType = getCurrentValueType ();
         FormatUtils formatUtils = context.getFormatUtils ();
 
-        switch (vType) {
+        switch (getCurrentValueType ()) {
             case DISTANCE:
                 return context.getResReader ().getString (
                     "st.dlg.overview.value_type.distance_sum", formatUtils.getDistanceUnitName ());

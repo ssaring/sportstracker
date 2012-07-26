@@ -193,7 +193,7 @@ public class STViewImpl extends FrameView implements STView {
     }   
 
     private Image loadImage(String filename) {
-        return new ImageIcon(getClass().getResource(filename)).getImage();
+        return new ImageIcon(STViewImpl.class.getResource(filename)).getImage();
     }
     
     /**

@@ -3,8 +3,7 @@ Changelog
 
 v5.6.0:
  SportsTracker changes:
-  - Findbugs bugfixes in modules st-exerciseviewer, st-util 
-    (minor code improvements)
+  - Findbugs bugfixes in all modules (minor code improvements)
 
 v5.5.0:
  ExerciseViewer changes:

@@ -619,7 +619,7 @@ public class OptionsDialog extends JDialog {
     /**
      * This class is for combobox items for the look & feel selection.
      */
-    private class LAFComboBoxItem {
+    private static class LAFComboBoxItem {
         private LookAndFeelInfo lookAndFeelInfo;
         
         public LAFComboBoxItem (LookAndFeelInfo lookAndFeelInfo) {
@@ -639,7 +639,7 @@ public class OptionsDialog extends JDialog {
     /**
      * This class is for combobox items for automatic calculation type selection.
      */
-    private class AutoCalculationComboBoxItem {
+    private static class AutoCalculationComboBoxItem {
         private STOptions.AutoCalculation autoCalculation;
         private String text;
 
