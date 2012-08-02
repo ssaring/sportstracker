@@ -303,8 +303,10 @@ class GarminTcxParser extends AbstractExerciseParser {
             exercise.altitude.altitudeAVG = Math.round(altitudeMetersTotal / trackpointCount)
             
             for (evLap in exercise.lapList) {
-                exercise.altitude.ascent += evLap.altitude.ascent
+                if (evLap.altitude != null) {
+                    exercise.altitude.ascent += evLap.altitude.ascent
+                }
             }
-        }                
+        }
     }
 }
