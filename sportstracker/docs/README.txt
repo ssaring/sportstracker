@@ -110,8 +110,8 @@ If you want to download exercise files from your heartrate monitor you also
 need one of the download tools listed above.
 
 The application was tested on GNU/Linux (e.g. Ubuntu 10.04), Windows (XP,
-Vista, 7) and Mac OS X (10.7), although it should work on all systems with
-the required Java Runtime Environment.
+Vista, 7) and Mac OS X (10.7 and 10.8), although it should work on all systems
+with the required Java Runtime Environment.
 
 
 Installation and Start
@@ -148,9 +148,9 @@ This variable should be set system-wide (e.g. by adding to '/etc/environment'
 on Ubuntu Linux), so the performance of all Java desktop applications will be
 improved.
 
-Java WebStart for Mac OS X will be available with JDK 7u6. Until then you
-need to install JDK 7u4 and the SportsTracker app bundle for Mac OS X or the 
-binary package for all platforms.
+On Mac OS X you need at least JDK or JRE 7u6 for using Java WebStart. 
+If you prefer OS X application bundles, the appropriate download is available
+too.
 
 
 Usage
@@ -446,4 +446,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2012/07/24
+2012/08/15

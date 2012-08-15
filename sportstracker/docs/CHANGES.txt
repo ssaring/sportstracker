@@ -4,6 +4,13 @@ Changelog
 v5.6.0:
  SportsTracker changes:
   - Findbugs bugfixes in all modules (minor code improvements)
+  - Mac OS X application bundle creation: 
+    - The huge JRE is not included anymore, the app size is now 12 MByte 
+      instead of 67 before. Since JDK 7u6 for OS X the launcher is able to find
+      the installed JRE (needs to be installed!)
+    - The appbundler Ant library is now included, no installation needed.
+  - Java WebStart for Mac OS X is working again, when JDK / JRE 7u6 or later
+    is installed.
  ExerciseViewer changes:
   - Garmin TCX Parser: Fix for SourceForge-Bug #3551583 
     (Fail to parse tcx files with laps without altitude)
