@@ -4,7 +4,7 @@
     <!-- Define the appbundler task -->
     <taskdef name="bundleapp" 
              classname="com.oracle.appbundler.AppBundlerTask"
-             classpath="appbundler-1.0ea.jar" />
+             classpath="appbundler-1.0.jar" />
 
 	<!-- <property name="java_home.dir" value="/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home" /> -->
 	<property name="jar.dir" value="../../target"/>   
