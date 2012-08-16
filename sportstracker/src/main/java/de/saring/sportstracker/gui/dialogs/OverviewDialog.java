@@ -640,8 +640,15 @@ public class OverviewDialog extends JDialog {
                 avgWeight = ConvertUtils.convertKilogram2Lbs (avgWeight);
             }
             
-            // add computed value to time series
-            dataset.add (timePeriod, avgWeight, seriesName);
+            // add computed value to time series (if the weight value is available)
+            if (avgWeight > 0) {
+                dataset.add (timePeriod, Double.valueOf(avgWeight), seriesName, true);
+            }
+            // when there is no weight value, add at least the first and last dataset item
+            // to make sure the full time range is shown
+            else if (timeStep == 0 || timeStep == timeStepCount - 1) {
+                dataset.add (timePeriod, (Number) null, seriesName, true);
+            }
         }
     }
 
