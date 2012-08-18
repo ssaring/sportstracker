@@ -74,8 +74,10 @@ public class CalendarWidget extends JComponent {
     private final Color COLOR_BACKGROUND_SELECTED2;
     private final Color COLOR_BACKGROUND_SELECTED_BORDER;    
     private final Color COLOR_FOREGROUND;
+    private final Color COLOR_FOREGROUND_TODAY;
     private final Color COLOR_FOREGROUND_OUTSIDE;
     private final Color COLOR_FOREGROUND_SUNDAY;
+    private final Color COLOR_FOREGROUND_SUNDAY_TODAY;
     private final Color COLOR_FOREGROUND_SUNDAY_OUTSIDE;
     private final Color COLOR_FOREGROUND_NOTE;
     private final Color COLOR_FOREGROUND_WEIGHT;
@@ -108,8 +110,10 @@ public class CalendarWidget extends JComponent {
         COLOR_BACKGROUND_SELECTED2 = context.getResReader ().getColor ("st.calendar.background_selected2");
         COLOR_BACKGROUND_SELECTED_BORDER = context.getResReader ().getColor ("st.calendar.background_selected_border");
         COLOR_FOREGROUND = context.getResReader ().getColor ("st.calendar.foreground");
+        COLOR_FOREGROUND_TODAY = context.getResReader ().getColor ("st.calendar.foreground_today");
         COLOR_FOREGROUND_OUTSIDE = context.getResReader ().getColor ("st.calendar.foreground_outside");
         COLOR_FOREGROUND_SUNDAY = context.getResReader ().getColor ("st.calendar.foreground_sunday");
+        COLOR_FOREGROUND_SUNDAY_TODAY = context.getResReader ().getColor ("st.calendar.foreground_sunday_today");
         COLOR_FOREGROUND_SUNDAY_OUTSIDE = context.getResReader ().getColor ("st.calendar.foreground_sunday_outside");
         COLOR_FOREGROUND_NOTE = context.getResReader ().getColor ("st.calendar.foreground.note");
         COLOR_FOREGROUND_WEIGHT = context.getResReader ().getColor ("st.calendar.foreground.weight");
@@ -417,11 +421,12 @@ public class CalendarWidget extends JComponent {
         Font fontDefault = getFont ();
         FontMetrics fontMetrics = g.getFontMetrics ();
         Calendar calTemp = calendarDay.getDate ();
-        if (isSameDay (calTemp, calendarToday)) {
+        boolean isSameDay = isSameDay (calTemp, calendarToday);
+        if (isSameDay) {
             g.setFont (fontDefault.deriveFont (fontDefault.getStyle () | Font.BOLD));
             fontMetrics = g.getFontMetrics ();
         }
-        g.setColor (getWeekDayNumberColor (calendarDay));
+        g.setColor(getWeekDayNumberColor(calendarDay, isSameDay));
 
         String strDayNr = String.valueOf (calendarDay.getDate ().get (Calendar.DAY_OF_MONTH)); 
         double textWidth = fontMetrics.getStringBounds (strDayNr, g).getWidth ();
@@ -515,21 +520,39 @@ public class CalendarWidget extends JComponent {
     /**
      * Returns the foreground color for the week day number.
      * @param calendarDay the CalendarDay cell to be drawn
+     * @param isToday flag is true when the specified calendar day is today
      * @return the day number color
      */
-    private Color getWeekDayNumberColor (CalendarDay calendarDay) {
+    private Color getWeekDayNumberColor (CalendarDay calendarDay, boolean isToday) {
         
         boolean isSunday = calendarDay.getDate ().get (Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;        
         boolean isInsideCurrentMonth = 
             calendarDay.getDate ().get (Calendar.MONTH) == displayedMonth - 1 &&
             calendarDay.getDate ().get (Calendar.YEAR) == displayedYear;
 
-        // use black color, but grey for days outside of month and red for sundays
+        // use black color, but grey for days outside of month and red for sundays,
+        // but highlight today with different colors
         if (!isSunday) {
-            return isInsideCurrentMonth ? COLOR_FOREGROUND : COLOR_FOREGROUND_OUTSIDE;
+            if (isToday) {
+                return COLOR_FOREGROUND_TODAY;
+            }
+            else if (isInsideCurrentMonth) {
+                return COLOR_FOREGROUND;
+            }
+            else {
+                return COLOR_FOREGROUND_OUTSIDE;
+            }
         }
         else {
-            return isInsideCurrentMonth ? COLOR_FOREGROUND_SUNDAY : COLOR_FOREGROUND_SUNDAY_OUTSIDE;
+            if (isToday) {
+                return COLOR_FOREGROUND_SUNDAY_TODAY;
+            }
+            else if (isInsideCurrentMonth) {
+                return COLOR_FOREGROUND_SUNDAY;
+            }
+            else {
+                return COLOR_FOREGROUND_SUNDAY_OUTSIDE;
+            }
         }
     }
     
