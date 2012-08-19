@@ -1,6 +1,18 @@
 SportsTracker-TODO
 ==================
 
+- Statistic dialog for equipment usage:
+  => see TODOs in OverviewDialog
+    => test changes!!! 
+      => also with existing filters in view, when they specify other sport types or equipments
+      => also with miles
+- use better colors for equipment
+- increase minimum size of diagram
+- add german translations
+- add to readme/changes
+- close feature requests
+- Document working with branches
+
 Mac OS X integration:
 - Application name is not displayed in MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
@@ -21,12 +33,6 @@ General TODOs:
   - improve icons for start/end/lap points
   - display data for each track point (hover?)
   - slider for progress which shows position and details
-- Statistic dialog for equipment usage, not possible yet
-  => add a new "equipment usage" diagram in Overview Dialog
-     - a combobox will be displayed (bottom right) for sport type selection
-     - diagram will not be stacked
-     - displays always graph "not specified" for exercises with no equipment
-  - User selection for sport type and time range => cake or chart diagram?
 - Overview dialog: new display mode for comparing 2 seasons / years:
   (https://sourceforge.net/projects/sportstracker/forums/forum/451565/topic/4435642)
   - add a new diagram option in the selection combobox called "Compare two seasons"

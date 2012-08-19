@@ -40,6 +40,7 @@ import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.TextAnchor;
 
 import de.saring.sportstracker.core.STOptions;
+import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.ExerciseFilter;
 import de.saring.sportstracker.data.SportType;
@@ -63,7 +64,7 @@ import de.saring.util.unitcalc.FormatUtils.UnitSystem;
  * or the last 10 years until the selected year).
  *
  * @author  Stefan Saring, Kai Pastor
- * @version 3.1
+ * @version 3.2
  */
 public class OverviewDialog extends JDialog {
 
@@ -80,7 +81,7 @@ public class OverviewDialog extends JDialog {
 	}
 
     /** This is the list of possible value types displayed in diagram. */
-    private enum ValueType { DISTANCE, DURATION, ASCENT, CALORIES, EXERCISES, AVG_SPEED, WEIGHT  }
+    private enum ValueType { DISTANCE, DURATION, ASCENT, CALORIES, EXERCISES, AVG_SPEED, EQUIPMENT, WEIGHT  }
 
     private STContext context;
     private STDocument document;
@@ -129,7 +130,8 @@ public class OverviewDialog extends JDialog {
         
         cbTimeRange.addActionListener (alUpdate);
         cbDisplay.addActionListener (alUpdate);
-        cbSportType.addActionListener (alUpdate);
+        cbSportTypeMode.addActionListener (alUpdate);
+        cbSportTypeList.addActionListener (alUpdate);        
 
         spYear.addChangeListener (new ChangeListener () {
             public void stateChanged (ChangeEvent e) {
@@ -174,12 +176,18 @@ public class OverviewDialog extends JDialog {
         cbDisplay.addItem (context.getResReader ().getString ("st.dlg.overview.display.calorie_sum.text"));
         cbDisplay.addItem (context.getResReader ().getString ("st.dlg.overview.display.exercise_count.text"));
         cbDisplay.addItem (context.getResReader ().getString ("st.dlg.overview.display.avg_speed.text"));
+        cbDisplay.addItem (context.getResReader ().getString ("st.dlg.overview.display.equipment_distance.text"));
         cbDisplay.addItem (context.getResReader ().getString ("st.dlg.overview.display.weight.text"));
 
-        cbSportType.removeAllItems ();
-        cbSportType.addItem (OverviewType.EACH_SPLITTED);
-        cbSportType.addItem (OverviewType.EACH_STACKED);
-        cbSportType.addItem (OverviewType.ALL_SUMMARY);
+        cbSportTypeMode.removeAllItems ();
+        cbSportTypeMode.addItem (OverviewType.EACH_SPLITTED);
+        cbSportTypeMode.addItem (OverviewType.EACH_STACKED);
+        cbSportTypeMode.addItem (OverviewType.ALL_SUMMARY);
+        
+        cbSportTypeList.removeAllItems();
+        for (SportType sportType : document.getSportTypeList()) {
+            cbSportTypeList.addItem(sportType.getName());
+        }
 
         // the spinner must not use number grouping (otherwise e.g. year "2.007")
         ((JSpinner.NumberEditor) spYear.getEditor ()).getFormat ().setGroupingUsed (false);
@@ -204,11 +212,20 @@ public class OverviewDialog extends JDialog {
         TimeTableXYDataset dataset = new TimeTableXYDataset ();
         List<Color> lGraphColors = new ArrayList<> ();
         
-        // add TimeSeries graph (different ways for Exercise and Weight entries)
-        if (getCurrentValueType () != ValueType.WEIGHT) {
+        // add TimeSeries graph (different ways for Exercise, Equipment and Weight modes)
+        if (getCurrentValueType () == ValueType.EQUIPMENT) {
+            // get selected sport type
+            SportType sportType = document.getSportTypeList().getAt(cbSportTypeList.getSelectedIndex());
             
+            // display a graph for each equipment and one for not specified equipment
+            for (Equipment equipment : sportType.getEquipmentList()) {
+                addEquipmentTimeSeries(dataset, timeType, year, sportType, equipment);
+            }
+            addEquipmentTimeSeries(dataset, timeType, year, sportType, null);
+        }
+        else if (getCurrentValueType () != ValueType.WEIGHT) {            
             // which sport type mode is selected by user ?
-            switch ((OverviewType) cbSportType.getSelectedItem ()) {
+            switch ((OverviewType) cbSportTypeMode.getSelectedItem ()) {
                 case ALL_SUMMARY:
                 case EACH_STACKED:
                     // create one graph for sum of all sport types
@@ -296,7 +313,7 @@ public class OverviewDialog extends JDialog {
         
         // special handling for overview type EACH_STACKED, it uses a special renderer
         // (not when Weight entries are displayed, stacked mode is not possible there)
-        if (cbSportType.getSelectedItem () == OverviewType.EACH_STACKED && 
+        if (cbSportTypeMode.getSelectedItem () == OverviewType.EACH_STACKED && 
             getCurrentValueType () != ValueType.WEIGHT) {
             
             renderer.setSeriesLinesVisible (0, false);
@@ -374,8 +391,18 @@ public class OverviewDialog extends JDialog {
 
         // the sport type selection is only visible for the ValueType WEIGHT
         boolean sssEnabled = getCurrentValueType () != ValueType.WEIGHT;
-        laFor.setVisible (sssEnabled);
-        cbSportType.setVisible (sssEnabled);
+        laFor.setVisible(sssEnabled);
+        cbSportTypeMode.setVisible(sssEnabled);
+        cbSportTypeList.setVisible(sssEnabled);
+        
+        // display sport type mode (for exercise mode) or sport type list (for equipment mode) combobox only
+        if (sssEnabled) {
+            boolean equipmentSelected = getCurrentValueType() == ValueType.EQUIPMENT;
+            laFor.setText(context.getResReader().getString(!equipmentSelected ? 
+                    "st.dlg.overview.for.text" : "st.dlg.overview.for_sport_type.text"));
+            cbSportTypeMode.setVisible(!equipmentSelected);
+            cbSportTypeList.setVisible(equipmentSelected);
+        }
     }
 
     /**
@@ -412,6 +439,8 @@ public class OverviewDialog extends JDialog {
             case 5:
                 return ValueType.AVG_SPEED;
             case 6:
+                return ValueType.EQUIPMENT;
+            case 7:
                 return ValueType.WEIGHT;
             default:
                 throw new IllegalArgumentException ("Invalid display type selection!");
@@ -441,6 +470,9 @@ public class OverviewDialog extends JDialog {
             case AVG_SPEED:
                 return context.getResReader ().getString (
                     "st.dlg.overview.value_type.avg_speed", formatUtils.getSpeedUnitName ());
+            case EQUIPMENT:
+                return context.getResReader ().getString (
+                    "st.dlg.overview.value_type.equipment_distance", formatUtils.getDistanceUnitName ());
             case WEIGHT:
                 return context.getResReader ().getString (
                     "st.dlg.overview.value_type.weight", formatUtils.getWeightUnitName ());
@@ -468,65 +500,17 @@ public class OverviewDialog extends JDialog {
             sportType.getName () :
             context.getResReader ().getString ("st.dlg.overview.graph.all_types");
 
-        int timeStepCount = getTimeStepCount (timeType, year);
-        
         // process value calculation for each step of time range
+        int timeStepCount = getTimeStepCount (timeType, year);
         for (int timeStep = 0; timeStep < timeStepCount; timeStep++) {
             
             // create time period for current time step
             RegularTimePeriod timePeriod = createTimePeriodForTimeStep (timeType, year, timeStep);
 
             // create the ExerciseFilter for the time range of the current time step
-            // (ExerciseFilter was not made for Weight, but it's also handy to use here :-)
             ExerciseFilter filter = createExerciseFilterForTimeStep (timeType, year, timeStep);
             filter.setSportType (sportType);
-            
-            // when the exercise filter is enabled in the GUI then we need to
-            // merge these filter criterias into the created diagram filter            
-            if (document.isFilterEnabled ()) {
-                ExerciseFilter currentFilter = document.getCurrentFilter ();
-
-                // merge filter date
-                if (currentFilter.getDateStart ().after (filter.getDateStart ())) {
-                    filter.setDateStart (currentFilter.getDateStart ());
-                }
-                if (currentFilter.getDateEnd ().before (filter.getDateEnd ())) {
-                    filter.setDateEnd (currentFilter.getDateEnd ());
-                }
-
-                // merge sport type and subtype filter
-                if (currentFilter.getSportType () != null) {
-                    
-                    if ((filter.getSportType () != null) &&
-                        (currentFilter.getSportType ().getId () != filter.getSportType ().getId ())) {
-                        // filters have different sport types 
-                        // => add value 0 and continue, because nothing will be found
-                        dataset.add (timePeriod, 0, seriesName);
-                        continue;
-                    }
-                    filter.setSportType (currentFilter.getSportType ());
-
-                    if (currentFilter.getSportSubType () != null) {
-                        filter.setSportSubType (currentFilter.getSportSubType ());
-                    }
-                }
-
-                // merge intensity filter
-                if (currentFilter.getIntensity () != null) {
-                    filter.setIntensity (currentFilter.getIntensity ());
-                }
-
-                // merge equipment filter
-                if (currentFilter.getEquipment () != null) {
-                    filter.setEquipment (currentFilter.getEquipment ());
-                }
-
-                // merge comment filter
-                if (currentFilter.getCommentSubString () != null) {
-                    filter.setCommentSubString (currentFilter.getCommentSubString ());
-                    filter.setRegularExpressionMode (currentFilter.isRegularExpressionMode ());
-                }
-            }
+            mergeExerciseFilterIfEnabled(filter);
             
             // get exercises for defined filter
             // (add value 0 and skip to next time step when no exercises found)
@@ -611,6 +595,58 @@ public class OverviewDialog extends JDialog {
     }
 
     /**
+     * This method calculates the distance per equipment values and adds them to a TimeTableXYDataset. 
+     * The calculation is always done for the sport type selected by the user.
+     * 
+     * @param dataset the timetable dataset
+     * @param timeType time range for calculated values
+     * @param year the year for calculation
+     * @param sportType the sport type to be shown
+     * @param equipment the equipment to be shown in this series (when null, then calculate exercises with no equipment assigned only)
+     */
+    private void addEquipmentTimeSeries (TimeTableXYDataset dataset, TimeRangeType timeType, int year, 
+            SportType sportType, Equipment equipment) {
+        
+        String seriesName = equipment != null ? 
+                equipment.getName() : context.getResReader().getString("st.dlg.overview.equipment.not_specified");
+                
+        // process value calculation for each step of time range
+        int timeStepCount = getTimeStepCount (timeType, year);
+        for (int timeStep = 0; timeStep < timeStepCount; timeStep++) {
+            
+            // create time period for current time step
+            RegularTimePeriod timePeriod = createTimePeriodForTimeStep (timeType, year, timeStep);
+
+            // create the ExerciseFilter for the time range of the current time step
+            ExerciseFilter filter = createExerciseFilterForTimeStep (timeType, year, timeStep);
+            filter.setSportType (sportType);
+            filter.setEquipment(equipment);
+            mergeExerciseFilterIfEnabled(filter);
+                        
+            // get exercises for defined filter
+            IdObjectList<Exercise> lExercises = document.getExerciseList ().getExercisesForFilter (filter);
+
+            // create distance sum of all found exercises
+            double sumDistance = 0d;                
+            for (Exercise tempExercise : lExercises) {
+                // when displaying series for no equipment assigned then skip exercises with assigned equipment
+                if (equipment == null && tempExercise.getEquipment() != null) {
+                    continue;
+                }
+                sumDistance += tempExercise.getDistance ();
+            }
+                
+            // convert to english unit mode when enabled
+            if (document.getOptions ().getUnitSystem () != UnitSystem.Metric) {
+                sumDistance = ConvertUtils.convertKilometer2Miles (sumDistance, false);
+            }
+
+            // set distance value of time step
+            dataset.add (timePeriod, sumDistance, seriesName);
+        }
+    }
+
+    /**
      * This method creates a TimeSeries graph which contains all Weight entries
      * for the current selected time range and adds them to the passed
      * TimeTableXYDataset.
@@ -622,9 +658,9 @@ public class OverviewDialog extends JDialog {
     private void addWeightTimeSeries (TimeTableXYDataset dataset, TimeRangeType timeType, int year) {
         
         String seriesName = context.getResReader ().getString ("st.dlg.overview.display.weight.text");
-        int timeStepCount = getTimeStepCount (timeType, year);
-
+        
         // process value calculation for each step of time range
+        int timeStepCount = getTimeStepCount (timeType, year);
         for (int timeStep = 0; timeStep < timeStepCount; timeStep++) {
             
             // create time period for current time step
@@ -667,7 +703,7 @@ public class OverviewDialog extends JDialog {
                 return 12;                
             case WEEKS_OF_YEAR:
                 // Workaround for a JFreeChart problem: use the Year instead
-                // of Week class for the botton axis, otherwise there will be
+                // of Week class for the bottom axis, otherwise there will be
                 // format problems on the axis (the first week is often "52")
                 // => get number of weeks for the specified year (mostly 52, sometimes 53)
                 Calendar calTemp = createCalendarForWeekOfYear (year, 3);
@@ -770,7 +806,7 @@ public class OverviewDialog extends JDialog {
         }
         
         return filter;
-    }
+    }    
     
     private Calendar createCalendarFor (int year, int month, int day, boolean startOfDay) {
         Calendar cal = Calendar.getInstance ();
@@ -795,6 +831,66 @@ public class OverviewDialog extends JDialog {
         cal.set (Calendar.DAY_OF_WEEK, firstWeekDay);
         return cal;
     }    
+    
+    /**
+     * Merges the specified filter for time series creation with the existing filter
+     * in the SportsTracker view (if it is enabled).
+     * 
+     * @param filter the filter used for time series creation
+     */
+    private void mergeExerciseFilterIfEnabled(ExerciseFilter filter) {
+        // when the exercise filter is enabled in the GUI then we need to
+        // merge these filter criterias into the created diagram filter            
+        if (document.isFilterEnabled ()) {            
+            ExerciseFilter currentFilter = document.getCurrentFilter ();
+
+            // merge filter date
+            if (currentFilter.getDateStart ().after (filter.getDateStart ())) {
+                filter.setDateStart (currentFilter.getDateStart ());
+            }
+            if (currentFilter.getDateEnd ().before (filter.getDateEnd ())) {
+                filter.setDateEnd (currentFilter.getDateEnd ());
+            }
+
+            // merge sport type and subtype filter
+            if (currentFilter.getSportType() != null) {
+                
+                if (filter.getSportType() != null &&
+                    !currentFilter.getSportType().equals(filter.getSportType())) {
+                    // filters have different sport types => add a not existing sport type, so nothing will be found 
+                    filter.setSportType(new SportType(Integer.MIN_VALUE));
+                } else {
+                    filter.setSportType (currentFilter.getSportType ());
+    
+                    if (currentFilter.getSportSubType () != null) {
+                        filter.setSportSubType (currentFilter.getSportSubType ());
+                    }
+                }
+            }
+
+            // merge intensity filter
+            if (currentFilter.getIntensity () != null) {
+                filter.setIntensity (currentFilter.getIntensity ());
+            }
+
+            // merge equipment filter
+            if (currentFilter.getEquipment () != null) {
+                if (filter.getEquipment() != null &&
+                    !currentFilter.getEquipment().equals(filter.getEquipment())) {
+                    // filters have different equipments => add a not existing equipment, so nothing will be found 
+                    filter.setEquipment(new Equipment(Integer.MIN_VALUE));
+                } else {
+                    filter.setEquipment (currentFilter.getEquipment ());
+                }                
+            }
+
+            // merge comment filter
+            if (currentFilter.getCommentSubString () != null) {
+                filter.setCommentSubString (currentFilter.getCommentSubString ());
+                filter.setRegularExpressionMode (currentFilter.isRegularExpressionMode ());
+            }
+        }        
+    }
 
     /**
      * Returns the average weight value for all Weight entries in the time range
@@ -844,8 +940,9 @@ public class OverviewDialog extends JDialog {
         laDisplay = new javax.swing.JLabel();
         cbDisplay = new javax.swing.JComboBox();
         laFor = new javax.swing.JLabel();
-        cbSportType = new javax.swing.JComboBox();
+        cbSportTypeMode = new javax.swing.JComboBox();
         separator = new javax.swing.JSeparator();
+        cbSportTypeList = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
@@ -881,37 +978,43 @@ public class OverviewDialog extends JDialog {
         laFor.setText("_for");
         laFor.setName("st.dlg.overview.for"); // NOI18N
 
-        cbSportType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbSportType.setName("cbSportType"); // NOI18N
+        cbSportTypeMode.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSportTypeMode.setName("cbSportTypeMode"); // NOI18N
 
         separator.setName("separator"); // NOI18N
+
+        cbSportTypeList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbSportTypeList.setName("cbSportTypeList"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(laDisplay)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(laFor)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbSportType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pDiagram, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(cbTimeRange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(spYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pDiagram, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
                     .addComponent(laTimeRange)
                     .addComponent(laOptions)
-                    .addComponent(btClose, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                    .addComponent(btClose, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(laDisplay)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(laFor)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbSportTypeMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbSportTypeList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbTimeRange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(spYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(8, 8, 8))
             .addComponent(separator, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -924,7 +1027,7 @@ public class OverviewDialog extends JDialog {
                     .addComponent(cbTimeRange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(pDiagram, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .addComponent(pDiagram, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(laOptions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -932,10 +1035,11 @@ public class OverviewDialog extends JDialog {
                     .addComponent(laDisplay)
                     .addComponent(cbDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(laFor)
-                    .addComponent(cbSportType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(cbSportTypeMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbSportTypeList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btClose)
                 .addContainerGap())
         );
@@ -948,7 +1052,8 @@ public class OverviewDialog extends JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btClose;
     private javax.swing.JComboBox cbDisplay;
-    private javax.swing.JComboBox cbSportType;
+    private javax.swing.JComboBox cbSportTypeList;
+    private javax.swing.JComboBox cbSportTypeMode;
     private javax.swing.JComboBox cbTimeRange;
     private javax.swing.JLabel laDisplay;
     private javax.swing.JLabel laFor;
