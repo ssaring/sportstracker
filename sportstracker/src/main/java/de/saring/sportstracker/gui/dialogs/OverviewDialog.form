@@ -26,30 +26,35 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="12" pref="12" max="12" attributes="0"/>
-                      <Component id="laDisplay" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="cbDisplay" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="laFor" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="cbSportType" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="pDiagram" alignment="0" pref="724" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="12" pref="12" max="12" attributes="0"/>
-                      <Component id="cbTimeRange" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="spYear" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="pDiagram" alignment="0" pref="720" max="32767" attributes="0"/>
                   <Component id="laTimeRange" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="laOptions" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="btClose" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="laDisplay" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="cbDisplay" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="laFor" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="cbSportTypeMode" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cbSportTypeList" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="cbTimeRange" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="spYear" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
           </Group>
           <Component id="separator" alignment="0" pref="736" max="32767" attributes="0"/>
       </Group>
@@ -65,7 +70,7 @@
                   <Component id="spYear" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Component id="pDiagram" pref="316" max="32767" attributes="0"/>
+              <Component id="pDiagram" pref="328" max="32767" attributes="0"/>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="laOptions" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
@@ -73,11 +78,12 @@
                   <Component id="laDisplay" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cbDisplay" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="laFor" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cbSportType" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbSportTypeMode" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbSportTypeList" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="separator" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="btClose" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -166,7 +172,7 @@
         <Property name="name" type="java.lang.String" value="st.dlg.overview.for" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cbSportType">
+    <Component class="javax.swing.JComboBox" name="cbSportTypeMode">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
@@ -176,12 +182,25 @@
             <StringItem index="3" value="Item 4"/>
           </StringArray>
         </Property>
-        <Property name="name" type="java.lang.String" value="cbSportType" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="cbSportTypeMode" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="separator">
       <Properties>
         <Property name="name" type="java.lang.String" value="separator" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbSportTypeList">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+        <Property name="name" type="java.lang.String" value="cbSportTypeList" noResource="true"/>
       </Properties>
     </Component>
   </SubComponents>
