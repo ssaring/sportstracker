@@ -2,10 +2,6 @@ SportsTracker-TODO
 ==================
 
 - Statistic dialog for equipment usage:
-  => see TODOs in OverviewDialog
-    => test changes!!! 
-      => also with existing filters in view, when they specify other sport types or equipments
-      => also with miles
 - use better colors for equipment
 - add to readme/changes
 - close feature requests
