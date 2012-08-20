@@ -193,7 +193,7 @@ public class OverviewDialog extends JDialog {
         ((JSpinner.NumberEditor) spYear.getEditor ()).getFormat ().setGroupingUsed (false);
         spYear.setValue (Calendar.getInstance ().get (Calendar.YEAR));    
     }
-
+    
     /**
      * Draws the overview diagram according to the current selections.
      */
@@ -204,51 +204,21 @@ public class OverviewDialog extends JDialog {
         TimeRangeType timeType = getCurrentTimeRangeType ();
         ValueType vType = getCurrentValueType ();
         String vTypeName = getCurrentValueTypeName ();
-
-        // get selected year
-        int year = ((Number) spYear.getValue ()).intValue ();
+        int year = getSelectedYear();
 
         // create a table of all time series (graphs) and the appropriate colors
         TimeTableXYDataset dataset = new TimeTableXYDataset ();
         List<Color> lGraphColors = new ArrayList<> ();
         
-        // add TimeSeries graph (different ways for Exercise, Equipment and Weight modes)
+        // setup TimeSeries in the diagram (different ways for Exercise, Equipment and Weight modes)
         if (getCurrentValueType () == ValueType.EQUIPMENT) {
-            // get selected sport type
-            SportType sportType = document.getSportTypeList().getAt(cbSportTypeList.getSelectedIndex());
-            
-            // display a graph for each equipment and one for not specified equipment
-            for (Equipment equipment : sportType.getEquipmentList()) {
-                addEquipmentTimeSeries(dataset, timeType, year, sportType, equipment);
-            }
-            addEquipmentTimeSeries(dataset, timeType, year, sportType, null);
-            
-            // add custom colors for the equipment graphs (some color presets are not usable)
-            for (int i = 1; i <= 8; i++) {
-                lGraphColors.add(context.getResReader ().getColor ("st.dlg.overview.graph_color.equipment" + i));   
-            }            
+            setupEquipmentDiagram(dataset, lGraphColors);
         }
-        else if (getCurrentValueType () != ValueType.WEIGHT) {            
-            // which sport type mode is selected by user ?
-            switch ((OverviewType) cbSportTypeMode.getSelectedItem ()) {
-                case ALL_SUMMARY:
-                case EACH_STACKED:
-                    // create one graph for sum of all sport types
-                    addExerciseTimeSeries (dataset, timeType, year, vType, null);
-                    lGraphColors.add (context.getResReader ().getColor ("st.dlg.overview.graph_color.all_types"));
-                    break;
-                case EACH_SPLITTED:
-                    // create a separate graph for each sport type
-                    for (SportType sportType : document.getSportTypeList ()) {
-                        addExerciseTimeSeries (dataset, timeType, year, vType, sportType);
-                        lGraphColors.add (sportType.getColor ());
-                    }
-                    break;
-            }
+        else if (getCurrentValueType () == ValueType.WEIGHT) {
+            setupWeightDiagram(dataset, lGraphColors);
         }
         else {
-            addWeightTimeSeries(dataset, timeType, year);
-            lGraphColors.add (context.getResReader ().getColor ("st.dlg.overview.graph_color.all_types"));
+            setupExerciseDiagram(dataset, lGraphColors);
         }
         
         // create chart
@@ -317,9 +287,10 @@ public class OverviewDialog extends JDialog {
         });
         
         // special handling for overview type EACH_STACKED, it uses a special renderer
-        // (not when Weight entries are displayed, stacked mode is not possible there)
+        // (not when Equipment and Weight entries are displayed, stacked mode is not possible there)
         if (cbSportTypeMode.getSelectedItem () == OverviewType.EACH_STACKED && 
-            getCurrentValueType () != ValueType.WEIGHT) {
+            vType != ValueType.EQUIPMENT &&
+            vType != ValueType.WEIGHT) {
             
             renderer.setSeriesLinesVisible (0, false);
             renderer.setSeriesShapesVisible (0, false);
@@ -426,6 +397,14 @@ public class OverviewDialog extends JDialog {
     }
 
     /**
+     * Returns the selected year for the time range to be shown.
+     * @return year
+     */
+    private int getSelectedYear() {
+        return ((Number) spYear.getValue ()).intValue ();
+    }
+
+    /**
      * Returns the current selected value type.
      * @return current ValueType
      */
@@ -485,6 +464,36 @@ public class OverviewDialog extends JDialog {
                 throw new IllegalArgumentException ("Invalid value type!");
         }
     }
+    
+    /**
+     * Sets up the diagram for exercise data.
+     * 
+     * @param dataset the XY dataset to be filled
+     * @param graphColors list of graph colors, can be filled with preferred colors 
+     */
+    private void setupExerciseDiagram(TimeTableXYDataset dataset, List<Color> graphColors) {
+        
+        // get time range and value type to display
+        TimeRangeType timeType = getCurrentTimeRangeType ();
+        int year = getSelectedYear();
+
+        ValueType vType = getCurrentValueType ();
+        OverviewType overviewType = (OverviewType) cbSportTypeMode.getSelectedItem ();
+        
+        // which sport type mode is selected by user ?
+        if (overviewType != OverviewType.EACH_SPLITTED) {
+            // create one graph for sum of all sport types
+            addExerciseTimeSeries (dataset, timeType, year, vType, null);
+            graphColors.add (context.getResReader ().getColor ("st.dlg.overview.graph_color.all_types"));
+        }
+        else {
+            // create a separate graph for each sport type
+            for (SportType sportType : document.getSportTypeList ()) {
+                addExerciseTimeSeries (dataset, timeType, year, vType, sportType);
+                graphColors.add (sportType.getColor ());
+            }
+        }
+    }    
 
     /**
      * This method calculates the specified exercise values (distance, duration, ascent,
@@ -600,6 +609,34 @@ public class OverviewDialog extends JDialog {
     }
 
     /**
+     * Sets up the diagram for equipment usage per sport type.
+     * 
+     * @param dataset the XY dataset to be filled
+     * @param graphColors list of graph colors, can be filled with preferred colors 
+     */
+    private void setupEquipmentDiagram(TimeTableXYDataset dataset, List<Color> graphColors) {
+        
+        // get time range to display
+        TimeRangeType timeType = getCurrentTimeRangeType ();
+        int year = getSelectedYear();
+        
+        // get selected sport type
+        SportType sportType = document.getSportTypeList().getAt(cbSportTypeList.getSelectedIndex());
+        
+        // display a graph for each equipment and one for not specified equipment
+        for (Equipment equipment : sportType.getEquipmentList()) {
+            addEquipmentTimeSeries(dataset, timeType, year, sportType, equipment);
+        }
+        addEquipmentTimeSeries(dataset, timeType, year, sportType, null);
+        
+        // add custom colors for the equipment graphs, some color presets are not usable
+        // (if more colors are needed, then presets will be used)
+        for (int i = 1; i <= 8; i++) {
+            graphColors.add(context.getResReader ().getColor ("st.dlg.overview.graph_color.equipment" + i));   
+        }            
+    }
+
+    /**
      * This method calculates the distance per equipment values and adds them to a TimeTableXYDataset. 
      * The calculation is always done for the sport type selected by the user.
      * 
@@ -651,6 +688,22 @@ public class OverviewDialog extends JDialog {
         }
     }
 
+    /**
+     * Sets up the diagram for weight data.
+     * 
+     * @param dataset the XY dataset to be filled
+     * @param graphColors list of graph colors, can be filled with preferred colors 
+     */
+    private void setupWeightDiagram(TimeTableXYDataset dataset, List<Color> graphColors) {        
+        
+        // get time range to display
+        TimeRangeType timeType = getCurrentTimeRangeType ();
+        int year = getSelectedYear();
+        
+        addWeightTimeSeries(dataset, timeType, year);
+        graphColors.add (context.getResReader ().getColor ("st.dlg.overview.graph_color.all_types"));        
+    }
+    
     /**
      * This method creates a TimeSeries graph which contains all Weight entries
      * for the current selected time range and adds them to the passed
