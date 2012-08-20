@@ -2,7 +2,7 @@ SportsTracker-TODO
 ==================
 
 Mac OS X integration:
-- Application name is not displayed in MenuBar, it shows STMain instead
+- Application name is not displayed in the MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
   => Known bug, maybe it will be fixed in next JDK release
 - SportsTracker.app works properly, the name is set via JVM parameter there
