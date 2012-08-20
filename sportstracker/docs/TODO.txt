@@ -7,8 +7,6 @@ SportsTracker-TODO
       => also with existing filters in view, when they specify other sport types or equipments
       => also with miles
 - use better colors for equipment
-- increase minimum size of diagram
-- add german translations
 - add to readme/changes
 - close feature requests
 - Document working with branches
