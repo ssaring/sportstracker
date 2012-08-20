@@ -44,6 +44,12 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 5.6.0:
+- st.dlg.overview.display.equipment_distance.text (new)
+- st.dlg.overview.value_type.equipment_distance (new)
+- st.dlg.overview.for_sport_type.text (new)
+- st.dlg.overview.equipment_not_specified (new)
+
 SportsTracker 5.5.0:
 - common.warning
 - st.main.error.missing_exercise_files
