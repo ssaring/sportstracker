@@ -1,11 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Statistic dialog for equipment usage:
-- add to readme/changes
-- close feature requests
-- Document working with branches
-
 Mac OS X integration:
 - Application name is not displayed in MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
