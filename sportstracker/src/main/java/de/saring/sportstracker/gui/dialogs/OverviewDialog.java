@@ -222,6 +222,11 @@ public class OverviewDialog extends JDialog {
                 addEquipmentTimeSeries(dataset, timeType, year, sportType, equipment);
             }
             addEquipmentTimeSeries(dataset, timeType, year, sportType, null);
+            
+            // add custom colors for the equipment graphs (some color presets are not usable)
+            for (int i = 1; i <= 8; i++) {
+                lGraphColors.add(context.getResReader ().getColor ("st.dlg.overview.graph_color.equipment" + i));   
+            }            
         }
         else if (getCurrentValueType () != ValueType.WEIGHT) {            
             // which sport type mode is selected by user ?

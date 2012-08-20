@@ -1,8 +1,7 @@
 SportsTracker-TODO
 ==================
 
-- Statistic dialog for equipment usage:
-- use better colors for equipment
+Statistic dialog for equipment usage:
 - add to readme/changes
 - close feature requests
 - Document working with branches
