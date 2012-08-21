@@ -43,6 +43,7 @@ import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.ExerciseFilter;
+import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STContext;
@@ -81,7 +82,7 @@ public class OverviewDialog extends JDialog {
 	}
 
     /** This is the list of possible value types displayed in diagram. */
-    private enum ValueType { DISTANCE, DURATION, ASCENT, CALORIES, EXERCISES, AVG_SPEED, EQUIPMENT, WEIGHT  }
+    private enum ValueType { DISTANCE, DURATION, ASCENT, CALORIES, EXERCISES, AVG_SPEED, SPORTSUBTYPE, EQUIPMENT, WEIGHT  }
 
     private STContext context;
     private STDocument document;
@@ -176,6 +177,7 @@ public class OverviewDialog extends JDialog {
         cbDisplay.addItem (context.getResReader ().getString ("st.dlg.overview.display.calorie_sum.text"));
         cbDisplay.addItem (context.getResReader ().getString ("st.dlg.overview.display.exercise_count.text"));
         cbDisplay.addItem (context.getResReader ().getString ("st.dlg.overview.display.avg_speed.text"));
+        cbDisplay.addItem (context.getResReader ().getString ("st.dlg.overview.display.sportsubtype_distance.text"));
         cbDisplay.addItem (context.getResReader ().getString ("st.dlg.overview.display.equipment_distance.text"));
         cbDisplay.addItem (context.getResReader ().getString ("st.dlg.overview.display.weight.text"));
 
@@ -210,8 +212,11 @@ public class OverviewDialog extends JDialog {
         TimeTableXYDataset dataset = new TimeTableXYDataset ();
         List<Color> lGraphColors = new ArrayList<> ();
         
-        // setup TimeSeries in the diagram (different ways for Exercise, Equipment and Weight modes)
-        if (getCurrentValueType () == ValueType.EQUIPMENT) {
+        // setup TimeSeries in the diagram (done in different ways for all the value types)
+        if (getCurrentValueType () == ValueType.SPORTSUBTYPE) {
+            setupSportSubTypeDiagram(dataset, lGraphColors);
+        }
+        else if (getCurrentValueType () == ValueType.EQUIPMENT) {
             setupEquipmentDiagram(dataset, lGraphColors);
         }
         else if (getCurrentValueType () == ValueType.WEIGHT) {
@@ -287,10 +292,8 @@ public class OverviewDialog extends JDialog {
         });
         
         // special handling for overview type EACH_STACKED, it uses a special renderer
-        // (not when Equipment and Weight entries are displayed, stacked mode is not possible there)
-        if (cbSportTypeMode.getSelectedItem () == OverviewType.EACH_STACKED && 
-            vType != ValueType.EQUIPMENT &&
-            vType != ValueType.WEIGHT) {
+        // (only for exercises based value types, stacked mode can be selected only there)
+        if (cbSportTypeMode.isVisible() && cbSportTypeMode.getSelectedItem () == OverviewType.EACH_STACKED) {
             
             renderer.setSeriesLinesVisible (0, false);
             renderer.setSeriesShapesVisible (0, false);
@@ -423,8 +426,10 @@ public class OverviewDialog extends JDialog {
             case 5:
                 return ValueType.AVG_SPEED;
             case 6:
-                return ValueType.EQUIPMENT;
+                return ValueType.SPORTSUBTYPE;
             case 7:
+                return ValueType.EQUIPMENT;
+            case 8:
                 return ValueType.WEIGHT;
             default:
                 throw new IllegalArgumentException ("Invalid display type selection!");
@@ -454,6 +459,9 @@ public class OverviewDialog extends JDialog {
             case AVG_SPEED:
                 return context.getResReader ().getString (
                     "st.dlg.overview.value_type.avg_speed", formatUtils.getSpeedUnitName ());
+            case SPORTSUBTYPE:
+                return context.getResReader ().getString (
+                    "st.dlg.overview.value_type.sportsubtype_distance", formatUtils.getDistanceUnitName ());
             case EQUIPMENT:
                 return context.getResReader ().getString (
                     "st.dlg.overview.value_type.equipment_distance", formatUtils.getDistanceUnitName ());
@@ -609,7 +617,84 @@ public class OverviewDialog extends JDialog {
     }
 
     /**
-     * Sets up the diagram for equipment usage per sport type.
+     * Sets up the diagram for sport subtype overview for the selected sport type.
+     * 
+     * @param dataset the XY dataset to be filled
+     * @param graphColors list of graph colors, can be filled with preferred colors 
+     */
+    private void setupSportSubTypeDiagram(TimeTableXYDataset dataset, List<Color> graphColors) {
+        
+        // TODO: refactoring possible?
+        
+        // get time range to display
+        TimeRangeType timeType = getCurrentTimeRangeType ();
+        int year = getSelectedYear();
+        
+        // get selected sport type
+        SportType sportType = document.getSportTypeList().getAt(cbSportTypeList.getSelectedIndex());
+        
+        // display a graph for each sport subtype
+        for (SportSubType sportSubType : sportType.getSportSubTypeList()) {
+            addSportSubTypeTimeSeries(dataset, timeType, year, sportType, sportSubType);
+        }
+        
+        // add custom colors for the sport subtype graphs, some color presets are not usable
+        // (if more colors are needed, then presets will be used)
+        for (int i = 1; i <= 8; i++) {
+            // TODO: rename properties
+            graphColors.add(context.getResReader ().getColor ("st.dlg.overview.graph_color.equipment" + i));   
+        }            
+    }
+
+    /**
+     * This method calculates the distance per sport subtype values and adds them to a TimeTableXYDataset. 
+     * The calculation is always done for the sport type selected by the user.
+     * 
+     * @param dataset the timetable dataset
+     * @param timeType time range for calculated values
+     * @param year the year for calculation
+     * @param sportType the sport type to be shown
+     * @param sportSubType the sport subtype to be shown in this series
+     */
+    private void addSportSubTypeTimeSeries (TimeTableXYDataset dataset, TimeRangeType timeType, int year, 
+            SportType sportType, SportSubType sportSubType) {
+        
+        String seriesName = sportSubType.getName();
+                
+        // process value calculation for each step of time range
+        int timeStepCount = getTimeStepCount (timeType, year);
+        for (int timeStep = 0; timeStep < timeStepCount; timeStep++) {
+            
+            // create time period for current time step
+            RegularTimePeriod timePeriod = createTimePeriodForTimeStep (timeType, year, timeStep);
+
+            // create the ExerciseFilter for the time range of the current time step
+            ExerciseFilter filter = createExerciseFilterForTimeStep (timeType, year, timeStep);
+            filter.setSportType (sportType);
+            filter.setSportSubType(sportSubType);
+            mergeExerciseFilterIfEnabled(filter);
+                        
+            // get exercises for defined filter
+            IdObjectList<Exercise> lExercises = document.getExerciseList ().getExercisesForFilter (filter);
+
+            // create distance sum of all found exercises
+            double sumDistance = 0d;                
+            for (Exercise tempExercise : lExercises) {
+                sumDistance += tempExercise.getDistance ();
+            }
+                
+            // convert to english unit mode when enabled
+            if (document.getOptions ().getUnitSystem () != UnitSystem.Metric) {
+                sumDistance = ConvertUtils.convertKilometer2Miles (sumDistance, false);
+            }
+
+            // set distance value of time step
+            dataset.add (timePeriod, sumDistance, seriesName);
+        }
+    }
+
+    /**
+     * Sets up the diagram for equipment usage for the selected sport type.
      * 
      * @param dataset the XY dataset to be filled
      * @param graphColors list of graph colors, can be filled with preferred colors 
