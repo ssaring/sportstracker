@@ -625,8 +625,6 @@ public class OverviewDialog extends JDialog {
      */
     private void setupSportSubTypeDiagram(TimeTableXYDataset dataset, List<Color> graphColors) {
         
-        // TODO: refactoring possible?
-        
         // get time range to display
         TimeRangeType timeType = getCurrentTimeRangeType ();
         int year = getSelectedYear();
@@ -676,7 +674,10 @@ public class OverviewDialog extends JDialog {
             // create distance sum of all found exercises
             double sumDistance = 0d;                
             for (Exercise tempExercise : lExercises) {
-                sumDistance += tempExercise.getDistance ();
+                // sum only exercises with same sport subtype (otherwise conflicts with the merged filter set in the view)
+                if (sportSubType.equals(tempExercise.getSportSubType())) {
+                    sumDistance += tempExercise.getDistance ();
+                }
             }
                 
             // convert to english unit mode when enabled
