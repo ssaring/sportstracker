@@ -374,13 +374,14 @@ public class OverviewDialog extends JDialog {
         cbSportTypeMode.setVisible(sssEnabled);
         cbSportTypeList.setVisible(sssEnabled);
         
-        // display sport type mode (for exercise mode) or sport type list (for equipment mode) combobox only
+        // display sport type mode (for exercise mode) or sport type list (for sport subtype and equipment mode) combobox only
         if (sssEnabled) {
-            boolean equipmentSelected = getCurrentValueType() == ValueType.EQUIPMENT;
-            laFor.setText(context.getResReader().getString(!equipmentSelected ? 
+            boolean showSportTypeModes = getCurrentValueType() != ValueType.SPORTSUBTYPE 
+                    && getCurrentValueType() != ValueType.EQUIPMENT;
+            laFor.setText(context.getResReader().getString(showSportTypeModes ? 
                     "st.dlg.overview.for.text" : "st.dlg.overview.for_sport_type.text"));
-            cbSportTypeMode.setVisible(!equipmentSelected);
-            cbSportTypeList.setVisible(equipmentSelected);
+            cbSportTypeMode.setVisible(showSportTypeModes);
+            cbSportTypeList.setVisible(!showSportTypeModes);
         }
     }
 
