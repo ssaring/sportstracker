@@ -638,12 +638,7 @@ public class OverviewDialog extends JDialog {
             addSportSubTypeTimeSeries(dataset, timeType, year, sportType, sportSubType);
         }
         
-        // add custom colors for the sport subtype graphs, some color presets are not usable
-        // (if more colors are needed, then presets will be used)
-        for (int i = 1; i <= 8; i++) {
-            // TODO: rename properties
-            graphColors.add(context.getResReader ().getColor ("st.dlg.overview.graph_color.equipment" + i));   
-        }            
+        addCustomGraphColors(graphColors);
     }
 
     /**
@@ -714,11 +709,7 @@ public class OverviewDialog extends JDialog {
         }
         addEquipmentTimeSeries(dataset, timeType, year, sportType, null);
         
-        // add custom colors for the equipment graphs, some color presets are not usable
-        // (if more colors are needed, then presets will be used)
-        for (int i = 1; i <= 8; i++) {
-            graphColors.add(context.getResReader ().getColor ("st.dlg.overview.graph_color.equipment" + i));   
-        }            
+        addCustomGraphColors(graphColors);
     }
 
     /**
@@ -951,6 +942,16 @@ public class OverviewDialog extends JDialog {
         return filter;
     }    
     
+    /**
+     * Adds custom colors for all the diagram graphs, because some color presets are not usable or
+     * readable (if more colors are needed, then presets will be used).
+     */
+    private void addCustomGraphColors(List<Color> graphColors) {
+        for (int i = 1; i <= 8; i++) {
+            graphColors.add(context.getResReader ().getColor ("st.dlg.overview.graph_color.graph" + i));   
+        }            
+    }
+
     private Calendar createCalendarFor (int year, int month, int day, boolean startOfDay) {
         Calendar cal = Calendar.getInstance ();
         cal.clear ();
