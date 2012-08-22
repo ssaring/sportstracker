@@ -5,8 +5,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -101,7 +104,53 @@ public class TrackPanel extends BasePanel {
     
     private void setupMapViewer() {
         mapKit = new JXMapKit();
-        mapKit.setDefaultProvider(DefaultProviders.OpenStreetMaps);           
+        mapKit.setDefaultProvider(DefaultProviders.OpenStreetMaps);     
+        
+        // TODO: Refactor
+        mapKit.getMainMap().addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                
+                Rectangle rect = mapKit.getMainMap().getViewportBounds();                
+                
+                Point mousePos = e.getPoint();
+                mousePos.translate(rect.x, rect.y);
+                GeoPosition mouseGeoPos = convertPixelPosToGeoPos(mousePos);
+                
+                final int TRACKPOINT_TOOLTIP_BUFFER = 5;
+                Point horizontalBufferPos = new Point(mousePos.x + TRACKPOINT_TOOLTIP_BUFFER, mousePos.y);
+                Point verticalBufferPos = new Point(mousePos.x, mousePos.y - TRACKPOINT_TOOLTIP_BUFFER);
+                GeoPosition horizontalBufferGeoPos = convertPixelPosToGeoPos(horizontalBufferPos);
+                GeoPosition verticalBufferGeoPos = convertPixelPosToGeoPos(verticalBufferPos);
+                
+                double latitudeBuffer = Math.abs(verticalBufferGeoPos.getLatitude() - mouseGeoPos.getLatitude());
+                double longitudeBuffer = Math.abs(horizontalBufferGeoPos.getLongitude() - mouseGeoPos.getLongitude());
+                System.out.println("latbuffer: " + latitudeBuffer + " - longbuffer: " + longitudeBuffer);
+
+                String toolTipText = null;
+                
+                EVExercise exercise = getDocument().getExercise();                
+                for (ExerciseSample sample : exercise.getSampleList()) {
+                    Position samplePos = sample.getPosition();
+                    
+                    if (samplePos != null) {
+                        
+                        if (Math.abs(samplePos.getLatitude() - mouseGeoPos.getLatitude()) < latitudeBuffer &&
+                            Math.abs(samplePos.getLongitude() - mouseGeoPos.getLongitude()) < longitudeBuffer) {
+                            
+                            toolTipText = "" + sample.getTimestamp();
+                        }
+                    }
+                }
+                
+                
+                mapKit.getMainMap().setToolTipText(toolTipText);
+            }
+            
+            @Override
+            public void mouseDragged(MouseEvent e) {
+            }
+        });
 
         removeAll();
         add(mapKit, java.awt.BorderLayout.CENTER);  
@@ -307,5 +356,9 @@ public class TrackPanel extends BasePanel {
     
     private Point2D convertGeoPosToPixelPos(GeoPosition geoPosition) {
         return mapKit.getMainMap().getTileFactory().geoToPixel(geoPosition, mapKit.getMainMap().getZoom());
+    }    
+
+    private GeoPosition convertPixelPosToGeoPos(Point2D point) {
+        return mapKit.getMainMap().getTileFactory().pixelToGeo(point, mapKit.getMainMap().getZoom());
     }    
 }
