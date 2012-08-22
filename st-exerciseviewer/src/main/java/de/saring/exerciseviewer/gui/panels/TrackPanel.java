@@ -393,20 +393,31 @@ public class TrackPanel extends BasePanel {
     private String createToolTipText(int sampleIndex) {
         
         ExerciseSample sample = getDocument().getExercise().getSampleList()[sampleIndex];
-        FormatUtils formatUtils = getContext ().getFormatUtils ();
+        FormatUtils formatUtils = getContext().getFormatUtils ();
         
         StringBuilder sb = new StringBuilder();
         sb.append("<html>");
-        // TODO: I18N
-        sb.append("_Trackpoint ").append(sampleIndex + 1).append(":<br/>");        
+        appendToolTipLine(sb, "pv.track.tooltip.trackpoint", 
+                String.valueOf(sampleIndex + 1));
+        appendToolTipLine(sb, "pv.track.tooltip.time", 
+                formatUtils.seconds2TimeString((int) (sample.getTimestamp() / 1000)));
+        appendToolTipLine(sb, "pv.track.tooltip.distance", 
+                formatUtils.distanceToString(sample.getDistance() / 1000f, 3));
+        appendToolTipLine(sb, "pv.track.tooltip.altitude", 
+                formatUtils.heightToString(sample.getAltitude()));
         
-        sb.append("&nbsp; _Time: ");
-        sb.append(formatUtils.seconds2TimeString((int) (sample.getTimestamp() / 1000)));
-        sb.append("<br/>");
-        
-        // TODO: also output: distance, altitude, heart rate, speed, temperature
-        
+        // TODO: also output? heart rate, speed, temperature
+      //pv.track.tooltip.heartrate=Heartrate
+      //pv.track.tooltip.speed=Speed
+      //pv.track.tooltip.cadence=Cadence
+      //pv.track.tooltip.temperature=Temperature
+              
         sb.append("</html>");
         return sb.toString();
+    }
+    
+    private void appendToolTipLine(StringBuilder sb, String resourceKey, String value) {
+        sb.append(getContext().getResReader().getString(resourceKey));
+        sb.append(": ").append(value).append("<br/>");
     }
 }
