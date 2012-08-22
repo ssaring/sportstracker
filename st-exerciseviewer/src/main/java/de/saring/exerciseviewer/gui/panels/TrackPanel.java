@@ -9,13 +9,14 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
@@ -25,13 +26,12 @@ import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.painter.Painter;
 
-import javax.inject.Inject;
-
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.ExerciseSample;
 import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.Position;
 import de.saring.exerciseviewer.gui.EVContext;
+import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * This class is the implementation of the "Track" panel, which displays the recorded location  
@@ -50,6 +50,9 @@ public class TrackPanel extends BasePanel {
     private static final Color COLOR_END = new Color(255, 180, 180); 
     private static final Color COLOR_LAP = Color.WHITE; 
     private static final Color COLOR_TRACK = Color.RED; 
+    
+    private static final int TRACKPOINT_TOOLTIP_DISTANCE_BUFFER = 4;
+    
     
     /**
      * Standard c'tor.
@@ -106,49 +109,11 @@ public class TrackPanel extends BasePanel {
         mapKit = new JXMapKit();
         mapKit.setDefaultProvider(DefaultProviders.OpenStreetMaps);     
         
-        // TODO: Refactor
-        mapKit.getMainMap().addMouseMotionListener(new MouseMotionListener() {
+        // add MouseMotionListener to the map for nearby sample lookup and tooltip creation
+        mapKit.getMainMap().addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
-                
-                Rectangle rect = mapKit.getMainMap().getViewportBounds();                
-                
-                Point mousePos = e.getPoint();
-                mousePos.translate(rect.x, rect.y);
-                GeoPosition mouseGeoPos = convertPixelPosToGeoPos(mousePos);
-                
-                final int TRACKPOINT_TOOLTIP_BUFFER = 5;
-                Point horizontalBufferPos = new Point(mousePos.x + TRACKPOINT_TOOLTIP_BUFFER, mousePos.y);
-                Point verticalBufferPos = new Point(mousePos.x, mousePos.y - TRACKPOINT_TOOLTIP_BUFFER);
-                GeoPosition horizontalBufferGeoPos = convertPixelPosToGeoPos(horizontalBufferPos);
-                GeoPosition verticalBufferGeoPos = convertPixelPosToGeoPos(verticalBufferPos);
-                
-                double latitudeBuffer = Math.abs(verticalBufferGeoPos.getLatitude() - mouseGeoPos.getLatitude());
-                double longitudeBuffer = Math.abs(horizontalBufferGeoPos.getLongitude() - mouseGeoPos.getLongitude());
-                System.out.println("latbuffer: " + latitudeBuffer + " - longbuffer: " + longitudeBuffer);
-
-                String toolTipText = null;
-                
-                EVExercise exercise = getDocument().getExercise();                
-                for (ExerciseSample sample : exercise.getSampleList()) {
-                    Position samplePos = sample.getPosition();
-                    
-                    if (samplePos != null) {
-                        
-                        if (Math.abs(samplePos.getLatitude() - mouseGeoPos.getLatitude()) < latitudeBuffer &&
-                            Math.abs(samplePos.getLongitude() - mouseGeoPos.getLongitude()) < longitudeBuffer) {
-                            
-                            toolTipText = "" + sample.getTimestamp();
-                        }
-                    }
-                }
-                
-                
-                mapKit.getMainMap().setToolTipText(toolTipText);
-            }
-            
-            @Override
-            public void mouseDragged(MouseEvent e) {
+                lookupNearbySampleAndCreateToolTip(e);
             }
         });
 
@@ -353,12 +318,95 @@ public class TrackPanel extends BasePanel {
         return geoPositions;
     }
 
-    
     private Point2D convertGeoPosToPixelPos(GeoPosition geoPosition) {
         return mapKit.getMainMap().getTileFactory().geoToPixel(geoPosition, mapKit.getMainMap().getZoom());
     }    
 
     private GeoPosition convertPixelPosToGeoPos(Point2D point) {
         return mapKit.getMainMap().getTileFactory().pixelToGeo(point, mapKit.getMainMap().getZoom());
-    }    
+    }
+    
+    /**
+     * This method must be called on every mouse movement. It searches for an exercise samples 
+     * nearby the mouse position. If a sample was found, then a tooltip with all the sample 
+     * details will be shown.
+     * 
+     * @param e the MouseEvent
+     */
+    private void lookupNearbySampleAndCreateToolTip(MouseEvent e) {
+
+        // get mouse position in the map component (translation needed)
+        Rectangle rect = mapKit.getMainMap().getViewportBounds();                        
+        Point mousePos = e.getPoint();
+        mousePos.translate(rect.x, rect.y);
+        GeoPosition mouseGeoPos = convertPixelPosToGeoPos(mousePos);
+        
+        // compute the latitude and longitude distance buffer for searching a nearby sample
+        Point bufferPos = new Point(mousePos.x + TRACKPOINT_TOOLTIP_DISTANCE_BUFFER, 
+                mousePos.y - TRACKPOINT_TOOLTIP_DISTANCE_BUFFER);
+        GeoPosition bufferGeoPos = convertPixelPosToGeoPos(bufferPos);
+        
+        double latitudeBuffer = Math.abs(bufferGeoPos.getLatitude() - mouseGeoPos.getLatitude());
+        double longitudeBuffer = Math.abs(bufferGeoPos.getLongitude() - mouseGeoPos.getLongitude());
+
+        // lookup a nearby sample and show tooltip text when found (or delete tooltip if not found)
+        String toolTipText = null;
+
+        int nearBySampleIndex = getSampleIndexNearbyGeoPos(mouseGeoPos, latitudeBuffer, longitudeBuffer);
+        if (nearBySampleIndex >= 0) {
+            toolTipText = createToolTipText(nearBySampleIndex);
+        }
+        
+        mapKit.getMainMap().setToolTipText(toolTipText);
+    }
+
+    /**
+     * Searches for the exercise sample with the position nearby the specified position.
+     * 
+     * @param geoPos the position to search for a nearby exercise sample
+     * @param latitudeBuffer longitude distance buffer, the exercise sample must be located closer
+     * @param longitudeBuffer longitude distance buffer, the exercise sample must be located closer
+     * @return the index of the found exercise sample or -1 when no sample found
+     */
+    private int getSampleIndexNearbyGeoPos(GeoPosition geoPos, double latitudeBuffer, double longitudeBuffer) {
+        EVExercise exercise = getDocument().getExercise();                
+        
+        for (int i = 0; i < exercise.getSampleList().length; i++) {
+            ExerciseSample sample = exercise.getSampleList()[i];
+            Position samplePos = sample.getPosition();
+            
+            if (samplePos != null &&      
+                Math.abs(samplePos.getLatitude() - geoPos.getLatitude()) < latitudeBuffer &&
+                Math.abs(samplePos.getLongitude() - geoPos.getLongitude()) < longitudeBuffer) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Creates the tool tip text for the specified exercise sample to be shown on the map.
+     * 
+     * @param sampleIndex index of the exercise sample
+     * @return text
+     */
+    private String createToolTipText(int sampleIndex) {
+        
+        ExerciseSample sample = getDocument().getExercise().getSampleList()[sampleIndex];
+        FormatUtils formatUtils = getContext ().getFormatUtils ();
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html>");
+        // TODO: I18N
+        sb.append("_Trackpoint ").append(sampleIndex + 1).append(":<br/>");        
+        
+        sb.append("&nbsp; _Time: ");
+        sb.append(formatUtils.seconds2TimeString((int) (sample.getTimestamp() / 1000)));
+        sb.append("<br/>");
+        
+        // TODO: also output: distance, altitude, heart rate, speed, temperature
+        
+        sb.append("</html>");
+        return sb.toString();
+    }
 }

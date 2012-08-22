@@ -1,6 +1,11 @@
 SportsTracker-TODO
 ==================
 
+Map Tooltips:
+- see TrackPanel
+- test and document (ReadMe, Changes)
+- close branch
+
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
