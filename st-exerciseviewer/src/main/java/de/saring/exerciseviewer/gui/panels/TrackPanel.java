@@ -53,7 +53,6 @@ public class TrackPanel extends BasePanel {
     
     private static final int TRACKPOINT_TOOLTIP_DISTANCE_BUFFER = 4;
     
-    
     /**
      * Standard c'tor.
      * @param context the ExerciseViewer context
@@ -61,7 +60,7 @@ public class TrackPanel extends BasePanel {
     @Inject
     public TrackPanel (EVContext context) {
         super (context);
-        initComponents();
+        initComponents();        
     }
 
     private void initComponents() {
@@ -84,7 +83,7 @@ public class TrackPanel extends BasePanel {
         if (visible && !panelWasVisible) {
             displayTrack();
             panelWasVisible = true;
-        }
+        }        
         super.setVisible(visible);
     }
     
@@ -392,25 +391,33 @@ public class TrackPanel extends BasePanel {
      */
     private String createToolTipText(int sampleIndex) {
         
-        ExerciseSample sample = getDocument().getExercise().getSampleList()[sampleIndex];
+        EVExercise exercise = getDocument().getExercise();
+        ExerciseSample sample = exercise.getSampleList()[sampleIndex];
         FormatUtils formatUtils = getContext().getFormatUtils ();
         
         StringBuilder sb = new StringBuilder();
         sb.append("<html>");
+        
         appendToolTipLine(sb, "pv.track.tooltip.trackpoint", 
                 String.valueOf(sampleIndex + 1));
         appendToolTipLine(sb, "pv.track.tooltip.time", 
                 formatUtils.seconds2TimeString((int) (sample.getTimestamp() / 1000)));
         appendToolTipLine(sb, "pv.track.tooltip.distance", 
                 formatUtils.distanceToString(sample.getDistance() / 1000f, 3));
-        appendToolTipLine(sb, "pv.track.tooltip.altitude", 
-                formatUtils.heightToString(sample.getAltitude()));
-        
-        // TODO: also output? heart rate, speed, temperature
-      //pv.track.tooltip.heartrate=Heartrate
-      //pv.track.tooltip.speed=Speed
-      //pv.track.tooltip.cadence=Cadence
-      //pv.track.tooltip.temperature=Temperature
+        if (exercise.getRecordingMode().isAltitude()) {
+            appendToolTipLine(sb, "pv.track.tooltip.altitude", 
+                    formatUtils.heightToString(sample.getAltitude()));
+        }        
+        appendToolTipLine(sb, "pv.track.tooltip.heartrate", 
+                formatUtils.heartRateToString (sample.getHeartRate()));                
+        if (exercise.getRecordingMode().isSpeed()) {
+            appendToolTipLine(sb, "pv.track.tooltip.speed", 
+                    formatUtils.speedToString(sample.getSpeed(), 2));
+        }
+        if (exercise.getRecordingMode().isTemperature()) {
+            appendToolTipLine(sb, "pv.track.tooltip.temperature", 
+                    formatUtils.temperatureToString(sample.getTemperature()));
+        }
               
         sb.append("</html>");
         return sb.toString();

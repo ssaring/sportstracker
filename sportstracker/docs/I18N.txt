@@ -58,7 +58,6 @@ SportsTracker 5.6.0:
 - pv.track.tooltip.altitude (new)
 - pv.track.tooltip.heartrate (new)
 - pv.track.tooltip.speed (new)
-- pv.track.tooltip.cadence (new)
 - pv.track.tooltip.temperature (new)
 
 SportsTracker 5.5.0:
