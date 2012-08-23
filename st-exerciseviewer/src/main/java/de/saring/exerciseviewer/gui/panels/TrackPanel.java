@@ -339,9 +339,10 @@ public class TrackPanel extends BasePanel {
     private void lookupNearbySampleAndCreateToolTip(MouseEvent e) {
 
         // get mouse position in the map component (translation needed)
+        // => the offset of 1 pixel is needed for proper centered detection of nearby trackpoints
         Rectangle rect = mapKit.getMainMap().getViewportBounds();                        
         Point mousePos = e.getPoint();
-        mousePos.translate(rect.x, rect.y);
+        mousePos.translate(rect.x - 1, rect.y - 1);
         GeoPosition mouseGeoPos = convertPixelPosToGeoPos(mousePos);
         
         // compute the latitude and longitude distance buffer for searching a nearby sample

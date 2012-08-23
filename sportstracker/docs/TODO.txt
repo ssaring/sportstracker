@@ -1,11 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Map Tooltips:
-- see TrackPanel
-  - are the route lines drawed centered?
-- close branch
-
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
