@@ -109,11 +109,11 @@ public class STViewImpl extends FrameView implements STView {
     @Override
     public void initView () {
         createView();
-       
+        
         // set format utils for current configuration in the context
         STOptions options = document.getOptions ();
         context.setFormatUtils (new FormatUtils (options.getUnitSystem (), options.getSpeedView()));
-
+        
         // init views and select the intital view
         calendarView.initView ();
         exerciseListView.initView ();
@@ -126,6 +126,10 @@ public class STViewImpl extends FrameView implements STView {
         else {
             switchToView (EntryView.ViewType.EXERCISE_LIST);
         }
+
+        // show tooltips always for 10 seconds, default is 4 seconds 
+        // (needed e.g. in CalendarView or Track panel of ExerciseViewer)
+        ToolTipManager.sharedInstance().setDismissDelay(10 * 1000);
     }
 
     /**
