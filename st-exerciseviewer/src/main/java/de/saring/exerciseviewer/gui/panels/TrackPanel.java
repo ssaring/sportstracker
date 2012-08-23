@@ -250,11 +250,15 @@ public class TrackPanel extends BasePanel {
         for (GeoPosition geoPosition : geoPositions) {
             Point2D pt = convertGeoPosToPixelPos(geoPosition);
             if (lastX != -1 && lastY != -1) {
-                g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
+                g.drawLine(lastX, lastY, round(pt.getX()), round(pt.getY()));
             }
-            lastX = (int) pt.getX();
-            lastY = (int) pt.getY();
+            lastX = round(pt.getX());
+            lastY = round(pt.getY());
         }
+    }
+    
+    private int round(double value) {
+        return (int) Math.round(value);
     }
 
     /**
@@ -280,13 +284,13 @@ public class TrackPanel extends BasePanel {
         g.draw(new Ellipse2D.Double(pt.getX() - RADIUS, pt.getY() - RADIUS, RADIUS*2, RADIUS*2));
 
         // draw the text right from the circle with a gray shadow
-        float textPosX = (float) (pt.getX() + RADIUS*2.2);
-        float textPosY = (float) pt.getY() + 3;
+        int textPosX = round(pt.getX() + RADIUS*2.2);
+        int textPosY = round(pt.getY() + 3);
         
         g.setFont(new Font("Dialog.bold", Font.BOLD, 12));
         
         g.setColor(Color.DARK_GRAY);
-        g.drawString(text, textPosX + 1f, textPosY + 1f);
+        g.drawString(text, textPosX + 1, textPosY + 1);
         g.setColor(color);
         g.drawString(text, textPosX, textPosY);
     }
