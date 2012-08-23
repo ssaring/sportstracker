@@ -52,6 +52,14 @@ SportsTracker 5.6.0:
 - st.dlg.overview.for_sport_type.text (new)
 - st.dlg.overview.equipment_not_specified (new)
 
+- pv.track.tooltip.trackpoint (new)
+- pv.track.tooltip.time (new)
+- pv.track.tooltip.distance (new)
+- pv.track.tooltip.altitude (new)
+- pv.track.tooltip.heartrate (new)
+- pv.track.tooltip.speed (new)
+- pv.track.tooltip.temperature (new)
+
 SportsTracker 5.5.0:
 - common.warning
 - st.main.error.missing_exercise_files
