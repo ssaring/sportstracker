@@ -4,7 +4,6 @@ SportsTracker-TODO
 Map Tooltips:
 - see TrackPanel
   - are the route lines drawed centered?
-- test and document (ReadMe, Changes)
 - close branch
 
 Mac OS X integration:

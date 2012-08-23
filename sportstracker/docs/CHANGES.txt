@@ -25,6 +25,10 @@ v5.6.0:
  ExerciseViewer changes:
   - Garmin TCX Parser: Fix for SourceForge-Bug #3551583 
     (Fail to parse tcx files with laps without altitude)
+  - Track Panel: added tooltips to all track points, so the track can now be
+    followed easily on the map. The tooltips show:
+    - track point number, time, distance
+    - altitude, heartrate, speed, temperature (if available)
 
 v5.5.0:
  ExerciseViewer changes:
