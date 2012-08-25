@@ -1,5 +1,6 @@
 package de.saring.exerciseviewer.parser.impl
 
+import groovy.transform.TypeChecked;
 import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
@@ -9,6 +10,7 @@ import de.saring.exerciseviewer.parser.ExerciseParser
  *
  * @author Stefan Saring
  */
+@TypeChecked
 class PolarRS200SDParserTest extends GroovyTestCase {
     
     /** Instance to be tested. */
@@ -43,23 +45,23 @@ class PolarRS200SDParserTest extends GroovyTestCase {
         
         def calDate = Calendar.getInstance ()
         calDate.set (2006, 2-1, 20, 16, 54, 11)
-        assertEquals ((int) (calDate.time.time / 1000), (int) (exercise.date.time / 1000))
+        assertEquals ((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
         assertEquals (28 * 60 * 10 + 51 * 10 + 5, exercise.duration)            
         
         // heart rates
-        assertEquals (161, exercise.heartRateAVG)
-        assertEquals (181, exercise.heartRateMax)
+        assertEquals ((short) 161, exercise.heartRateAVG)
+        assertEquals ((short) 181, exercise.heartRateMax)
         
         // energy
         assertEquals (404, exercise.energy)
         
         // heartrate limits
         assertEquals (5, exercise.heartRateLimits.size ())
-        assertEquals (100, exercise.heartRateLimits[0].lowerHeartRate)
-        assertEquals (118, exercise.heartRateLimits[0].upperHeartRate)
+        assertEquals ((short) 100, exercise.heartRateLimits[0].lowerHeartRate)
+        assertEquals ((short) 118, exercise.heartRateLimits[0].upperHeartRate)
         assertEquals (25, exercise.heartRateLimits[0].timeWithin)
-        assertEquals (140, exercise.heartRateLimits[2].lowerHeartRate)
-        assertEquals (158, exercise.heartRateLimits[2].upperHeartRate)
+        assertEquals ((short) 140, exercise.heartRateLimits[2].lowerHeartRate)
+        assertEquals ((short) 158, exercise.heartRateLimits[2].upperHeartRate)
         assertEquals (485, exercise.heartRateLimits[2].timeWithin)
         
         // distance & speed & odometer
@@ -70,23 +72,23 @@ class PolarRS200SDParserTest extends GroovyTestCase {
         // lap data
         assertEquals  (6, exercise.lapList.size ())
         
-        assertEquals (173, exercise.lapList[0].heartRateSplit)        
-        assertEquals (151, exercise.lapList[0].heartRateAVG)
-        assertEquals (173, exercise.lapList[0].heartRateMax)
+        assertEquals ((short) 173, exercise.lapList[0].heartRateSplit)        
+        assertEquals ((short) 151, exercise.lapList[0].heartRateAVG)
+        assertEquals ((short) 173, exercise.lapList[0].heartRateMax)
         assertEquals (1000, exercise.lapList[0].speed.distance)
         assertEquals (11428, (int) (exercise.lapList[0].speed.speedAVG * 1000))
         assertEquals (12756, (int) (exercise.lapList[0].speed.speedEnd * 1000))
         
-        assertEquals (165, exercise.lapList[2].heartRateSplit)        
-        assertEquals (165, exercise.lapList[2].heartRateAVG)
-        assertEquals (174, exercise.lapList[2].heartRateMax)
+        assertEquals ((short) 165, exercise.lapList[2].heartRateSplit)        
+        assertEquals ((short) 165, exercise.lapList[2].heartRateAVG)
+        assertEquals ((short) 174, exercise.lapList[2].heartRateMax)
         assertEquals (3000, exercise.lapList[2].speed.distance)
         assertEquals (11842, (int) (exercise.lapList[2].speed.speedAVG * 1000))
         assertEquals (13249, (int) (exercise.lapList[2].speed.speedEnd * 1000))
         
-        assertEquals (181, exercise.lapList[5].heartRateSplit)        
-        assertEquals (172, exercise.lapList[5].heartRateAVG)
-        assertEquals (181, exercise.lapList[5].heartRateMax)
+        assertEquals ((short) 181, exercise.lapList[5].heartRateSplit)        
+        assertEquals ((short) 172, exercise.lapList[5].heartRateAVG)
+        assertEquals ((short) 181, exercise.lapList[5].heartRateMax)
         assertEquals (5680, exercise.lapList[5].speed.distance)
         assertEquals (11780, (int) (exercise.lapList[5].speed.speedAVG * 1000))
         assertEquals (12829, (int) (exercise.lapList[5].speed.speedEnd * 1000))

@@ -1,5 +1,6 @@
 package de.saring.exerciseviewer.parser.impl
 
+import groovy.transform.TypeChecked;
 import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
@@ -9,6 +10,7 @@ import de.saring.exerciseviewer.parser.ExerciseParser
  *
  * @author Kai Pastor
  */
+@TypeChecked
 class SmartsyncCSVParserTest extends GroovyTestCase {
     
     /** Instance to be tested. */
@@ -49,28 +51,28 @@ class SmartsyncCSVParserTest extends GroovyTestCase {
         
         def calDate = Calendar.getInstance ()
         calDate.set (2008, 4-1, 19, 12, 45, 19)
-        assertEquals ((int) (calDate.time.time / 1000), (int) (exercise.date.time / 1000))
+        assertEquals ((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
         assertEquals ((294 - 1) * 2 * 10, exercise.duration)
-        assertEquals (2, exercise.recordingInterval)
+        assertEquals ((short) 2, exercise.recordingInterval)
 
-        assertEquals (147, exercise.heartRateAVG)
-        assertEquals (180, exercise.heartRateMax)
+        assertEquals ((short) 147, exercise.heartRateAVG)
+        assertEquals ((short) 180, exercise.heartRateMax)
 
         // check lap data (first, one from middle and last lap only)
         assertEquals (0, exercise.lapList.size ())
         
         // check sample data (first, two from middle and last only)
         assertEquals (294, exercise.sampleList.size ())
-        assertEquals (0, exercise.sampleList[0].timestamp)        
-        assertEquals (71, exercise.sampleList[0].heartRate)
+        assertEquals ((short) 0, exercise.sampleList[0].timestamp)        
+        assertEquals ((short) 71, exercise.sampleList[0].heartRate)
         
-        assertEquals (100*2*1000, exercise.sampleList[100].timestamp)        
-        assertEquals (152, exercise.sampleList[100].heartRate)
+        assertEquals (100*2*1000L, exercise.sampleList[100].timestamp)        
+        assertEquals ((short) 152, exercise.sampleList[100].heartRate)
         
-        assertEquals (200*2*1000, exercise.sampleList[200].timestamp)        
-        assertEquals (156, exercise.sampleList[200].heartRate)
+        assertEquals (200*2*1000L, exercise.sampleList[200].timestamp)        
+        assertEquals ((short) 156, exercise.sampleList[200].heartRate)
         
-        assertEquals (293*2*1000, exercise.sampleList[293].timestamp)        
-        assertEquals (163, exercise.sampleList[293].heartRate)
+        assertEquals (293*2*1000L, exercise.sampleList[293].timestamp)        
+        assertEquals ((short) 163, exercise.sampleList[293].heartRate)
     }
 }

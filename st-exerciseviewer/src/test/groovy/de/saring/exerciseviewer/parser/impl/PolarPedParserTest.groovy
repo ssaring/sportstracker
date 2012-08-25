@@ -1,5 +1,6 @@
 package de.saring.exerciseviewer.parser.impl;
 
+import groovy.transform.TypeChecked;
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.parser.ExerciseParser
@@ -9,10 +10,11 @@ import de.saring.exerciseviewer.parser.ExerciseParser
  *
  * @author Philippe Marzouk
  */
+@TypeChecked
 public class PolarPedParserTest extends GroovyTestCase {
 
     /** Instance to be tested. */
-    private ExerciseParser parser;
+    private PolarPedParser parser;
 
     public void setUp() {
         parser = new PolarPedParser();
@@ -33,7 +35,7 @@ public class PolarPedParserTest extends GroovyTestCase {
     public void testPedtooManyCalls() throws Exception {
         def filename = 'misc/testdata/polarpersonaltrainer/polar-ped-sample.ped'
         def exercise = parser.parseExercise(filename)
-        def exerciseCount = parser.getExerciseCount();
+        def exerciseCount = parser.exerciseCount;
         shouldFail (EVException) {
             exercise = parser.parseExercise(filename, exerciseCount)
         }
@@ -53,7 +55,7 @@ public class PolarPedParserTest extends GroovyTestCase {
 
         def calDate = Calendar.getInstance ()
         calDate.set (2010, 4-1, 2, 19, 19, 00)
-        assertEquals ((int) (calDate.time.time / 1000), (int) (exercise.date.time / 1000))
+        assertEquals ((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
 
         assertEquals(31560, exercise.duration)
         assertEquals(12800, exercise.speed.distance)
@@ -61,8 +63,8 @@ public class PolarPedParserTest extends GroovyTestCase {
 
         assertEquals(367, exercise.energy)
 
-        assertEquals(127, exercise.heartRateAVG)
-        assertEquals(141, exercise.heartRateMax)
+        assertEquals((short) 127, exercise.heartRateAVG)
+        assertEquals((short) 141, exercise.heartRateMax)
 
     }
 }
