@@ -14,14 +14,15 @@
     </security>
     <resources>
         <java version="1.7+"/>
-        <jar href="sportstracker-5.5.0.jar" main="true" download="eager"/>
-        <jar href="lib/st-exerciseviewer-5.5.0.jar" download="eager"/>
-        <jar href="lib/st-util-5.5.0.jar" download="eager"/>
+        <jar href="sportstracker-5.6.0.jar" main="true" download="eager"/>
+        <jar href="lib/st-exerciseviewer-5.6.0.jar" download="eager"/>
+        <jar href="lib/st-util-5.6.0.jar" download="eager"/>
         <jar href="lib/guice-3.0.jar" download="eager"/>
         <jar href="lib/aopalliance-1.0.jar" download="eager"/>
         <jar href="lib/javax.inject-1.jar" download="eager"/>
         <jar href="lib/bsaf-1.9.2.jar" download="eager"/>
-        <jar href="lib/groovy-all-1.8.6.jar" download="eager"/>
+        <jar href="lib/groovy-2.0.1.jar" download="eager"/>
+        <jar href="lib/groovy-xml-2.0.1.jar" download="eager"/>
         <jar href="lib/jdom-2.0.1.jar" download="eager"/>
         <jar href="lib/jcommon-1.0.17.jar" download="eager"/>
         <jar href="lib/jfreechart-1.0.14.jar" download="eager"/>

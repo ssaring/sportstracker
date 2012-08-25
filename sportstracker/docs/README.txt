@@ -317,12 +317,12 @@ For compilation of the SportsTracker sources you need:
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
-  - NetBeans IDE 7.1 (from http://www.netbeans.org)
+  - NetBeans IDE 7.2 (from http://www.netbeans.org)
     (Maven support is included, Groovy plugin needs to be installed)
   - Eclipse 4.0 (from http://eclipse.org) with following plugins:
     - Groovy-Eclipse 2.7.0 (from http://groovy.codehaus.org/Eclipse+Plugin)
       - with Groovy-Eclipse Feature
-      - with Groovy Compiler 1.8 Feature
+      - with Groovy Compiler 2.0 Feature
       - with Groovy-Eclipse M2E integration
 
 The Maven build configuration supports all typical goals (clean, compile,
@@ -355,7 +355,7 @@ The SportsTracker project uses the following libraries:
   - BSAF 1.9.2 (Better Swing Application Framework)
     (http://kenai.com/projects/bsaf)
       License: Lesser General Public License 2.1 (LGPL)
-  - Groovy 1.8.6 (http://groovy.codehaus.org)
+  - Groovy 2.0.1 (http://groovy.codehaus.org)
       License: Apache License v2.0
   - Guice 3.0 (http://code.google.com/p/google-guice/)
       Includes: aopalliance-1.0.jar, javax.inject-1.jar

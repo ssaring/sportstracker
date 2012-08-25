@@ -1,6 +1,11 @@
 SportsTracker-TODO
 ==================
 
+Groovy 2.0 usage:
+- use of TypeChecked
+- use of new maven eclipse groovy compiler
+
+
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup

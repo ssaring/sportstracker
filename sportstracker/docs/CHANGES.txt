@@ -22,6 +22,9 @@ v5.6.0:
     - new diagram mode for equipment usage overview of a selected sport type
       (shows the distances per equipment of one sport type)
     - bigger size, much more readable (still fits on 1024x768 displays)
+  - update to Groovy 2.0.1, usage of new Groovy features
+    - use only the required Groovy modules instead of groovy-all dependency
+      => the Groovy libraries are now about 3 MByte smaller      
  ExerciseViewer changes:
   - Garmin TCX Parser: Fix for SourceForge-Bug #3551583 
     (Fail to parse tcx files with laps without altitude)
