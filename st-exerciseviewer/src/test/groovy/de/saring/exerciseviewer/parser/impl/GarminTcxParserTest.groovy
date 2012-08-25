@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.parser.impl
 
-import groovy.transform.TypeChecked;
 import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
