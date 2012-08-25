@@ -1,6 +1,7 @@
 package de.saring.exerciseviewer.parser.impl
 
 import static org.junit.Assert.assertEquals;
+import groovy.transform.TypeChecked;
 import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
@@ -10,6 +11,7 @@ import de.saring.exerciseviewer.parser.ExerciseParser
  *
  * @author Stefan Saring
  */
+@TypeChecked
 class PolarHRMParserTest extends GroovyTestCase {
     
     /** Instance to be tested. */
@@ -42,7 +44,7 @@ class PolarHRMParserTest extends GroovyTestCase {
         
         // check exercise data
         assertEquals (EVExercise.ExerciseFileType.HRM, exercise.fileType)
-        assertEquals (0, exercise.userID)
+        assertEquals ((short) 0, exercise.userID)
         assertTrue (exercise.recordingMode.altitude)
         assertTrue (exercise.recordingMode.speed)
         assertFalse (exercise.recordingMode.cadence)
@@ -53,7 +55,7 @@ class PolarHRMParserTest extends GroovyTestCase {
         
         def calDate = Calendar.getInstance ()
         calDate.set (2002, 11-1, 20, 14, 07, 44)
-        assertEquals ((int) (calDate.time.time / 1000), (int) (exercise.date.time / 1000))
+        assertEquals ((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
         assertEquals ((1*60*60*10) + (13*60*10) + 15*10, exercise.duration)
         assertEquals (15, exercise.recordingInterval)
 
@@ -176,7 +178,7 @@ class PolarHRMParserTest extends GroovyTestCase {
 
         // check exercise data
         assertEquals (exercise.fileType, EVExercise.ExerciseFileType.HRM)
-        assertEquals (exercise.userID, 0)
+        assertEquals ((short) 0, exercise.userID)
         // assertEquals (exercise.Type, 1) // (not in HRM file)
         // assertEquals (exercise.TypeLabel, "ExeSet1") // (not in HRM file)
         assertTrue (exercise.recordingMode.altitude)
@@ -187,7 +189,7 @@ class PolarHRMParserTest extends GroovyTestCase {
 
         def calDate = Calendar.getInstance ()
         calDate.set (2002, 11-1, 20, 13, 10, 42)
-        assertEquals ((int) (calDate.time.time / 1000), (int) (exercise.date.time / 1000))
+        assertEquals ((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
         assertEquals ((0*60*60*10) + (51*60*10) + 0*10, exercise.duration)
         assertEquals (15, exercise.recordingInterval)
 
@@ -307,7 +309,7 @@ class PolarHRMParserTest extends GroovyTestCase {
 
         // check exercise data
         assertEquals (exercise.fileType, EVExercise.ExerciseFileType.HRM)
-        assertEquals (exercise.userID, 0)
+        assertEquals ((short) 0, exercise.userID)
         // assertEquals (exercise.type, 2) // (not in HRM file)
         // assertEquals (exercise.typeLabel, "ExeSet2") // (not in HRM file)
         assertTrue (exercise.recordingMode.altitude)
@@ -318,7 +320,7 @@ class PolarHRMParserTest extends GroovyTestCase {
         
         def calDate = Calendar.getInstance ()
         calDate.set (2002, 12-1, 25, 10, 21, 04)
-        assertEquals ((int) (calDate.time.time / 1000), (int) (exercise.date.time / 1000))
+        assertEquals ((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
         assertEquals ((0*60*60*10) + (42*60*10) + 24*10 + 7, exercise.duration)
         assertEquals (15, exercise.recordingInterval)
         
