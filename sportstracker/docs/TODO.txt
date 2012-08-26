@@ -33,7 +33,7 @@ General TODOs:
   distance, duration etc.
 - Exercise list view: right mouse click on the column header should open the
   Options Dialog tab for the list view
-- translation updates (german is up to date)
+- translation updates (german and french are up to date)
 - manual starting of Tasks (background) will be simpler in future AFW's,
   improve STController:startActionManually() then
   => https://appframework.dev.java.net/issues/show_bug.cgi?id=39

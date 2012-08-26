@@ -38,6 +38,9 @@ v5.6.0:
     followed easily on the map. The tooltips show:
     - track point number, time, distance
     - altitude, heartrate, speed, temperature (if available)
+ Translations:
+  - updated german translation by Stefan Saring
+  - updated french translation by Nicolas Ollivier <nicollivier@gmail.com>
 
 v5.5.0:
  ExerciseViewer changes:
