@@ -132,6 +132,11 @@ On Windows systems you can start the application just by starting the file
 On Unix-like systems you need to start it by using the command 
 'java -jar sportstracker-x.y.z.jar' from the application directory.
 
+On Mac OS X you need at least JDK or JRE 7u6 for using Java WebStart. 
+If you prefer OS X application bundles, the appropriate download is available
+too. This bundle does not contain Java, the JDK or JRE must be installed 
+before.
+
 The default directory for the application data is '$HOME/.sportstracker',
 e.g. '/home/foo/.sportstracker' for the Linux user foo. You can also specify
 another directory with the '--datadir' command line parameter. 
@@ -139,18 +144,6 @@ Example: 'java -jar sportstracker-x.y.z.jar --datadir=.' stores the
 application data in the SportsTracker installation directory. So you're able
 to put SportsTracker and it's data on an USB stick and use it on any available
 computer.
-
-On Linux/Unix systems Java uses the server-mode JVM (HotSpot), the application
-will start slower and will use more memory than on Windows (uses client-mode).
-The client-mode can be enabled by setting the environment variable:
-  JDK_ALTERNATE_VM=client
-This variable should be set system-wide (e.g. by adding to '/etc/environment'
-on Ubuntu Linux), so the performance of all Java desktop applications will be
-improved.
-
-On Mac OS X you need at least JDK or JRE 7u6 for using Java WebStart. 
-If you prefer OS X application bundles, the appropriate download is available
-too.
 
 
 Usage
@@ -362,7 +355,7 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - JFreeChart 1.0.14 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
-  - JDOM 1.1.3 (http://www.jdom.org)
+  - JDOM 2.0.2 (http://www.jdom.org)
       License: Apache-style open source license
   - SwingX 1.6.3 (https://swingx.dev.java.net/)
       License: Lesser General Public License (LGPL)
