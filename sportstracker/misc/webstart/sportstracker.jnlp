@@ -30,7 +30,7 @@
         <jar href="lib/swingx-all-1.6.3.jar" download="eager"/>
         <jar href="lib/swingx-ws-1.0.jar" download="eager"/>
         <jar href="lib/miglayout-3.7.4.jar" download="eager"/>
-        <jar href="lib/fit-1.0.jar" download="eager"/>
+        <jar href="lib/fit-4.20.jar" download="eager"/>
     </resources>
     <application-desc main-class="de.saring.sportstracker.gui.STMain"/>
 </jnlp>

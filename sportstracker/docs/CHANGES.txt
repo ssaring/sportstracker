@@ -5,7 +5,9 @@ v5.7.0:
  Translations:
   - updated spanish translation by Luis Llorente Campo
     <luisllorente@luisllorente.com>
-
+ ExerciseViewer changes:
+  - update of Garmin FIT SDK to version 4.20 (for parsing FIT files)
+  
 v5.6.0:
  SportsTracker changes:
   - Findbugs bugfixes in all modules (minor code improvements)

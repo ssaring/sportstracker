@@ -369,8 +369,8 @@ The SportsTracker project uses the following libraries:
       License: Common Public License v1.0
   - EasyMock 3.0 (http://www.easymock.org)
       License: Apache License v2.0
-  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 1.0
-      URL: http://www.thisisant.com/support/
+  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 4.20
+      URL: http://www.thisisant.com/pages/products/fit-sdk
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: http://www.thisisant.com/pages/ant/fit-license
 
@@ -443,4 +443,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2012/08/15
+2012/10/21
