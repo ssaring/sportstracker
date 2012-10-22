@@ -1,10 +1,14 @@
 SportsTracker-TODO
 ==================
 
-Garmin-Support:
-- Problems with 910 XT FIT files
-- all the parsers must also be able to handle NullPointerExceptions, otherwise errors are 
-  not visible for the users
+Support for Garmin Forerunner 910XT (Feature request #3578651):
+- Problems when parsing 910 XT FIT files
+  => see TODOs in GarminFitParser
+  => remove System.out's
+  => add test files for special cases
+  => documentation in ReadMe + website
+=> all the parsers must also be able to handle NullPointerExceptions, otherwise errors are 
+   not visible for the users
 
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead

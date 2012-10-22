@@ -3,7 +3,9 @@ package de.saring.exerciseviewer.parser.impl.garminfit;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.garmin.fit.DateTime;
 import com.garmin.fit.LapMesg;
+import com.garmin.fit.LengthMesg;
 import com.garmin.fit.Mesg;
 import com.garmin.fit.MesgListener;
 import com.garmin.fit.MesgNum;
@@ -42,6 +44,8 @@ class FitMessageListener implements MesgListener {
     
     @Override
     public void onMesg(Mesg mesg) {
+        
+        System.err.println("onMesg: " + mesg.getName());
 
         // delegate interesting messages to appropriate handler methods
         switch(mesg.getNum()) {
@@ -53,6 +57,9 @@ class FitMessageListener implements MesgListener {
                 break;
             case MesgNum.RECORD:
                 readRecordMessage(new RecordMesg(mesg));
+                break;
+            case MesgNum.LENGTH:
+                readLengthMessage(new LengthMesg(mesg));
                 break;
         }
     }
@@ -86,8 +93,14 @@ class FitMessageListener implements MesgListener {
             exercise.getRecordingMode().setSpeed(true);
             exercise.setSpeed(new ExerciseSpeed());
             exercise.getSpeed().setDistance(Math.round(mesg.getTotalDistance()));
-            exercise.getSpeed().setSpeedAVG(
-                ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
+            // TODO AVG speed might be missing for running data from Garmin Forerunner 910XT, must be calculated
+            // => can this be read from the "unknown" messages which come after the Lap or Session messages?
+            // => debug and check all attys there...
+            Float avgSpeed = mesg.getAvgSpeed();
+            if (avgSpeed != null) {
+                exercise.getSpeed().setSpeedAVG(
+                        ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
+            }
             exercise.getSpeed().setSpeedMax(
                 ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getMaxSpeed()));
         }
@@ -132,8 +145,14 @@ class FitMessageListener implements MesgListener {
         if (mesg.getTotalDistance() != null) {
             lap.setSpeed(new LapSpeed());
             lap.getSpeed().setDistance(Math.round(mesg.getTotalDistance()));
-            lap.getSpeed().setSpeedAVG(
-                ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
+            // TODO AVG speed might be missing for running data from Garmin Forerunner 910XT, must be calculated
+            // => can this be read from the "unknown" messages which come after the Lap or Session messages?
+            // => debug and check all attys there...
+            Float avgSpeed = mesg.getAvgSpeed();
+            if (avgSpeed != null) {
+                lap.getSpeed().setSpeedAVG(
+                    ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
+            }
         }
         
         // read optional ascent data
@@ -162,7 +181,11 @@ class FitMessageListener implements MesgListener {
         lSamples.add(sample);
 
         // sample timestamp must be the offset from start time, will be corrected later 
-        sample.setTimestamp(mesg.getTimestamp().getDate().getTime());
+        // (in some cases the timestamp is missing and will be read from the next Length message)
+        DateTime timestamp = mesg.getTimestamp();
+        if (timestamp != null) {
+            sample.setTimestamp(timestamp.getDate().getTime());
+        }
 
         if (mesg.getHeartRate() != null) {
             sample.setHeartRate(mesg.getHeartRate());
@@ -191,6 +214,24 @@ class FitMessageListener implements MesgListener {
             temperatureAvailable = true;
             sample.setTemperature(mesg.getTemperature());
         }
+    }
+
+    /**
+     * Special handling for Garmin Forerunner 910XT exercise files: Length messages are stored mostly in swimming
+     * exercises, they contain informations for a "length". For some reason the previous read Record message does
+     * not contain any timing informations, these are contained in the Length messages. So the end timestamp must 
+     * be read and assigned to the last read sample record here.
+     * 
+     * @param mesg Length message
+     */
+    private void readLengthMessage(LengthMesg mesg) {
+        
+        long startTimestamp = mesg.getStartTime().getDate().getTime();
+        long totalElapsedTime = Math.round(mesg.getTotalElapsedTime().doubleValue() * 1000d);
+        long endTimestamp = startTimestamp + totalElapsedTime;
+        
+        ExerciseSample lastSample = lSamples.get(lSamples.size() - 1);
+        lastSample.setTimestamp(endTimestamp);
     }
     
     /**
