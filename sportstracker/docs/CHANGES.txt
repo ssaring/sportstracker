@@ -7,9 +7,10 @@ v5.7.0:
     <luisllorente@luisllorente.com>
  ExerciseViewer changes:
   - update of Garmin FIT SDK to version 4.20 (for parsing FIT files)
-  - support for Garmin Forerunner 910XT exercise files (there are still minor
-    problems in exercises with sport type transitions, e.g. for triathlon) 
-  
+  - support for Garmin Forerunner 910XT exercises (Feature request #3578651)
+    => there are still minor problems in exercises with sport type 
+       transitions, e.g. for triathlon) 
+
 v5.6.0:
  SportsTracker changes:
   - Findbugs bugfixes in all modules (minor code improvements)

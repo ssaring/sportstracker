@@ -1,8 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Support for Garmin Forerunner 910XT (Feature request #3578651):
-  => add test files for special cases
 Before next release:
 - add support for Garmin Forerunner 910XT in website
 - all the parsers must also be able to handle NullPointerExceptions, otherwise errors are 
