@@ -25,6 +25,7 @@ import de.saring.exerciseviewer.data.LapSpeed;
 import de.saring.exerciseviewer.data.LapTemperature;
 import de.saring.exerciseviewer.data.Position;
 import de.saring.exerciseviewer.data.RecordingMode;
+import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
 
 /**
@@ -45,8 +46,6 @@ class FitMessageListener implements MesgListener {
     @Override
     public void onMesg(Mesg mesg) {
         
-        System.err.println("onMesg: " + mesg.getName());
-
         // delegate interesting messages to appropriate handler methods
         switch(mesg.getNum()) {
             case MesgNum.SESSION:
@@ -93,9 +92,7 @@ class FitMessageListener implements MesgListener {
             exercise.getRecordingMode().setSpeed(true);
             exercise.setSpeed(new ExerciseSpeed());
             exercise.getSpeed().setDistance(Math.round(mesg.getTotalDistance()));
-            // TODO AVG speed might be missing for running data from Garmin Forerunner 910XT, must be calculated
-            // => can this be read from the "unknown" messages which come after the Lap or Session messages?
-            // => debug and check all attys there...
+            // AVG speed might be missing in Garmin Forerunner 910XT exercises, will be calculated afterwards
             Float avgSpeed = mesg.getAvgSpeed();
             if (avgSpeed != null) {
                 exercise.getSpeed().setSpeedAVG(
@@ -145,9 +142,7 @@ class FitMessageListener implements MesgListener {
         if (mesg.getTotalDistance() != null) {
             lap.setSpeed(new LapSpeed());
             lap.getSpeed().setDistance(Math.round(mesg.getTotalDistance()));
-            // TODO AVG speed might be missing for running data from Garmin Forerunner 910XT, must be calculated
-            // => can this be read from the "unknown" messages which come after the Lap or Session messages?
-            // => debug and check all attys there...
+            // AVG speed might be missing in Garmin Forerunner 910XT exercises, will be calculated afterwards
             Float avgSpeed = mesg.getAvgSpeed();
             if (avgSpeed != null) {
                 lap.getSpeed().setSpeedAVG(
@@ -251,6 +246,7 @@ class FitMessageListener implements MesgListener {
 
         calculateAltitudeSummary();
         calculateTemperatureSummary();
+        calculateMissingAverageSpeed();
         return exercise;
     }
 
@@ -377,4 +373,28 @@ class FitMessageListener implements MesgListener {
                 (short) (Math.round(temperatureSum / (double) exercise.getSampleList().length)));
         }
     }        
+
+    /**
+     * Workaround for Garmin Forerunner 910XT exercise files: the AVG speed is often not available
+     * for the parsed laps and for the exercise (for unknown reasons). So the AVG speed needs to
+     * be calculated after parsing.
+     * TODO This workaround works only for exercise files without transitions between sport types
+     * (then there are negative timestamps for some strange reasons).
+     */
+    private void calculateMissingAverageSpeed() {
+        
+        ExerciseSpeed exerciseSpeed = exercise.getSpeed();
+        if (exerciseSpeed != null && exerciseSpeed.getSpeedAVG() == 0f) {
+            exerciseSpeed.setSpeedAVG(CalculationUtils.calculateAvgSpeed(
+                    exerciseSpeed.getDistance() / 1000f, Math.round(exercise.getDuration() / 10f)));
+        }
+        
+        for (Lap lap : exercise.getLapList()) {
+            LapSpeed lapSpeed = lap.getSpeed();            
+            if (lapSpeed != null && lapSpeed.getSpeedAVG() == 0f) {
+                lapSpeed.setSpeedAVG(CalculationUtils.calculateAvgSpeed(
+                        lapSpeed.getDistance() / 1000f, Math.round(lap.getTimeSplit() / 10f)));
+            }
+        }
+    }
 }

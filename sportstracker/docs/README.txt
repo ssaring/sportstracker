@@ -44,7 +44,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - CicloSport HAC4Pro (tested)
   - CicloSport HAC5    (tested)
   - Garmin Edge        (tested with Edge 500 and Edge 705, FIT and TCX files)
-  - Garmin Forerunner  (tested with Forerunner 305, FIT and TCX files)
+  - Garmin Forerunner  (tested with Forerunner 305, 910XT, FIT and TCX files)
   - Garmin Oregon      (tested with Oregon 450, GPX files)
   - Timex Ironmen Race Trainer (tested)
   - Timex Ironman Global Trainer  (tested)
