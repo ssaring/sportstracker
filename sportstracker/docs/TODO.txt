@@ -1,6 +1,12 @@
 SportsTracker-TODO
 ==================
 
+Bugfix for support of Timex Ironman Run Trainer PWX files (Bugs-3599059):
+- check parsed values, also for other, older test files
+- fix existing tests and add a test for the Run Trainer
+- add to ChangeLog and to list of supported devices
+- close bug
+
 Before next release:
 - add support for Garmin Forerunner 910XT in website
 - all the parsers must also be able to handle NullPointerExceptions, otherwise errors are 
