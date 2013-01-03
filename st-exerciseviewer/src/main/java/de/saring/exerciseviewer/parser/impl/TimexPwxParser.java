@@ -1,6 +1,7 @@
 package de.saring.exerciseviewer.parser.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -43,9 +44,11 @@ import de.saring.exerciseviewer.parser.ExerciseParserInfo;
  * 9/10/2010 Version 1.2
  *              Added support for Global Trainer Pwx Files
  *              Changed Lap Distance to Distance since beginning of exercise
+ * 01/03/2012 Version 1.3
+ *              Added support for Timex Ironman Run Trainer Pwx Files
  *
- * @author  Robert C. Schultz
- * @version 1.2
+ * @author  Robert C. Schultz, Stefan Saring
+ * @version 1.3
  */
 public class TimexPwxParser extends AbstractExerciseParser {
 
@@ -194,9 +197,11 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 exercise.setSumRideTime((int) workoutSummary.getDuration() / 60);  // Assume some watches keep track of bike specific time..This one doesn't
                 exercise.setEnergy((int) (workoutSummary.getWork() * (0.238845896627495939619))); // Convert to Calories first
                 //exercise.setEnergyTotal((int) (workoutSummary.getWork() * (0.238845896627495939619))); // Using the value in device/extensions
-                exercise.setHeartRateMax((short) workoutSummary.getHr().getMax());
-                // exercise.setHeartRateMin((short) workoutSummary.getHr().getMin()); // Not implemented in EVExercise
-                exercise.setHeartRateAVG((short) workoutSummary.getHr().getAvg());
+                if (workoutSummary.getHr() != null) {
+                    exercise.setHeartRateMax((short) workoutSummary.getHr().getMax());
+                    // exercise.setHeartRateMin((short) workoutSummary.getHr().getMin()); // Not implemented in EVExercise
+                    exercise.setHeartRateAVG((short) workoutSummary.getHr().getAvg());
+                }
                 exercise.setOdometer((int)workoutSummary.getDistance()/1000);
                 if (workoutSummary.getSpeed() != null) {
                     ExerciseSpeed workoutSpeed = new ExerciseSpeed();
@@ -235,9 +240,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         String childName;
         for (int i = 0; i < children.getLength(); i++) {
             childName = children.item(i).getNodeName();//
-            if (childName.equals("laps")) {
-                exercise.setLapList(new Lap[Integer.valueOf(children.item(i).getTextContent())]);
-            } else if (childName.equals("ascent")) {
+            if (childName.equals("ascent")) {
                 exercise.getAltitude().setAscent(Integer.valueOf(children.item(i).getTextContent()));
             } else if (childName.equals("descent")) {
                 // obtain descent - not used in EVExercise
@@ -259,7 +262,8 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 // obtain make        
             } else if (childName.equals("model")) {
                 // obtain model        
-                if (children.item(i).getTextContent().equals("Global Trainer")){
+                String model = children.item(i).getTextContent();
+                if (model.equals("Global Trainer") || model.equals("Run Trainer")){
                     exercise = setGlobalTrainerRecordingMode(exercise);
                     exercise = setGlobalTrainerZones(exercise);
                 }
@@ -358,9 +362,6 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 Zones[5].setLowerHeartRate(Short.valueOf(children.item(i).getTextContent()));
             } else if (childName.equals("HasHRMData")) {
                 // does file have hrm data   
-            } else if (childName.equals("TotalNumberOfLaps")) {
-                // obtain total number of laps and generate LapList in the exercise
-                exercise.setLapList(new Lap[Integer.valueOf(children.item(i).getTextContent())]);
             } else if (childName.equals("KCalPerDevice")) {
                 // obtain kCalPerDevice        
                 exercise.setEnergyTotal(Integer.valueOf(children.item(i).getTextContent()));
@@ -473,10 +474,10 @@ public class TimexPwxParser extends AbstractExerciseParser {
     private EVExercise parseWorkoutSegments(EVExercise exercise, Node workoutNode){
         // obtain segment name  ( Either laps or Workout Summary )
         // parse segment summary data
-        int totalLaps = exercise.getLapList().length ;
-        int currentLap = 0;
         // Create and initialize a holding Lap
-
+        
+        ArrayList<Lap> laps = new ArrayList<>();
+        
         // Finished Holding Lap
         NodeList children = workoutNode.getChildNodes();
         NodeList segmentChildren = null;
@@ -487,6 +488,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
             if (childName.equals("segment")) {
                 segmentChildren = children.item(i).getChildNodes();
                 Lap lap = new Lap();
+                laps.add(lap);
                 LapAltitude lapAlt = new LapAltitude();
                 LapSpeed lapSpd = new LapSpeed();
                 LapTemperature lapTmp = new LapTemperature();
@@ -519,19 +521,22 @@ public class TimexPwxParser extends AbstractExerciseParser {
                          lapSpd.setSpeedEnd((float) 0.0);
                          }
                          lap.setSpeed(lapSpd);
-                         lap.setHeartRateAVG((short)segmentSummary.getHr().getAvg());
-                         lap.setHeartRateMax((short)segmentSummary.getHr().getMax());
+                         if (segmentSummary.getHr() != null) {
+                             lap.setHeartRateAVG((short)segmentSummary.getHr().getAvg());
+                             lap.setHeartRateMax((short)segmentSummary.getHr().getMax());
+                         }
                          if ( segmentSummary.getAltitude() != null) {
                             lapAlt.setAltitude((short) segmentSummary.getAltitude().getMax());
                             lapAlt.setAscent((int) (segmentSummary.getAltitude().getMax() - segmentSummary.getAltitude().getMin()));
                             lap.setAltitude(lapAlt);
+                         }
                     }
                 }
-                }
-                if (currentLap < totalLaps) {
-                    exercise.getLapList()[currentLap++] = lap;
-                }
             }
+        }
+
+        if (!laps.isEmpty()) {
+            exercise.setLapList(laps.toArray(new Lap[laps.size()]));
         }
         return exercise;
     }
@@ -632,23 +637,28 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 exercise.getSampleList()[currentSampleNumber++] = sample;
 
                 // update Zone information
-                for (int j = 0; j < 6; j++) {
-                    if ( sample.getHeartRate() > exercise.getHeartRateLimits()[j].getUpperHeartRate()) {
-                        aboveZone[j] +=(currentOffset-lastOffset);
-                    } else if (sample.getHeartRate() < exercise.getHeartRateLimits()[j].getLowerHeartRate()) {
-                        belowZone[j] += (currentOffset-lastOffset);
-                    } else {
-                        inZone[j] += (currentOffset-lastOffset);
+                if (exercise.getHeartRateLimits() != null) {
+                    for (int j = 0; j < 6; j++) {
+                        if ( sample.getHeartRate() > exercise.getHeartRateLimits()[j].getUpperHeartRate()) {
+                            aboveZone[j] +=(currentOffset-lastOffset);
+                        } else if (sample.getHeartRate() < exercise.getHeartRateLimits()[j].getLowerHeartRate()) {
+                            belowZone[j] += (currentOffset-lastOffset);
+                        } else {
+                            inZone[j] += (currentOffset-lastOffset);
+                        }
                     }
                 }
             }
             
         }
+        
         // Store Zone Information in the exercise file
-        for (int i = 0; i < 6; i++) {
-            exercise.getHeartRateLimits()[i].setTimeAbove((short)aboveZone[i]);
-            exercise.getHeartRateLimits()[i].setTimeBelow((short)belowZone[i]);
-            exercise.getHeartRateLimits()[i].setTimeWithin((short)inZone[i]);
+        if (exercise.getHeartRateLimits() != null) {
+            for (int i = 0; i < 6; i++) {
+                exercise.getHeartRateLimits()[i].setTimeAbove((short)aboveZone[i]);
+                exercise.getHeartRateLimits()[i].setTimeBelow((short)belowZone[i]);
+                exercise.getHeartRateLimits()[i].setTimeWithin((short)inZone[i]);
+            }
         }
         exercise.setRecordingInterval((short)2);
         return exercise;        
