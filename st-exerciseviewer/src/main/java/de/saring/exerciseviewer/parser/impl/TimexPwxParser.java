@@ -472,11 +472,11 @@ public class TimexPwxParser extends AbstractExerciseParser {
     }
 
     private EVExercise parseWorkoutSegments(EVExercise exercise, Node workoutNode){
+        ArrayList<Lap> laps = new ArrayList<>();
+        
         // obtain segment name  ( Either laps or Workout Summary )
         // parse segment summary data
         // Create and initialize a holding Lap
-        
-        ArrayList<Lap> laps = new ArrayList<>();
         
         // Finished Holding Lap
         NodeList children = workoutNode.getChildNodes();
@@ -488,7 +488,6 @@ public class TimexPwxParser extends AbstractExerciseParser {
             if (childName.equals("segment")) {
                 segmentChildren = children.item(i).getChildNodes();
                 Lap lap = new Lap();
-                laps.add(lap);
                 LapAltitude lapAlt = new LapAltitude();
                 LapSpeed lapSpd = new LapSpeed();
                 LapTemperature lapTmp = new LapTemperature();
@@ -531,6 +530,12 @@ public class TimexPwxParser extends AbstractExerciseParser {
                             lap.setAltitude(lapAlt);
                          }
                     }
+                }
+
+                // sometimes there are laps (mostly the last one) with lap length 0 => ignore them
+                Lap previousLap = laps.isEmpty() ? null : laps.get(laps.size() - 1);
+                if (previousLap == null || lap.getTimeSplit() > previousLap.getTimeSplit()) {
+                    laps.add(lap);
                 }
             }
         }
