@@ -2,8 +2,7 @@ SportsTracker-TODO
 ==================
 
 Bugfix for support of Timex Ironman Run Trainer PWX files (Bugs-3599059):
-- check parsed values, also for other, older test files
-- fix existing tests and add a test for the Run Trainer
+- add an unit test for the Run Trainer
 - add to ChangeLog and to list of supported devices
 - close bug
 

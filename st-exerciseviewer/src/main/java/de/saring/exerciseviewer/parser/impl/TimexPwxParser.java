@@ -25,6 +25,7 @@ import de.saring.exerciseviewer.data.Position;
 import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
+import de.saring.util.unitcalc.CalculationUtils;
 
 /**
  * This implementation of an ExerciseParser is for reading PWX files of the
@@ -666,9 +667,17 @@ public class TimexPwxParser extends AbstractExerciseParser {
             }
         }
         exercise.setRecordingInterval((short)2);
+        
+        // some models (e.g. Timex Ironman Run Trainer) don't contain statistic date (avg, max, ...)
+        // => compute the missing data   
+        if (exercise.getSampleList().length > 0) {
+            computeHeartrateStatisticIfMissing(exercise);
+            computeSpeedStatisticIfMissing(exercise);
+            computeAltitudeStatisticIfMissing(exercise);
+        }
         return exercise;        
     }
-
+    
     private Node findFirstPwx(Document doc) {
         // Find the first node of the document that is a pwx and then return it otherwise, return null
         // Normally only expect one node at this level but who knows.
@@ -722,6 +731,62 @@ public class TimexPwxParser extends AbstractExerciseParser {
         // done :-) ?
 
         return exercise;
+    }
+
+    private void computeHeartrateStatisticIfMissing(EVExercise exercise) {
+        if (exercise.getHeartRateAVG() == 0) {
+            double sumHeartrate = 0;
+            
+            for (ExerciseSample sample : exercise.getSampleList()) {
+                sumHeartrate += sample.getHeartRate();
+                exercise.setHeartRateMax((short) Math.max(exercise.getHeartRateMax(), sample.getHeartRate())); 
+            }
+            exercise.setHeartRateAVG((short) Math.round(sumHeartrate / (double) exercise.getSampleList().length));
+        }
+    }
+
+    private void computeSpeedStatisticIfMissing(EVExercise exercise) {
+        if (exercise.getRecordingMode().isSpeed() && exercise.getSpeed() == null) {
+            
+            ExerciseSpeed exSpeed = new ExerciseSpeed();
+            exSpeed.setSpeedMax(Float.MIN_VALUE);
+            exercise.setSpeed(exSpeed);
+            
+            for (ExerciseSample sample : exercise.getSampleList()) {
+                exSpeed.setSpeedMax(Math.max(exSpeed.getSpeedMax(), sample.getSpeed()));
+            }
+            
+            ExerciseSample lastSample = exercise.getSampleList()[exercise.getSampleList().length - 1];
+            exSpeed.setDistance(lastSample.getDistance());
+            exSpeed.setSpeedAVG(CalculationUtils.calculateAvgSpeed(
+                    exSpeed.getDistance() / 1000f, 
+                    Math.round(exercise.getDuration() / 10f)));
+        }
+    }
+    
+    private void computeAltitudeStatisticIfMissing(EVExercise exercise) {
+        if (exercise.getRecordingMode().isAltitude() && exercise.getAltitude() == null) {
+            
+            ExerciseAltitude exAltitude = new ExerciseAltitude();
+            exAltitude.setAltitudeMin(Short.MAX_VALUE);
+            exAltitude.setAltitudeMax(Short.MIN_VALUE);
+            exercise.setAltitude(exAltitude);
+            
+            double sumAltitude = 0;
+            short previousAltitude = Short.MAX_VALUE;
+            
+            for (ExerciseSample sample : exercise.getSampleList()) {
+                sumAltitude += sample.getAltitude();
+                exAltitude.setAltitudeMin((short) Math.min(exAltitude.getAltitudeMin(), sample.getAltitude()));
+                exAltitude.setAltitudeMax((short) Math.max(exAltitude.getAltitudeMax(), sample.getAltitude()));
+                
+                if (previousAltitude < sample.getAltitude()) {
+                    exAltitude.setAscent(exAltitude.getAscent() + (sample.getAltitude() - previousAltitude));
+                }
+                previousAltitude = sample.getAltitude();
+            }
+            exAltitude.setAltitudeAVG((short) Math.round(sumAltitude / (double) exercise.getSampleList().length));
+        }
     }
 }
 
