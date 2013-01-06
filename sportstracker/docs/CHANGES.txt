@@ -2,9 +2,6 @@ Changelog
 ---------
 
 v5.7.0:
- Translations:
-  - updated spanish translation by Luis Llorente Campo
-    <luisllorente@luisllorente.com>
  ExerciseViewer changes:
   - update of Garmin FIT SDK to version 4.20 (for parsing FIT files)
   - support for Garmin Forerunner 910XT exercises (Feature request #3578651)
@@ -14,6 +11,13 @@ v5.7.0:
     - added support for Timex Ironman Run Trainer PWX exercises, calculation
       of missing statistic data
     - unit test for Timex Ironman Run Trainer PWX files
+  - proper error handling when ExerciseViewer parsers fail to read an exercise
+    file (displays an error message dialog and prints error details to the 
+    console)
+ Translations:
+  - updated spanish translation by Luis Llorente Campo
+    <luisllorente@luisllorente.com>
+  - updated german translation by Stefan Saring
 
 v5.6.0:
  SportsTracker changes:

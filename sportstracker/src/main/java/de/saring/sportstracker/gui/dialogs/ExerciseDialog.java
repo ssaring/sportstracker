@@ -442,10 +442,10 @@ public class ExerciseDialog extends JDialog {
             ExerciseParser parser = ExerciseParserFactory.getParser (hrmFile);
             pvExercise = parser.parseExercise (hrmFile);
         }
-        catch (EVException pe) {
-            LOGGER.log (Level.SEVERE, "Failed to parse exercise file!", pe);
+        catch (Exception e) {
+            LOGGER.log (Level.SEVERE, "Failed to parse exercise file!", e);
             context.showMessageDialog (this, JOptionPane.ERROR_MESSAGE, 
-                "common.error", "st.dlg.exercise.error.import", hrmFile);
+                "common.error", "st.dlg.exercise.error.import_console", hrmFile);
             return;
         }            
         

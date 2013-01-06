@@ -25,6 +25,7 @@ public interface ExerciseParser {
      * @param filename name of exercise file to parse
      * @return the parsed PVExercise object
      * @throws EVException thrown on read/parse problems
+     * @throws Exception all kind of other runtime exeptions when parsing unsupported files (e.g. NullPointerException)
      */
     public EVExercise parseExercise (String filename) throws EVException;
 }

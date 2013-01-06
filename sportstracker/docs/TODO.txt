@@ -2,13 +2,10 @@ SportsTracker-TODO
 ==================
 
 Bugfix for support of Timex Ironman Run Trainer PWX files (Bugs-3599059):
-- add an unit test for the Run Trainer
 - close bug
 
 Before next release:
 - add support for Garmin Forerunner 910XT and Timex Ironman Run Trainer in website
-- all the parsers must also be able to handle NullPointerExceptions, otherwise errors are 
-  not visible for the users
 
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead

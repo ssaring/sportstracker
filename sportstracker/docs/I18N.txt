@@ -44,6 +44,13 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 5.7.0:
+- st.dlg.exercise.error.import_console (new)
+- st.dlg.exercise.error.import (removed)
+- st.dlg.about.copyright.text (changed)
+- pv.error.read_exercise_console (new)
+- pv.error.read_exercise (removed)
+
 SportsTracker 5.6.0:
 - st.dlg.overview.display.sportsubtype_distance.text (new)
 - st.dlg.overview.value_type.sportsubtype_distance (new)

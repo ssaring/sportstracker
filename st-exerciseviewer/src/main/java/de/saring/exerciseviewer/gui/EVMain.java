@@ -49,10 +49,10 @@ public class EVMain {
         try {
             document.openExerciseFile (exerciseFilename);
         } 
-        catch (EVException pe) {
-            LOGGER.log (Level.SEVERE, "Failed to open exercise file " + exerciseFilename + "!", pe);
+        catch (Exception e) {
+            LOGGER.log (Level.SEVERE, "Failed to open exercise file " + exerciseFilename + "!", e);
             JOptionPane.showMessageDialog (context.getMainFrame (),
-                context.getResReader ().getString ("pv.error.read_exercise", exerciseFilename),
+                context.getResReader ().getString ("pv.error.read_exercise_console", exerciseFilename),
                 context.getResReader ().getString ("common.error"), JOptionPane.ERROR_MESSAGE);
             return;
         }        
