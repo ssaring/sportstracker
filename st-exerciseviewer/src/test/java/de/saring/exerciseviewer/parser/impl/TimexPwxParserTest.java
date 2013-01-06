@@ -14,9 +14,10 @@ import static org.junit.Assert.*;
  * This file is based on PolarHsrRawParser.java by Remco den Breeje
  * which is based PolarSRawParser.java by Stefan Saring
  * 
- * 9/10/2010 - Added test for Timex Global Trainer PWX Parsing
+ * 09/10/2010 - Added test for Timex Global Trainer PWX Parsing
+ * 06/01/2013 - Added test for Timex Ironman Run Trainer PWX Parsing
  * 
- * @author  Robert C. Schultz
+ * @author  Robert C. Schultz, Stefan Saring
  */
 public class TimexPwxParserTest {
     
@@ -321,5 +322,131 @@ public class TimexPwxParserTest {
         assertEquals (exercise.getSampleList ()[299].getSpeed(), 10.17f, 0.01f);
         assertEquals (exercise.getSampleList ()[299].getCadence (), (short) 0);
         assertEquals (exercise.getSampleList ()[299].getDistance (), 5310);
+    }
+
+    /**
+     * This method tests the parser with an Timex Ironman Run Trainer Pwx workout file.
+     */
+    @Test
+    public void testParseTimexRunTrainerPwxFile () throws EVException {
+        // parse exercise file
+        EVExercise exercise = parser.parseExercise(
+                "misc/testdata/timex-runtrainer-pwx/Timex_Run_Trainer_2013_01_01_08_22_52.pwx");
+
+        // check exercise data
+        assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.TIMEX_PWX);
+        assertEquals(exercise.getUserID(), (byte) 0);
+        Calendar date = Calendar.getInstance();
+        date.setTime(exercise.getDate());
+        assertEquals(1, date.get(Calendar.DAY_OF_MONTH));
+        assertEquals(0, date.get(Calendar.MONTH));
+        assertEquals(2013, date.get(Calendar.YEAR));
+        assertEquals(8, date.get(Calendar.HOUR_OF_DAY));
+        assertEquals(22, date.get(Calendar.MINUTE));
+        assertEquals(52, date.get(Calendar.SECOND));
+        assertEquals((byte) 0, exercise.getType());
+        assertEquals("Run", exercise.getTypeLabel());
+        assertEquals(true, exercise.getRecordingMode().isAltitude());
+        assertEquals(true, exercise.getRecordingMode().isSpeed());
+        assertEquals(false, exercise.getRecordingMode().isCadence());
+        assertEquals(true, exercise.getRecordingMode().isPower());
+        assertEquals((byte) 0, exercise.getRecordingMode().getBikeNumber());
+        assertEquals(39 * 60 * 10 + 41 * 10 + 0, exercise.getDuration());
+        assertEquals((short) 2, exercise.getRecordingInterval());
+        assertEquals((short) 141, exercise.getHeartRateAVG());
+        assertEquals((short) 159, exercise.getHeartRateMax());
+        assertEquals(3869, exercise.getSpeed().getDistance());
+        assertEquals(5.85, exercise.getSpeed().getSpeedAVG(), 0.001);
+        assertEquals(7.938, exercise.getSpeed().getSpeedMax(), 0.001);
+        assertNull(exercise.getCadence());
+        assertEquals(12, exercise.getAltitude().getAltitudeMin());
+        assertEquals(44, exercise.getAltitude().getAltitudeAVG());
+        assertEquals(64, exercise.getAltitude().getAltitudeMax());
+        assertEquals(117, exercise.getAltitude().getAscent());
+        assertNull(exercise.getTemperature());
+        assertEquals(2324, exercise.getEnergy()); // this is probably wrong, proper parsing is unknown yet
+        assertEquals(0, exercise.getEnergyTotal()); // This is per the device
+        assertEquals(39, exercise.getSumExerciseTime());
+        assertEquals(39, exercise.getSumRideTime());
+        assertEquals(3, exercise.getOdometer());
+
+        // check heart rate limits
+        assertEquals(6, exercise.getHeartRateLimits().length);
+        assertTrue(exercise.getHeartRateLimits()[5].isAbsoluteRange());
+        assertEquals((short) 200, exercise.getHeartRateLimits()[5].getUpperHeartRate());
+        assertEquals((short) 175, exercise.getHeartRateLimits()[5].getLowerHeartRate());
+        assertEquals((39 * 60) + 41, exercise.getHeartRateLimits()[5].getTimeBelow());
+        assertEquals((0 * 60) + 0, exercise.getHeartRateLimits()[5].getTimeWithin());
+        assertEquals((0 * 60) + 0, exercise.getHeartRateLimits()[5].getTimeAbove());
+
+        assertTrue(exercise.getHeartRateLimits()[4].isAbsoluteRange());
+        assertEquals((short) 175, exercise.getHeartRateLimits()[4].getUpperHeartRate());
+        assertEquals((short) 150, exercise.getHeartRateLimits()[4].getLowerHeartRate());
+        assertEquals((29 * 60) + 57, exercise.getHeartRateLimits()[4].getTimeBelow());
+        assertEquals((9 * 60) + 44, exercise.getHeartRateLimits()[4].getTimeWithin());
+        assertEquals((0 * 60) + 0, exercise.getHeartRateLimits()[4].getTimeAbove());
+
+        assertTrue(exercise.getHeartRateLimits()[3].isAbsoluteRange());
+        assertEquals((short) 150, exercise.getHeartRateLimits()[3].getUpperHeartRate());
+        assertEquals((short) 125, exercise.getHeartRateLimits()[3].getLowerHeartRate());
+        assertEquals((3 * 60) + 33, exercise.getHeartRateLimits()[3].getTimeBelow());
+        assertEquals((27 * 60) + 58, exercise.getHeartRateLimits()[3].getTimeWithin());
+        assertEquals((8 * 60) + 10, exercise.getHeartRateLimits()[3].getTimeAbove());
+
+        assertTrue(exercise.getHeartRateLimits()[2].isAbsoluteRange());
+        assertEquals((short) 125, exercise.getHeartRateLimits()[2].getUpperHeartRate());
+        assertEquals((short) 100, exercise.getHeartRateLimits()[2].getLowerHeartRate());
+        assertEquals((0 * 60) + 9, exercise.getHeartRateLimits()[2].getTimeBelow());
+        assertEquals((4 * 60) + 0, exercise.getHeartRateLimits()[2].getTimeWithin());
+        assertEquals((35 * 60) + 32, exercise.getHeartRateLimits()[2].getTimeAbove());
+
+        assertTrue(exercise.getHeartRateLimits()[1].isAbsoluteRange());
+        assertEquals((short) 100, exercise.getHeartRateLimits()[1].getUpperHeartRate());
+        assertEquals((short) 75, exercise.getHeartRateLimits()[1].getLowerHeartRate());
+        assertEquals((0 * 60) + 0, exercise.getHeartRateLimits()[1].getTimeBelow());
+        assertEquals((0 * 60) + 9, exercise.getHeartRateLimits()[1].getTimeWithin());
+        assertEquals((39 * 60) + 32, exercise.getHeartRateLimits()[1].getTimeAbove());
+
+        assertTrue(exercise.getHeartRateLimits()[0].isAbsoluteRange());
+        assertEquals((short) 75, exercise.getHeartRateLimits()[0].getUpperHeartRate());
+        assertEquals((short) 50, exercise.getHeartRateLimits()[0].getLowerHeartRate());
+        assertEquals((0 * 60) + 0, exercise.getHeartRateLimits()[0].getTimeBelow());
+        assertEquals((0 * 60) + 0, exercise.getHeartRateLimits()[0].getTimeWithin());
+        assertEquals((39 * 60) + 41, exercise.getHeartRateLimits()[0].getTimeAbove());
+
+        // check last lap data
+        assertEquals(1, exercise.getLapList().length);
+        assertEquals(39 * 60 * 10 + 41 * 10 + 2, exercise.getLapList()[0].getTimeSplit());
+        assertEquals((short) 0, exercise.getLapList()[0].getHeartRateSplit());
+        assertEquals((short) 0, exercise.getLapList()[0].getHeartRateAVG());
+        assertEquals((short) 0, exercise.getLapList()[0].getHeartRateMax());
+        assertEquals(5.85f, exercise.getLapList()[0].getSpeed().getSpeedAVG(), 0.01);
+        assertEquals(3868, exercise.getLapList()[0].getSpeed().getDistance());
+        assertEquals(0, exercise.getLapList()[0].getAltitude().getAltitude());
+        assertEquals(0, exercise.getLapList()[0].getAltitude().getAscent());
+        assertEquals(25, exercise.getLapList()[0].getTemperature().getTemperature());
+
+        // check sample data (first, two from middle and last only)
+        assertEquals(1191, exercise.getSampleList().length);
+        assertEquals(1 * 1000, exercise.getSampleList()[0].getTimestamp());
+        assertEquals(93, exercise.getSampleList()[0].getHeartRate());
+        assertEquals(16, exercise.getSampleList()[0].getAltitude());
+        assertEquals(0f, exercise.getSampleList()[0].getSpeed(), 0.01f);
+        assertEquals(0, exercise.getSampleList()[0].getCadence());
+        assertEquals(0, exercise.getSampleList()[0].getDistance());
+
+        assertEquals((16 * 60 + 41) * 1000, exercise.getSampleList()[500].getTimestamp());
+        assertEquals(136, exercise.getSampleList()[500].getHeartRate());
+        assertEquals(51, exercise.getSampleList()[500].getAltitude());
+        assertEquals(5.19f, exercise.getSampleList()[500].getSpeed(), 0.01f);
+        assertEquals(0, exercise.getSampleList()[500].getCadence());
+        assertEquals(1608, exercise.getSampleList()[500].getDistance());
+
+        assertEquals((39 * 60 + 41) * 1000, exercise.getSampleList()[1190].getTimestamp());
+        assertEquals(141, exercise.getSampleList()[1190].getHeartRate());
+        assertEquals(38, exercise.getSampleList()[1190].getAltitude());
+        assertEquals(5.49f, exercise.getSampleList()[1190].getSpeed(), 0.01f);
+        assertEquals(0, exercise.getSampleList()[1190].getCadence());
+        assertEquals(3869, exercise.getSampleList()[1190].getDistance());
     }
 }
