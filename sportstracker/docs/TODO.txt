@@ -1,9 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Bugfix for support of Timex Ironman Run Trainer PWX files (Bugs-3599059):
-- close bug
-
 Before next release:
 - add support for Garmin Forerunner 910XT and Timex Ironman Run Trainer in website
 
