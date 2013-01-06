@@ -24,7 +24,6 @@ import javax.swing.SwingUtilities;
 
 import org.jdesktop.application.Action;
 
-import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.gui.EVMain;
 import de.saring.exerciseviewer.parser.ExerciseParser;

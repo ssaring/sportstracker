@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.swing.JOptionPane;
-import de.saring.exerciseviewer.core.EVException;
+
 import de.saring.exerciseviewer.core.EVOptions;
 
 /**
