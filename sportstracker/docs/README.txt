@@ -47,6 +47,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - Garmin Forerunner  (tested with Forerunner 305, 910XT, FIT and TCX files)
   - Garmin Oregon      (tested with Oregon 450, GPX files)
   - Timex Ironmen Race Trainer (tested)
+  - Timex Ironmen Run Trainer (tested)
   - Timex Ironman Global Trainer  (tested)
   - Oregon Scientific SmartSync WM100 (tested)
   - HOLUX FunTrek      (tested with FunTrek 130, GPX files)  
