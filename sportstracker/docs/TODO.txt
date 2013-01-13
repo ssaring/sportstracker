@@ -1,9 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Before next release:
-- add support for Garmin Forerunner 910XT and Timex Ironman Run Trainer in website
-
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
