@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+v5.8.0:
+ Translations:
+  - updated french translation by Nicolas Ollivier <nicollivier@gmail.com>
+
 v5.7.0:
  ExerciseViewer changes:
   - update of Garmin FIT SDK to version 4.20 (for parsing FIT files)
