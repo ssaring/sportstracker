@@ -9,6 +9,8 @@ Mac OS X integration:
 
 General TODOs:
 --------------
+
+- Update to SwingX 1.6.5
 - Import feature for devices connected via USB
   - New Tab in Options dialog with these settings:
     - Device directory/drive
