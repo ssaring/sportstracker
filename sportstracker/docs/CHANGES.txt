@@ -2,6 +2,9 @@ Changelog
 ---------
 
 v5.8.0:
+ SportsTracker changes:
+  - use of new default Mercurial repository after SourceForge project 
+    platform update
  Translations:
   - updated french translation by Nicolas Ollivier <nicollivier@gmail.com>
 
