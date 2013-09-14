@@ -1,6 +1,13 @@
 SportsTracker-TODO
 ==================
 
+Java Webstart: 
+- since Java 7u40 there are security warnings on each ST start due to missing 
+  signed certificate
+- drop Java WebStart, there will be no signed certificates
+- remove Java WebStart files from project
+- update installation documentation in ReadMe.txt and on the website
+
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
@@ -11,6 +18,7 @@ General TODOs:
 --------------
 
 - Update to SwingX 1.6.5
+- Update to latest JFreeChart
 - Import feature for devices connected via USB
   - New Tab in Options dialog with these settings:
     - Device directory/drive
