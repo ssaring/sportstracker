@@ -14,19 +14,19 @@
     </security>
     <resources>
         <java version="1.7+"/>
-        <jar href="sportstracker-5.7.0.jar" main="true" download="eager"/>
-        <jar href="lib/st-exerciseviewer-5.7.0.jar" download="eager"/>
-        <jar href="lib/st-util-5.7.0.jar" download="eager"/>
+        <jar href="sportstracker-5.8.0.jar" main="true" download="eager"/>
+        <jar href="lib/st-exerciseviewer-5.8.0.jar" download="eager"/>
+        <jar href="lib/st-util-5.8.0.jar" download="eager"/>
         <jar href="lib/guice-3.0.jar" download="eager"/>
         <jar href="lib/aopalliance-1.0.jar" download="eager"/>
         <jar href="lib/javax.inject-1.jar" download="eager"/>
         <jar href="lib/bsaf-1.9.2.jar" download="eager"/>
-        <jar href="lib/groovy-2.0.1.jar" download="eager"/>
-        <jar href="lib/groovy-xml-2.0.1.jar" download="eager"/>
+        <jar href="lib/groovy-2.1.7.jar" download="eager"/>
+        <jar href="lib/groovy-xml-2.1.7.jar" download="eager"/>
         <jar href="lib/asm-4.0.jar" download="eager"/>
         <jar href="lib/jdom-2.0.2.jar" download="eager"/>
         <jar href="lib/jcommon-1.0.17.jar" download="eager"/>
-        <jar href="lib/jfreechart-1.0.14.jar" download="eager"/>
+        <jar href="lib/jfreechart-1.0.15.jar" download="eager"/>
         <jar href="lib/swingx-all-1.6.3.jar" download="eager"/>
         <jar href="lib/swingx-ws-1.0.jar" download="eager"/>
         <jar href="lib/miglayout-3.7.4.jar" download="eager"/>
