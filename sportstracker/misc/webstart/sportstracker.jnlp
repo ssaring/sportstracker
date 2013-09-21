@@ -13,10 +13,10 @@
         <all-permissions/>
     </security>
     <resources>
-        <java version="1.7+"/>
-        <jar href="sportstracker-5.8.0.jar" main="true" download="eager"/>
-        <jar href="lib/st-exerciseviewer-5.8.0.jar" download="eager"/>
-        <jar href="lib/st-util-5.8.0.jar" download="eager"/>
+        <java version="1.8+"/>
+        <jar href="sportstracker-6.0.0.jar" main="true" download="eager"/>
+        <jar href="lib/st-exerciseviewer-6.0.0.jar" download="eager"/>
+        <jar href="lib/st-util-6.0.0.jar" download="eager"/>
         <jar href="lib/guice-3.0.jar" download="eager"/>
         <jar href="lib/aopalliance-1.0.jar" download="eager"/>
         <jar href="lib/javax.inject-1.jar" download="eager"/>
