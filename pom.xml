@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <groovy.version>2.0.1</groovy.version>
+        <groovy.version>2.1.7</groovy.version>
     </properties>
     
     <modules>
@@ -33,7 +33,7 @@
             <!-- Compiler plugin configuration: use groovy-eclipse-compiler for mixed Java/Groovy compilation -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.1</version>
                 <configuration>
                     <compilerId>groovy-eclipse-compiler</compilerId>
                     <verbose>false</verbose>
@@ -45,8 +45,13 @@
                     <dependency>
                         <groupId>org.codehaus.groovy</groupId>
                         <artifactId>groovy-eclipse-compiler</artifactId>
-                        <version>2.7.0-01</version>
+                        <version>2.8.0-01</version>
                     </dependency>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-eclipse-batch</artifactId>
+                        <version>2.1.5-03</version>
+                    </dependency>                    
                 </dependencies>
             </plugin>
         </plugins>
@@ -118,7 +123,7 @@
         <dependency>
             <groupId>org.jfree</groupId>
             <artifactId>jfreechart</artifactId>
-            <version>1.0.14</version>
+            <version>1.0.15</version>
             <exclusions>
                 <!-- Exclude all not needed dependecies -->
                 <exclusion>
@@ -145,7 +150,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>4.11</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -157,7 +162,7 @@
         <dependency>
             <groupId>org.easymock</groupId>
             <artifactId>easymock</artifactId>
-            <version>3.0</version>
+            <version>3.2</version>
             <scope>test</scope>
         </dependency>        
     </dependencies>
