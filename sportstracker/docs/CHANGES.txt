@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+v6.0.0:
+ SportsTracker changes:
+  - switched compiler to Java 8 (except for module st-exerciseviewer)
+
 v5.8.0:
  SportsTracker changes:
   - use of new default Mercurial repository after SourceForge project 

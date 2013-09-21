@@ -1,6 +1,14 @@
 SportsTracker-TODO
 ==================
 
+Java 8 support (in branch java_8):
+- required JDK 8 EA (build 106), set JAVA_HOME to the install directory, e.g.
+  export JAVA_HOME=~/Utils/NoBackup/jdk1.8.0.jdk/Contents/Home/
+- all SportsTracker modules are now compiling in JDK 8 mode
+  - only st-exerciseviewer is still in JDK 7 mode, because the 
+    groovy-eclipse-compiler for mixed Java/Groovy compilation does not support
+    JDK 8 mode yet => change as soon as support is available
+
 Java Webstart: 
 - since Java 7u40 there are security warnings on each ST start due to missing 
   signed certificate
