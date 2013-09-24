@@ -13,7 +13,7 @@ import java.util.List;
  * Its possible to register IdObjectListChangeListener which will be informed
  * each time the list content has changed.
  * 
- * @param T the object type to store in this list, must be a subclass of IdObject
+ * @param <T> the object type to store in this list, must be a subclass of IdObject
  * 
  * @author  Stefan Saring
  * @version 1.0
@@ -21,10 +21,10 @@ import java.util.List;
 public class IdObjectList<T extends IdObject> implements Iterable<T> {
 
     /** Generic list of subclasses of IdObject. */
-    private List<T> lIdObjects = new ArrayList<> ();
+    private final List<T> lIdObjects = new ArrayList<> ();
 
     /** List of listeners which will be notified on each list content change. */
-    private List<IdObjectListChangeListener> listChangelisteners = new ArrayList<> ();
+    private final List<IdObjectListChangeListener> listChangelisteners = new ArrayList<> ();
 
     /**
      * Returns the IdObject with the specified ID.
@@ -180,10 +180,8 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      * 
      * @param changedObject the added / changed object (or null when removed)
      */
-    protected void notifyAllListChangelisteners (IdObject changedObject) {
-        for (IdObjectListChangeListener listener : listChangelisteners) {
-            listener.listChanged(changedObject);
-        }
+    protected void notifyAllListChangelisteners(IdObject changedObject) {
+        listChangelisteners.forEach(listener -> listener.listChanged(changedObject));
     }
 
     /** 
@@ -191,15 +189,10 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      * @return string with object content
      */
     @Override
-    public String toString () {        
-        StringBuilder sBuilder = new StringBuilder ();
-        sBuilder.append (this.getClass ().getName () + ":\n");
-        
-        if (this.lIdObjects != null) {
-            for (T t : this.lIdObjects) {
-                sBuilder.append (t);
-            }
-        }
+    public String toString() {        
+        StringBuilder sBuilder = new StringBuilder();
+        sBuilder.append(this.getClass().getName()).append(":\n");
+        lIdObjects.forEach(entry -> sBuilder.append(entry));
         return sBuilder.toString ();
     }
 }

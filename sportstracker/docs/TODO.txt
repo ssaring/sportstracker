@@ -11,7 +11,10 @@ Java 8 support status (in branch java_8):
 
 Java 8 TODOs:
 - Eclipse has problems with JDK 8 support, the modules are running in 1.4 mode
-  -> try NetBeans 7.4 RC1 or IDEA instead
+  -> NetBeans 7.4 RC1 works good
+- use lambdas in st-util
+  - started in IdObjectList, continue
+  - IdDateObjectList
 - use lambdas for XML loading/parsing, see TaskList
 - use new Java Date API
 - use lambdas where possible
