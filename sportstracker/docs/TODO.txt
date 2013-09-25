@@ -11,7 +11,12 @@ Java 8 support status (in branch java_8):
 
 Java 8 TODOs:
 - Eclipse has problems with JDK 8 support, the modules are running in 1.4 mode
-  -> NetBeans 7.4 RC1 works good
+  -> NetBeans 7.4 RC1 works OK, but not perfect
+  -> IDEA seems to work fine, further tests needed
+    -> required antlr dependency for Groovy compilation
+    -> when OK, add IDEA project files to repository and delete NetBeans files
+       (currently all IDEA files are excluded in .hgignore)
+    -> then also add to ReadMe and ChangeLog
 - use lambdas in st-util
   - started in IdObjectList, continue
   - IdDateObjectList
