@@ -18,8 +18,6 @@ Java 8 support status (in branch java_8):
 - consistent Java source code formatting (Java standard) in module st-util
 
 Java 8 TODOs:
-- module st-util:
-  - use Hamcrast.contains in tests
 - use lambdas for XML loading/parsing, see TaskList
 - use new source code formating in all Java classes
 - use new Java Date API
