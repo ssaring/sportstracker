@@ -349,12 +349,12 @@ The SportsTracker project uses the following libraries:
   - BSAF 1.9.2 (Better Swing Application Framework)
     (http://kenai.com/projects/bsaf)
       License: Lesser General Public License 2.1 (LGPL)
-  - Groovy 2.0.1 (http://groovy.codehaus.org)
+  - Groovy 2.1.7 (http://groovy.codehaus.org)
       License: Apache License v2.0
   - Guice 3.0 (http://code.google.com/p/google-guice/)
       Includes: aopalliance-1.0.jar, javax.inject-1.jar
       License: Apache License v2.0
-  - JFreeChart 1.0.14 (http://www.jfree.org/)
+  - JFreeChart 1.0.15 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
   - JDOM 2.0.2 (http://www.jdom.org)
       License: Apache-style open source license
@@ -366,10 +366,10 @@ The SportsTracker project uses the following libraries:
       License: BSD License
   - commons-cli 1.2 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - JUnit 4.10 (http://www.junit.org)
+  - JUnit 4.11 (http://www.junit.org)
       License: Common Public License v1.0
-  - EasyMock 3.0 (http://www.easymock.org)
-      License: Apache License v2.0
+  - Mockito 1.9.5 (http://code.google.com/p/mockito/)
+      License: MIT License
   - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 4.20
       URL: http://www.thisisant.com/pages/products/fit-sdk
       License: FIT Protocol License (open source by Dynastream / Garmin)

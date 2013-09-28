@@ -19,7 +19,6 @@ Java 8 support status (in branch java_8):
 
 Java 8 TODOs:
 - module st-util:
-  - use Mockito in IdObjectListChangeListenerTest
   - use Hamcrast.contains in tests
 - use lambdas for XML loading/parsing, see TaskList
 - use new source code formating in all Java classes

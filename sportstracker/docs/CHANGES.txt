@@ -4,6 +4,8 @@ Changelog
 v6.0.0:
  SportsTracker changes:
   - switched compiler to Java 8 (except for module st-exerciseviewer)
+  - replaced mocking framework EasyMock 3.2 with Mockito 1.9.5 
+    (much better API and easier to use)
 
 v5.8.0:
  SportsTracker changes:
