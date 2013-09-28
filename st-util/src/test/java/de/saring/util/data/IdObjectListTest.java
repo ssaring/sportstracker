@@ -87,7 +87,7 @@ public class IdObjectListTest {
     /**
      * Test of set method set() of class IdObjectList: must fail on null.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void setNull () {
         list.set (null);
     }

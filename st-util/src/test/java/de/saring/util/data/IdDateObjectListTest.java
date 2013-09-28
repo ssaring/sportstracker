@@ -72,7 +72,7 @@ public class IdDateObjectListTest {
     /**
      * Test of set(): must fail when the entry is null.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void testSetNull () {
         list.set (null);
     }
@@ -80,7 +80,7 @@ public class IdDateObjectListTest {
     /**
      * Test of set(): must fail when date is null.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void testSetDateNull () {
         list.set (new  DateNameObject (4, null, "four"));
     }
@@ -118,7 +118,7 @@ public class IdDateObjectListTest {
     /**
      * Test of getEntriesInTimeRange(): must fail when one of the dates is null.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void testGetEntriesInTimeRangeNull () {
         list.getEntriesInTimeRange (new Date (), null);
     }

@@ -3,6 +3,7 @@ package de.saring.util.data;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -79,9 +80,8 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      * @param t the IdObject to store (must not be null)
      */
     public void set(T t) {
-        if (t == null) {
-            throw new IllegalArgumentException("Must not be null!");
-        }
+        Objects.requireNonNull(t, "IdObject must not be null!");
+        
         if (t.getId() <= 0) {
             throw new IllegalArgumentException("ID must be a positive integer > 0!");
         }

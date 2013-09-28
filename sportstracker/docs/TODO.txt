@@ -14,8 +14,8 @@ Java 8 support status (in branch java_8):
   - IDEA seems to work fine, but does not support recent Lambda syntax and constructs
   => NetBeans 7.4 RC1 is currently the best choice
      -> required antlr dependency for Groovy compilation
-- full use of Lambdas in classes of module st-util:
-  - IdObjectList
+- full use of Lambdas in module st-util, done in packages:
+  - de.saring.util.data
 
 Java 8 TODOs:
 - use lambdas in st-util (and apply new source format)
