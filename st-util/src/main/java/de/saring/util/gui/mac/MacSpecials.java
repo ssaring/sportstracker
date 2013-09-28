@@ -9,9 +9,10 @@ import javax.swing.Action;
 
 /**
  * Class to handle special features for java apps running on MacOS X.
- * 
+ *
  * For some functionalities reflections are used, so that this class is also
- * compilable on non Mac platforms, where package com.apple.eawt is not available.
+ * compilable on non Mac platforms, where package com.apple.eawt is not
+ * available.
  *
  * @author Mathias Obst
  * @version 1.0
@@ -24,10 +25,12 @@ public final class MacSpecials {
     private Action quitAction = null;
 
     /**
-     * Holder class for Singleton pattern (Initialization on demand holder idiom)
-     * see: http://de.wikipedia.org/wiki/Singleton_(Entwurfsmuster)#Eager_Creation
+     * Holder class for Singleton pattern (Initialization on demand holder
+     * idiom) see:
+     * http://de.wikipedia.org/wiki/Singleton_(Entwurfsmuster)#Eager_Creation
      */
     private static final class InstanceHolder {
+
         private static final MacSpecials INSTANCE = new MacSpecials();
     }
 
@@ -44,13 +47,13 @@ public final class MacSpecials {
             //Dynamically get Mac application listener interface and create a proxy instance for it
             Class<?> eawtAppListenerClass = Class.forName("com.apple.eawt.ApplicationListener");
             Object appListenerProxy = Proxy.newProxyInstance(AppListenerProxy.class.getClassLoader(),
-                                                             new Class[] { eawtAppListenerClass },
-                                                             new AppListenerProxy());
-            
+                    new Class[]{eawtAppListenerClass},
+                    new AppListenerProxy());
+
             //Dynamically add proxy instance as ApplicationListener
             Class<?> c = eawtApp.getClass();
-            Method m = c.getDeclaredMethod("addApplicationListener", new Class[] { eawtAppListenerClass });
-            m.invoke(eawtApp, new Object[] { appListenerProxy });
+            Method m = c.getDeclaredMethod("addApplicationListener", new Class[]{eawtAppListenerClass});
+            m.invoke(eawtApp, new Object[]{appListenerProxy});
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,8 +76,9 @@ public final class MacSpecials {
     }
 
     /**
-     * Set the name of the Mac application menu.
-     * Must be called as early as possible at the beginning of application initialization.
+     * Set the name of the Mac application menu. Must be called as early as
+     * possible at the beginning of application initialization.
+     *
      * @param name
      */
     public static void setApplicationMenuName(String name) {
@@ -82,8 +86,9 @@ public final class MacSpecials {
     }
 
     /**
-     * Set if the application menus should be integrated into the global Mac menu bar.
-     * Must be called as early as possible at the beginning of application initialization.
+     * Set if the application menus should be integrated into the global Mac
+     * menu bar. Must be called as early as possible at the beginning of
+     * application initialization.
      */
     public static void useScreenMenuBar(boolean use) {
         System.setProperty("apple.laf.useScreenMenuBar", String.valueOf(use));
@@ -96,8 +101,8 @@ public final class MacSpecials {
         try {
             //Dynamically call Mac applications method
             Class<?> c = eawtApp.getClass();
-            Method m = c.getDeclaredMethod("setDockIconImage",  new Class[] { Image.class });
-            m.invoke(eawtApp, new Object[] { dockIcon });
+            Method m = c.getDeclaredMethod("setDockIconImage", new Class[]{Image.class});
+            m.invoke(eawtApp, new Object[]{dockIcon});
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,15 +116,16 @@ public final class MacSpecials {
         try {
             //Dynamically call Mac applications method
             Class<?> c = eawtApp.getClass();
-            Method m = c.getDeclaredMethod("setEnabledAboutMenu",  new Class[] { boolean.class });
-            m.invoke(eawtApp, new Object[] { Boolean.valueOf(enable) });
+            Method m = c.getDeclaredMethod("setEnabledAboutMenu", new Class[]{boolean.class});
+            m.invoke(eawtApp, new Object[]{Boolean.valueOf(enable)});
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Set the action which should be executed on Mac application about activation.
+     * Set the action which should be executed on Mac application about
+     * activation.
      */
     public void setAboutAction(Action action) {
         aboutAction = action;
@@ -139,15 +145,16 @@ public final class MacSpecials {
         try {
             //Dynamically call Mac applications method
             Class<?> c = eawtApp.getClass();
-            Method m = c.getDeclaredMethod("setEnabledPreferencesMenu",  new Class[] { boolean.class });
-            m.invoke(eawtApp, new Object[] { Boolean.valueOf(enable) });
+            Method m = c.getDeclaredMethod("setEnabledPreferencesMenu", new Class[]{boolean.class});
+            m.invoke(eawtApp, new Object[]{Boolean.valueOf(enable)});
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Set the action which should be executed on Mac application preferences activation.
+     * Set the action which should be executed on Mac application preferences
+     * activation.
      */
     public void setPreferencesAction(Action action) {
         prefsAction = action;
@@ -161,7 +168,8 @@ public final class MacSpecials {
     }
 
     /**
-     * Set the action which should be executed on Mac application quit activation.
+     * Set the action which should be executed on Mac application quit
+     * activation.
      */
     public void setQuitAction(Action action) {
         quitAction = action;
@@ -195,8 +203,8 @@ public final class MacSpecials {
                 if (eawtAppEvent != null) {
                     //Dynamically call setHandled method of Mac ApplicationEvent
                     Class<?> c = eawtAppEvent.getClass();
-                    Method m = c.getDeclaredMethod("setHandled", new Class[] { boolean.class });
-                    m.invoke(eawtAppEvent, new Object[] { Boolean.valueOf(eventHandled) });
+                    Method m = c.getDeclaredMethod("setHandled", new Class[]{boolean.class});
+                    m.invoke(eawtAppEvent, new Object[]{Boolean.valueOf(eventHandled)});
                 }
             } catch (Exception e) {
                 e.printStackTrace();
