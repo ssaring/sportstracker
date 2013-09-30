@@ -10,14 +10,19 @@ Java 8 support status (in branch java_8):
     JDK 8 mode yet => change as soon as support is available
 - IDE support:
   - Eclipse has problems with JDK 8 support, the modules are running in 1.4 mode
-  - NetBeans 7.4 RC1 works fine, but not perfect
   - IDEA seems to work fine, but does not support recent Lambda syntax and constructs
+    -> invalid compile errors for correct source code
+  - NetBeans 7.4 RC1 works fine, but not perfect
   => NetBeans 7.4 RC1 is currently the best choice
      -> required antlr dependency for Groovy compilation
 - full use of Lambdas in module st-util
 - consistent Java source code formatting (Java standard) in module st-util
 
 Java 8 TODOs:
+- use new formating and fix displayed warnings in NetBeans
+  - done in module st-util
+  - progress in module sportstracker (source, not in tests)
+    - done in package de.saring.util.data
 - use lambdas for XML loading/parsing, see TaskList
 - use new source code formating in all Java classes
 - use new Java Date API
