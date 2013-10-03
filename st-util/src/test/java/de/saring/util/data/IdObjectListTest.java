@@ -2,6 +2,7 @@ package de.saring.util.data;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
@@ -11,7 +12,9 @@ import static org.junit.Assert.*;
  */
 public class IdObjectListTest {
 
-    /** The instance to test. */
+    /**
+     * The instance to test.
+     */
     private IdObjectList<NameObject> list;
 
     @Before

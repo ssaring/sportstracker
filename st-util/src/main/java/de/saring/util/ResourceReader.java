@@ -1,7 +1,8 @@
 package de.saring.util;
 
-import java.awt.Color;
 import org.jdesktop.application.ResourceMap;
+
+import java.awt.*;
 
 /**
  * Helper class for for reading resources from the applications properties files
@@ -12,11 +13,15 @@ import org.jdesktop.application.ResourceMap;
  */
 public class ResourceReader {
 
-    /** Constants for resource keys used by multiple classes. */
+    /**
+     * Constants for resource keys used by multiple classes.
+     */
     public static final String COMMON_TABLE_BACKGROUND_ODD = "common.table.background_odd";
     public static final String COMMON_TABLE_BACKGROUND_EVEN = "common.table.background_even";
 
-    /** This ResourceMap contains all the application resources. */
+    /**
+     * This ResourceMap contains all the application resources.
+     */
     private final ResourceMap resourceMap;
 
     /**

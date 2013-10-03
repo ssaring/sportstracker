@@ -1,11 +1,8 @@
 package de.saring.util.gui;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.KeyStroke;
 
 /**
  * This utility class contains helper methods for typical dialog features.

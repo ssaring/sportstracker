@@ -1,10 +1,10 @@
 package de.saring.util.data;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit tests for IdObjectListChangeListener usage in IdObjectList. Test for a
@@ -38,8 +38,8 @@ public class IdObjectListChangeListenerTest {
         DummyIdObject changedObject = new DummyIdObject(2);
 
         idObjectList.set(changedObject);
-        
-        assertEquals(3, idObjectList.size());        
+
+        assertEquals(3, idObjectList.size());
         verify(listenerMock).listChanged(changedObject);
     }
 
@@ -52,7 +52,7 @@ public class IdObjectListChangeListenerTest {
         DummyIdObject newObject = new DummyIdObject(5);
 
         idObjectList.set(newObject);
-        
+
         assertEquals(4, idObjectList.size());
         verify(listenerMock).listChanged(newObject);
     }
@@ -81,7 +81,7 @@ public class IdObjectListChangeListenerTest {
     @Test
     public void testRemoveSuccess() {
         assertTrue(idObjectList.removeByID(2));
-        
+
         assertEquals(2, idObjectList.size());
         verify(listenerMock).listChanged(null);
     }
@@ -93,7 +93,7 @@ public class IdObjectListChangeListenerTest {
     @Test
     public void testRemoveFailed() {
         assertFalse(idObjectList.removeByID(5));
-        
+
         assertEquals(3, idObjectList.size());
         verifyZeroInteractions(listenerMock);
     }

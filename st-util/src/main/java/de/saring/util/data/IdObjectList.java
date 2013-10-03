@@ -1,11 +1,6 @@
 package de.saring.util.data;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -15,23 +10,26 @@ import java.util.stream.Collectors;
  * getting new unique IDs.
  * Its possible to register IdObjectListChangeListener which will be informed
  * each time the list content has changed.
- * 
+ *
  * @param <T> the object type to store in this list, must be a subclass of IdObject
- * 
- * @author  Stefan Saring
+ * @author Stefan Saring
  * @version 1.0
  */
 public class IdObjectList<T extends IdObject> implements Iterable<T> {
 
-    /** Generic list of subclasses of IdObject. */
+    /**
+     * Generic list of subclasses of IdObject.
+     */
     private final List<T> lIdObjects = new ArrayList<>();
 
-    /** List of listeners which will be notified on each list content change. */
+    /**
+     * List of listeners which will be notified on each list content change.
+     */
     private final List<IdObjectListChangeListener> listChangelisteners = new ArrayList<>();
 
     /**
      * Returns the IdObject with the specified ID.
-     * 
+     *
      * @param id ID of IdObject
      * @return the IdObject object or null
      */
@@ -39,7 +37,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
         Optional<T> oIdObject = lIdObjects.stream().filter(o -> o.getId() == id).findFirst();
         return oIdObject.orElse(null);
     }
-    
+
     /**
      * Returns the IdObject at the specified index. Throws an
      * IndexOutOfBoundsException when the index is not valid.
@@ -61,7 +59,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
     public int indexOf(T t) {
         return lIdObjects.indexOf(t);
     }
-    
+
     /**
      * Checks whether the specified object is contained in list.
      *
@@ -81,7 +79,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      */
     public void set(T t) {
         Objects.requireNonNull(t, "IdObject must not be null!");
-        
+
         if (t.getId() <= 0) {
             throw new IllegalArgumentException("ID must be a positive integer > 0!");
         }

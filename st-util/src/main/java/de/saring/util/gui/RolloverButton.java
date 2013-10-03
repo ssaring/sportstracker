@@ -22,24 +22,22 @@
 package de.saring.util.gui;
 
 import de.saring.util.gui.mac.MacSpecials;
-import java.awt.AlphaComposite;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.Icon;
-import javax.swing.JButton;
 
 /**
  * If you wish to have rollovers on your buttons, use this class.
- *
+ * <p/>
  * Unlike the Swing rollover support, this class works outside of
  * <code>JToolBar</code>s, and does not require undocumented client property
  * hacks or JDK1.4-specific API calls.<p>
- *
+ * <p/>
  * Note: You should not call <code>setBorder()</code> on your buttons, as they
  * probably won't work properly.
- *
+ * <p/>
  * When running on Mac OS X the button will just have the typical toolbar
  * behaviour, rollovers are not commomn there.
  */

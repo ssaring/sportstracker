@@ -1,9 +1,7 @@
 package de.saring.util.gui;
 
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JList;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Custom list cell renderer based on the default implementation. It uses

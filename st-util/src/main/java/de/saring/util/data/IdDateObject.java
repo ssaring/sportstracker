@@ -11,7 +11,9 @@ import java.util.Date;
  */
 public abstract class IdDateObject extends IdObject {
 
-    /** The date and time of this object. */
+    /**
+     * The date and time of this object.
+     */
     private Date date;
 
     /**

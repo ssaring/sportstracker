@@ -29,13 +29,19 @@ public class FormatUtils {
         DistancePerHour, MinutesPerDistance
     }
 
-    /** The current unit system used by the formater. */
+    /**
+     * The current unit system used by the formater.
+     */
     private UnitSystem unitSystem;
 
-    /** The current speed view used by the formater. */
+    /**
+     * The current speed view used by the formater.
+     */
     private SpeedView speedView;
 
-    /** The number format instance. */
+    /**
+     * The number format instance.
+     */
     private NumberFormat numberFormat;
 
     /**
@@ -252,7 +258,7 @@ public class FormatUtils {
      *
      * @param time the time String to convert
      * @return the number of seconds represented by the time String or -1 on
-     * errors
+     *         errors
      */
     public int timeString2TotalSeconds(String time) {
         if ((time == null) || (time.length() == 0)) {
@@ -454,7 +460,7 @@ public class FormatUtils {
      *
      * @param calories the calorie consumption
      * @return a String representation of the calorie consumption incl. unit
-     * name
+     *         name
      */
     public String caloriesToString(int calories) {
         numberFormat.setMaximumFractionDigits(0);

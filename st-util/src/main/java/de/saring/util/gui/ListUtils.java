@@ -1,7 +1,6 @@
 package de.saring.util.gui;
 
-import javax.swing.JList;
-import javax.swing.JTable;
+import javax.swing.*;
 
 /**
  * Utility methods for Swing's list and table widgets.

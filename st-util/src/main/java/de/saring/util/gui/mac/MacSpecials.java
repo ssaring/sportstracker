@@ -1,15 +1,16 @@
 package de.saring.util.gui.mac;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.Image;
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.Locale;
-
-import javax.swing.Action;
 
 /**
  * Class to handle special features for java apps running on MacOS X.
- *
+ * <p/>
  * For some functionalities reflections are used, so that this class is also
  * compilable on non Mac platforms, where package com.apple.eawt is not
  * available.

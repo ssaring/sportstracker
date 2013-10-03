@@ -1,9 +1,8 @@
 package de.saring.util.gui;
 
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
 
 /**
  * Custom table cell renderer based on the default implementation. It uses
@@ -29,7 +28,9 @@ public class TableCellRendererOddEven extends DefaultTableCellRenderer {
         this.colorBackgroundEven = colorBackgroundEven;
     }
 
-    /** Returns the cell component for the specified value and position. */
+    /**
+     * Returns the cell component for the specified value and position.
+     */
     @Override
     public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex) {

@@ -1,7 +1,8 @@
 package de.saring.util.unitcalc;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class contains all unit tests for the CalculationUtils class.

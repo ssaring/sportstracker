@@ -1,9 +1,12 @@
 package de.saring.util.unitcalc;
 
-import java.util.Locale;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.util.Locale;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * This class contains all unit tests for the ConvertUtils class.
@@ -12,14 +15,18 @@ import static org.junit.Assert.*;
  */
 public class FormatUtilsTest {
 
-    /** Thes tests needs to use the English locale, results look different for
-     * other. */
+    /**
+     * Thes tests needs to use the English locale, results look different for
+     * other.
+     */
     @Before
     public void setUp() {
         Locale.setDefault(Locale.ENGLISH);
     }
 
-    /** Tests the getters of current unit system and speed view. */
+    /**
+     * Tests the getters of current unit system and speed view.
+     */
     @Test
     public void testGetSettings() {
         FormatUtils formatUtils = new FormatUtils(FormatUtils.UnitSystem.English, FormatUtils.SpeedView.MinutesPerDistance);
@@ -27,7 +34,9 @@ public class FormatUtilsTest {
         assertEquals(FormatUtils.SpeedView.MinutesPerDistance, formatUtils.getSpeedView());
     }
 
-    /** Tests the appropriate method. */
+    /**
+     * Tests the appropriate method.
+     */
     @Test
     public void testMinutes2TimeString() {
         FormatUtils formatUtils = new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour);
@@ -38,7 +47,9 @@ public class FormatUtilsTest {
         assertEquals(formatUtils.minutes2TimeString(7199), "119:59");
     }
 
-    /** Tests the appropriate method. */
+    /**
+     * Tests the appropriate method.
+     */
     @Test
     public void testSeconds2TimeString() {
         FormatUtils formatUtils = new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour);
@@ -48,7 +59,9 @@ public class FormatUtilsTest {
         assertEquals(formatUtils.seconds2TimeString(365145), "101:25:45");
     }
 
-    /** Tests the appropriate method. */
+    /**
+     * Tests the appropriate method.
+     */
     @Test
     public void testSeconds2MinuteTimeString() {
         FormatUtils formatUtils = new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour);
@@ -58,7 +71,9 @@ public class FormatUtilsTest {
         assertEquals(formatUtils.seconds2MinuteTimeString(365145), "6085:45");
     }
 
-    /** Tests the appropriate method. */
+    /**
+     * Tests the appropriate method.
+     */
     @Test
     public void testTimeString2TotalSeconds() {
         FormatUtils formatUtils = new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour);
@@ -98,7 +113,9 @@ public class FormatUtilsTest {
         assertEquals(formatUtils.timeString2TotalSeconds("114:32:48"), (114 * 60 * 60) + (32 * 60) + 48);
     }
 
-    /** Tests that temperatureToString works as expected. */
+    /**
+     * Tests that temperatureToString works as expected.
+     */
     @Test
     public void testTemperatureToString() {
         FormatUtils formatUtils = new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour);
@@ -110,7 +127,9 @@ public class FormatUtilsTest {
         assertEquals("212 F", formatUtils.temperatureToString((short) 100));
     }
 
-    /** Tests that distanceToString works as expected. */
+    /**
+     * Tests that distanceToString works as expected.
+     */
     @Test
     public void testDistanceToString() {
         FormatUtils formatUtils = new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour);
@@ -142,7 +161,9 @@ public class FormatUtilsTest {
         assertEquals("62.45", formatUtils.distanceToStringWithoutUnitName(100.50f, 2));
     }
 
-    /** Tests that speedToString works as expected. */
+    /**
+     * Tests that speedToString works as expected.
+     */
     @Test
     public void testSpeedToString() {
         FormatUtils formatUtils = new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour);
@@ -191,14 +212,18 @@ public class FormatUtilsTest {
         assertEquals("N/A", formatUtils.speedToStringWithoutUnitName(0f, 0));
     }
 
-    /** Tests that getDistanceUnitName works as expected. */
+    /**
+     * Tests that getDistanceUnitName works as expected.
+     */
     @Test
     public void testGetDistanceUnitName() {
         assertEquals("km", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).getDistanceUnitName());
         assertEquals("m", new FormatUtils(FormatUtils.UnitSystem.English, FormatUtils.SpeedView.DistancePerHour).getDistanceUnitName());
     }
 
-    /** Tests that getSpeedUnitName works as expected. */
+    /**
+     * Tests that getSpeedUnitName works as expected.
+     */
     @Test
     public void testGetSpeedUnitName() {
         assertEquals("km/h", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).getSpeedUnitName());
@@ -207,21 +232,27 @@ public class FormatUtilsTest {
         assertEquals("min/m", new FormatUtils(FormatUtils.UnitSystem.English, FormatUtils.SpeedView.MinutesPerDistance).getSpeedUnitName());
     }
 
-    /** Tests that getTemperatureUnitName works as expected. */
+    /**
+     * Tests that getTemperatureUnitName works as expected.
+     */
     @Test
     public void testGetTemperatureUnitName() {
         assertEquals("C", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).getTemperatureUnitName());
         assertEquals("F", new FormatUtils(FormatUtils.UnitSystem.English, FormatUtils.SpeedView.DistancePerHour).getTemperatureUnitName());
     }
 
-    /** Tests that getAltitudeUnitName() works as expected. */
+    /**
+     * Tests that getAltitudeUnitName() works as expected.
+     */
     @Test
     public void testGetAltitudeUnitName() {
         assertEquals("m", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).getAltitudeUnitName());
         assertEquals("ft", new FormatUtils(FormatUtils.UnitSystem.English, FormatUtils.SpeedView.DistancePerHour).getAltitudeUnitName());
     }
 
-    /** Tests that heartRateToString works as expected. */
+    /**
+     * Tests that heartRateToString works as expected.
+     */
     @Test
     public void testHeartRateToString() {
         assertEquals("0 bpm", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).heartRateToString(0));
@@ -229,7 +260,9 @@ public class FormatUtilsTest {
         assertEquals("1,234 bpm", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).heartRateToString(1234));
     }
 
-    /** Tests that heightToString works as expected. */
+    /**
+     * Tests that heightToString works as expected.
+     */
     @Test
     public void testHeightToString() {
         assertEquals("0 m", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).heightToString(0));
@@ -249,7 +282,9 @@ public class FormatUtilsTest {
         assertEquals("328", new FormatUtils(FormatUtils.UnitSystem.English, FormatUtils.SpeedView.DistancePerHour).heightToStringWithoutUnitName(100));
     }
 
-    /** Tests that cadenceToString works as expected. */
+    /**
+     * Tests that cadenceToString works as expected.
+     */
     @Test
     public void testCadenceToString() {
         assertEquals("0 rpm", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).cadenceToString(0));
@@ -257,7 +292,9 @@ public class FormatUtilsTest {
         assertEquals("1,234 rpm", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).cadenceToString(1234));
     }
 
-    /** Tests that caloriesToString works as expected. */
+    /**
+     * Tests that caloriesToString works as expected.
+     */
     @Test
     public void testCaloriesToString() {
         assertEquals("0 kCal", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).caloriesToString(0));
@@ -266,7 +303,9 @@ public class FormatUtilsTest {
         assertEquals("1,234,567 kCal", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).caloriesToString(1234567));
     }
 
-    /** Tests that weightToString works as expected. */
+    /**
+     * Tests that weightToString works as expected.
+     */
     @Test
     public void testweightToString() {
         assertEquals("0 kg", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).weightToString(0, 0));

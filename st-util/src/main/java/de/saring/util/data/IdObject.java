@@ -11,7 +11,9 @@ import java.util.Objects;
  */
 public abstract class IdObject {
 
-    /** The ID of the object for referencing. */
+    /**
+     * The ID of the object for referencing.
+     */
     private int id;
 
     /**

@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
  *
  * @param <T> the object type to store in this list, must be a subclass of
  * IdDateObject
- *
  * @author Stefan Saring
  * @version 1.0
  */
@@ -28,10 +27,10 @@ public class IdDateObjectList<T extends IdDateObject> extends IdObjectList<T> {
      * date)
      */
     @Override
-    public void set(T t) {        
+    public void set(T t) {
         Objects.requireNonNull(t, "IdDateObject must not be null");
         Objects.requireNonNull(t.getDate(), "Date must not be null!");
-        
+
         if (t.getId() <= 0) {
             throw new IllegalArgumentException("ID must be a positive integer > 0!");
         }
@@ -63,7 +62,7 @@ public class IdDateObjectList<T extends IdDateObject> extends IdObjectList<T> {
      * @param dtEnd end date of the time range (inclusive)
      * @return list of entries in this time range
      */
-    public List<T> getEntriesInTimeRange(Date dtStart, Date dtEnd) {        
+    public List<T> getEntriesInTimeRange(Date dtStart, Date dtEnd) {
         Objects.requireNonNull(dtStart, "Start date must not be null");
         Objects.requireNonNull(dtEnd, "End date must not be null");
 
@@ -72,8 +71,8 @@ public class IdDateObjectList<T extends IdDateObject> extends IdObjectList<T> {
         }
 
         return getIDObjects().stream()
-                .filter(dateObject -> 
-                    !dateObject.getDate().before(dtStart) && !dateObject.getDate().after(dtEnd))
+                .filter(dateObject ->
+                        !dateObject.getDate().before(dtStart) && !dateObject.getDate().after(dtEnd))
                 .collect(Collectors.toList());
     }
 }

@@ -1,11 +1,10 @@
 package de.saring.util.gui.jfreechart;
 
-import java.awt.Color;
-import java.awt.Font;
-
-import javax.swing.JComponent;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Utility class for JFreeChart usage.

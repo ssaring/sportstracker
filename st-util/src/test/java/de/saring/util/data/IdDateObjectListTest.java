@@ -1,12 +1,14 @@
 package de.saring.util.data;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit tests of class IdDateObjectList.
@@ -15,7 +17,9 @@ import static org.junit.Assert.*;
  */
 public class IdDateObjectListTest {
 
-    /** The instance to test. */
+    /**
+     * The instance to test.
+     */
     private IdDateObjectList<DateNameObject> list;
 
     @Before

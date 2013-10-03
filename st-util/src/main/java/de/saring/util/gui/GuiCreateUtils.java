@@ -1,22 +1,13 @@
 package de.saring.util.gui;
 
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.text.DateFormat;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
-import javax.swing.SwingUtilities;
-
+import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.plaf.basic.BasicDatePickerUI;
 
-import net.miginfocom.swing.MigLayout;
+import javax.swing.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.text.DateFormat;
 
 /**
  * This utility class contains helper methods for typical GUI widget creation.
@@ -110,7 +101,7 @@ public final class GuiCreateUtils {
             int count = Math.abs(event.getWheelRotation());
 
             for (int i = 0; i < count; i++) {
-                Object newValue = fForward ? 
+                Object newValue = fForward ?
                         spinner.getModel().getNextValue() : spinner.getModel().getPreviousValue();
 
                 if (newValue != null) {
