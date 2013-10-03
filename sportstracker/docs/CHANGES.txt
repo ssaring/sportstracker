@@ -6,6 +6,7 @@ v6.0.0:
   - switched compiler to Java 8 (except for module st-exerciseviewer)
   - replaced mocking framework EasyMock 3.2 with Mockito 1.9.5 
     (much better API and easier to use)
+  - switch to IntelliJ IDEA 12.1.5 as project IDE, added project files to VCS
 
 v5.8.0:
  SportsTracker changes:

@@ -305,18 +305,20 @@ Developer Requirements
 ----------------------
 
 For compilation of the SportsTracker sources you need:
-  - Java SE Development Kit (JDK) 7 or greater
+  - Java SE Development Kit (JDK) 8 or greater
     (from http://java.sun.com/javase/downloads)
   - Maven 3.0.3
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
-  - NetBeans IDE 7.2 (from http://www.netbeans.org)
+  - IntelliJ IDEA 12.1.5 Community Edition (http://www.jetbrains.com/idea/)
+    => preferred IDE, project files are in VCS
+  - NetBeans IDE 7.4 (from http://www.netbeans.org)
     (Maven support is included, Groovy plugin needs to be installed)
-  - Eclipse 4.0 (from http://eclipse.org) with following plugins:
-    - Groovy-Eclipse 2.7.0 (from http://groovy.codehaus.org/Eclipse+Plugin)
+  - Eclipse 4.3 (from http://eclipse.org) with following plugins:
+    - Groovy-Eclipse (from http://groovy.codehaus.org/Eclipse+Plugin)
       - with Groovy-Eclipse Feature
-      - with Groovy Compiler 2.0 Feature
+      - with Groovy Compiler Feature
       - with Groovy-Eclipse M2E integration
 
 The Maven build configuration supports all typical goals (clean, compile,
@@ -444,4 +446,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2013/01/13
+2013/10/03
