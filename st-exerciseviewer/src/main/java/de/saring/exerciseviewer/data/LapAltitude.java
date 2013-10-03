@@ -17,10 +17,6 @@ public final class LapAltitude {
      */
     private int ascent;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public short getAltitude() {
         return altitude;
     }
@@ -36,10 +32,6 @@ public final class LapAltitude {
     public void setAscent(int ascent) {
         this.ascent = ascent;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {

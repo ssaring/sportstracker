@@ -25,9 +25,6 @@ public final class Equipment extends IdObject implements Cloneable {
         super(id);
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
     public String getName() {
         return name;
     }
@@ -36,7 +33,15 @@ public final class Equipment extends IdObject implements Cloneable {
         this.name = name;
     }
 
-    /** *** END: Generated Getters and Setters **** */
+    @Override
+    public String toString() {
+        StringBuilder sBuilder = new StringBuilder();
+        sBuilder.append(this.getClass().getName()).append(":\n");
+        sBuilder.append(" [id=").append(this.getId()).append("\n");
+        sBuilder.append("  name=").append(this.name).append("]\n");
+        return sBuilder.toString();
+    }
+
     /**
      * Returns a deep clone copy of this Equipment object.
      *
@@ -51,14 +56,5 @@ public final class Equipment extends IdObject implements Cloneable {
         } catch (CloneNotSupportedException ex) {
             throw new AssertionError();
         }
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sBuilder = new StringBuilder();
-        sBuilder.append(this.getClass().getName()).append(":\n");
-        sBuilder.append(" [id=").append(this.getId()).append("\n");
-        sBuilder.append("  name=").append(this.name).append("]\n");
-        return sBuilder.toString();
     }
 }

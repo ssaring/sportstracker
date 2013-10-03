@@ -56,9 +56,6 @@ public final class ExerciseFilter {
      */
     private boolean regularExpressionMode = false;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
     public Date getDateStart() {
         return dateStart;
     }
@@ -123,7 +120,6 @@ public final class ExerciseFilter {
         this.commentSubString = commentSubString;
     }
 
-    /** *** END: Generated Getters and Setters **** */
     /**
      * Creates the default filter criteria object which will be used at
      * application startup. This filter accepts all exercises of the current

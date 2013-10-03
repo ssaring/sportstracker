@@ -29,9 +29,6 @@ public final class Weight extends IdDateObject {
         super(id);
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
     public float getValue() {
         return value;
     }
@@ -48,7 +45,6 @@ public final class Weight extends IdDateObject {
         this.comment = comment;
     }
 
-    /** *** END: Generated Getters and Setters **** */
     /**
      * Returns a complete clone of this Weight object. All the attributes are
      * the same, but the ID of the clone is the specified one.

@@ -117,10 +117,6 @@ public class STDocumentImpl implements STDocument {
         currentFilter = ExerciseFilter.createDefaultExerciseFilter();
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters for application data ****
-     */
-
     public SportTypeList getSportTypeList() {
         return sportTypeList;
     }
@@ -164,10 +160,6 @@ public class STDocumentImpl implements STDocument {
     public String getDataDirectory() {
         return dataDirectory;
     }
-
-    /**
-     * ** END: Generated Getters and Setters for application data ****
-     */
 
     @Override
     public void evaluateCommandLineParameters(String[] parameters) {

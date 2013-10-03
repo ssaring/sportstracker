@@ -106,10 +106,6 @@ public class STOptions implements EVOptions, Serializable {
      */
     private String lookAndFeelClassName;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public View getInitialView() {
         return initialView;
     }
@@ -225,8 +221,6 @@ public class STOptions implements EVOptions, Serializable {
     public void setLookAndFeelClassName(String lookAndFeelClassName) {
         this.lookAndFeelClassName = lookAndFeelClassName;
     }
-
-    /***** END: Generated Getters and Setters *****/
 
     /**
      * Creates an instance of STOptions filled with default values.

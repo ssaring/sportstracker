@@ -32,10 +32,6 @@ public class CalendarDay {
         this.calendarEntries = new ArrayList<>();
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public Calendar getDate() {
         return date;
     }
@@ -43,6 +39,4 @@ public class CalendarDay {
     public List<CalendarEntry> getCalendarEntries() {
         return calendarEntries;
     }
-
-    /***** END: Generated Getters and Setters *****/
 }

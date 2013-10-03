@@ -25,10 +25,6 @@ public final class ExerciseAltitude {
      */
     private int ascent;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public short getAltitudeMin() {
         return altitudeMin;
     }
@@ -60,10 +56,6 @@ public final class ExerciseAltitude {
     public void setAscent(int ascent) {
         this.ascent = ascent;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {

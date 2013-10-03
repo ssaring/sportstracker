@@ -17,10 +17,6 @@ public final class ExerciseCadence {
      */
     private short cadenceMax;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public short getCadenceAVG() {
         return cadenceAVG;
     }
@@ -36,10 +32,6 @@ public final class ExerciseCadence {
     public void setCadenceMax(short cadenceMax) {
         this.cadenceMax = cadenceMax;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {

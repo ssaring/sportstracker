@@ -113,10 +113,6 @@ public final class EVExercise {
      */
     public static final short DYNAMIC_RECORDING_INTERVAL = -1;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public ExerciseFileType getFileType() {
         return fileType;
     }
@@ -292,8 +288,6 @@ public final class EVExercise {
     public void setSampleList(ExerciseSample[] sampleList) {
         this.sampleList = sampleList;
     }
-
-    /***** END: Generated Getters and Setters *****/
 
     /**
      * In most file formats (e.g. S710Raw, HRM) there are no distance values for each

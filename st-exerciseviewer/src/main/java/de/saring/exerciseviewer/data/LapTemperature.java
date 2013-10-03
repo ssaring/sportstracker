@@ -14,10 +14,6 @@ public final class LapTemperature {
      */
     private short temperature;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public short getTemperature() {
         return temperature;
     }
@@ -25,10 +21,6 @@ public final class LapTemperature {
     public void setTemperature(short temperature) {
         this.temperature = temperature;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {

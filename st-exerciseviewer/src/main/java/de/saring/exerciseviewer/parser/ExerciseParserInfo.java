@@ -29,10 +29,6 @@ public class ExerciseParserInfo {
         this.suffixes = suffixes;
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public String getName() {
         return name;
     }
@@ -40,7 +36,5 @@ public class ExerciseParserInfo {
     public String[] getSuffixes() {
         return suffixes;
     }
-
-    /***** END: Generated Getters and Setters *****/
 }
 

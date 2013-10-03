@@ -15,13 +15,8 @@ Java 8 support status (in branch java_8):
   - NetBeans 7.4 RC1 works fine, but not perfect
   => IDEA is currently the best choice
 - full use of Lambdas in module st-util
-- consistent Java source code formatting (Java standard) in module st-util
 
 Java 8 TODOs:
-- use new formating and fix displayed NetBeans-warnings
-  - done in module st-util
-  - progress in module sportstracker (source, not in tests)
-    - done in package de.saring.util.data
 - use lambdas for XML loading/parsing, see TaskList
 - use new source code formating in all Java classes
 - use new Java Date API

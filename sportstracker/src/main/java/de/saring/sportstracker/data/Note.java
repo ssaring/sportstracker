@@ -25,9 +25,6 @@ public final class Note extends IdDateObject {
         super(id);
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
     public String getText() {
         return text;
     }
@@ -36,7 +33,6 @@ public final class Note extends IdDateObject {
         this.text = text;
     }
 
-    /** *** END: Generated Getters and Setters **** */
     /**
      * Returns a complete clone of this Note object. All the attributes are the
      * same, but the ID of the clone is the specified one.

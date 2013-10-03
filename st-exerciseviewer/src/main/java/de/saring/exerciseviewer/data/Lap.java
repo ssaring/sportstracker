@@ -42,10 +42,6 @@ public final class Lap {
     private Position positionSplit;
 
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public int getTimeSplit() {
         return timeSplit;
     }
@@ -109,10 +105,6 @@ public final class Lap {
     public void setPositionSplit(Position positionSplit) {
         this.positionSplit = positionSplit;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {

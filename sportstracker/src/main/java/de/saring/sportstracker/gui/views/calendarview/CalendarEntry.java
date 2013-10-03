@@ -35,10 +35,6 @@ public class CalendarEntry {
         this.entry = entry;
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public IdDateObject getEntry() {
         return entry;
     }
@@ -58,8 +54,6 @@ public class CalendarEntry {
     public void setToolTipText(String toolTipText) {
         this.toolTipText = toolTipText;
     }
-
-    /***** END: Generated Getters and Setters *****/
 
     /**
      * Checks that this entry is an Exercise entry.

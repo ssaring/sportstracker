@@ -35,10 +35,6 @@ public final class HeartRateLimit {
      */
     private boolean absoluteRange = true;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public short getLowerHeartRate() {
         return lowerHeartRate;
     }
@@ -86,10 +82,6 @@ public final class HeartRateLimit {
     public void setAbsoluteRange(boolean absoluteRange) {
         this.absoluteRange = absoluteRange;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {

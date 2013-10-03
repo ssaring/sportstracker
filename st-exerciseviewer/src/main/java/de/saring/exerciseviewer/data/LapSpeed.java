@@ -25,10 +25,6 @@ public final class LapSpeed {
      */
     private short cadence;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public float getSpeedEnd() {
         return speedEnd;
     }
@@ -60,10 +56,6 @@ public final class LapSpeed {
     public void setCadence(short cadence) {
         this.cadence = cadence;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {

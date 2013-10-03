@@ -147,9 +147,6 @@ public final class Exercise extends IdDateObject implements Cloneable {
         super(id);
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
     public SportType getSportType() {
         return sportType;
     }
@@ -246,7 +243,6 @@ public final class Exercise extends IdDateObject implements Cloneable {
         this.comment = comment;
     }
 
-    /** *** END: Generated Getters and Setters **** */
     /**
      * Returns a complete clone of this Exercise object. All the attributes are
      * the same, but the ID of the clone is the specified one.

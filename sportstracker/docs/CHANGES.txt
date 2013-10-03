@@ -7,6 +7,10 @@ v6.0.0:
   - replaced mocking framework EasyMock 3.2 with Mockito 1.9.5 
     (much better API and easier to use)
   - switch to IntelliJ IDEA 12.1.5 as project IDE, added project files to VCS
+  - reformated all Java and Groovy source files to common Java source code
+    format guidelines (reformating done by IntelliJ IDEA)
+  - cleanup of import statements in all Java and Groovy source files
+    (done by IntelliJ IDEA)
 
 v5.8.0:
  SportsTracker changes:

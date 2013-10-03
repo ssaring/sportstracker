@@ -25,9 +25,6 @@ public final class SportSubType extends IdObject implements Cloneable {
         super(id);
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
     public String getName() {
         return name;
     }
@@ -36,7 +33,6 @@ public final class SportSubType extends IdObject implements Cloneable {
         this.name = name;
     }
 
-    /** *** END: Generated Getters and Setters **** */
     /**
      * Returns a deep clone copy of this SportSubType object.
      *

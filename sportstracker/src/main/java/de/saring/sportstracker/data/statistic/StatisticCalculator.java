@@ -264,10 +264,6 @@ public class StatisticCalculator {
         }
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public int getAvgAscent() {
         return avgAscent;
     }
@@ -451,6 +447,4 @@ public class StatisticCalculator {
     public void setTotalDuration(int totalDuration) {
         this.totalDuration = totalDuration;
     }
-
-    /***** END: Generated Getters and Setters *****/
 }

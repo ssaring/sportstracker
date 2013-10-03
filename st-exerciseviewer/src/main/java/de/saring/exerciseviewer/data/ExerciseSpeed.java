@@ -21,10 +21,6 @@ public final class ExerciseSpeed {
      */
     private int distance;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public float getSpeedAVG() {
         return speedAVG;
     }
@@ -48,10 +44,6 @@ public final class ExerciseSpeed {
     public void setDistance(int distance) {
         this.distance = distance;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {

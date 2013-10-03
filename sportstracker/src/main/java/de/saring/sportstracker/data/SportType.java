@@ -53,9 +53,6 @@ public final class SportType extends IdObject implements Cloneable {
         super(id);
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
     public String getName() {
         return name;
     }
@@ -96,7 +93,6 @@ public final class SportType extends IdObject implements Cloneable {
         return equipmentList;
     }
 
-    /** *** END: Generated Getters and Setters **** */
     /**
      * Returns a deep clone copy of this SportType object.
      *

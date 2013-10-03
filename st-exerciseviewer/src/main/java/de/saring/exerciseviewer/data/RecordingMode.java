@@ -46,10 +46,6 @@ public final class RecordingMode {
      */
     private boolean heartRate;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public boolean isAltitude() {
         return altitude;
     }
@@ -121,10 +117,6 @@ public final class RecordingMode {
     public void setHeartRate(boolean heartRate) {
         this.heartRate = heartRate;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {

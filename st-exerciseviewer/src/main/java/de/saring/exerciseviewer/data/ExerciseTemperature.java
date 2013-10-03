@@ -21,10 +21,6 @@ public final class ExerciseTemperature {
      */
     private short temperatureMax;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public short getTemperatureMin() {
         return temperatureMin;
     }
@@ -48,10 +44,6 @@ public final class ExerciseTemperature {
     public void setTemperatureMax(short temperatureMax) {
         this.temperatureMax = temperatureMax;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {

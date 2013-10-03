@@ -43,10 +43,6 @@ public final class ExerciseSample {
      */
     private Position position;
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
-
     public long getTimestamp() {
         return timestamp;
     }
@@ -110,10 +106,6 @@ public final class ExerciseSample {
     public void setPosition(Position position) {
         this.position = position;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {

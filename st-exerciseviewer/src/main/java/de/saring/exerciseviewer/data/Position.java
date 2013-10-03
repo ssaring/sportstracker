@@ -24,9 +24,6 @@ public class Position {
         this.longitude = longitude;
     }
 
-    /**
-     * ** BEGIN: Generated Getters and Setters ****
-     */
     public double getLatitude() {
         return latitude;
     }
@@ -34,10 +31,6 @@ public class Position {
     public double getLongitude() {
         return longitude;
     }
-
-    /**
-     * ** END: Generated Getters and Setters ****
-     */
 
     @Override
     public String toString() {
