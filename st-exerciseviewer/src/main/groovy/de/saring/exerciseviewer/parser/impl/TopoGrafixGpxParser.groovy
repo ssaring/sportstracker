@@ -1,10 +1,10 @@
 package de.saring.exerciseviewer.parser.impl
 
 import de.saring.exerciseviewer.core.EVException
-import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.exerciseviewer.data.*
-import de.saring.exerciseviewer.parser.AbstractExerciseParser;
-import de.saring.exerciseviewer.parser.ExerciseParserInfo;
+import de.saring.exerciseviewer.parser.AbstractExerciseParser
+import de.saring.exerciseviewer.parser.ExerciseParserInfo
+import de.saring.util.unitcalc.CalculationUtils
 
 import java.text.SimpleDateFormat
 
@@ -13,20 +13,20 @@ import java.text.SimpleDateFormat
  * Documentation about the format can be found at the TopoGrafix website
  * ( http://www.topografix.com/gpx.asp ).
  *
- * @author  Stefan Saring
- * @author  Alex Wulms
+ * @author Stefan Saring
+ * @author Alex Wulms
  * @version 2.0
  */
 class TopoGrafixGpxParser extends AbstractExerciseParser {
 
     /** Informations about this parser. */
-    private def info = new ExerciseParserInfo ('TopoGrafix GPX', ["gpx", "GPX"] as String[])
+    private def info = new ExerciseParserInfo('TopoGrafix GPX', ["gpx", "GPX"] as String[])
 
     /** The date and time parser instance for XML date standard. */
-    private def sdFormat = new SimpleDateFormat ("yyyy-MM-dd'T'HH:mm:ss");
+    private def sdFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
-    private final double DEGREE_TO_RADIAN_DIVIDER=57.29577951d
-    private final double EARTH_RADIUS_IN_METER=6371000d
+    private final double DEGREE_TO_RADIAN_DIVIDER = 57.29577951d
+    private final double EARTH_RADIUS_IN_METER = 6371000d
 
     /** {@inheritDoc} */
     @Override
@@ -44,7 +44,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
             return parseExercisePath(gpx)
         }
         catch (Exception e) {
-            throw new EVException ("Failed to read the TopoGrafix GPX exercise file '${filename}' ...", e)
+            throw new EVException("Failed to read the TopoGrafix GPX exercise file '${filename}' ...", e)
         }
     }
 
@@ -80,7 +80,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
         EVExercise exercise = new EVExercise()
         exercise.fileType = EVExercise.ExerciseFileType.GPX
         exercise.recordingInterval = EVExercise.DYNAMIC_RECORDING_INTERVAL
-        exercise.recordingMode = new RecordingMode ()
+        exercise.recordingMode = new RecordingMode()
         exercise.recordingMode.location = true
 
         exercise.heartRateLimits = new HeartRateLimit[0]
@@ -94,10 +94,9 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
         exercise
     }
 
-
     /**
      * Parses all trackpoints in all tracks and track segments under the "gpx" element.
-     * 
+     *
      * @return Array of ExerciseSample objects for each trackpoint
      */
     private def parseSampleTrackpoints(gpx, exercise) {
@@ -122,7 +121,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
                     // get timestamp and calculate sample time offset (optional)
                     if (!trkpt.time.isEmpty()) {
                         Date timestampSample = sdFormat.parse(trkpt.time.text())
-                        
+
                         // store first timestamp as exercise start time when missing 
                         // or when exercise timestamp larger then (first) track time stamp
                         // (In some GPX files track metadata is missing, while in some other
@@ -131,7 +130,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
                         //  was started)
                         if (!exercise.date || exercise.date.time > timestampSample.time) {
                             exercise.date = timestampSample
-                        }                        
+                        }
                         sample.timestamp = timestampSample.time - exercise.date.time
 
                     }
@@ -171,38 +170,36 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
             double distanceInMeter
             if (prevPosition != null) {
                 // Calculate distance based on GPS coordinates, using haversine formula
-                double dLat = (sample.position.latitude-prevPosition.latitude)/DEGREE_TO_RADIAN_DIVIDER
-                double dLon = (sample.position.longitude-prevPosition.longitude)/DEGREE_TO_RADIAN_DIVIDER 
-                double prevLat = prevPosition.latitude/DEGREE_TO_RADIAN_DIVIDER
-                double currLat = sample.position.latitude/DEGREE_TO_RADIAN_DIVIDER
-                double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(prevLat) * Math.cos(currLat)
-                distanceInMeter = EARTH_RADIUS_IN_METER * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+                double dLat = (sample.position.latitude - prevPosition.latitude) / DEGREE_TO_RADIAN_DIVIDER
+                double dLon = (sample.position.longitude - prevPosition.longitude) / DEGREE_TO_RADIAN_DIVIDER
+                double prevLat = prevPosition.latitude / DEGREE_TO_RADIAN_DIVIDER
+                double currLat = sample.position.latitude / DEGREE_TO_RADIAN_DIVIDER
+                double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(prevLat) * Math.cos(currLat)
+                distanceInMeter = EARTH_RADIUS_IN_METER * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
                 totalDistanceInMeter += distanceInMeter;
             }
             sample.distance = totalDistanceInMeter
             prevPosition = sample.position
-    
+
             if (prevTimestamp != -1) {
-                 // Calculate speed. Don't use CalculateUtils.calculateAvgSpeed, because
-                 // that one gives 'infinity' when rounded time-difference is 0
-                 // (e.g. when two timestamps are less then 500 milliseconds apart)
-                 // Note that timestamps are in milliseconds
-                 // Note that speed is in km/h
-                 long deltaTime = sample.timestamp - prevTimestamp
-                 // Note that deltaTime can be 0, either when GPX file contains two
-                 // consecutive points with same timestamp or when it does not contain
-                 // any timestamps at all. In both cases, speed will be set to 0 for
-                 // the sample
-                 if (deltaTime != 0) {
-                     exercise.recordingMode.speed = true
-                     sample.speed = 3600*distanceInMeter/deltaTime
-                 }
-                 else {
-                     sample.speed = 0
-                 }
-            }
-            else {
+                // Calculate speed. Don't use CalculateUtils.calculateAvgSpeed, because
+                // that one gives 'infinity' when rounded time-difference is 0
+                // (e.g. when two timestamps are less then 500 milliseconds apart)
+                // Note that timestamps are in milliseconds
+                // Note that speed is in km/h
+                long deltaTime = sample.timestamp - prevTimestamp
+                // Note that deltaTime can be 0, either when GPX file contains two
+                // consecutive points with same timestamp or when it does not contain
+                // any timestamps at all. In both cases, speed will be set to 0 for
+                // the sample
+                if (deltaTime != 0) {
+                    exercise.recordingMode.speed = true
+                    sample.speed = 3600 * distanceInMeter / deltaTime
+                } else {
+                    sample.speed = 0
+                }
+            } else {
                 // First sample point; speed not known yet. Assume person did not start
                 // the training yet and is standing still
                 sample.speed = 0
@@ -236,7 +233,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
             previousAltitude = sample.altitude
         }
 
-        altitude.altitudeAVG = (short)Math.round(altitudeSum / exercise.sampleList.size())
+        altitude.altitudeAVG = (short) Math.round(altitudeSum / exercise.sampleList.size())
     }
 
     /**
@@ -275,10 +272,9 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
             def lastSample = exercise.sampleList[sampleCount - 1]
             exercise.speed.distance = Math.round(lastSample.distance)
             exercise.speed.speedAVG = CalculationUtils.calculateAvgSpeed(
-                (float)(exercise.speed.distance/1000f), (int)Math.round(lastSample.timestamp/1000f)
+                    (float) (exercise.speed.distance / 1000f), (int) Math.round(lastSample.timestamp / 1000f)
             )
-        }
-        else {
+        } else {
             exercise.speed.distance = 0;
             exercise.speed.speedAVG = 0;
         }
@@ -300,6 +296,6 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
             }
         }
 
-        exercise.heartRateAVG  = (short)Math.round(heartRateSum / exercise.sampleList.size())
+        exercise.heartRateAVG = (short) Math.round(heartRateSum / exercise.sampleList.size())
     }
 }

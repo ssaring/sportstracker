@@ -1,9 +1,9 @@
 package de.saring.exerciseviewer.parser.impl
 
-import groovy.transform.TypeChecked;
 import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
+import groovy.transform.TypeChecked
 
 /**
  * This class contains all unit tests for the TopoGrafixGpxParser class.
@@ -19,16 +19,16 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
     /**
      * This method initializes the environment for testing.
      */
-    void setUp () {
-        parser = new TopoGrafixGpxParser ()
+    void setUp() {
+        parser = new TopoGrafixGpxParser()
     }
 
     /**
      * This method must fail on parsing an exerise file which doesn't exists.
      */
-    void testParseExerciseMissingFile () {
-        shouldFail (EVException) {
-            parser.parseExercise ('misc/testdata/gpx/unknown-file.gpx')
+    void testParseExerciseMissingFile() {
+        shouldFail(EVException) {
+            parser.parseExercise('misc/testdata/gpx/unknown-file.gpx')
         }
     }
 
@@ -36,13 +36,13 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
      * This test parses a GPX file for a bike tour created by GPSies.com.
      * It contains track (location), time and altitude data.
      */
-    void testGpxBikeTour () {
+    void testGpxBikeTour() {
 
-        def exercise = parser.parseExercise ('misc/testdata/gpx/bike-tour-gpsies.gpx')
+        def exercise = parser.parseExercise('misc/testdata/gpx/bike-tour-gpsies.gpx')
 
         // check basic exercise data
-        assertEquals (EVExercise.ExerciseFileType.GPX, exercise.fileType)
-        assertEquals (EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
+        assertEquals(EVExercise.ExerciseFileType.GPX, exercise.fileType)
+        assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)
         assertFalse(exercise.recordingMode.heartRate)
@@ -53,10 +53,10 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertFalse(exercise.recordingMode.intervalExercise)
 
         // Check exercise time and duration
-        def calDate = Calendar.getInstance ()
-        calDate.set (2010, 8-1, 10, 17, 27, 47)
-        assertEquals ((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
-        assertEquals (((47*60) + 6) *10, exercise.duration)
+        def calDate = Calendar.getInstance()
+        calDate.set(2010, 8 - 1, 10, 17, 27, 47)
+        assertEquals((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
+        assertEquals(((47 * 60) + 6) * 10, exercise.duration)
 
         // check altitude data
         assertEquals((short) 236, exercise.altitude.altitudeMin)
@@ -98,12 +98,12 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
      * This test parses a GPX file for a bike tour created by Garmin Oregon with heart rate monitor.
      * It contains track (location), time, altitude and heart rate data.
      */
-    void testGpxGarminOregonHeartRateBikeTour () {
-        def exercise = parser.parseExercise ('misc/testdata/gpx/bike-tour-garmin-oregon-with-heartrate.gpx')
+    void testGpxGarminOregonHeartRateBikeTour() {
+        def exercise = parser.parseExercise('misc/testdata/gpx/bike-tour-garmin-oregon-with-heartrate.gpx')
 
         // check basic exercise data
-        assertEquals (EVExercise.ExerciseFileType.GPX, exercise.fileType)
-        assertEquals (EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
+        assertEquals(EVExercise.ExerciseFileType.GPX, exercise.fileType)
+        assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)
         assertTrue(exercise.recordingMode.heartRate)
@@ -114,10 +114,10 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertFalse(exercise.recordingMode.intervalExercise)
 
         // Check exercise time and duration
-        def calDate = Calendar.getInstance ()
-        calDate.set (2012, 3-1, 2, 6, 53, 51)
-        assertEquals ((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
-        assertEquals (6090, exercise.duration)
+        def calDate = Calendar.getInstance()
+        calDate.set(2012, 3 - 1, 2, 6, 53, 51)
+        assertEquals((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
+        assertEquals(6090, exercise.duration)
 
         // check altitude data
         assertEquals((short) 32, exercise.altitude.altitudeMin)
@@ -167,12 +167,12 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
      * Note that first version of the test file is derived from a Garmin Oregon track file, which has been
      * manually patched to be aligned with the example shown in feature request 3432983
      */
-    void testGpxHoluxFunTrek130ProHeartRateBikeTour () {
-        def exercise = parser.parseExercise ('misc/testdata/gpx/bike-tour-holux-funtrek-130-pro-with-heartrate.gpx')
+    void testGpxHoluxFunTrek130ProHeartRateBikeTour() {
+        def exercise = parser.parseExercise('misc/testdata/gpx/bike-tour-holux-funtrek-130-pro-with-heartrate.gpx')
 
         // check basic exercise data
-        assertEquals (EVExercise.ExerciseFileType.GPX, exercise.fileType)
-        assertEquals (EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
+        assertEquals(EVExercise.ExerciseFileType.GPX, exercise.fileType)
+        assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)
         assertTrue(exercise.recordingMode.heartRate)
@@ -183,10 +183,10 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertFalse(exercise.recordingMode.intervalExercise)
 
         // Check exercise time and duration
-        def calDate = Calendar.getInstance ()
-        calDate.set (2011, 11-1, 3, 9, 9, 25)
-        assertEquals ((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
-        assertEquals (1780, exercise.duration)
+        def calDate = Calendar.getInstance()
+        calDate.set(2011, 11 - 1, 3, 9, 9, 25)
+        assertEquals((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
+        assertEquals(1780, exercise.duration)
 
         // check altitude data
         assertEquals((short) 212, exercise.altitude.altitudeMin)
@@ -233,13 +233,13 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
     /**
      * This test parses a GPX file, which contains just the track (location) data.
      */
-    void testGpxBikeTourLocationDataOnly () {
+    void testGpxBikeTourLocationDataOnly() {
 
-        def exercise = parser.parseExercise ('misc/testdata/gpx/bike-tour-track_only.gpx')
+        def exercise = parser.parseExercise('misc/testdata/gpx/bike-tour-track_only.gpx')
 
         // check basic exercise data
-        assertEquals (EVExercise.ExerciseFileType.GPX, exercise.fileType)
-        assertEquals (EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
+        assertEquals(EVExercise.ExerciseFileType.GPX, exercise.fileType)
+        assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         assertFalse(exercise.recordingMode.altitude)
         assertFalse(exercise.recordingMode.heartRate)
         assertFalse(exercise.recordingMode.speed)
@@ -250,10 +250,10 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertFalse(exercise.recordingMode.intervalExercise)
 
         // check exercise time and duration
-        assertNull (exercise.date)
-        assertEquals (0, exercise.duration)
+        assertNull(exercise.date)
+        assertEquals(0, exercise.duration)
         assertNull(exercise.altitude)
-        
+
         // check sample data
         assertEquals(142, exercise.sampleList.size())
 
