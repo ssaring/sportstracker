@@ -1,48 +1,54 @@
 package de.saring.exerciseviewer.data;
 
-    
+
 /**
  * This class stores the cadence informations of a recorded exercise.
  *
- * @author  Stefan Saring
+ * @author Stefan Saring
  * @version 1.0
  */
-public final class ExerciseCadence
-{
-    /** Average cadence of exercise (rpm). */
+public final class ExerciseCadence {
+    /**
+     * Average cadence of exercise (rpm).
+     */
     private short cadenceAVG;
-    /** Maximum cadence of exercise (rpm). */
+    /**
+     * Maximum cadence of exercise (rpm).
+     */
     private short cadenceMax;
 
-    /***** BEGIN: Generated Getters and Setters *****/
-    
-    public short getCadenceAVG () {
+    /**
+     * ** BEGIN: Generated Getters and Setters ****
+     */
+
+    public short getCadenceAVG() {
         return cadenceAVG;
     }
 
-    public void setCadenceAVG (short cadenceAVG) {
+    public void setCadenceAVG(short cadenceAVG) {
         this.cadenceAVG = cadenceAVG;
     }
 
-    public short getCadenceMax () {
+    public short getCadenceMax() {
         return cadenceMax;
     }
 
-    public void setCadenceMax (short cadenceMax) {
+    public void setCadenceMax(short cadenceMax) {
         this.cadenceMax = cadenceMax;
     }
-    
-    /***** END: Generated Getters and Setters *****/
+
+    /**
+     * ** END: Generated Getters and Setters ****
+     */
 
     @Override
-    public String toString ()
-    {
-        StringBuilder sBuilder = new StringBuilder ();
+    public String toString() {
+        StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append (ExerciseCadence.class.getName () + ":\n");
-        sBuilder.append (" [cadenceAVG=" + cadenceAVG + "\n");
-        sBuilder.append ("  cadenceMax=" + cadenceMax + "]\n");
+        sBuilder.append(ExerciseCadence.class.getName() + ":\n");
+        sBuilder.append(" [cadenceAVG=" + cadenceAVG + "\n");
+        sBuilder.append("  cadenceMax=" + cadenceMax + "]\n");
 
-        return sBuilder.toString ();
+        return sBuilder.toString();
     }
 }

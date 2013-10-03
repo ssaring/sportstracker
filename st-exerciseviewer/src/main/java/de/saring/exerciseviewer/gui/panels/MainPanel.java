@@ -1,14 +1,15 @@
 package de.saring.exerciseviewer.gui.panels;
 
-import javax.inject.Inject;
-import de.saring.exerciseviewer.data.HeartRateLimit;
 import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.HeartRateLimit;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.unitcalc.FormatUtils;
+import org.jdesktop.application.Action;
+
+import javax.inject.Inject;
+import javax.swing.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import javax.swing.ActionMap;
-import org.jdesktop.application.Action;
 
 /**
  * This class is the implementation of the "Main" panel, which displays all
@@ -18,201 +19,199 @@ import org.jdesktop.application.Action;
  * @version 1.0
  */
 public class MainPanel extends BasePanel {
-    
-    private static final String ACTION_UPDATE_RANGE_TIMES = "pv.main.update_range_times";
-    
-    private DiagramPanel diagramPanel;    
 
-    
+    private static final String ACTION_UPDATE_RANGE_TIMES = "pv.main.update_range_times";
+
+    private DiagramPanel diagramPanel;
+
+
     /**
      * Standard c'tor.
+     *
      * @param context the ExerciseViewer context
      */
     @Inject
-    public MainPanel (EVContext context) {
-        super (context);
-        initComponents ();
-        
+    public MainPanel(EVContext context) {
+        super(context);
+        initComponents();
+
         // setup actions
-        ActionMap actionMap = getContext ().getSAFContext ().getActionMap (getClass (), this);
-        cbRange.setAction (actionMap.get (ACTION_UPDATE_RANGE_TIMES));
+        ActionMap actionMap = getContext().getSAFContext().getActionMap(getClass(), this);
+        cbRange.setAction(actionMap.get(ACTION_UPDATE_RANGE_TIMES));
     }
 
     @Override
-    public void displayExercise () {
-        EVExercise exercise = getDocument ().getExercise ();
-        FormatUtils formatUtils = getContext ().getFormatUtils ();
+    public void displayExercise() {
+        EVExercise exercise = getDocument().getExercise();
+        FormatUtils formatUtils = getContext().getFormatUtils();
 
         // set default text for all value labels first
-        laTypeValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laUserValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laDateValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laDurationValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laEnergyValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        
-        laAverageValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laMaximumValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
+        laTypeValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laUserValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laDateValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laDurationValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laEnergyValue.setText(getContext().getResReader().getString("common.n_a_"));
 
-        laTimeBelowValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laTimeWithinValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laTimeAboveValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
+        laAverageValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laMaximumValue.setText(getContext().getResReader().getString("common.n_a_"));
 
-        laAltitudeValue.setText (getContext ().getResReader ().getString ("common.disabled"));
-        laSpeedValue.setText (getContext ().getResReader ().getString ("common.disabled"));
-        laCadenceValue.setText (getContext ().getResReader ().getString ("common.disabled"));
-        laPowerValue.setText (getContext ().getResReader ().getString ("common.disabled"));
-        
-        laTotalExerciseTimeValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laTotalRidingTimeValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laTotalEnergyValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laOdometerValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        
+        laTimeBelowValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laTimeWithinValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laTimeAboveValue.setText(getContext().getResReader().getString("common.n_a_"));
+
+        laAltitudeValue.setText(getContext().getResReader().getString("common.disabled"));
+        laSpeedValue.setText(getContext().getResReader().getString("common.disabled"));
+        laCadenceValue.setText(getContext().getResReader().getString("common.disabled"));
+        laPowerValue.setText(getContext().getResReader().getString("common.disabled"));
+
+        laTotalExerciseTimeValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laTotalRidingTimeValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laTotalEnergyValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laOdometerValue.setText(getContext().getResReader().getString("common.n_a_"));
+
         // fill general data 
-        laTypeValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laUserValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laEnergyValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laTotalExerciseTimeValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laTotalRidingTimeValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laTotalEnergyValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
+        laTypeValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laUserValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laEnergyValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laTotalExerciseTimeValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laTotalRidingTimeValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laTotalEnergyValue.setText(getContext().getResReader().getString("common.n_a_"));
 
-        if (exercise.getFileType () != EVExercise.ExerciseFileType.HRM) {
-            
+        if (exercise.getFileType() != EVExercise.ExerciseFileType.HRM) {
+
             // fill type and user data
-        	if (exercise.getType() > 0) {
-        		laTypeValue.setText ("" + exercise.getType () + " (" + exercise.getTypeLabel () + ")");
-        	}
-        	if (exercise.getUserID() > 0) {
-        		laUserValue.setText ("" + exercise.getUserID ());
-        	}
-        	
+            if (exercise.getType() > 0) {
+                laTypeValue.setText("" + exercise.getType() + " (" + exercise.getTypeLabel() + ")");
+            }
+            if (exercise.getUserID() > 0) {
+                laUserValue.setText("" + exercise.getUserID());
+            }
+
             // fill energy data
-        	if (exercise.getEnergy() > 0) {
-        		laEnergyValue.setText (formatUtils.caloriesToString (exercise.getEnergy ()));
-        	}
-        	
+            if (exercise.getEnergy() > 0) {
+                laEnergyValue.setText(formatUtils.caloriesToString(exercise.getEnergy()));
+            }
+
             // fill statistics data
-        	if (exercise.getSumExerciseTime() > 0) {
-        		laTotalExerciseTimeValue.setText (formatUtils.minutes2TimeString (exercise.getSumExerciseTime ()));
-        	}
-        	if (exercise.getEnergyTotal() > 0) {
-        		laTotalEnergyValue.setText (formatUtils.caloriesToString (exercise.getEnergyTotal ()));
-        	}
-            
+            if (exercise.getSumExerciseTime() > 0) {
+                laTotalExerciseTimeValue.setText(formatUtils.minutes2TimeString(exercise.getSumExerciseTime()));
+            }
+            if (exercise.getEnergyTotal() > 0) {
+                laTotalEnergyValue.setText(formatUtils.caloriesToString(exercise.getEnergyTotal()));
+            }
+
             // fill total riding time (available only in S710 exercises)
-            if (exercise.getFileType () == EVExercise.ExerciseFileType.S710RAW) {
-                laTotalRidingTimeValue.setText (formatUtils.minutes2TimeString (exercise.getSumRideTime ()));
+            if (exercise.getFileType() == EVExercise.ExerciseFileType.S710RAW) {
+                laTotalRidingTimeValue.setText(formatUtils.minutes2TimeString(exercise.getSumRideTime()));
             }
         }
-        
+
         // fill time data
         if (exercise.getDate() != null) {
-            DateFormat sdFormat = SimpleDateFormat.getDateTimeInstance (
+            DateFormat sdFormat = SimpleDateFormat.getDateTimeInstance(
                     SimpleDateFormat.MEDIUM, SimpleDateFormat.MEDIUM);
-        	laDateValue.setText (sdFormat.format (exercise.getDate ()));
-        }
-        
-        if (exercise.getDuration() > 0) {
-        	laDurationValue.setText (formatUtils.tenthSeconds2TimeString (exercise.getDuration ()));
-        }
-        
-        // fill heartrate data
-        if (exercise.getHeartRateAVG() > 0) {
-        	laAverageValue.setText (formatUtils.heartRateToString (exercise.getHeartRateAVG ()));
-        }
-        if (exercise.getHeartRateMax() > 0) {
-        	laMaximumValue.setText (formatUtils.heartRateToString (exercise.getHeartRateMax ()));
-        }
-        
-        // fill recording mode data
-        laAltitudeValue.setText (boolean2EnabledString (exercise.getRecordingMode ().isAltitude ()));
-        laSpeedValue.setText (boolean2EnabledString (exercise.getRecordingMode ().isSpeed ()));
-        laCadenceValue.setText (boolean2EnabledString (exercise.getRecordingMode ().isCadence ()));
-        laPowerValue.setText (boolean2EnabledString (exercise.getRecordingMode ().isPower ()));
-        
-        // fill odometer data (if available, e.g. not on Polar S410 or S610)
-        if (exercise.getOdometer () != 0) {
-            laOdometerValue.setText (formatUtils.distanceToString (exercise.getOdometer (), 2));
+            laDateValue.setText(sdFormat.format(exercise.getDate()));
         }
 
-        fillHeartRateRanges ();
+        if (exercise.getDuration() > 0) {
+            laDurationValue.setText(formatUtils.tenthSeconds2TimeString(exercise.getDuration()));
+        }
+
+        // fill heartrate data
+        if (exercise.getHeartRateAVG() > 0) {
+            laAverageValue.setText(formatUtils.heartRateToString(exercise.getHeartRateAVG()));
+        }
+        if (exercise.getHeartRateMax() > 0) {
+            laMaximumValue.setText(formatUtils.heartRateToString(exercise.getHeartRateMax()));
+        }
+
+        // fill recording mode data
+        laAltitudeValue.setText(boolean2EnabledString(exercise.getRecordingMode().isAltitude()));
+        laSpeedValue.setText(boolean2EnabledString(exercise.getRecordingMode().isSpeed()));
+        laCadenceValue.setText(boolean2EnabledString(exercise.getRecordingMode().isCadence()));
+        laPowerValue.setText(boolean2EnabledString(exercise.getRecordingMode().isPower()));
+
+        // fill odometer data (if available, e.g. not on Polar S410 or S610)
+        if (exercise.getOdometer() != 0) {
+            laOdometerValue.setText(formatUtils.distanceToString(exercise.getOdometer(), 2));
+        }
+
+        fillHeartRateRanges();
     }
-    
+
     /**
      * Sets the diagram panel of ExerciseViewer (needed for hertrage range updates).
+     *
      * @param diagramPanel the diagram panel
      */
-    public void setDiagramPanel (DiagramPanel diagramPanel) {
+    public void setDiagramPanel(DiagramPanel diagramPanel) {
         this.diagramPanel = diagramPanel;
     }
-    
+
     /**
      * Converts the specified boolean value to string.
+     *
      * @param fEnabled boolean value to convert
      * @return "enabled" if fEnabled is true, "disabled" otherwise
      */
-    private String boolean2EnabledString (boolean fEnabled) {
+    private String boolean2EnabledString(boolean fEnabled) {
         if (fEnabled)
-            return getContext ().getResReader ().getString ("common.enabled");
+            return getContext().getResReader().getString("common.enabled");
         else
-            return getContext ().getResReader ().getString ("common.disabled");
+            return getContext().getResReader().getString("common.disabled");
     }
-    
+
     /**
      * Fills the heartrate limit selection combobox with exercise values.
      */
-    private void fillHeartRateRanges () 
-    {        
-        EVExercise exercise = getDocument ().getExercise ();
-        
+    private void fillHeartRateRanges() {
+        EVExercise exercise = getDocument().getExercise();
+
         // add all ranges (if there are some) to the combobox
-        if ((exercise.getHeartRateLimits () != null) &&
-            (exercise.getHeartRateLimits ().length > 0)) 
-        {
-            for (HeartRateLimit limit : exercise.getHeartRateLimits ()) {                
-                String unitName = limit.isAbsoluteRange () ? "bpm" :"%";                
-                cbRange.addItem  ("" + limit.getLowerHeartRate () + " - " 
-                    + limit.getUpperHeartRate () + " " + unitName);
+        if ((exercise.getHeartRateLimits() != null) &&
+                (exercise.getHeartRateLimits().length > 0)) {
+            for (HeartRateLimit limit : exercise.getHeartRateLimits()) {
+                String unitName = limit.isAbsoluteRange() ? "bpm" : "%";
+                cbRange.addItem("" + limit.getLowerHeartRate() + " - "
+                        + limit.getUpperHeartRate() + " " + unitName);
             }
-            cbRange.setSelectedIndex (0);
-            
-            updateHeartRateRangeTimes ();
-        } 
-        else {
-            cbRange.setEnabled (false);
+            cbRange.setSelectedIndex(0);
+
+            updateHeartRateRangeTimes();
+        } else {
+            cbRange.setEnabled(false);
         }
     }
-        
+
     /**
-     * Updates the heartrate time controls with the values of the current 
+     * Updates the heartrate time controls with the values of the current
      * selected range.
      */
-    @Action(name=ACTION_UPDATE_RANGE_TIMES)
-    public void updateHeartRateRangeTimes ()
-    {
-        int index = cbRange.getSelectedIndex ();
-        EVExercise exercise = getDocument ().getExercise ();
-        FormatUtils formatUtils = getContext ().getFormatUtils ();
-        
-        HeartRateLimit limit = exercise.getHeartRateLimits ()[index];
+    @Action(name = ACTION_UPDATE_RANGE_TIMES)
+    public void updateHeartRateRangeTimes() {
+        int index = cbRange.getSelectedIndex();
+        EVExercise exercise = getDocument().getExercise();
+        FormatUtils formatUtils = getContext().getFormatUtils();
+
+        HeartRateLimit limit = exercise.getHeartRateLimits()[index];
 
         // calculate percentages of times below, within and above
         int percentsBelow = 0, percentsWithin = 0, percentsAbove = 0;
-        if (exercise.getDuration () > 0)
-        {
-            percentsBelow  = (int) Math.round (limit.getTimeBelow  () / (double) exercise.getDuration () * 10 * 100);
-            percentsWithin = (int) Math.round (limit.getTimeWithin () / (double) exercise.getDuration () * 10 * 100);
-            percentsAbove  = (int) Math.round (limit.getTimeAbove  () / (double) exercise.getDuration () * 10 * 100);
+        if (exercise.getDuration() > 0) {
+            percentsBelow = (int) Math.round(limit.getTimeBelow() / (double) exercise.getDuration() * 10 * 100);
+            percentsWithin = (int) Math.round(limit.getTimeWithin() / (double) exercise.getDuration() * 10 * 100);
+            percentsAbove = (int) Math.round(limit.getTimeAbove() / (double) exercise.getDuration() * 10 * 100);
         }
 
-        laTimeBelowValue.setText (formatUtils.seconds2TimeString (limit.getTimeBelow ()) + "   (" + percentsBelow  + " %)");
-        laTimeWithinValue.setText (formatUtils.seconds2TimeString (limit.getTimeWithin ()) + "   (" + percentsWithin + " %)");
-        laTimeAboveValue.setText  (formatUtils.seconds2TimeString (limit.getTimeAbove  ()) + "   (" + percentsAbove  + " %)");
+        laTimeBelowValue.setText(formatUtils.seconds2TimeString(limit.getTimeBelow()) + "   (" + percentsBelow + " %)");
+        laTimeWithinValue.setText(formatUtils.seconds2TimeString(limit.getTimeWithin()) + "   (" + percentsWithin + " %)");
+        laTimeAboveValue.setText(formatUtils.seconds2TimeString(limit.getTimeAbove()) + "   (" + percentsAbove + " %)");
 
         // update heartrate range in diagram
-        diagramPanel.displayDiagramForHeartrateRange (index);
+        diagramPanel.displayDiagramForHeartrateRange(index);
     }
-        
-    /** 
+
+    /**
      * This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -338,108 +337,108 @@ public class MainPanel extends BasePanel {
         javax.swing.GroupLayout pLeftLayout = new javax.swing.GroupLayout(pLeft);
         pLeft.setLayout(pLeftLayout);
         pLeftLayout.setHorizontalGroup(
-            pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pLeftLayout.createSequentialGroup()
-                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(laRange)
-                            .addComponent(laTimeBelow)
-                            .addComponent(laTimeWithin)
-                            .addComponent(laTimeAbove))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(laAverageValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(laMaximumValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(laEnergyValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(laDurationValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(laDateValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(laUserValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(laTypeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(laTimeBelowValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(laTimeWithinValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(laTimeAboveValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(cbRange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(laGeneralData)
-                    .addComponent(laHeartRateData)
-                    .addComponent(laHeartRateLimits)
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(laMaximum)
-                            .addComponent(laAverage))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE))
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(laType)
-                            .addComponent(laUser)
-                            .addComponent(laDate)
-                            .addComponent(laDuration)
-                            .addComponent(laEnergy))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)))
-                .addContainerGap())
+                pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pLeftLayout.createSequentialGroup()
+                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(laRange)
+                                                        .addComponent(laTimeBelow)
+                                                        .addComponent(laTimeWithin)
+                                                        .addComponent(laTimeAbove))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(laAverageValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                                        .addComponent(laMaximumValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                                        .addComponent(laEnergyValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                                        .addComponent(laDurationValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                                        .addComponent(laDateValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                                        .addComponent(laUserValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                                        .addComponent(laTypeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                                        .addComponent(laTimeBelowValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                                        .addComponent(laTimeWithinValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                                        .addComponent(laTimeAboveValue, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                                        .addComponent(cbRange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(laGeneralData)
+                                        .addComponent(laHeartRateData)
+                                        .addComponent(laHeartRateLimits)
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(laMaximum)
+                                                        .addComponent(laAverage))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE))
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(laType)
+                                                        .addComponent(laUser)
+                                                        .addComponent(laDate)
+                                                        .addComponent(laDuration)
+                                                        .addComponent(laEnergy))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)))
+                                .addContainerGap())
         );
         pLeftLayout.setVerticalGroup(
-            pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pLeftLayout.createSequentialGroup()
-                .addComponent(laGeneralData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addComponent(laType)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laUser)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laDate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laDuration)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laEnergy))
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addComponent(laTypeValue)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laUserValue)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laDateValue)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laDurationValue)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laEnergyValue)))
-                .addGap(25, 25, 25)
-                .addComponent(laHeartRateData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addComponent(laAverage)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laMaximum))
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addComponent(laAverageValue)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laMaximumValue)))
-                .addGap(25, 25, 25)
-                .addComponent(laHeartRateLimits)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addComponent(laTimeWithin)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laTimeAbove))
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbRange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(laRange, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(laTimeBelowValue)
-                            .addComponent(laTimeBelow))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laTimeWithinValue)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laTimeAboveValue)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pLeftLayout.createSequentialGroup()
+                                .addComponent(laGeneralData)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addComponent(laType)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laUser)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laDate)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laDuration)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laEnergy))
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addComponent(laTypeValue)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laUserValue)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laDateValue)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laDurationValue)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laEnergyValue)))
+                                .addGap(25, 25, 25)
+                                .addComponent(laHeartRateData)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addComponent(laAverage)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laMaximum))
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addComponent(laAverageValue)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laMaximumValue)))
+                                .addGap(25, 25, 25)
+                                .addComponent(laHeartRateLimits)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addComponent(laTimeWithin)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laTimeAbove))
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(cbRange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(laRange, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(laTimeBelowValue)
+                                                        .addComponent(laTimeBelow))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laTimeWithinValue)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laTimeAboveValue)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(pLeft);
@@ -495,79 +494,79 @@ public class MainPanel extends BasePanel {
         javax.swing.GroupLayout pRightLayout = new javax.swing.GroupLayout(pRight);
         pRight.setLayout(pRightLayout);
         pRightLayout.setHorizontalGroup(
-            pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pRightLayout.createSequentialGroup()
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laStatistics)
-                    .addComponent(laRecordingMode)
-                    .addGroup(pRightLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(laTotalExerciseTime)
-                            .addComponent(laTotalRidingTime)
-                            .addComponent(laTotalEnergy)
-                            .addComponent(laOdometer)
-                            .addComponent(laAltitude)
-                            .addComponent(laSpeed)
-                            .addComponent(laCadence)
-                            .addComponent(laPower))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(laAltitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .addComponent(laSpeedValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .addComponent(laCadenceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .addComponent(laPowerValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .addComponent(laTotalExerciseTimeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .addComponent(laTotalRidingTimeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .addComponent(laTotalEnergyValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .addComponent(laOdometerValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))))
-                .addContainerGap())
+                pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pRightLayout.createSequentialGroup()
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laStatistics)
+                                        .addComponent(laRecordingMode)
+                                        .addGroup(pRightLayout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(laTotalExerciseTime)
+                                                        .addComponent(laTotalRidingTime)
+                                                        .addComponent(laTotalEnergy)
+                                                        .addComponent(laOdometer)
+                                                        .addComponent(laAltitude)
+                                                        .addComponent(laSpeed)
+                                                        .addComponent(laCadence)
+                                                        .addComponent(laPower))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(laAltitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                                        .addComponent(laSpeedValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                                        .addComponent(laCadenceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                                        .addComponent(laPowerValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                                        .addComponent(laTotalExerciseTimeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                                        .addComponent(laTotalRidingTimeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                                        .addComponent(laTotalEnergyValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                                        .addComponent(laOdometerValue, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))))
+                                .addContainerGap())
         );
         pRightLayout.setVerticalGroup(
-            pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pRightLayout.createSequentialGroup()
-                .addComponent(laRecordingMode)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laAltitude)
-                    .addComponent(laAltitudeValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laSpeed)
-                    .addComponent(laSpeedValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laCadence)
-                    .addComponent(laCadenceValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laPower)
-                    .addComponent(laPowerValue))
-                .addGap(25, 25, 25)
-                .addComponent(laStatistics)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laTotalExerciseTime)
-                    .addComponent(laTotalExerciseTimeValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laTotalRidingTime)
-                    .addComponent(laTotalRidingTimeValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laTotalEnergy)
-                    .addComponent(laTotalEnergyValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laOdometer)
-                    .addComponent(laOdometerValue))
-                .addContainerGap(133, Short.MAX_VALUE))
+                pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pRightLayout.createSequentialGroup()
+                                .addComponent(laRecordingMode)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laAltitude)
+                                        .addComponent(laAltitudeValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laSpeed)
+                                        .addComponent(laSpeedValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laCadence)
+                                        .addComponent(laCadenceValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laPower)
+                                        .addComponent(laPowerValue))
+                                .addGap(25, 25, 25)
+                                .addComponent(laStatistics)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laTotalExerciseTime)
+                                        .addComponent(laTotalExerciseTimeValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laTotalRidingTime)
+                                        .addComponent(laTotalRidingTimeValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laTotalEnergy)
+                                        .addComponent(laTotalEnergyValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laOdometer)
+                                        .addComponent(laOdometerValue))
+                                .addContainerGap(133, Short.MAX_VALUE))
         );
 
         add(pRight);
     }// </editor-fold>//GEN-END:initComponents
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cbRange;
     private javax.swing.JLabel laAltitude;
@@ -615,5 +614,5 @@ public class MainPanel extends BasePanel {
     private javax.swing.JPanel pLeft;
     private javax.swing.JPanel pRight;
     // End of variables declaration//GEN-END:variables
-    
+
 }

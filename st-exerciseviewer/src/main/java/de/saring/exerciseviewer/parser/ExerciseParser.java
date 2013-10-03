@@ -6,18 +6,19 @@ import de.saring.exerciseviewer.data.EVExercise;
 /**
  * This interface defines the functionality of any parser implementation,
  * which reads exercise files of heart rate monitor devices from a file.
- * 
- * @author  Stefan Saring
+ *
+ * @author Stefan Saring
  * @version 1.0
  */
 public interface ExerciseParser {
 
     /**
      * Returns the informations about this parser implementation.
+     *
      * @return the parser informations
      */
-    public ExerciseParserInfo getInfo ();
-        
+    public ExerciseParserInfo getInfo();
+
     /**
      * This method parses the specified exercise file and creates an
      * PVExercise object from it.
@@ -27,5 +28,5 @@ public interface ExerciseParser {
      * @throws EVException thrown on read/parse problems
      * @throws Exception all kind of other runtime exeptions when parsing unsupported files (e.g. NullPointerException)
      */
-    public EVExercise parseExercise (String filename) throws EVException;
+    public EVExercise parseExercise(String filename) throws EVException;
 }

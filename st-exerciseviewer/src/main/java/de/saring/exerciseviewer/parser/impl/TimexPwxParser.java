@@ -1,31 +1,19 @@
 package de.saring.exerciseviewer.parser.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.*;
+import de.saring.exerciseviewer.parser.AbstractExerciseParser;
+import de.saring.exerciseviewer.parser.ExerciseParserInfo;
+import de.saring.util.unitcalc.CalculationUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.EVExercise;
-import de.saring.exerciseviewer.data.ExerciseAltitude;
-import de.saring.exerciseviewer.data.ExerciseSample;
-import de.saring.exerciseviewer.data.ExerciseSpeed;
-import de.saring.exerciseviewer.data.HeartRateLimit;
-import de.saring.exerciseviewer.data.Lap;
-import de.saring.exerciseviewer.data.LapAltitude;
-import de.saring.exerciseviewer.data.LapSpeed;
-import de.saring.exerciseviewer.data.LapTemperature;
-import de.saring.exerciseviewer.data.Position;
-import de.saring.exerciseviewer.data.RecordingMode;
-import de.saring.exerciseviewer.parser.AbstractExerciseParser;
-import de.saring.exerciseviewer.parser.ExerciseParserInfo;
-import de.saring.util.unitcalc.CalculationUtils;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 /**
  * This implementation of an ExerciseParser is for reading PWX files of the
@@ -41,32 +29,51 @@ import de.saring.util.unitcalc.CalculationUtils;
  * <br/>
  * TODO: This parser contains a lot of unused code (commented out),
  * remove it when not needed anymore.
- * 
+ * <p/>
  * 9/10/2010 Version 1.2
- *              Added support for Global Trainer Pwx Files
- *              Changed Lap Distance to Distance since beginning of exercise
+ * Added support for Global Trainer Pwx Files
+ * Changed Lap Distance to Distance since beginning of exercise
  * 01/03/2012 Version 1.3
- *              Added support for Timex Ironman Run Trainer Pwx Files
+ * Added support for Timex Ironman Run Trainer Pwx Files
  *
- * @author  Robert C. Schultz, Stefan Saring
+ * @author Robert C. Schultz, Stefan Saring
  * @version 1.3
  */
 public class TimexPwxParser extends AbstractExerciseParser {
 
-    /** Informations about this parser. */
+    /**
+     * Informations about this parser.
+     */
     private final ExerciseParserInfo info = new ExerciseParserInfo("Timex PWX", new String[]{"pwx", "PWX"});
 
     private static class MinMaxAvg {
-        private float min=0;
-        private float max=0;
-        private float avg=0;
-        
-        public void setMin(float in){ min = in; }
-        public float getMin(){ return min; }
-        public void setMax(float in){ max = in; }
-        public float getMax(){ return max; }
-        public void setAvg(float in){ avg = in; }
-        public float getAvg(){ return avg; }
+        private float min = 0;
+        private float max = 0;
+        private float avg = 0;
+
+        public void setMin(float in) {
+            min = in;
+        }
+
+        public float getMin() {
+            return min;
+        }
+
+        public void setMax(float in) {
+            max = in;
+        }
+
+        public float getMax() {
+            return max;
+        }
+
+        public void setAvg(float in) {
+            avg = in;
+        }
+
+        public float getAvg() {
+            return avg;
+        }
     }
 
     private MinMaxAvg node2MinMaxAvg(Node inNode) {
@@ -89,11 +96,11 @@ public class TimexPwxParser extends AbstractExerciseParser {
         private double duration = 0;
         private int work = 0;
         private MinMaxAvg hr;
-//        private double durationStopped = 0;
+        //        private double durationStopped = 0;
 //        private float tss = 0;
 //        private int normalizedPower = 0;
         private MinMaxAvg speed;
-//        private MinMaxAvg power;
+        //        private MinMaxAvg power;
 //        private MinMaxAvg torque;
 //        private MinMaxAvg cadence;
         private float distance = 0;
@@ -101,33 +108,74 @@ public class TimexPwxParser extends AbstractExerciseParser {
 //        private MinMaxAvg temperature;
 //        private int variabilityIndex = 0;
 //        private float climbingElevation = 0;
-        
-        public void setBeginning(double in){ beginning = in; }
-        public double getBeginning(){ return beginning; }
-        public void setDuration(double in){ duration = in; }
-        public double getDuration(){ return duration; }
-        public void setWork(int in){ work = in; }
-        public int getWork(){ return work; }
-        public void setHr(MinMaxAvg in){ hr = in; }
-        public MinMaxAvg getHr(){ return hr; }
-//        public void setDurationStopped(double in){ durationStopped = in; }
+
+        public void setBeginning(double in) {
+            beginning = in;
+        }
+
+        public double getBeginning() {
+            return beginning;
+        }
+
+        public void setDuration(double in) {
+            duration = in;
+        }
+
+        public double getDuration() {
+            return duration;
+        }
+
+        public void setWork(int in) {
+            work = in;
+        }
+
+        public int getWork() {
+            return work;
+        }
+
+        public void setHr(MinMaxAvg in) {
+            hr = in;
+        }
+
+        public MinMaxAvg getHr() {
+            return hr;
+        }
+
+        //        public void setDurationStopped(double in){ durationStopped = in; }
 //        public double getDurationStopped(){ return durationStopped; }
 //        public void setTss(float in){ tss = in; }
 //        public float getTss(){ return tss; }
 //        public void setNormalizedPower(int in){ normalizedPower = in; }
 //        public int getNormalizedPower(){ return normalizedPower; }
-        public void setSpeed(MinMaxAvg in){ speed = in; }
-        public MinMaxAvg getSpeed(){ return speed; }
-//        public void setPower(MinMaxAvg in){ power = in; }
+        public void setSpeed(MinMaxAvg in) {
+            speed = in;
+        }
+
+        public MinMaxAvg getSpeed() {
+            return speed;
+        }
+
+        //        public void setPower(MinMaxAvg in){ power = in; }
 //        public MinMaxAvg getPower(){ return power ; }
 //        public void setTorque(MinMaxAvg in){ torque = in; }
 //        public MinMaxAvg getTorque(){ return torque; }
 //        public void setCadence(MinMaxAvg in){ cadence = in; }
 //        public MinMaxAvg getCadence(){ return cadence; }
-        public void setDistance(float in){ distance = in; }
-        public float getDistance(){ return distance; }
-        public void setAltitude(MinMaxAvg in){ altitude = in; }
-        public MinMaxAvg getAltitude(){ return altitude; }
+        public void setDistance(float in) {
+            distance = in;
+        }
+
+        public float getDistance() {
+            return distance;
+        }
+
+        public void setAltitude(MinMaxAvg in) {
+            altitude = in;
+        }
+
+        public MinMaxAvg getAltitude() {
+            return altitude;
+        }
 //        public void setTemperature(MinMaxAvg in){ temperature  = in; }
 //        public MinMaxAvg getTemperature(){ return temperature; }
 //        public void setVariabilityIndex(int in){ variabilityIndex = in; }
@@ -135,7 +183,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
 //        public void setClimbingElevation(float in){ climbingElevation = in; }
 //        public float getClimbingElevation(){ return climbingElevation; }
     }
-    
+
     @Override
     public ExerciseParserInfo getInfo() {
         return info;
@@ -151,7 +199,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
 
 
         for (int i = 0; i < numChildren; i++) {
-            currentNodeName=children.item(i).getNodeName();
+            currentNodeName = children.item(i).getNodeName();
             if (currentNodeName.equals(string2count)) {
                 numMatches++;
             }
@@ -159,7 +207,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         return numMatches;
     }
 
-    private EVExercise parseWorkoutNode(EVExercise exercise, Node workoutNode){
+    private EVExercise parseWorkoutNode(EVExercise exercise, Node workoutNode) {
         NodeList children = workoutNode.getChildNodes();
         String childName;
         for (int i = 0; i < children.getLength(); i++) {
@@ -171,7 +219,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 // Probably is in the files downloaded from the online software
             } else if (childName.equals("sportType")) {
                 // obtain sportType
-                exercise.setType((byte)0);
+                exercise.setType((byte) 0);
                 exercise.setTypeLabel(children.item(i).getTextContent());
             } else if (childName.equals("cmt")) {
                 // Not implemented
@@ -203,7 +251,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
                     // exercise.setHeartRateMin((short) workoutSummary.getHr().getMin()); // Not implemented in EVExercise
                     exercise.setHeartRateAVG((short) workoutSummary.getHr().getAvg());
                 }
-                exercise.setOdometer((int)workoutSummary.getDistance()/1000);
+                exercise.setOdometer((int) workoutSummary.getDistance() / 1000);
                 if (workoutSummary.getSpeed() != null) {
                     ExerciseSpeed workoutSpeed = new ExerciseSpeed();
                     workoutSpeed.setDistance((int) workoutSummary.getDistance());
@@ -213,9 +261,9 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 }
                 if (workoutSummary.getAltitude() != null) {
                     ExerciseAltitude workoutAltitude = new ExerciseAltitude();
-                    workoutAltitude.setAltitudeAVG((short)workoutSummary.getAltitude().getAvg() );
-                    workoutAltitude.setAltitudeMax((short)workoutSummary.getAltitude().getMax() );
-                    workoutAltitude.setAltitudeMin((short)workoutSummary.getAltitude().getMin() );
+                    workoutAltitude.setAltitudeAVG((short) workoutSummary.getAltitude().getAvg());
+                    workoutAltitude.setAltitudeMax((short) workoutSummary.getAltitude().getMax());
+                    workoutAltitude.setAltitudeMin((short) workoutSummary.getAltitude().getMin());
                     exercise.setAltitude(workoutAltitude);
                 }
 
@@ -235,7 +283,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         return exercise;
     }
 
-    private EVExercise parseWorkoutExtensionNode(EVExercise exercise, Node workoutExtensionNode){
+    private EVExercise parseWorkoutExtensionNode(EVExercise exercise, Node workoutExtensionNode) {
         // Used for Global Trainer
         NodeList children = workoutExtensionNode.getChildNodes();
         String childName;
@@ -251,6 +299,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         }
         return exercise;
     }
+
     private EVExercise parseWorkoutDeviceNode(EVExercise exercise, Node deviceNode) {
         NodeList children = deviceNode.getChildNodes();
         String childName;
@@ -264,7 +313,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
             } else if (childName.equals("model")) {
                 // obtain model        
                 String model = children.item(i).getTextContent();
-                if (model.equals("Global Trainer") || model.equals("Run Trainer")){
+                if (model.equals("Global Trainer") || model.equals("Run Trainer")) {
                     exercise = setGlobalTrainerRecordingMode(exercise);
                     exercise = setGlobalTrainerZones(exercise);
                 }
@@ -278,7 +327,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         return exercise;
     }
 
-    private EVExercise setGlobalTrainerRecordingMode(EVExercise exercise){
+    private EVExercise setGlobalTrainerRecordingMode(EVExercise exercise) {
         RecordingMode recMode = new RecordingMode();
 
         recMode.setPower(true);
@@ -292,12 +341,13 @@ public class TimexPwxParser extends AbstractExerciseParser {
         exercise.setRecordingMode(recMode);
         return exercise;
     }
-    private EVExercise setGlobalTrainerZones(EVExercise exercise){
+
+    private EVExercise setGlobalTrainerZones(EVExercise exercise) {
         HeartRateLimit Zones[] = new HeartRateLimit[6];
         for (int i = 0; i < 6; i++) {
             Zones[i] = new HeartRateLimit();
-            Zones[i].setUpperHeartRate((short) (50+(i+1) * 25) );
-            Zones[i].setLowerHeartRate((short) (50+i*25) );
+            Zones[i].setUpperHeartRate((short) (50 + (i + 1) * 25));
+            Zones[i].setLowerHeartRate((short) (50 + i * 25));
             Zones[i].setAbsoluteRange(true);
             Zones[i].setTimeAbove(0);
             Zones[i].setTimeBelow(0);
@@ -308,6 +358,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         System.arraycopy(Zones, 0, exercise.getHeartRateLimits(), 0, 6);
         return exercise;
     }
+
     private EVExercise parseDeviceExtensionNode(EVExercise exercise, Node deviceExtensionNode) {
         NodeList children = deviceExtensionNode.getChildNodes();
         String childName;
@@ -370,7 +421,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 // obtain workout type - If not Chrono, then stop parsing since intervals aren't yet implemented
                 if (!children.item(i).getTextContent().equals("Chrono")) {
                     // Not sure how to handle this... I want it to stop parsing and report an unsupported file.
-                    
+
                 }
             } else {
                 // obtain Alarm flags 1-3 (Enabled/Disabled)
@@ -472,18 +523,18 @@ public class TimexPwxParser extends AbstractExerciseParser {
         return nodeSummaryData; // Probably don't want to pass and return the Exercise itself.
     }
 
-    private EVExercise parseWorkoutSegments(EVExercise exercise, Node workoutNode){
+    private EVExercise parseWorkoutSegments(EVExercise exercise, Node workoutNode) {
         ArrayList<Lap> laps = new ArrayList<>();
-        
+
         // obtain segment name  ( Either laps or Workout Summary )
         // parse segment summary data
         // Create and initialize a holding Lap
-        
+
         // Finished Holding Lap
         NodeList children = workoutNode.getChildNodes();
         NodeList segmentChildren = null;
         String childName;
-        float runningDistance=0;
+        float runningDistance = 0;
         for (int i = 0; i < children.getLength(); i++) {
             childName = children.item(i).getNodeName();
             if (childName.equals("segment")) {
@@ -507,29 +558,29 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 for (int j = 0; j < segmentChildren.getLength(); j++) {
                     childName = segmentChildren.item(j).getNodeName();
                     if (childName.equals("summarydata")) {
-                         SummaryData segmentSummary = parseSummaryData(segmentChildren.item(j));
-                         lap.setTimeSplit((int) ((segmentSummary.getDuration() + segmentSummary.getBeginning()) * 10));
-                         if ( segmentSummary.getDistance()!= 0 ){
-                            runningDistance+=segmentSummary.getDistance();
-                            lapSpd.setDistance((int)runningDistance);
-                            lapSpd.setSpeedAVG((float) ( 3.600*segmentSummary.getDistance() / segmentSummary.getDuration())); // Assumes 1/4 Mile Lap
+                        SummaryData segmentSummary = parseSummaryData(segmentChildren.item(j));
+                        lap.setTimeSplit((int) ((segmentSummary.getDuration() + segmentSummary.getBeginning()) * 10));
+                        if (segmentSummary.getDistance() != 0) {
+                            runningDistance += segmentSummary.getDistance();
+                            lapSpd.setDistance((int) runningDistance);
+                            lapSpd.setSpeedAVG((float) (3.600 * segmentSummary.getDistance() / segmentSummary.getDuration())); // Assumes 1/4 Mile Lap
                             lapSpd.setSpeedEnd((float) 0.0);
-                         } else                         {
-                            runningDistance+=402.336;
-                            lapSpd.setDistance((int)runningDistance);
-                         lapSpd.setSpeedAVG((float) (3.6 * 402.336 / segmentSummary.getDuration())); // Assumes 1/4 Mile Lap
-                         lapSpd.setSpeedEnd((float) 0.0);
-                         }
-                         lap.setSpeed(lapSpd);
-                         if (segmentSummary.getHr() != null) {
-                             lap.setHeartRateAVG((short)segmentSummary.getHr().getAvg());
-                             lap.setHeartRateMax((short)segmentSummary.getHr().getMax());
-                         }
-                         if ( segmentSummary.getAltitude() != null) {
+                        } else {
+                            runningDistance += 402.336;
+                            lapSpd.setDistance((int) runningDistance);
+                            lapSpd.setSpeedAVG((float) (3.6 * 402.336 / segmentSummary.getDuration())); // Assumes 1/4 Mile Lap
+                            lapSpd.setSpeedEnd((float) 0.0);
+                        }
+                        lap.setSpeed(lapSpd);
+                        if (segmentSummary.getHr() != null) {
+                            lap.setHeartRateAVG((short) segmentSummary.getHr().getAvg());
+                            lap.setHeartRateMax((short) segmentSummary.getHr().getMax());
+                        }
+                        if (segmentSummary.getAltitude() != null) {
                             lapAlt.setAltitude((short) segmentSummary.getAltitude().getMax());
                             lapAlt.setAscent((int) (segmentSummary.getAltitude().getMax() - segmentSummary.getAltitude().getMin()));
                             lap.setAltitude(lapAlt);
-                         }
+                        }
                     }
                 }
 
@@ -546,10 +597,11 @@ public class TimexPwxParser extends AbstractExerciseParser {
         }
         return exercise;
     }
-    public static float getDistanceFromPositions(Position startPosition, Position stopPosition){ //float lat1, float lng1, float lat2, float lng2) {
+
+    public static float getDistanceFromPositions(Position startPosition, Position stopPosition) { //float lat1, float lng1, float lat2, float lng2) {
         double earthRadius = 6369.6; //3958.75;
-        double dLat = Math.toRadians(stopPosition.getLatitude()-startPosition.getLatitude());
-        double dLng = Math.toRadians(stopPosition.getLongitude()-startPosition.getLongitude());
+        double dLat = Math.toRadians(stopPosition.getLatitude() - startPosition.getLatitude());
+        double dLng = Math.toRadians(stopPosition.getLongitude() - startPosition.getLongitude());
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
                 + Math.cos(Math.toRadians(startPosition.getLatitude())) * Math.cos(Math.toRadians(stopPosition.getLatitude()))
                 * Math.sin(dLng / 2) * Math.sin(dLng / 2);
@@ -558,85 +610,85 @@ public class TimexPwxParser extends AbstractExerciseParser {
 
         int meterConversion = 1000; // 1609;
 
-        if (dist<0){
-            dist=0-dist;
+        if (dist < 0) {
+            dist = 0 - dist;
         }
-        return (float)(dist * meterConversion);
+        return (float) (dist * meterConversion);
     }
 
-    private EVExercise parseWorkoutSamples(EVExercise exercise, Node workoutNode ){
+    private EVExercise parseWorkoutSamples(EVExercise exercise, Node workoutNode) {
         // obtain all the sample data.
-        int totalSamples = countNodeItems(workoutNode,"sample");
+        int totalSamples = countNodeItems(workoutNode, "sample");
         int currentSampleNumber = 0;
         float lastDistance = 0;
         boolean distanceinsample = false;
-        boolean firstsample=true;
+        boolean firstsample = true;
         exercise.setSampleList(new ExerciseSample[totalSamples]);
         double lastOffset = 0;
         double currentOffset = 0;
-        Position lastPosition = new Position(0,0);
+        Position lastPosition = new Position(0, 0);
         NodeList children = workoutNode.getChildNodes();
         NodeList sampleChildren = null;
         String childName;
         ExerciseSample lastSample = new ExerciseSample(); // Stop the jitters... assumes no
-        Double latitude=0.0, longitude=0.0;
+        Double latitude = 0.0, longitude = 0.0;
         double belowZone[] = {0, 0, 0, 0, 0, 0};
         double inZone[] = {0, 0, 0, 0, 0, 0};
         double aboveZone[] = {0, 0, 0, 0, 0, 0};
         int istop = children.getLength(); // getLength() is a slow function so keep it out of the loop.
         for (int i = 0; i < istop; i++) {
             childName = children.item(i).getNodeName();
-            if (childName.equals("sample")){
+            if (childName.equals("sample")) {
                 ExerciseSample sample = new ExerciseSample();
                 sampleChildren = children.item(i).getChildNodes();
                 int jstop = sampleChildren.getLength();
-                for( int j = 0; j< jstop;j++){
+                for (int j = 0; j < jstop; j++) {
                     childName = sampleChildren.item(j).getNodeName();
-                    if (childName.equals("timeoffset")){
-                        if (currentOffset != 0 )
+                    if (childName.equals("timeoffset")) {
+                        if (currentOffset != 0)
                             lastOffset = currentOffset;
-                        currentOffset=Double.valueOf(sampleChildren.item(j).getTextContent()).doubleValue();
-                        sample.setTimestamp((long) (1000*currentOffset));
-                    }else if (childName.equals("hr")){
+                        currentOffset = Double.valueOf(sampleChildren.item(j).getTextContent()).doubleValue();
+                        sample.setTimestamp((long) (1000 * currentOffset));
+                    } else if (childName.equals("hr")) {
                         sample.setHeartRate((short) Short.valueOf(sampleChildren.item(j).getTextContent()));
-                    }else if (childName.equals("spd")){
-                        sample.setSpeed((float)3.6*Float.valueOf(sampleChildren.item(j).getTextContent()).floatValue());
-                    }else if (childName.equals("pwr")){
+                    } else if (childName.equals("spd")) {
+                        sample.setSpeed((float) 3.6 * Float.valueOf(sampleChildren.item(j).getTextContent()).floatValue());
+                    } else if (childName.equals("pwr")) {
                         // Not implemented in ExerciseSample class
-                    }else if (childName.equals("torq")){
+                    } else if (childName.equals("torq")) {
                         // Not implemented in ExerciseSample class
-                    }else if (childName.equals("cad")){
+                    } else if (childName.equals("cad")) {
                         sample.setCadence((short) Short.valueOf(sampleChildren.item(j).getTextContent()));
                         exercise.getRecordingMode().setCadence(true);
-                    }else if (childName.equals("dist")){
+                    } else if (childName.equals("dist")) {
                         double dist = Double.valueOf(sampleChildren.item(j).getTextContent());
                         sample.setDistance((int) Math.round(dist));
-                        distanceinsample=true;
-                    }else if (childName.equals("lat")){
+                        distanceinsample = true;
+                    } else if (childName.equals("lat")) {
                         latitude = Double.valueOf(sampleChildren.item(j).getTextContent());
-                    }else if (childName.equals("lon")){
+                    } else if (childName.equals("lon")) {
                         longitude = Double.valueOf(sampleChildren.item(j).getTextContent());
-                    }else if (childName.equals("alt")){
+                    } else if (childName.equals("alt")) {
                         sample.setAltitude(Float.valueOf(sampleChildren.item(j).getTextContent()).shortValue());
-                    }else if (childName.equals("temp")){
+                    } else if (childName.equals("temp")) {
                         sample.setTemperature(Float.valueOf(sampleChildren.item(j).getTextContent()).shortValue());
-                    }else if (childName.equals("time")){
+                    } else if (childName.equals("time")) {
                         // Not implemented in ExerciseSample
                     }
                 }
                 sample.setPosition(new Position(latitude, longitude));
-                if (firstsample){
-                    lastPosition=sample.getPosition();
-                    firstsample=false;
+                if (firstsample) {
+                    lastPosition = sample.getPosition();
+                    firstsample = false;
                 }
-                if(!distanceinsample){
-                    lastDistance+=getDistanceFromPositions(lastPosition,sample.getPosition());
-                    sample.setDistance((int)lastDistance);
-                    lastPosition=sample.getPosition();
+                if (!distanceinsample) {
+                    lastDistance += getDistanceFromPositions(lastPosition, sample.getPosition());
+                    sample.setDistance((int) lastDistance);
+                    lastPosition = sample.getPosition();
                 }
                 // Eliminates the jitters of 0bpm samples... assumes that heart rate won't change instantiously by much and
                 // that there will only be the occasional missed heart beat.  Also fixes the laps not adding up.
-                if (sample.getHeartRate()==0)
+                if (sample.getHeartRate() == 0)
                     sample.setHeartRate(lastSample.getHeartRate());
                 else
                     lastSample.setHeartRate(sample.getHeartRate());
@@ -645,29 +697,29 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 // update Zone information
                 if (exercise.getHeartRateLimits() != null) {
                     for (int j = 0; j < 6; j++) {
-                        if ( sample.getHeartRate() > exercise.getHeartRateLimits()[j].getUpperHeartRate()) {
-                            aboveZone[j] +=(currentOffset-lastOffset);
+                        if (sample.getHeartRate() > exercise.getHeartRateLimits()[j].getUpperHeartRate()) {
+                            aboveZone[j] += (currentOffset - lastOffset);
                         } else if (sample.getHeartRate() < exercise.getHeartRateLimits()[j].getLowerHeartRate()) {
-                            belowZone[j] += (currentOffset-lastOffset);
+                            belowZone[j] += (currentOffset - lastOffset);
                         } else {
-                            inZone[j] += (currentOffset-lastOffset);
+                            inZone[j] += (currentOffset - lastOffset);
                         }
                     }
                 }
             }
-            
+
         }
-        
+
         // Store Zone Information in the exercise file
         if (exercise.getHeartRateLimits() != null) {
             for (int i = 0; i < 6; i++) {
-                exercise.getHeartRateLimits()[i].setTimeAbove((short)aboveZone[i]);
-                exercise.getHeartRateLimits()[i].setTimeBelow((short)belowZone[i]);
-                exercise.getHeartRateLimits()[i].setTimeWithin((short)inZone[i]);
+                exercise.getHeartRateLimits()[i].setTimeAbove((short) aboveZone[i]);
+                exercise.getHeartRateLimits()[i].setTimeBelow((short) belowZone[i]);
+                exercise.getHeartRateLimits()[i].setTimeWithin((short) inZone[i]);
             }
         }
-        exercise.setRecordingInterval((short)2);
-        
+        exercise.setRecordingInterval((short) 2);
+
         // some models (e.g. Timex Ironman Run Trainer) don't contain statistic date (avg, max, ...)
         // => compute the missing data   
         if (exercise.getSampleList().length > 0) {
@@ -675,9 +727,9 @@ public class TimexPwxParser extends AbstractExerciseParser {
             computeSpeedStatisticIfMissing(exercise);
             computeAltitudeStatisticIfMissing(exercise);
         }
-        return exercise;        
+        return exercise;
     }
-    
+
     private Node findFirstPwx(Document doc) {
         // Find the first node of the document that is a pwx and then return it otherwise, return null
         // Normally only expect one node at this level but who knows.
@@ -694,7 +746,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
     public EVExercise parseExercise(String filename) throws EVException {
 
         // create an EVExercise object from this data and set file type
-   
+
         EVExercise exercise = new EVExercise();
         exercise.setFileType(EVExercise.ExerciseFileType.TIMEX_PWX);
         // Open Document and Get root
@@ -713,17 +765,16 @@ public class TimexPwxParser extends AbstractExerciseParser {
             doc = db.parse(filename); // Document
             root = findFirstPwx(doc); // Node
         } catch (Exception e) {
-            throw new EVException ("Failed to open pwx exercise file '" + filename + "' ...", e);
+            throw new EVException("Failed to open pwx exercise file '" + filename + "' ...", e);
         }
-        if ( root != null )
-              exercise.setFileType(EVExercise.ExerciseFileType.TIMEX_PWX);
+        if (root != null)
+            exercise.setFileType(EVExercise.ExerciseFileType.TIMEX_PWX);
         else
-            throw new EVException ("Failed to find a pwx node in file '" + filename + "'");
+            throw new EVException("Failed to find a pwx node in file '" + filename + "'");
 
         children = root.getChildNodes();
-        for(int i=0;i<children.getLength(); i++)
-        {
-            if( children.item(i).getNodeName().equals("workout")){
+        for (int i = 0; i < children.getLength(); i++) {
+            if (children.item(i).getNodeName().equals("workout")) {
                 exercise = parseWorkoutNode(exercise, children.item(i));
             }
         }
@@ -736,10 +787,10 @@ public class TimexPwxParser extends AbstractExerciseParser {
     private void computeHeartrateStatisticIfMissing(EVExercise exercise) {
         if (exercise.getHeartRateAVG() == 0) {
             double sumHeartrate = 0;
-            
+
             for (ExerciseSample sample : exercise.getSampleList()) {
                 sumHeartrate += sample.getHeartRate();
-                exercise.setHeartRateMax((short) Math.max(exercise.getHeartRateMax(), sample.getHeartRate())); 
+                exercise.setHeartRateMax((short) Math.max(exercise.getHeartRateMax(), sample.getHeartRate()));
             }
             exercise.setHeartRateAVG((short) Math.round(sumHeartrate / (double) exercise.getSampleList().length));
         }
@@ -747,39 +798,39 @@ public class TimexPwxParser extends AbstractExerciseParser {
 
     private void computeSpeedStatisticIfMissing(EVExercise exercise) {
         if (exercise.getRecordingMode().isSpeed() && exercise.getSpeed() == null) {
-            
+
             ExerciseSpeed exSpeed = new ExerciseSpeed();
             exSpeed.setSpeedMax(Float.MIN_VALUE);
             exercise.setSpeed(exSpeed);
-            
+
             for (ExerciseSample sample : exercise.getSampleList()) {
                 exSpeed.setSpeedMax(Math.max(exSpeed.getSpeedMax(), sample.getSpeed()));
             }
-            
+
             ExerciseSample lastSample = exercise.getSampleList()[exercise.getSampleList().length - 1];
             exSpeed.setDistance(lastSample.getDistance());
             exSpeed.setSpeedAVG(CalculationUtils.calculateAvgSpeed(
-                    exSpeed.getDistance() / 1000f, 
+                    exSpeed.getDistance() / 1000f,
                     Math.round(exercise.getDuration() / 10f)));
         }
     }
-    
+
     private void computeAltitudeStatisticIfMissing(EVExercise exercise) {
         if (exercise.getRecordingMode().isAltitude() && exercise.getAltitude() == null) {
-            
+
             ExerciseAltitude exAltitude = new ExerciseAltitude();
             exAltitude.setAltitudeMin(Short.MAX_VALUE);
             exAltitude.setAltitudeMax(Short.MIN_VALUE);
             exercise.setAltitude(exAltitude);
-            
+
             double sumAltitude = 0;
             short previousAltitude = Short.MAX_VALUE;
-            
+
             for (ExerciseSample sample : exercise.getSampleList()) {
                 sumAltitude += sample.getAltitude();
                 exAltitude.setAltitudeMin((short) Math.min(exAltitude.getAltitudeMin(), sample.getAltitude()));
                 exAltitude.setAltitudeMax((short) Math.max(exAltitude.getAltitudeMax(), sample.getAltitude()));
-                
+
                 if (previousAltitude < sample.getAltitude()) {
                     exAltitude.setAscent(exAltitude.getAscent() + (sample.getAltitude() - previousAltitude));
                 }

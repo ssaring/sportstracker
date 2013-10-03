@@ -7,51 +7,58 @@ import de.saring.exerciseviewer.parser.ExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 
 /**
- * This class contains all document (MVC) related data and functionality of the 
+ * This class contains all document (MVC) related data and functionality of the
  * ExerciseViewer application.
  *
  * @author Stefan Saring
  * @version 1.0
  */
 public class EVDocument {
-    
-    /** The current exercise to be displayed. */
+
+    /**
+     * The current exercise to be displayed.
+     */
     private EVExercise exercise;
-    
-    /** The filename of the current exercise. */
+
+    /**
+     * The filename of the current exercise.
+     */
     private String exerciseFilename;
 
-    /** The ExerciseViewer options. */
+    /**
+     * The ExerciseViewer options.
+     */
     private EVOptions options;
-    
+
 
     /**
      * Reads the specified exercise file and stores it in the document.
+     *
      * @param filename exercise filename
      * @throws EVException on parsing problems
      */
-    public void openExerciseFile (String filename) throws EVException {        
-        
-        ExerciseParser parser = ExerciseParserFactory.getParser (filename);
-        exercise = parser.parseExercise (filename);
+    public void openExerciseFile(String filename) throws EVException {
+
+        ExerciseParser parser = ExerciseParserFactory.getParser(filename);
+        exercise = parser.parseExercise(filename);
         exerciseFilename = filename;
     }
 
     // ***** BEGIN: Getters and Setters ***** //
-    
-    public EVExercise getExercise () {
+
+    public EVExercise getExercise() {
         return exercise;
     }
 
-    public String getExerciseFilename () {
+    public String getExerciseFilename() {
         return exerciseFilename;
     }
 
-    public EVOptions getOptions () {
+    public EVOptions getOptions() {
         return options;
     }
 
-    public void setOptions (EVOptions options) {
+    public void setOptions(EVOptions options) {
         this.options = options;
     }
 
