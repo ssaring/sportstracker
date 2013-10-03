@@ -125,7 +125,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      * @return a new unused ID
      */
     public int getNewID() {
-        Set<Integer> hsIDs = lIdObjects.stream()
+        Set<? super Integer> hsIDs = lIdObjects.stream()
                 .map(o -> o.getId())
                 .collect(Collectors.toSet());
 
