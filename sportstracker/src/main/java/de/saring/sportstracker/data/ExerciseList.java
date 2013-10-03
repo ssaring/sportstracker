@@ -1,6 +1,7 @@
 package de.saring.sportstracker.data;
 
 import de.saring.util.data.IdDateObjectList;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -53,7 +54,7 @@ public final class ExerciseList extends IdDateObjectList<Exercise> {
      *
      * @param filter the exercise filter criterias
      * @return List of Exercise objects which are valid for the specified
-     * filters
+     *         filters
      * @throws PatternSyntaxException thrown on parsing problems of the regular
      * expression for comment searching
      */

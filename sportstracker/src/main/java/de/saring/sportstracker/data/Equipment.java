@@ -11,7 +11,9 @@ import de.saring.util.data.IdObject;
  */
 public final class Equipment extends IdObject implements Cloneable {
 
-    /** Name of the equipment. */
+    /**
+     * Name of the equipment.
+     */
     private String name;
 
     /**
@@ -23,7 +25,9 @@ public final class Equipment extends IdObject implements Cloneable {
         super(id);
     }
 
-    /** *** BEGIN: Generated Getters and Setters **** */
+    /**
+     * ** BEGIN: Generated Getters and Setters ****
+     */
     public String getName() {
         return name;
     }

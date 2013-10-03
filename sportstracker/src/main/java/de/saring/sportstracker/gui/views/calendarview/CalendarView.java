@@ -1,7 +1,5 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
 import de.saring.sportstracker.data.Exercise;
@@ -11,15 +9,15 @@ import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.views.BaseView;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
-
 import de.saring.util.data.IdObject;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
+import org.jdesktop.application.Action;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.standard.OrientationRequested;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -31,49 +29,53 @@ import java.awt.print.PrinterJob;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.standard.OrientationRequested;
-import javax.swing.ActionMap;
-import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
-
-import org.jdesktop.application.Action;
-
 /**
  * This view class displays all (or a filtered list) exercises of the selected month in a calendar
  * view. It contains all the navigation widgets and functionality and the drawed calendar widget.
- * 
+ *
  * @author Stefan Saring
  * @version 1.0
  */
 @Singleton
 public class CalendarView extends BaseView {
 
-    /** Constants for action and property names. */
+    /**
+     * Constants for action and property names.
+     */
     private static final String ACTION_PREVIOUS_MONTH = "st.calview.previousMonth";
     private static final String ACTION_NEXT_MONTH = "st.calview.nextMonth";
     private static final String ACTION_PREVIOUS_YEAR = "st.calview.previousYear";
     private static final String ACTION_NEXT_YEAR = "st.calview.nextYear";
     private static final String ACTION_TODAY = "st.calview.today";
 
-    /** The custom calendar widget. */
+    /**
+     * The custom calendar widget.
+     */
     private CalendarWidget calendarWidget;
 
-    /** The list of month names. */
+    /**
+     * The list of month names.
+     */
     private String[] arMonthNames;
 
-    /** The current displayed month. */
+    /**
+     * The current displayed month.
+     */
     private int currentMonth;
 
-    /** The current displayed year. */
+    /**
+     * The current displayed year.
+     */
     private int currentYear;
 
-    /** The popup (context) menu for the calendar. */
+    /**
+     * The popup (context) menu for the calendar.
+     */
     private CalendarPopupMenu popupMenu;
 
     /**
      * Standard c'tor.
-     * 
+     *
      * @param context the SportsTracker context
      * @param calendarWidget the CalendarWidget component
      */
@@ -83,56 +85,57 @@ public class CalendarView extends BaseView {
     }
 
     @Override
-    public void initView () {
-        initComponents ();
-        
+    public void initView() {
+        initComponents();
+
         // create list of month names
         arMonthNames = new String[12];
         for (int i = 0; i < 12; i++) {
-            arMonthNames[i] = getContext ().getResReader ().getString ("st.calview.months." + (i+1));
+            arMonthNames[i] = getContext().getResReader().getString("st.calview.months." + (i + 1));
         }
-        
+
         // start with current date
         Calendar calToday = Calendar.getInstance();
-        currentMonth = calToday.get (Calendar.MONTH) + 1;
-        currentYear = calToday.get (Calendar.YEAR);
-        
+        currentMonth = calToday.get(Calendar.MONTH) + 1;
+        currentYear = calToday.get(Calendar.YEAR);
+
         // setup actions
-        ActionMap actionMap = getContext ().getSAFContext ().getActionMap (getClass (), this);
-        btPreviousMonth.setAction (actionMap.get (ACTION_PREVIOUS_MONTH));
-        btNextMonth.setAction (actionMap.get (ACTION_NEXT_MONTH));
-        btPreviousYear.setAction (actionMap.get (ACTION_PREVIOUS_YEAR));
-        btNextYear.setAction (actionMap.get (ACTION_NEXT_YEAR));
-        btToday.setAction (actionMap.get (ACTION_TODAY));
+        ActionMap actionMap = getContext().getSAFContext().getActionMap(getClass(), this);
+        btPreviousMonth.setAction(actionMap.get(ACTION_PREVIOUS_MONTH));
+        btNextMonth.setAction(actionMap.get(ACTION_NEXT_MONTH));
+        btPreviousYear.setAction(actionMap.get(ACTION_PREVIOUS_YEAR));
+        btNextYear.setAction(actionMap.get(ACTION_NEXT_YEAR));
+        btToday.setAction(actionMap.get(ACTION_TODAY));
 
         // add calendar widget
-        paCalendar.add (calendarWidget, BorderLayout.CENTER);
-        
+        paCalendar.add(calendarWidget, BorderLayout.CENTER);
+
         // setup the calendar popup menu
-        popupMenu = new CalendarPopupMenu ();
-        popupMenu.add (getController().getActionMap ().get (STController.ACTION_EXERCISE_ADD));
-        popupMenu.add (getController().getActionMap ().get (STController.ACTION_NOTE_ADD));
-        popupMenu.add (getController().getActionMap ().get (STController.ACTION_WEIGHT_ADD));
-        popupMenu.add (getController().getActionMap ().get (STController.ACTION_ENTRY_EDIT));
-        popupMenu.add (getController().getActionMap ().get (STController.ACTION_ENTRY_COPY));
-        popupMenu.add (getController().getActionMap ().get (STController.ACTION_ENTRY_DELETE));
-        
+        popupMenu = new CalendarPopupMenu();
+        popupMenu.add(getController().getActionMap().get(STController.ACTION_EXERCISE_ADD));
+        popupMenu.add(getController().getActionMap().get(STController.ACTION_NOTE_ADD));
+        popupMenu.add(getController().getActionMap().get(STController.ACTION_WEIGHT_ADD));
+        popupMenu.add(getController().getActionMap().get(STController.ACTION_ENTRY_EDIT));
+        popupMenu.add(getController().getActionMap().get(STController.ACTION_ENTRY_COPY));
+        popupMenu.add(getController().getActionMap().get(STController.ACTION_ENTRY_DELETE));
+
         // register mouse listener for the calendar (check for pressed, not clicked
         // events, otherwise it doen't work when the mouse have been moved meanwhile)
-        calendarWidget.addMouseListener (new MouseAdapter() {
-            @Override public void mousePressed (final MouseEvent me) {
-                onCalendarClicked (me);
+        calendarWidget.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(final MouseEvent me) {
+                onCalendarClicked(me);
             }
         });
-        
+
         // register the mouse wheel scrolling on drawing area
-        calendarWidget.addMouseWheelListener (new MouseWheelListener () {
-            public void mouseWheelMoved (final MouseWheelEvent mwe) {
-                if (mwe.getWheelRotation () < 0) {
-                    displayPreviousMonth ();
+        calendarWidget.addMouseWheelListener(new MouseWheelListener() {
+            public void mouseWheelMoved(final MouseWheelEvent mwe) {
+                if (mwe.getWheelRotation() < 0) {
+                    displayPreviousMonth();
                 }
-                if (mwe.getWheelRotation () > 0) {
-                    displayNextMonth ();
+                if (mwe.getWheelRotation() > 0) {
+                    displayNextMonth();
                 }
             }
         });
@@ -148,7 +151,7 @@ public class CalendarView extends BaseView {
 
     /**
      * This methods returns the number of selected exercises.
-     * 
+     *
      * @return number of selected exercises
      */
     @Override
@@ -159,7 +162,7 @@ public class CalendarView extends BaseView {
     /**
      * This methods returns the list of the currently selected exercise ID's (maximum count is 1 in
      * the calendar view).
-     * 
+     *
      * @return array of the selected exercise ID's (can be empty but not null)
      */
     @Override
@@ -190,7 +193,7 @@ public class CalendarView extends BaseView {
     /**
      * Returns the list of the currently selected CalendarEntry ID's of the specified type (maximum
      * count in the calendar view is 1).
-     * 
+     *
      * @return array of the selected CalendarEntry ID's (can be empty but not null)
      */
     private int[] getSelectedEntryIDsOfClass(final Class<? extends IdDateObject> clazz) {
@@ -198,15 +201,15 @@ public class CalendarView extends BaseView {
         if ((selectedCalendarEntry == null) || (selectedCalendarEntry.getEntry().getClass() != clazz)) {
             return new int[0];
         } else {
-            return new int[] {
-                selectedCalendarEntry.getEntry().getId()
+            return new int[]{
+                    selectedCalendarEntry.getEntry().getId()
             };
         }
     }
 
     @Override
     public void selectEntry(IdObject entry) {
-        
+
         if (entry instanceof IdDateObject) {
             IdDateObject dateEntry = (IdDateObject) entry;
 
@@ -214,13 +217,13 @@ public class CalendarView extends BaseView {
             Calendar calEntry = Calendar.getInstance();
             calEntry.setTime(dateEntry.getDate());
             currentYear = calEntry.get(Calendar.YEAR);
-            currentMonth = calEntry.get(Calendar.MONTH) + 1;        
+            currentMonth = calEntry.get(Calendar.MONTH) + 1;
             updateCalendar();
 
             calendarWidget.selectEntry(dateEntry);
         }
     }
-    
+
     /**
      * Removes the current selection in the page.
      */
@@ -309,7 +312,7 @@ public class CalendarView extends BaseView {
         boolean isWeekStartSunday = getDocument().getOptions().isWeekStartSunday();
         cMonthStart.setFirstDayOfWeek(isWeekStartSunday ? Calendar.SUNDAY : Calendar.MONDAY);
         cMonthStart.set(currentYear, currentMonth - 1, 1, 0, 0, 0);
-        Calendar cCalendarStart = (Calendar)cMonthStart.clone();
+        Calendar cCalendarStart = (Calendar) cMonthStart.clone();
 
         if (isWeekStartSunday) {
             switch (cMonthStart.get(Calendar.DAY_OF_WEEK)) {
@@ -358,7 +361,7 @@ public class CalendarView extends BaseView {
         // create the datetimes for all calendar cells (6 weeks)
         CalendarDay[] arCalendarDays = new CalendarDay[7 * 6];
         for (int i = 0; i < arCalendarDays.length; i++) {
-            Calendar cTemp = (Calendar)cCalendarStart.clone();
+            Calendar cTemp = (Calendar) cCalendarStart.clone();
             cTemp.add(Calendar.DATE, i);
             arCalendarDays[i] = new CalendarDay(cTemp);
         }
@@ -369,27 +372,27 @@ public class CalendarView extends BaseView {
         setEntriesInCalendarDays(arCalendarDays, getView().getDisplayedExercises());
 
         // redraw calendar
-        calendarWidget.setCalendarDays (arCalendarDays, currentMonth, currentYear);
-        calendarWidget.repaint ();
+        calendarWidget.setCalendarDays(arCalendarDays, currentMonth, currentYear);
+        calendarWidget.repaint();
     }
 
     /**
      * This method fills the specified CalendarDay array with all entries in the specified
      * IdDateObjectList. When the date of an entry matches an CalendarDay date then the entry will
      * be stored in this CalendarDay.
-     * 
+     *
      * @param arCalendarDays the array of CalendarDays
      * @param dateObjectList the list of entries to store
      */
     private void setEntriesInCalendarDays(final CalendarDay[] arCalendarDays,
-        final IdDateObjectList<? extends IdDateObject> dateObjectList) {
+                                          final IdDateObjectList<? extends IdDateObject> dateObjectList) {
         Date calendarStart = arCalendarDays[0].getDate().getTime();
 
         for (IdDateObject dateObject : dateObjectList) {
             // calculate the timespan between exercise day and first calendar day
             long diffMillis = dateObject.getDate().getTime() - calendarStart.getTime();
             if (diffMillis >= 0) {
-                int diffDays = (int)(diffMillis / (24 * 60 * 60 * 1000));
+                int diffDays = (int) (diffMillis / (24 * 60 * 60 * 1000));
                 if (diffDays < arCalendarDays.length) {
                     CalendarEntry tempEntry = new CalendarEntry(dateObject);
                     arCalendarDays[diffDays].getCalendarEntries().add(tempEntry);
@@ -400,30 +403,30 @@ public class CalendarView extends BaseView {
 
     /**
      * Event handler for mouse clicks on the calendar widget.
-     * 
+     *
      * @param me the mouse event
      */
     private void onCalendarClicked(final MouseEvent me) {
         // get CelendarDay on this position => cancel when outside of day cells
-        CalendarDay calDay = calendarWidget.getCalendarDayForPoint (me.getPoint ());
+        CalendarDay calDay = calendarWidget.getCalendarDayForPoint(me.getPoint());
         if (calDay == null) {
             return;
         }
 
         // set the date to be used when the user creates a new entry 
-        getController ().setDateForNewEntries (calDay.getDate ().getTime ());
-        
+        getController().setDateForNewEntries(calDay.getDate().getTime());
+
         // left mouse button ?
         if (me.getButton() == MouseEvent.BUTTON1) {
 
             // was it a single click ? => select the calendar entry if there is one
             if (me.getClickCount() == 1) {
-                selectCelendarWidgetEntryAtPoint (me.getPoint ());
+                selectCelendarWidgetEntryAtPoint(me.getPoint());
             }
             // was it a double click ?
             else if (me.getClickCount() == 2) {
                 // there was a single click before, so cell selection is not necessary
-    
+
                 if (getSelectedExerciseCount() > 0 || getSelectedNoteCount() > 0 || getSelectedWeightCount() > 0) {
                     // there's a selected entry => start edit action for it
                     getController().editEntry();
@@ -435,19 +438,19 @@ public class CalendarView extends BaseView {
             }
 
             // remove the date to be used for new entries
-            getController ().setDateForNewEntries (null);                        
+            getController().setDateForNewEntries(null);
         }
         // right mouse button ?
         else if (me.getButton() == MouseEvent.BUTTON3) {
-            
+
             // first select the entry at the mouse position (if there is one)
             // and display the popup menu
-            selectCelendarWidgetEntryAtPoint (me.getPoint ());            
-            popupMenu.show (calendarWidget, me.getX (), me.getY ());
+            selectCelendarWidgetEntryAtPoint(me.getPoint());
+            popupMenu.show(calendarWidget, me.getX(), me.getY());
         }
     }
 
-    private void selectCelendarWidgetEntryAtPoint (Point point) {
+    private void selectCelendarWidgetEntryAtPoint(Point point) {
         calendarWidget.selectCalendarEntryAtPoint(point);
         getView().updateEntryActions();
     }
@@ -459,11 +462,11 @@ public class CalendarView extends BaseView {
         PrinterJob job = PrinterJob.getPrinterJob();
         job.setPrintable(new Printable() {
             public int print(final Graphics graphics, final PageFormat pageFormat,
-                final int pageIndex) {
+                             final int pageIndex) {
                 if (pageIndex > 0) {
                     return NO_SUCH_PAGE;
                 } else {
-                    printPageContent((Graphics2D)graphics, pageFormat);
+                    printPageContent((Graphics2D) graphics, pageFormat);
                     return PAGE_EXISTS;
                 }
             }
@@ -476,17 +479,16 @@ public class CalendarView extends BaseView {
         if (job.printDialog(praSet)) {
             try {
                 job.print(praSet);
-            }
-            catch (PrinterException e) {
+            } catch (PrinterException e) {
                 throw new STException(STExceptionID.GUI_PRINT_VIEW_FAILED,
-                    "Failed to print the calendar view ...", e);
+                        "Failed to print the calendar view ...", e);
             }
         }
     }
 
     /**
      * Print the page content to the specified graphics device.
-     * 
+     *
      * @param g2 the Java2D graphics device to print too
      * @param pageFormat the page format
      */
@@ -506,14 +508,14 @@ public class CalendarView extends BaseView {
         // finally draw the page title text in the upper left corner
         // (unscale the font and height, the title text must not be scaled)
         g2.setColor(Color.BLACK);
-        g2.setFont(new Font(Font.DIALOG, Font.BOLD, (int)Math.round(FONT_SIZE / scale)));
-        g2.drawString(getPrintPageTitle(), 0, -(float)(TITLE_HEIGHT / 2 / scale));
+        g2.setFont(new Font(Font.DIALOG, Font.BOLD, (int) Math.round(FONT_SIZE / scale)));
+        g2.drawString(getPrintPageTitle(), 0, -(float) (TITLE_HEIGHT / 2 / scale));
     }
 
     /**
      * Calculates the scale factor, the printed title text and the calendar must fill the page.
      * There is a gap of 10 pixels, just to make sure that everything's on the page.
-     * 
+     *
      * @param pageFormat format of the page
      * @param titleHeight the height of the title text, the calendar must be below
      * @return the scale factor
@@ -578,52 +580,52 @@ public class CalendarView extends BaseView {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(
-            javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-            layout.createSequentialGroup().addComponent(btPreviousMonth,
-                javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(
-                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(laMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 100,
-                    javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(
-                    javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(btNextMonth,
-                    javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                    javax.swing.GroupLayout.PREFERRED_SIZE).addGap(50, 50, 50).addComponent(
-                    btPreviousYear, javax.swing.GroupLayout.PREFERRED_SIZE,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(laYear, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
-                    javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(
-                    javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(btNextYear,
-                    javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                    javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(
-                    javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
-                .addComponent(btToday, javax.swing.GroupLayout.PREFERRED_SIZE,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(paCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE));
+                javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+                layout.createSequentialGroup().addComponent(btPreviousMonth,
+                        javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                        javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(
+                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(laMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 100,
+                                javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(
+                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(btNextMonth,
+                        javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                        javax.swing.GroupLayout.PREFERRED_SIZE).addGap(50, 50, 50).addComponent(
+                        btPreviousYear, javax.swing.GroupLayout.PREFERRED_SIZE,
+                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(laYear, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
+                                javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(
+                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(btNextYear,
+                        javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                        javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(
+                        javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                        .addComponent(btToday, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(paCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE));
         layout.setVerticalGroup(layout.createParallelGroup(
-            javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-            layout.createSequentialGroup().addGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER).addComponent(
-                    btNextMonth, javax.swing.GroupLayout.PREFERRED_SIZE,
-                    javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(laMonth).addComponent(btPreviousMonth,
-                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                        javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(btPreviousYear,
-                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                        javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(laYear).addComponent(
-                        btNextYear, javax.swing.GroupLayout.PREFERRED_SIZE,
-                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                        javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(btToday,
-                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                        javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(
-                javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(paCalendar,
-                javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)));
+                javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+                layout.createSequentialGroup().addGroup(
+                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER).addComponent(
+                                btNextMonth, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(laMonth).addComponent(btPreviousMonth,
+                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(btPreviousYear,
+                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(laYear).addComponent(
+                                btNextYear, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(btToday,
+                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(
+                        javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(paCalendar,
+                        javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)));
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {
-            laMonth, laYear
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[]{
+                laMonth, laYear
         });
 
     }// </editor-fold>//GEN-END:initComponents
@@ -639,7 +641,7 @@ public class CalendarView extends BaseView {
     private javax.swing.JPanel paCalendar;
     // End of variables declaration//GEN-END:variables
 
-    
+
     /**
      * Extension for the JPopupMenu class which adds calendar-specific behaviour.
      */
@@ -647,18 +649,18 @@ public class CalendarView extends BaseView {
 
         @Override
         public void setVisible(boolean visible) {
-            super.setVisible (visible);
-            
+            super.setVisible(visible);
+
             // the date to be used for new added entries must be deleted after
             // the popup menu has been closed and the actions have been processed
             if (!visible) {
-                SwingUtilities.invokeLater(new Runnable () {                
+                SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        getController ().setDateForNewEntries (null);                                        
+                        getController().setDateForNewEntries(null);
                     }
                 });
             }
         }
-    }    
+    }
 }

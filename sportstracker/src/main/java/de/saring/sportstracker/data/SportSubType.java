@@ -11,7 +11,9 @@ import de.saring.util.data.IdObject;
  */
 public final class SportSubType extends IdObject implements Cloneable {
 
-    /** Name of sport subtype. */
+    /**
+     * Name of sport subtype.
+     */
     private String name;
 
     /**
@@ -23,7 +25,9 @@ public final class SportSubType extends IdObject implements Cloneable {
         super(id);
     }
 
-    /** *** BEGIN: Generated Getters and Setters **** */
+    /**
+     * ** BEGIN: Generated Getters and Setters ****
+     */
     public String getName() {
         return name;
     }

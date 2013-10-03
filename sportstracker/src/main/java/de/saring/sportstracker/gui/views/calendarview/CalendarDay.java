@@ -5,37 +5,44 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * This class defines the data of a calendar day, which contains the date and 
+ * This class defines the data of a calendar day, which contains the date and
  * a list of exercises entries of this day.
- * 
+ *
  * @author Stefan Saring
  */
 public class CalendarDay {
 
-    /** Date of calendar day. */
+    /**
+     * Date of calendar day.
+     */
     private Calendar date;
 
-    /** List of the exercises entries of this day. */
+    /**
+     * List of the exercises entries of this day.
+     */
     private List<CalendarEntry> calendarEntries;
 
     /**
      * Creates a CalendarDay instance for the specified date.
+     *
      * @param date the date of the calendar day
      */
-    public CalendarDay (Calendar date) {
+    public CalendarDay(Calendar date) {
         this.date = date;
-        this.calendarEntries = new ArrayList<> ();
+        this.calendarEntries = new ArrayList<>();
     }
 
-    /***** BEGIN: Generated Getters and Setters *****/
-    
-    public Calendar getDate () {
+    /**
+     * ** BEGIN: Generated Getters and Setters ****
+     */
+
+    public Calendar getDate() {
         return date;
     }
 
-    public List<CalendarEntry> getCalendarEntries () {
+    public List<CalendarEntry> getCalendarEntries() {
         return calendarEntries;
     }
 
-    /***** END: Generated Getters and Setters *****/    
+    /***** END: Generated Getters and Setters *****/
 }

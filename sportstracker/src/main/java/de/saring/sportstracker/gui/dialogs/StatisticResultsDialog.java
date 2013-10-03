@@ -1,147 +1,143 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import javax.inject.Inject;
-import javax.swing.ActionMap;
-import javax.swing.JDialog;
-
-import org.jdesktop.application.Action;
-
 import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.util.gui.DialogUtils;
 import de.saring.util.unitcalc.FormatUtils;
+import org.jdesktop.application.Action;
+
+import javax.inject.Inject;
+import javax.swing.*;
 
 /**
  * This dialog class displays the results for the calculated exercise statistics.
  *
- * @author  Stefan Saring
+ * @author Stefan Saring
  * @version 1.0
  */
 public class StatisticResultsDialog extends JDialog {
 
-    /** Constants for action and property names. */
+    /**
+     * Constants for action and property names.
+     */
     private static final String ACTION_CLOSE = "st.dlg.statistic_results.close";
 
     private STContext context;
-    
-    /** 
-     * Standard c'tor. The method setStatisticResults() must be called before the 
-     * dialog gets shown. 
+
+    /**
+     * Standard c'tor. The method setStatisticResults() must be called before the
+     * dialog gets shown.
+     *
      * @param context the SportsTracker context
      */
     @Inject
-    public StatisticResultsDialog (STContext context) {
-        super (context.getMainFrame (), true);
+    public StatisticResultsDialog(STContext context) {
+        super(context.getMainFrame(), true);
         this.context = context;
-        initComponents ();
+        initComponents();
         setLocationRelativeTo(getParent());
-        this.getRootPane ().setDefaultButton (btClose);      
-        
+        this.getRootPane().setDefaultButton(btClose);
+
         // setup actions
-        ActionMap actionMap = context.getSAFContext ().getActionMap (getClass (), this);
+        ActionMap actionMap = context.getSAFContext().getActionMap(getClass(), this);
         javax.swing.Action aClose = actionMap.get(ACTION_CLOSE);
         btClose.setAction(aClose);
         DialogUtils.setDialogEscapeKeyAction(this, aClose);
     }
-   
+
     /**
      * Sets the statistic result values to be displayed in this dialog.
+     *
      * @param statistic the calculated statistic data
      */
-    public void setStatisticResults (StatisticCalculator statistic) {        
-        FormatUtils formatUtils = context.getFormatUtils ();
+    public void setStatisticResults(StatisticCalculator statistic) {
+        FormatUtils formatUtils = context.getFormatUtils();
 
         // display total values
-        laTotalExercisesValue.setText (String.valueOf (statistic.getExerciseCount ()));
-        laTotalDistanceValue.setText (formatUtils.distanceToString (statistic.getTotalDistance (), 2));
-        laTotalDurationValue.setText (formatUtils.seconds2TimeString (statistic.getTotalDuration ()) + " (hh:mm:ss)");
-        laTotalAscentValue.setText (formatUtils.heightToString (statistic.getTotalAscent ()));
-        if (statistic.getTotalCalories () > 0) {
-            laTotalCaloriesValue.setText (formatUtils.caloriesToString (statistic.getTotalCalories ()));
+        laTotalExercisesValue.setText(String.valueOf(statistic.getExerciseCount()));
+        laTotalDistanceValue.setText(formatUtils.distanceToString(statistic.getTotalDistance(), 2));
+        laTotalDurationValue.setText(formatUtils.seconds2TimeString(statistic.getTotalDuration()) + " (hh:mm:ss)");
+        laTotalAscentValue.setText(formatUtils.heightToString(statistic.getTotalAscent()));
+        if (statistic.getTotalCalories() > 0) {
+            laTotalCaloriesValue.setText(formatUtils.caloriesToString(statistic.getTotalCalories()));
+        } else {
+            laTotalCaloriesValue.setText(" ");
         }
-        else {
-            laTotalCaloriesValue.setText (" ");
-        }
-        
+
         // display average values
-        laAvgDistanceValue.setText (formatUtils.distanceToString (statistic.getAvgDistance (), 2));
-        laAvgAvgSpeedValue.setText (formatUtils.speedToString (statistic.getAvgSpeed (), 2));
-        laAvgDurationValue.setText (formatUtils.seconds2TimeString (statistic.getAvgDuration ()) + " (hh:mm:ss)");
-        laAvgAscentValue.setText (formatUtils.heightToString (statistic.getAvgAscent ()));
-        if (statistic.getAvgHeartRate () > 0) {
-            laAvgAvgHeartrateValue.setText (formatUtils.heartRateToString (statistic.getAvgHeartRate ()));
+        laAvgDistanceValue.setText(formatUtils.distanceToString(statistic.getAvgDistance(), 2));
+        laAvgAvgSpeedValue.setText(formatUtils.speedToString(statistic.getAvgSpeed(), 2));
+        laAvgDurationValue.setText(formatUtils.seconds2TimeString(statistic.getAvgDuration()) + " (hh:mm:ss)");
+        laAvgAscentValue.setText(formatUtils.heightToString(statistic.getAvgAscent()));
+        if (statistic.getAvgHeartRate() > 0) {
+            laAvgAvgHeartrateValue.setText(formatUtils.heartRateToString(statistic.getAvgHeartRate()));
+        } else {
+            laAvgAvgHeartrateValue.setText(" ");
         }
-        else {
-            laAvgAvgHeartrateValue.setText (" ");
-        }
-        if (statistic.getAvgCalories () > 0) {
-            laAvgCaloriesValue.setText (formatUtils.caloriesToString (statistic.getAvgCalories ()));
-        }
-        else {
-            laAvgCaloriesValue.setText (" ");
+        if (statistic.getAvgCalories() > 0) {
+            laAvgCaloriesValue.setText(formatUtils.caloriesToString(statistic.getAvgCalories()));
+        } else {
+            laAvgCaloriesValue.setText(" ");
         }
 
         // display minimum values
-        laMinDistanceValue.setText (formatUtils.distanceToString (statistic.getMinDistance (), 2));
-        laMinAvgSpeedValue.setText (formatUtils.speedToString (statistic.getMinAvgSpeed (), 2));
-        laMinDurationValue.setText (formatUtils.seconds2TimeString (statistic.getMinDuration ()) + " (hh:mm:ss)");
-        laMinAscentValue.setText (formatUtils.heightToString (statistic.getMinAscent ()));
-        if (statistic.getMinAvgHeartRate () > 0) {
-            laMinAvgHeartrateValue.setText (formatUtils.heartRateToString (statistic.getMinAvgHeartRate ()));
+        laMinDistanceValue.setText(formatUtils.distanceToString(statistic.getMinDistance(), 2));
+        laMinAvgSpeedValue.setText(formatUtils.speedToString(statistic.getMinAvgSpeed(), 2));
+        laMinDurationValue.setText(formatUtils.seconds2TimeString(statistic.getMinDuration()) + " (hh:mm:ss)");
+        laMinAscentValue.setText(formatUtils.heightToString(statistic.getMinAscent()));
+        if (statistic.getMinAvgHeartRate() > 0) {
+            laMinAvgHeartrateValue.setText(formatUtils.heartRateToString(statistic.getMinAvgHeartRate()));
+        } else {
+            laMinAvgHeartrateValue.setText(" ");
         }
-        else {
-            laMinAvgHeartrateValue.setText (" ");
+        if (statistic.getMinCalories() > 0) {
+            laMinCaloriesValue.setText(formatUtils.caloriesToString(statistic.getMinCalories()));
+        } else {
+            laMinCaloriesValue.setText(" ");
         }
-        if (statistic.getMinCalories () > 0) {
-            laMinCaloriesValue.setText (formatUtils.caloriesToString (statistic.getMinCalories ()));
-        }
-        else {
-            laMinCaloriesValue.setText (" ");
-        }
-        
+
         // display maximum values
-        laMaxDistanceValue.setText (formatUtils.distanceToString (statistic.getMaxDistance (), 2));
-        laMaxAvgSpeedValue.setText (formatUtils.speedToString (statistic.getMaxAvgSpeed (), 2));
-        laMaxDurationValue.setText (formatUtils.seconds2TimeString (statistic.getMaxDuration ()) + " (hh:mm:ss)");
-        laMaxAscentValue.setText (formatUtils.heightToString (statistic.getMaxAscent ()));
-        if (statistic.getMaxAvgHeartRate () > 0) {
-            laMaxAvgHeartrateValue.setText (formatUtils.heartRateToString (statistic.getMaxAvgHeartRate ()));
+        laMaxDistanceValue.setText(formatUtils.distanceToString(statistic.getMaxDistance(), 2));
+        laMaxAvgSpeedValue.setText(formatUtils.speedToString(statistic.getMaxAvgSpeed(), 2));
+        laMaxDurationValue.setText(formatUtils.seconds2TimeString(statistic.getMaxDuration()) + " (hh:mm:ss)");
+        laMaxAscentValue.setText(formatUtils.heightToString(statistic.getMaxAscent()));
+        if (statistic.getMaxAvgHeartRate() > 0) {
+            laMaxAvgHeartrateValue.setText(formatUtils.heartRateToString(statistic.getMaxAvgHeartRate()));
+        } else {
+            laMaxAvgHeartrateValue.setText(" ");
         }
-        else {
-            laMaxAvgHeartrateValue.setText (" ");
-        }
-        if (statistic.getMaxCalories () > 0) {
-            laMaxCaloriesValue.setText (formatUtils.caloriesToString (statistic.getMaxCalories ()));
-        }
-        else {
-            laMaxCaloriesValue.setText (" ");
+        if (statistic.getMaxCalories() > 0) {
+            laMaxCaloriesValue.setText(formatUtils.caloriesToString(statistic.getMaxCalories()));
+        } else {
+            laMaxCaloriesValue.setText(" ");
         }
     }
 
     /**
      * Shows or hides this dialog. Before showing the dialog widgets will be packed
-     * once again. The AppFramework stores the size after close and uses them for 
-     * next show. This size can be wrong, when the calculated values are much 
+     * once again. The AppFramework stores the size after close and uses them for
+     * next show. This size can be wrong, when the calculated values are much
      * bigger than the last displayed values.
+     *
      * @param fVisible true for show, false for hide
      */
     @Override
-    public void setVisible (boolean fVisible) {
+    public void setVisible(boolean fVisible) {
         if (fVisible) {
-            pack ();
+            pack();
         }
-        super.setVisible (fVisible);
+        super.setVisible(fVisible);
     }
-    
+
     /**
      * Action for closing this dialog.
      */
-    @Action(name=ACTION_CLOSE)
-    public void close () {
-        this.dispose ();
+    @Action(name = ACTION_CLOSE)
+    public void close() {
+        this.dispose();
     }
-    
-    /** 
+
+    /**
      * This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -299,105 +295,105 @@ public class StatisticResultsDialog extends JDialog {
         javax.swing.GroupLayout pDataLeftLayout = new javax.swing.GroupLayout(pDataLeft);
         pDataLeft.setLayout(pDataLeftLayout);
         pDataLeftLayout.setHorizontalGroup(
-            pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pDataLeftLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laMinDistance)
-                    .addComponent(laMinAvgSpeed)
-                    .addComponent(laMinDuration)
-                    .addComponent(laMinAscent)
-                    .addComponent(laMinAvgHeartrate)
-                    .addComponent(laMinCalories))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laMinDistanceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laMinAvgSpeedValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laMinDurationValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laMinAscentValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laMinAvgHeartrateValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laMinCaloriesValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(pDataLeftLayout.createSequentialGroup()
-                .addComponent(laMinimum)
-                .addContainerGap(195, Short.MAX_VALUE))
-            .addGroup(pDataLeftLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(laSpacer)
-                .addContainerGap(245, Short.MAX_VALUE))
-            .addGroup(pDataLeftLayout.createSequentialGroup()
-                .addComponent(laTotal)
-                .addContainerGap(226, Short.MAX_VALUE))
-            .addGroup(pDataLeftLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laTotalDistance)
-                    .addComponent(laTotalDuration)
-                    .addComponent(laTotalAscent)
-                    .addComponent(laTotalCalories)
-                    .addComponent(laTotalExercises))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laTotalExercisesValue, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                    .addComponent(laTotalDistanceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                    .addComponent(laTotalAscentValue, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                    .addComponent(laTotalCaloriesValue, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                    .addComponent(laTotalDurationValue, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
-                .addGap(12, 12, 12))
+                pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pDataLeftLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laMinDistance)
+                                        .addComponent(laMinAvgSpeed)
+                                        .addComponent(laMinDuration)
+                                        .addComponent(laMinAscent)
+                                        .addComponent(laMinAvgHeartrate)
+                                        .addComponent(laMinCalories))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laMinDistanceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laMinAvgSpeedValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laMinDurationValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laMinAscentValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laMinAvgHeartrateValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laMinCaloriesValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                                .addContainerGap())
+                        .addGroup(pDataLeftLayout.createSequentialGroup()
+                                .addComponent(laMinimum)
+                                .addContainerGap(195, Short.MAX_VALUE))
+                        .addGroup(pDataLeftLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(laSpacer)
+                                .addContainerGap(245, Short.MAX_VALUE))
+                        .addGroup(pDataLeftLayout.createSequentialGroup()
+                                .addComponent(laTotal)
+                                .addContainerGap(226, Short.MAX_VALUE))
+                        .addGroup(pDataLeftLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laTotalDistance)
+                                        .addComponent(laTotalDuration)
+                                        .addComponent(laTotalAscent)
+                                        .addComponent(laTotalCalories)
+                                        .addComponent(laTotalExercises))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laTotalExercisesValue, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                                        .addComponent(laTotalDistanceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                                        .addComponent(laTotalAscentValue, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                                        .addComponent(laTotalCaloriesValue, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                                        .addComponent(laTotalDurationValue, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
+                                .addGap(12, 12, 12))
         );
         pDataLeftLayout.setVerticalGroup(
-            pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pDataLeftLayout.createSequentialGroup()
-                .addComponent(laTotal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laTotalExercisesValue)
-                    .addComponent(laTotalExercises))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laTotalDistance)
-                    .addComponent(laTotalDistanceValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laTotalDuration)
-                    .addComponent(laTotalDurationValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laTotalAscent)
-                    .addComponent(laTotalAscentValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laTotalCalories)
-                    .addComponent(laTotalCaloriesValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(laSpacer)
-                .addGap(18, 18, 18)
-                .addComponent(laMinimum)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMinDistance)
-                    .addComponent(laMinDistanceValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMinAvgSpeed)
-                    .addComponent(laMinAvgSpeedValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMinDuration)
-                    .addComponent(laMinDurationValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMinAscent)
-                    .addComponent(laMinAscentValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMinAvgHeartrate)
-                    .addComponent(laMinAvgHeartrateValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMinCalories)
-                    .addComponent(laMinCaloriesValue))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pDataLeftLayout.createSequentialGroup()
+                                .addComponent(laTotal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laTotalExercisesValue)
+                                        .addComponent(laTotalExercises))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laTotalDistance)
+                                        .addComponent(laTotalDistanceValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laTotalDuration)
+                                        .addComponent(laTotalDurationValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laTotalAscent)
+                                        .addComponent(laTotalAscentValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laTotalCalories)
+                                        .addComponent(laTotalCaloriesValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(laSpacer)
+                                .addGap(18, 18, 18)
+                                .addComponent(laMinimum)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMinDistance)
+                                        .addComponent(laMinDistanceValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMinAvgSpeed)
+                                        .addComponent(laMinAvgSpeedValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMinDuration)
+                                        .addComponent(laMinDurationValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMinAscent)
+                                        .addComponent(laMinAscentValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMinAvgHeartrate)
+                                        .addComponent(laMinAvgHeartrateValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMinCalories)
+                                        .addComponent(laMinCaloriesValue))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pData.add(pDataLeft);
@@ -487,105 +483,105 @@ public class StatisticResultsDialog extends JDialog {
         javax.swing.GroupLayout pDataRightLayout = new javax.swing.GroupLayout(pDataRight);
         pDataRight.setLayout(pDataRightLayout);
         pDataRightLayout.setHorizontalGroup(
-            pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pDataRightLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laMaxDistance)
-                    .addComponent(laMaxAvgSpeed)
-                    .addComponent(laMaxDuration)
-                    .addComponent(laMaxAscent)
-                    .addComponent(laMaxAvgHeartrate)
-                    .addComponent(laMaxCalories))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laMaxDistanceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laMaxAvgSpeedValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laMaxDurationValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laMaxAscentValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laMaxAvgHeartrateValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laMaxCaloriesValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(pDataRightLayout.createSequentialGroup()
-                .addComponent(laMaximum)
-                .addContainerGap(191, Short.MAX_VALUE))
-            .addGroup(pDataRightLayout.createSequentialGroup()
-                .addComponent(laAverage)
-                .addContainerGap(201, Short.MAX_VALUE))
-            .addGroup(pDataRightLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laAvgDistance)
-                    .addComponent(laAvgAvgSpeed)
-                    .addComponent(laAvgDuration)
-                    .addComponent(laAvgAscent)
-                    .addComponent(laAvgAvgHeartrate)
-                    .addComponent(laAvgCalories))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laAvgDistanceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laAvgAvgSpeedValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laAvgDurationValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laAvgAscentValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laAvgAvgHeartrateValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .addComponent(laAvgCaloriesValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
-                .addGap(12, 12, 12))
+                pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pDataRightLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laMaxDistance)
+                                        .addComponent(laMaxAvgSpeed)
+                                        .addComponent(laMaxDuration)
+                                        .addComponent(laMaxAscent)
+                                        .addComponent(laMaxAvgHeartrate)
+                                        .addComponent(laMaxCalories))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laMaxDistanceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laMaxAvgSpeedValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laMaxDurationValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laMaxAscentValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laMaxAvgHeartrateValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laMaxCaloriesValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                                .addContainerGap())
+                        .addGroup(pDataRightLayout.createSequentialGroup()
+                                .addComponent(laMaximum)
+                                .addContainerGap(191, Short.MAX_VALUE))
+                        .addGroup(pDataRightLayout.createSequentialGroup()
+                                .addComponent(laAverage)
+                                .addContainerGap(201, Short.MAX_VALUE))
+                        .addGroup(pDataRightLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laAvgDistance)
+                                        .addComponent(laAvgAvgSpeed)
+                                        .addComponent(laAvgDuration)
+                                        .addComponent(laAvgAscent)
+                                        .addComponent(laAvgAvgHeartrate)
+                                        .addComponent(laAvgCalories))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laAvgDistanceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laAvgAvgSpeedValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laAvgDurationValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laAvgAscentValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laAvgAvgHeartrateValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                        .addComponent(laAvgCaloriesValue, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
+                                .addGap(12, 12, 12))
         );
         pDataRightLayout.setVerticalGroup(
-            pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pDataRightLayout.createSequentialGroup()
-                .addComponent(laAverage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laAvgDistance)
-                    .addComponent(laAvgDistanceValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laAvgAvgSpeed)
-                    .addComponent(laAvgAvgSpeedValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laAvgDuration)
-                    .addComponent(laAvgDurationValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laAvgAscent)
-                    .addComponent(laAvgAscentValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laAvgAvgHeartrate)
-                    .addComponent(laAvgAvgHeartrateValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laAvgCalories)
-                    .addComponent(laAvgCaloriesValue))
-                .addGap(18, 18, 18)
-                .addComponent(laMaximum)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMaxDistance)
-                    .addComponent(laMaxDistanceValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMaxAvgSpeed)
-                    .addComponent(laMaxAvgSpeedValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMaxDuration)
-                    .addComponent(laMaxDurationValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMaxAscent)
-                    .addComponent(laMaxAscentValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMaxAvgHeartrate)
-                    .addComponent(laMaxAvgHeartrateValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMaxCalories)
-                    .addComponent(laMaxCaloriesValue))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pDataRightLayout.createSequentialGroup()
+                                .addComponent(laAverage)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laAvgDistance)
+                                        .addComponent(laAvgDistanceValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laAvgAvgSpeed)
+                                        .addComponent(laAvgAvgSpeedValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laAvgDuration)
+                                        .addComponent(laAvgDurationValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laAvgAscent)
+                                        .addComponent(laAvgAscentValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laAvgAvgHeartrate)
+                                        .addComponent(laAvgAvgHeartrateValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laAvgCalories)
+                                        .addComponent(laAvgCaloriesValue))
+                                .addGap(18, 18, 18)
+                                .addComponent(laMaximum)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMaxDistance)
+                                        .addComponent(laMaxDistanceValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMaxAvgSpeed)
+                                        .addComponent(laMaxAvgSpeedValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMaxDuration)
+                                        .addComponent(laMaxDurationValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMaxAscent)
+                                        .addComponent(laMaxAscentValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMaxAvgHeartrate)
+                                        .addComponent(laMaxAvgHeartrateValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pDataRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMaxCalories)
+                                        .addComponent(laMaxCaloriesValue))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pData.add(pDataRight);
@@ -595,30 +591,30 @@ public class StatisticResultsDialog extends JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(separator, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
-                    .addComponent(btClose))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(separator, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(pData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+                                        .addComponent(btClose))
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pData, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btClose)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(pData, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btClose)
+                                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btClose;
     private javax.swing.JLabel laAverage;
@@ -677,5 +673,5 @@ public class StatisticResultsDialog extends JDialog {
     private javax.swing.JPanel pDataRight;
     private javax.swing.JSeparator separator;
     // End of variables declaration//GEN-END:variables
-    
+
 }

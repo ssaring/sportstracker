@@ -11,7 +11,9 @@ import de.saring.util.data.IdDateObject;
  */
 public final class Note extends IdDateObject {
 
-    /** The text of the note. */
+    /**
+     * The text of the note.
+     */
     private String text;
 
     /**
@@ -23,7 +25,9 @@ public final class Note extends IdDateObject {
         super(id);
     }
 
-    /** *** BEGIN: Generated Getters and Setters **** */
+    /**
+     * ** BEGIN: Generated Getters and Setters ****
+     */
     public String getText() {
         return text;
     }

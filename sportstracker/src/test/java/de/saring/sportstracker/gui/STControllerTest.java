@@ -1,16 +1,17 @@
 package de.saring.sportstracker.gui;
 
 import de.saring.sportstracker.core.STException;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.gui.views.EntryView;
-import java.util.Date;
-import javax.swing.JOptionPane;
 import org.junit.Before;
 import org.junit.Test;
+
+import javax.swing.*;
+import java.util.Date;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit tests of class STController/Impl. All the involved components will be
@@ -26,7 +27,7 @@ public class STControllerTest {
     private STDocument documentMock;
     private STView viewMock;
     private EntryView exerciseViewMock;
-    
+
     private static final int[] EXERCISE_IDS = new int[]{123, 234};
     private ExerciseList exerciseList;
 
@@ -47,7 +48,7 @@ public class STControllerTest {
             Exercise exe = new Exercise(exeID);
             exe.setDate(new Date());
             exerciseList.set(exe);
-        }        
+        }
     }
 
     /**
@@ -56,14 +57,14 @@ public class STControllerTest {
      */
     @Test
     public void testDeleteEntryNothingSelected() {
-        
+
         when(viewMock.getCurrentView()).thenReturn(exerciseViewMock);
         when(exerciseViewMock.getSelectedExerciseCount()).thenReturn(0);
         when(exerciseViewMock.getSelectedNoteCount()).thenReturn(0);
         when(exerciseViewMock.getSelectedWeightCount()).thenReturn(0);
-        
+
         controller.deleteEntry();
-        
+
         verifyZeroInteractions(contextMock);
         verifyZeroInteractions(documentMock);
     }
@@ -75,7 +76,7 @@ public class STControllerTest {
      */
     @Test
     public void testDeleteEntryConfirmed() {
-        
+
         when(viewMock.getCurrentView()).thenReturn(exerciseViewMock);
         when(exerciseViewMock.getSelectedExerciseCount()).thenReturn(2);
         when(exerciseViewMock.getSelectedExerciseIDs()).thenReturn(EXERCISE_IDS);
@@ -101,7 +102,7 @@ public class STControllerTest {
      */
     @Test
     public void testDeleteEntryCancelled() {
-        
+
         when(viewMock.getCurrentView()).thenReturn(exerciseViewMock);
         when(exerciseViewMock.getSelectedExerciseCount()).thenReturn(2);
         when(exerciseViewMock.getSelectedExerciseIDs()).thenReturn(EXERCISE_IDS);
@@ -111,7 +112,7 @@ public class STControllerTest {
                 "st.view.confirm.delete.text")).thenReturn(JOptionPane.NO_OPTION);
 
         controller.deleteEntry();
-        
+
         assertEquals(2, exerciseList.size());
     }
 
@@ -123,7 +124,7 @@ public class STControllerTest {
         when(viewMock.getCurrentView()).thenReturn(exerciseViewMock);
 
         controller.print();
-        
+
         verify(exerciseViewMock).print();
     }
 }

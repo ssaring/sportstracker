@@ -1,15 +1,17 @@
 package de.saring.polarpersonaltrainer.importer;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit tests of class PedImporter.
- * 
+ *
  * @author Philippe Marzouk
  */
 public class PedImporterTest {
@@ -55,7 +57,7 @@ public class PedImporterTest {
         PedImporter.main(args);
         assertTrue(outContent.toString().startsWith("sport-subtype id 6 not found"));
     }
-    
+
     /**
      * Test of main method, of class PedImporter.
      */

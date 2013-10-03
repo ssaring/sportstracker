@@ -9,23 +9,18 @@ import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.sportstracker.storage.XMLStorage;
+import org.apache.commons.cli.*;
+
 import java.util.Iterator;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 
 /**
  * This class in an importer of files exported from polarpersonaltrainer.com.
- *
+ * <p/>
  * It uses the PolarPedParser in the ExerciseViewer of SportsTracker.
- *
+ * <p/>
  * The extension of the files should be .ped.
  *
- * @author  Philippe Marzouk
+ * @author Philippe Marzouk
  * @version 1.0
  */
 public class PedImporter {
@@ -39,17 +34,22 @@ public class PedImporter {
         return;
     }
 
-    /** The directory where the application data of the user is stored. */
+    /**
+     * The directory where the application data of the user is stored.
+     */
     private static String dataDirectory;
     private static boolean dryRun = false;
     private ExerciseList exerciseList;
-    /** The sport type list of the user. */
+    /**
+     * The sport type list of the user.
+     */
     private SportTypeList sportTypeList;
     IStorage storage;
     private int addedExercises = 0;
 
     /**
      * Starts the importer.
+     *
      * @param args the command line arguments
      */
     @SuppressWarnings("static-access")

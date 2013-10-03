@@ -10,10 +10,14 @@ import de.saring.util.data.IdDateObject;
  */
 public final class Weight extends IdDateObject {
 
-    /** The weight value in kilograms. */
+    /**
+     * The weight value in kilograms.
+     */
     private float value;
 
-    /** Comment for the weight entry. */
+    /**
+     * Comment for the weight entry.
+     */
     private String comment;
 
     /**
@@ -25,7 +29,9 @@ public final class Weight extends IdDateObject {
         super(id);
     }
 
-    /** *** BEGIN: Generated Getters and Setters **** */
+    /**
+     * ** BEGIN: Generated Getters and Setters ****
+     */
     public float getValue() {
         return value;
     }

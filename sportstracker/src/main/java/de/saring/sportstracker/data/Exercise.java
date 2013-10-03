@@ -11,58 +11,90 @@ import de.saring.util.data.IdDateObject;
  */
 public final class Exercise extends IdDateObject implements Cloneable {
 
-    /** The related SportType object. */
+    /**
+     * The related SportType object.
+     */
     private SportType sportType;
 
-    /** The related SportSubType object. */
+    /**
+     * The related SportSubType object.
+     */
     private SportSubType sportSubType;
 
-    /** Duration of exercise in seconds. */
+    /**
+     * Duration of exercise in seconds.
+     */
     private int duration;
 
-    /** Intensity of exercise. */
+    /**
+     * Intensity of exercise.
+     */
     private IntensityType intensity;
 
-    /** Distance of exercise in kilometers. */
+    /**
+     * Distance of exercise in kilometers.
+     */
     private float distance;
 
-    /** Average speed of exercise in kilometers per hour. */
+    /**
+     * Average speed of exercise in kilometers per hour.
+     */
     private float avgSpeed;
 
-    /** Average heartrate of exercise in beats per minute (optional). */
+    /**
+     * Average heartrate of exercise in beats per minute (optional).
+     */
     private int avgHeartRate;
 
-    /** Ascent (height meters) of exercise in meters (optional). */
+    /**
+     * Ascent (height meters) of exercise in meters (optional).
+     */
     private int ascent;
 
-    /** Amount of calories consumed (optional). */
+    /**
+     * Amount of calories consumed (optional).
+     */
     private int calories;
 
-    /** Name of heart rate monitor file (optional). */
+    /**
+     * Name of heart rate monitor file (optional).
+     */
     private String hrmFile;
 
-    /** The equipment used in this exercise (optional). */
+    /**
+     * The equipment used in this exercise (optional).
+     */
     private Equipment equipment;
 
-    /** Some exercise comments (optional). */
+    /**
+     * Some exercise comments (optional).
+     */
     private String comment;
 
-    /** This is the list of possible file types of an exercise. */
+    /**
+     * This is the list of possible file types of an exercise.
+     */
     public enum IntensityType {
 
         MINIMUM(0), LOW(1), NORMAL(2), HIGH(3), MAXIMUM(4), INTERVALS(5);
 
-        /** Value of the intensity type (needed for sorting). */
+        /**
+         * Value of the intensity type (needed for sorting).
+         */
         private final int value;
 
-        /** Static resource reader is needed for string creation. */
+        /**
+         * Static resource reader is needed for string creation.
+         */
         private static ResourceReader resReader;
 
         public static void setResReader(ResourceReader resReader) {
             IntensityType.resReader = resReader;
         }
 
-        /** Standard c'tor. */
+        /**
+         * Standard c'tor.
+         */
         IntensityType(int value) {
             this.value = value;
         }
@@ -115,7 +147,9 @@ public final class Exercise extends IdDateObject implements Cloneable {
         super(id);
     }
 
-    /** *** BEGIN: Generated Getters and Setters **** */
+    /**
+     * ** BEGIN: Generated Getters and Setters ****
+     */
     public SportType getSportType() {
         return sportType;
     }

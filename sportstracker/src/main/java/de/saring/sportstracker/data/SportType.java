@@ -2,7 +2,8 @@ package de.saring.sportstracker.data;
 
 import de.saring.util.data.IdObject;
 import de.saring.util.data.IdObjectList;
-import java.awt.Color;
+
+import java.awt.*;
 
 /**
  * This class contains all informations of a single sport type (e.g. cycling).
@@ -12,19 +13,29 @@ import java.awt.Color;
  */
 public final class SportType extends IdObject implements Cloneable {
 
-    /** Name of sport type. */
+    /**
+     * Name of sport type.
+     */
     private String name;
 
-    /** Flag is true, when the distance needs to be recorded for this sport type. */
+    /**
+     * Flag is true, when the distance needs to be recorded for this sport type.
+     */
     private boolean recordDistance = true;
 
-    /** Filename of sport type icon. */
+    /**
+     * Filename of sport type icon.
+     */
     private String icon;
 
-    /** Color used for sport type visualization in GUI. */
+    /**
+     * Color used for sport type visualization in GUI.
+     */
     private Color color = Color.BLACK;
 
-    /** This is the list of all subtypes of this sport type. */
+    /**
+     * This is the list of all subtypes of this sport type.
+     */
     private IdObjectList<SportSubType> sportSubTypeList = new IdObjectList<>();
 
     /**
@@ -42,7 +53,9 @@ public final class SportType extends IdObject implements Cloneable {
         super(id);
     }
 
-    /** *** BEGIN: Generated Getters and Setters **** */
+    /**
+     * ** BEGIN: Generated Getters and Setters ****
+     */
     public String getName() {
         return name;
     }

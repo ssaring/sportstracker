@@ -1,9 +1,9 @@
 package de.saring.sportstracker.data;
 
+import de.saring.sportstracker.data.Exercise.IntensityType;
+
 import java.util.Calendar;
 import java.util.Date;
-
-import de.saring.sportstracker.data.Exercise.IntensityType;
 
 /**
  * This class defines the criterias for filtering the exercise list (e.g. for
@@ -14,33 +14,51 @@ import de.saring.sportstracker.data.Exercise.IntensityType;
  */
 public final class ExerciseFilter {
 
-    /** The exercise dates needs to be greater or same as this start date. */
+    /**
+     * The exercise dates needs to be greater or same as this start date.
+     */
     private Date dateStart;
 
-    /** The exercise dates needs to be lesser or same as this end date. */
+    /**
+     * The exercise dates needs to be lesser or same as this end date.
+     */
     private Date dateEnd;
 
-    /** The exercise needs to have the same sport type (ignore, when null). */
+    /**
+     * The exercise needs to have the same sport type (ignore, when null).
+     */
     private SportType sportType = null;
 
-    /** The exercise needs to have the same sport subtype (ignore, when null). */
+    /**
+     * The exercise needs to have the same sport subtype (ignore, when null).
+     */
     private SportSubType sportSubType = null;
 
-    /** Exercises needs to have same intensity (ignore, when null). */
+    /**
+     * Exercises needs to have same intensity (ignore, when null).
+     */
     private Exercise.IntensityType intensity;
 
-    /** The exercise needs to have the same equipment (ignore, when null). */
+    /**
+     * The exercise needs to have the same equipment (ignore, when null).
+     */
     private Equipment equipment = null;
 
-    /** Substring which needs to be in the exercise comments (empty string or
-     * null means ignoring). */
+    /**
+     * Substring which needs to be in the exercise comments (empty string or
+     * null means ignoring).
+     */
     private String commentSubString = null;
 
-    /** When true then the substring in comment will be searched in regular
-     * expression mode. */
+    /**
+     * When true then the substring in comment will be searched in regular
+     * expression mode.
+     */
     private boolean regularExpressionMode = false;
 
-    /** *** BEGIN: Generated Getters and Setters **** */
+    /**
+     * ** BEGIN: Generated Getters and Setters ****
+     */
     public Date getDateStart() {
         return dateStart;
     }
