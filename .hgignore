@@ -7,7 +7,7 @@ syntax: glob
 .#*
 .DS_Store
 
-# ignore Maven build directories and Eclipse, Netbeans and IDEA project files
+# ignore Maven build directories and Eclipse, Netbeans project files
 target
 .classpath
 .project
@@ -17,6 +17,10 @@ target
 *.iws
 .idea
 nbactions.xml
+
+# ignore IDEA project files for local workspace settings
+workspace.xml
+tasks.xml
 
 # switch to regexp syntax
 syntax: regexp
