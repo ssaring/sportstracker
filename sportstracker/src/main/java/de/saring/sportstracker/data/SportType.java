@@ -107,15 +107,14 @@ public final class SportType extends IdObject implements Cloneable {
 
             if (this.sportSubTypeList != null) {
                 clone.sportSubTypeList = new IdObjectList<>();
-                for (SportSubType subType : this.sportSubTypeList) {
-                    clone.sportSubTypeList.set((SportSubType) subType.clone());
-                }
+                this.sportSubTypeList.forEach(subType ->
+                    clone.sportSubTypeList.set((SportSubType) subType.clone()));
             }
+
             if (this.equipmentList != null) {
                 clone.equipmentList = new IdObjectList<>();
-                for (Equipment equipment : this.equipmentList) {
-                    clone.equipmentList.set((Equipment) equipment.clone());
-                }
+                this.equipmentList.forEach(equipment ->
+                    clone.equipmentList.set((Equipment) equipment.clone()));
             }
 
             return clone;

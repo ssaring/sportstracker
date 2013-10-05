@@ -27,7 +27,7 @@ public final class ExerciseList extends IdDateObjectList<Exercise> {
     public void updateSportTypes(SportTypeList sportTypeList) {
 
         // process all exercises
-        for (Exercise exercise : this) {
+        this.forEach(exercise -> {
 
             // get and store the new SportType object with the same ID
             SportType newSportType = sportTypeList.getByID(exercise.getSportType().getId());
@@ -42,7 +42,7 @@ public final class ExerciseList extends IdDateObjectList<Exercise> {
                 Equipment newEquipment = newSportType.getEquipmentList().getByID(exercise.getEquipment().getId());
                 exercise.setEquipment(newEquipment);
             }
-        }
+        });
     }
 
     /**

@@ -1,8 +1,8 @@
 package de.saring.sportstracker.core;
 
 /**
- * This is the base Excpetion class for the whole SportsTracker application.
- * It extends the standard exception by an ID ofr beeing able to react properly
+ * This is the base Exception class for the whole SportsTracker application.
+ * It extends the standard exception by an ID ofr being able to react properly
  * on problems.
  *
  * @author Stefan Saring

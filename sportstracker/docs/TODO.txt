@@ -19,8 +19,15 @@ Java 8 support status (in branch java_8):
 Java 8 TODOs:
 - use new Java Date API
 - use lambdas where possible
+  - done in module st-util (all packages)
+  - status in module sportstracker:
+    - package de.saring.sportstracker.core -> done
+    - package de.saring.sportstracker.data -> done
+      - class ExerciseList -> TODO
+    - package de.saring.sportstracker.data.statistic -> TODO
+    - package de.saring.sportstracker.gui -> TODO
+    - package de.saring.sportstracker.storage -> done
 - update documentation in ReadMe / website
-  -> also add NetBeans support to ReadMe and ChangeLog
 
 Java Webstart: 
 - since Java 7u40 there are security warnings on each ST start due to missing 
