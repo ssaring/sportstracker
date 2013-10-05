@@ -4,6 +4,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.input.sax.XMLReaders;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.xml.sax.EntityResolver;
@@ -34,12 +35,12 @@ public final class XMLUtils {
      * @param xsdFilename the name of the XSD (just the filename)
      * @return the created JDOM Document
      * @throws java.io.IOException
-     * @throws org.jdom.JDOMException
+     * @throws org.jdom2.JDOMException
      */
     public static Document getJDOMDocument(final File xmlFile, final String xsdFilename) throws IOException, JDOMException {
 
         // create a SAX parser with XSD validation
-        SAXBuilder builder = new SAXBuilder(true);
+        SAXBuilder builder = new SAXBuilder(XMLReaders.DTDVALIDATING);
         builder.setFeature("http://apache.org/xml/features/validation/schema", true);
         builder.setProperty("http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation", "file://" + xsdFilename);
 
