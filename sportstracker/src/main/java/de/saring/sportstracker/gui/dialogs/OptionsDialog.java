@@ -113,7 +113,7 @@ public class OptionsDialog extends JDialog {
                 AutoCalculation.Duration, context.getResReader().getString("st.dlg.options.duration.text")));
 
         for (int i = 0; i < cbDefaultAutoCalculation.getItemCount(); i++) {
-            AutoCalculationComboBoxItem item = (AutoCalculationComboBoxItem) cbDefaultAutoCalculation.getItemAt(i);
+            AutoCalculationComboBoxItem item = cbDefaultAutoCalculation.getItemAt(i);
             if (item.getAutoCalculation() == options.getDefaultAutoCalcuation()) {
                 cbDefaultAutoCalculation.setSelectedItem(item);
                 break;

@@ -36,10 +36,7 @@ import org.jfree.ui.TextAnchor;
 
 import javax.inject.Inject;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -123,22 +120,13 @@ public class OverviewDialog extends JDialog {
         updateDiagram();
 
         // add listener for selection changes => diagram must be updated
-        ActionListener alUpdate = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateDiagram();
-            }
-        };
-
+        ActionListener alUpdate = e -> updateDiagram();
         cbTimeRange.addActionListener(alUpdate);
         cbDisplay.addActionListener(alUpdate);
         cbSportTypeMode.addActionListener(alUpdate);
         cbSportTypeList.addActionListener(alUpdate);
 
-        spYear.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                updateDiagram();
-            }
-        });
+        spYear.addChangeListener(e -> updateDiagram());
     }
 
     /**
@@ -248,9 +236,9 @@ public class OverviewDialog extends JDialog {
         }
 
         // setup date format for tooltips and time (bottom) axis
-        String dateFormatTooltip = null;
-        String dateFormatAxis = null;
-        DateTickUnit dateTickUnit = null;
+        String dateFormatTooltip;
+        String dateFormatAxis;
+        DateTickUnit dateTickUnit;
 
         switch (timeType) {
             case LAST_12_MONTHS:
