@@ -9,7 +9,6 @@ import org.jdom2.Element;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  * This class is for reading or writing an ExerciseList object from or to a XML
@@ -55,12 +54,9 @@ public class XMLExerciseList {
 
             // get root element and read all the contained exercises
             Element eExerciseList = document.getRootElement();
-            List<Element> lExercises = eExerciseList.getChildren("exercise");
 
-            for (Element eExercise : lExercises) {
-                Exercise exercise = readExercise(eExercise, sportTypeList);
-                exerciseList.set(exercise);
-            }
+            eExerciseList.getChildren("exercise").forEach(eExercise ->
+                exerciseList.set(readExercise(eExercise, sportTypeList)));
 
             return exerciseList;
         } catch (Exception e) {
@@ -77,7 +73,7 @@ public class XMLExerciseList {
      * @param sportTypeList the sport type list for assigning sport types to exercises.
      * @return the created Exercise object
      */
-    private Exercise readExercise(Element eExercise, SportTypeList sportTypeList) throws Exception {
+    private Exercise readExercise(Element eExercise, SportTypeList sportTypeList) {
 
         Exercise exercise = new Exercise(
                 Integer.parseInt(eExercise.getChildText("id")));
@@ -86,7 +82,7 @@ public class XMLExerciseList {
         int sportTypeID = Integer.parseInt(eExercise.getChildText("sport-type-id"));
         SportType sportType = sportTypeList.getByID(sportTypeID);
         if (sportType == null) {
-            throw new Exception("Failed to parse exercise with ID '" + exercise.getId() +
+            throw new IllegalArgumentException("Failed to parse exercise with ID '" + exercise.getId() +
                     "', the sport type ID '" + sportTypeID + "' is unknown!");
         }
         exercise.setSportType(sportType);
@@ -95,7 +91,7 @@ public class XMLExerciseList {
         int sportSubTypeID = Integer.parseInt(eExercise.getChildText("sport-subtype-id"));
         SportSubType sportSubType = sportType.getSportSubTypeList().getByID(sportSubTypeID);
         if (sportSubType == null) {
-            throw new Exception("Failed to parse exercise with ID '" + exercise.getId() +
+            throw new IllegalArgumentException("Failed to parse exercise with ID '" + exercise.getId() +
                     "', the sport subtype ID '" + sportSubTypeID + "' is unknown!");
         }
         exercise.setSportSubType(sportSubType);
@@ -105,7 +101,7 @@ public class XMLExerciseList {
         try {
             exercise.setDate(sdFormat.parse(strDate));
         } catch (Exception e) {
-            throw new Exception("Failed to parse exercise with ID '" + exercise.getId() +
+            throw new IllegalArgumentException("Failed to parse exercise with ID '" + exercise.getId() +
                     "', the date format '" + strDate + "' is not valid!");
         }
 
@@ -118,7 +114,7 @@ public class XMLExerciseList {
         try {
             exercise.setIntensity(Exercise.IntensityType.valueOf(strIntensity));
         } catch (Exception e) {
-            throw new Exception("Failed to parse exercise with ID '" + exercise.getId() +
+            throw new IllegalArgumentException("Failed to parse exercise with ID '" + exercise.getId() +
                     "', the intensity '" + strIntensity + "' is not valid!");
         }
 
@@ -147,7 +143,7 @@ public class XMLExerciseList {
             int equipmentID = Integer.parseInt(strEquipmentID);
             Equipment equipment = sportType.getEquipmentList().getByID(equipmentID);
             if (equipment == null) {
-                throw new Exception("Failed to parse exercise with ID '" + exercise.getId() +
+                throw new IllegalArgumentException("Failed to parse exercise with ID '" + exercise.getId() +
                         "', the equipment ID '" + equipmentID + "' is unknown!");
             }
             exercise.setEquipment(equipment);
@@ -185,7 +181,7 @@ public class XMLExerciseList {
         Element eExerciseList = new Element("exercise-list");
 
         // append an exercise element for each exercise
-        for (Exercise exercise : exerciseList) {
+        exerciseList.forEach(exercise -> {
             Element eExercise = new Element("exercise");
             eExerciseList.addContent(eExercise);
 
@@ -218,7 +214,7 @@ public class XMLExerciseList {
             if (exercise.getComment() != null) {
                 XMLUtils.addElement(eExercise, "comment", exercise.getComment());
             }
-        }
+        });
 
         return eExerciseList;
     }

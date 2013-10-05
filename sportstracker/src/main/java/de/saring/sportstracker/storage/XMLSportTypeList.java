@@ -7,6 +7,7 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.SportTypeList;
 import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
@@ -23,6 +24,7 @@ import java.util.List;
  * @version 2.0
  */
 public class XMLSportTypeList {
+
     /**
      * The XSD filename with the structure of the sport type list.
      */
@@ -51,11 +53,8 @@ public class XMLSportTypeList {
 
             // get root element and read all the contained sport types
             Element eSportTypeList = document.getRootElement();
-            List<Element> lSportTypes = eSportTypeList.getChildren("sport-type");
-
-            for (Element eSportType : lSportTypes) {
-                sportTypeList.set(readSportType(eSportType));
-            }
+            eSportTypeList.getChildren("sport-type").forEach(eSportType ->
+                sportTypeList.set(readSportType(eSportType)));
 
             return sportTypeList;
         } catch (Exception e) {
@@ -71,45 +70,51 @@ public class XMLSportTypeList {
      * @param eSportType sport-type JDOM element
      * @return the created SportType object
      */
-    private SportType readSportType(Element eSportType) throws Exception {
+    private SportType readSportType(Element eSportType) {
 
         SportType sportType = new SportType(Integer.parseInt(eSportType.getChildText("id")));
         sportType.setName(eSportType.getChildText("name"));
         sportType.setIcon(eSportType.getChildText("icon"));
 
-        Element eColor = eSportType.getChild("color");
-        int iRed = eColor.getAttribute("red").getIntValue();
-        int iGreen = eColor.getAttribute("green").getIntValue();
-        int iBlue = eColor.getAttribute("blue").getIntValue();
-        sportType.setColor(new Color(iRed, iGreen, iBlue));
+        try {
+            Element eColor = eSportType.getChild("color");
+            int iRed = eColor.getAttribute("red").getIntValue();
+            int iGreen = eColor.getAttribute("green").getIntValue();
+            int iBlue = eColor.getAttribute("blue").getIntValue();
+            sportType.setColor(new Color(iRed, iGreen, iBlue));
+        } catch (DataConversionException dce) {
+            throw new IllegalArgumentException("Failed to parse the color of sport type with ID '" + sportType.getId() +
+                    "', exception message: " + dce.getMessage());
+        }
 
         // get optional attribute 'record-distance'
         Attribute aRecDistance = eSportType.getAttribute("record-distance");
         if (aRecDistance != null) {
-            sportType.setRecordDistance(aRecDistance.getBooleanValue());
+            try {
+                sportType.setRecordDistance(aRecDistance.getBooleanValue());
+            } catch (DataConversionException dce) {
+                throw new IllegalArgumentException("Failed to parse the record-distance of sport type with ID '" +
+                        sportType.getId() + "', exception message: " + dce.getMessage());
+            }
         }
 
         // read all contained sport sub types
         Element eSportSubTypeList = eSportType.getChild("sport-subtype-list");
-        List<Element> lSportSubTypes = eSportSubTypeList.getChildren("sport-subtype");
-
-        for (Element eSportSubType : lSportSubTypes) {
+        eSportSubTypeList.getChildren("sport-subtype").forEach(eSportSubType -> {
             SportSubType sportSubType = new SportSubType(Integer.parseInt(eSportSubType.getChildText("id")));
             sportSubType.setName(eSportSubType.getChildText("name"));
             sportType.getSportSubTypeList().set(sportSubType);
-        }
+        });
 
         // read all contained equipment
         Element eEquipmentList = eSportType.getChild("equipment-list");
         if (eEquipmentList != null) {
-            List<Element> lEquipmentList = eEquipmentList.getChildren("equipment");
 
-            for (Element eEquipment : lEquipmentList) {
-                Equipment equipment = new Equipment(
-                        Integer.parseInt(eEquipment.getChildText("id")));
+            eEquipmentList.getChildren("equipment").forEach(eEquipment -> {
+                Equipment equipment = new Equipment(Integer.parseInt(eEquipment.getChildText("id")));
                 equipment.setName(eEquipment.getChildText("name"));
                 sportType.getEquipmentList().set(equipment);
-            }
+            });
         }
         return sportType;
     }
@@ -144,7 +149,7 @@ public class XMLSportTypeList {
         Element eSportTypeList = new Element("sport-type-list");
 
         // append an "sport-type" element for each sport type
-        for (SportType sportType : sportTypeList) {
+        sportTypeList.forEach(sportType -> {
             Element eSportType = new Element("sport-type");
             eSportTypeList.addContent(eSportType);
 
@@ -164,26 +169,24 @@ public class XMLSportTypeList {
             Element eSportSubTypeList = new Element("sport-subtype-list");
             eSportType.addContent(eSportSubTypeList);
 
-            for (SportSubType sportSubType : sportType.getSportSubTypeList()) {
-
+            sportType.getSportSubTypeList().forEach(sportSubType -> {
                 Element eSportSubType = new Element("sport-subtype");
                 eSportSubTypeList.addContent(eSportSubType);
                 XMLUtils.addElement(eSportSubType, "id", String.valueOf(sportSubType.getId()));
                 XMLUtils.addElement(eSportSubType, "name", sportSubType.getName());
-            }
+            });
 
             // append an "equipment" element for each equipment
             Element eEquipmentList = new Element("equipment-list");
             eSportType.addContent(eEquipmentList);
 
-            for (Equipment equipment : sportType.getEquipmentList()) {
-
+            sportType.getEquipmentList().forEach(equipment-> {
                 Element eEquipment = new Element("equipment");
                 eEquipmentList.addContent(eEquipment);
                 XMLUtils.addElement(eEquipment, "id", String.valueOf(equipment.getId()));
                 XMLUtils.addElement(eEquipment, "name", equipment.getName());
-            }
-        }
+            });
+        });
 
         return eSportTypeList;
     }

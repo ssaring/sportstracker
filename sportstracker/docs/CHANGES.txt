@@ -11,8 +11,10 @@ v6.0.0:
     format guidelines (reformating done by IntelliJ IDEA)
   - cleanup of import statements in all Java and Groovy source files
     (done by IntelliJ IDEA)
+  - use of Lambda features in module st-util
+  - use of Lambda features in module sportstracker
 
-v5.8.0:
+v5.8.0 (not released):
  SportsTracker changes:
   - use of new default Mercurial repository after SourceForge project 
     platform update

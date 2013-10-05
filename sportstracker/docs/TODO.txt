@@ -17,8 +17,6 @@ Java 8 support status (in branch java_8):
 - full use of Lambdas in module st-util
 
 Java 8 TODOs:
-- use lambdas for XML loading/parsing, see TaskList
-- use new source code formating in all Java classes
 - use new Java Date API
 - use lambdas where possible
 - update documentation in ReadMe / website

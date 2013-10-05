@@ -53,11 +53,8 @@ public class XMLWeightList {
 
             // get root element and read all the contained weights
             Element eWeightList = document.getRootElement();
-            List<Element> lWeights = eWeightList.getChildren("weight");
-
-            for (Element eWeight : lWeights) {
-                weightList.set(readWeight(eWeight));
-            }
+            eWeightList.getChildren("weight").forEach(eWeight ->
+                weightList.set(readWeight(eWeight)));
 
             return weightList;
         } catch (Exception e) {
@@ -73,7 +70,7 @@ public class XMLWeightList {
      * @param eWeight weight JDOM element
      * @return the created Weight object
      */
-    private Weight readWeight(Element eWeight) throws Exception {
+    private Weight readWeight(Element eWeight) {
         Weight weight = new Weight(Integer.parseInt(eWeight.getChildText("id")));
         weight.setValue(Float.parseFloat(eWeight.getChildText("value")));
         weight.setComment(eWeight.getChildText("comment"));
@@ -83,7 +80,7 @@ public class XMLWeightList {
         try {
             weight.setDate(sdFormat.parse(strDate));
         } catch (Exception e) {
-            throw new Exception("Failed to parse weight with ID '" + weight.getId() +
+            throw new IllegalArgumentException("Failed to parse weight with ID '" + weight.getId() +
                     "', the date format '" + strDate + "' is not valid!");
         }
         return weight;
@@ -120,7 +117,7 @@ public class XMLWeightList {
     private Element createWeightListElement(WeightList weightList) {
         Element eWeightList = new Element("weight-list");
 
-        for (Weight weight : weightList) {
+        weightList.forEach(weight -> {
             Element eWeight = new Element("weight");
             eWeightList.addContent(eWeight);
 
@@ -128,7 +125,7 @@ public class XMLWeightList {
             XMLUtils.addElement(eWeight, "date", sdFormat.format(weight.getDate()));
             XMLUtils.addElement(eWeight, "value", String.valueOf(weight.getValue()));
             XMLUtils.addElement(eWeight, "comment", weight.getComment());
-        }
+        });
         return eWeightList;
     }
 }

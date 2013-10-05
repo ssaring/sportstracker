@@ -52,11 +52,8 @@ public class XMLNoteList {
 
             // get root element and read all the contained notes
             Element eNoteList = document.getRootElement();
-            List<Element> lNotes = eNoteList.getChildren("note");
-
-            for (Element eNote : lNotes) {
-                noteList.set(readNote(eNote));
-            }
+            eNoteList.getChildren("note").forEach(eNote ->
+                    noteList.set(readNote(eNote)));
 
             return noteList;
         } catch (Exception e) {
@@ -72,7 +69,7 @@ public class XMLNoteList {
      * @param eNote note JDOM element
      * @return the created Note object
      */
-    private Note readNote(Element eNote) throws Exception {
+    private Note readNote(Element eNote) {
         Note note = new Note(Integer.parseInt(eNote.getChildText("id")));
         note.setText(eNote.getChildText("text"));
 
@@ -81,7 +78,7 @@ public class XMLNoteList {
         try {
             note.setDate(sdFormat.parse(strDate));
         } catch (Exception e) {
-            throw new Exception("Failed to parse note with ID '" + note.getId() +
+            throw new IllegalArgumentException("Failed to parse note with ID '" + note.getId() +
                     "', the date format '" + strDate + "' is not valid!");
         }
         return note;
@@ -118,14 +115,14 @@ public class XMLNoteList {
     private Element createNoteListElement(NoteList noteList) {
         Element eNoteList = new Element("note-list");
 
-        for (Note note : noteList) {
+        noteList.forEach(note -> {
             Element eNote = new Element("note");
             eNoteList.addContent(eNote);
 
             XMLUtils.addElement(eNote, "id", String.valueOf(note.getId()));
             XMLUtils.addElement(eNote, "date", sdFormat.format(note.getDate()));
             XMLUtils.addElement(eNote, "text", note.getText());
-        }
+        });
         return eNoteList;
     }
 }
