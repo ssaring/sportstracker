@@ -540,11 +540,11 @@ public class DiagramPanel extends BasePanel {
         pButtons = new javax.swing.JPanel();
         laAxis = new javax.swing.JLabel();
         laLeft = new javax.swing.JLabel();
-        cbLeft = new javax.swing.JComboBox();
+        cbLeft = new javax.swing.JComboBox<>();
         laRight = new javax.swing.JLabel();
-        cbRight = new javax.swing.JComboBox();
+        cbRight = new javax.swing.JComboBox<>();
         laBottom = new javax.swing.JLabel();
-        cbBottom = new javax.swing.JComboBox();
+        cbBottom = new javax.swing.JComboBox<>();
 
         pDiagram.setLayout(new java.awt.BorderLayout());
 
@@ -622,9 +622,9 @@ public class DiagramPanel extends BasePanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox cbBottom;
-    private javax.swing.JComboBox cbLeft;
-    private javax.swing.JComboBox cbRight;
+    private javax.swing.JComboBox<AxisType> cbBottom;
+    private javax.swing.JComboBox<AxisType> cbLeft;
+    private javax.swing.JComboBox<AxisType> cbRight;
     private javax.swing.JLabel laAxis;
     private javax.swing.JLabel laBottom;
     private javax.swing.JLabel laLeft;

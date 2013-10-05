@@ -1084,16 +1084,16 @@ public class OverviewDialog extends JDialog {
 
         btClose = new javax.swing.JButton();
         laTimeRange = new javax.swing.JLabel();
-        cbTimeRange = new javax.swing.JComboBox();
+        cbTimeRange = new javax.swing.JComboBox<>();
         spYear = new javax.swing.JSpinner();
         pDiagram = new javax.swing.JPanel();
         laOptions = new javax.swing.JLabel();
         laDisplay = new javax.swing.JLabel();
-        cbDisplay = new javax.swing.JComboBox();
+        cbDisplay = new javax.swing.JComboBox<>();
         laFor = new javax.swing.JLabel();
-        cbSportTypeMode = new javax.swing.JComboBox();
+        cbSportTypeMode = new javax.swing.JComboBox<>();
         separator = new javax.swing.JSeparator();
-        cbSportTypeList = new javax.swing.JComboBox();
+        cbSportTypeList = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
@@ -1107,7 +1107,6 @@ public class OverviewDialog extends JDialog {
         laTimeRange.setText("_Displayed Time Range");
         laTimeRange.setName("st.dlg.overview.time_range"); // NOI18N
 
-        cbTimeRange.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         cbTimeRange.setName("cbTimeRange"); // NOI18N
 
         spYear.setModel(new javax.swing.SpinnerNumberModel(2000, 1900, 2999, 1));
@@ -1123,18 +1122,15 @@ public class OverviewDialog extends JDialog {
         laDisplay.setText("_Display");
         laDisplay.setName("st.dlg.overview.display"); // NOI18N
 
-        cbDisplay.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         cbDisplay.setName("cbDisplay"); // NOI18N
 
         laFor.setText("_for");
         laFor.setName("st.dlg.overview.for"); // NOI18N
 
-        cbSportTypeMode.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         cbSportTypeMode.setName("cbSportTypeMode"); // NOI18N
 
         separator.setName("separator"); // NOI18N
 
-        cbSportTypeList.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         cbSportTypeList.setName("cbSportTypeList"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1202,10 +1198,10 @@ public class OverviewDialog extends JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btClose;
-    private javax.swing.JComboBox cbDisplay;
-    private javax.swing.JComboBox cbSportTypeList;
-    private javax.swing.JComboBox cbSportTypeMode;
-    private javax.swing.JComboBox cbTimeRange;
+    private javax.swing.JComboBox<String> cbDisplay;
+    private javax.swing.JComboBox<String> cbSportTypeList;
+    private javax.swing.JComboBox<OverviewType> cbSportTypeMode;
+    private javax.swing.JComboBox<String> cbTimeRange;
     private javax.swing.JLabel laDisplay;
     private javax.swing.JLabel laFor;
     private javax.swing.JLabel laOptions;

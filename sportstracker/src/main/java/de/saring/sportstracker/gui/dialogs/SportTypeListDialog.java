@@ -210,7 +210,7 @@ public class SportTypeListDialog extends JDialog {
         btClose = new javax.swing.JButton();
         separator = new javax.swing.JSeparator();
         spSportTypes = new javax.swing.JScrollPane();
-        liSportTypes = new javax.swing.JList();
+        liSportTypes = new javax.swing.JList<>();
         btAdd = new javax.swing.JButton();
         btEdit = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
@@ -283,7 +283,7 @@ public class SportTypeListDialog extends JDialog {
     private javax.swing.JButton btClose;
     private javax.swing.JButton btDelete;
     private javax.swing.JButton btEdit;
-    private javax.swing.JList liSportTypes;
+    private javax.swing.JList<String> liSportTypes;
     private javax.swing.JSeparator separator;
     private javax.swing.JScrollPane spSportTypes;
     // End of variables declaration//GEN-END:variables

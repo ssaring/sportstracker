@@ -553,7 +553,7 @@ public class SportTypeDialog extends JDialog {
         btCancel = new javax.swing.JButton();
         separator = new javax.swing.JSeparator();
         spSubtypes = new javax.swing.JScrollPane();
-        liSubtypes = new javax.swing.JList();
+        liSubtypes = new javax.swing.JList<>();
         btAddSubtype = new javax.swing.JButton();
         btEditSubtype = new javax.swing.JButton();
         btDeleteSubtype = new javax.swing.JButton();
@@ -562,7 +562,7 @@ public class SportTypeDialog extends JDialog {
         btEditEquipment = new javax.swing.JButton();
         btDeleteEquipment = new javax.swing.JButton();
         spEquipment = new javax.swing.JScrollPane();
-        liEquipment = new javax.swing.JList();
+        liEquipment = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
@@ -750,8 +750,8 @@ public class SportTypeDialog extends JDialog {
     private javax.swing.JLabel laName;
     private javax.swing.JLabel laProperties;
     private javax.swing.JLabel laSubtypes;
-    private javax.swing.JList liEquipment;
-    private javax.swing.JList liSubtypes;
+    private javax.swing.JList<String> liEquipment;
+    private javax.swing.JList<String> liSubtypes;
     private javax.swing.JSeparator separator;
     private javax.swing.JScrollPane spEquipment;
     private javax.swing.JScrollPane spSubtypes;

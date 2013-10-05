@@ -16,7 +16,7 @@ public final class ListUtils {
      *
      * @param list the list to change
      */
-    public static void increaseListCellHeight(JList list) {
+    public static void increaseListCellHeight(JList<String> list) {
         list.setPrototypeCellValue("Ag123");
         list.setFixedCellHeight(list.getFixedCellHeight() + 2);
     }

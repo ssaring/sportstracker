@@ -425,13 +425,13 @@ public class FilterDialog extends JDialog {
         pFilterDataGrid = new javax.swing.JPanel();
         pDataLeft = new javax.swing.JPanel();
         laSportType = new javax.swing.JLabel();
-        cbSportType = new javax.swing.JComboBox();
+        cbSportType = new javax.swing.JComboBox<>();
         pDataCenter = new javax.swing.JPanel();
         laSportSubType = new javax.swing.JLabel();
-        cbSportSubType = new javax.swing.JComboBox();
+        cbSportSubType = new javax.swing.JComboBox<>();
         pDataRight = new javax.swing.JPanel();
         laIntensity = new javax.swing.JLabel();
-        cbIntensity = new javax.swing.JComboBox();
+        cbIntensity = new javax.swing.JComboBox<>();
         laCommentString = new javax.swing.JLabel();
         tfCommentString = new javax.swing.JTextField();
         cbRegExpression = new javax.swing.JCheckBox();
@@ -444,7 +444,7 @@ public class FilterDialog extends JDialog {
         dpDateStart = new org.jdesktop.swingx.JXDatePicker();
         dpDateEnd = new org.jdesktop.swingx.JXDatePicker();
         laEquipment = new javax.swing.JLabel();
-        cbEquipment = new javax.swing.JComboBox();
+        cbEquipment = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
@@ -479,7 +479,6 @@ public class FilterDialog extends JDialog {
         laSportType.setText("_Sport type:");
         laSportType.setName("st.dlg.filter.sport_type"); // NOI18N
 
-        cbSportType.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1"}));
         cbSportType.setName("cbSportType"); // NOI18N
 
         javax.swing.GroupLayout pDataLeftLayout = new javax.swing.GroupLayout(pDataLeft);
@@ -507,7 +506,6 @@ public class FilterDialog extends JDialog {
         laSportSubType.setText("_Sport subtype:");
         laSportSubType.setName("st.dlg.filter.sport_subtype"); // NOI18N
 
-        cbSportSubType.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1"}));
         cbSportSubType.setName("cbSportSubType"); // NOI18N
 
         javax.swing.GroupLayout pDataCenterLayout = new javax.swing.GroupLayout(pDataCenter);
@@ -535,7 +533,6 @@ public class FilterDialog extends JDialog {
         laIntensity.setText("_Intensity:");
         laIntensity.setName("st.dlg.filter.intensity"); // NOI18N
 
-        cbIntensity.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1"}));
         cbIntensity.setName("cbIntensity"); // NOI18N
 
         javax.swing.GroupLayout pDataRightLayout = new javax.swing.GroupLayout(pDataRight);
@@ -594,7 +591,6 @@ public class FilterDialog extends JDialog {
         laEquipment.setText("_Equipment:");
         laEquipment.setName("st.dlg.filter.equipment"); // NOI18N
 
-        cbEquipment.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         cbEquipment.setName("cbEquipment"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -689,11 +685,11 @@ public class FilterDialog extends JDialog {
     private javax.swing.JButton btCurrentWeek;
     private javax.swing.JButton btCurrentYear;
     private javax.swing.JButton btOK;
-    private javax.swing.JComboBox cbEquipment;
-    private javax.swing.JComboBox cbIntensity;
+    private javax.swing.JComboBox<String> cbEquipment;
+    private javax.swing.JComboBox<Object> cbIntensity;
     private javax.swing.JCheckBox cbRegExpression;
-    private javax.swing.JComboBox cbSportSubType;
-    private javax.swing.JComboBox cbSportType;
+    private javax.swing.JComboBox<String> cbSportSubType;
+    private javax.swing.JComboBox<String> cbSportType;
     private org.jdesktop.swingx.JXDatePicker dpDateEnd;
     private org.jdesktop.swingx.JXDatePicker dpDateStart;
     private javax.swing.JLabel laCommentString;

@@ -972,11 +972,11 @@ public class ExerciseDialog extends JDialog {
         cbAutoCalcAvgSpeed = new javax.swing.JRadioButton();
         cbAutoCalcDuration = new javax.swing.JRadioButton();
         laSportType = new javax.swing.JLabel();
-        cbSportType = new javax.swing.JComboBox();
+        cbSportType = new javax.swing.JComboBox<>();
         laSportSubType = new javax.swing.JLabel();
-        cbSportSubType = new javax.swing.JComboBox();
+        cbSportSubType = new javax.swing.JComboBox<>();
         laIntensity = new javax.swing.JLabel();
-        cbIntensity = new javax.swing.JComboBox();
+        cbIntensity = new javax.swing.JComboBox<>();
         pOptionalData = new javax.swing.JPanel();
         laHRMFile = new javax.swing.JLabel();
         tfHRMFile = new javax.swing.JTextField();
@@ -984,7 +984,7 @@ public class ExerciseDialog extends JDialog {
         btHRMView = new javax.swing.JButton();
         btHRMImport = new javax.swing.JButton();
         laEquipment = new javax.swing.JLabel();
-        cbEquipment = new javax.swing.JComboBox();
+        cbEquipment = new javax.swing.JComboBox<>();
         laAscent = new javax.swing.JLabel();
         tfAscent = new javax.swing.JTextField();
         laAvgHeartrate = new javax.swing.JLabel();
@@ -1035,17 +1035,11 @@ public class ExerciseDialog extends JDialog {
         laSportType.setText("_Sport type:");
         laSportType.setName("st.dlg.exercise.sport_type"); // NOI18N
 
-        cbSportType.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1"}));
-
         laSportSubType.setText("_Sport subtype:");
         laSportSubType.setName("st.dlg.exercise.sport_subtype"); // NOI18N
 
-        cbSportSubType.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1"}));
-
         laIntensity.setText("_Intensity:");
         laIntensity.setName("st.dlg.exercise.intensity"); // NOI18N
-
-        cbIntensity.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1"}));
 
         javax.swing.GroupLayout pExerciseDataLayout = new javax.swing.GroupLayout(pExerciseData);
         pExerciseData.setLayout(pExerciseDataLayout);
@@ -1149,8 +1143,6 @@ public class ExerciseDialog extends JDialog {
 
         laEquipment.setText("_Equipment:");
         laEquipment.setName("st.dlg.exercise.equipment"); // NOI18N
-
-        cbEquipment.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
 
         laAscent.setText("_Ascent (m):");
 
@@ -1310,10 +1302,10 @@ public class ExerciseDialog extends JDialog {
     private javax.swing.JRadioButton cbAutoCalcAvgSpeed;
     private javax.swing.JRadioButton cbAutoCalcDistance;
     private javax.swing.JRadioButton cbAutoCalcDuration;
-    private javax.swing.JComboBox cbEquipment;
-    private javax.swing.JComboBox cbIntensity;
-    private javax.swing.JComboBox cbSportSubType;
-    private javax.swing.JComboBox cbSportType;
+    private javax.swing.JComboBox<String> cbEquipment;
+    private javax.swing.JComboBox<Exercise.IntensityType> cbIntensity;
+    private javax.swing.JComboBox<String> cbSportSubType;
+    private javax.swing.JComboBox<String> cbSportType;
     private org.jdesktop.swingx.JXDatePicker dpDate;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel laAscent;

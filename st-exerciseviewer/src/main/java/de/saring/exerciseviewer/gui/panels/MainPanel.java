@@ -244,7 +244,7 @@ public class MainPanel extends BasePanel {
         laTimeBelowValue = new javax.swing.JLabel();
         laTimeAboveValue = new javax.swing.JLabel();
         laTimeWithinValue = new javax.swing.JLabel();
-        cbRange = new javax.swing.JComboBox();
+        cbRange = new javax.swing.JComboBox<>();
         laGeneralData = new javax.swing.JLabel();
         pRight = new javax.swing.JPanel();
         laRecordingMode = new javax.swing.JLabel();
@@ -568,7 +568,7 @@ public class MainPanel extends BasePanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox cbRange;
+    private javax.swing.JComboBox<String> cbRange;
     private javax.swing.JLabel laAltitude;
     private javax.swing.JLabel laAltitudeValue;
     private javax.swing.JLabel laAverage;

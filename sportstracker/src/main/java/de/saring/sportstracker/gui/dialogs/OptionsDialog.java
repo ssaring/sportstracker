@@ -225,9 +225,9 @@ public class OptionsDialog extends JDialog {
         rbCalendar = new javax.swing.JRadioButton();
         rbExerciseList = new javax.swing.JRadioButton();
         laDefaultAutoCalculation = new javax.swing.JLabel();
-        cbDefaultAutoCalculation = new javax.swing.JComboBox();
+        cbDefaultAutoCalculation = new javax.swing.JComboBox<>();
         laLookAndFeel = new javax.swing.JLabel();
-        cbLookAndFeel = new javax.swing.JComboBox();
+        cbLookAndFeel = new javax.swing.JComboBox<>();
         laSaveOnExit = new javax.swing.JLabel();
         cbSaveOnExit = new javax.swing.JCheckBox();
         paUnits = new javax.swing.JPanel();
@@ -278,14 +278,12 @@ public class OptionsDialog extends JDialog {
         laDefaultAutoCalculation.setText("_Default Automatic Calculation");
         laDefaultAutoCalculation.setName("st.dlg.options.defaultautocalc"); // NOI18N
 
-        cbDefaultAutoCalculation.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         cbDefaultAutoCalculation.setName("cbDefaultAutoCalculation"); // NOI18N
 
         laLookAndFeel.setFont(laLookAndFeel.getFont().deriveFont(laLookAndFeel.getFont().getStyle() | java.awt.Font.BOLD));
         laLookAndFeel.setText("_Look & Feel");
         laLookAndFeel.setName("st.dlg.options.lookandfeel"); // NOI18N
 
-        cbLookAndFeel.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         cbLookAndFeel.setName("cbLookAndFeel"); // NOI18N
 
         laSaveOnExit.setFont(laSaveOnExit.getFont().deriveFont(laSaveOnExit.getFont().getStyle() | java.awt.Font.BOLD));
@@ -577,8 +575,8 @@ public class OptionsDialog extends JDialog {
     private javax.swing.ButtonGroup bgWeekStart;
     private javax.swing.JButton btCancel;
     private javax.swing.JButton btOK;
-    private javax.swing.JComboBox cbDefaultAutoCalculation;
-    private javax.swing.JComboBox cbLookAndFeel;
+    private javax.swing.JComboBox<AutoCalculationComboBoxItem> cbDefaultAutoCalculation;
+    private javax.swing.JComboBox<LAFComboBoxItem> cbLookAndFeel;
     private javax.swing.JCheckBox cbSaveOnExit;
     private javax.swing.JCheckBox cbSecondGraph;
     private javax.swing.JCheckBox cbShowAscent;
