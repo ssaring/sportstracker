@@ -54,7 +54,7 @@ public abstract class BaseListView extends BaseView {
     /**
      * Returns the column index which stores the entry ID.
      *
-     * @return
+     * @return column index
      */
     protected abstract int getIdColumnIndex();
 
@@ -95,11 +95,8 @@ public abstract class BaseListView extends BaseView {
         }
 
         // add list selection listener => update entry actions on selection changes
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                getView().updateEntryActions();
-            }
-        });
+        table.getSelectionModel().addListSelectionListener(event ->
+            getView().updateEntryActions());
 
         // add mouse listener 
         table.addMouseListener(new MouseAdapter() {

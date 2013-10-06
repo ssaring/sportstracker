@@ -76,7 +76,6 @@ public class CalendarView extends BaseView {
     /**
      * Standard c'tor.
      *
-     * @param context the SportsTracker context
      * @param calendarWidget the CalendarWidget component
      */
     @Inject
@@ -129,14 +128,12 @@ public class CalendarView extends BaseView {
         });
 
         // register the mouse wheel scrolling on drawing area
-        calendarWidget.addMouseWheelListener(new MouseWheelListener() {
-            public void mouseWheelMoved(final MouseWheelEvent mwe) {
-                if (mwe.getWheelRotation() < 0) {
-                    displayPreviousMonth();
-                }
-                if (mwe.getWheelRotation() > 0) {
-                    displayNextMonth();
-                }
+        calendarWidget.addMouseWheelListener(event -> {
+            if (event.getWheelRotation() < 0) {
+                displayPreviousMonth();
+            }
+            if (event.getWheelRotation() > 0) {
+                displayNextMonth();
             }
         });
     }
@@ -460,15 +457,12 @@ public class CalendarView extends BaseView {
 
         // create a new PrinterJob and set the Printable content
         PrinterJob job = PrinterJob.getPrinterJob();
-        job.setPrintable(new Printable() {
-            public int print(final Graphics graphics, final PageFormat pageFormat,
-                             final int pageIndex) {
-                if (pageIndex > 0) {
-                    return NO_SUCH_PAGE;
-                } else {
-                    printPageContent((Graphics2D) graphics, pageFormat);
-                    return PAGE_EXISTS;
-                }
+        job.setPrintable((Graphics graphics, PageFormat pageFormat, int pageIndex) -> {
+            if (pageIndex > 0) {
+                return Printable.NO_SUCH_PAGE;
+            } else {
+                printPageContent((Graphics2D) graphics, pageFormat);
+                return Printable.PAGE_EXISTS;
             }
         });
 
@@ -654,12 +648,7 @@ public class CalendarView extends BaseView {
             // the date to be used for new added entries must be deleted after
             // the popup menu has been closed and the actions have been processed
             if (!visible) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        getController().setDateForNewEntries(null);
-                    }
-                });
+                SwingUtilities.invokeLater(() -> getController().setDateForNewEntries(null));
             }
         }
     }

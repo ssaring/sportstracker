@@ -684,7 +684,7 @@ public class CalendarWidget extends JComponent {
      * Creates the tooltip text to be shown for the specified calendar cell
      * entry (uses HTML format).
      *
-     * @param exercise the displayed exercise
+     * @param calendarEntry calendar entry
      * @return the created tool tip text
      */
     private String createEntryToolTipText(CalendarEntry calendarEntry) {

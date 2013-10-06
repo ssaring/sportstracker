@@ -76,11 +76,8 @@ public class SportTypeListDialog extends JDialog {
 
         // add list selection listener 
         // => fire sportTypeSelected property change for updating the action status
-        liSportTypes.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                firePropertyChange(PROPERTY_SPORTTYPE_SELECTED, true, false);
-            }
-        });
+        liSportTypes.addListSelectionListener(event ->
+            firePropertyChange(PROPERTY_SPORTTYPE_SELECTED, true, false));
 
         // add mouse listener for double clicks => edit sport type
         liSportTypes.addMouseListener(new MouseAdapter() {

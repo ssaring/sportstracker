@@ -52,7 +52,7 @@ public interface STView {
     /**
      * Switches the view to the specified exercise view type.
      *
-     * @param view the exercise view type to display
+     * @param viewType the exercise view type to display
      */
     void switchToView(EntryView.ViewType viewType);
 

@@ -281,17 +281,11 @@ public class ExerciseDialog extends JDialog {
         // Add listener for sport subtype updates when sport type was selected.
         // Also delete the previous exercise index (for copying the comment) on
         // sport type and subtype selection changes.
-        cbSportType.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateForSelectedSportType();
-                previousExerciseIndex = null;
-            }
+        cbSportType.addActionListener(event -> {
+            updateForSelectedSportType();
+            previousExerciseIndex = null;
         });
-        cbSportSubType.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                previousExerciseIndex = null;
-            }
-        });
+        cbSportSubType.addActionListener(event -> previousExerciseIndex = null);
 
         // add focus lost listener for changes on inputs for distance, avg speed
         // and duration => the automatic value must be calculated then        
@@ -312,11 +306,7 @@ public class ExerciseDialog extends JDialog {
             @Override
             public void focusGained(FocusEvent e) {
                 final JTextField tf = (JTextField) e.getSource();
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        tf.selectAll();
-                    }
-                });
+                SwingUtilities.invokeLater(tf::selectAll);
             }
         };
         ((JSpinner.DefaultEditor) spHour.getEditor()).getTextField().addFocusListener(focusListenerSelectAll);
@@ -508,7 +498,7 @@ public class ExerciseDialog extends JDialog {
             if (indexCurrentExercise == -1) {
                 indexCurrentExercise = document.getExerciseList().size();
             }
-            previousExerciseIndex = Integer.valueOf(indexCurrentExercise);
+            previousExerciseIndex = indexCurrentExercise;
         }
 
         // check all exercises before the previous exercise
@@ -525,7 +515,7 @@ public class ExerciseDialog extends JDialog {
                 // the current checked exercise is similar => copy comment when there is one
                 if (tempExercise.getComment() != null && tempExercise.getComment().length() > 0) {
                     taComment.setText(tempExercise.getComment());
-                    previousExerciseIndex = Integer.valueOf(currentSearchIndex);
+                    previousExerciseIndex = currentSearchIndex;
                     return;
                 }
             }
@@ -560,8 +550,8 @@ public class ExerciseDialog extends JDialog {
         // store date and time of exercise
         Calendar calTemp = Calendar.getInstance();
         calTemp.setTime(dpDate.getDate());
-        calTemp.set(Calendar.HOUR_OF_DAY, ((Integer) spHour.getValue()).intValue());
-        calTemp.set(Calendar.MINUTE, ((Integer) spMinute.getValue()).intValue());
+        calTemp.set(Calendar.HOUR_OF_DAY, (Integer) spHour.getValue());
+        calTemp.set(Calendar.MINUTE, (Integer) spMinute.getValue());
         calTemp.set(Calendar.SECOND, 0);
         newExercise.setDate(calTemp.getTime());
 

@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -103,9 +104,7 @@ public class HRMFileOpenDialog {
                     parserInfo.getSuffixes()));
 
             // append the parsers suffixes to the list of all extensions
-            for (String extension : parserInfo.getSuffixes()) {
-                lAllExtensions.add(extension);
-            }
+            Collections.addAll(lAllExtensions, parserInfo.getSuffixes());
         }
 
         // append a file filter for all ExerciseViewer file extensions

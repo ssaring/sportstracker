@@ -52,7 +52,7 @@ public class AboutDialog extends JDialog {
      * translators text areas will be scrolled to the upper left position
      * (they are initially at the bottom otherwise).
      *
-     * @param true for show, false for hide
+     * @param fVisible true for show, false for hide
      */
     @Override
     public void setVisible(boolean fVisible) {

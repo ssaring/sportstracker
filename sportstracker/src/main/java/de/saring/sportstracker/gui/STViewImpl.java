@@ -392,14 +392,10 @@ public class STViewImpl extends FrameView implements STView {
     public void registerViewForDataChanges() {
         // register a listener which updates view after each change and selects
         // the changed object if specified
-        document.registerListChangeListener(new IdObjectListChangeListener() {
-
-            @Override
-            public void listChanged(IdObject changedObject) {
-                updateView();
-                if (changedObject != null) {
-                    getCurrentView().selectEntry(changedObject);
-                }
+        document.registerListChangeListener(changedObject -> {
+            updateView();
+            if (changedObject != null) {
+                getCurrentView().selectEntry(changedObject);
             }
         });
     }

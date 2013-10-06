@@ -135,10 +135,10 @@ public final class SportType extends IdObject implements Cloneable {
         sBuilder.append("  color=").append(this.color).append("]\n");
 
         if (this.sportSubTypeList != null) {
-            this.sportSubTypeList.forEach(subType -> sBuilder.append(subType));
+            this.sportSubTypeList.forEach(sBuilder::append);
         }
         if (this.equipmentList != null) {
-            this.equipmentList.forEach(equipment -> sBuilder.append(equipment));
+            this.equipmentList.forEach(sBuilder::append);
         }
         return sBuilder.toString();
     }

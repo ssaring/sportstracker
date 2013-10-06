@@ -118,7 +118,7 @@ public final class ExerciseList extends IdDateObjectList<Exercise> {
                     if (!filter.isRegularExpressionMode()) {
                         // normal searching for substring (is not case sensitive !)
                         String strExerciseComment = tempExercise.getComment().toLowerCase();
-                        if (strExerciseComment.indexOf(strCommentSubString) == -1) {
+                        if (!strExerciseComment.contains(strCommentSubString)) {
                             continue;
                         }
                     } else {

@@ -804,7 +804,7 @@ public class OverviewDialog extends JDialog {
 
             // add computed value to time series (if the weight value is available)
             if (avgWeight > 0) {
-                dataset.add(timePeriod, Double.valueOf(avgWeight), seriesName, true);
+                dataset.add(timePeriod, avgWeight, seriesName, true);
             }
             // when there is no weight value, add at least the first and last dataset item
             // to make sure the full time range is shown

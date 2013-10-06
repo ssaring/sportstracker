@@ -17,7 +17,7 @@ Java 8 support status (in branch java_8):
 - full use of Lambdas in module st-util
 
 Java 8 TODOs:
-- fix all warnings shown by IDEA
+- fix all warnings shown by IDEA code inspector
 - use new Java Date API
 - use lambdas where possible
   - done in module st-util (all packages)

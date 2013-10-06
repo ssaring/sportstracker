@@ -12,6 +12,7 @@ v6.0.0:
   - cleanup of import statements in all Java and Groovy source files
     (done by IntelliJ IDEA)
   - fixed all compiler warnings
+  - fixed warnings found by IntelliJ IDEA code inspector
   - use of Lambda features in module st-util
   - use of Lambda features in module sportstracker
 

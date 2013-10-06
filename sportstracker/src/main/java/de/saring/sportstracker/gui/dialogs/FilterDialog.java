@@ -142,11 +142,7 @@ public class FilterDialog extends JDialog {
         cbRegExpression.setSelected(iFilter.isRegularExpressionMode());
 
         // add listener for sport subtype and equipment updates when sport type was selected
-        cbSportType.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateForSelectedSportType();
-            }
-        });
+        cbSportType.addActionListener(event -> updateForSelectedSportType());
     }
 
     /**

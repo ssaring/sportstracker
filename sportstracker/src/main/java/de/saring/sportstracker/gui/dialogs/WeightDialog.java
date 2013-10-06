@@ -126,7 +126,7 @@ public class WeightDialog extends JDialog {
     /**
      * Initializes the dialog with the specified weight.
      *
-     * @param exercise the Weight object to be edited
+     * @param weight the Weight object to be edited
      */
     public void setWeight(Weight weight) {
         this.weight = weight;
@@ -197,8 +197,8 @@ public class WeightDialog extends JDialog {
         // store date and time of exercise
         Calendar calTemp = Calendar.getInstance();
         calTemp.setTime(dpDate.getDate());
-        calTemp.set(Calendar.HOUR_OF_DAY, ((Integer) spHour.getValue()).intValue());
-        calTemp.set(Calendar.MINUTE, ((Integer) spMinute.getValue()).intValue());
+        calTemp.set(Calendar.HOUR_OF_DAY, (Integer) spHour.getValue());
+        calTemp.set(Calendar.MINUTE, (Integer) spMinute.getValue());
         calTemp.set(Calendar.SECOND, 0);
         newWeight.setDate(calTemp.getTime());
 

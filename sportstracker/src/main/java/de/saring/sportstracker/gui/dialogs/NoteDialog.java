@@ -116,7 +116,7 @@ public class NoteDialog extends JDialog {
     /**
      * Initializes the dialog with the specified note.
      *
-     * @param exercise the Note object to be edited
+     * @param note the Note object to be edited
      */
     public void setNote(Note note) {
         this.note = note;
@@ -184,8 +184,8 @@ public class NoteDialog extends JDialog {
         // store date and time of exercise
         Calendar calTemp = Calendar.getInstance();
         calTemp.setTime(dpDate.getDate());
-        calTemp.set(Calendar.HOUR_OF_DAY, ((Integer) spHour.getValue()).intValue());
-        calTemp.set(Calendar.MINUTE, ((Integer) spMinute.getValue()).intValue());
+        calTemp.set(Calendar.HOUR_OF_DAY, (Integer) spHour.getValue());
+        calTemp.set(Calendar.MINUTE, (Integer) spMinute.getValue());
         calTemp.set(Calendar.SECOND, 0);
         newNote.setDate(calTemp.getTime());
 
