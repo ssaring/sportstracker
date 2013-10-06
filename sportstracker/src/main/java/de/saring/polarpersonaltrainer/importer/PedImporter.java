@@ -31,7 +31,6 @@ public class PedImporter {
     private static void printUsage(Options options) {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("PedImporter", options);
-        return;
     }
 
     /**
@@ -44,7 +43,7 @@ public class PedImporter {
      * The sport type list of the user.
      */
     private SportTypeList sportTypeList;
-    IStorage storage;
+    private IStorage storage;
     private int addedExercises = 0;
 
     /**
@@ -63,7 +62,7 @@ public class PedImporter {
         options.addOption(OptionBuilder.withLongOpt("dry-run").withDescription("if this parameter is set, no data is written to disk").create("n"));
 
         CommandLineParser parser = new GnuParser();
-        String filename = null;
+        String filename;
         int sportTypeId = 1;
         int sportSubTypeId = 1;
         try {
@@ -136,17 +135,15 @@ public class PedImporter {
             try {
                 EVExercise pedExercise = parser.parseExercise(filename, exerciseIndex);
 
-                Boolean found = false;
-                Iterator<Exercise> it = exerciseList.iterator();
-                while (it.hasNext()) {
-                    Exercise exercise = it.next();
+                boolean found = false;
+                for (Exercise exercise : exerciseList) {
                     if (pedExercise.getDate().equals(exercise.getDate())) {
                         found = true;
                         break;
                     }
                 }
 
-                if (found == false) {
+                if (!found) {
                     // add Exercise to the list
                     Exercise newExercise = new Exercise(exerciseList.getNewID());
                     newExercise.setDate(pedExercise.getDate());
@@ -178,7 +175,7 @@ public class PedImporter {
 
         if (dryRun) {
             System.out.println("Dry run, nothing written to disk");
-        } else if (modified == true) {
+        } else if (modified) {
             storage.storeExerciseList(exerciseList, filename);
         }
         if (addedExercises > 0) {
