@@ -80,7 +80,7 @@ public final class MacSpecials {
      * Set the name of the Mac application menu. Must be called as early as
      * possible at the beginning of application initialization.
      *
-     * @param name
+     * @param name menu name
      */
     public static void setApplicationMenuName(String name) {
         System.setProperty("com.apple.mrj.application.apple.menu.about.name", name);
@@ -179,7 +179,7 @@ public final class MacSpecials {
     /**
      * Proxy class to use as Mac ApplicationListener implementation.
      */
-    public class AppListenerProxy implements InvocationHandler {
+    private class AppListenerProxy implements InvocationHandler {
 
         /* ApplicationListener method calls arrive here */
         public Object invoke(Object proxy, Method method, Object[] args) {

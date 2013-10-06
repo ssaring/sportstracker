@@ -58,6 +58,7 @@ public class IdDateObjectList<T extends IdDateObject> extends IdObjectList<T> {
      * Returns all IdDateObject entries of this list for which their date is in
      * the specified time range.
      *
+     *
      * @param dtStart start date of the time range (inclusive)
      * @param dtEnd end date of the time range (inclusive)
      * @return list of entries in this time range

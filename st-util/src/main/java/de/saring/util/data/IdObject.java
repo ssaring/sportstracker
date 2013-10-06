@@ -14,7 +14,7 @@ public abstract class IdObject {
     /**
      * The ID of the object for referencing.
      */
-    private int id;
+    private final int id;
 
     /**
      * Standard c'tor.

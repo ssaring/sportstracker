@@ -81,7 +81,7 @@ public class StackedRenderer extends StackedXYAreaRenderer2 {
     /**
      * The alpha component to be used for the area (0.0 ... 1.0).
      */
-    protected float areaAlpha;
+    private float areaAlpha;
 
     /**
      * This flag controls whether or not the x-coordinates (in Java2D space)

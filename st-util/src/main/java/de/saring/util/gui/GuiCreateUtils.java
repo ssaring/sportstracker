@@ -76,11 +76,7 @@ public final class GuiCreateUtils {
             @Override
             public void focusGained(FocusEvent e) {
                 final JTextField tf = (JTextField) e.getSource();
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        tf.selectAll();
-                    }
-                });
+                SwingUtilities.invokeLater(tf::selectAll);
             }
         };
         ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().addFocusListener(focusListenerSelectAll);

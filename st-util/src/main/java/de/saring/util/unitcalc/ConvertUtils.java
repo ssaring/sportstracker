@@ -114,7 +114,7 @@ public class ConvertUtils {
     /**
      * Converts the weight value from kilogram to pounds (lbs).
      *
-     * @param weight value in kilogram
+     * @param kilogram weight value in kilogram
      * @return value in pounds
      */
     public static double convertKilogram2Lbs(double kilogram) {
@@ -124,7 +124,7 @@ public class ConvertUtils {
     /**
      * Converts the weight value from pounds (lbs) to kilogram.
      *
-     * @param weight value in pounds (lbs)
+     * @param pounds weight value in pounds (lbs)
      * @return value in kilogram
      */
     public static double convertLbs2Kilogram(double pounds) {

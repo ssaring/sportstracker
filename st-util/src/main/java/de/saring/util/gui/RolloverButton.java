@@ -45,7 +45,7 @@ public class RolloverButton extends JButton {
 
     private static final long serialVersionUID = -420069024598467830L;
 
-    private boolean isMacOSX = MacSpecials.isMacOSX();
+    private final boolean isMacOSX = MacSpecials.isMacOSX();
 
     /**
      * Setup the border (invisible initially)
@@ -139,7 +139,7 @@ public class RolloverButton extends JButton {
     /**
      * Make the border visible/invisible on rollovers
      */
-    class MouseOverHandler extends MouseAdapter {
+    private class MouseOverHandler extends MouseAdapter {
 
         @Override
         public void mouseEntered(MouseEvent e) {

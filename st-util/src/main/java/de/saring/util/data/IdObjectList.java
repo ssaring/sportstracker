@@ -124,7 +124,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      */
     public int getNewID() {
         Set<? super Integer> hsIDs = lIdObjects.stream()
-                .map(o -> o.getId())
+                .map(T::getId)
                 .collect(Collectors.toSet());
 
         // find first unused ID
@@ -193,7 +193,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
         sBuilder.append(this.getClass().getName()).append(":\n");
-        lIdObjects.forEach(entry -> sBuilder.append(entry));
+        lIdObjects.forEach(sBuilder::append);
         return sBuilder.toString();
     }
 }

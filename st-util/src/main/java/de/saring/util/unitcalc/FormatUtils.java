@@ -32,17 +32,17 @@ public class FormatUtils {
     /**
      * The current unit system used by the formater.
      */
-    private UnitSystem unitSystem;
+    private final UnitSystem unitSystem;
 
     /**
      * The current speed view used by the formater.
      */
-    private SpeedView speedView;
+    private final SpeedView speedView;
 
     /**
      * The number format instance.
      */
-    private NumberFormat numberFormat;
+    private final NumberFormat numberFormat;
 
     /**
      * Creates a new FormatUtils instance for the specified unit system.

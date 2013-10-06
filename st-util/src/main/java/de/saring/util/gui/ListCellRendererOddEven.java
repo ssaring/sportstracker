@@ -14,7 +14,7 @@ public class ListCellRendererOddEven extends DefaultListCellRenderer {
 
     private static final long serialVersionUID = -6530870819648810487L;
 
-    private Color colorBackgroundOdd, colorBackgroundEven;
+    private final Color colorBackgroundOdd, colorBackgroundEven;
 
     /**
      * Standard c'tor.
