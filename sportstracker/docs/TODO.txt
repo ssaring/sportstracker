@@ -30,6 +30,15 @@ Java 8 TODOs:
     - package de.saring.sportstracker.storage -> done
 - update documentation in ReadMe / website
 
+Dependency Injection:
+- use Dagger as an alternative to the Guice framework,
+  URL: http://square.github.io/dagger/
+  -> almost same interface (JSR 330), but DI done on compilation without 
+     reflection instead at runtime 
+  -> much faster startup performance
+  -> see Devoxx 2013 talk about Dagger from Jake Wharton
+- Alternative: Guice 4.0
+
 Java Webstart: 
 - since Java 7u40 there are security warnings on each ST start due to missing 
   signed certificate
