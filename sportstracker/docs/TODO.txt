@@ -40,6 +40,8 @@ Dependency Injection:
 - Alternative: Guice 4.0
 
 Java Webstart: 
+- Java WebStart option is not available on project website anymore
+  - the WebStart files are still online for existing WebStart users
 - since Java 7u40 there are security warnings on each ST start due to missing 
   signed certificate
 - drop Java WebStart, there will be no signed certificates
