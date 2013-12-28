@@ -2,6 +2,7 @@ package de.saring.util.data;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * This list contains unique instances of IdObject subclasses. It will never
@@ -34,7 +35,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      * @return the IdObject object or null
      */
     public T getByID(int id) {
-        Optional<T> oIdObject = lIdObjects.stream().filter(o -> o.getId() == id).findFirst();
+        Optional<T> oIdObject = stream().filter(o -> o.getId() == id).findFirst();
         return oIdObject.orElse(null);
     }
 
@@ -123,7 +124,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      * @return a new unused ID
      */
     public int getNewID() {
-        Set<? super Integer> hsIDs = lIdObjects.stream()
+        Set<? super Integer> hsIDs = stream()
                 .map(T::getId)
                 .collect(Collectors.toSet());
 
@@ -152,16 +153,6 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return lIdObjects.iterator();
-    }
-
-    /**
-     * Returns the internal list of IdObject. Only subclasses can directly
-     * access this list.
-     *
-     * @return the internal list of IdObject
-     */
-    protected List<T> getIDObjects() {
-        return lIdObjects;
     }
 
     /**
@@ -195,5 +186,25 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
         sBuilder.append(this.getClass().getName()).append(":\n");
         lIdObjects.forEach(sBuilder::append);
         return sBuilder.toString();
+    }
+
+    /**
+     * Returns the internal list of IdObject. Only subclasses can directly
+     * access this list.
+     *
+     * @return the internal list of IdObject
+     */
+    protected List<T> getIDObjects() {
+        return lIdObjects;
+    }
+
+    /**
+     * Returns the Stream of the internal IDObject list for functional processing. Only subclasses can directly
+     * access this list.
+     *
+     * @return the Stream of the internal IDObject list
+     */
+    protected Stream<T> stream() {
+        return lIdObjects.stream();
     }
 }

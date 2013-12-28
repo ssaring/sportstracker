@@ -5,6 +5,7 @@ import de.saring.util.data.IdDateObjectList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
 
 /**
  * This class contains a list of all exercises of the user and provides access
@@ -60,81 +61,75 @@ public final class ExerciseList extends IdDateObjectList<Exercise> {
      */
     public IdDateObjectList<Exercise> getExercisesForFilter(ExerciseFilter filter) throws PatternSyntaxException {
 
-        IdDateObjectList<Exercise> foundExercises = new IdDateObjectList<>();
+        final IdDateObjectList<Exercise> foundExercises = new IdDateObjectList<>();
+        stream().filter(exercise -> filterExercise(exercise, filter))
+                .forEach(foundExercises::set);
+        return foundExercises;
+    }
+
+    private boolean filterExercise(Exercise exercise, ExerciseFilter filter) {
+
+        // make sure that the exercise is in the specified time period
+        if (filter.getDateStart().after(exercise.getDate()) || filter.getDateEnd().before(exercise.getDate())) {
+            return false;
+        }
+
+        // if a sport type filter is specified => make sure that exercise has the same sport type
+        if (filter.getSportType() != null && !filter.getSportType().equals(exercise.getSportType())) {
+            return false;
+        }
+
+        // if a sport subtype filter is specified => make sure that exercise has the same sport subtype
+        if (filter.getSportSubType() != null && !filter.getSportSubType().equals(exercise.getSportSubType())) {
+            return false;
+        }
+
+        // if an intensity is specified => make sure that exercise has the same intensity
+        if (filter.getIntensity() != null && filter.getIntensity() != exercise.getIntensity()) {
+            return false;
+        }
+
+        // if an equipment filter is specified => make sure that exercise has the same equipment (is optional)
+        if (filter.getEquipment() != null && !filter.getEquipment().equals(exercise.getEquipment())) {
+            return false;
+        }
 
         // do we need to search in comments ?
-        boolean fCommentStringSearch = (filter.getCommentSubString() != null) && (filter.getCommentSubString().length() > 0);
-        String strCommentSubString = null;
-        Pattern ptnCommentSubString = null;
-
-        // prepare searchstring
-        if (fCommentStringSearch) {
-            strCommentSubString = filter.getCommentSubString().trim();
-
-            if (!filter.isRegularExpressionMode()) {
-                // searching is not case sensitive when regular expression mode is disabled
-                strCommentSubString = strCommentSubString.toLowerCase();
-            } else {
-                // create regular expression pattern
-                ptnCommentSubString = Pattern.compile(strCommentSubString);
+        if (filter.getCommentSubString() != null && !filter.getCommentSubString().isEmpty()) {
+            if (!filterExerciseByComment(exercise, filter)) {
+                return false;
             }
         }
 
-        // process all exercises
-        for (Exercise tempExercise : this) {
+        // all filter criterias are fulfilled
+        return true;
+    }
 
-            // make sure that the exercise is in the specified time period
-            if ((!filter.getDateStart().after(tempExercise.getDate()))
-                    && (!filter.getDateEnd().before(tempExercise.getDate()))) {
-                // if a sport type filter is specified => make sure that exercise has the same sport type
-                if ((filter.getSportType() != null) && (filter.getSportType().getId() != tempExercise.getSportType().getId())) {
-                    continue;
-                }
+    private boolean filterExerciseByComment(Exercise exercise, ExerciseFilter filter) {
 
-                // if a sport subtype filter is specified => make sure that exercise has the same sport subtype
-                if ((filter.getSportSubType() != null) && (filter.getSportSubType().getId() != tempExercise.getSportSubType().getId())) {
-                    continue;
-                }
+        // ignore this exercise, when it has no comment
+        if ((exercise.getComment() == null) || (exercise.getComment().length() == 0)) {
+            return false;
+        }
 
-                // if an intensity is specified => make sure that exercise has the same intensity
-                if ((filter.getIntensity() != null) && (filter.getIntensity() != tempExercise.getIntensity())) {
-                    continue;
-                }
+        String strCommentSubString = filter.getCommentSubString().trim();
 
-                // if an equipment filter is specified => make sure that exercise has the same equipment (is optional)
-                if ((filter.getEquipment() != null)
-                        && ((tempExercise.getEquipment() == null)
-                        || (filter.getEquipment().getId() != tempExercise.getEquipment().getId()))) {
-                    continue;
-                }
-
-                // search for comment substring (if enabled)
-                if (fCommentStringSearch) {
-                    // ignore this exercise, when it has no comment
-                    if ((tempExercise.getComment() == null) || (tempExercise.getComment().length() == 0)) {
-                        continue;
-                    }
-
-                    if (!filter.isRegularExpressionMode()) {
-                        // normal searching for substring (is not case sensitive !)
-                        String strExerciseComment = tempExercise.getComment().toLowerCase();
-                        if (!strExerciseComment.contains(strCommentSubString)) {
-                            continue;
-                        }
-                    } else {
-                        // regular expression searching for substring (is case sensitive !)
-                        Matcher matcher = ptnCommentSubString.matcher(tempExercise.getComment());
-                        if (!matcher.find()) {
-                            continue;
-                        }
-                    }
-                }
-
-                // exercise passed all filters => add
-                foundExercises.set(tempExercise);
+        if (!filter.isRegularExpressionMode()) {
+            // normal searching for substring (is not case sensitive !)
+            strCommentSubString = strCommentSubString.toLowerCase();
+            String strExerciseComment = exercise.getComment().toLowerCase();
+            if (!strExerciseComment.contains(strCommentSubString)) {
+                return false;
+            }
+        } else {
+            // regular expression searching for substring (is case sensitive !)
+            Pattern ptnCommentSubString = Pattern.compile(strCommentSubString);
+            Matcher matcher = ptnCommentSubString.matcher(exercise.getComment());
+            if (!matcher.find()) {
+                return false;
             }
         }
 
-        return foundExercises;
+        return true;
     }
 }

@@ -71,7 +71,7 @@ public class IdDateObjectList<T extends IdDateObject> extends IdObjectList<T> {
             throw new IllegalArgumentException("Start date is after end date!");
         }
 
-        return getIDObjects().stream()
+        return stream()
                 .filter(dateObject ->
                         !dateObject.getDate().before(dtStart) && !dateObject.getDate().after(dtEnd))
                 .collect(Collectors.toList());

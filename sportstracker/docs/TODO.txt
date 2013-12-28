@@ -12,7 +12,7 @@ Java 8 support status (in branch java_8):
   - Eclipse has problems with JDK 8 support, the modules are running in 1.4 mode
   - IDEA works fine since version 12.1.5, no problems so far
     -> requires antlr dependency for Groovy compilation (added)
-  - NetBeans 7.4 RC1 works fine, but not perfect
+  - NetBeans 7.4 works fine, but not perfect
   => IDEA is currently the best choice
 - full use of Lambdas in module st-util
 
@@ -24,7 +24,6 @@ Java 8 TODOs:
   - status in module sportstracker:
     - package de.saring.sportstracker.core -> done
     - package de.saring.sportstracker.data -> done
-      - class ExerciseList -> TODO
     - package de.saring.sportstracker.data.statistic -> TODO
     - package de.saring.sportstracker.gui -> TODO
     - package de.saring.sportstracker.storage -> done
