@@ -156,6 +156,15 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
     }
 
     /**
+     * Returns the Stream of the internal IDObject list for functional processing.
+     *
+     * @return the Stream of the internal IDObject list
+     */
+    public Stream<T> stream() {
+        return lIdObjects.stream();
+    }
+
+    /**
      * Adds the specified IdObjectListChangeListener to the list of listeners
      * which will be notified on each list change.
      *
@@ -163,16 +172,6 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      */
     public void addListChangeListener(IdObjectListChangeListener listener) {
         listChangelisteners.add(listener);
-    }
-
-    /**
-     * Notifies all registered listeners that the content of the list has been
-     * changed.
-     *
-     * @param changedObject the added / changed object (or null when removed)
-     */
-    protected void notifyAllListChangelisteners(IdObject changedObject) {
-        listChangelisteners.forEach(listener -> listener.listChanged(changedObject));
     }
 
     /**
@@ -189,6 +188,16 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
     }
 
     /**
+     * Notifies all registered listeners that the content of the list has been
+     * changed.
+     *
+     * @param changedObject the added / changed object (or null when removed)
+     */
+    protected void notifyAllListChangelisteners(IdObject changedObject) {
+        listChangelisteners.forEach(listener -> listener.listChanged(changedObject));
+    }
+
+    /**
      * Returns the internal list of IdObject. Only subclasses can directly
      * access this list.
      *
@@ -196,15 +205,5 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      */
     protected List<T> getIDObjects() {
         return lIdObjects;
-    }
-
-    /**
-     * Returns the Stream of the internal IDObject list for functional processing. Only subclasses can directly
-     * access this list.
-     *
-     * @return the Stream of the internal IDObject list
-     */
-    protected Stream<T> stream() {
-        return lIdObjects.stream();
     }
 }

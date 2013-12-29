@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * This class contains all document (MVC) related data and functionality of the
@@ -252,15 +253,9 @@ public class STDocumentImpl implements STDocument {
 
     @Override
     public List<Exercise> checkExerciseFiles() {
-        List<Exercise> corruptExercises = new ArrayList<>();
-
-        for (Exercise exercise : exerciseList) {
-            if (exercise.getHrmFile() != null &&
-                    !new File(exercise.getHrmFile()).exists()) {
-                corruptExercises.add(exercise);
-            }
-        }
-        return corruptExercises;
+        return exerciseList.stream()
+                .filter(exercise -> exercise.getHrmFile() != null && !new File(exercise.getHrmFile()).exists())
+                .collect(Collectors.toList());
     }
 
     @Override

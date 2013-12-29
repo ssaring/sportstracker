@@ -24,9 +24,11 @@ Java 8 TODOs:
   - status in module sportstracker:
     - package de.saring.sportstracker.core -> done
     - package de.saring.sportstracker.data -> done
-    - package de.saring.sportstracker.data.statistic -> TODO
-    - package de.saring.sportstracker.gui -> TODO
+    - package de.saring.sportstracker.data.statistic -> done
     - package de.saring.sportstracker.storage -> done
+    - package de.saring.sportstracker.gui -> done
+    - package de.saring.sportstracker.dialogs -> TODO
+    - package de.saring.sportstracker.views -> TODO
 - update documentation in ReadMe / website
 
 Dependency Injection:
