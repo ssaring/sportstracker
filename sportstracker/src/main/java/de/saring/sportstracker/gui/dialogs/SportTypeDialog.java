@@ -21,6 +21,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * This class is the implementation of the dialog for adding/editing sport types.
@@ -138,12 +140,10 @@ public class SportTypeDialog extends JDialog {
 
         // the record distance mode can only be changed, when no exercises exists for
         // this sport type => disable checkbutton, when such exercises were found
-        for (Exercise exercise : document.getExerciseList()) {
-            if (exercise.getSportType().getId() == this.sportType.getId()) {
-                cbDistance.setEnabled(false);
-                break;
-            }
-        }
+        Optional<Exercise> oExercise = document.getExerciseList().stream()
+                .filter(exercise -> exercise.getSportType().equals(this.sportType))
+                .findFirst();
+        cbDistance.setEnabled(!oExercise.isPresent());
 
         // use sport type color in button foreground
         btSelect.setForeground(this.sportType.getColor());
@@ -242,17 +242,14 @@ public class SportTypeDialog extends JDialog {
 
         // are there any existing exercises for this sport subtype?
         SportSubType selSubType = this.sportType.getSportSubTypeList().getAt(liSubtypes.getSelectedIndex());
-        List<Integer> lRefExerciseIDs = new ArrayList<>();
-        for (Exercise exercise : document.getExerciseList()) {
 
-            if ((exercise.getSportType().getId() == this.sportType.getId()) &&
-                    (exercise.getSportSubType().getId() == selSubType.getId())) {
-                lRefExerciseIDs.add(exercise.getId());
-            }
-        }
+        List<Exercise> lRefExercises = document.getExerciseList().stream()
+                .filter(exercise -> exercise.getSportType().equals(this.sportType)
+                        && exercise.getSportSubType().equals(selSubType))
+                .collect(Collectors.toList());
 
         // when there are referenced exercises => these exercises needs to be deleted too
-        if (lRefExerciseIDs.size() > 0) {
+        if (!lRefExercises.isEmpty()) {
 
             // show confirmation message box again
             if (context.showConfirmDialog(this, "st.dlg.sporttype.confirm.delete_subtype.title",
@@ -261,9 +258,7 @@ public class SportTypeDialog extends JDialog {
             }
 
             // delete reference exercises
-            for (int refExerciseID : lRefExerciseIDs) {
-                document.getExerciseList().removeByID(refExerciseID);
-            }
+            lRefExercises.forEach(exercise -> document.getExerciseList().removeByID(exercise.getId()));
         }
 
         // finally delete sport subtype

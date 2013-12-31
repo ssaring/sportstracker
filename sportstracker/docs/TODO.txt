@@ -28,6 +28,7 @@ Java 8 TODOs:
     - package de.saring.sportstracker.storage -> done
     - package de.saring.sportstracker.gui -> done
     - package de.saring.sportstracker.dialogs -> TODO
+      -> continue in SportTypeDialog -> deleteEquipment()
     - package de.saring.sportstracker.views -> TODO
 - update documentation in ReadMe / website
 
