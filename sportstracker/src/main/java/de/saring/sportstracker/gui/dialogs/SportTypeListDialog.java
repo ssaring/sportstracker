@@ -21,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class is the implementation of the dialog for editing the sport type list.
@@ -150,16 +151,13 @@ public class SportTypeListDialog extends JDialog {
         // are there any existing exercises for this sport type?
         int selectedIndex = liSportTypes.getSelectedIndex();
         SportType sportType = document.getSportTypeList().getAt(selectedIndex);
-        List<Integer> lRefExerciseIDs = new ArrayList<>();
-        for (Exercise exercise : document.getExerciseList()) {
 
-            if (exercise.getSportType().getId() == sportType.getId()) {
-                lRefExerciseIDs.add(exercise.getId());
-            }
-        }
+        List<Exercise> lRefExercises = document.getExerciseList().stream()
+                .filter(exercise -> exercise.getSportType().equals(sportType))
+                .collect(Collectors.toList());
 
         // when there are referenced exercises => these exercises needs to be deleted too
-        if (lRefExerciseIDs.size() > 0) {
+        if (!lRefExercises.isEmpty()) {
 
             // show confirmation message box again
             if (context.showConfirmDialog(this, "st.dlg.sporttype_list.confirm.delete.title",
@@ -168,9 +166,7 @@ public class SportTypeListDialog extends JDialog {
             }
 
             // delete reference exercises
-            for (int refExerciseID : lRefExerciseIDs) {
-                document.getExerciseList().removeByID(refExerciseID);
-            }
+            lRefExercises.forEach(exercise -> document.getExerciseList().removeByID(exercise.getId()));
         }
 
         // finally delete the sport type
