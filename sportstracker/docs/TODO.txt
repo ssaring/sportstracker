@@ -27,9 +27,10 @@ Java 8 TODOs:
     - package de.saring.sportstracker.data.statistic -> done
     - package de.saring.sportstracker.storage -> done
     - package de.saring.sportstracker.gui -> done
-    - package de.saring.sportstracker.dialogs -> TODO
-      -> continue in SportTypeDialog -> deleteEquipment()
-    - package de.saring.sportstracker.views -> TODO
+    - package de.saring.sportstracker.dialogs -> done
+    - package de.saring.sportstracker.views -> done
+    - package de.saring.sportstracker.views.calendarview -> TODO, continue with CalendarWidget
+    - package de.saring.sportstracker.views.listview -> TODO
 - update documentation in ReadMe / website
 
 Dependency Injection:

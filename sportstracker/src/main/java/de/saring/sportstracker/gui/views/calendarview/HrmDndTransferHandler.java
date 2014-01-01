@@ -17,6 +17,7 @@ import java.io.Reader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -84,12 +85,12 @@ public class HrmDndTransferHandler extends TransferHandler {
         }
 
         // get the drop destination entry, this must be an exercise (if there is one)
-        CalendarEntry calEntryToDrop = calendarWidget.getCalendarEntryForPoint(
+        Optional<CalendarEntry> oCalEntryToDrop = calendarWidget.getCalendarEntryForPoint(
                 support.getDropLocation().getDropPoint());
 
         Exercise exerciseToDrop = null;
-        if (calEntryToDrop != null && calEntryToDrop.isExercise()) {
-            exerciseToDrop = (Exercise) calEntryToDrop.getEntry();
+        if (oCalEntryToDrop.isPresent() && oCalEntryToDrop.get().isExercise()) {
+            exerciseToDrop = (Exercise) oCalEntryToDrop.get().getEntry();
         }
 
         // assign the HRM file to the destination exercise or add a new one

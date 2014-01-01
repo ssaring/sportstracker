@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This class is a custom component for painting the monthly calendar.
@@ -223,7 +224,7 @@ public class CalendarWidget extends JComponent {
      * @param point the point for selection
      */
     public void selectCalendarEntryAtPoint(Point point) {
-        selectedCalendarEntry = getCalendarEntryForPoint(point);
+        selectedCalendarEntry = getCalendarEntryForPoint(point).orElse(null);
         repaint();
     }
 
@@ -254,21 +255,18 @@ public class CalendarWidget extends JComponent {
      * Returns the CalendarEntry for the specified point inside the calendar.
      *
      * @param point the point inside the calendar
-     * @return the appropriate CalendarEntry or null when there is not one
+     * @return the appropriate CalendarEntry when there is one
      */
-    CalendarEntry getCalendarEntryForPoint(Point point) {
+    Optional<CalendarEntry> getCalendarEntryForPoint(Point point) {
 
         // get CalendarDay at this point and check all it's entries
         CalendarDay calDay = getCalendarDayForPoint(point);
         if (calDay != null) {
-            for (CalendarEntry tempEntry : calDay.getCalendarEntries()) {
-                if (tempEntry.getLocationRect() != null &&
-                        tempEntry.getLocationRect().contains(point)) {
-                    return tempEntry;
-                }
-            }
+            return calDay.getCalendarEntries().stream()
+                    .filter(entry -> entry.getLocationRect() != null && entry.getLocationRect().contains(point))
+                    .findFirst();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -749,7 +747,7 @@ public class CalendarWidget extends JComponent {
     @Override
     public String getToolTipText(MouseEvent event) {
         // return the tooltip of the CalendarEntry at the mouse position (if available)
-        CalendarEntry calEntry = getCalendarEntryForPoint(event.getPoint());
-        return calEntry != null ? calEntry.getToolTipText() : null;
+        Optional<CalendarEntry> oCalEntry = getCalendarEntryForPoint(event.getPoint());
+        return oCalEntry.isPresent() ? oCalEntry.get().getToolTipText() : null;
     }
 }
