@@ -14,24 +14,14 @@ Java 8 support status (in branch java_8):
     -> requires antlr dependency for Groovy compilation (added)
   - NetBeans 7.4 works fine, but not perfect
   => IDEA is currently the best choice
-- full use of Lambdas in module st-util
+- full use of Lambdas in module st-util and sportstracker (st-exerciseviewer
+  is still in Java 7 mode, because of mixed Groovy/Java compilation)
 
 Java 8 TODOs:
 - fix all warnings shown by IDEA code inspector
 - use new Java Date API
-- use lambdas where possible
-  - done in module st-util (all packages)
-  - status in module sportstracker:
-    - package de.saring.sportstracker.core -> done
-    - package de.saring.sportstracker.data -> done
-    - package de.saring.sportstracker.data.statistic -> done
-    - package de.saring.sportstracker.storage -> done
-    - package de.saring.sportstracker.gui -> done
-    - package de.saring.sportstracker.dialogs -> done
-    - package de.saring.sportstracker.views -> done
-    - package de.saring.sportstracker.views.calendarview -> TODO, continue with CalendarWidget
-    - package de.saring.sportstracker.views.listview -> TODO
 - update documentation in ReadMe / website
+- usage of new Optional class in interfaces for avoiding NullPointerExceptions
 
 Dependency Injection:
 - use Dagger as an alternative to the Guice framework,
