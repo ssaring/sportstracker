@@ -303,18 +303,14 @@ public class SportTypeDialog extends JDialog {
 
         // are there any existing exercises for this equipment?
         Equipment selEquipment = this.sportType.getEquipmentList().getAt(liEquipment.getSelectedIndex());
-        List<Integer> lRefExerciseIDs = new ArrayList<>();
-        for (Exercise exercise : document.getExerciseList()) {
 
-            if ((exercise.getSportType().getId() == this.sportType.getId()) &&
-                    (exercise.getEquipment() != null) &&
-                    (exercise.getEquipment().getId() == selEquipment.getId())) {
-                lRefExerciseIDs.add(exercise.getId());
-            }
-        }
+        List<Exercise> lRefExercises = document.getExerciseList().stream()
+                .filter(exercise -> exercise.getSportType().equals(this.sportType)
+                        && exercise.getEquipment() != null && exercise.getEquipment().equals(selEquipment))
+                .collect(Collectors.toList());
 
         // when there are referenced exercises => the equipment must be deleted in those too
-        if (lRefExerciseIDs.size() > 0) {
+        if (lRefExercises.size() > 0) {
 
             // show confirmation message box again
             if (context.showConfirmDialog(this, "st.dlg.sporttype.confirm.delete_equipment.title",
@@ -323,9 +319,7 @@ public class SportTypeDialog extends JDialog {
             }
 
             // delete equipment in all exercises which use it
-            for (int refExerciseID : lRefExerciseIDs) {
-                document.getExerciseList().getByID(refExerciseID).setEquipment(null);
-            }
+            lRefExercises.forEach(exercise -> exercise.setEquipment(null));
         }
 
         // finally delete the equipment
@@ -340,7 +334,7 @@ public class SportTypeDialog extends JDialog {
     public void ok() {
 
         // make sure that user has entered a name
-        String strName = tfName.getText().trim();
+        final String strName = tfName.getText().trim();
         if (strName.length() == 0) {
             tfName.selectAll();
             context.showMessageDialog(this, JOptionPane.ERROR_MESSAGE,
@@ -350,17 +344,16 @@ public class SportTypeDialog extends JDialog {
         }
 
         // make sure that the entered name is not in use by other sport types yet
-        for (SportType stTemp : document.getSportTypeList()) {
+        Optional<SportType> oSportTypeSameName = document.getSportTypeList().stream()
+                .filter(stTemp -> stTemp.getId() != this.sportType.getId() && stTemp.getName().equals(strName))
+                .findFirst();
 
-            if ((stTemp.getId() != this.sportType.getId()) &&
-                    (stTemp.getName().equals(strName))) {
-
-                tfName.selectAll();
-                context.showMessageDialog(this, JOptionPane.ERROR_MESSAGE,
-                        "common.error", "st.dlg.sporttype.error.name_in_use");
-                tfName.requestFocus();
-                return;
-            }
+        if (oSportTypeSameName.isPresent()) {
+            tfName.selectAll();
+            context.showMessageDialog(this, JOptionPane.ERROR_MESSAGE,
+                    "common.error", "st.dlg.sporttype.error.name_in_use");
+            tfName.requestFocus();
+            return;
         }
         this.sportType.setName(strName);
 
