@@ -100,43 +100,35 @@ exported exercises with the included PolarPersonalTrainer-Importer utility.
 Requirements
 ------------
 
-SportsTracker is an application for the Java platform written in Java and 
-Groovy. It was developed and tested with the Sun JVM, other JVM implementations
-will probably work too.
-For running the Java WebStart or binary version of SportsTracker you just need
-the Java SE Runtime Environment (JRE) 7 or greater, it can be downloaded from:
+SportsTracker is an application for the Java platform written in Java and
+Groovy. It was developed and tested with the Oracle JVM, other JVM
+implementations will probably work too.
+For running SportsTracker you just need the Java SE Runtime Environment
+(JRE) 7 or greater, the Oracle JRE can be downloaded from:
 http://www.java.com
 
 If you want to download exercise files from your heartrate monitor you also 
 need one of the download tools listed above.
 
-The application was tested on GNU/Linux (e.g. Ubuntu 10.04), Windows (XP,
-Vista, 7) and Mac OS X (10.7 and 10.8), although it should work on all systems
+The application was tested on GNU/Linux (e.g. Ubuntu 12.04), Windows (XP,
+Vista, 7) and Mac OS X (10.7 - 10.9), although it should work on all systems
 with the required Java Runtime Environment.
 
 
 Installation and Start
 ----------------------
 
-The most easy way to install SportsTracker is to use Java WebStart. If you 
-have the Java Runtime Environment (JRE) installed, simply click the install
-link on the homepage. Once the application is installed you can simply launch
-it by using the WebStart client or you can create a shortcut for it.
-New SportsTracker versions will be detected and installed automatically.
-The uninstallation can also be done within Java WebStart.
-
-If you don't want to use Java WebStart you can download the ZIP archive with
-the application binaries. You must extract this archive to a directory of 
-your choice.
+For installation you need to download the ZIP archive with the application
+binaries from the SourceForge project page. Then extract this archive to a
+directory of your choice.
 On Windows systems you can start the application just by starting the file 
 'sportstracker-x.y.z.jar'.
 On Unix-like systems you need to start it by using the command 
 'java -jar sportstracker-x.y.z.jar' from the application directory.
 
-On Mac OS X you need at least JDK or JRE 7u6 for using Java WebStart. 
-If you prefer OS X application bundles, the appropriate download is available
-too. This bundle does not contain Java, the JDK or JRE must be installed 
-before.
+Mac OS X users will probably prefer the installation of the SportsTracker
+OS X application bundle, the appropriate download is available too. This
+bundle does not contain Java, the JDK or JRE must be installed before.
 
 The default directory for the application data is '$HOME/.sportstracker',
 e.g. '/home/foo/.sportstracker' for the Linux user foo. You can also specify
@@ -306,12 +298,12 @@ Developer Requirements
 
 For compilation of the SportsTracker sources you need:
   - Java SE Development Kit (JDK) 8 or greater
-    (from http://java.sun.com/javase/downloads)
+    (from http://www.oracle.com/technetwork/java/)
   - Maven 3.0.3
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
-  - IntelliJ IDEA 12.1.5 Community Edition (http://www.jetbrains.com/idea/)
+  - IntelliJ IDEA 13 Community Edition (http://www.jetbrains.com/idea/)
     => preferred IDE, project files are in VCS
   - NetBeans IDE 7.4 (from http://www.netbeans.org)
     (Maven support is included, Groovy plugin needs to be installed)
@@ -389,9 +381,9 @@ language), here are the most important reasons:
   - much better tooling support for development, e.g. IDE's, debuggers,
     profilers, refactoring tools and so on
   - much more usefull open source libraries, e.g. for diagram creation
-  - much less installation problems when using Java WebStart
-    (you can see all the user problems with Mono in the ST forum)
   - support for more operating systems (e.g. MacOS X, ...)
+  - less installation problems (no .NET runtime required on Linux or Mac OS X,
+    no GTK+ libraries required on Windows and Mac OS X)
   - I18N support on all operating systems
   - the Java platform is much more mature and reliable than Mono
 
@@ -446,4 +438,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2013/10/03
+2014/01/03

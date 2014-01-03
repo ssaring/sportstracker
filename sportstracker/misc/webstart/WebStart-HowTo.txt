@@ -1,3 +1,15 @@
+=============================================================================
+===== JAVA WEBSTART INSTALLATION WAS DROPPED WITH SPORTSTRACKER 6.0 !!! =====
+=============================================================================
+
+The Java WebStart installation option has been removed, since Java 7u40 there
+were security warnings on each ST start due to missing signed certificates.
+Free signed certificates are not available for open source projects.
+
+=============================================================================
+=============================================================================
+
+
 How to distribute SportStracker by JavaWebStart
 ===============================================
 
