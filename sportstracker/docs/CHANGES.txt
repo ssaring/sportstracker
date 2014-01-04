@@ -12,6 +12,7 @@ v6.0.0:
   - cleanup of import statements in all Java and Groovy source files
     (done by IntelliJ IDEA)
   - fixed all compiler warnings
+  - fixed warnings reported by the IntelliJ IDEA Code Inspector
   - fixed warnings found by IntelliJ IDEA code inspector
   - removed Java WebStart installation option (since Java 7u40 there were
     security warnings on each ST start due to missing signed certificates)

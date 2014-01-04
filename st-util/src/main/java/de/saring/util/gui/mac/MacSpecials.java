@@ -54,7 +54,7 @@ public final class MacSpecials {
             //Dynamically add proxy instance as ApplicationListener
             Class<?> c = eawtApp.getClass();
             Method m = c.getDeclaredMethod("addApplicationListener", new Class[]{eawtAppListenerClass});
-            m.invoke(eawtApp, new Object[]{appListenerProxy});
+            m.invoke(eawtApp, appListenerProxy);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,7 +103,7 @@ public final class MacSpecials {
             //Dynamically call Mac applications method
             Class<?> c = eawtApp.getClass();
             Method m = c.getDeclaredMethod("setDockIconImage", new Class[]{Image.class});
-            m.invoke(eawtApp, new Object[]{dockIcon});
+            m.invoke(eawtApp, dockIcon);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,7 +118,7 @@ public final class MacSpecials {
             //Dynamically call Mac applications method
             Class<?> c = eawtApp.getClass();
             Method m = c.getDeclaredMethod("setEnabledAboutMenu", new Class[]{boolean.class});
-            m.invoke(eawtApp, new Object[]{Boolean.valueOf(enable)});
+            m.invoke(eawtApp, Boolean.valueOf(enable));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -147,7 +147,7 @@ public final class MacSpecials {
             //Dynamically call Mac applications method
             Class<?> c = eawtApp.getClass();
             Method m = c.getDeclaredMethod("setEnabledPreferencesMenu", new Class[]{boolean.class});
-            m.invoke(eawtApp, new Object[]{Boolean.valueOf(enable)});
+            m.invoke(eawtApp, Boolean.valueOf(enable));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -205,7 +205,7 @@ public final class MacSpecials {
                     //Dynamically call setHandled method of Mac ApplicationEvent
                     Class<?> c = eawtAppEvent.getClass();
                     Method m = c.getDeclaredMethod("setHandled", new Class[]{boolean.class});
-                    m.invoke(eawtAppEvent, new Object[]{Boolean.valueOf(eventHandled)});
+                    m.invoke(eawtAppEvent, Boolean.valueOf(eventHandled));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

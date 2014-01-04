@@ -68,7 +68,7 @@ public class ConvertUtils {
      * @return value in meters
      */
     public static int convertFeet2Meter(int feet) {
-        return (int) Math.round(feet * 0.30479f);
+        return Math.round(feet * 0.30479f);
     }
 
     /**
@@ -78,7 +78,7 @@ public class ConvertUtils {
      * @return value in feets
      */
     public static int convertMeter2Feet(int meters) {
-        return (int) Math.round(meters / 0.30479f);
+        return Math.round(meters / 0.30479f);
     }
 
     /**
