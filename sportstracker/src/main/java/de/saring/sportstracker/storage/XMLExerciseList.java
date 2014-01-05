@@ -27,7 +27,7 @@ public class XMLExerciseList {
     /**
      * The date and time parser instance.
      */
-    private final SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    private static final SimpleDateFormat SD_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     /**
      * Reads the exercise list from the specified XML file and maps the sport types
@@ -99,7 +99,7 @@ public class XMLExerciseList {
         // get and convert date (format allready checked by XSD schema)
         String strDate = eExercise.getChildText("date");
         try {
-            exercise.setDate(sdFormat.parse(strDate));
+            exercise.setDate(SD_FORMAT.parse(strDate));
         } catch (Exception e) {
             throw new IllegalArgumentException("Failed to parse exercise with ID '" + exercise.getId() +
                     "', the date format '" + strDate + "' is not valid!");
@@ -189,7 +189,7 @@ public class XMLExerciseList {
             XMLUtils.addElement(eExercise, "id", String.valueOf(exercise.getId()));
             XMLUtils.addElement(eExercise, "sport-type-id", String.valueOf(exercise.getSportType().getId()));
             XMLUtils.addElement(eExercise, "sport-subtype-id", String.valueOf(exercise.getSportSubType().getId()));
-            XMLUtils.addElement(eExercise, "date", sdFormat.format(exercise.getDate()));
+            XMLUtils.addElement(eExercise, "date", SD_FORMAT.format(exercise.getDate()));
             XMLUtils.addElement(eExercise, "duration", String.valueOf(exercise.getDuration()));
             XMLUtils.addElement(eExercise, "intensity", exercise.getIntensity().toStringEnum());
             XMLUtils.addElement(eExercise, "distance", String.valueOf(exercise.getDistance()));
