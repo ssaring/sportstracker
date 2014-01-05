@@ -12,12 +12,12 @@ public class Position {
     /**
      * Latitude of this trackpoint in degrees.
      */
-    private double latitude;
+    private final double latitude;
 
     /**
      * Longitude of this trackpoint in degrees.
      */
-    private double longitude;
+    private final double longitude;
 
     public Position(double latitude, double longitude) {
         this.latitude = latitude;
@@ -35,9 +35,9 @@ public class Position {
     @Override
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
-        sBuilder.append(Position.class.getName() + ":\n");
-        sBuilder.append(" [latitude=" + this.latitude + "\n");
-        sBuilder.append("  longitude=" + this.longitude + "]\n");
+        sBuilder.append(Position.class.getName()).append(":\n");
+        sBuilder.append(" [latitude=").append(this.latitude).append("\n");
+        sBuilder.append("  longitude=").append(this.longitude).append("]\n");
         return sBuilder.toString();
     }
 }

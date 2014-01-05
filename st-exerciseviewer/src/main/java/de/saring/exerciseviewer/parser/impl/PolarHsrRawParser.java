@@ -40,7 +40,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
     /**
      * section data
      */
-    int[][] s;
+    private int[][] s;
 
 
     @Override
@@ -221,12 +221,12 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         recMode.setCadence(false);
         recMode.setAltitude(false);
 
-        if ((fBike1 == false) && (fBike2 == false)) {
+        if (!fBike1 && !fBike2) {
             recMode.setSpeed(false);
             recMode.setBikeNumber((byte) 0);
         } else {
             recMode.setSpeed(true);
-            if (fBike1 == true) {
+            if (fBike1) {
                 recMode.setBikeNumber((byte) 1);
             } else {
                 recMode.setBikeNumber((byte) 2);
@@ -334,10 +334,10 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         //if (recMode.isSpeed ()) other size?
 
         // determine in which section the lap data starts
-        int lapsec = 4 + (int) ((numberOfSamples - 1) / 60);
+        int lapsec = 4 + (numberOfSamples - 1) / 60;
         // add offset for speed data
         if (recMode.isSpeed())
-            lapsec += 1 + (int) ((numberOfSamples - 1) / 60);
+            lapsec += 1 + (numberOfSamples - 1) / 60;
         // determine in how _many_ sections the lap data resides
         int lapseccnt = (int) (((double) (numberOfMeas * lapSize) / 60) + .9999);
 
@@ -409,7 +409,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         ////////// decode sample data /////////////
 
         int hrsec = 3;
-        int spdsec = 4 + (int) ((numberOfSamples - 1) / 60);
+        int spdsec = 4 + (numberOfSamples - 1) / 60;
 
         // create sample list
         exercise.setSampleList(new ExerciseSample[numberOfSamples]);

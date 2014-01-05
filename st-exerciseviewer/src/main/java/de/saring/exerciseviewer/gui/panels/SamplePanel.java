@@ -31,7 +31,7 @@ public class SamplePanel extends BasePanel {
     private static final int COLUMN_CADENCE = 5;
     private static final int COLUMN_TEMPERATURE = 6;
 
-    private String[] columnNames;
+    private final String[] columnNames;
 
 
     /**

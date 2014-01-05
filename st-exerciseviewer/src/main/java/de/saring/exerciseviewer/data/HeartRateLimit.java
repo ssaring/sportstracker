@@ -87,13 +87,13 @@ public final class HeartRateLimit {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(HeartRateLimit.class.getName() + ":\n");
-        sBuilder.append(" [lowerHeartRate=" + this.lowerHeartRate + "\n");
-        sBuilder.append("  upperHeartRate=" + this.upperHeartRate + "\n");
-        sBuilder.append("  timeBelow=" + this.timeBelow + "\n");
-        sBuilder.append("  timeWithin=" + this.timeWithin + "\n");
-        sBuilder.append("  timeAbove=" + this.timeAbove + "\n");
-        sBuilder.append("  absoluteRange=" + this.absoluteRange + "]\n");
+        sBuilder.append(HeartRateLimit.class.getName()).append(":\n");
+        sBuilder.append(" [lowerHeartRate=").append(this.lowerHeartRate).append("\n");
+        sBuilder.append("  upperHeartRate=").append(this.upperHeartRate).append("\n");
+        sBuilder.append("  timeBelow=").append(this.timeBelow).append("\n");
+        sBuilder.append("  timeWithin=").append(this.timeWithin).append("\n");
+        sBuilder.append("  timeAbove=").append(this.timeAbove).append("\n");
+        sBuilder.append("  absoluteRange=").append(this.absoluteRange).append("]\n");
 
         return sBuilder.toString();
     }

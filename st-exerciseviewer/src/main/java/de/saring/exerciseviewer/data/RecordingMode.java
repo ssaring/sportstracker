@@ -122,16 +122,16 @@ public final class RecordingMode {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(RecordingMode.class.getName() + ":\n");
-        sBuilder.append(" [altitude=" + this.altitude + "\n");
-        sBuilder.append("  speed=" + this.speed + "\n");
-        sBuilder.append("  cadence=" + this.cadence + "\n");
-        sBuilder.append("  power=" + this.power + "\n");
-        sBuilder.append("  bikeNumber=" + this.bikeNumber + "\n");
-        sBuilder.append("  temperature=" + this.temperature + "\n");
-        sBuilder.append("  location=" + this.location + "\n");
-        sBuilder.append("  intervalExercise=" + this.intervalExercise + "\n");
-        sBuilder.append("  heartRate=" + this.heartRate + "]\n");
+        sBuilder.append(RecordingMode.class.getName()).append(":\n");
+        sBuilder.append(" [altitude=").append(this.altitude).append("\n");
+        sBuilder.append("  speed=").append(this.speed).append("\n");
+        sBuilder.append("  cadence=").append(this.cadence).append("\n");
+        sBuilder.append("  power=").append(this.power).append("\n");
+        sBuilder.append("  bikeNumber=").append(this.bikeNumber).append("\n");
+        sBuilder.append("  temperature=").append(this.temperature).append("\n");
+        sBuilder.append("  location=").append(this.location).append("\n");
+        sBuilder.append("  intervalExercise=").append(this.intervalExercise).append("\n");
+        sBuilder.append("  heartRate=").append(this.heartRate).append("]\n");
 
         return sBuilder.toString();
     }

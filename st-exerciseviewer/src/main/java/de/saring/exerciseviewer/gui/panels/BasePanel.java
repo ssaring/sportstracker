@@ -16,14 +16,13 @@ import javax.swing.*;
  */
 public abstract class BasePanel extends JPanel {
 
-    private EVContext context;
+    private final EVContext context;
     private EVDocument document;
 
     /**
      * Standard c'tor.
      *
      * @param context the ExerciseViewer context
-     * @param document the ExerciseViewer document
      */
     public BasePanel(EVContext context) {
         this.context = context;

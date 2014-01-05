@@ -49,10 +49,10 @@ public final class ExerciseTemperature {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(ExerciseTemperature.class.getName() + ":\n");
-        sBuilder.append(" [temperatureMin=" + this.temperatureMin + "\n");
-        sBuilder.append("  temperatureAVG=" + this.temperatureAVG + "\n");
-        sBuilder.append("  temperatureMax=" + this.temperatureMax + "]\n");
+        sBuilder.append(ExerciseTemperature.class.getName()).append(":\n");
+        sBuilder.append(" [temperatureMin=").append(this.temperatureMin).append("\n");
+        sBuilder.append("  temperatureAVG=").append(this.temperatureAVG).append("\n");
+        sBuilder.append("  temperatureMax=").append(this.temperatureMax).append("]\n");
 
         return sBuilder.toString();
     }

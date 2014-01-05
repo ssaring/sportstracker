@@ -61,11 +61,11 @@ public final class LapSpeed {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(LapSpeed.class.getName() + ":\n");
-        sBuilder.append(" [speedEnd=" + this.speedEnd + "\n");
-        sBuilder.append("  speedAVG=" + this.speedAVG + "\n");
-        sBuilder.append("  distance=" + this.distance + "\n");
-        sBuilder.append("  cadence=" + this.cadence + "]\n");
+        sBuilder.append(LapSpeed.class.getName()).append(":\n");
+        sBuilder.append(" [speedEnd=").append(this.speedEnd).append("\n");
+        sBuilder.append("  speedAVG=").append(this.speedAVG).append("\n");
+        sBuilder.append("  distance=").append(this.distance).append("\n");
+        sBuilder.append("  cadence=").append(this.cadence).append("]\n");
 
         return sBuilder.toString();
     }

@@ -37,9 +37,9 @@ public final class ExerciseCadence {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(ExerciseCadence.class.getName() + ":\n");
-        sBuilder.append(" [cadenceAVG=" + cadenceAVG + "\n");
-        sBuilder.append("  cadenceMax=" + cadenceMax + "]\n");
+        sBuilder.append(ExerciseCadence.class.getName()).append(":\n");
+        sBuilder.append(" [cadenceAVG=").append(cadenceAVG).append("\n");
+        sBuilder.append("  cadenceMax=").append(cadenceMax).append("]\n");
 
         return sBuilder.toString();
     }

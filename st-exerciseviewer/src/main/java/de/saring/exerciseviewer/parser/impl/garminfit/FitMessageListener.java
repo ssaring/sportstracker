@@ -22,11 +22,11 @@ class FitMessageListener implements MesgListener {
     /**
      * List of created laps (collected in a LinkedList and not in EVExercise array, much faster).
      */
-    private List<FitLap> lFitLaps = new LinkedList<>();
+    private final List<FitLap> lFitLaps = new LinkedList<>();
     /**
      * List of created exercise samples (collected in a LinkedList and not in EVExercise array, much faster).
      */
-    private List<ExerciseSample> lSamples = new LinkedList<>();
+    private final List<ExerciseSample> lSamples = new LinkedList<>();
     /**
      * Flag for availability of temperature data.
      */
@@ -225,7 +225,7 @@ class FitMessageListener implements MesgListener {
      * Returns the EVExercise created from the received message. It sets
      * up all lap and sample data and calculates the missing data before.
      *
-     * @return
+     * @return exercise
      */
     public EVExercise getExercise() throws EVException {
 

@@ -61,11 +61,11 @@ public final class ExerciseAltitude {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(ExerciseAltitude.class.getName() + ":\n");
-        sBuilder.append(" [altitudeMin=" + this.altitudeMin + "\n");
-        sBuilder.append("  altitudeAVG=" + this.altitudeAVG + "\n");
-        sBuilder.append("  altitudeMax=" + this.altitudeMax + "\n");
-        sBuilder.append("  ascent=" + this.ascent + "]\n");
+        sBuilder.append(ExerciseAltitude.class.getName()).append(":\n");
+        sBuilder.append(" [altitudeMin=").append(this.altitudeMin).append("\n");
+        sBuilder.append("  altitudeAVG=").append(this.altitudeAVG).append("\n");
+        sBuilder.append("  altitudeMax=").append(this.altitudeMax).append("\n");
+        sBuilder.append("  ascent=").append(this.ascent).append("]\n");
 
         return sBuilder.toString();
     }

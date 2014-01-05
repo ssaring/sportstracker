@@ -14,11 +14,12 @@ final class FitLap {
     /**
      * The Lap object to wrap.
      */
-    private Lap lap;
+    private final Lap lap;
+
     /**
      * The timestamp of lap split.
      */
-    private Date splitTime;
+    private final Date splitTime;
 
     public FitLap(Lap lap, Date splitTime) {
         this.lap = lap;

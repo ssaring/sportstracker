@@ -111,15 +111,15 @@ public final class ExerciseSample {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(ExerciseSample.class.getName() + ":\n");
-        sBuilder.append(" [timestamp=" + this.timestamp + "\n");
-        sBuilder.append("  heartRate=" + this.heartRate + "\n");
-        sBuilder.append("  altitude=" + this.altitude + "\n");
-        sBuilder.append("  speed=" + this.speed + "\n");
-        sBuilder.append("  cadence=" + this.cadence + "\n");
-        sBuilder.append("  distance=" + this.distance + "\n");
-        sBuilder.append("  temperature=" + this.temperature + "\n");
-        sBuilder.append("  position=" + this.position + "]\n");
+        sBuilder.append(ExerciseSample.class.getName()).append(":\n");
+        sBuilder.append(" [timestamp=").append(this.timestamp).append("\n");
+        sBuilder.append("  heartRate=").append(this.heartRate).append("\n");
+        sBuilder.append("  altitude=").append(this.altitude).append("\n");
+        sBuilder.append("  speed=").append(this.speed).append("\n");
+        sBuilder.append("  cadence=").append(this.cadence).append("\n");
+        sBuilder.append("  distance=").append(this.distance).append("\n");
+        sBuilder.append("  temperature=").append(this.temperature).append("\n");
+        sBuilder.append("  position=").append(this.position).append("]\n");
 
         return sBuilder.toString();
     }

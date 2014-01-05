@@ -49,10 +49,10 @@ public final class ExerciseSpeed {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(ExerciseSpeed.class.getName() + ":\n");
-        sBuilder.append(" [speedAVG=" + this.speedAVG + "\n");
-        sBuilder.append("  speedMax=" + this.speedMax + "\n");
-        sBuilder.append("  distance=" + this.distance + "]\n");
+        sBuilder.append(ExerciseSpeed.class.getName()).append(":\n");
+        sBuilder.append(" [speedAVG=").append(this.speedAVG).append("\n");
+        sBuilder.append("  speedMax=").append(this.speedMax).append("\n");
+        sBuilder.append("  distance=").append(this.distance).append("]\n");
 
         return sBuilder.toString();
     }

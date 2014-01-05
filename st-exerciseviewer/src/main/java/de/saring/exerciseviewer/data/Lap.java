@@ -110,15 +110,15 @@ public final class Lap {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(Lap.class.getName() + ":\n");
-        sBuilder.append(" [timeSplit=" + this.timeSplit + "\n");
-        sBuilder.append("  heartRateSplit=" + this.heartRateSplit + "\n");
-        sBuilder.append("  heartRateAVG=" + this.heartRateAVG + "\n");
-        sBuilder.append("  heartRateMax=" + this.heartRateMax + "\n");
-        sBuilder.append("  speed=" + this.speed + "\n");
-        sBuilder.append("  altitude=" + this.altitude + "\n");
-        sBuilder.append("  temperature=" + this.temperature + "\n");
-        sBuilder.append("  positionSplit=" + this.positionSplit + "]\n");
+        sBuilder.append(Lap.class.getName()).append(":\n");
+        sBuilder.append(" [timeSplit=").append(this.timeSplit).append("\n");
+        sBuilder.append("  heartRateSplit=").append(this.heartRateSplit).append("\n");
+        sBuilder.append("  heartRateAVG=").append(this.heartRateAVG).append("\n");
+        sBuilder.append("  heartRateMax=").append(this.heartRateMax).append("\n");
+        sBuilder.append("  speed=").append(this.speed).append("\n");
+        sBuilder.append("  altitude=").append(this.altitude).append("\n");
+        sBuilder.append("  temperature=").append(this.temperature).append("\n");
+        sBuilder.append("  positionSplit=").append(this.positionSplit).append("]\n");
 
         return sBuilder.toString();
     }

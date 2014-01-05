@@ -30,6 +30,16 @@ import java.util.Calendar;
 public class PolarF6RawParser extends AbstractExerciseParser {
 
     /**
+     * The exercise file length for F6 watches
+     */
+    private static final int F6_EXERCISE_FILE_LENGTH = 49;
+
+    /**
+     * The exercise file length for F11 watches
+     */
+    private static final int F11_EXERCISE_FILE_LENGTH = 50;
+
+    /**
      * Informations about this parser.
      */
     private final ExerciseParserInfo info = new ExerciseParserInfo("Polar F6/F11", new String[]{"frd", "FRD"});
@@ -38,16 +48,6 @@ public class PolarF6RawParser extends AbstractExerciseParser {
      * The binary data of the exercise file.
      */
     private int[] fileContent;
-
-    /**
-     * The exercise file length for F6 watches
-     */
-    private static int F6ExerciseFileLength = 49;
-
-    /**
-     * The exercise file length for F11 watches
-     */
-    private static int F11ExerciseFileLength = 50;
 
     @Override
     public ExerciseParserInfo getInfo() {
@@ -64,7 +64,7 @@ public class PolarF6RawParser extends AbstractExerciseParser {
         exercise.setFileType(EVExercise.ExerciseFileType.F6RAW);
 
         // check wheter the read data fits the expected data length
-        if (fileContent.length != F6ExerciseFileLength && fileContent.length != F11ExerciseFileLength) {
+        if (fileContent.length != F6_EXERCISE_FILE_LENGTH && fileContent.length != F11_EXERCISE_FILE_LENGTH) {
             throw new EVException("The exercise file is not valid, the file length is not correct ...");
         }
 
@@ -140,7 +140,7 @@ public class PolarF6RawParser extends AbstractExerciseParser {
 
         // set the offset if the file is a 50 byte F11 file
         int offset = 0;
-        if (fileContent.length == F11ExerciseFileLength) {
+        if (fileContent.length == F11_EXERCISE_FILE_LENGTH) {
             offset = 1;
         }
 

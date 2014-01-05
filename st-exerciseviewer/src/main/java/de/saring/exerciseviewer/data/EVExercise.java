@@ -323,21 +323,21 @@ public final class EVExercise {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(EVExercise.class.getName() + ":\n");
-        sBuilder.append(" [fileType=" + this.fileType + "\n");
-        sBuilder.append("  userID=" + this.userID + "\n");
-        sBuilder.append("  date=" + this.date + "\n");
-        sBuilder.append("  type=" + this.type + "\n");
-        sBuilder.append("  typeLabel=" + this.typeLabel + "\n");
-        sBuilder.append("  duration=" + this.duration + "\n");
-        sBuilder.append("  recordingInterval=" + this.recordingInterval + "\n");
-        sBuilder.append("  heartRateAVG=" + this.heartRateAVG + "\n");
-        sBuilder.append("  heartRateMax=" + this.heartRateMax + "\n");
-        sBuilder.append("  energy=" + this.energy + "\n");
-        sBuilder.append("  energyTotal=" + this.energyTotal + "\n");
-        sBuilder.append("  sumExerciseTime=" + this.sumExerciseTime + "\n");
-        sBuilder.append("  sumRideTime=" + this.sumRideTime + "\n");
-        sBuilder.append("  odometer=" + this.odometer + "]\n");
+        sBuilder.append(EVExercise.class.getName()).append(":\n");
+        sBuilder.append(" [fileType=").append(this.fileType).append("\n");
+        sBuilder.append("  userID=").append(this.userID).append("\n");
+        sBuilder.append("  date=").append(this.date).append("\n");
+        sBuilder.append("  type=").append(this.type).append("\n");
+        sBuilder.append("  typeLabel=").append(this.typeLabel).append("\n");
+        sBuilder.append("  duration=").append(this.duration).append("\n");
+        sBuilder.append("  recordingInterval=").append(this.recordingInterval).append("\n");
+        sBuilder.append("  heartRateAVG=").append(this.heartRateAVG).append("\n");
+        sBuilder.append("  heartRateMax=").append(this.heartRateMax).append("\n");
+        sBuilder.append("  energy=").append(this.energy).append("\n");
+        sBuilder.append("  energyTotal=").append(this.energyTotal).append("\n");
+        sBuilder.append("  sumExerciseTime=").append(this.sumExerciseTime).append("\n");
+        sBuilder.append("  sumRideTime=").append(this.sumRideTime).append("\n");
+        sBuilder.append("  odometer=").append(this.odometer).append("]\n");
 
         if (this.recordingMode != null) sBuilder.append(this.recordingMode);
         if (this.speed != null) sBuilder.append(this.speed);
@@ -347,21 +347,21 @@ public final class EVExercise {
 
         if (this.heartRateLimits != null) {
             for (int i = 0; i < this.heartRateLimits.length; i++) {
-                sBuilder.append("arrayIndex " + i + ": ");
+                sBuilder.append("arrayIndex ").append(i).append(": ");
                 sBuilder.append(this.heartRateLimits[i]);
             }
         }
 
         if (this.lapList != null) {
             for (int i = 0; i < this.lapList.length; i++) {
-                sBuilder.append("arrayIndex " + i + ": ");
+                sBuilder.append("arrayIndex ").append(i).append(": ");
                 sBuilder.append(this.lapList[i]);
             }
         }
 
         if (this.sampleList != null) {
             for (int i = 0; i < this.sampleList.length; i++) {
-                sBuilder.append("arrayIndex " + i + ": ");
+                sBuilder.append("arrayIndex ").append(i).append(": ");
                 sBuilder.append(this.sampleList[i]);
             }
         }

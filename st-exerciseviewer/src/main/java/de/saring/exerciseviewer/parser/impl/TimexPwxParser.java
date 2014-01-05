@@ -189,7 +189,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         return info;
     }
 
-    public int countNodeItems(Node node, String string2count) {
+    int countNodeItems(Node node, String string2count) {
         // Given a Node and a Child Node Name, count the number of children with that node name
         NodeList children = node.getChildNodes();
 
@@ -212,68 +212,74 @@ public class TimexPwxParser extends AbstractExerciseParser {
         String childName;
         for (int i = 0; i < children.getLength(); i++) {
             childName = children.item(i).getNodeName();
-            if (childName.equals("athlete")) {
-                // Nothing to do with this yet...or is there?
-            } else if (childName.equals("goal")) {
-                // Not in files downloaded directly from the Timex 843/844
-                // Probably is in the files downloaded from the online software
-            } else if (childName.equals("sportType")) {
-                // obtain sportType
-                exercise.setType((byte) 0);
-                exercise.setTypeLabel(children.item(i).getTextContent());
-            } else if (childName.equals("cmt")) {
-                // Not implemented
-            } else if (childName.equals("code")) {
-                // Not implemented
-            } else if (childName.equals("device")) {
-                // parse device
-                exercise = parseWorkoutDeviceNode(exercise, children.item(i));
-                // The passing an object and then assigning the result of the method to the same object is akward to me.
-                // It seems like that could result in a lot of time moving data.  My understanding is that is not the case
-                // in Java though.
-            } else if (childName.equals("time")) {
-                // obtain start time
-                try {
-                    exercise.setDate(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(children.item(i).getTextContent()));
-                } catch (Exception e) {
-                    exercise.setDate(null);
-                }
-            } else if (childName.equals("summarydata")) {
-                // parse workout summary data
-                SummaryData workoutSummary = parseSummaryData(children.item(i));
-                exercise.setDuration((int) workoutSummary.getDuration() * 10);
-                exercise.setSumExerciseTime((int) workoutSummary.getDuration() / 60); // Not sure why these are different.
-                exercise.setSumRideTime((int) workoutSummary.getDuration() / 60);  // Assume some watches keep track of bike specific time..This one doesn't
-                exercise.setEnergy((int) (workoutSummary.getWork() * (0.238845896627495939619))); // Convert to Calories first
-                //exercise.setEnergyTotal((int) (workoutSummary.getWork() * (0.238845896627495939619))); // Using the value in device/extensions
-                if (workoutSummary.getHr() != null) {
-                    exercise.setHeartRateMax((short) workoutSummary.getHr().getMax());
-                    // exercise.setHeartRateMin((short) workoutSummary.getHr().getMin()); // Not implemented in EVExercise
-                    exercise.setHeartRateAVG((short) workoutSummary.getHr().getAvg());
-                }
-                exercise.setOdometer((int) workoutSummary.getDistance() / 1000);
-                if (workoutSummary.getSpeed() != null) {
-                    ExerciseSpeed workoutSpeed = new ExerciseSpeed();
-                    workoutSpeed.setDistance((int) workoutSummary.getDistance());
-                    workoutSpeed.setSpeedAVG(workoutSummary.getSpeed().getAvg() * (float) 3.6);
-                    workoutSpeed.setSpeedMax(workoutSummary.getSpeed().getMax() * (float) 3.6);
-                    exercise.setSpeed(workoutSpeed);
-                }
-                if (workoutSummary.getAltitude() != null) {
-                    ExerciseAltitude workoutAltitude = new ExerciseAltitude();
-                    workoutAltitude.setAltitudeAVG((short) workoutSummary.getAltitude().getAvg());
-                    workoutAltitude.setAltitudeMax((short) workoutSummary.getAltitude().getMax());
-                    workoutAltitude.setAltitudeMin((short) workoutSummary.getAltitude().getMin());
-                    exercise.setAltitude(workoutAltitude);
-                }
-
-            } else if (childName.equals("segment")) {
-                // This is handled after parsing everything else
-            } else if (childName.equals("sample")) {
-                // This is handled after parsing everything else
-            } else if (childName.equals("extension")) {
-                // Used for Timex Global Trainer and possibly others.
-                exercise = parseWorkoutExtensionNode(exercise, children.item(i));
+            switch (childName) {
+                case "athlete":
+                    // Nothing to do with this yet...or is there?
+                    break;
+                case "goal":
+                    // Not in files downloaded directly from the Timex 843/844
+                    // Probably is in the files downloaded from the online software
+                    break;
+                case "sportType":
+                    // obtain sportType
+                    exercise.setType((byte) 0);
+                    exercise.setTypeLabel(children.item(i).getTextContent());
+                    break;
+                case "cmt":
+                case "code":
+                    // Not implemented
+                    break;
+                case "device":
+                    // parse device
+                    exercise = parseWorkoutDeviceNode(exercise, children.item(i));
+                    // The passing an object and then assigning the result of the method to the same object is akward to me.
+                    // It seems like that could result in a lot of time moving data.  My understanding is that is not the case
+                    // in Java though.
+                case "time":
+                    // obtain start time
+                    try {
+                        exercise.setDate(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(children.item(i).getTextContent()));
+                    } catch (Exception e) {
+                        exercise.setDate(null);
+                    }
+                    break;
+                case "summarydata":
+                    // parse workout summary data
+                    SummaryData workoutSummary = parseSummaryData(children.item(i));
+                    exercise.setDuration((int) workoutSummary.getDuration() * 10);
+                    exercise.setSumExerciseTime((int) workoutSummary.getDuration() / 60); // Not sure why these are different.
+                    exercise.setSumRideTime((int) workoutSummary.getDuration() / 60);  // Assume some watches keep track of bike specific time..This one doesn't
+                    exercise.setEnergy((int) (workoutSummary.getWork() * (0.238845896627495939619))); // Convert to Calories first
+                    //exercise.setEnergyTotal((int) (workoutSummary.getWork() * (0.238845896627495939619))); // Using the value in device/extensions
+                    if (workoutSummary.getHr() != null) {
+                        exercise.setHeartRateMax((short) workoutSummary.getHr().getMax());
+                        // exercise.setHeartRateMin((short) workoutSummary.getHr().getMin()); // Not implemented in EVExercise
+                        exercise.setHeartRateAVG((short) workoutSummary.getHr().getAvg());
+                    }
+                    exercise.setOdometer((int) workoutSummary.getDistance() / 1000);
+                    if (workoutSummary.getSpeed() != null) {
+                        ExerciseSpeed workoutSpeed = new ExerciseSpeed();
+                        workoutSpeed.setDistance((int) workoutSummary.getDistance());
+                        workoutSpeed.setSpeedAVG(workoutSummary.getSpeed().getAvg() * (float) 3.6);
+                        workoutSpeed.setSpeedMax(workoutSummary.getSpeed().getMax() * (float) 3.6);
+                        exercise.setSpeed(workoutSpeed);
+                    }
+                    if (workoutSummary.getAltitude() != null) {
+                        ExerciseAltitude workoutAltitude = new ExerciseAltitude();
+                        workoutAltitude.setAltitudeAVG((short) workoutSummary.getAltitude().getAvg());
+                        workoutAltitude.setAltitudeMax((short) workoutSummary.getAltitude().getMax());
+                        workoutAltitude.setAltitudeMin((short) workoutSummary.getAltitude().getMin());
+                        exercise.setAltitude(workoutAltitude);
+                    }
+                    break;
+                case "segment":
+                case "sample":
+                    // This is handled after parsing everything else
+                    break;
+                case "extension":
+                    // Used for Timex Global Trainer and possibly others.
+                    exercise = parseWorkoutExtensionNode(exercise, children.item(i));
+                    break;
             }
         }
         // parse lap segments
@@ -598,7 +604,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         return exercise;
     }
 
-    public static float getDistanceFromPositions(Position startPosition, Position stopPosition) { //float lat1, float lng1, float lat2, float lng2) {
+    private static float getDistanceFromPositions(Position startPosition, Position stopPosition) { //float lat1, float lng1, float lat2, float lng2) {
         double earthRadius = 6369.6; //3958.75;
         double dLat = Math.toRadians(stopPosition.getLatitude() - startPosition.getLatitude());
         double dLng = Math.toRadians(stopPosition.getLongitude() - startPosition.getLongitude());
@@ -647,10 +653,10 @@ public class TimexPwxParser extends AbstractExerciseParser {
                     if (childName.equals("timeoffset")) {
                         if (currentOffset != 0)
                             lastOffset = currentOffset;
-                        currentOffset = Double.valueOf(sampleChildren.item(j).getTextContent()).doubleValue();
+                        currentOffset = Double.valueOf(sampleChildren.item(j).getTextContent());
                         sample.setTimestamp((long) (1000 * currentOffset));
                     } else if (childName.equals("hr")) {
-                        sample.setHeartRate((short) Short.valueOf(sampleChildren.item(j).getTextContent()));
+                        sample.setHeartRate(Short.valueOf(sampleChildren.item(j).getTextContent()));
                     } else if (childName.equals("spd")) {
                         sample.setSpeed((float) 3.6 * Float.valueOf(sampleChildren.item(j).getTextContent()).floatValue());
                     } else if (childName.equals("pwr")) {
@@ -658,7 +664,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
                     } else if (childName.equals("torq")) {
                         // Not implemented in ExerciseSample class
                     } else if (childName.equals("cad")) {
-                        sample.setCadence((short) Short.valueOf(sampleChildren.item(j).getTextContent()));
+                        sample.setCadence(Short.valueOf(sampleChildren.item(j).getTextContent()));
                         exercise.getRecordingMode().setCadence(true);
                     } else if (childName.equals("dist")) {
                         double dist = Double.valueOf(sampleChildren.item(j).getTextContent());

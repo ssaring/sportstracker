@@ -48,8 +48,6 @@ public class HAC4TURParser extends AbstractExerciseParser {
         public static final int BEGIN_SAMPLES = 54;
     }
 
-    ;
-
     /**
      * Private inner class which is used for reading samples from the file.
      */
@@ -166,12 +164,12 @@ public class HAC4TURParser extends AbstractExerciseParser {
         @Override
         public String toString() {
             StringBuilder builder = new StringBuilder();
-            builder.append("distance = " + distance + ", ");
-            builder.append("altitude = " + altitude + ", ");
-            builder.append("HR = " + heartRate + ", ");
-            builder.append("Cadence = " + cadence + ", ");
-            builder.append("Temp = " + temperature + ", ");
-            builder.append("Time (seconds) = " + time + ", ");
+            builder.append("distance = ").append(distance).append(", ");
+            builder.append("altitude = ").append(altitude).append(", ");
+            builder.append("HR = ").append(heartRate).append(", ");
+            builder.append("Cadence = ").append(cadence).append(", ");
+            builder.append("Temp = ").append(temperature).append(", ");
+            builder.append("Time (seconds) = ").append(time).append(", ");
             return builder.toString();
         }
     }
@@ -437,7 +435,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
 
         // find length of all strings to this point
         int lengthUntilSamples = 0;
-        for (int i = 0; i < (int) fpBeginSamples; i++)
+        for (int i = 0; i < fpBeginSamples; i++)
             lengthUntilSamples += fileContents[i].length() + 1;
 
         // start reading samples
@@ -479,7 +477,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         long firstTimestamp = nrSamples > 0 ? samples.get(0).getTime() : 0;
 
         for (int i = 0; i < nrSamples; i++) {
-            Sample sample = (Sample) samples.get(i);
+            Sample sample = samples.get(i);
             eSamples[i] = new ExerciseSample();
             eSamples[i].setTimestamp((sample.getTime() - firstTimestamp) * 1000L);
             eSamples[i].setHeartRate((short) sample.getHeartRate());
@@ -521,6 +519,6 @@ public class HAC4TURParser extends AbstractExerciseParser {
      * Read a line from the file contents.
      */
     private String readLine(int pos) {
-        return fileContents[(int) pos];
+        return fileContents[pos];
     }
 }

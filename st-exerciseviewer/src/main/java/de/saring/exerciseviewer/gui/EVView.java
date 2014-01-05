@@ -18,15 +18,15 @@ public class EVView extends JDialog {
     private static final String APPLICATION_NAME = "ExerciseViewer";
     private static final String ACTION_CLOSE = "pv.view.close";
 
-    private transient EVContext context;
+    private final transient EVContext context;
     private transient EVDocument document;
 
-    private MainPanel mainPanel;
-    private OptionalPanel optionalPanel;
-    private LapPanel lapPanel;
-    private SamplePanel samplePanel;
-    private DiagramPanel diagramPanel;
-    private TrackPanel trackPanel;
+    private final MainPanel mainPanel;
+    private final OptionalPanel optionalPanel;
+    private final LapPanel lapPanel;
+    private final SamplePanel samplePanel;
+    private final DiagramPanel diagramPanel;
+    private final TrackPanel trackPanel;
 
 
     /**
@@ -57,7 +57,7 @@ public class EVView extends JDialog {
     /**
      * Initializes the PVView and all contained components.
      *
-     * @param the ExerciseViewer document
+     * @param document the ExerciseViewer document
      */
     public void initView(EVDocument document) {
         initComponents();

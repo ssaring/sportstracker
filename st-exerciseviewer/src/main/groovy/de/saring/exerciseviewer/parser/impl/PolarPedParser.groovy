@@ -55,21 +55,17 @@ class PolarPedParser extends AbstractExerciseParser {
      *
      * @param filename name of exercise file to parse
      * @return the parsed PVExercise object
-     * @throws PVException thrown on read/parse problems
+     * @throws EVException thrown on read/parse problems
      */
     @Override
     EVExercise parseExercise(String filename) throws EVException {
         path = readPedFile(filename)
-        def EVExercise exercise = null
 
         if (exerciseCount >= 1) {
-            exercise = parseExercisePath(path, 0)
+            return parseExercisePath(path, 0)
         } else {
             throw new EVException("No exercise in file '${filename}' ...")
         }
-
-        return exercise
-
     }
 
     /**
@@ -82,7 +78,7 @@ class PolarPedParser extends AbstractExerciseParser {
      * @param filename name of exercise file to parse
      * @param exerciseIdx the exercise record index (starting with 0) in the file
      * @return the parsed PVExercise object
-     * @throws PVException thrown on read/parse problems
+     * @throws EVException thrown on read/parse problems
      */
     public EVExercise parseExercise(String filename, Integer exerciseIdx) throws EVException {
         return parseExercisePath(path, exerciseIdx)
@@ -120,7 +116,6 @@ class PolarPedParser extends AbstractExerciseParser {
         }
 
         // Exercise Date
-        def calDate = Calendar.getInstance()
         def dateTime = path."calendar-items".exercise[exerciseID].time.text()
         exercise.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(dateTime)
 

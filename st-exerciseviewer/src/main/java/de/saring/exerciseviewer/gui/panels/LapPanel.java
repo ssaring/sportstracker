@@ -37,7 +37,7 @@ public class LapPanel extends BasePanel {
     private static final int COLUMN_ASCENT = 11;
     private static final int COLUMN_TEMPERATURE = 12;
 
-    private String[] columnNames;
+    private final String[] columnNames;
 
 
     /**

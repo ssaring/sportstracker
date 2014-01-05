@@ -59,7 +59,6 @@ class GarminTcxParser extends AbstractExerciseParser {
 
         def activity = path.Activities.Activity
         exercise.date = sdFormat.parse(activity.Id.text())
-        int timeSplitPreviousLap = 0
         int trackpointCount = 0
 
         double altitudeMetersTotal = 0

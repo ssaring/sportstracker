@@ -26,8 +26,8 @@ public final class LapTemperature {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(LapTemperature.class.getName() + ":\n");
-        sBuilder.append(" [temperature=" + this.temperature + "]\n");
+        sBuilder.append(LapTemperature.class.getName()).append(":\n");
+        sBuilder.append(" [temperature=").append(this.temperature).append("]\n");
 
         return sBuilder.toString();
     }

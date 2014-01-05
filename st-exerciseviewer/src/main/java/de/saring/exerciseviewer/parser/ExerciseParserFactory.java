@@ -33,7 +33,7 @@ public class ExerciseParserFactory {
     /**
      * The ServiceLoader instance for all ExerciseParser implementations.
      */
-    ServiceLoader<ExerciseParser> exerciseParserLoader;
+    private final ServiceLoader<ExerciseParser> exerciseParserLoader;
 
     /**
      * Creates a new instance of ExerciseParserFactory and loads all

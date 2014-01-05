@@ -49,7 +49,7 @@ public class DiagramPanel extends BasePanel {
     /**
      * The panel containing the current chart.
      */
-    private ChartPanel chartPanel;
+    private final ChartPanel chartPanel;
 
     /**
      * Flag for ignoring actions for updating the diagram.

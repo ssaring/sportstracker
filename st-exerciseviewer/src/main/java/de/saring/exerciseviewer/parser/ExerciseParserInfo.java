@@ -11,12 +11,12 @@ public class ExerciseParserInfo {
     /**
      * The name of the parser.
      */
-    private String name;
+    private final String name;
 
     /**
      * List of exercise file suffixes which can be read by this parser.
      */
-    private String[] suffixes;
+    private final String[] suffixes;
 
     /**
      * Creates a new ExerciseParserInfo instance.

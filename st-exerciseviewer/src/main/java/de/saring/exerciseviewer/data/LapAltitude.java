@@ -37,9 +37,9 @@ public final class LapAltitude {
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append(LapAltitude.class.getName() + ":\n");
-        sBuilder.append(" [altitude=" + this.altitude + "\n");
-        sBuilder.append("  ascent=" + this.ascent + "]\n");
+        sBuilder.append(LapAltitude.class.getName()).append(":\n");
+        sBuilder.append(" [altitude=").append(this.altitude).append("\n");
+        sBuilder.append("  ascent=").append(this.ascent).append("]\n");
 
         return sBuilder.toString();
     }

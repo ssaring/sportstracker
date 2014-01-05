@@ -18,9 +18,9 @@ import java.util.logging.Logger;
 public class EVMain {
     private static final Logger LOGGER = Logger.getLogger(EVMain.class.getName());
 
-    private EVContext context;
-    private EVDocument document;
-    private EVView view;
+    private final EVContext context;
+    private final EVDocument document;
+    private final EVView view;
 
     /**
      * Standard c'tor.

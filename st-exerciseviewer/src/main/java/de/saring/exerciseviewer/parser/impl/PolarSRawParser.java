@@ -55,7 +55,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
         // create an PVExercise object from this data and set file type
         EVExercise exercise = new EVExercise();
-        if (fS610 == false) {
+        if (!fS610) {
             exercise.setFileType(EVExercise.ExerciseFileType.S710RAW);
         } else {
             exercise.setFileType(EVExercise.ExerciseFileType.S610RAW);
@@ -120,19 +120,19 @@ public class PolarSRawParser extends AbstractExerciseParser {
         RecordingMode recMode = new RecordingMode();
         exercise.setRecordingMode(recMode);
 
-        if (fS610 == false) {
+        if (!fS610) {
             boolean fBike2 = (fileContent[26] & 0x20) == 0x20;
             boolean fBike1 = (fileContent[26] & 0x10) == 0x10;
             recMode.setPower((fileContent[26] & 0x08) == 0x08);
             recMode.setCadence((fileContent[26] & 0x04) == 0x04);
             recMode.setAltitude((fileContent[26] & 0x02) == 0x02);
 
-            if ((fBike1 == false) && (fBike2 == false)) {
+            if (!fBike1 && !fBike2) {
                 recMode.setSpeed(false);
                 recMode.setBikeNumber((byte) 0);
             } else {
                 recMode.setSpeed(true);
-                if (fBike1 == true) {
+                if (fBike1) {
                     recMode.setBikeNumber((byte) 1);
                 } else {
                     recMode.setBikeNumber((byte) 2);
@@ -198,7 +198,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
         int cumWorkoutPart3 = decodeBCD(fileContent[indexCumWorkoutStart + 2]);
         exercise.setSumExerciseTime(cumWorkoutPart3 + (cumWorkoutPart1 * 60) + (cumWorkoutPart2 * 60 * 100));
 
-        if (fS610 == false) {
+        if (!fS610) {
             // get cumulative ride time
             int cumRidePart1 = decodeBCD(fileContent[79]);
             int cumRidePart2 = decodeBCD(fileContent[80]);
@@ -268,7 +268,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
             altitude.setAltitudeMax(decodeAltitude(fileContent[96], fileContent[97]));
             altitude.setAscent(fileContent[101] + (fileContent[102] << 8));
 
-            if (fMetricUnits == false) {
+            if (!fMetricUnits) {
                 altitude.setAltitudeMin((short) ConvertUtils.convertFeet2Meter(altitude.getAltitudeMin()));
                 altitude.setAltitudeAVG((short) ConvertUtils.convertFeet2Meter(altitude.getAltitudeAVG()));
                 altitude.setAltitudeMax((short) ConvertUtils.convertFeet2Meter(altitude.getAltitudeMax()));

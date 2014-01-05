@@ -118,7 +118,7 @@ public abstract class AbstractExerciseParser implements ExerciseParser {
             timeSplitBefore = lap.getTimeSplit();
 
             lap.getSpeed().setSpeedAVG(CalculationUtils.calculateAvgSpeed(
-                    lapDistance / 1000f, (int) Math.round(lapDuration / 10f)));
+                    lapDistance / 1000f, Math.round(lapDuration / 10f)));
         }
     }
 }
