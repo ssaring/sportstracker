@@ -14,7 +14,6 @@ import org.jdom2.Element;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * This class is for reading and writing a SportTypeList object from or to a

@@ -10,7 +10,6 @@ import org.jdom2.Element;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  * This class is for reading or writing a NoteList object from or to a XML file.
@@ -27,7 +26,7 @@ public class XMLNoteList {
     /**
      * The date and time parser instance.
      */
-    private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    private static final SimpleDateFormat SD_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     /**
      * Reads the note list from the specified XML file.
@@ -76,7 +75,7 @@ public class XMLNoteList {
         // get and convert date (format allready checked by XSD schema)
         String strDate = eNote.getChildText("date");
         try {
-            note.setDate(sdFormat.parse(strDate));
+            note.setDate(SD_FORMAT.parse(strDate));
         } catch (Exception e) {
             throw new IllegalArgumentException("Failed to parse note with ID '" + note.getId() +
                     "', the date format '" + strDate + "' is not valid!");
@@ -120,7 +119,7 @@ public class XMLNoteList {
             eNoteList.addContent(eNote);
 
             XMLUtils.addElement(eNote, "id", String.valueOf(note.getId()));
-            XMLUtils.addElement(eNote, "date", sdFormat.format(note.getDate()));
+            XMLUtils.addElement(eNote, "date", SD_FORMAT.format(note.getDate()));
             XMLUtils.addElement(eNote, "text", note.getText());
         });
         return eNoteList;

@@ -23,8 +23,8 @@ import java.util.Calendar;
  */
 public class NoteDialog extends JDialog {
 
-    private STContext context;
-    private STDocument document;
+    private final STContext context;
+    private final STDocument document;
 
     private JXDatePicker dpDate;
     private JSpinner spHour, spMinute;

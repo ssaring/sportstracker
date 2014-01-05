@@ -21,10 +21,10 @@ import javax.inject.Singleton;
 @Singleton
 public class XMLStorage implements IStorage {
 
-    private XMLSportTypeList xmlSportTypeList;
-    private XMLExerciseList xmlExerciseList;
-    private XMLNoteList xmlNoteList;
-    private XMLWeightList xmlWeightList;
+    private final XMLSportTypeList xmlSportTypeList;
+    private final XMLExerciseList xmlExerciseList;
+    private final XMLNoteList xmlNoteList;
+    private final XMLWeightList xmlWeightList;
 
     /**
      * Standard c'tor.

@@ -26,8 +26,8 @@ import java.util.Calendar;
  */
 public class WeightDialog extends JDialog {
 
-    private STContext context;
-    private STDocument document;
+    private final STContext context;
+    private final STDocument document;
 
     private JXDatePicker dpDate;
     private JSpinner spHour, spMinute;

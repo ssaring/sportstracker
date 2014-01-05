@@ -22,7 +22,7 @@ public class StatisticResultsDialog extends JDialog {
      */
     private static final String ACTION_CLOSE = "st.dlg.statistic_results.close";
 
-    private STContext context;
+    private final STContext context;
 
     /**
      * Standard c'tor. The method setStatisticResults() must be called before the

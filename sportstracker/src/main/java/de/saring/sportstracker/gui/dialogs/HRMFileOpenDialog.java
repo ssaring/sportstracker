@@ -24,7 +24,7 @@ public class HRMFileOpenDialog {
 
     private static final String DEFAULT_S710_DATA_DIRECTORY = "/var/polar";
 
-    private STContext context;
+    private final STContext context;
 
     /**
      * Standard c'tor.
@@ -67,7 +67,7 @@ public class HRMFileOpenDialog {
                 initialDirectory = new File(DEFAULT_S710_DATA_DIRECTORY);
             }
 
-            if (initialDirectory != null && initialDirectory.exists()) {
+            if (initialDirectory.exists()) {
                 fChooser.setCurrentDirectory(initialDirectory);
             }
         }

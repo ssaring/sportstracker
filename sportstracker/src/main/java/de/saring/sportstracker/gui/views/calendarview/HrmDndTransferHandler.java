@@ -31,9 +31,9 @@ import java.util.logging.Logger;
 public class HrmDndTransferHandler extends TransferHandler {
     private static final Logger LOGGER = Logger.getLogger(HrmDndTransferHandler.class.getName());
 
-    private STContext context;
-    private STController controller;
-    private CalendarWidget calendarWidget;
+    private final STContext context;
+    private final STController controller;
+    private final CalendarWidget calendarWidget;
 
     /**
      * Standard c'tor.

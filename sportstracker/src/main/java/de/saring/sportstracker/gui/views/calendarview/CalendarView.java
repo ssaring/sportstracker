@@ -20,8 +20,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
@@ -51,7 +49,7 @@ public class CalendarView extends BaseView {
     /**
      * The custom calendar widget.
      */
-    private CalendarWidget calendarWidget;
+    private final CalendarWidget calendarWidget;
 
     /**
      * The list of month names.

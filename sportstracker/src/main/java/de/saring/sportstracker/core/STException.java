@@ -14,7 +14,7 @@ public class STException extends Exception {
     /**
      * ID of exception.
      */
-    private STExceptionID id;
+    private final STExceptionID id;
 
     /**
      * Returns the exception ID.

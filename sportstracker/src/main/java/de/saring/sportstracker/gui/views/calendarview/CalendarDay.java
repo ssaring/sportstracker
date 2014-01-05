@@ -15,12 +15,12 @@ public class CalendarDay {
     /**
      * Date of calendar day.
      */
-    private Calendar date;
+    private final Calendar date;
 
     /**
      * List of the exercises entries of this day.
      */
-    private List<CalendarEntry> calendarEntries;
+    private final List<CalendarEntry> calendarEntries;
 
     /**
      * Creates a CalendarDay instance for the specified date.

@@ -25,7 +25,7 @@ import java.util.Optional;
  */
 public class CalendarWidget extends JComponent {
 
-    private STContext context;
+    private final STContext context;
     @Inject
     private STDocument document;
 

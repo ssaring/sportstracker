@@ -30,8 +30,8 @@ public class OptionsDialog extends JDialog {
     private static final String ACTION_OK = "st.dlg.options.ok";
     private static final String ACTION_CANCEL = "st.dlg.options.cancel";
 
-    private STContext context;
-    private STDocument document;
+    private final STContext context;
+    private final STDocument document;
 
     /**
      * Creates new OptionsDialog instance.
@@ -612,7 +612,7 @@ public class OptionsDialog extends JDialog {
      * This class is for combobox items for the look & feel selection.
      */
     private static class LAFComboBoxItem {
-        private LookAndFeelInfo lookAndFeelInfo;
+        private final LookAndFeelInfo lookAndFeelInfo;
 
         public LAFComboBoxItem(LookAndFeelInfo lookAndFeelInfo) {
             this.lookAndFeelInfo = lookAndFeelInfo;
@@ -632,8 +632,8 @@ public class OptionsDialog extends JDialog {
      * This class is for combobox items for automatic calculation type selection.
      */
     private static class AutoCalculationComboBoxItem {
-        private STOptions.AutoCalculation autoCalculation;
-        private String text;
+        private final STOptions.AutoCalculation autoCalculation;
+        private final String text;
 
         public AutoCalculationComboBoxItem(AutoCalculation autoCalculation, String text) {
             this.autoCalculation = autoCalculation;

@@ -8,8 +8,6 @@ import org.jdesktop.application.Action;
 
 import javax.inject.Inject;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -26,8 +24,8 @@ import java.util.regex.Pattern;
 public class FilterDialog extends JDialog {
     private static final Logger LOGGER = Logger.getLogger(FilterDialog.class.getName());
 
-    private STContext context;
-    private STDocument document;
+    private final STContext context;
+    private final STDocument document;
 
     /**
      * The exercise filter selected by the user when the dialog was closed.

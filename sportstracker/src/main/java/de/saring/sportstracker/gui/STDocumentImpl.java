@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +35,7 @@ public class STDocumentImpl implements STDocument {
     private static final String FILENAME_WEIGHT_LIST = "weights.xml";
     private static final String FILENAME_OPTIONS = "st-options.xml";
 
-    private STContext context;
+    private final STContext context;
 
     /**
      * The sport type list of the user.
@@ -62,7 +61,7 @@ public class STDocumentImpl implements STDocument {
     /**
      * The data storage instance of the application.
      */
-    private IStorage storage;
+    private final IStorage storage;
 
     /**
      * The directory where the application data of the user is stored.
@@ -170,7 +169,7 @@ public class STDocumentImpl implements STDocument {
                 // check for a custom data directory (optional)
                 if (parameter.startsWith(PARAMETER_DATA_DIR)) {
                     String dataDir = parameter.substring(PARAMETER_DATA_DIR.length()).trim();
-                    if (dataDir != null && dataDir.length() > 0) {
+                    if (dataDir.length() > 0) {
                         dataDirectory = dataDir;
                     }
                 }

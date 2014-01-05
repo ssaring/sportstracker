@@ -11,8 +11,6 @@ import de.saring.sportstracker.storage.IStorage;
 import de.saring.sportstracker.storage.XMLStorage;
 import org.apache.commons.cli.*;
 
-import java.util.Iterator;
-
 /**
  * This class in an importer of files exported from polarpersonaltrainer.com.
  * <p/>

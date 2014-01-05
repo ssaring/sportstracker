@@ -14,12 +14,9 @@ import org.jdesktop.application.Action;
 
 import javax.inject.Inject;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,8 +45,8 @@ public class SportTypeDialog extends JDialog {
     private static final String PROPERTY_SPORTSUBTYPE_SELECTED = "sportSubtypeSelected";
     private static final String PROPERTY_EQUIPMENT_SELECTED = "equipmentSelected";
 
-    private STContext context;
-    private STDocument document;
+    private final STContext context;
+    private final STDocument document;
 
     /**
      * The edited sport type.

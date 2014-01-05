@@ -76,13 +76,13 @@ public class OverviewDialog extends JDialog {
         DISTANCE, DURATION, ASCENT, CALORIES, EXERCISES, AVG_SPEED, SPORTSUBTYPE, EQUIPMENT, WEIGHT
     }
 
-    private STContext context;
-    private STDocument document;
+    private final STContext context;
+    private final STDocument document;
 
     /**
      * The panel containing the current chart.
      */
-    private ChartPanel chartPanel;
+    private final ChartPanel chartPanel;
 
     /**
      * Constants for action and property names.

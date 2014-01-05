@@ -16,7 +16,7 @@ public class CalendarEntry {
     /**
      * The displayed calendar entry.
      */
-    private IdDateObject entry;
+    private final IdDateObject entry;
     /**
      * The location rectangle inside the calendar widget which shows the entry (set while drawing).
      */

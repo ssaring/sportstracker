@@ -11,8 +11,6 @@ import de.saring.util.gui.TableCellRendererOddEven;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.standard.OrientationRequested;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
@@ -265,7 +263,7 @@ public abstract class BaseListView extends BaseView {
      * Cell renderer implementation for the notes table.
      */
     public class BaseListCellRenderer extends TableCellRendererOddEven {
-        private DateFormat dFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM);
+        private final DateFormat dFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM);
 
         /**
          * Standard c'tor.

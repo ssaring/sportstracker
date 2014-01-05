@@ -38,9 +38,9 @@ import java.util.logging.Logger;
 public class STControllerImpl implements STController {
     private static final Logger LOGGER = Logger.getLogger(STControllerImpl.class.getName());
 
-    private STContext context;
-    private STDocument document;
-    private STView view;
+    private final STContext context;
+    private final STDocument document;
+    private final STView view;
 
     @Inject
     private Provider<ExerciseDialog> prExerciseDialog;

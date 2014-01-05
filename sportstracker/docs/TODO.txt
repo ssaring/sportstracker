@@ -18,10 +18,9 @@ Java 8 support status (in branch java_8):
   is still in Java 7 mode, because of mixed Groovy/Java compilation)
 
 Java 8 TODOs:
-- fix all warnings shown by IDEA code inspector
 - use new Java Date API
-- update documentation in ReadMe / website
 - usage of new Optional class in interfaces for avoiding NullPointerExceptions
+- update documentation in ReadMe / website
 
 Dependency Injection:
 - use Dagger as an alternative to the Guice framework,

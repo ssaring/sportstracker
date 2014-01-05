@@ -23,8 +23,8 @@ import java.text.SimpleDateFormat;
  */
 public class StatisticDialog extends JDialog {
 
-    private STContext context;
-    private STDocument document;
+    private final STContext context;
+    private final STDocument document;
 
     @Inject
     private Provider<FilterDialog> prFilterDialog;

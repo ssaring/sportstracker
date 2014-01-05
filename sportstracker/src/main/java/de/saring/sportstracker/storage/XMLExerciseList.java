@@ -27,7 +27,7 @@ public class XMLExerciseList {
     /**
      * The date and time parser instance.
      */
-    private SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    private final SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     /**
      * Reads the exercise list from the specified XML file and maps the sport types

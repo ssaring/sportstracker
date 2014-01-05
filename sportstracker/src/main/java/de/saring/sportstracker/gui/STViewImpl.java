@@ -9,8 +9,6 @@ import de.saring.sportstracker.gui.views.listview.ExerciseListView;
 import de.saring.sportstracker.gui.views.listview.NoteListView;
 import de.saring.sportstracker.gui.views.listview.WeightListView;
 import de.saring.util.data.IdDateObjectList;
-import de.saring.util.data.IdObject;
-import de.saring.util.data.IdObjectListChangeListener;
 import de.saring.util.gui.mac.MacSpecials;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.FormatUtils;
@@ -38,9 +36,9 @@ public class STViewImpl extends FrameView implements STView {
 
     private static final String SEPARATOR = "---";
 
-    private STContext context;
-    private STDocument document;
-    private STController controller;
+    private final STContext context;
+    private final STDocument document;
+    private final STController controller;
 
     /**
      * The currently displayed view.
@@ -50,22 +48,22 @@ public class STViewImpl extends FrameView implements STView {
     /**
      * The view panel which displays the exercises in a (month) calendar.
      */
-    private CalendarView calendarView;
+    private final CalendarView calendarView;
 
     /**
      * The view panel which displays the exercise list.
      */
-    private ExerciseListView exerciseListView;
+    private final ExerciseListView exerciseListView;
 
     /**
      * The view panel which displays the note list.
      */
-    private NoteListView noteListView;
+    private final NoteListView noteListView;
 
     /**
      * The view panel which displays the weight list.
      */
-    private WeightListView weightListView;
+    private final WeightListView weightListView;
 
 
     /**

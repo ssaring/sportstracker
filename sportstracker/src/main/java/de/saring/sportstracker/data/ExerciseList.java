@@ -5,7 +5,6 @@ import de.saring.util.data.IdDateObjectList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-import java.util.stream.Collectors;
 
 /**
  * This class contains a list of all exercises of the user and provides access

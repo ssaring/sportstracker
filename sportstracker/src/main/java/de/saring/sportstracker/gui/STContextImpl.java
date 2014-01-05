@@ -20,12 +20,12 @@ import java.awt.*;
 @Singleton
 public class STContextImpl implements STContext {
 
-    private ApplicationContext appContext;
+    private final ApplicationContext appContext;
 
     /**
      * The helper class for reading application resources.
      */
-    private ResourceReader resReader;
+    private final ResourceReader resReader;
 
     /**
      * The format utils for the current unit system.

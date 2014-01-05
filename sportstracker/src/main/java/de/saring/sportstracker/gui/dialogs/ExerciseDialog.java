@@ -22,8 +22,6 @@ import org.jdesktop.application.Action;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.File;
@@ -44,8 +42,8 @@ import java.util.logging.Logger;
 public class ExerciseDialog extends JDialog {
     private static final Logger LOGGER = Logger.getLogger(ExerciseDialog.class.getName());
 
-    private STContext context;
-    private STDocument document;
+    private final STContext context;
+    private final STDocument document;
 
     @Inject
     private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
@@ -57,7 +55,7 @@ public class ExerciseDialog extends JDialog {
      */
     private Exercise exercise;
 
-    private FormatUtils formatUtils;
+    private final FormatUtils formatUtils;
 
     /**
      * Index of the previous similar exercise in the exercise list from which
