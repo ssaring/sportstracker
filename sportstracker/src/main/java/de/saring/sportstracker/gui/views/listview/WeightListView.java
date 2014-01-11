@@ -11,7 +11,7 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * This view class displays the list of the users weight entries in a table view.
@@ -131,7 +131,7 @@ public class WeightListView extends BaseListView {
         public Class<?> getColumnClass(int col) {
             switch (col) {
                 case COLUMN_DATE:
-                    return Date.class;
+                    return LocalDateTime.class;
                 case COLUMN_WEIGHT:
                     return Float.class;
                 default:
@@ -148,7 +148,7 @@ public class WeightListView extends BaseListView {
 
             switch (col) {
                 case COLUMN_DATE:
-                    return weight.getDate();
+                    return weight.getDateTime();
                 case COLUMN_WEIGHT:
                     return weight.getValue();
                 case COLUMN_COMMENT:

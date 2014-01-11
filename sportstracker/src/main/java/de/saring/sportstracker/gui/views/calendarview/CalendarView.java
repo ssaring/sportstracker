@@ -24,8 +24,9 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 
 /**
  * This view class displays all (or a filtered list) exercises of the selected month in a calendar
@@ -92,9 +93,9 @@ public class CalendarView extends BaseView {
         }
 
         // start with current date
-        Calendar calToday = Calendar.getInstance();
-        currentMonth = calToday.get(Calendar.MONTH) + 1;
-        currentYear = calToday.get(Calendar.YEAR);
+        LocalDate now = LocalDate.now();
+        currentMonth = now.getMonthValue();
+        currentYear = now.getYear();
 
         // setup actions
         ActionMap actionMap = getContext().getSAFContext().getActionMap(getClass(), this);
@@ -209,10 +210,8 @@ public class CalendarView extends BaseView {
             IdDateObject dateEntry = (IdDateObject) entry;
 
             // set calendar to month/year of the entry
-            Calendar calEntry = Calendar.getInstance();
-            calEntry.setTime(dateEntry.getDate());
-            currentYear = calEntry.get(Calendar.YEAR);
-            currentMonth = calEntry.get(Calendar.MONTH) + 1;
+            currentYear = dateEntry.getDateTime().getYear();
+            currentMonth = dateEntry.getDateTime().getMonthValue();
             updateCalendar();
 
             calendarWidget.selectEntry(dateEntry);
@@ -285,9 +284,9 @@ public class CalendarView extends BaseView {
      */
     @Action(name = ACTION_TODAY)
     public void selectToday() {
-        Calendar calToday = Calendar.getInstance();
-        currentMonth = calToday.get(Calendar.MONTH) + 1;
-        currentYear = calToday.get(Calendar.YEAR);
+        LocalDate now = LocalDate.now();
+        currentMonth = now.getMonthValue();
+        currentYear = now.getYear();
         updateCalendar();
     }
 
@@ -300,65 +299,18 @@ public class CalendarView extends BaseView {
         laMonth.setText(arMonthNames[currentMonth - 1]);
         laYear.setText(String.valueOf(currentYear));
 
-        // calculate the first displayed day in calendar (this is mostly a day of the previous
-        // month)
-        Calendar cMonthStart = Calendar.getInstance();
-        cMonthStart.clear();
+        // calculate the first displayed day in calendar, this is mostly a day of the previous month
+        // (depending whether week start is configured as sunday or monday)
+        LocalDate dateMonthStart = LocalDate.of(currentYear, currentMonth, 1);
         boolean isWeekStartSunday = getDocument().getOptions().isWeekStartSunday();
-        cMonthStart.setFirstDayOfWeek(isWeekStartSunday ? Calendar.SUNDAY : Calendar.MONDAY);
-        cMonthStart.set(currentYear, currentMonth - 1, 1, 0, 0, 0);
-        Calendar cCalendarStart = (Calendar) cMonthStart.clone();
+        LocalDate dateCalendarStart = isWeekStartSunday ?
+                dateMonthStart.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY)) :
+                dateMonthStart.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
-        if (isWeekStartSunday) {
-            switch (cMonthStart.get(Calendar.DAY_OF_WEEK)) {
-                case Calendar.MONDAY:
-                    cCalendarStart.add(Calendar.DATE, -1);
-                    break;
-                case Calendar.TUESDAY:
-                    cCalendarStart.add(Calendar.DATE, -2);
-                    break;
-                case Calendar.WEDNESDAY:
-                    cCalendarStart.add(Calendar.DATE, -3);
-                    break;
-                case Calendar.THURSDAY:
-                    cCalendarStart.add(Calendar.DATE, -4);
-                    break;
-                case Calendar.FRIDAY:
-                    cCalendarStart.add(Calendar.DATE, -5);
-                    break;
-                case Calendar.SATURDAY:
-                    cCalendarStart.add(Calendar.DATE, -6);
-                    break;
-            }
-        } else {
-            switch (cMonthStart.get(Calendar.DAY_OF_WEEK)) {
-                case Calendar.TUESDAY:
-                    cCalendarStart.add(Calendar.DATE, -1);
-                    break;
-                case Calendar.WEDNESDAY:
-                    cCalendarStart.add(Calendar.DATE, -2);
-                    break;
-                case Calendar.THURSDAY:
-                    cCalendarStart.add(Calendar.DATE, -3);
-                    break;
-                case Calendar.FRIDAY:
-                    cCalendarStart.add(Calendar.DATE, -4);
-                    break;
-                case Calendar.SATURDAY:
-                    cCalendarStart.add(Calendar.DATE, -5);
-                    break;
-                case Calendar.SUNDAY:
-                    cCalendarStart.add(Calendar.DATE, -6);
-                    break;
-            }
-        }
-
-        // create the datetimes for all calendar cells (6 weeks)
+        // create the CalendarDays for all calendar cells (6 weeks)
         CalendarDay[] arCalendarDays = new CalendarDay[7 * 6];
         for (int i = 0; i < arCalendarDays.length; i++) {
-            Calendar cTemp = (Calendar) cCalendarStart.clone();
-            cTemp.add(Calendar.DATE, i);
-            arCalendarDays[i] = new CalendarDay(cTemp);
+            arCalendarDays[i] = new CalendarDay(dateCalendarStart.plusDays(i));
         }
 
         // fill the CalendarDay array with all notes, weights and exercises in this timespan
@@ -381,17 +333,17 @@ public class CalendarView extends BaseView {
      */
     private void setEntriesInCalendarDays(final CalendarDay[] arCalendarDays,
                                           final IdDateObjectList<? extends IdDateObject> dateObjectList) {
-        Date calendarStart = arCalendarDays[0].getDate().getTime();
+        long calendarStartEpochDay = arCalendarDays[0].getDate().toEpochDay();
 
         for (IdDateObject dateObject : dateObjectList) {
-            // calculate the timespan between exercise day and first calendar day
-            long diffMillis = dateObject.getDate().getTime() - calendarStart.getTime();
-            if (diffMillis >= 0) {
-                int diffDays = (int) (diffMillis / (24 * 60 * 60 * 1000));
-                if (diffDays < arCalendarDays.length) {
-                    CalendarEntry tempEntry = new CalendarEntry(dateObject);
-                    arCalendarDays[diffDays].getCalendarEntries().add(tempEntry);
-                }
+
+            // calculate the timespan in days between exercise day and first calendar day
+            long dateObjectEpochDay = dateObject.getDateTime().toLocalDate().toEpochDay();
+            int diffDays = (int) (dateObjectEpochDay - calendarStartEpochDay);
+
+            if (diffDays >= 0 && diffDays < arCalendarDays.length) {
+                CalendarEntry tempEntry = new CalendarEntry(dateObject);
+                arCalendarDays[diffDays].getCalendarEntries().add(tempEntry);
             }
         }
     }
@@ -409,7 +361,7 @@ public class CalendarView extends BaseView {
         }
 
         // set the date to be used when the user creates a new entry 
-        getController().setDateForNewEntries(calDay.getDate().getTime());
+        getController().setDateForNewEntries(calDay.getDate());
 
         // left mouse button ?
         if (me.getButton() == MouseEvent.BUTTON1) {

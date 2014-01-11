@@ -86,7 +86,7 @@ class SmartsyncCSVParser extends AbstractExerciseParser {
             } else if (line.startsWith("Description,")) {
                 // not supported in EVExercise
             } else if (line.startsWith("Date,")) {
-                // parse exercise date (mm/dd/yyyy)
+                // parse exercise dateTime (mm/dd/yyyy)
                 exeMonth = line.substring(5, 7).toInteger() - 1
                 exeDay = line.substring(8, 10).toInteger()
                 exeYear = line.substring(11, 15).toInteger()

@@ -9,7 +9,7 @@ import org.jdom2.Element;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 /**
  * This class is for reading or writing a WeightList object from or to a XML file.
@@ -23,11 +23,6 @@ public class XMLWeightList {
      * The XSD filename with the structure of the weight list.
      */
     private static final String XSD_WEIGHTS = "weights.xsd";
-
-    /**
-     * The date and time parser instance.
-     */
-    private static final SimpleDateFormat SD_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     /**
      * Reads the weight list from the specified XML file.
@@ -77,7 +72,7 @@ public class XMLWeightList {
         // get and convert date (format allready checked by XSD schema)
         String strDate = eWeight.getChildText("date");
         try {
-            weight.setDate(SD_FORMAT.parse(strDate));
+            weight.setDateTime(LocalDateTime.parse(strDate, XMLUtils.DATE_TIME_FORMAT));
         } catch (Exception e) {
             throw new IllegalArgumentException("Failed to parse weight with ID '" + weight.getId() +
                     "', the date format '" + strDate + "' is not valid!");
@@ -121,7 +116,7 @@ public class XMLWeightList {
             eWeightList.addContent(eWeight);
 
             XMLUtils.addElement(eWeight, "id", String.valueOf(weight.getId()));
-            XMLUtils.addElement(eWeight, "date", SD_FORMAT.format(weight.getDate()));
+            XMLUtils.addElement(eWeight, "date", weight.getDateTime().format(XMLUtils.DATE_TIME_FORMAT));
             XMLUtils.addElement(eWeight, "value", String.valueOf(weight.getValue()));
             XMLUtils.addElement(eWeight, "comment", weight.getComment());
         });

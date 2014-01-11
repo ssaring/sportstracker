@@ -85,7 +85,7 @@ class PolarHRMParser extends AbstractExerciseParser {
         // does the HRM file uses metric or english units ?
         def fMetricUnits = strSMode[7] == '0'
 
-        // parse exercise date (yyyymmdd)
+        // parse exercise dateTime (yyyymmdd)
         def strDate = getValueFromBlock(lParamsBlock, 'Date')
         def exeYear = strDate.substring(0, 4).toInteger()
         def exeMonth = strDate.substring(4, 6).toInteger() - 1

@@ -2,8 +2,8 @@ package de.saring.sportstracker.data;
 
 import de.saring.sportstracker.data.Exercise.IntensityType;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 
 /**
  * This class defines the criterias for filtering the exercise list (e.g. for
@@ -17,12 +17,12 @@ public final class ExerciseFilter {
     /**
      * The exercise dates needs to be greater or same as this start date.
      */
-    private Date dateStart;
+    private LocalDate dateStart;
 
     /**
      * The exercise dates needs to be lesser or same as this end date.
      */
-    private Date dateEnd;
+    private LocalDate dateEnd;
 
     /**
      * The exercise needs to have the same sport type (ignore, when null).
@@ -56,19 +56,19 @@ public final class ExerciseFilter {
      */
     private boolean regularExpressionMode = false;
 
-    public Date getDateStart() {
+    public LocalDate getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(LocalDate dateStart) {
         this.dateStart = dateStart;
     }
 
-    public Date getDateEnd() {
+    public LocalDate getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(LocalDate dateEnd) {
         this.dateEnd = dateEnd;
     }
 
@@ -128,18 +128,11 @@ public final class ExerciseFilter {
      * @return the default filter object
      */
     public static ExerciseFilter createDefaultExerciseFilter() {
-
-        Calendar cStart = Calendar.getInstance();
-        Calendar cEnd = Calendar.getInstance();
-        Calendar cNow = Calendar.getInstance();
-        cStart.clear();
-        cEnd.clear();
-        cStart.set(cNow.get(Calendar.YEAR), cNow.get(Calendar.MONTH), 1, 0, 0, 0);
-        cEnd.set(cNow.get(Calendar.YEAR), cNow.get(Calendar.MONTH), cNow.getActualMaximum(Calendar.DAY_OF_MONTH), 23, 59, 59);
+        LocalDate now = LocalDate.now();
 
         ExerciseFilter filter = new ExerciseFilter();
-        filter.dateStart = cStart.getTime();
-        filter.dateEnd = cEnd.getTime();
+        filter.dateStart = now.with(TemporalAdjusters.firstDayOfMonth());
+        filter.dateEnd = now.with(TemporalAdjusters.lastDayOfMonth());
         filter.sportType = null;
         filter.sportSubType = null;
         filter.intensity = null;

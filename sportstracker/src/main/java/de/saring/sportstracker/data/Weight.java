@@ -54,7 +54,7 @@ public final class Weight extends IdDateObject {
      */
     public Weight clone(int cloneId) {
         Weight clone = new Weight(cloneId);
-        clone.setDate(this.getDate());
+        clone.setDateTime(this.getDateTime());
         clone.setValue(this.getValue());
         clone.setComment(this.getComment());
         return clone;
@@ -65,7 +65,7 @@ public final class Weight extends IdDateObject {
         StringBuilder sBuilder = new StringBuilder();
         sBuilder.append(this.getClass().getName()).append(":\n");
         sBuilder.append(" [id=").append(this.getId()).append("\n");
-        sBuilder.append("  date=").append(this.getDate()).append("\n");
+        sBuilder.append("  date=").append(this.getDateTime()).append("\n");
         sBuilder.append("  value=").append(this.value).append("\n");
         sBuilder.append("  comment=").append(this.comment).append("]\n");
         return sBuilder.toString();

@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.swing.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -46,7 +46,7 @@ public class STControllerTest {
         exerciseList = new ExerciseList();
         for (int exeID : EXERCISE_IDS) {
             Exercise exe = new Exercise(exeID);
-            exe.setDate(new Date());
+            exe.setDateTime(LocalDateTime.now());
             exerciseList.set(exe);
         }
     }

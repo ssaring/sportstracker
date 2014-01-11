@@ -19,6 +19,9 @@ v6.0.0:
     -> free signed certificates are not available for open source projects
   - use of Lambda features in module st-util
   - use of Lambda features in module sportstracker
+  - use new Java Date Time API (JSR 310) in all SportsTracker modules
+    - provides a better API for creation, conversion and formatting
+    - provides type separation of date, time and date time (less errors)
 
 v5.8.0 (not released):
  SportsTracker changes:

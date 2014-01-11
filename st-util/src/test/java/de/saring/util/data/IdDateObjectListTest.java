@@ -3,8 +3,8 @@ package de.saring.util.data;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -25,9 +25,9 @@ public class IdDateObjectListTest {
     @Before
     public void setUp() {
         list = new IdDateObjectList<>();
-        list.set(new DateNameObject(1, createDate(2009, 01, 05, 21, 30, 0), "one"));
-        list.set(new DateNameObject(2, createDate(2008, 11, 11, 20, 30, 0), "two"));
-        list.set(new DateNameObject(3, createDate(2009, 01, 07, 11, 40, 0), "three"));
+        list.set(new DateNameObject(1, LocalDateTime.of(2009, 02, 05, 21, 30, 0), "one"));
+        list.set(new DateNameObject(2, LocalDateTime.of(2008, 12, 11, 20, 30, 0), "two"));
+        list.set(new DateNameObject(3, LocalDateTime.of(2009, 02, 07, 11, 40, 0), "three"));
 
         checkDateOrder();
     }
@@ -37,7 +37,7 @@ public class IdDateObjectListTest {
      */
     @Test
     public void testSetAdd() {
-        list.set(new DateNameObject(4, createDate(2008, 12, 25, 21, 30, 0), "four"));
+        list.set(new DateNameObject(4, LocalDateTime.of(2008, 12, 25, 21, 30, 0), "four"));
         assertEquals(list.size(), 4);
         assertEquals("four", list.getAt(1).getName());
         checkDateOrder();
@@ -50,7 +50,7 @@ public class IdDateObjectListTest {
     @Test
     public void testSetReplaceNew() {
         assertEquals("three", list.getAt(2).getName());
-        list.set(new DateNameObject(3, createDate(2009, 01, 07, 11, 40, 0), "three-new"));
+        list.set(new DateNameObject(3, LocalDateTime.of(2009, 02, 07, 11, 40, 0), "three-new"));
         assertEquals(list.size(), 3);
         assertEquals("three-new", list.getAt(2).getName());
         checkDateOrder();
@@ -64,7 +64,7 @@ public class IdDateObjectListTest {
     public void testSetReplaceModified() {
         DateNameObject no3 = list.getAt(2);
         assertEquals("three", no3.getName());
-        no3.setDate(createDate(2008, 06, 12, 12, 45, 0));
+        no3.setDateTime(LocalDateTime.of(2008, 07, 12, 12, 45, 0));
         no3.setName("three-new");
 
         list.set(no3);
@@ -90,14 +90,13 @@ public class IdDateObjectListTest {
     }
 
     /**
-     * Test of getEntriesInTimeRange(): must find all entries, the time range
+     * Test of getEntriesInDateRange(): must find all entries, the date range
      * includes the earliest and latest entry.
      */
     @Test
-    public void testGetEntriesInTimeRangeFindAll() {
-        List<DateNameObject> lFound = list.getEntriesInTimeRange(
-                createDate(2008, 11, 11, 20, 30, 0),
-                createDate(2009, 01, 07, 11, 40, 0));
+    public void testGetEntriesInDateRangeFindAll() {
+        List<DateNameObject> lFound = list.getEntriesInDateRange(
+                LocalDate.of(2008, 12, 11), LocalDate.of(2009, 02, 07));
 
         assertEquals(3, lFound.size());
         assertEquals("two", lFound.get(0).getName());
@@ -106,42 +105,34 @@ public class IdDateObjectListTest {
     }
 
     /**
-     * Test of getEntriesInTimeRange(): must find only one entries, the time
+     * Test of getEntriesInDateRange(): must find only one entries, the date
      * range does not include the earliest and latest entry.
      */
     @Test
-    public void testGetEntriesInTimeRangeFindOne() {
-        List<DateNameObject> lFound = list.getEntriesInTimeRange(
-                createDate(2008, 11, 11, 20, 30, 1),
-                createDate(2009, 01, 07, 11, 39, 59));
+    public void testGetEntriesInDateRangeFindOne() {
+        List<DateNameObject> lFound = list.getEntriesInDateRange(
+                LocalDate.of(2008, 12, 12), LocalDate.of(2009, 2, 6));
 
         assertEquals(1, lFound.size());
         assertEquals("one", lFound.get(0).getName());
     }
 
     /**
-     * Test of getEntriesInTimeRange(): must fail when one of the dates is null.
+     * Test of getEntriesInDateRange(): must fail when one of the dates is null.
      */
     @Test(expected = NullPointerException.class)
-    public void testGetEntriesInTimeRangeNull() {
-        list.getEntriesInTimeRange(new Date(), null);
+    public void testGetEntriesInDateRangeNull() {
+        list.getEntriesInDateRange(LocalDate.now(), null);
     }
 
     /**
-     * Test of getEntriesInTimeRange(): must fail when one of the dates is null.
+     * Test of getEntriesInDateRange(): must fail when the begin date ist after end date.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testGetEntriesInTimeRangeInvalidRange() {
-        list.getEntriesInTimeRange(
-                createDate(2009, 11, 11, 20, 30, 0),
-                createDate(2009, 10, 11, 20, 30, 0));
-    }
-
-    private Date createDate(int year, int month, int day, int hour, int minute, int second) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear();
-        calendar.set(year, month, day, hour, minute, second);
-        return calendar.getTime();
+    public void testGetEntriesInDateRangeInvalidRange() {
+        list.getEntriesInDateRange(
+                LocalDate.of(2009, 12, 11),
+                LocalDate.of(2009, 11, 11));
     }
 
     /**
@@ -150,11 +141,11 @@ public class IdDateObjectListTest {
      * bigger then the date of the current exercise).
      */
     private void checkDateOrder() {
-        Date previousDate = createDate(1970, 1, 1, 0, 0, 0);
+        LocalDateTime previousDate = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
 
         for (IdDateObject temp : list) {
-            assertTrue(previousDate.before(temp.getDate()));
-            previousDate = temp.getDate();
+            assertTrue(previousDate.isBefore(temp.getDateTime()));
+            previousDate = temp.getDateTime();
         }
     }
 
@@ -165,9 +156,9 @@ public class IdDateObjectListTest {
 
         private String name;
 
-        public DateNameObject(int id, Date date, String name) {
+        public DateNameObject(int id, LocalDateTime dateTime, String name) {
             super(id);
-            setDate(date);
+            setDateTime(dateTime);
             this.name = name;
         }
 

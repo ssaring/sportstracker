@@ -1,10 +1,10 @@
 package de.saring.util.data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Abstract base class for all objects which needs to have an ID for referencing
- * and contain a date.
+ * and contain a dateTime and a time.
  *
  * @author Stefan Saring
  * @version 1.0
@@ -12,9 +12,9 @@ import java.util.Date;
 public abstract class IdDateObject extends IdObject {
 
     /**
-     * The date and time of this object.
+     * The dateTime and time of this object.
      */
-    private Date date;
+    private LocalDateTime dateTime;
 
     /**
      * Standard c'tor.
@@ -25,12 +25,12 @@ public abstract class IdDateObject extends IdObject {
         super(id);
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateTime(LocalDateTime date) {
+        this.dateTime = date;
     }
 
     /**
@@ -43,7 +43,7 @@ public abstract class IdDateObject extends IdObject {
         StringBuilder sBuilder = new StringBuilder();
         sBuilder.append(this.getClass().getName()).append(":\n");
         sBuilder.append(" [id=").append(this.getId()).append("\n");
-        sBuilder.append("  date=").append(this.date).append("]\n");
+        sBuilder.append("  dateTime=").append(this.dateTime).append("]\n");
         return sBuilder.toString();
     }
 }

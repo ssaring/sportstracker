@@ -13,8 +13,10 @@ import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,10 +67,10 @@ public class CalendarWidget extends JComponent {
     private double dCellHeight;
 
     /**
-     * The Calendar instance of the current day (kept as a member,
+     * The LocalDate instance of the current day (kept as a member,
      * otherwise it will be created too often).
      */
-    private Calendar calendarToday;
+    private LocalDate today;
 
     // the calendar colors
     private final Color COLOR_BACKGROUND1;
@@ -285,7 +287,7 @@ public class CalendarWidget extends JComponent {
      * @param g the graphics context
      */
     private void drawCalendar(Graphics2D g) {
-        calendarToday = Calendar.getInstance();
+        today = LocalDate.now();
 
         // calculate the weekday line height
         weekdayLineHeight = g.getFontMetrics().getHeight() + (2 * COLUMN_NAME_VERTICAL_SPACE);
@@ -329,7 +331,7 @@ public class CalendarWidget extends JComponent {
                     drawCalendarDayCell(g, arCalendarDays[cellIndex], exercisesOfWeek,
                             xPos, yPos, cellClipFull, cellClipWithBorderSpace);
                 } else {
-                    int weekNr = arCalendarDays[row * 7].getDate().get(Calendar.WEEK_OF_YEAR);
+                    int weekNr = arCalendarDays[row * 7].getDate().get(ChronoField.ALIGNED_WEEK_OF_YEAR);
                     drawWeekSummaryCell(g, String.valueOf(weekNr), exercisesOfWeek, xPos, yPos);
                 }
 
@@ -443,15 +445,14 @@ public class CalendarWidget extends JComponent {
         // => use bold font for today
         Font fontDefault = getFont();
         FontMetrics fontMetrics = g.getFontMetrics();
-        Calendar calTemp = calendarDay.getDate();
-        boolean isSameDay = isSameDay(calTemp, calendarToday);
+        boolean isSameDay = calendarDay.getDate().equals(today);
         if (isSameDay) {
             g.setFont(fontDefault.deriveFont(fontDefault.getStyle() | Font.BOLD));
             fontMetrics = g.getFontMetrics();
         }
         g.setColor(getWeekDayNumberColor(calendarDay, isSameDay));
 
-        String strDayNr = String.valueOf(calendarDay.getDate().get(Calendar.DAY_OF_MONTH));
+        String strDayNr = String.valueOf(calendarDay.getDate().getDayOfMonth());
         double textWidth = fontMetrics.getStringBounds(strDayNr, g).getWidth();
         int dayNrXPos = xPos + (int) (dCellWidth - textWidth) - CELL_BORDER_SPACE;
         int dayNrYPos = yPos + CELL_BORDER_SPACE + fontMetrics.getAscent();
@@ -550,10 +551,10 @@ public class CalendarWidget extends JComponent {
      */
     private Color getWeekDayNumberColor(CalendarDay calendarDay, boolean isToday) {
 
-        boolean isSunday = calendarDay.getDate().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
+        boolean isSunday = calendarDay.getDate().getDayOfWeek() == DayOfWeek.SUNDAY;
         boolean isInsideCurrentMonth =
-                calendarDay.getDate().get(Calendar.MONTH) == displayedMonth - 1 &&
-                        calendarDay.getDate().get(Calendar.YEAR) == displayedYear;
+                calendarDay.getDate().getMonthValue() == displayedMonth &&
+                        calendarDay.getDate().getYear() == displayedYear;
 
         // use black color, but grey for days outside of month and red for sundays,
         // but highlight today with different colors
@@ -628,19 +629,6 @@ public class CalendarWidget extends JComponent {
 
     private int getColumnIndexForSunday() {
         return document.getOptions().isWeekStartSunday() ? 0 : 6;
-    }
-
-    /**
-     * Returns true if both Calendar instances reference the same day.
-     *
-     * @param cal1 first Calendar instance
-     * @param cal2 second Calendar instance
-     * @return true when it's the same day
-     */
-    private boolean isSameDay(Calendar cal1, Calendar cal2) {
-        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
-                cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH);
     }
 
     /**

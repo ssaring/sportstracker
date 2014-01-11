@@ -252,7 +252,7 @@ public final class Exercise extends IdDateObject implements Cloneable {
      */
     public Exercise clone(int cloneId) {
         Exercise clone = new Exercise(cloneId);
-        clone.setDate(this.getDate());
+        clone.setDateTime(this.getDateTime());
         clone.setSportType(this.getSportType());
         clone.setSportSubType(this.getSportSubType());
         clone.setDuration(this.getDuration());
@@ -274,7 +274,7 @@ public final class Exercise extends IdDateObject implements Cloneable {
         StringBuilder sBuilder = new StringBuilder();
         sBuilder.append(this.getClass().getName()).append(":\n");
         sBuilder.append(" [id=").append(this.getId()).append("\n");
-        sBuilder.append("  date=").append(this.getDate()).append("\n");
+        sBuilder.append("  date=").append(this.getDateTime()).append("\n");
         sBuilder.append("  sportType=").append(this.sportType).append("\n");
         sBuilder.append("  sportSubType=").append(this.sportSubType).append("\n");
         sBuilder.append("  duration=").append(this.duration).append("\n");

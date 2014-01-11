@@ -1,7 +1,7 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ public class CalendarDay {
     /**
      * Date of calendar day.
      */
-    private final Calendar date;
+    private final LocalDate date;
 
     /**
      * List of the exercises entries of this day.
@@ -27,12 +27,12 @@ public class CalendarDay {
      *
      * @param date the date of the calendar day
      */
-    public CalendarDay(Calendar date) {
+    public CalendarDay(LocalDate date) {
         this.date = date;
         this.calendarEntries = new ArrayList<>();
     }
 
-    public Calendar getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

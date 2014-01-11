@@ -2,6 +2,7 @@ package de.saring.sportstracker.data;
 
 import de.saring.util.data.IdDateObjectList;
 
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -69,7 +70,8 @@ public final class ExerciseList extends IdDateObjectList<Exercise> {
     private boolean filterExercise(Exercise exercise, ExerciseFilter filter) {
 
         // make sure that the exercise is in the specified time period
-        if (filter.getDateStart().after(exercise.getDate()) || filter.getDateEnd().before(exercise.getDate())) {
+        LocalDate exerciseDate = exercise.getDateTime().toLocalDate();
+        if (filter.getDateStart().isAfter(exerciseDate) || filter.getDateEnd().isBefore(exerciseDate)) {
             return false;
         }
 

@@ -12,6 +12,7 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.Date310Utils;
 import de.saring.util.gui.DialogUtils;
 import de.saring.util.gui.GuiCreateUtils;
 import de.saring.util.unitcalc.CalculationUtils;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
@@ -193,13 +195,10 @@ public class ExerciseDialog extends JDialog {
      */
     private void setInitialValues() {
 
-        // set date (formating is done by the textfield) and time
-        dpDate.setDate(exercise.getDate());
-
-        Calendar calTemp = Calendar.getInstance();
-        calTemp.setTime(exercise.getDate());
-        spHour.setValue(calTemp.get(Calendar.HOUR_OF_DAY));
-        spMinute.setValue(calTemp.get(Calendar.MINUTE));
+        // set date (formatting is done by the textfield) and time
+        dpDate.setDate(Date310Utils.localDateTimeToDate(exercise.getDateTime()));
+        spHour.setValue(exercise.getDateTime().getHour());
+        spMinute.setValue(exercise.getDateTime().getMinute());
 
         // select the exercise sport type in the combobox (same order as in sport type list)
         // => if there is only one select it as default
@@ -546,12 +545,11 @@ public class ExerciseDialog extends JDialog {
         }
 
         // store date and time of exercise
-        Calendar calTemp = Calendar.getInstance();
-        calTemp.setTime(dpDate.getDate());
-        calTemp.set(Calendar.HOUR_OF_DAY, (Integer) spHour.getValue());
-        calTemp.set(Calendar.MINUTE, (Integer) spMinute.getValue());
-        calTemp.set(Calendar.SECOND, 0);
-        newExercise.setDate(calTemp.getTime());
+        LocalDateTime newDateTime = Date310Utils.dateToLocalDateTime(dpDate.getDate());
+        newDateTime = newDateTime.withHour((Integer) spHour.getValue());
+        newDateTime = newDateTime.withMinute((Integer) spMinute.getValue());
+        newDateTime = newDateTime.withSecond(0);
+        newExercise.setDateTime(newDateTime);
 
         // check and get sport type
         int selSportTypeIndex = cbSportType.getSelectedIndex();

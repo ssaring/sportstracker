@@ -1,5 +1,7 @@
 package de.saring.util.data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +31,7 @@ public class IdDateObjectList<T extends IdDateObject> extends IdObjectList<T> {
     @Override
     public void set(T t) {
         Objects.requireNonNull(t, "IdDateObject must not be null");
-        Objects.requireNonNull(t.getDate(), "Date must not be null!");
+        Objects.requireNonNull(t.getDateTime(), "DateTime must not be null!");
 
         if (t.getId() <= 0) {
             throw new IllegalArgumentException("ID must be a positive integer > 0!");
@@ -43,7 +45,7 @@ public class IdDateObjectList<T extends IdDateObject> extends IdObjectList<T> {
             for (int i = 0; i < getIDObjects().size(); i++) {
                 IdDateObject temp = getIDObjects().get(i);
 
-                if (t.getDate().before(temp.getDate())) {
+                if (t.getDateTime().isBefore(temp.getDateTime())) {
                     getIDObjects().add(i, t);
                     return;
                 }
@@ -55,25 +57,26 @@ public class IdDateObjectList<T extends IdDateObject> extends IdObjectList<T> {
     }
 
     /**
-     * Returns all IdDateObject entries of this list for which their date is in
-     * the specified time range.
+     * Returns all IdDateObject entries of this list for which their datetime is in
+     * the specified date range.
      *
      *
-     * @param dtStart start date of the time range (inclusive)
-     * @param dtEnd end date of the time range (inclusive)
+     * @param dStart start date of the time range (inclusive)
+     * @param dEnd end date of the time range (inclusive)
      * @return list of entries in this time range
      */
-    public List<T> getEntriesInTimeRange(Date dtStart, Date dtEnd) {
-        Objects.requireNonNull(dtStart, "Start date must not be null");
-        Objects.requireNonNull(dtEnd, "End date must not be null");
+    public List<T> getEntriesInDateRange(LocalDate dStart, LocalDate dEnd) {
+        Objects.requireNonNull(dStart, "Start date must not be null");
+        Objects.requireNonNull(dEnd, "End date must not be null");
 
-        if (dtStart.after(dtEnd)) {
+        if (dStart.isAfter(dEnd)) {
             throw new IllegalArgumentException("Start date is after end date!");
         }
 
         return stream()
-                .filter(dateObject ->
-                        !dateObject.getDate().before(dtStart) && !dateObject.getDate().after(dtEnd))
-                .collect(Collectors.toList());
+                .filter(dateObject -> {
+                    LocalDate doDate = dateObject.getDateTime().toLocalDate();
+                    return !doDate.isBefore(dStart) && !doDate.isAfter(dEnd);
+                }).collect(Collectors.toList());
     }
 }

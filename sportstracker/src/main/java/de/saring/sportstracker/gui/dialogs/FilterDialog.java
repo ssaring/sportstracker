@@ -3,13 +3,16 @@ package de.saring.sportstracker.gui.dialogs;
 import de.saring.sportstracker.data.*;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.Date310Utils;
 import de.saring.util.gui.DialogUtils;
 import org.jdesktop.application.Action;
 
 import javax.inject.Inject;
 import javax.swing.*;
 import java.text.DateFormat;
-import java.util.Calendar;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -81,7 +84,7 @@ public class FilterDialog extends JDialog {
         btCancel.setAction(aCancel);
         DialogUtils.setDialogEscapeKeyAction(this, aCancel);
 
-        // fill the comoboxes with all sport types and intensity types
+        // fill the comboboxes with all sport types and intensity types
         cbSportType.removeAllItems();
         cbSportType.addItem(context.getResReader().getString("st.dlg.filter.all.text"));
         for (SportType sportType : document.getSportTypeList()) {
@@ -103,8 +106,8 @@ public class FilterDialog extends JDialog {
     public void setInitialFilter(ExerciseFilter iFilter) {
 
         // preselect dates
-        dpDateStart.setDate(iFilter.getDateStart());
-        dpDateEnd.setDate(iFilter.getDateEnd());
+        dpDateStart.setDate(Date310Utils.localDateToDate(iFilter.getDateStart()));
+        dpDateEnd.setDate(Date310Utils.localDateToDate(iFilter.getDateEnd()));
 
         // preselect sport type from filter (when available)
         if (iFilter.getSportType() != null) {
@@ -175,66 +178,16 @@ public class FilterDialog extends JDialog {
      */
     @Action(name = ACTION_CURRENT_WEEK)
     public void setCurrentWeek() {
+        LocalDate now = LocalDate.now();
 
-        Calendar cStart = Calendar.getInstance();
-        Calendar cEnd = Calendar.getInstance();
-        Calendar cNow = Calendar.getInstance();
-        cStart.clear();
-        cEnd.clear();
-        cStart.set(cNow.get(Calendar.YEAR), cNow.get(Calendar.MONTH), cNow.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
-        cEnd.set(cNow.get(Calendar.YEAR), cNow.get(Calendar.MONTH), cNow.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+        // get first day of week, depending whether it's configured as sunday or monday
+        LocalDate firstDayOfWeek = document.getOptions().isWeekStartSunday() ?
+                now.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY)) :
+                now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate lastDayOfWeek = firstDayOfWeek.plusDays(6);
 
-        // compute the count of days of the week start
-        int weekStartDayCount = 0;
-        if (document.getOptions().isWeekStartSunday()) {
-            switch (cNow.get(Calendar.DAY_OF_WEEK)) {
-                case Calendar.MONDAY:
-                    weekStartDayCount = -1;
-                    break;
-                case Calendar.TUESDAY:
-                    weekStartDayCount = -2;
-                    break;
-                case Calendar.WEDNESDAY:
-                    weekStartDayCount = -3;
-                    break;
-                case Calendar.THURSDAY:
-                    weekStartDayCount = -4;
-                    break;
-                case Calendar.FRIDAY:
-                    weekStartDayCount = -5;
-                    break;
-                case Calendar.SATURDAY:
-                    weekStartDayCount = -6;
-                    break;
-            }
-        } else {
-            switch (cNow.get(Calendar.DAY_OF_WEEK)) {
-                case Calendar.TUESDAY:
-                    weekStartDayCount = -1;
-                    break;
-                case Calendar.WEDNESDAY:
-                    weekStartDayCount = -2;
-                    break;
-                case Calendar.THURSDAY:
-                    weekStartDayCount = -3;
-                    break;
-                case Calendar.FRIDAY:
-                    weekStartDayCount = -4;
-                    break;
-                case Calendar.SATURDAY:
-                    weekStartDayCount = -5;
-                    break;
-                case Calendar.SUNDAY:
-                    weekStartDayCount = -6;
-                    break;
-            }
-        }
-
-        // roll start and end date to week begin and end
-        cStart.add(Calendar.DATE, weekStartDayCount);
-        cEnd.add(Calendar.DATE, weekStartDayCount + 6);
-        dpDateStart.setDate(cStart.getTime());
-        dpDateEnd.setDate(cEnd.getTime());
+        dpDateStart.setDate(Date310Utils.localDateToDate(firstDayOfWeek));
+        dpDateEnd.setDate(Date310Utils.localDateToDate(lastDayOfWeek));
     }
 
     /**
@@ -242,15 +195,12 @@ public class FilterDialog extends JDialog {
      */
     @Action(name = ACTION_CURRENT_MONTH)
     public void setCurrentMonth() {
-        Calendar cStart = Calendar.getInstance();
-        Calendar cEnd = Calendar.getInstance();
-        Calendar cNow = Calendar.getInstance();
-        cStart.clear();
-        cEnd.clear();
-        cStart.set(cNow.get(Calendar.YEAR), cNow.get(Calendar.MONTH), 1, 0, 0, 0);
-        cEnd.set(cNow.get(Calendar.YEAR), cNow.get(Calendar.MONTH), cNow.getActualMaximum(Calendar.DAY_OF_MONTH), 23, 59, 59);
-        dpDateStart.setDate(cStart.getTime());
-        dpDateEnd.setDate(cEnd.getTime());
+        LocalDate now = LocalDate.now();
+        LocalDate firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
+        LocalDate lastDayOfMonth = now.with(TemporalAdjusters.lastDayOfMonth());
+
+        dpDateStart.setDate(Date310Utils.localDateToDate(firstDayOfMonth));
+        dpDateEnd.setDate(Date310Utils.localDateToDate(lastDayOfMonth));
     }
 
     /**
@@ -258,15 +208,12 @@ public class FilterDialog extends JDialog {
      */
     @Action(name = ACTION_CURRENT_YEAR)
     public void setCurrentYear() {
-        Calendar cStart = Calendar.getInstance();
-        Calendar cEnd = Calendar.getInstance();
-        Calendar cNow = Calendar.getInstance();
-        cStart.clear();
-        cEnd.clear();
-        cStart.set(cNow.get(Calendar.YEAR), 1 - 1, 1, 0, 0, 0);
-        cEnd.set(cNow.get(Calendar.YEAR), 12 - 1, 31, 23, 59, 59);
-        dpDateStart.setDate(cStart.getTime());
-        dpDateEnd.setDate(cEnd.getTime());
+        LocalDate now = LocalDate.now();
+        LocalDate firstDayOfYear = now.with(TemporalAdjusters.firstDayOfYear());
+        LocalDate lastDayOfYear = now.with(TemporalAdjusters.lastDayOfYear());
+
+        dpDateStart.setDate(Date310Utils.localDateToDate(firstDayOfYear));
+        dpDateEnd.setDate(Date310Utils.localDateToDate(lastDayOfYear));
     }
 
     /**
@@ -274,14 +221,11 @@ public class FilterDialog extends JDialog {
      */
     @Action(name = ACTION_ALL_TIME)
     public void setAllTime() {
-        Calendar cStart = Calendar.getInstance();
-        Calendar cEnd = Calendar.getInstance();
-        cStart.clear();
-        cEnd.clear();
-        cStart.set(1900, 1 - 1, 1, 0, 0, 0);
-        cEnd.set(2999, 12 - 1, 31, 23, 59, 59);
-        dpDateStart.setDate(cStart.getTime());
-        dpDateEnd.setDate(cEnd.getTime());
+        LocalDate firstDayEver = LocalDate.of(1900, 1, 1);
+        LocalDate lastDayEver = LocalDate.of(2999, 12, 31);
+
+        dpDateStart.setDate(Date310Utils.localDateToDate(firstDayEver));
+        dpDateEnd.setDate(Date310Utils.localDateToDate(lastDayEver));
     }
 
     /**
@@ -308,25 +252,12 @@ public class FilterDialog extends JDialog {
             return;
         }
 
-        // create start and end dates (start date at day start and end date at 
-        // day end, otherwise the exercises of the last day will not be included)
-        Calendar cTemp = Calendar.getInstance();
-        cTemp.clear();
-        cTemp.setTime(dpDateStart.getDate());
-        cTemp.set(Calendar.HOUR_OF_DAY, 0);
-        cTemp.set(Calendar.MINUTE, 0);
-        cTemp.set(Calendar.SECOND, 0);
-        filter.setDateStart(cTemp.getTime());
-
-        cTemp.clear();
-        cTemp.setTime(dpDateEnd.getDate());
-        cTemp.set(Calendar.HOUR_OF_DAY, 23);
-        cTemp.set(Calendar.MINUTE, 59);
-        cTemp.set(Calendar.SECOND, 59);
-        filter.setDateEnd(cTemp.getTime());
+        // create start and end dates
+        filter.setDateStart(Date310Utils.dateToLocalDate(dpDateStart.getDate()));
+        filter.setDateEnd(Date310Utils.dateToLocalDate(dpDateEnd.getDate()));
 
         // make sure that start date is before end date
-        if (!filter.getDateStart().before(filter.getDateEnd())) {
+        if (!filter.getDateStart().isBefore(filter.getDateEnd())) {
             context.showMessageDialog(this, JOptionPane.ERROR_MESSAGE,
                     "common.error", "st.dlg.filter.error.start_after_end");
             return;

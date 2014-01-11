@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumnModel;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * This view class displays the list of the users notes in a table view.
@@ -121,7 +121,7 @@ public class NoteListView extends BaseListView {
         public Class<?> getColumnClass(int col) {
             switch (col) {
                 case COLUMN_DATE:
-                    return Date.class;
+                    return LocalDateTime.class;
                 default:
                     return Object.class;
             }
@@ -136,7 +136,7 @@ public class NoteListView extends BaseListView {
 
             switch (col) {
                 case COLUMN_DATE:
-                    return note.getDate();
+                    return note.getDateTime();
                 case COLUMN_TEXT:
                     return getContext().getFormatUtils().firstLineOfText(note.getText());
                 case HIDDEN_COLUMN_ID:

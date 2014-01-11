@@ -8,7 +8,7 @@ import org.jdom2.Element;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 /**
  * This class is for reading or writing an ExerciseList object from or to a XML
@@ -23,11 +23,6 @@ public class XMLExerciseList {
      * The XSD filename with the structure of the exercise list.
      */
     private static final String XSD_EXERCISES = "exercises.xsd";
-
-    /**
-     * The date and time parser instance.
-     */
-    private static final SimpleDateFormat SD_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     /**
      * Reads the exercise list from the specified XML file and maps the sport types
@@ -99,7 +94,7 @@ public class XMLExerciseList {
         // get and convert date (format allready checked by XSD schema)
         String strDate = eExercise.getChildText("date");
         try {
-            exercise.setDate(SD_FORMAT.parse(strDate));
+            exercise.setDateTime(LocalDateTime.parse(strDate, XMLUtils.DATE_TIME_FORMAT));
         } catch (Exception e) {
             throw new IllegalArgumentException("Failed to parse exercise with ID '" + exercise.getId() +
                     "', the date format '" + strDate + "' is not valid!");
@@ -189,7 +184,7 @@ public class XMLExerciseList {
             XMLUtils.addElement(eExercise, "id", String.valueOf(exercise.getId()));
             XMLUtils.addElement(eExercise, "sport-type-id", String.valueOf(exercise.getSportType().getId()));
             XMLUtils.addElement(eExercise, "sport-subtype-id", String.valueOf(exercise.getSportSubType().getId()));
-            XMLUtils.addElement(eExercise, "date", SD_FORMAT.format(exercise.getDate()));
+            XMLUtils.addElement(eExercise, "date", exercise.getDateTime().format(XMLUtils.DATE_TIME_FORMAT));
             XMLUtils.addElement(eExercise, "duration", String.valueOf(exercise.getDuration()));
             XMLUtils.addElement(eExercise, "intensity", exercise.getIntensity().toStringEnum());
             XMLUtils.addElement(eExercise, "distance", String.valueOf(exercise.getDistance()));

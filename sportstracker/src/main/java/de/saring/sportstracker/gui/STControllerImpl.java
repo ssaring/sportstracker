@@ -19,10 +19,11 @@ import javax.inject.Singleton;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,7 +74,7 @@ public class STControllerImpl implements STController {
     /**
      * The date to be set initially when the next entry will be added.
      */
-    private Date dateForNewEntries;
+    private LocalDate dateForNewEntries;
 
     /**
      * Standard c'tor.
@@ -146,8 +147,7 @@ public class STControllerImpl implements STController {
             if (corruptExercises != null && !corruptExercises.isEmpty()) {
 
                 StringBuilder sb = new StringBuilder();
-                DateFormat dFormat = SimpleDateFormat.getDateTimeInstance(
-                        SimpleDateFormat.MEDIUM, SimpleDateFormat.MEDIUM);
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
 
                 for (int i = 0; i < corruptExercises.size(); i++) {
                     if (i > 15) {
@@ -155,7 +155,7 @@ public class STControllerImpl implements STController {
                         break;
                     }
 
-                    sb.append(dFormat.format(corruptExercises.get(i).getDate()));
+                    sb.append(corruptExercises.get(i).getDateTime().format(dateTimeFormatter));
                     sb.append("\n");
                 }
 
@@ -268,7 +268,7 @@ public class STControllerImpl implements STController {
     public void addNote() {
         // start Note dialog for a new created Note
         Note newNote = new Note(document.getNoteList().getNewID());
-        newNote.setDate(setTimeForDate(dateForNewEntries));
+        newNote.setDateTime(getNoonDateTimeForDate(dateForNewEntries));
 
         NoteDialog dlg = prNoteDialog.get();
         dlg.setNote(newNote);
@@ -280,7 +280,7 @@ public class STControllerImpl implements STController {
     public void addWeight() {
         // start Weight dialog for a new created Weight
         Weight newWeight = new Weight(document.getWeightList().getNewID());
-        newWeight.setDate(setTimeForDate(dateForNewEntries));
+        newWeight.setDateTime(getNoonDateTimeForDate(dateForNewEntries));
 
         // initialize with the weight value of previous entry (if there is some)
         int weightCount = document.getWeightList().size();
@@ -295,7 +295,7 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void setDateForNewEntries(Date date) {
+    public void setDateForNewEntries(LocalDate date) {
         this.dateForNewEntries = date;
     }
 
@@ -689,9 +689,9 @@ public class STControllerImpl implements STController {
      * @param date the date to be set in the exercise (can be null for the current date)
      * @return the created Exercise
      */
-    private Exercise createNewExercise(Date date) {
+    private Exercise createNewExercise(LocalDate date) {
         Exercise exercise = new Exercise(document.getExerciseList().getNewID());
-        exercise.setDate(setTimeForDate(date));
+        exercise.setDateTime(getNoonDateTimeForDate(date));
         return exercise;
     }
 
@@ -705,7 +705,7 @@ public class STControllerImpl implements STController {
      */
     private Exercise createExerciseCopy(Exercise exercise) {
         Exercise clonedExercise = exercise.clone(document.getExerciseList().getNewID());
-        clonedExercise.setDate(setTimeForDate(null));
+        clonedExercise.setDateTime(getNoonDateTimeForDate(null));
         clonedExercise.setHrmFile(null);
         return clonedExercise;
     }
@@ -719,7 +719,7 @@ public class STControllerImpl implements STController {
      */
     private Note createNoteCopy(Note note) {
         Note clonedNote = note.clone(document.getNoteList().getNewID());
-        clonedNote.setDate(setTimeForDate(null));
+        clonedNote.setDateTime(getNoonDateTimeForDate(null));
         return clonedNote;
     }
 
@@ -732,26 +732,19 @@ public class STControllerImpl implements STController {
      */
     private Weight createWeightCopy(Weight weight) {
         Weight clonedWeight = weight.clone(document.getWeightList().getNewID());
-        clonedWeight.setDate(setTimeForDate(null));
+        clonedWeight.setDateTime(getNoonDateTimeForDate(null));
         return clonedWeight;
     }
 
     /**
-     * Returns a Date object for the specified date, the time is set to 12:00:00.
+     * Returns a Date LocalDateTime for the specified date, the time is set to 12:00:00.
      * When no date is specified then the current date will be used.
      *
      * @param date contains the date to be used (optional)
-     * @return the created Date
+     * @return the created LocalDateTime
      */
-    private Date setTimeForDate(final Date date) {
-        Calendar cal = Calendar.getInstance();
-        if (date != null) {
-            cal.setTime(date);
-        }
-        cal.set(Calendar.HOUR_OF_DAY, 12);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTime();
+    private LocalDateTime getNoonDateTimeForDate(final LocalDate date) {
+        final LocalDate tempDate = date == null ? LocalDate.now() : date;
+        return LocalDateTime.of(tempDate, LocalTime.of(12, 0));
     }
 }

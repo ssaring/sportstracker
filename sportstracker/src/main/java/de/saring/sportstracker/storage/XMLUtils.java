@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Helper class for common functions when reading and writing XML files.
@@ -23,6 +24,9 @@ import java.io.OutputStreamWriter;
  * @version 1.0
  */
 public final class XMLUtils {
+
+    /** The date and time parser and formatter instance. */
+    public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     private XMLUtils() {
     }

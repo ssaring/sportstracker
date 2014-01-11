@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.dialogs;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.Date310Utils;
 import de.saring.util.gui.DialogUtils;
 import de.saring.util.gui.GuiCreateUtils;
 import net.miginfocom.swing.MigLayout;
@@ -12,7 +13,7 @@ import org.jdesktop.swingx.JXDatePicker;
 import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 /**
  * This class is the implementation of the dialog for editing / adding
@@ -151,13 +152,11 @@ public class NoteDialog extends JDialog {
      * Sets the initial exercise values for all controls.
      */
     private void setInitialValues() {
-        // set date (formating is done by the textfield) and time
-        dpDate.setDate(note.getDate());
 
-        Calendar calTemp = Calendar.getInstance();
-        calTemp.setTime(note.getDate());
-        spHour.setValue(calTemp.get(Calendar.HOUR_OF_DAY));
-        spMinute.setValue(calTemp.get(Calendar.MINUTE));
+        // set date (formatting is done by the textfield) and time
+        dpDate.setDate(Date310Utils.localDateTimeToDate(note.getDateTime()));
+        spHour.setValue(note.getDateTime().getHour());
+        spMinute.setValue(note.getDateTime().getMinute());
 
         taText.setText(note.getText());
         taText.setCaretPosition(0);
@@ -181,13 +180,12 @@ public class NoteDialog extends JDialog {
             return;
         }
 
-        // store date and time of exercise
-        Calendar calTemp = Calendar.getInstance();
-        calTemp.setTime(dpDate.getDate());
-        calTemp.set(Calendar.HOUR_OF_DAY, (Integer) spHour.getValue());
-        calTemp.set(Calendar.MINUTE, (Integer) spMinute.getValue());
-        calTemp.set(Calendar.SECOND, 0);
-        newNote.setDate(calTemp.getTime());
+        // store date and time of the note
+        LocalDateTime newDateTime = Date310Utils.dateToLocalDateTime(dpDate.getDate());
+        newDateTime = newDateTime.withHour((Integer) spHour.getValue());
+        newDateTime = newDateTime.withMinute((Integer) spMinute.getValue());
+        newDateTime = newDateTime.withSecond(0);
+        note.setDateTime(newDateTime);
 
         // get note text
         String strText = taText.getText().trim();

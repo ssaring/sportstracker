@@ -3,7 +3,7 @@ package de.saring.sportstracker.gui;
 import de.saring.sportstracker.data.Exercise;
 
 import javax.swing.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * This interface provides all controller (MVC) related functionality of the
@@ -75,7 +75,7 @@ public interface STController {
      *
      * @param date the date to be used (the time will be set to 12:00)
      */
-    void setDateForNewEntries(Date date);
+    void setDateForNewEntries(LocalDate date);
 
     /**
      * Action for editing the selected entry.

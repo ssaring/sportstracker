@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.dialogs;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.Date310Utils;
 import de.saring.util.gui.DialogUtils;
 import de.saring.util.gui.GuiCreateUtils;
 import de.saring.util.unitcalc.ConvertUtils;
@@ -15,7 +16,7 @@ import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
 import java.text.NumberFormat;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 /**
  * This class is the implementation of the dialog for editing / adding
@@ -161,13 +162,11 @@ public class WeightDialog extends JDialog {
      * Sets the initial exercise values for all controls.
      */
     private void setInitialValues() {
-        // set date (formating is done by the textfield) and time
-        dpDate.setDate(weight.getDate());
 
-        Calendar calTemp = Calendar.getInstance();
-        calTemp.setTime(weight.getDate());
-        spHour.setValue(calTemp.get(Calendar.HOUR_OF_DAY));
-        spMinute.setValue(calTemp.get(Calendar.MINUTE));
+        // set date (formatting is done by the textfield) and time
+        dpDate.setDate(Date310Utils.localDateTimeToDate(weight.getDateTime()));
+        spHour.setValue(weight.getDateTime().getHour());
+        spMinute.setValue(weight.getDateTime().getMinute());
 
         tfWeight.setText(context.getFormatUtils().weightToStringWithoutUnitName(
                 weight.getValue(), 2));
@@ -194,13 +193,12 @@ public class WeightDialog extends JDialog {
             return;
         }
 
-        // store date and time of exercise
-        Calendar calTemp = Calendar.getInstance();
-        calTemp.setTime(dpDate.getDate());
-        calTemp.set(Calendar.HOUR_OF_DAY, (Integer) spHour.getValue());
-        calTemp.set(Calendar.MINUTE, (Integer) spMinute.getValue());
-        calTemp.set(Calendar.SECOND, 0);
-        newWeight.setDate(calTemp.getTime());
+        // store date and time of the weight
+        LocalDateTime newDateTime = Date310Utils.dateToLocalDateTime(dpDate.getDate());
+        newDateTime = newDateTime.withHour((Integer) spHour.getValue());
+        newDateTime = newDateTime.withMinute((Integer) spMinute.getValue());
+        newDateTime = newDateTime.withSecond(0);
+        newWeight.setDateTime(newDateTime);
 
         // check and store weight value (and convert when not metric unit system)
         try {

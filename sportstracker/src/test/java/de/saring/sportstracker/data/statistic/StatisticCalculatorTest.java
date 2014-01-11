@@ -7,7 +7,7 @@ import de.saring.util.data.IdObjectList;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,7 +38,7 @@ public class StatisticCalculatorTest {
         Exercise tempExercise = new Exercise(1);
         tempExercise.setSportType(sportType1);
         tempExercise.setSportSubType(sportSubType1);
-        tempExercise.setDate(new Date());
+        tempExercise.setDateTime(LocalDateTime.now());
         tempExercise.setIntensity(Exercise.IntensityType.NORMAL);
         tempExercise.setDistance(20);
         tempExercise.setAvgSpeed(20);
@@ -50,7 +50,7 @@ public class StatisticCalculatorTest {
         tempExercise = new Exercise(2);
         tempExercise.setSportType(sportType1);
         tempExercise.setSportSubType(sportSubType1);
-        tempExercise.setDate(new Date());
+        tempExercise.setDateTime(LocalDateTime.now());
         tempExercise.setIntensity(Exercise.IntensityType.NORMAL);
         tempExercise.setDistance(6);
         tempExercise.setAvgSpeed(8.2f);
@@ -62,7 +62,7 @@ public class StatisticCalculatorTest {
         tempExercise = new Exercise(3);
         tempExercise.setSportType(sportType1);
         tempExercise.setSportSubType(sportSubType1);
-        tempExercise.setDate(new Date());
+        tempExercise.setDateTime(LocalDateTime.now());
         tempExercise.setIntensity(Exercise.IntensityType.NORMAL);
         tempExercise.setDistance(31);
         tempExercise.setAvgSpeed(19);
@@ -74,7 +74,7 @@ public class StatisticCalculatorTest {
         tempExercise = new Exercise(4);
         tempExercise.setSportType(sportType1);
         tempExercise.setSportSubType(sportSubType1);
-        tempExercise.setDate(new Date());
+        tempExercise.setDateTime(LocalDateTime.now());
         tempExercise.setIntensity(Exercise.IntensityType.LOW);
         tempExercise.setDistance(0);
         tempExercise.setAvgSpeed(0);

@@ -22,7 +22,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
     /** Informations about this parser. */
     private def info = new ExerciseParserInfo('TopoGrafix GPX', ["gpx", "GPX"] as String[])
 
-    /** The date and time parser instance for XML date standard. */
+    /** The dateTime and time parser instance for XML dateTime standard. */
     private def sdFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     private final double DEGREE_TO_RADIAN_DIVIDER = 57.29577951d
@@ -86,7 +86,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
         exercise.heartRateLimits = new HeartRateLimit[0]
         exercise.lapList = new Lap[0]
 
-        // get date and time (optional)
+        // get dateTime and time (optional)
         if (!gpx.metadata.time.isEmpty()) {
             exercise.date = sdFormat.parse(gpx.metadata.time.text())
         }

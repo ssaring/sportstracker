@@ -13,8 +13,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * This view class displays all the user exercises (or a filtered list) in
@@ -268,7 +268,7 @@ public class ExerciseListView extends BaseListView {
         public Class<?> getColumnClass(int col) {
             switch (col) {
                 case COLUMN_DATE:
-                    return Date.class;
+                    return LocalDateTime.class;
                 case COLUMN_DURATION:
                 case COLUMN_AVG_HEARTRATE:
                 case COLUMN_ASCENT:
@@ -294,7 +294,7 @@ public class ExerciseListView extends BaseListView {
 
             switch (col) {
                 case COLUMN_DATE:
-                    return exercise.getDate();
+                    return exercise.getDateTime();
                 case COLUMN_TYPE:
                     return exercise.getSportType().getName();
                 case COLUMN_SUBTYPE:

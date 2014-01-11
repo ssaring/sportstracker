@@ -17,10 +17,10 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
-import java.text.DateFormat;
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 /**
  * This abstract class contains the common implementation for all views for
@@ -263,7 +263,8 @@ public abstract class BaseListView extends BaseView {
      * Cell renderer implementation for the notes table.
      */
     public class BaseListCellRenderer extends TableCellRendererOddEven {
-        private final DateFormat dFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM);
+
+        private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
 
         /**
          * Standard c'tor.
@@ -299,8 +300,8 @@ public abstract class BaseListView extends BaseView {
         protected String formatText(Object value, int rowIndex, int columnIndex) {
             if (value == null) {
                 return "";
-            } else if (value instanceof Date) {
-                return dFormat.format((Date) value);
+            } else if (value instanceof LocalDateTime) {
+                return ((LocalDateTime) value).format(dateTimeFormatter);
             } else {
                 return value.toString();
             }

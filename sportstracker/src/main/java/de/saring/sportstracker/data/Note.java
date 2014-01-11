@@ -42,7 +42,7 @@ public final class Note extends IdDateObject {
      */
     public Note clone(int cloneId) {
         Note clone = new Note(cloneId);
-        clone.setDate(this.getDate());
+        clone.setDateTime(this.getDateTime());
         clone.setText(this.getText());
         return clone;
     }
@@ -52,7 +52,7 @@ public final class Note extends IdDateObject {
         StringBuilder sBuilder = new StringBuilder();
         sBuilder.append(this.getClass().getName()).append(":\n");
         sBuilder.append(" [id=").append(this.getId()).append("\n");
-        sBuilder.append("  date=").append(this.getDate()).append("\n");
+        sBuilder.append("  date=").append(this.getDateTime()).append("\n");
         sBuilder.append("  text=").append(this.text).append("]\n");
         return sBuilder.toString();
     }

@@ -4,6 +4,7 @@ import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.*;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.Date310Utils;
 import de.saring.util.ResourceReader;
 import de.saring.util.data.IdObjectList;
 import de.saring.util.gui.DialogUtils;
@@ -40,8 +41,12 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -181,7 +186,7 @@ public class OverviewDialog extends JDialog {
 
         // the spinner must not use number grouping (otherwise e.g. year "2.007")
         ((JSpinner.NumberEditor) spYear.getEditor()).getFormat().setGroupingUsed(false);
-        spYear.setValue(Calendar.getInstance().get(Calendar.YEAR));
+        spYear.setValue(LocalDate.now().getYear());
     }
 
     /**
@@ -327,13 +332,13 @@ public class OverviewDialog extends JDialog {
 
         // add vertical year break marker when displaying the last 12 months
         if (timeType == TimeRangeType.LAST_12_MONTHS) {
-            Calendar today = Calendar.getInstance();
-            Calendar newYear = createCalendarFor(today.get(Calendar.YEAR), 0, 1, true);
-            newYear.add(Calendar.DAY_OF_MONTH, -15);
-            ValueMarker newYearMarker = new ValueMarker(newYear.getTimeInMillis());
+            LocalDate firstDayOfYear = LocalDate.now().with(TemporalAdjusters.firstDayOfYear());
+            LocalDate middleOfDecemberOfLastYear = firstDayOfYear.minusDays(15);
+            Date dateMiddleOfDecemberOfLastYear = Date310Utils.localDateToDate(middleOfDecemberOfLastYear);
+            ValueMarker newYearMarker = new ValueMarker(dateMiddleOfDecemberOfLastYear.getTime());
             newYearMarker.setPaint(context.getResReader().getColor("st.dlg.overview.graph_color.year_break"));
             newYearMarker.setStroke(new BasicStroke(0.8f));
-            newYearMarker.setLabel(" " + today.get(Calendar.YEAR));
+            newYearMarker.setLabel(String.valueOf(firstDayOfYear.getYear()));
             newYearMarker.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
             newYearMarker.setLabelTextAnchor(TextAnchor.TOP_LEFT);
             plot.addDomainMarker(newYearMarker);
@@ -833,8 +838,8 @@ public class OverviewDialog extends JDialog {
                 // of Week class for the bottom axis, otherwise there will be
                 // format problems on the axis (the first week is often "52")
                 // => get number of weeks for the specified year (mostly 52, sometimes 53)
-                Calendar calTemp = createCalendarForWeekOfYear(year, 3);
-                return calTemp.getActualMaximum(Calendar.WEEK_OF_YEAR);
+                LocalDate dateinYear = LocalDate.of(year, 1, 15);
+                return (int) dateinYear.range(ChronoField.ALIGNED_WEEK_OF_YEAR).getMaximum();
             case LAST_10_YEARS:
                 return 10;
             default:
@@ -856,10 +861,10 @@ public class OverviewDialog extends JDialog {
 
         switch (timeType) {
             case LAST_12_MONTHS:
-                Calendar today = Calendar.getInstance();
-                int tempMonth = today.get(Calendar.MONTH) + timeStep;
-                int tempYear = today.get(Calendar.YEAR) - 1 + tempMonth / 12;
-                return new Month(tempMonth % 12 + 1, tempYear);
+                LocalDate now = LocalDate.now();
+                int tempMonth = now.getMonthValue() + timeStep;
+                int tempYear = now.getYear() - 1 + tempMonth / 12;
+                return new Month(tempMonth % 12, tempYear);
             case MONTHS_OF_YEAR:
                 return new Month(timeStep + 1, year);
             case WEEKS_OF_YEAR:
@@ -889,51 +894,44 @@ public class OverviewDialog extends JDialog {
             TimeRangeType timeType, int year, int timeStep) {
 
         ExerciseFilter filter = new ExerciseFilter();
+        LocalDate now = LocalDate.now();
+
+        LocalDate dateRangeStart;
+        LocalDate dateRangeEnd;
 
         // setup time range of filter depending on the specified time type
         switch (timeType) {
             case LAST_12_MONTHS:
-                Calendar today = Calendar.getInstance();
-                int tempMonth = today.get(Calendar.MONTH) + timeStep;
-                int tempYear = today.get(Calendar.YEAR) - 1 + tempMonth / 12;
-                Calendar calMonth = createCalendarFor(tempYear, tempMonth % 12, 1, true);
-                filter.setDateStart(calMonth.getTime());
-                calMonth.add(Calendar.MONTH, 1);
-                calMonth.add(Calendar.SECOND, -1);
-                filter.setDateEnd(calMonth.getTime());
+                int tempMonth = now.getMonthValue() + timeStep;
+                int tempYear = now.getYear() - 1 + tempMonth / 12;
+                dateRangeStart = LocalDate.of(tempYear, tempMonth % 12, 1);
+                dateRangeEnd = dateRangeStart.plusMonths(1).minusDays(1);
                 break;
 
             case MONTHS_OF_YEAR:
                 tempMonth = timeStep;
-                calMonth = createCalendarFor(year, tempMonth, 1, true);
-                filter.setDateStart(calMonth.getTime());
-                calMonth.add(Calendar.MONTH, 1);
-                calMonth.add(Calendar.SECOND, -1);
-                filter.setDateEnd(calMonth.getTime());
+                dateRangeStart = LocalDate.of(year, tempMonth + 1, 1);
+                dateRangeEnd = dateRangeStart.plusMonths(1).minusDays(1);
                 break;
 
             case WEEKS_OF_YEAR:
                 int tempWeekNr = timeStep + 1;
-                Calendar calWeek = createCalendarForWeekOfYear(year, tempWeekNr);
-                filter.setDateStart(calWeek.getTime());
-                calWeek.add(Calendar.WEEK_OF_YEAR, 1);
-                calWeek.add(Calendar.SECOND, -1);
-                filter.setDateEnd(calWeek.getTime());
+                dateRangeStart = getStartDateForWeekOfYear(year, tempWeekNr);
+                dateRangeEnd = dateRangeStart.plusDays(6);
                 break;
 
             case LAST_10_YEARS:
                 tempYear = year - 9 + timeStep;
-                Calendar calYear = createCalendarFor(tempYear, 1 - 1, 1, true);
-                filter.setDateStart(calYear.getTime());
-                calYear.add(Calendar.YEAR, 1);
-                calYear.add(Calendar.SECOND, -1);
-                filter.setDateEnd(calYear.getTime());
+                dateRangeStart = LocalDate.of(tempYear, 1, 1);
+                dateRangeEnd = dateRangeStart.plusYears(1).minusDays(1);
                 break;
 
             default:
                 throw new IllegalArgumentException("Unknow TimeRangeType!");
         }
 
+        filter.setDateStart(dateRangeStart);
+        filter.setDateEnd(dateRangeEnd);
         return filter;
     }
 
@@ -947,27 +945,18 @@ public class OverviewDialog extends JDialog {
         }
     }
 
-    private Calendar createCalendarFor(int year, int month, int day, boolean startOfDay) {
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-        if (startOfDay) {
-            cal.set(year, month, day, 0, 0, 0);
-        } else {
-            cal.set(year, month, day, 23, 59, 59);
-        }
-        return cal;
-    }
+    private LocalDate getStartDateForWeekOfYear(int year, int weekNr) {
 
-    private Calendar createCalendarForWeekOfYear(int year, int weekNr) {
-        int firstWeekDay = document.getOptions().isWeekStartSunday() ?
-                Calendar.SUNDAY : Calendar.MONDAY;
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-        cal.setFirstDayOfWeek(firstWeekDay);
-        cal.set(year, 0, 1, 0, 0, 0);
-        cal.set(Calendar.WEEK_OF_YEAR, weekNr);
-        cal.set(Calendar.DAY_OF_WEEK, firstWeekDay);
-        return cal;
+        // use ISO (week start at monday) or SUNDAY_START WeekFields depending on configuration
+        WeekFields weekField = document.getOptions().isWeekStartSunday() ?
+                WeekFields.SUNDAY_START : WeekFields.ISO;
+
+        // create date for some day in the specified year
+        LocalDate date = LocalDate.of(year, 2, 1);
+        // set the first weekday (values 1 - 7, value 1 is Sunday or Monday)
+        date = date.with(weekField.dayOfWeek(), 1);
+        // set the specified week number
+        return date.with(weekField.weekOfYear(), weekNr);
     }
 
     /**
@@ -983,10 +972,10 @@ public class OverviewDialog extends JDialog {
             ExerciseFilter currentFilter = document.getCurrentFilter();
 
             // merge filter date
-            if (currentFilter.getDateStart().after(filter.getDateStart())) {
+            if (currentFilter.getDateStart().isAfter(filter.getDateStart())) {
                 filter.setDateStart(currentFilter.getDateStart());
             }
-            if (currentFilter.getDateEnd().before(filter.getDateEnd())) {
+            if (currentFilter.getDateEnd().isBefore(filter.getDateEnd())) {
                 filter.setDateEnd(currentFilter.getDateEnd());
             }
 
@@ -1039,7 +1028,7 @@ public class OverviewDialog extends JDialog {
      */
     private double getAverageWeightInTimeRange(ExerciseFilter filter) {
         List<Weight> weightsInTimeRange =
-                document.getWeightList().getEntriesInTimeRange(
+                document.getWeightList().getEntriesInDateRange(
                         filter.getDateStart(), filter.getDateEnd());
 
         if (weightsInTimeRange.isEmpty()) {

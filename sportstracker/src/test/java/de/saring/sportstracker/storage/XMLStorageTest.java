@@ -7,8 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
@@ -174,7 +173,7 @@ public class XMLStorageTest {
         assertEquals(exe1.getId(), 1);
         assertEquals(exe1.getSportType().getId(), 1);
         assertEquals(exe1.getSportSubType().getId(), 3);
-        checkDate(exe1.getDate(), 2003, 07, 24, 8, 23, 45);
+        assertEquals(exe1.getDateTime(), LocalDateTime.of(2003, 07, 24, 8, 23, 45));
         assertEquals(exe1.getDuration(), 11340);
         assertEquals(exe1.getIntensity(), Exercise.IntensityType.LOW);
         assertEquals(exe1.getDistance(), 76.5f, 0.01f);
@@ -192,7 +191,7 @@ public class XMLStorageTest {
         assertEquals(exe2.getId(), 2);
         assertEquals(exe2.getSportType().getId(), 2);
         assertEquals(exe2.getSportSubType().getId(), 1);
-        checkDate(exe2.getDate(), 2003, 07, 26, 14, 13, 22);
+        assertEquals(exe2.getDateTime(), LocalDateTime.of(2003, 07, 26, 14, 13, 22));
         assertEquals(exe2.getDuration(), 4082);
         assertEquals(exe2.getIntensity(), Exercise.IntensityType.INTERVALS);
         assertEquals(exe2.getDistance(), 9.5f, 0.01f);
@@ -209,7 +208,7 @@ public class XMLStorageTest {
         assertEquals(exe3.getId(), 3);
         assertEquals(exe3.getSportType().getId(), 1);
         assertEquals(exe3.getSportSubType().getId(), 1);
-        checkDate(exe3.getDate(), 2003, 07, 27, 13, 20, 0);
+        assertEquals(exe3.getDateTime(), LocalDateTime.of(2003, 07, 27, 13, 20, 0));
         assertEquals(exe3.getDuration(), 12640);
         assertEquals(exe3.getIntensity(), Exercise.IntensityType.NORMAL);
         assertEquals(exe3.getDistance(), 61.5f, 0.01f);
@@ -220,21 +219,6 @@ public class XMLStorageTest {
         assertNull(exe3.getHrmFile());
         assertNull(exe3.getEquipment());
         assertNull(exe3.getComment());
-    }
-
-    /**
-     * Helper method for checking Date instances.
-     */
-    private void checkDate(Date date, int year, int month, int day, int hour, int minute, int second) {
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        assertEquals(year, cal.get(Calendar.YEAR));
-        assertEquals(month - 1, cal.get(Calendar.MONTH));
-        assertEquals(day, cal.get(Calendar.DAY_OF_MONTH));
-        assertEquals(hour, cal.get(Calendar.HOUR_OF_DAY));
-        assertEquals(minute, cal.get(Calendar.MINUTE));
-        assertEquals(second, cal.get(Calendar.SECOND));
     }
 
     /**
@@ -404,17 +388,17 @@ public class XMLStorageTest {
 
         Note note1 = noteList.getByID(1);
         assertEquals(1, note1.getId());
-        checkDate(note1.getDate(), 2009, 01, 02, 9, 10, 11);
+        assertEquals(note1.getDateTime(), LocalDateTime.of(2009, 01, 02, 9, 10, 11));
         assertEquals("Note 1", note1.getText());
 
         Note note2 = noteList.getByID(2);
         assertEquals(2, note2.getId());
-        checkDate(note2.getDate(), 2009, 01, 05, 13, 14, 15);
+        assertEquals(note2.getDateTime(), LocalDateTime.of(2009, 01, 05, 13, 14, 15));
         assertEquals("Note 2", note2.getText());
 
         Note note3 = noteList.getByID(3);
         assertEquals(3, note3.getId());
-        checkDate(note3.getDate(), 2009, 01, 07, 20, 21, 22);
+        assertEquals(note3.getDateTime(), LocalDateTime.of(2009, 01, 07, 20, 21, 22));
         assertEquals("Note 3", note3.getText());
     }
 
@@ -472,20 +456,20 @@ public class XMLStorageTest {
 
         Weight weight1 = weightList.getByID(1);
         assertEquals(1, weight1.getId());
-        checkDate(weight1.getDate(), 2009, 01, 02, 9, 10, 11);
+        assertEquals(weight1.getDateTime(), LocalDateTime.of(2009, 01, 02, 9, 10, 11));
         assertEquals(70.2, weight1.getValue(), 0.0001);
         assertEquals("Weight 1", weight1.getComment());
 
         Weight weight2 = weightList.getByID(2);
         assertEquals(2, weight2.getId());
-        checkDate(weight2.getDate(), 2009, 01, 05, 13, 14, 15);
+        assertEquals(weight2.getDateTime(), LocalDateTime.of(2009, 01, 05, 13, 14, 15));
         assertEquals(72.3, weight2.getValue(), 0.0001);
         assertEquals("Weight 2", weight2.getComment());
 
         Weight weight3 = weightList.getByID(3);
         assertEquals(3, weight3.getId());
+        assertEquals(weight3.getDateTime(), LocalDateTime.of(2009, 01, 07, 20, 21, 22));
         assertEquals(74.4, weight3.getValue(), 0.0001);
-        checkDate(weight3.getDate(), 2009, 01, 07, 20, 21, 22);
     }
 
     /**

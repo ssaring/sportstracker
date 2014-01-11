@@ -21,7 +21,7 @@ class GarminTcxParser extends AbstractExerciseParser {
     /** Informations about this parser. */
     private def info = new ExerciseParserInfo('Garmin TCX', ["tcx", "TCX"] as String[])
 
-    /** The date and time parser instance for XML date standard. */
+    /** The dateTime and time parser instance for XML dateTime standard. */
     private def sdFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     /** {@inheritDoc} */
