@@ -14,6 +14,8 @@ import javax.inject.Provider;
 import javax.swing.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 /**
  * This class is the implementation of the Statistics dialog.
@@ -79,9 +81,9 @@ public class StatisticDialog extends JDialog {
     private void setFilterValues() {
 
         // create string for filter timespan
-        DateFormat sdFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.DEFAULT);
-        String strTimeSpan = sdFormat.format(statFilter.getDateStart()) +
-                " - " + sdFormat.format(statFilter.getDateEnd());
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
+        String strTimeSpan = statFilter.getDateStart().format(dateFormatter) +
+                " - " + statFilter.getDateEnd().format(dateFormatter);
 
         // create strings for sport type and subtype
         String strSportType = context.getResReader().getString("st.dlg.statistic.all.text");
