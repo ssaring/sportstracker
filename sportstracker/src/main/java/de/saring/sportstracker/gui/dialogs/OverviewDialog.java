@@ -862,7 +862,7 @@ public class OverviewDialog extends JDialog {
         switch (timeType) {
             case LAST_12_MONTHS:
                 LocalDate now = LocalDate.now();
-                int tempMonth = now.getMonthValue() + timeStep;
+                int tempMonth = now.getMonthValue() + timeStep - 1;
                 int tempYear = now.getYear() - 1 + tempMonth / 12;
                 return new Month(tempMonth % 12 + 1, tempYear);
             case MONTHS_OF_YEAR:
@@ -902,7 +902,7 @@ public class OverviewDialog extends JDialog {
         // setup time range of filter depending on the specified time type
         switch (timeType) {
             case LAST_12_MONTHS:
-                int tempMonth = now.getMonthValue() + timeStep;
+                int tempMonth = now.getMonthValue() + timeStep - 1;
                 int tempYear = now.getYear() - 1 + tempMonth / 12;
                 dateRangeStart = LocalDate.of(tempYear, tempMonth % 12 + 1, 1);
                 dateRangeEnd = dateRangeStart.plusMonths(1).minusDays(1);
