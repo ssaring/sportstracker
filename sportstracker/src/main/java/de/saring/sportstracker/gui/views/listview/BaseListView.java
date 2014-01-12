@@ -264,7 +264,7 @@ public abstract class BaseListView extends BaseView {
      */
     public class BaseListCellRenderer extends TableCellRendererOddEven {
 
-        private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+        private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
 
         /**
          * Standard c'tor.
