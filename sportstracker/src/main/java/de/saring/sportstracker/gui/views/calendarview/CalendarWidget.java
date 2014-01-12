@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -331,7 +332,14 @@ public class CalendarWidget extends JComponent {
                     drawCalendarDayCell(g, arCalendarDays[cellIndex], exercisesOfWeek,
                             xPos, yPos, cellClipFull, cellClipWithBorderSpace);
                 } else {
-                    int weekNr = arCalendarDays[row * 7].getDate().get(ChronoField.ALIGNED_WEEK_OF_YEAR);
+                    // use ISO (week start at monday) or SUNDAY_START WeekFields depending on configuration
+                    WeekFields weekField = document.getOptions().isWeekStartSunday() ?
+                            WeekFields.SUNDAY_START : WeekFields.ISO;
+
+                    // get week number for a date in the middle of the week (otherwise problems with JSR 310
+                    // DateTime API, it sometimes returns week ranges 53, 0, 1 or 53, 2, 3)
+                    LocalDate weekMiddleDate = arCalendarDays[row * 7 + 3].getDate();
+                    int weekNr = weekMiddleDate.get(weekField.weekOfYear());
                     drawWeekSummaryCell(g, String.valueOf(weekNr), exercisesOfWeek, xPos, yPos);
                 }
 

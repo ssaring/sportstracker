@@ -17,9 +17,6 @@ Java 8 support status (in branch java_8):
 - full use of Lambdas in module st-util and sportstracker (st-exerciseviewer
   is still in Java 7 mode, because of mixed Groovy/Java compilation)
 
-Bug: CalendarView does not displays proper week number (CalendarWidget 333)
-  (ALIGNED_WEEK_OF_YEAR does not work)
-
 Java 8 TODOs:
 - use new Java Date API
   - completed in module st-util and sportstracker
