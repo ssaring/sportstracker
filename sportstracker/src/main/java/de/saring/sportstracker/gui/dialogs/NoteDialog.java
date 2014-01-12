@@ -185,7 +185,7 @@ public class NoteDialog extends JDialog {
         newDateTime = newDateTime.withHour((Integer) spHour.getValue());
         newDateTime = newDateTime.withMinute((Integer) spMinute.getValue());
         newDateTime = newDateTime.withSecond(0);
-        note.setDateTime(newDateTime);
+        newNote.setDateTime(newDateTime);
 
         // get note text
         String strText = taText.getText().trim();
