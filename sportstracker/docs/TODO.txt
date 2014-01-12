@@ -18,7 +18,7 @@ Java 8 support status (in branch java_8):
   is still in Java 7 mode, because of mixed Groovy/Java compilation)
 
 Bugs:
-- AIOOBE when opening OverviewDialog, see Breakpoint
+- OverviewDialog: in mode "last 12 month" it shows the last 11 months + the next month
 
 Java 8 TODOs:
 - use new Java Date API

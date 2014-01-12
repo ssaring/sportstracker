@@ -864,7 +864,7 @@ public class OverviewDialog extends JDialog {
                 LocalDate now = LocalDate.now();
                 int tempMonth = now.getMonthValue() + timeStep;
                 int tempYear = now.getYear() - 1 + tempMonth / 12;
-                return new Month(tempMonth % 12, tempYear);
+                return new Month(tempMonth % 12 + 1, tempYear);
             case MONTHS_OF_YEAR:
                 return new Month(timeStep + 1, year);
             case WEEKS_OF_YEAR:
@@ -904,7 +904,7 @@ public class OverviewDialog extends JDialog {
             case LAST_12_MONTHS:
                 int tempMonth = now.getMonthValue() + timeStep;
                 int tempYear = now.getYear() - 1 + tempMonth / 12;
-                dateRangeStart = LocalDate.of(tempYear, tempMonth % 12, 1);
+                dateRangeStart = LocalDate.of(tempYear, tempMonth % 12 + 1, 1);
                 dateRangeEnd = dateRangeStart.plusMonths(1).minusDays(1);
                 break;
 
