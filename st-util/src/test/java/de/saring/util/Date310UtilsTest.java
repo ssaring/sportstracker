@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -56,6 +57,35 @@ public class Date310UtilsTest {
     public void testLocalDateToDate() {
         assertEquals(Date310Utils.localDateToDate(LocalDate.of(2014, 01, 15)),
                 createDate(2014, 01, 15, 0, 0, 0));
+    }
+
+    /**
+     * Tests the method getWeekNumber() when the week starts on Monday.
+     */
+    @Test
+    public void testGetWeekNumberWithStartMonday() {
+        assertEquals(52, Date310Utils.getWeekNumber(LocalDate.of(2013, 12, 29), false));
+        assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2014, 1, 1), false));
+        assertEquals(2, Date310Utils.getWeekNumber(LocalDate.of(2014, 1, 6), false));
+
+        assertEquals(53, Date310Utils.getWeekNumber(LocalDate.of(2015, 12, 28), false));
+        assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2016, 1, 4), false));
+        assertEquals(2, Date310Utils.getWeekNumber(LocalDate.of(2016, 1, 11), false));
+    }
+
+    /**
+     * Tests the method getWeekNumber() when the week starts on Sunday.
+     */
+    @Test
+    public void testGetWeekNumberWithStartSunday() {
+        assertEquals(52, Date310Utils.getWeekNumber(LocalDate.of(2013, 12, 28), true));
+        assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2014, 1, 1), true));
+        assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2014, 1, 4), true));
+        assertEquals(2, Date310Utils.getWeekNumber(LocalDate.of(2014, 1, 5), true));
+
+        assertEquals(53, Date310Utils.getWeekNumber(LocalDate.of(2014, 12, 28), true));
+        assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2015, 1, 2), true));
+        assertEquals(2, Date310Utils.getWeekNumber(LocalDate.of(2015, 1, 6), true));
     }
 
     private Date createDate(int year, int month, int day, int hour, int minute, int second) {

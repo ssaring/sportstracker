@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.WeekFields;
 import java.util.Date;
 
 /**
@@ -57,5 +58,17 @@ public final class Date310Utils {
      */
     public static Date localDateToDate(final LocalDate date) {
         return localDateTimeToDate(date.atStartOfDay());
+    }
+
+    /**
+     * Returns the week number of the specified date.
+     *
+     * @param date date
+     * @param weekStartsSunday flag whether the week starts on sunday or monday
+     * @return week number (1 to 53)
+     */
+    public static int getWeekNumber(final LocalDate date, final boolean weekStartsSunday) {
+        final WeekFields weekField = weekStartsSunday ? WeekFields.SUNDAY_START : WeekFields.ISO;
+        return date.get(weekField.weekOfYear());
     }
 }

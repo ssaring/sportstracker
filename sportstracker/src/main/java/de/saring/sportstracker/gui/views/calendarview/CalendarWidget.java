@@ -6,6 +6,7 @@ import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.Date310Utils;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.unitcalc.FormatUtils;
 
@@ -332,14 +333,12 @@ public class CalendarWidget extends JComponent {
                     drawCalendarDayCell(g, arCalendarDays[cellIndex], exercisesOfWeek,
                             xPos, yPos, cellClipFull, cellClipWithBorderSpace);
                 } else {
-                    // use ISO (week start at monday) or SUNDAY_START WeekFields depending on configuration
-                    WeekFields weekField = document.getOptions().isWeekStartSunday() ?
-                            WeekFields.SUNDAY_START : WeekFields.ISO;
-
                     // get week number for a date in the middle of the week (otherwise problems with JSR 310
                     // DateTime API, it sometimes returns week ranges 53, 0, 1 or 53, 2, 3)
                     LocalDate weekMiddleDate = arCalendarDays[row * 7 + 3].getDate();
-                    int weekNr = weekMiddleDate.get(weekField.weekOfYear());
+                    boolean isWeekStartSunday = document.getOptions().isWeekStartSunday();
+                    int weekNr = Date310Utils.getWeekNumber(weekMiddleDate, isWeekStartSunday);
+
                     drawWeekSummaryCell(g, String.valueOf(weekNr), exercisesOfWeek, xPos, yPos);
                 }
 
