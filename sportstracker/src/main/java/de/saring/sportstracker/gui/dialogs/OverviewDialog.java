@@ -42,7 +42,6 @@ import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
@@ -839,7 +838,8 @@ public class OverviewDialog extends JDialog {
                 // format problems on the axis (the first week is often "52")
                 // => get number of weeks for the specified year (mostly 52, sometimes 53)
                 LocalDate dateinYear = LocalDate.of(year, 1, 15);
-                return (int) dateinYear.range(ChronoField.ALIGNED_WEEK_OF_YEAR).getMaximum();
+                WeekFields weekField = getWeekFieldsForWeekStart();
+                return (int) dateinYear.range(weekField.weekOfYear()).getMaximum();
             case LAST_10_YEARS:
                 return 10;
             default:
@@ -946,10 +946,7 @@ public class OverviewDialog extends JDialog {
     }
 
     private LocalDate getStartDateForWeekOfYear(int year, int weekNr) {
-
-        // use ISO (week start at monday) or SUNDAY_START WeekFields depending on configuration
-        WeekFields weekField = document.getOptions().isWeekStartSunday() ?
-                WeekFields.SUNDAY_START : WeekFields.ISO;
+        WeekFields weekField = getWeekFieldsForWeekStart();
 
         // create date for some day in the specified year
         LocalDate date = LocalDate.of(year, 2, 1);
@@ -957,6 +954,11 @@ public class OverviewDialog extends JDialog {
         date = date.with(weekField.dayOfWeek(), 1);
         // set the specified week number
         return date.with(weekField.weekOfYear(), weekNr);
+    }
+
+    private WeekFields getWeekFieldsForWeekStart() {
+        // use ISO (week start at monday) or SUNDAY_START WeekFields depending on configuration
+        return document.getOptions().isWeekStartSunday() ? WeekFields.SUNDAY_START : WeekFields.ISO;
     }
 
     /**

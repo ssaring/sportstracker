@@ -16,8 +16,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

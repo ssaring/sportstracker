@@ -21,11 +21,6 @@ Java 8 TODOs:
 - use new Java Date API
   - completed in module st-util and sportstracker
     - continue in st-exerciseviewer
-  - test needs to be done for:
-    - OverviewDialog: check all diagram date types, compare with old version
-      - check that year marker is displayed correctly when showing for last 12 months
-      - check that the proper number of weeks is displayed in "weeks of year mode"
-      - check that first month is calculated properly in "last 12 months" mode
 
 - usage of new Optional class in interfaces for avoiding NullPointerExceptions
 - update documentation in ReadMe / website
