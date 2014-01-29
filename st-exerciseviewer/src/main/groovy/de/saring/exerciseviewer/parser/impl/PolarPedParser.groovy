@@ -7,7 +7,8 @@ import de.saring.exerciseviewer.parser.ExerciseParserInfo
 import de.saring.util.unitcalc.CalculationUtils
 import de.saring.util.unitcalc.FormatUtils
 
-import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * This implementation of an ExerciseParser is for reading XML files from
@@ -116,8 +117,8 @@ class PolarPedParser extends AbstractExerciseParser {
         }
 
         // Exercise Date
-        def dateTime = path."calendar-items".exercise[exerciseID].time.text()
-        exercise.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(dateTime)
+        String dateTime = path."calendar-items".exercise[exerciseID].time.text()
+        exercise.dateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss.S'))
 
         exercise.recordingMode = new RecordingMode()
         exercise.recordingMode.speed = true

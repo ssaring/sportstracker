@@ -4,9 +4,11 @@ import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.*
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
+import de.saring.util.Date310Utils
 import de.saring.util.unitcalc.CalculationUtils
 
-import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * ExerciseParser implementation for reading TopoGrafix GPX v1.1 exercise files (XML-based).
@@ -21,9 +23,6 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
 
     /** Informations about this parser. */
     private def info = new ExerciseParserInfo('TopoGrafix GPX', ["gpx", "GPX"] as String[])
-
-    /** The dateTime and time parser instance for XML dateTime standard. */
-    private def sdFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     private final double DEGREE_TO_RADIAN_DIVIDER = 57.29577951d
     private final double EARTH_RADIUS_IN_METER = 6371000d
@@ -60,7 +59,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
         if (exercise.recordingMode.altitude) {
             calculateAltitudeSummary(exercise)
         }
-        if (exercise.date) {
+        if (exercise.dateTime) {
             calculateDuration(exercise)
         }
         if (exercise.recordingMode.speed) {
@@ -88,7 +87,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
 
         // get dateTime and time (optional)
         if (!gpx.metadata.time.isEmpty()) {
-            exercise.date = sdFormat.parse(gpx.metadata.time.text())
+            exercise.dateTime = parseDateTime(gpx.metadata.time.text())
         }
 
         exercise
@@ -120,7 +119,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
 
                     // get timestamp and calculate sample time offset (optional)
                     if (!trkpt.time.isEmpty()) {
-                        Date timestampSample = sdFormat.parse(trkpt.time.text())
+                        LocalDateTime timestampSample = parseDateTime(trkpt.time.text())
 
                         // store first timestamp as exercise start time when missing 
                         // or when exercise timestamp larger then (first) track time stamp
@@ -128,11 +127,11 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
                         //  GPX file, the time stamp in the meta data is the time the track
                         //  was saved -thus after the exercise- and not the time the track
                         //  was started)
-                        if (!exercise.date || exercise.date.time > timestampSample.time) {
-                            exercise.date = timestampSample
+                        if (!exercise.dateTime || exercise.dateTime.isAfter(timestampSample)) {
+                            exercise.dateTime = timestampSample
                         }
-                        sample.timestamp = timestampSample.time - exercise.date.time
-
+                        sample.timestamp = Date310Utils.getMilliseconds(timestampSample) -
+                                Date310Utils.getMilliseconds(exercise.dateTime)
                     }
 
                     // get heartrate in Garmin Oregon format if present
@@ -297,5 +296,14 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
         }
 
         exercise.heartRateAVG = (short) Math.round(heartRateSum / exercise.sampleList.size())
+    }
+
+    /**
+     * Parses the date time in ISO format specified in the passed text and returns the appropriate LocalDateTime.
+     */
+    def parseDateTime(dateTimeText) {
+        // remove the suffix 'Z' if contained in the passed text, can't be ignored by ISO_LOCAL_DATE_TIME
+        def dateTimeTextFixed = dateTimeText.endsWith('Z') ? dateTimeText[0..-2] : dateTimeText
+        LocalDateTime.parse(dateTimeTextFixed, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
     }
 }

@@ -5,6 +5,8 @@ import de.saring.exerciseviewer.data.*
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
 
+import java.time.LocalDateTime
+
 /**
  * This implementation of an ExerciseParser is for reading the XML-based 
  * exercise files of the Polar RS200SD devices.
@@ -55,15 +57,13 @@ class PolarRS200SDParser extends AbstractExerciseParser {
         exercise.fileType = EVExercise.ExerciseFileType.RS200SDRAW
         exercise.recordingMode = new RecordingMode()
 
-        def calDate = Calendar.getInstance()
-        calDate.set(
-                path.session_data.year.toInteger(),
-                path.session_data.month.toInteger() - 1,
-                path.session_data.day.toInteger(),
-                path.session_data.start_hour.toInteger(),
-                path.session_data.start_minute.toInteger(),
-                path.session_data.start_second.toInteger())
-        exercise.date = calDate.time
+        exercise.dateTime = LocalDateTime.of(
+            path.session_data.year.toInteger(),
+            path.session_data.month.toInteger(),
+            path.session_data.day.toInteger(),
+            path.session_data.start_hour.toInteger(),
+            path.session_data.start_minute.toInteger(),
+            path.session_data.start_second.toInteger())
 
         def summary = path.session_data.summary
         exercise.duration = summary.length.toFloat() * 10

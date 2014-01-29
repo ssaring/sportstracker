@@ -4,9 +4,11 @@ import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.*
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
+import de.saring.util.Date310Utils
 import de.saring.util.unitcalc.CalculationUtils
 
-import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * ExerciseParser implementation for reading Garmin TCX v2 exercise files (XML-based).
@@ -20,9 +22,6 @@ class GarminTcxParser extends AbstractExerciseParser {
 
     /** Informations about this parser. */
     private def info = new ExerciseParserInfo('Garmin TCX', ["tcx", "TCX"] as String[])
-
-    /** The dateTime and time parser instance for XML dateTime standard. */
-    private def sdFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     /** {@inheritDoc} */
     @Override
@@ -58,7 +57,7 @@ class GarminTcxParser extends AbstractExerciseParser {
         exercise.speed = new ExerciseSpeed()
 
         def activity = path.Activities.Activity
-        exercise.date = sdFormat.parse(activity.Id.text())
+        exercise.dateTime = parseDateTime(activity.Id.text())
         int trackpointCount = 0
 
         double altitudeMetersTotal = 0
@@ -80,14 +79,16 @@ class GarminTcxParser extends AbstractExerciseParser {
 
             // compute the total time gap between all laps
             if (lastTrackpointTimestamp > 0) {
-                long lapStartTimestamp = sdFormat.parse(lap.@StartTime.text()).time
-                totalTimeGapBetweenLaps += lapStartTimestamp - lastTrackpointTimestamp
+                LocalDateTime lapStart = parseDateTime(lap.@StartTime.text())
+                long lapStartMillis = Date310Utils.getMilliseconds(lapStart)
+                totalTimeGapBetweenLaps += lapStartMillis - lastTrackpointTimestamp
             }
 
             double lapAscentMeters = 0
             long previousTrackpointTimestamp = Long.MIN_VALUE
             double previousTrackpointDistanceMeters = Double.MIN_VALUE
             double previousTrackpointAltitudeMeters = Double.MIN_VALUE
+            long exerciseDateTimeMillis = Date310Utils.getMilliseconds(exercise.dateTime)
 
             // parse all Track elements
             for (track in lap.Track) {
@@ -100,9 +101,11 @@ class GarminTcxParser extends AbstractExerciseParser {
                     evSamples << evSample
 
                     // calculate sample timestamp (time gap between laps must be substracted here)
-                    long tpTimestamp = sdFormat.parse(trackpoint.Time.text()).time
-                    lastTrackpointTimestamp = tpTimestamp
-                    evSample.setTimestamp(tpTimestamp - exercise.date.time - totalTimeGapBetweenLaps)
+                    LocalDateTime tpDateTime = parseDateTime(trackpoint.Time.text())
+                    long tpMillis = Date310Utils.getMilliseconds(tpDateTime)
+                    lastTrackpointTimestamp = tpMillis
+
+                    evSample.timestamp = tpMillis - exerciseDateTimeMillis - totalTimeGapBetweenLaps
 
                     parseTrackpointPositionData(exercise, evSample, trackpoint)
                     parseTrackpointHeartRateData(evLap, evSample, trackpoint)
@@ -115,14 +118,14 @@ class GarminTcxParser extends AbstractExerciseParser {
                         // calculate speed between current and previous trackpoint
                         evSample.speed = 0
                         if (previousTrackpointTimestamp > Long.MIN_VALUE) {
-                            long tpTimestampDiff = tpTimestamp - previousTrackpointTimestamp
+                            long tpTimestampDiff = tpMillis - previousTrackpointTimestamp
                             // sometimes computed difference is < 0 => impossible, use 0 instead
                             double tpDistanceDiff = Math.max(tpDistanceMeters - previousTrackpointDistanceMeters, 0d)
 
                             evSample.speed = CalculationUtils.calculateAvgSpeed(
                                     (float) (tpDistanceDiff / 1000f), (int) Math.round(tpTimestampDiff / 1000f))
                         }
-                        previousTrackpointTimestamp = tpTimestamp
+                        previousTrackpointTimestamp = tpMillis
                         previousTrackpointDistanceMeters = tpDistanceMeters
 
                         evLap.speed.speedEnd = evSample.speed
@@ -237,9 +240,11 @@ class GarminTcxParser extends AbstractExerciseParser {
             }
         }
 
-        long lapStartTimestamp = sdFormat.parse(lapElement.@StartTime.text()).time
-        long lastTpTimestamp = sdFormat.parse(lastTrackpoint.Time.text()).time
-        (lastTpTimestamp - lapStartTimestamp) / 1000
+        LocalDateTime lapStart = parseDateTime(lapElement.@StartTime.text())
+        LocalDateTime lastTp = parseDateTime(lastTrackpoint.Time.text())
+        long lapStartMillis = Date310Utils.getMilliseconds(lapStart)
+        long lastTpMillis = Date310Utils.getMilliseconds(lastTp)
+        (lastTpMillis - lapStartMillis) / 1000
     }
 
     def parseLapHeartRateData(exercise, evLap, lapElement) {
@@ -308,5 +313,14 @@ class GarminTcxParser extends AbstractExerciseParser {
                 }
             }
         }
+    }
+
+    /**
+     * Parses the date time in ISO format specified in the passed text and returns the appropriate LocalDateTime.
+     */
+    def parseDateTime(dateTimeText) {
+        // remove the suffix 'Z' if contained in the passed text, can't be ignored by ISO_LOCAL_DATE_TIME
+        def dateTimeTextFixed = dateTimeText.endsWith('Z') ? dateTimeText[0..-2] : dateTimeText
+        LocalDateTime.parse(dateTimeTextFixed, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
     }
 }

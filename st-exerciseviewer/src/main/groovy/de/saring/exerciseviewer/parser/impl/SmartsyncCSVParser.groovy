@@ -7,6 +7,8 @@ import de.saring.exerciseviewer.data.RecordingMode
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
 
+import java.time.LocalDateTime
+
 /**
  * This implementation of an ExerciseParser is for reading the CSV files 
  * exported from Oregon Scientific's Smartsync software, 
@@ -64,10 +66,10 @@ class SmartsyncCSVParser extends AbstractExerciseParser {
         exercise.recordingMode = new RecordingMode()
         exercise.lapList = []
 
-        def calDate = Calendar.getInstance()
-        def exeYear = calDate.get(Calendar.YEAR)
-        def exeMonth = calDate.get(Calendar.MONTH)
-        def exeDay = calDate.get(Calendar.DAY_OF_MONTH)
+        def now = LocalDateTime.now()
+        def exeYear = now.year
+        def exeMonth = now.monthValue
+        def exeDay = now.dayOfMonth
         def exeHour = 12
         def exeMinute = 0
         def exeSecond = 0
@@ -87,7 +89,7 @@ class SmartsyncCSVParser extends AbstractExerciseParser {
                 // not supported in EVExercise
             } else if (line.startsWith("Date,")) {
                 // parse exercise dateTime (mm/dd/yyyy)
-                exeMonth = line.substring(5, 7).toInteger() - 1
+                exeMonth = line.substring(5, 7).toInteger()
                 exeDay = line.substring(8, 10).toInteger()
                 exeYear = line.substring(11, 15).toInteger()
             } else if (line.startsWith("Time,")) {
@@ -108,8 +110,7 @@ class SmartsyncCSVParser extends AbstractExerciseParser {
             }
         }
 
-        calDate.set(exeYear, exeMonth, exeDay, exeHour, exeMinute, exeSecond)
-        exercise.date = calDate.time
+        exercise.dateTime = LocalDateTime.of(exeYear, exeMonth, exeDay, exeHour, exeMinute, exeSecond)
 
         exercise.sampleList = sampleList
 

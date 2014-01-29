@@ -2,7 +2,7 @@ package de.saring.exerciseviewer.parser.impl.garminfit;
 
 import de.saring.exerciseviewer.data.Lap;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Extension class for Lap data. The lap split time needs to be calculated at the end,
@@ -17,20 +17,20 @@ final class FitLap {
     private final Lap lap;
 
     /**
-     * The timestamp of lap split.
+     * The date-timestamp of lap split.
      */
-    private final Date splitTime;
+    private final LocalDateTime splitDateTime;
 
-    public FitLap(Lap lap, Date splitTime) {
+    public FitLap(Lap lap, LocalDateTime splitDateTime) {
         this.lap = lap;
-        this.splitTime = splitTime;
+        this.splitDateTime = splitDateTime;
     }
 
     public Lap getLap() {
         return lap;
     }
 
-    public Date getSplitTime() {
-        return splitTime;
+    public LocalDateTime getSplitDatTime() {
+        return splitDateTime;
     }
 }

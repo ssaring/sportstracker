@@ -104,7 +104,7 @@ SportsTracker is an application for the Java platform written in Java and
 Groovy. It was developed and tested with the Oracle JVM, other JVM
 implementations will probably work too.
 For running SportsTracker you just need the Java SE Runtime Environment
-(JRE) 7 or greater, the Oracle JRE can be downloaded from:
+(JRE) 8 or greater, the Oracle JRE can be downloaded from:
 http://www.java.com
 
 If you want to download exercise files from your heartrate monitor you also 
@@ -299,7 +299,7 @@ Developer Requirements
 For compilation of the SportsTracker sources you need:
   - Java SE Development Kit (JDK) 8 or greater
     (from http://www.oracle.com/technetwork/java/)
-  - Maven 3.0.3
+  - Maven 3.0.3 or greater
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)

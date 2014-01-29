@@ -1,6 +1,6 @@
 package de.saring.exerciseviewer.data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * This class represents an recorded exercise. There is all the data of an
@@ -22,7 +22,7 @@ public final class EVExercise {
     /**
      * Timestamp of exercise.
      */
-    private Date date;
+    private LocalDateTime dateTime;
     /**
      * Exercise type (0 to 5).
      */
@@ -129,12 +129,12 @@ public final class EVExercise {
         this.userID = userID;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public byte getType() {
@@ -326,7 +326,7 @@ public final class EVExercise {
         sBuilder.append(EVExercise.class.getName()).append(":\n");
         sBuilder.append(" [fileType=").append(this.fileType).append("\n");
         sBuilder.append("  userID=").append(this.userID).append("\n");
-        sBuilder.append("  date=").append(this.date).append("\n");
+        sBuilder.append("  dateTime=").append(this.dateTime).append("\n");
         sBuilder.append("  type=").append(this.type).append("\n");
         sBuilder.append("  typeLabel=").append(this.typeLabel).append("\n");
         sBuilder.append("  duration=").append(this.duration).append("\n");

@@ -6,9 +6,10 @@ import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class contains all unit tests for the PolarHsrRawParser class.
@@ -57,13 +58,7 @@ public class PolarHsrParserTest {
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S510RAW);
         assertEquals(exercise.getUserID(), (byte) 1);
-        Calendar date = Calendar.getInstance();
-        date.setTime(exercise.getDate());
-        assertEquals(3, date.get(Calendar.DAY_OF_MONTH));
-        assertEquals(10, date.get(Calendar.MONTH));
-        assertEquals(2007, date.get(Calendar.YEAR));
-        assertEquals(11, date.get(Calendar.HOUR_OF_DAY));
-        assertEquals(03, date.get(Calendar.MINUTE));
+        assertEquals(LocalDateTime.of(2007, 11, 3, 11, 03, 53), exercise.getDateTime());
         assertEquals(exercise.getType(), (byte) 0);
         assertEquals(exercise.getTypeLabel(), "BasicUse");
         assertEquals(exercise.getRecordingMode().isAltitude(), false);
@@ -175,14 +170,7 @@ public class PolarHsrParserTest {
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S510RAW);
         assertEquals(exercise.getUserID(), (byte) 1);
-        Calendar date = Calendar.getInstance();
-        date.setTime(exercise.getDate());
-        assertEquals(20, date.get(Calendar.DAY_OF_MONTH));
-        assertEquals(7, date.get(Calendar.MONTH));
-        assertEquals(2007, date.get(Calendar.YEAR));
-        assertEquals(21, date.get(Calendar.HOUR_OF_DAY));
-        assertEquals(10, date.get(Calendar.MINUTE));
-        assertEquals(11, date.get(Calendar.SECOND));
+        assertEquals(LocalDateTime.of(2007, 8, 20, 21, 10, 11), exercise.getDateTime());
         assertEquals(exercise.getType(), (byte) 5);
         assertEquals(exercise.getTypeLabel(), "ExeSet5");
         assertEquals(exercise.getRecordingMode().isAltitude(), false);

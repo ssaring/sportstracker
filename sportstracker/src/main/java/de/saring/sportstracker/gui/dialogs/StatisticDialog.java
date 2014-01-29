@@ -12,8 +12,6 @@ import org.jdesktop.application.Action;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.swing.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 

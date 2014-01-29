@@ -6,6 +6,8 @@ import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
 import de.saring.util.unitcalc.ConvertUtils
 
+import java.time.LocalDateTime
+
 /**
  * This implementation of an ExerciseParser is for reading the common 
  * HRM files of Polar heartrate monitors.
@@ -88,7 +90,7 @@ class PolarHRMParser extends AbstractExerciseParser {
         // parse exercise dateTime (yyyymmdd)
         def strDate = getValueFromBlock(lParamsBlock, 'Date')
         def exeYear = strDate.substring(0, 4).toInteger()
-        def exeMonth = strDate.substring(4, 6).toInteger() - 1
+        def exeMonth = strDate.substring(4, 6).toInteger()
         def exeDay = strDate.substring(6, 8).toInteger()
 
         // parse exercise start time (can be either h:mm:ss.d or hh:mm:ss.d !)
@@ -102,9 +104,7 @@ class PolarHRMParser extends AbstractExerciseParser {
         def exeHour = startTimeSplitted[0].toInteger()
         def exeMinute = startTimeSplitted[1].toInteger()
         def exeSecond = startTimeSplitted[2].toInteger()
-        def calDate = Calendar.getInstance()
-        calDate.set(exeYear, exeMonth, exeDay, exeHour, exeMinute, exeSecond)
-        exercise.date = calDate.time
+        exercise.dateTime = LocalDateTime.of(exeYear, exeMonth, exeDay, exeHour, exeMinute, exeSecond)
 
         // parse exercise duration (can be either h:mm:ss.d or hh:mm:ss.d !)
         def strDuration = getValueFromBlock(lParamsBlock, 'Length')

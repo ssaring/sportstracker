@@ -6,9 +6,10 @@ import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class contains all unit tests for the TimexPwxParser class.
@@ -60,14 +61,7 @@ public class TimexPwxParserTest {
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.TIMEX_PWX);
         assertEquals(exercise.getUserID(), (byte) 0);
-        Calendar date = Calendar.getInstance();
-        date.setTime(exercise.getDate());
-        assertEquals(18, date.get(Calendar.DAY_OF_MONTH));
-        assertEquals(5, date.get(Calendar.MONTH));
-        assertEquals(2010, date.get(Calendar.YEAR));
-        assertEquals(20, date.get(Calendar.HOUR_OF_DAY));
-        assertEquals(12, date.get(Calendar.MINUTE));
-        assertEquals(00, date.get(Calendar.SECOND));
+        assertEquals(LocalDateTime.of(2010, 6, 18, 20, 12, 0), exercise.getDateTime());
         assertEquals((byte) 0, exercise.getType());
         assertEquals("Run", exercise.getTypeLabel());
         assertEquals(false, exercise.getRecordingMode().isAltitude());
@@ -214,14 +208,7 @@ public class TimexPwxParserTest {
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.TIMEX_PWX);
         assertEquals(exercise.getUserID(), (byte) 0);
-        Calendar date = Calendar.getInstance();
-        date.setTime(exercise.getDate());
-        assertEquals(9, date.get(Calendar.DAY_OF_MONTH));
-        assertEquals(8, date.get(Calendar.MONTH));
-        assertEquals(2010, date.get(Calendar.YEAR));
-        assertEquals(17, date.get(Calendar.HOUR_OF_DAY));
-        assertEquals(53, date.get(Calendar.MINUTE));
-        assertEquals(21, date.get(Calendar.SECOND));
+        assertEquals(LocalDateTime.of(2010, 9, 9, 17, 53, 21), exercise.getDateTime());
         assertEquals((byte) 0, exercise.getType());
         assertEquals("Bike", exercise.getTypeLabel());
         assertEquals(true, exercise.getRecordingMode().isAltitude());
@@ -337,14 +324,7 @@ public class TimexPwxParserTest {
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.TIMEX_PWX);
         assertEquals(exercise.getUserID(), (byte) 0);
-        Calendar date = Calendar.getInstance();
-        date.setTime(exercise.getDate());
-        assertEquals(1, date.get(Calendar.DAY_OF_MONTH));
-        assertEquals(0, date.get(Calendar.MONTH));
-        assertEquals(2013, date.get(Calendar.YEAR));
-        assertEquals(8, date.get(Calendar.HOUR_OF_DAY));
-        assertEquals(22, date.get(Calendar.MINUTE));
-        assertEquals(52, date.get(Calendar.SECOND));
+        assertEquals(LocalDateTime.of(2013, 1, 1, 8, 22, 52), exercise.getDateTime());
         assertEquals((byte) 0, exercise.getType());
         assertEquals("Run", exercise.getTypeLabel());
         assertEquals(true, exercise.getRecordingMode().isAltitude());

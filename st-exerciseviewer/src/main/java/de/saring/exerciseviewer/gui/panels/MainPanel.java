@@ -8,8 +8,8 @@ import org.jdesktop.application.Action;
 
 import javax.inject.Inject;
 import javax.swing.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 /**
  * This class is the implementation of the "Main" panel, which displays all
@@ -107,10 +107,9 @@ public class MainPanel extends BasePanel {
         }
 
         // fill time data
-        if (exercise.getDate() != null) {
-            DateFormat sdFormat = SimpleDateFormat.getDateTimeInstance(
-                    SimpleDateFormat.MEDIUM, SimpleDateFormat.MEDIUM);
-            laDateValue.setText(sdFormat.format(exercise.getDate()));
+        if (exercise.getDateTime() != null) {
+            laDateValue.setText(exercise.getDateTime().format(
+                    DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));
         }
 
         if (exercise.getDuration() > 0) {

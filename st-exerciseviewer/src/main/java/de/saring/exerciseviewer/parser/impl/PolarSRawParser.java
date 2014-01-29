@@ -6,7 +6,7 @@ import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
 import de.saring.util.unitcalc.ConvertUtils;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 /**
  * This implementation of an ExerciseParser is for reading RAW files of the
@@ -90,11 +90,9 @@ public class PolarSRawParser extends AbstractExerciseParser {
             dateHours += 12;
         }
 
-        // get duration
-        Calendar calDate = Calendar.getInstance();
-        calDate.set(dateYear, dateMonth - 1, dateDay, dateHours, dateMinutes, dateSeconds);
-        exercise.setDate(calDate.getTime());
+        exercise.setDateTime(LocalDateTime.of(dateYear, dateMonth, dateDay, dateHours, dateMinutes, dateSeconds));
 
+        // get duration
         int durationTenthSeconds = (fileContent[15] >> 4);
         int durationSeconds = decodeBCD(fileContent[16]);
         int durationMinutes = decodeBCD(fileContent[17]);

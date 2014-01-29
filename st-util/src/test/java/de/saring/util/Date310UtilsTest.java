@@ -88,6 +88,16 @@ public class Date310UtilsTest {
         assertEquals(2, Date310Utils.getWeekNumber(LocalDate.of(2015, 1, 6), true));
     }
 
+    /**
+     * Tests the method getMilliseconds(), must perform like {@link java.util.Date#getTime()}.
+     */
+    @Test
+    public void testGetMilliseconds() {
+        assertEquals(createDate(2014, 2, 14, 15, 20, 30).getTime(),
+                Date310Utils.getMilliseconds(LocalDateTime.of(2014, 2, 14, 15, 20, 30)));
+    }
+
+
     private Date createDate(int year, int month, int day, int hour, int minute, int second) {
         final Calendar calendar = Calendar.getInstance();
         calendar.clear();

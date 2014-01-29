@@ -3,6 +3,7 @@ package de.saring.exerciseviewer.parser.impl.garminfit;
 import com.garmin.fit.*;
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.*;
+import de.saring.util.Date310Utils;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
 
@@ -62,7 +63,7 @@ class FitMessageListener implements MesgListener {
         // read time data
         exercise = new EVExercise();
         exercise.setFileType(EVExercise.ExerciseFileType.GARMIN_FIT);
-        exercise.setDate(mesg.getStartTime().getDate());
+        exercise.setDateTime(Date310Utils.dateToLocalDateTime(mesg.getStartTime().getDate()));
         exercise.setDuration(Math.round(mesg.getTotalTimerTime() * 10));
         exercise.setRecordingMode(new RecordingMode());
 
@@ -154,7 +155,7 @@ class FitMessageListener implements MesgListener {
                     ConvertUtils.convertSemicircle2Degree(mesg.getEndPositionLong())));
         }
 
-        lFitLaps.add(new FitLap(lap, mesg.getTimestamp().getDate()));
+        lFitLaps.add(new FitLap(lap, Date310Utils.dateToLocalDateTime(mesg.getTimestamp().getDate())));
     }
 
     /**
@@ -248,7 +249,7 @@ class FitMessageListener implements MesgListener {
      * ExerciseSamples, it must be the offset from the start time.
      */
     private void storeSamples() {
-        long startTime = exercise.getDate().getTime();
+        long startTime = Date310Utils.getMilliseconds(exercise.getDateTime());
         for (ExerciseSample sample : lSamples) {
             sample.setTimestamp(sample.getTimestamp() - startTime);
         }
@@ -263,14 +264,15 @@ class FitMessageListener implements MesgListener {
 
         // convert FitLap to Lap objects
         List<Lap> lLaps = new LinkedList<>();
-        long startTime = exercise.getDate().getTime();
+        long startTime = Date310Utils.getMilliseconds(exercise.getDateTime());
 
         for (FitLap fitLap : lFitLaps) {
             Lap lap = fitLap.getLap();
             lLaps.add(lap);
 
             // fix the split time in all Laps, it must be the offset from the start time
-            lap.setTimeSplit((int) ((fitLap.getSplitTime().getTime() - startTime) / 100));
+            long lapSplitDateTimeMillis = Date310Utils.getMilliseconds(fitLap.getSplitDatTime());
+            lap.setTimeSplit((int) ((lapSplitDateTimeMillis - startTime) / 100));
 
             // get all the missing lap data from the sample at lap end time
             ExerciseSample sampleAtLapEnd = getExerciseSampleForLapEnd(lap);

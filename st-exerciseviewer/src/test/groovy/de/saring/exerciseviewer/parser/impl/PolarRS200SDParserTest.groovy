@@ -5,6 +5,8 @@ import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
 import groovy.transform.TypeChecked
 
+import java.time.LocalDateTime
+
 /**
  * This class contains all unit tests for the PolarRS200SDParser class.
  *
@@ -43,9 +45,7 @@ class PolarRS200SDParserTest extends GroovyTestCase {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.RS200SDRAW, exercise.fileType)
 
-        def calDate = Calendar.getInstance()
-        calDate.set(2006, 2 - 1, 20, 16, 54, 11)
-        assertEquals((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
+        assertEquals(LocalDateTime.of(2006, 2, 20, 16, 54, 11), exercise.dateTime);
         assertEquals(28 * 60 * 10 + 51 * 10 + 5, exercise.duration)
 
         // heart rates

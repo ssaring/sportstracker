@@ -6,9 +6,10 @@ import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class contains all unit tests for the HAC4TURParser class.
@@ -61,13 +62,7 @@ public class HAC4TURParserTest {
         assertTrue(exercise.getRecordingMode().isTemperature());
 
         // time information
-        Calendar date = Calendar.getInstance();
-        date.setTime(exercise.getDate());
-        assertEquals(10, date.get(Calendar.DAY_OF_MONTH));
-        assertEquals(10 - 1, date.get(Calendar.MONTH));
-        assertEquals(2005, date.get(Calendar.YEAR));
-        assertEquals(14, date.get(Calendar.HOUR_OF_DAY));
-        assertEquals(05, date.get(Calendar.MINUTE));
+        assertEquals(LocalDateTime.of(2005, 10, 10, 14, 5, 0), exercise.getDateTime());
         assertEquals(9037 * 10, exercise.getDuration());
         assertEquals(183 * 60 + 14, exercise.getSumExerciseTime());
 
@@ -127,13 +122,7 @@ public class HAC4TURParserTest {
         assertTrue(exercise.getRecordingMode().isTemperature());
 
         // time information
-        Calendar date = Calendar.getInstance();
-        date.setTime(exercise.getDate());
-        assertEquals(4, date.get(Calendar.DAY_OF_MONTH));
-        assertEquals(2 - 1, date.get(Calendar.MONTH));
-        assertEquals(2006, date.get(Calendar.YEAR));
-        assertEquals(10, date.get(Calendar.HOUR_OF_DAY));
-        assertEquals(34, date.get(Calendar.MINUTE));
+        assertEquals(LocalDateTime.of(2006, 2, 4, 10, 34, 0), exercise.getDateTime());
         assertEquals(16675 * 10, exercise.getDuration());
         assertEquals(13965 / 60, exercise.getSumExerciseTime());
 

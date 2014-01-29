@@ -5,6 +5,8 @@ import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
 import groovy.transform.TypeChecked
 
+import java.time.LocalDateTime
+
 /**
  * This class contains all unit tests for the GarminTcxParser class.
  *
@@ -44,10 +46,7 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertTrue(exercise.recordingMode.speed)
         assertFalse(exercise.recordingMode.cadence)
         assertTrue(exercise.recordingMode.location)
-
-        def calDate = Calendar.getInstance()
-        calDate.set(2007, 8 - 1, 7, 2, 42, 41)
-        assertEquals((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
+        assertEquals(LocalDateTime.of(2007, 8, 7, 2, 42, 41), exercise.dateTime);
         assertEquals((39 * 60 + 5) * 10, exercise.duration)
 
         // heart rates
@@ -132,10 +131,7 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertTrue(exercise.recordingMode.speed)
         assertTrue(exercise.recordingMode.cadence)
         assertTrue(exercise.recordingMode.location)
-
-        def calDate = Calendar.getInstance()
-        calDate.set(2009, 12 - 1, 9, 6, 54, 25)
-        assertEquals((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
+        assertEquals(LocalDateTime.of(2009, 12, 9, 6, 54, 25), exercise.dateTime);
         assertEquals(6086 * 10, exercise.duration)
 
         // heart rates

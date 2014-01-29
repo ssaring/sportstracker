@@ -5,6 +5,8 @@ import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
 import groovy.transform.TypeChecked
 
+import java.time.LocalDateTime
+
 /**
  * This class contains all unit tests for the TopoGrafixGpxParser class.
  *
@@ -53,9 +55,7 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertFalse(exercise.recordingMode.intervalExercise)
 
         // Check exercise time and duration
-        def calDate = Calendar.getInstance()
-        calDate.set(2010, 8 - 1, 10, 17, 27, 47)
-        assertEquals((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
+        assertEquals(LocalDateTime.of(2010, 8, 10, 17, 27, 47), exercise.dateTime);
         assertEquals(((47 * 60) + 6) * 10, exercise.duration)
 
         // check altitude data
@@ -114,9 +114,7 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertFalse(exercise.recordingMode.intervalExercise)
 
         // Check exercise time and duration
-        def calDate = Calendar.getInstance()
-        calDate.set(2012, 3 - 1, 2, 6, 53, 51)
-        assertEquals((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
+        assertEquals(LocalDateTime.of(2012, 3, 2, 6, 53, 51), exercise.dateTime);
         assertEquals(6090, exercise.duration)
 
         // check altitude data
@@ -183,9 +181,7 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertFalse(exercise.recordingMode.intervalExercise)
 
         // Check exercise time and duration
-        def calDate = Calendar.getInstance()
-        calDate.set(2011, 11 - 1, 3, 9, 9, 25)
-        assertEquals((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
+        assertEquals(LocalDateTime.of(2011, 11, 3, 9, 9, 25), exercise.dateTime);
         assertEquals(1780, exercise.duration)
 
         // check altitude data
@@ -250,7 +246,7 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
         assertFalse(exercise.recordingMode.intervalExercise)
 
         // check exercise time and duration
-        assertNull(exercise.date)
+        assertNull(exercise.dateTime)
         assertEquals(0, exercise.duration)
         assertNull(exercise.altitude)
 

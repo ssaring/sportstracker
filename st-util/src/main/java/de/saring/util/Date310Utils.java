@@ -71,4 +71,14 @@ public final class Date310Utils {
         final WeekFields weekField = weekStartsSunday ? WeekFields.SUNDAY_START : WeekFields.ISO;
         return date.get(weekField.weekOfYear());
     }
+
+    /**
+     * Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT
+     * represented by the passed LocalDateTime object.
+     *
+     * @return  the number of milliseconds
+     */
+    public static long getMilliseconds(final LocalDateTime dateTime) {
+        return localDateTimeToDate(dateTime).getTime();
+    }
 }

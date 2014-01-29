@@ -5,6 +5,8 @@ import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
 import groovy.transform.TypeChecked
 
+import java.time.LocalDateTime
+
 /**
  * This class contains all unit tests for the SmartsyncCSVParser class.
  *
@@ -48,10 +50,7 @@ class SmartsyncCSVParserTest extends GroovyTestCase {
         assertFalse(exercise.recordingMode.speed)
         assertFalse(exercise.recordingMode.cadence)
         assertFalse(exercise.recordingMode.power)
-
-        def calDate = Calendar.getInstance()
-        calDate.set(2008, 4 - 1, 19, 12, 45, 19)
-        assertEquals((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
+        assertEquals(LocalDateTime.of(2008, 4, 19, 12, 45, 19), exercise.dateTime);
         assertEquals((294 - 1) * 2 * 10, exercise.duration)
         assertEquals((short) 2, exercise.recordingInterval)
 

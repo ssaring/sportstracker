@@ -12,7 +12,8 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -238,9 +239,10 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 case "time":
                     // obtain start time
                     try {
-                        exercise.setDate(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(children.item(i).getTextContent()));
+                        String strDateTime = children.item(i).getTextContent();
+                        exercise.setDateTime(LocalDateTime.parse(strDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
                     } catch (Exception e) {
-                        exercise.setDate(null);
+                        exercise.setDateTime(null);
                     }
                     break;
                 case "summarydata":

@@ -6,7 +6,7 @@ import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -56,14 +56,7 @@ public class PolarF6RawParserTest {
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.F6RAW);
         assertEquals(exercise.getUserID(), (byte) 0);
-        Calendar date = Calendar.getInstance();
-        date.setTime(exercise.getDate());
-        assertEquals(28, date.get(Calendar.DAY_OF_MONTH));
-        assertEquals(10 - 1, date.get(Calendar.MONTH));
-        assertEquals(2007, date.get(Calendar.YEAR));
-        assertEquals(11, date.get(Calendar.HOUR_OF_DAY));
-        assertEquals(07, date.get(Calendar.MINUTE));
-        assertEquals(34, date.get(Calendar.SECOND));
+        assertEquals(LocalDateTime.of(2007, 10, 28, 11, 7, 34), exercise.getDateTime());
         assertEquals((byte) 0, exercise.getType());
         assertEquals("0", exercise.getTypeLabel());
         assertEquals(false, exercise.getRecordingMode().isAltitude());

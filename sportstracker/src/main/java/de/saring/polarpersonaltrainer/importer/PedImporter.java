@@ -9,10 +9,7 @@ import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.sportstracker.storage.XMLStorage;
-import de.saring.util.Date310Utils;
 import org.apache.commons.cli.*;
-
-import java.time.LocalDateTime;
 
 /**
  * This class in an importer of files exported from polarpersonaltrainer.com.
@@ -138,8 +135,7 @@ public class PedImporter {
 
                 boolean found = false;
                 for (Exercise exercise : exerciseList) {
-                    LocalDateTime pedExerciseDateTime = Date310Utils.dateToLocalDateTime(pedExercise.getDate());
-                    if (pedExerciseDateTime.equals(exercise.getDateTime())) {
+                    if (pedExercise.getDateTime().equals(exercise.getDateTime())) {
                         found = true;
                         break;
                     }
@@ -148,7 +144,7 @@ public class PedImporter {
                 if (!found) {
                     // add Exercise to the list
                     Exercise newExercise = new Exercise(exerciseList.getNewID());
-                    newExercise.setDateTime(Date310Utils.dateToLocalDateTime(pedExercise.getDate()));
+                    newExercise.setDateTime(pedExercise.getDateTime());
                     newExercise.setAvgSpeed(pedExercise.getSpeed().getSpeedAVG());
                     newExercise.setIntensity(Exercise.IntensityType.NORMAL);
                     newExercise.setAvgHeartRate(pedExercise.getHeartRateAVG());

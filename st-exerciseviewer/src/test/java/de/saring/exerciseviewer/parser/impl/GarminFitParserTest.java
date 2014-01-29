@@ -8,12 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class contains all unit tests for the GarminFitParser class.
@@ -75,7 +75,7 @@ public class GarminFitParserTest {
         assertTrue(exercise.getRecordingMode().isCadence());
         assertTrue(exercise.getRecordingMode().isTemperature());
 
-        assertDate(exercise.getDate(), 2010, 7 - 1, 4, 6, 7, 36);
+        assertEquals(LocalDateTime.of(2010, 7, 4, 6, 7, 36), exercise.getDateTime());
         assertEquals(146499, exercise.getDuration());
 
         assertEquals(121, exercise.getHeartRateAVG());
@@ -189,7 +189,7 @@ public class GarminFitParserTest {
         assertFalse(exercise.getRecordingMode().isCadence());
         assertFalse(exercise.getRecordingMode().isTemperature());
 
-        assertDate(exercise.getDate(), 2012, 9 - 1, 29, 17, 2, 19);
+        assertEquals(LocalDateTime.of(2012, 9, 29, 17, 2, 19), exercise.getDateTime());
         assertEquals(30067, exercise.getDuration());
 
         assertEquals(155, exercise.getHeartRateAVG());
@@ -245,17 +245,5 @@ public class GarminFitParserTest {
         assertEquals(49.42749d, exercise.getSampleList()[500].getPosition().getLatitude(), 0.001d);
         assertEquals(8.63364d, exercise.getSampleList()[500].getPosition().getLongitude(), 0.001d);
         assertEquals(0, exercise.getSampleList()[500].getTemperature());
-    }
-
-    private void assertDate(Date date, int year, int month, int day, int hour, int minute, int second) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-
-        assertEquals(year, cal.get(Calendar.YEAR));
-        assertEquals(month, cal.get(Calendar.MONTH));
-        assertEquals(day, cal.get(Calendar.DAY_OF_MONTH));
-        assertEquals(hour, cal.get(Calendar.HOUR_OF_DAY));
-        assertEquals(minute, cal.get(Calendar.MINUTE));
-        assertEquals(second, cal.get(Calendar.SECOND));
     }
 }

@@ -28,10 +28,9 @@ import java.awt.event.FocusEvent;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -437,12 +436,11 @@ public class ExerciseDialog extends JDialog {
         }
 
         // fill dialog widgets with values from parsed HRM exercise
-        if (pvExercise.getDate() != null) {
-            dpDate.setDate(pvExercise.getDate());
-            Calendar calTemp = Calendar.getInstance();
-            calTemp.setTime(pvExercise.getDate());
-            spHour.setValue(calTemp.get(Calendar.HOUR_OF_DAY));
-            spMinute.setValue(calTemp.get(Calendar.MINUTE));
+        LocalDateTime pvExerciseDateTime = pvExercise.getDateTime();
+        if (pvExerciseDateTime != null) {
+            dpDate.setDate(Date310Utils.localDateTimeToDate(pvExerciseDateTime));
+            spHour.setValue(pvExerciseDateTime.getHour());
+            spMinute.setValue(pvExerciseDateTime.getMinute());
         }
 
         tfDuration.setText(formatUtils.seconds2TimeString(pvExercise.getDuration() / 10));
@@ -841,12 +839,8 @@ public class ExerciseDialog extends JDialog {
                 return value;
             } else {
                 // SpeedView.MinutesPerDistance
-                Date value = new SimpleDateFormat("mm:ss").parse(tfAvgSpeed.getText());
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(value);
-                int minutes = calendar.get(Calendar.MINUTE);
-                int seconds = calendar.get(Calendar.SECOND);
-                return 3600 / (float) (minutes * 60 + seconds);
+                LocalTime time = LocalTime.parse("00:" + tfAvgSpeed.getText().trim(), DateTimeFormatter.ISO_LOCAL_TIME);
+                return 3600 / (float) (time.getMinute() * 60 + time.getSecond());
             }
         } catch (Exception e) {
             if (displayError) {

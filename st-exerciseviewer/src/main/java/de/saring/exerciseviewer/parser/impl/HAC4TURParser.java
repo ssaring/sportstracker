@@ -5,7 +5,8 @@ import de.saring.exerciseviewer.data.*;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -218,7 +219,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         // get date and time
         String strDateAndTime = readLine(FilePosition.START_DATE) + "-" + readLine(FilePosition.START_TIME);
         try {
-            exercise.setDate(new SimpleDateFormat("dd.MM.yyy-HH:mm").parse(strDateAndTime));
+            exercise.setDateTime(LocalDateTime.parse(strDateAndTime, DateTimeFormatter.ofPattern("dd.MM.yyy-HH:mm")));
         } catch (Exception e) {
             throw new EVException("Failed to read exercise date and time from string '" + strDateAndTime + "'...", e);
         }
