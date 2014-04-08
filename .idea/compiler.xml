@@ -28,7 +28,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="sportstracker" target="1.8" />
       <module name="st-exerciseviewer" target="1.7" />
+      <module name="st-parent" target="1.8" />
+      <module name="st-util" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

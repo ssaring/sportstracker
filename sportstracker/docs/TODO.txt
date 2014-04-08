@@ -1,26 +1,18 @@
 SportsTracker-TODO
 ==================
 
-Java 8 support and usage:
-- TOOD:
-  - merge and close branch java_8 when Java 8 has been released
-  - update website for Java 8 requirement
-- Status:
-  - required JDK 8 EA (build 119), set JAVA_HOME to the install directory, e.g.
-    export JAVA_HOME=~/Utils/NoBackup/jdk1.8.0.jdk/Contents/Home/
-  - all SportsTracker modules are now compiling in JDK 8 mode
-    - only st-exerciseviewer is still in JDK 7 mode, because the
-      groovy-eclipse-compiler for mixed Java/Groovy compilation does not support
-      JDK 8 mode yet => change as soon as support is available
-  - IDE support:
-    - Eclipse has problems with JDK 8 support, the modules are running in 1.4 mode
-    - IDEA works fine since version 12.1.5, no problems so far
-    - NetBeans 7.4 works fine, but not perfect
-    => IDEA is currently the best choice
-  - full use of Lambdas in module st-util and sportstracker (st-exerciseviewer
-    is still in Java 7 mode, because of mixed Groovy/Java compilation)
-  - full use new of new Java Date API (JSR 310) in all SportsTracker modules
-  - README.txt has been updated for Java 8
+Java 8 migration status:
+- all SportsTracker modules are now compiling in JDK 8 mode
+  - only st-exerciseviewer is still in JDK 7 mode, because the
+    groovy-eclipse-compiler for mixed Java/Groovy compilation does not support
+    JDK 8 mode yet => change as soon as support is available
+- full use of Lambdas in modules st-util and sportstracker (st-exerciseviewer
+  is still in Java 7 mode, because of mixed Groovy/Java compilation)
+- full use new of new Java Date API (JSR 310) in all SportsTracker modules
+- documentation has been updated for Java 8
+- IDE support:
+  - IDEA (13.1) works fine, NetBeans 8.0 too
+  - problems with Eclipse on last checks
 
 Dependency Injection:
 - use Dagger as an alternative to the Guice framework,
