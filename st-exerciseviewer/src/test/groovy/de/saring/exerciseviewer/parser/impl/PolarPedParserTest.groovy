@@ -1,9 +1,10 @@
-package de.saring.exerciseviewer.parser.impl;
+package de.saring.exerciseviewer.parser.impl
 
-import groovy.transform.TypeChecked;
-import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.EVExercise;
-import de.saring.exerciseviewer.parser.ExerciseParser
+import de.saring.exerciseviewer.core.EVException
+import de.saring.exerciseviewer.data.EVExercise
+import groovy.transform.TypeChecked
+
+import java.time.LocalDateTime
 
 /**
  * Unit tests of class PolarPedParser.
@@ -20,11 +21,11 @@ public class PolarPedParserTest extends GroovyTestCase {
         parser = new PolarPedParser();
     }
 
-     /**
+    /**
      * This method must fail on parsing an exercise file which doesn't exists.
      */
     public void testParsePedExerciseMissingFile() throws Exception {
-        shouldFail (EVException) {
+        shouldFail(EVException) {
             parser.parseExercise("missing-file.ped")
         }
     }
@@ -36,7 +37,7 @@ public class PolarPedParserTest extends GroovyTestCase {
         def filename = 'misc/testdata/polarpersonaltrainer/polar-ped-sample.ped'
         def exercise = parser.parseExercise(filename)
         def exerciseCount = parser.exerciseCount;
-        shouldFail (EVException) {
+        shouldFail(EVException) {
             exercise = parser.parseExercise(filename, exerciseCount)
         }
     }
@@ -52,11 +53,7 @@ public class PolarPedParserTest extends GroovyTestCase {
         //assertEquals(2, parser.getExerciseCount())
 
         assertEquals(EVExercise.ExerciseFileType.PED, exercise.fileType)
-
-        def calDate = Calendar.getInstance ()
-        calDate.set (2010, 4-1, 2, 19, 19, 00)
-        assertEquals ((int) (calDate.getTime().getTime() / 1000), (int) (exercise.date.time / 1000))
-
+        assertEquals(LocalDateTime.of(2010, 4, 2, 19, 19, 00), exercise.dateTime);
         assertEquals(31560, exercise.duration)
         assertEquals(12800, exercise.speed.distance)
         assertEquals(14600, (int) (exercise.speed.speedAVG * 1000))

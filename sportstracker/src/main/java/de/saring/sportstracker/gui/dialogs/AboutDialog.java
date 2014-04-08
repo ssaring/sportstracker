@@ -1,75 +1,77 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import javax.inject.Inject;
-import javax.swing.ActionMap;
-import javax.swing.JDialog;
-import javax.swing.JTextField;
-
-import org.jdesktop.application.Action;
-
 import de.saring.sportstracker.gui.STContext;
 import de.saring.util.gui.DialogUtils;
+import org.jdesktop.application.Action;
+
+import javax.inject.Inject;
+import javax.swing.*;
 
 /**
  * This is the "About" dialog of the SportsTracker application.
- * @author  Stefan Saring
+ *
+ * @author Stefan Saring
  * @version 1.0
  */
 public class AboutDialog extends JDialog {
 
-    /** Constants for action and property names. */
+    /**
+     * Constants for action and property names.
+     */
     private static final String ACTION_CLOSE = "st.dlg.about.close";
-    
-    /** 
+
+    /**
      * Creates a new AboutDialog.
+     *
      * @param context the SportsTracker context
      */
     @Inject
-    public AboutDialog (STContext context) {
-        super (context.getMainFrame (), true);
-        initComponents ();
+    public AboutDialog(STContext context) {
+        super(context.getMainFrame(), true);
+        initComponents();
         setLocationRelativeTo(getParent());
-        this.getRootPane ().setDefaultButton (btClose);
-        
-        tpAuthors.setTitleAt (0, context.getResReader ().getString ("st.dlg.about.title.authors"));
-        tpAuthors.setTitleAt (1, context.getResReader ().getString ("st.dlg.about.title.translators"));
+        this.getRootPane().setDefaultButton(btClose);
+
+        tpAuthors.setTitleAt(0, context.getResReader().getString("st.dlg.about.title.authors"));
+        tpAuthors.setTitleAt(1, context.getResReader().getString("st.dlg.about.title.translators"));
 
         // use same font in textareas as in textfields (not default on Win32)
-        JTextField tfDummy = new JTextField ();
-        taAuthors.setFont (tfDummy.getFont ());
-        taTranslators.setFont (tfDummy.getFont ());
-        
+        JTextField tfDummy = new JTextField();
+        taAuthors.setFont(tfDummy.getFont());
+        taTranslators.setFont(tfDummy.getFont());
+
         // setup actions
-        ActionMap actionMap = context.getSAFContext ().getActionMap (getClass (), this);
-        javax.swing.Action aClose = actionMap.get (ACTION_CLOSE);
-        btClose.setAction(aClose);        
+        ActionMap actionMap = context.getSAFContext().getActionMap(getClass(), this);
+        javax.swing.Action aClose = actionMap.get(ACTION_CLOSE);
+        btClose.setAction(aClose);
         DialogUtils.setDialogEscapeKeyAction(this, aClose);
     }
 
     /**
-     * Workaround: Shows or hides this dialog. Before showing the authors and 
-     * translators text areas will be scrolled to the upper left position 
+     * Workaround: Shows or hides this dialog. Before showing the authors and
+     * translators text areas will be scrolled to the upper left position
      * (they are initially at the bottom otherwise).
-     * @param true for show, false for hide
+     *
+     * @param fVisible true for show, false for hide
      */
     @Override
-    public void setVisible (boolean fVisible) {
+    public void setVisible(boolean fVisible) {
         if (fVisible) {
-            taAuthors.setCaretPosition (0);
-            taTranslators.setCaretPosition (0);
+            taAuthors.setCaretPosition(0);
+            taTranslators.setCaretPosition(0);
         }
-        super.setVisible (fVisible);
+        super.setVisible(fVisible);
     }
 
     /**
      * Action for closing the dialog.
      */
-    @Action(name=ACTION_CLOSE)
-    public void close () {
-        this.dispose ();
+    @Action(name = ACTION_CLOSE)
+    public void close() {
+        this.dispose();
     }
-    
-    /** 
+
+    /**
      * This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -140,44 +142,44 @@ public class AboutDialog extends JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(separator, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(376, Short.MAX_VALUE)
-                .addComponent(btClose)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tpAuthors, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(laLogo)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(laCopyright)
-                            .addComponent(laSportsTracker)
-                            .addComponent(laDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE))))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(separator, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(376, Short.MAX_VALUE)
+                                .addComponent(btClose)
+                                .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(tpAuthors, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(laLogo)
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(laCopyright)
+                                                        .addComponent(laSportsTracker)
+                                                        .addComponent(laDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE))))
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(laSportsTracker)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(laDescription)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(laCopyright))
-                    .addComponent(laLogo))
-                .addGap(18, 18, 18)
-                .addComponent(tpAuthors, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btClose)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(laSportsTracker)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(laDescription)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(laCopyright))
+                                        .addComponent(laLogo))
+                                .addGap(18, 18, 18)
+                                .addComponent(tpAuthors, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btClose)
+                                .addContainerGap())
         );
 
         pack();

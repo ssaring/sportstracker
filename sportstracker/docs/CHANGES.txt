@@ -1,7 +1,29 @@
 Changelog
 ---------
 
-v5.8.0:
+v6.0.0:
+ SportsTracker changes:
+  - switched compiler to Java 8 (except for module st-exerciseviewer)
+  - replaced mocking framework EasyMock 3.2 with Mockito 1.9.5 
+    (much better API and easier to use)
+  - switch to IntelliJ IDEA 13 as project IDE, added project files to VCS
+  - reformated all Java and Groovy source files to common Java source code
+    format guidelines (reformating done by IntelliJ IDEA)
+  - cleanup of import statements in all Java and Groovy source files
+    (done by IntelliJ IDEA)
+  - fixed all compiler warnings
+  - fixed warnings reported by the IntelliJ IDEA Code Inspector
+  - fixed warnings found by IntelliJ IDEA code inspector
+  - removed Java WebStart installation option (since Java 7u40 there were
+    security warnings on each ST start due to missing signed certificates)
+    -> free signed certificates are not available for open source projects
+  - use of Lambda features in module st-util
+  - use of Lambda features in module sportstracker
+  - use new Java Date Time API (JSR 310) in all SportsTracker modules
+    - provides a better API for creation, conversion and formatting
+    - provides type separation of date, time and date time (less errors)
+
+v5.8.0 (not released):
  SportsTracker changes:
   - use of new default Mercurial repository after SourceForge project 
     platform update

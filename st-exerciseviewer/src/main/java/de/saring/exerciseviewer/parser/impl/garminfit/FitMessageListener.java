@@ -1,53 +1,43 @@
 package de.saring.exerciseviewer.parser.impl.garminfit;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import com.garmin.fit.DateTime;
-import com.garmin.fit.LapMesg;
-import com.garmin.fit.LengthMesg;
-import com.garmin.fit.Mesg;
-import com.garmin.fit.MesgListener;
-import com.garmin.fit.MesgNum;
-import com.garmin.fit.RecordMesg;
-import com.garmin.fit.SessionMesg;
-
+import com.garmin.fit.*;
 import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.EVExercise;
-import de.saring.exerciseviewer.data.ExerciseAltitude;
-import de.saring.exerciseviewer.data.ExerciseCadence;
-import de.saring.exerciseviewer.data.ExerciseSample;
-import de.saring.exerciseviewer.data.ExerciseSpeed;
-import de.saring.exerciseviewer.data.ExerciseTemperature;
-import de.saring.exerciseviewer.data.Lap;
-import de.saring.exerciseviewer.data.LapAltitude;
-import de.saring.exerciseviewer.data.LapSpeed;
-import de.saring.exerciseviewer.data.LapTemperature;
-import de.saring.exerciseviewer.data.Position;
-import de.saring.exerciseviewer.data.RecordingMode;
+import de.saring.exerciseviewer.data.*;
+import de.saring.util.Date310Utils;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This message listener implementation creates the EVExercise object from
  * the FIT messages send by the Decoder (parser).
  */
 class FitMessageListener implements MesgListener {
-    
-    /** The parsed exercise. */
+
+    /**
+     * The parsed exercise.
+     */
     private EVExercise exercise = null;
-    /** List of created laps (collected in a LinkedList and not in EVExercise array, much faster). */
-    private List<FitLap> lFitLaps = new LinkedList<>();
-    /** List of created exercise samples (collected in a LinkedList and not in EVExercise array, much faster). */
-    private List<ExerciseSample> lSamples = new LinkedList<>();
-    /** Flag for availability of temperature data. */
+    /**
+     * List of created laps (collected in a LinkedList and not in EVExercise array, much faster).
+     */
+    private final List<FitLap> lFitLaps = new LinkedList<>();
+    /**
+     * List of created exercise samples (collected in a LinkedList and not in EVExercise array, much faster).
+     */
+    private final List<ExerciseSample> lSamples = new LinkedList<>();
+    /**
+     * Flag for availability of temperature data.
+     */
     private boolean temperatureAvailable = false;
-    
+
     @Override
     public void onMesg(Mesg mesg) {
-        
+
         // delegate interesting messages to appropriate handler methods
-        switch(mesg.getNum()) {
+        switch (mesg.getNum()) {
             case MesgNum.SESSION:
                 readSessionMessage(new SessionMesg(mesg));
                 break;
@@ -65,14 +55,15 @@ class FitMessageListener implements MesgListener {
 
     /**
      * Reads exercise-level data from the specified Session message.
+     *
      * @param mesg Session message
      */
     private void readSessionMessage(SessionMesg mesg) {
-        
+
         // read time data
         exercise = new EVExercise();
         exercise.setFileType(EVExercise.ExerciseFileType.GARMIN_FIT);
-        exercise.setDate(mesg.getStartTime().getDate());
+        exercise.setDateTime(Date310Utils.dateToLocalDateTime(mesg.getStartTime().getDate()));
         exercise.setDuration(Math.round(mesg.getTotalTimerTime() * 10));
         exercise.setRecordingMode(new RecordingMode());
 
@@ -99,14 +90,14 @@ class FitMessageListener implements MesgListener {
                         ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
             }
             exercise.getSpeed().setSpeedMax(
-                ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getMaxSpeed()));
+                    ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getMaxSpeed()));
         }
-        
+
         // read optional speed data
         if (mesg.getStartPositionLat() != null && mesg.getStartPositionLong() != null) {
             exercise.getRecordingMode().setLocation(true);
         }
-        
+
         // read optional ascent data
         if (mesg.getTotalAscent() != null) {
             exercise.getRecordingMode().setAltitude(true);
@@ -125,6 +116,7 @@ class FitMessageListener implements MesgListener {
 
     /**
      * Reads lap-level data from the specified Lap message.
+     *
      * @param mesg Lap message
      */
     private void readLapMessage(LapMesg mesg) {
@@ -146,10 +138,10 @@ class FitMessageListener implements MesgListener {
             Float avgSpeed = mesg.getAvgSpeed();
             if (avgSpeed != null) {
                 lap.getSpeed().setSpeedAVG(
-                    ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
+                        ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
             }
         }
-        
+
         // read optional ascent data
         if (mesg.getTotalAscent() != null) {
             lap.setAltitude(new LapAltitude());
@@ -159,19 +151,20 @@ class FitMessageListener implements MesgListener {
         // read optional position data
         if (mesg.getEndPositionLat() != null && mesg.getEndPositionLong() != null) {
             lap.setPositionSplit(new Position(
-                ConvertUtils.convertSemicircle2Degree(mesg.getEndPositionLat()), 
-                ConvertUtils.convertSemicircle2Degree(mesg.getEndPositionLong())));
+                    ConvertUtils.convertSemicircle2Degree(mesg.getEndPositionLat()),
+                    ConvertUtils.convertSemicircle2Degree(mesg.getEndPositionLong())));
         }
-        
-        lFitLaps.add(new FitLap(lap, mesg.getTimestamp().getDate()));
+
+        lFitLaps.add(new FitLap(lap, Date310Utils.dateToLocalDateTime(mesg.getTimestamp().getDate())));
     }
-    
+
     /**
      * Reads sample-level data from the specified Record message.
+     *
      * @param mesg Record message
      */
     private void readRecordMessage(RecordMesg mesg) {
-        
+
         ExerciseSample sample = new ExerciseSample();
         lSamples.add(sample);
 
@@ -188,9 +181,9 @@ class FitMessageListener implements MesgListener {
         if (mesg.getDistance() != null) {
             sample.setDistance(Math.round(mesg.getDistance()));
         }
-        if (mesg.getSpeed () != null) {
+        if (mesg.getSpeed() != null) {
             sample.setSpeed(
-                ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getSpeed()));
+                    ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getSpeed()));
         }
         if (mesg.getAltitude() != null) {
             sample.setAltitude((short) Math.round(mesg.getAltitude()));
@@ -198,13 +191,13 @@ class FitMessageListener implements MesgListener {
         if (mesg.getCadence() != null) {
             sample.setCadence(mesg.getCadence());
         }
-        
+
         if (mesg.getPositionLat() != null && mesg.getPositionLong() != null) {
             sample.setPosition(new Position(
-                ConvertUtils.convertSemicircle2Degree(mesg.getPositionLat()), 
-                ConvertUtils.convertSemicircle2Degree(mesg.getPositionLong())));
+                    ConvertUtils.convertSemicircle2Degree(mesg.getPositionLat()),
+                    ConvertUtils.convertSemicircle2Degree(mesg.getPositionLong())));
         }
-        
+
         if (mesg.getTemperature() != null) {
             temperatureAvailable = true;
             sample.setTemperature(mesg.getTemperature());
@@ -214,25 +207,26 @@ class FitMessageListener implements MesgListener {
     /**
      * Special handling for Garmin Forerunner 910XT exercise files: Length messages are stored mostly in swimming
      * exercises, they contain informations for a "length". For some reason the previous read Record message does
-     * not contain any timing informations, these are contained in the Length messages. So the end timestamp must 
+     * not contain any timing informations, these are contained in the Length messages. So the end timestamp must
      * be read and assigned to the last read sample record here.
-     * 
+     *
      * @param mesg Length message
      */
     private void readLengthMessage(LengthMesg mesg) {
-        
+
         long startTimestamp = mesg.getStartTime().getDate().getTime();
         long totalElapsedTime = Math.round(mesg.getTotalElapsedTime().doubleValue() * 1000d);
         long endTimestamp = startTimestamp + totalElapsedTime;
-        
+
         ExerciseSample lastSample = lSamples.get(lSamples.size() - 1);
         lastSample.setTimestamp(endTimestamp);
     }
-    
+
     /**
      * Returns the EVExercise created from the received message. It sets
      * up all lap and sample data and calculates the missing data before.
-     * @return
+     *
+     * @return exercise
      */
     public EVExercise getExercise() throws EVException {
 
@@ -240,7 +234,7 @@ class FitMessageListener implements MesgListener {
         if (exercise == null) {
             throw new EVException("The FIT file does not contain any exercise (activity) data...");
         }
-        
+
         storeSamples();
         storeLaps();
 
@@ -251,11 +245,11 @@ class FitMessageListener implements MesgListener {
     }
 
     /**
-     * Stores the sample data in the exercise. It also fixes the timestamps in all 
+     * Stores the sample data in the exercise. It also fixes the timestamps in all
      * ExerciseSamples, it must be the offset from the start time.
      */
-    private void storeSamples() {            
-        long startTime = exercise.getDate().getTime();
+    private void storeSamples() {
+        long startTime = Date310Utils.getMilliseconds(exercise.getDateTime());
         for (ExerciseSample sample : lSamples) {
             sample.setTimestamp(sample.getTimestamp() - startTime);
         }
@@ -263,26 +257,27 @@ class FitMessageListener implements MesgListener {
     }
 
     /**
-     * Stores the lap data in the exercise and calculate the missing values. 
+     * Stores the lap data in the exercise and calculate the missing values.
      */
     private void storeLaps() {
         int lapDistanceSum = 0;
-        
+
         // convert FitLap to Lap objects
-        List<Lap> lLaps = new LinkedList<>();            
-        long startTime = exercise.getDate().getTime();
-        
+        List<Lap> lLaps = new LinkedList<>();
+        long startTime = Date310Utils.getMilliseconds(exercise.getDateTime());
+
         for (FitLap fitLap : lFitLaps) {
             Lap lap = fitLap.getLap();
             lLaps.add(lap);
-            
+
             // fix the split time in all Laps, it must be the offset from the start time
-            lap.setTimeSplit((int) ((fitLap.getSplitTime().getTime() - startTime) / 100));
-            
+            long lapSplitDateTimeMillis = Date310Utils.getMilliseconds(fitLap.getSplitDatTime());
+            lap.setTimeSplit((int) ((lapSplitDateTimeMillis - startTime) / 100));
+
             // get all the missing lap data from the sample at lap end time
             ExerciseSample sampleAtLapEnd = getExerciseSampleForLapEnd(lap);
             lap.setHeartRateSplit(sampleAtLapEnd.getHeartRate());
-            
+
             if (lap.getSpeed() != null) {
                 // fix lap distance, it must be the distance from exercise start (FIT stores from Lap start)
                 lapDistanceSum += lap.getSpeed().getDistance();
@@ -291,11 +286,11 @@ class FitMessageListener implements MesgListener {
                 lap.getSpeed().setSpeedEnd(sampleAtLapEnd.getSpeed());
                 lap.getSpeed().setCadence(sampleAtLapEnd.getCadence());
             }
-            
+
             if (lap.getAltitude() != null) {
                 lap.getAltitude().setAltitude(sampleAtLapEnd.getAltitude());
             }
-            
+
             if (temperatureAvailable) {
                 lap.setTemperature(new LapTemperature());
                 lap.getTemperature().setTemperature(sampleAtLapEnd.getTemperature());
@@ -307,14 +302,15 @@ class FitMessageListener implements MesgListener {
 
     /**
      * Returns the closest ExerciseSample for the lap end time.
+     *
      * @param lap the lap for search
      * @return the closest ExerciseSample
      */
     private ExerciseSample getExerciseSampleForLapEnd(Lap lap) {
-        long lapSplitTimestamp = lap.getTimeSplit() * 100L;            
+        long lapSplitTimestamp = lap.getTimeSplit() * 100L;
         ExerciseSample closestSample = null;
         long closestTimeDistance = Long.MAX_VALUE;
-        
+
         for (ExerciseSample sample : exercise.getSampleList()) {
             long timeDistance = Math.abs(sample.getTimestamp() - lapSplitTimestamp);
             if (timeDistance < closestTimeDistance) {
@@ -324,13 +320,13 @@ class FitMessageListener implements MesgListener {
         }
         return closestSample;
     }
-    
+
     /**
      * Calculates the min, max and average altitude (if available) from the sample data.
      */
     private void calculateAltitudeSummary() {
         if (exercise.getRecordingMode().isAltitude() &&
-            exercise.getSampleList().length > 0) {
+                exercise.getSampleList().length > 0) {
 
             short altMin = Short.MAX_VALUE;
             short altMax = Short.MIN_VALUE;
@@ -345,10 +341,10 @@ class FitMessageListener implements MesgListener {
             exercise.getAltitude().setAltitudeMin(altMin);
             exercise.getAltitude().setAltitudeMax(altMax);
             exercise.getAltitude().setAltitudeAVG(
-                (short) (Math.round(altitudeSum / (double) exercise.getSampleList().length)));
+                    (short) (Math.round(altitudeSum / (double) exercise.getSampleList().length)));
         }
     }
-    
+
     /**
      * Calculates the min, max and average temperature (if available) from the sample data.
      */
@@ -370,9 +366,9 @@ class FitMessageListener implements MesgListener {
             exercise.getTemperature().setTemperatureMin(tempMin);
             exercise.getTemperature().setTemperatureMax(tempMax);
             exercise.getTemperature().setTemperatureAVG(
-                (short) (Math.round(temperatureSum / (double) exercise.getSampleList().length)));
+                    (short) (Math.round(temperatureSum / (double) exercise.getSampleList().length)));
         }
-    }        
+    }
 
     /**
      * Workaround for Garmin Forerunner 910XT exercise files: the AVG speed is often not available
@@ -382,15 +378,15 @@ class FitMessageListener implements MesgListener {
      * (then there are negative timestamps for some strange reasons).
      */
     private void calculateMissingAverageSpeed() {
-        
+
         ExerciseSpeed exerciseSpeed = exercise.getSpeed();
         if (exerciseSpeed != null && exerciseSpeed.getSpeedAVG() == 0f) {
             exerciseSpeed.setSpeedAVG(CalculationUtils.calculateAvgSpeed(
                     exerciseSpeed.getDistance() / 1000f, Math.round(exercise.getDuration() / 10f)));
         }
-        
+
         for (Lap lap : exercise.getLapList()) {
-            LapSpeed lapSpeed = lap.getSpeed();            
+            LapSpeed lapSpeed = lap.getSpeed();
             if (lapSpeed != null && lapSpeed.getSpeedAVG() == 0f) {
                 lapSpeed.setSpeedAVG(CalculationUtils.calculateAvgSpeed(
                         lapSpeed.getDistance() / 1000f, Math.round(lap.getTimeSplit() / 10f)));

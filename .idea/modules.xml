@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/sportstracker/sportstracker.iml" filepath="$PROJECT_DIR$/sportstracker/sportstracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/st-exerciseviewer/st-exerciseviewer.iml" filepath="$PROJECT_DIR$/st-exerciseviewer/st-exerciseviewer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/st-parent.iml" filepath="$PROJECT_DIR$/st-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/st-util/st-util.iml" filepath="$PROJECT_DIR$/st-util/st-util.iml" />
+    </modules>
+  </component>
+</project>
+

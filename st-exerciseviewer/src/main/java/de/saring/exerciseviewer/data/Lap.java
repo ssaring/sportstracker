@@ -1,114 +1,125 @@
 package de.saring.exerciseviewer.data;
 
-    
+
 /**
  * This class contains all data of a lap of an exercise.
  *
- * @author  Stefan Saring
+ * @author Stefan Saring
  * @version 1.0
  */
-public final class Lap 
-{
-    /** Lap split time (in 1/10 seconds). */
+public final class Lap {
+    /**
+     * Lap split time (in 1/10 seconds).
+     */
     private int timeSplit;
-    /** Heartrate at lap split time. */
+    /**
+     * Heartrate at lap split time.
+     */
     private short heartRateSplit;
-    /** Average heartrate at lap. */
+    /**
+     * Average heartrate at lap.
+     */
     private short heartRateAVG;
-    /** Maximum heartrate at lap. */
+    /**
+     * Maximum heartrate at lap.
+     */
     private short heartRateMax;
-    /** Lap speed data (if recorded). */
+    /**
+     * Lap speed data (if recorded).
+     */
     private LapSpeed speed;
-    /** Lap altitude data (if recorded). */
+    /**
+     * Lap altitude data (if recorded).
+     */
     private LapAltitude altitude;
-    /** Lap temperature. */
+    /**
+     * Lap temperature.
+     */
     private LapTemperature temperature;
-    /** The geographical location at lap split time (optional). */
+    /**
+     * The geographical location at lap split time (optional).
+     */
     private Position positionSplit;
 
 
-    /***** BEGIN: Generated Getters and Setters *****/
-
-    public int getTimeSplit () {
+    public int getTimeSplit() {
         return timeSplit;
     }
 
-    public void setTimeSplit (int timeSplit) {
+    public void setTimeSplit(int timeSplit) {
         this.timeSplit = timeSplit;
     }
 
-    public short getHeartRateSplit () {
+    public short getHeartRateSplit() {
         return heartRateSplit;
     }
 
-    public void setHeartRateSplit (short heartRateSplit) {
+    public void setHeartRateSplit(short heartRateSplit) {
         this.heartRateSplit = heartRateSplit;
     }
 
-    public short getHeartRateAVG () {
+    public short getHeartRateAVG() {
         return heartRateAVG;
     }
 
-    public void setHeartRateAVG (short heartRateAVG) {
+    public void setHeartRateAVG(short heartRateAVG) {
         this.heartRateAVG = heartRateAVG;
     }
 
-    public short getHeartRateMax () {
+    public short getHeartRateMax() {
         return heartRateMax;
     }
 
-    public void setHeartRateMax (short heartRateMax) {
+    public void setHeartRateMax(short heartRateMax) {
         this.heartRateMax = heartRateMax;
     }
 
-    public LapSpeed getSpeed () {
+    public LapSpeed getSpeed() {
         return speed;
     }
 
-    public void setSpeed (LapSpeed speed) {
+    public void setSpeed(LapSpeed speed) {
         this.speed = speed;
     }
 
-    public LapAltitude getAltitude () {
+    public LapAltitude getAltitude() {
         return altitude;
     }
 
-    public void setAltitude (LapAltitude altitude) {
+    public void setAltitude(LapAltitude altitude) {
         this.altitude = altitude;
     }
 
-    public LapTemperature getTemperature () {
+    public LapTemperature getTemperature() {
         return temperature;
     }
 
-    public void setTemperature (LapTemperature temperature) {
+    public void setTemperature(LapTemperature temperature) {
         this.temperature = temperature;
     }
-    
+
     public Position getPositionSplit() {
-	    return positionSplit;
+        return positionSplit;
     }
-    
+
     public void setPositionSplit(Position positionSplit) {
-	    this.positionSplit = positionSplit;
+        this.positionSplit = positionSplit;
     }
-    
-    /***** END: Generated Getters and Setters *****/
 
     @Override
-    public String toString () {
-        StringBuilder sBuilder = new StringBuilder ();
+    public String toString() {
+        StringBuilder sBuilder = new StringBuilder();
 
-        sBuilder.append (Lap.class.getName () + ":\n");
-        sBuilder.append (" [timeSplit=" + this.timeSplit + "\n");
-        sBuilder.append ("  heartRateSplit=" + this.heartRateSplit + "\n");
-        sBuilder.append ("  heartRateAVG=" + this.heartRateAVG + "\n");
-        sBuilder.append ("  heartRateMax=" + this.heartRateMax + "\n");
-        sBuilder.append ("  speed=" + this.speed + "\n");
-        sBuilder.append ("  altitude=" + this.altitude + "\n");
-        sBuilder.append ("  temperature=" + this.temperature + "\n");
-        sBuilder.append ("  positionSplit=" + this.positionSplit + "]\n");
+        sBuilder.append(Lap.class.getName()).append(":\n");
+        sBuilder.append(" [timeSplit=").append(this.timeSplit).append("\n");
+        sBuilder.append("  heartRateSplit=").append(this.heartRateSplit).append("\n");
+        sBuilder.append("  heartRateAVG=").append(this.heartRateAVG).append("\n");
+        sBuilder.append("  heartRateMax=").append(this.heartRateMax).append("\n");
+        sBuilder.append("  speed=").append(this.speed).append("\n");
+        sBuilder.append("  altitude=").append(this.altitude).append("\n");
+        sBuilder.append("  temperature=").append(this.temperature).append("\n");
+        sBuilder.append("  positionSplit=").append(this.positionSplit).append("]\n");
 
-        return sBuilder.toString ();
+        return sBuilder.toString();
     }
 }

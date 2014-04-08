@@ -1,44 +1,37 @@
 package de.saring.exerciseviewer.gui;
 
-import javax.swing.ActionMap;
-import javax.swing.JDialog;
-
+import de.saring.exerciseviewer.gui.panels.*;
 import org.jdesktop.application.Action;
 
 import javax.inject.Inject;
-
-import de.saring.exerciseviewer.gui.panels.DiagramPanel;
-import de.saring.exerciseviewer.gui.panels.LapPanel;
-import de.saring.exerciseviewer.gui.panels.MainPanel;
-import de.saring.exerciseviewer.gui.panels.OptionalPanel;
-import de.saring.exerciseviewer.gui.panels.SamplePanel;
-import de.saring.exerciseviewer.gui.panels.TrackPanel;
+import javax.swing.*;
 
 /**
- * This class contains all view (MVC) related data and functionality of the 
+ * This class contains all view (MVC) related data and functionality of the
  * ExerciseViewer application.
  *
  * @author Stefan Saring
  * @version 1.0
  */
 public class EVView extends JDialog {
-    
+
     private static final String APPLICATION_NAME = "ExerciseViewer";
     private static final String ACTION_CLOSE = "pv.view.close";
-    
-    private transient EVContext context;
+
+    private final transient EVContext context;
     private transient EVDocument document;
 
-    private MainPanel mainPanel;
-    private OptionalPanel optionalPanel;
-    private LapPanel lapPanel;
-    private SamplePanel samplePanel;
-    private DiagramPanel diagramPanel;
-    private TrackPanel trackPanel;
+    private final MainPanel mainPanel;
+    private final OptionalPanel optionalPanel;
+    private final LapPanel lapPanel;
+    private final SamplePanel samplePanel;
+    private final DiagramPanel diagramPanel;
+    private final TrackPanel trackPanel;
 
-    
+
     /**
      * Standard c'tor.
+     *
      * @param context the ExerciseViewer context
      * @param mainPanel the main panel
      * @param optionalPanel the optional panel
@@ -48,10 +41,10 @@ public class EVView extends JDialog {
      * @param trackPanel the track panel
      */
     @Inject
-    public EVView (EVContext context, MainPanel mainPanel, OptionalPanel optionalPanel,
-        LapPanel lapPanel, SamplePanel samplePanel, DiagramPanel diagramPanel, TrackPanel trackPanel) {
-        
-        super (context.getMainFrame ());
+    public EVView(EVContext context, MainPanel mainPanel, OptionalPanel optionalPanel,
+                  LapPanel lapPanel, SamplePanel samplePanel, DiagramPanel diagramPanel, TrackPanel trackPanel) {
+
+        super(context.getMainFrame());
         this.context = context;
         this.mainPanel = mainPanel;
         this.optionalPanel = optionalPanel;
@@ -63,84 +56,86 @@ public class EVView extends JDialog {
 
     /**
      * Initializes the PVView and all contained components.
-     * @param the ExerciseViewer document
+     *
+     * @param document the ExerciseViewer document
      */
-    public void initView (EVDocument document) {
-        initComponents ();
+    public void initView(EVDocument document) {
+        initComponents();
 
         // The PVDocument can't be injected in this class and all panels, Guice would
         // create new instances for it. The declaration of PVDocument as @Singleton does
         // not help here, because the user can open multiple ExerciseViewer instances at 
         // the same time. So the dependency injection must be done manually :-(
         this.document = document;
-        mainPanel.setDocument (document);
-        optionalPanel.setDocument (document);
-        lapPanel.setDocument (document);
-        samplePanel.setDocument (document);
-        diagramPanel.setDocument (document);
-        trackPanel.setDocument (document);
-        
-        mainPanel.setDiagramPanel (diagramPanel);
-        this.getRootPane ().setDefaultButton (btClose);
-        
-        tabbedPane.add (context.getResReader ().getString ("pv.view.main"), mainPanel);
-        tabbedPane.add (context.getResReader ().getString ("pv.view.optional"), optionalPanel);
-        tabbedPane.add (context.getResReader ().getString ("pv.view.laps"), lapPanel);
-        tabbedPane.add (context.getResReader ().getString ("pv.view.samples"), samplePanel);
-        tabbedPane.add (context.getResReader ().getString ("pv.view.diagram"), diagramPanel);
-        tabbedPane.add (context.getResReader ().getString ("pv.view.track"), trackPanel);
+        mainPanel.setDocument(document);
+        optionalPanel.setDocument(document);
+        lapPanel.setDocument(document);
+        samplePanel.setDocument(document);
+        diagramPanel.setDocument(document);
+        trackPanel.setDocument(document);
+
+        mainPanel.setDiagramPanel(diagramPanel);
+        this.getRootPane().setDefaultButton(btClose);
+
+        tabbedPane.add(context.getResReader().getString("pv.view.main"), mainPanel);
+        tabbedPane.add(context.getResReader().getString("pv.view.optional"), optionalPanel);
+        tabbedPane.add(context.getResReader().getString("pv.view.laps"), lapPanel);
+        tabbedPane.add(context.getResReader().getString("pv.view.samples"), samplePanel);
+        tabbedPane.add(context.getResReader().getString("pv.view.diagram"), diagramPanel);
+        tabbedPane.add(context.getResReader().getString("pv.view.track"), trackPanel);
 
         // start resource injection for automatic widget internationalization for this
         // component and all subcomponents
-        context.getSAFContext ().getResourceMap ().injectComponents (this);
-                
+        context.getSAFContext().getResourceMap().injectComponents(this);
+
         // setup actions
-        ActionMap actionMap = context.getSAFContext ().getActionMap (getClass (), this);
-        btClose.setAction (actionMap.get (ACTION_CLOSE));
+        ActionMap actionMap = context.getSAFContext().getActionMap(getClass(), this);
+        btClose.setAction(actionMap.get(ACTION_CLOSE));
     }
-    
+
     /**
      * Shows or hides this dialog. Before showing the dialog, the minimum size
      * will be set to the prefered size (all widgets are initialized now). This
      * makes sure that all the widgets are always displayed, the window size
      * can not be reduced too much.
+     *
      * @param fVisible true for show, false for hide
      */
     @Override
-    public void setVisible (boolean fVisible) {
+    public void setVisible(boolean fVisible) {
         if (fVisible) {
-            this.setMinimumSize (this.getPreferredSize ());
+            this.setMinimumSize(this.getPreferredSize());
         }
-        super.setVisible (fVisible);
+        super.setVisible(fVisible);
     }
-        
+
     /**
      * Action for closing the ExerciseViewer dialog.
      */
-    @Action(name=ACTION_CLOSE)
-    public void close () {
-        dispose ();
+    @Action(name = ACTION_CLOSE)
+    public void close() {
+        dispose();
     }
-    
+
     /**
      * Displays the current exercise in all panels.
      */
-    public void displayExercise () {
-        
+    public void displayExercise() {
+
         // show filename in window title
-        this.setTitle (APPLICATION_NAME + " - " + document.getExerciseFilename ());
-        
+        this.setTitle(APPLICATION_NAME + " - " + document.getExerciseFilename());
+
         mainPanel.displayExercise();
         optionalPanel.displayExercise();
         lapPanel.displayExercise();
         samplePanel.displayExercise();
         diagramPanel.displayExercise();
         trackPanel.displayExercise();
-        
-        pack ();
+
+        pack();
     }
-    
-    /** 
+
+    /**
      * This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -162,42 +157,42 @@ public class EVView extends JDialog {
         javax.swing.GroupLayout pMainLayout = new javax.swing.GroupLayout(pMain);
         pMain.setLayout(pMainLayout);
         pMainLayout.setHorizontalGroup(
-            pMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
-                    .addComponent(btClose, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                pMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pMainLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+                                        .addComponent(btClose, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addContainerGap())
         );
         pMainLayout.setVerticalGroup(
-            pMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
-                .addGap(10, 10, 10)
-                .addComponent(btClose)
-                .addContainerGap())
+                pMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pMainLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                                .addGap(10, 10, 10)
+                                .addComponent(btClose)
+                                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(pMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(pMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btClose;
     private javax.swing.JPanel pMain;
     private javax.swing.JTabbedPane tabbedPane;
     // End of variables declaration//GEN-END:variables
-    
+
 }

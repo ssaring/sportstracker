@@ -1,68 +1,68 @@
 package de.saring.exerciseviewer.gui;
 
+import de.saring.exerciseviewer.core.EVOptions;
+
+import javax.inject.Inject;
+import javax.swing.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
-import javax.swing.JOptionPane;
-
-import de.saring.exerciseviewer.core.EVOptions;
-
 /**
- * This is the main class of the ExerciseViewer which start the "sub-application" 
- * (is a child-dialog of the parent frame). It creates the document and the view 
+ * This is the main class of the ExerciseViewer which start the "sub-application"
+ * (is a child-dialog of the parent frame). It creates the document and the view
  * instances of ExerciseViewer.
  *
- * @author  Stefan Saring
+ * @author Stefan Saring
  * @version 1.0
  */
 public class EVMain {
-    private static final Logger LOGGER = Logger.getLogger (EVMain.class.getName ()); 
-    
-    private EVContext context;
-    private EVDocument document;
-    private EVView view;
+    private static final Logger LOGGER = Logger.getLogger(EVMain.class.getName());
+
+    private final EVContext context;
+    private final EVDocument document;
+    private final EVView view;
 
     /**
      * Standard c'tor.
+     *
      * @param context the ExerciseViewer context
      * @param document the ExerciseViewer document component
      * @param view the ExerciseViewer view component
      */
     @Inject
-    public EVMain (EVContext context, EVDocument document, EVView view) {
+    public EVMain(EVContext context, EVDocument document, EVView view) {
         this.context = context;
         this.document = document;
         this.view = view;
     }
-    
+
     /**
      * Displays the exercise specified by the filename in the ExerciseViewer dialog.
+     *
      * @param exerciseFilename exercise file to display
-     * @param options the options to be used in ExerciseViewer 
+     * @param options the options to be used in ExerciseViewer
      * @param modal pass true when the dialog must be modal
      */
-    public void showExercise (String exerciseFilename, EVOptions options, boolean modal) {
-        
+    public void showExercise(String exerciseFilename, EVOptions options, boolean modal) {
+
         // init document and load exercise file
-        document.setOptions (options);        
+        document.setOptions(options);
         try {
-            document.openExerciseFile (exerciseFilename);
-        } 
-        catch (Exception e) {
-            LOGGER.log (Level.SEVERE, "Failed to open exercise file " + exerciseFilename + "!", e);
-            JOptionPane.showMessageDialog (context.getMainFrame (),
-                context.getResReader ().getString ("pv.error.read_exercise_console", exerciseFilename),
-                context.getResReader ().getString ("common.error"), JOptionPane.ERROR_MESSAGE);
+            document.openExerciseFile(exerciseFilename);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Failed to open exercise file " + exerciseFilename + "!", e);
+            JOptionPane.showMessageDialog(context.getMainFrame(),
+                    context.getResReader().getString("pv.error.read_exercise_console", exerciseFilename),
+                    context.getResReader().getString("common.error"), JOptionPane.ERROR_MESSAGE);
             return;
-        }        
+        }
 
         // init view
-        view.initView (document);
-        view.setModal (modal);
-        view.displayExercise ();
+        view.initView(document);
+        view.setModal(modal);
+        view.displayExercise();
 
         // display ExerciseViewer dialog
-        context.showDialog (view);
+        context.showDialog(view);
     }
 }

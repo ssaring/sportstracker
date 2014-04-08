@@ -1,27 +1,30 @@
 package de.saring.sportstracker.gui.views.listview;
 
-import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STController;
 import de.saring.util.data.IdObject;
 import de.saring.util.unitcalc.FormatUtils;
-import java.util.Date;
-import javax.swing.JTable;
+
+import javax.inject.Singleton;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import java.time.LocalDateTime;
 
 /**
  * This view class displays the list of the users weight entries in a table view.
  *
- * @author  Stefan Saring
+ * @author Stefan Saring
  * @version 1.0
  */
 @Singleton
 public class WeightListView extends BaseListView {
-    
-    /** Constants for columns indexes. */
+
+    /**
+     * Constants for columns indexes.
+     */
     private static final int COLUMN_COUNT = 3;
     private static final int COLUMN_DATE = 0;
     private static final int COLUMN_WEIGHT = 1;
@@ -30,64 +33,66 @@ public class WeightListView extends BaseListView {
 
     private String[] columnNames;
 
-    /** The table model of the weights table. */
+    /**
+     * The table model of the weights table.
+     */
     private WeightsTableModel tmWeights;
 
-    
+
     @Override
-    public void initView () {
-        
+    public void initView() {
+
         // initialize array of column names
         columnNames = new String[COLUMN_COUNT];
-        columnNames[0] = getContext ().getResReader ().getString ("st.weightlistview.date");
-        columnNames[1] = getContext ().getResReader ().getString ("st.weightlistview.weight");
-        columnNames[2] = getContext ().getResReader ().getString ("st.weightlistview.comment");
+        columnNames[0] = getContext().getResReader().getString("st.weightlistview.date");
+        columnNames[1] = getContext().getResReader().getString("st.weightlistview.weight");
+        columnNames[2] = getContext().getResReader().getString("st.weightlistview.comment");
 
         // create tablemodel
-        tmWeights = new WeightsTableModel ();
+        tmWeights = new WeightsTableModel();
 
         // create table and setup its context menu
-        createTable ();
-        getPopupMenu().insert(getController().getActionMap ().get(STController.ACTION_WEIGHT_ADD), 0);
-        
+        createTable();
+        getPopupMenu().insert(getController().getActionMap().get(STController.ACTION_WEIGHT_ADD), 0);
+
         // set column widths 
-        getTable ().setAutoResizeMode (JTable.AUTO_RESIZE_LAST_COLUMN);
-        TableColumnModel tcModel = getTable ().getColumnModel ();
-        tcModel.getColumn (COLUMN_DATE).setWidth (80);
-        tcModel.getColumn (COLUMN_WEIGHT).setWidth (80);
-        tcModel.getColumn (COLUMN_COMMENT).setPreferredWidth (520);
+        getTable().setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        TableColumnModel tcModel = getTable().getColumnModel();
+        tcModel.getColumn(COLUMN_DATE).setWidth(80);
+        tcModel.getColumn(COLUMN_WEIGHT).setWidth(80);
+        tcModel.getColumn(COLUMN_COMMENT).setPreferredWidth(520);
     }
 
     @Override
-    protected String[] getColumnNames () {
+    protected String[] getColumnNames() {
         return columnNames;
     }
 
     @Override
-    protected AbstractTableModel getTableModel () {
+    protected AbstractTableModel getTableModel() {
         return tmWeights;
     }
-    
+
     @Override
     protected int getIdColumnIndex() {
         return HIDDEN_COLUMN_ID;
     }
 
     @Override
-    protected DefaultTableCellRenderer getTableCellRender () {
+    protected DefaultTableCellRenderer getTableCellRender() {
         return new WeightCellRenderer();
     }
 
     @Override
-    public int getSelectedWeightCount () {
+    public int getSelectedWeightCount() {
         return getSelectedEntryCount();
     }
 
     @Override
-    public int[] getSelectedWeightIDs () {
+    public int[] getSelectedWeightIDs() {
         return getSelectedEntryIDs();
     }
-    
+
     @Override
     public void selectEntry(IdObject entry) {
         if (entry instanceof Weight) {
@@ -96,31 +101,37 @@ public class WeightListView extends BaseListView {
     }
 
     @Override
-    public void print () throws STException {
-        if (!getController ().checkForExistingWeights ()) {
+    public void print() throws STException {
+        if (!getController().checkForExistingWeights()) {
             return;
         }
-        
-        printList (
-            getContext ().getResReader ().getString ("st.weightlistview.print.title"),
-            getContext ().getResReader ().getString ("st.weightlistview.print.page"));
+
+        printList(
+                getContext().getResReader().getString("st.weightlistview.print.title"),
+                getContext().getResReader().getString("st.weightlistview.print.page"));
     }
-    
+
     /**
      * Table model implementation for the Weights table.
      */
     class WeightsTableModel extends BaseListView.BaseListTableModel {
-        
-        /** Returns the number of weights. */
-        @Override public int getRowCount() {
-            return getDocument ().getWeightList ().size ();
+
+        /**
+         * Returns the number of weights.
+         */
+        @Override
+        public int getRowCount() {
+            return getDocument().getWeightList().size();
         }
 
-        /** Returns the class of the specified column (needed for sorting). */
-        @Override public Class<?> getColumnClass (int col) {
-            switch (col) {                
+        /**
+         * Returns the class of the specified column (needed for sorting).
+         */
+        @Override
+        public Class<?> getColumnClass(int col) {
+            switch (col) {
                 case COLUMN_DATE:
-                    return Date.class;
+                    return LocalDateTime.class;
                 case COLUMN_WEIGHT:
                     return Float.class;
                 default:
@@ -128,19 +139,22 @@ public class WeightListView extends BaseListView {
             }
         }
 
-        /** Returns the exercise value for the specified column. */
-        @Override public Object getValueAt (int row, int col) {            
-            Weight weight = getDocument ().getWeightList ().getAt (row);
+        /**
+         * Returns the exercise value for the specified column.
+         */
+        @Override
+        public Object getValueAt(int row, int col) {
+            Weight weight = getDocument().getWeightList().getAt(row);
 
-            switch (col) {                
+            switch (col) {
                 case COLUMN_DATE:
-                    return weight.getDate ();
+                    return weight.getDateTime();
                 case COLUMN_WEIGHT:
-                    return weight.getValue ();
+                    return weight.getValue();
                 case COLUMN_COMMENT:
-                    return weight.getComment ();
+                    return weight.getComment();
                 case HIDDEN_COLUMN_ID:
-                    return weight.getId ();
+                    return weight.getId();
             }
             return null;
         }
@@ -152,17 +166,17 @@ public class WeightListView extends BaseListView {
     class WeightCellRenderer extends BaseListView.BaseListCellRenderer {
 
         @Override
-        protected String formatText (Object value, int rowIndex, int columnIndex) {
-            FormatUtils formatUtils = getContext ().getFormatUtils ();
+        protected String formatText(Object value, int rowIndex, int columnIndex) {
+            FormatUtils formatUtils = getContext().getFormatUtils();
 
             switch (columnIndex) {
                 case COLUMN_WEIGHT:
                     // use special format for the weight column
-                    return formatUtils.weightToString ((Float) value, 2);
+                    return formatUtils.weightToString((Float) value, 2);
                 case COLUMN_COMMENT:
-                    return formatUtils.firstLineOfText ((String) value);
+                    return formatUtils.firstLineOfText((String) value);
                 default:
-                    return super.formatText (value, rowIndex, columnIndex);
+                    return super.formatText(value, rowIndex, columnIndex);
             }
         }
     }

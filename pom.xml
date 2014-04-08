@@ -30,33 +30,18 @@
     
     <build>
         <plugins>
-            <!-- Compiler plugin configuration: use groovy-eclipse-compiler for mixed Java/Groovy compilation -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <compilerId>groovy-eclipse-compiler</compilerId>
                     <verbose>false</verbose>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-eclipse-compiler</artifactId>
-                        <version>2.8.0-01</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-eclipse-batch</artifactId>
-                        <version>2.1.5-03</version>
-                    </dependency>                    
-                </dependencies>
             </plugin>
         </plugins>
     </build>
-    
 
     <dependencies>
         <!-- Common compile dependencies -->
@@ -92,11 +77,7 @@
             <artifactId>groovy</artifactId>
             <version>${groovy.version}</version>
             <exclusions>
-                <!-- Exclude all not needed dependecies, only asm core is needed -->
-                <exclusion>
-                  <groupId>antlr</groupId>
-                  <artifactId>antlr</artifactId>
-                </exclusion>
+                <!-- Exclude all not needed dependecies, only asm-core and antlr are needed -->
                 <exclusion>
                     <groupId>org.ow2.asm</groupId>
                     <artifactId>asm-analysis</artifactId>
@@ -160,11 +141,10 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.easymock</groupId>
-            <artifactId>easymock</artifactId>
-            <version>3.2</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.9.5</version>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
     </dependencies>
-
 </project>

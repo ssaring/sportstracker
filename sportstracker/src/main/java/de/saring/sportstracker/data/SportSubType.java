@@ -3,59 +3,58 @@ package de.saring.sportstracker.data;
 import de.saring.util.data.IdObject;
 
 /**
- * This class contains all informations of a subtype of a sport type (e.g. 
+ * This class contains all informations of a subtype of a sport type (e.g.
  * mountainbiking for sport type cycling).
- * 
- * @author  Stefan Saring
+ *
+ * @author Stefan Saring
  * @version 1.0
  */
 public final class SportSubType extends IdObject implements Cloneable {
 
-    /** Name of sport subtype. */
+    /**
+     * Name of sport subtype.
+     */
     private String name;
 
     /**
      * Standard c'tor.
+     *
      * @param id the ID of the object
      */
-    public SportSubType (int id) {
-        super (id);
+    public SportSubType(int id) {
+        super(id);
     }
-    
-    /***** BEGIN: Generated Getters and Setters *****/
-    
-    public String getName () {
+
+    public String getName() {
         return name;
     }
 
-    public void setName (String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    /***** END: Generated Getters and Setters *****/
-
     /**
      * Returns a deep clone copy of this SportSubType object.
+     *
      * @return clone of this object
      */
     @Override
-    public SportSubType clone () {
+    public SportSubType clone() {
         try {
             // nothing more to do (contains only primitives and an immutable string)
             // (the exception can't happen)
-            return (SportSubType) super.clone ();
-        }
-        catch (CloneNotSupportedException ex) {
-            throw new AssertionError ();
+            return (SportSubType) super.clone();
+        } catch (CloneNotSupportedException ex) {
+            throw new AssertionError();
         }
     }
 
     @Override
-    public String toString () {
-        StringBuilder sBuilder = new StringBuilder ();
-        sBuilder.append (this.getClass ().getName () + ":\n");
-        sBuilder.append (" [id=" + this.getId () + "\n");
-        sBuilder.append ("  name=" + this.name + "]\n");
-        return sBuilder.toString ();
+    public String toString() {
+        StringBuilder sBuilder = new StringBuilder();
+        sBuilder.append(this.getClass().getName()).append(":\n");
+        sBuilder.append(" [id=").append(this.getId()).append("\n");
+        sBuilder.append("  name=").append(this.name).append("]\n");
+        return sBuilder.toString();
     }
 }

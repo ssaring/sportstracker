@@ -1,9 +1,10 @@
 package de.saring.exerciseviewer.gui.panels;
 
-import javax.inject.Inject;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.unitcalc.FormatUtils;
+
+import javax.inject.Inject;
 
 /**
  * This class is the implementation of the "Optional" panel, which displays all
@@ -13,75 +14,76 @@ import de.saring.util.unitcalc.FormatUtils;
  * @version 1.0
  */
 public class OptionalPanel extends BasePanel {
-    
+
     /**
      * Standard c'tor.
+     *
      * @param context the ExerciseViewer context
      */
     @Inject
-    public OptionalPanel (EVContext context) {
-        super (context);
-        initComponents ();        
+    public OptionalPanel(EVContext context) {
+        super(context);
+        initComponents();
     }
-    
+
     @Override
-    public void displayExercise () {
-        EVExercise exercise = getDocument ().getExercise ();
-        FormatUtils formatUtils = getContext ().getFormatUtils ();
+    public void displayExercise() {
+        EVExercise exercise = getDocument().getExercise();
+        FormatUtils formatUtils = getContext().getFormatUtils();
 
         // set default text for all value labels first
-        laAvgSpeedValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laMaxSpeedValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laDistanceValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laBikeNrValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
+        laAvgSpeedValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laMaxSpeedValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laDistanceValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laBikeNrValue.setText(getContext().getResReader().getString("common.n_a_"));
 
-        laAvgCadenceValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laMaxCadenceValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
+        laAvgCadenceValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laMaxCadenceValue.setText(getContext().getResReader().getString("common.n_a_"));
 
-        laMinAltitudeValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laAvgAltitudeValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laMaxAltitudeValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laAscentValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
+        laMinAltitudeValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laAvgAltitudeValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laMaxAltitudeValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laAscentValue.setText(getContext().getResReader().getString("common.n_a_"));
 
-        laMinTemperatureValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laAvgTemperatureValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        laMaxTemperatureValue.setText (getContext ().getResReader ().getString ("common.n_a_"));
-        
+        laMinTemperatureValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laAvgTemperatureValue.setText(getContext().getResReader().getString("common.n_a_"));
+        laMaxTemperatureValue.setText(getContext().getResReader().getString("common.n_a_"));
+
         // fill speed data
-        if (exercise.getSpeed () != null) {
-            laAvgSpeedValue.setText (formatUtils.speedToString (exercise.getSpeed ().getSpeedAVG (), 2));
-            laMaxSpeedValue.setText (formatUtils.speedToString (exercise.getSpeed ().getSpeedMax (), 2));
-            laDistanceValue.setText (formatUtils.distanceToString (exercise.getSpeed ().getDistance () / 1000f, 2));
-            
+        if (exercise.getSpeed() != null) {
+            laAvgSpeedValue.setText(formatUtils.speedToString(exercise.getSpeed().getSpeedAVG(), 2));
+            laMaxSpeedValue.setText(formatUtils.speedToString(exercise.getSpeed().getSpeedMax(), 2));
+            laDistanceValue.setText(formatUtils.distanceToString(exercise.getSpeed().getDistance() / 1000f, 2));
+
             // bike number can't be displayed for HRM files
-            if (exercise.getFileType () != EVExercise.ExerciseFileType.HRM) {
-                laBikeNrValue.setText (String.valueOf (exercise.getRecordingMode ().getBikeNumber ()));
+            if (exercise.getFileType() != EVExercise.ExerciseFileType.HRM) {
+                laBikeNrValue.setText(String.valueOf(exercise.getRecordingMode().getBikeNumber()));
             }
         }
-        
+
         // fill cadence data
-        if (exercise.getCadence () != null) {
-            laAvgCadenceValue.setText (formatUtils.cadenceToString (exercise.getCadence ().getCadenceAVG ()));
-            laMaxCadenceValue.setText (formatUtils.cadenceToString (exercise.getCadence ().getCadenceMax ()));
+        if (exercise.getCadence() != null) {
+            laAvgCadenceValue.setText(formatUtils.cadenceToString(exercise.getCadence().getCadenceAVG()));
+            laMaxCadenceValue.setText(formatUtils.cadenceToString(exercise.getCadence().getCadenceMax()));
         }
-        
+
         // fill altitude data
-        if (exercise.getAltitude () != null) {
-            laMinAltitudeValue.setText (formatUtils.heightToString (exercise.getAltitude ().getAltitudeMin ()));
-            laAvgAltitudeValue.setText (formatUtils.heightToString (exercise.getAltitude ().getAltitudeAVG ()));
-            laMaxAltitudeValue.setText (formatUtils.heightToString (exercise.getAltitude ().getAltitudeMax ()));
-            laAscentValue.setText (formatUtils.heightToString (exercise.getAltitude ().getAscent ()));
+        if (exercise.getAltitude() != null) {
+            laMinAltitudeValue.setText(formatUtils.heightToString(exercise.getAltitude().getAltitudeMin()));
+            laAvgAltitudeValue.setText(formatUtils.heightToString(exercise.getAltitude().getAltitudeAVG()));
+            laMaxAltitudeValue.setText(formatUtils.heightToString(exercise.getAltitude().getAltitudeMax()));
+            laAscentValue.setText(formatUtils.heightToString(exercise.getAltitude().getAscent()));
         }
-        
+
         // fill temperature data
-        if (exercise.getTemperature () != null) {
-            laMinTemperatureValue.setText (formatUtils.temperatureToString (exercise.getTemperature ().getTemperatureMin ()));
-            laAvgTemperatureValue.setText (formatUtils.temperatureToString (exercise.getTemperature ().getTemperatureAVG ()));
-            laMaxTemperatureValue.setText (formatUtils.temperatureToString (exercise.getTemperature ().getTemperatureMax ()));
-        }        
+        if (exercise.getTemperature() != null) {
+            laMinTemperatureValue.setText(formatUtils.temperatureToString(exercise.getTemperature().getTemperatureMin()));
+            laAvgTemperatureValue.setText(formatUtils.temperatureToString(exercise.getTemperature().getTemperatureAVG()));
+            laMaxTemperatureValue.setText(formatUtils.temperatureToString(exercise.getTemperature().getTemperatureMax()));
+        }
     }
-        
-    /** 
+
+    /**
      * This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -167,70 +169,70 @@ public class OptionalPanel extends BasePanel {
         javax.swing.GroupLayout pLeftLayout = new javax.swing.GroupLayout(pLeft);
         pLeft.setLayout(pLeftLayout);
         pLeftLayout.setHorizontalGroup(
-            pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pLeftLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laAvgCadence)
-                    .addComponent(laMaxCadence))
-                .addContainerGap(164, Short.MAX_VALUE))
-            .addGroup(pLeftLayout.createSequentialGroup()
-                .addComponent(laCadenceData)
-                .addContainerGap(139, Short.MAX_VALUE))
-            .addGroup(pLeftLayout.createSequentialGroup()
-                .addComponent(laSpeedData)
-                .addContainerGap(156, Short.MAX_VALUE))
-            .addGroup(pLeftLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laAvgSpeed)
-                    .addComponent(laMaxSpeed)
-                    .addComponent(laDistance)
-                    .addComponent(laBikeNr))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(laBikeNrValue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                    .addComponent(laDistanceValue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                    .addComponent(laMaxSpeedValue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                    .addComponent(laAvgSpeedValue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                    .addComponent(laAvgCadenceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                    .addComponent(laMaxCadenceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
+                pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pLeftLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laAvgCadence)
+                                        .addComponent(laMaxCadence))
+                                .addContainerGap(164, Short.MAX_VALUE))
+                        .addGroup(pLeftLayout.createSequentialGroup()
+                                .addComponent(laCadenceData)
+                                .addContainerGap(139, Short.MAX_VALUE))
+                        .addGroup(pLeftLayout.createSequentialGroup()
+                                .addComponent(laSpeedData)
+                                .addContainerGap(156, Short.MAX_VALUE))
+                        .addGroup(pLeftLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laAvgSpeed)
+                                        .addComponent(laMaxSpeed)
+                                        .addComponent(laDistance)
+                                        .addComponent(laBikeNr))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(laBikeNrValue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                        .addComponent(laDistanceValue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                        .addComponent(laMaxSpeedValue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                        .addComponent(laAvgSpeedValue, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                        .addComponent(laAvgCadenceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                        .addComponent(laMaxCadenceValue, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
         );
         pLeftLayout.setVerticalGroup(
-            pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pLeftLayout.createSequentialGroup()
-                .addComponent(laSpeedData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addComponent(laAvgSpeed)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laMaxSpeed)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laDistance)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laBikeNr))
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addComponent(laAvgSpeedValue)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laMaxSpeedValue)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laDistanceValue)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(laBikeNrValue)))
-                .addGap(25, 25, 25)
-                .addComponent(laCadenceData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pLeftLayout.createSequentialGroup()
-                        .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(laAvgCadence)
-                            .addComponent(laAvgCadenceValue))
-                        .addGap(21, 21, 21))
-                    .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(laMaxCadence)
-                        .addComponent(laMaxCadenceValue)))
-                .addContainerGap(152, Short.MAX_VALUE))
+                pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pLeftLayout.createSequentialGroup()
+                                .addComponent(laSpeedData)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addComponent(laAvgSpeed)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laMaxSpeed)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laDistance)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laBikeNr))
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addComponent(laAvgSpeedValue)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laMaxSpeedValue)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laDistanceValue)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(laBikeNrValue)))
+                                .addGap(25, 25, 25)
+                                .addComponent(laCadenceData)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(pLeftLayout.createSequentialGroup()
+                                                .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(laAvgCadence)
+                                                        .addComponent(laAvgCadenceValue))
+                                                .addGap(21, 21, 21))
+                                        .addGroup(pLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(laMaxCadence)
+                                                .addComponent(laMaxCadenceValue)))
+                                .addContainerGap(152, Short.MAX_VALUE))
         );
 
         add(pLeft);
@@ -281,73 +283,73 @@ public class OptionalPanel extends BasePanel {
         javax.swing.GroupLayout pRightLayout = new javax.swing.GroupLayout(pRight);
         pRight.setLayout(pRightLayout);
         pRightLayout.setHorizontalGroup(
-            pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pRightLayout.createSequentialGroup()
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laTemperatureData)
-                    .addGroup(pRightLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(laMinTemperature)
-                            .addComponent(laAvgTemperature)
-                            .addComponent(laMaxTemperature)
-                            .addComponent(laMinAltitude)
-                            .addComponent(laAvgAltitude)
-                            .addComponent(laMaxAltitude)
-                            .addComponent(laAscent))
-                        .addGap(7, 7, 7)
-                        .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(laMinAltitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                            .addComponent(laAvgAltitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                            .addComponent(laMaxAltitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                            .addComponent(laAscentValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                            .addComponent(laMinTemperatureValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                            .addComponent(laAvgTemperatureValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                            .addComponent(laMaxTemperatureValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)))
-                    .addComponent(laAltitudeData))
-                .addContainerGap())
+                pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pRightLayout.createSequentialGroup()
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laTemperatureData)
+                                        .addGroup(pRightLayout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(laMinTemperature)
+                                                        .addComponent(laAvgTemperature)
+                                                        .addComponent(laMaxTemperature)
+                                                        .addComponent(laMinAltitude)
+                                                        .addComponent(laAvgAltitude)
+                                                        .addComponent(laMaxAltitude)
+                                                        .addComponent(laAscent))
+                                                .addGap(7, 7, 7)
+                                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(laMinAltitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                                                        .addComponent(laAvgAltitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                                                        .addComponent(laMaxAltitudeValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                                                        .addComponent(laAscentValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                                                        .addComponent(laMinTemperatureValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                                                        .addComponent(laAvgTemperatureValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                                                        .addComponent(laMaxTemperatureValue, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)))
+                                        .addComponent(laAltitudeData))
+                                .addContainerGap())
         );
         pRightLayout.setVerticalGroup(
-            pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pRightLayout.createSequentialGroup()
-                .addComponent(laAltitudeData, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMinAltitude)
-                    .addComponent(laMinAltitudeValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laAvgAltitude)
-                    .addComponent(laAvgAltitudeValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMaxAltitude)
-                    .addComponent(laMaxAltitudeValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laAscent)
-                    .addComponent(laAscentValue))
-                .addGap(25, 25, 25)
-                .addComponent(laTemperatureData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMinTemperature)
-                    .addComponent(laMinTemperatureValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laAvgTemperature)
-                    .addComponent(laAvgTemperatureValue))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(laMaxTemperature)
-                    .addComponent(laMaxTemperatureValue))
-                .addContainerGap(129, Short.MAX_VALUE))
+                pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pRightLayout.createSequentialGroup()
+                                .addComponent(laAltitudeData, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMinAltitude)
+                                        .addComponent(laMinAltitudeValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laAvgAltitude)
+                                        .addComponent(laAvgAltitudeValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMaxAltitude)
+                                        .addComponent(laMaxAltitudeValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laAscent)
+                                        .addComponent(laAscentValue))
+                                .addGap(25, 25, 25)
+                                .addComponent(laTemperatureData)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMinTemperature)
+                                        .addComponent(laMinTemperatureValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laAvgTemperature)
+                                        .addComponent(laAvgTemperatureValue))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(laMaxTemperature)
+                                        .addComponent(laMaxTemperatureValue))
+                                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         add(pRight);
     }// </editor-fold>//GEN-END:initComponents
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel laAltitudeData;
     private javax.swing.JLabel laAscent;
@@ -382,5 +384,5 @@ public class OptionalPanel extends BasePanel {
     private javax.swing.JPanel pLeft;
     private javax.swing.JPanel pRight;
     // End of variables declaration//GEN-END:variables
-    
+
 }

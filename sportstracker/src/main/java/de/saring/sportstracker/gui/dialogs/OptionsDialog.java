@@ -1,17 +1,5 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.inject.Inject;
-import javax.swing.ActionMap;
-import javax.swing.JDialog;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-
-import org.jdesktop.application.Action;
-
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.core.STOptions.AutoCalculation;
 import de.saring.sportstracker.gui.STContext;
@@ -19,131 +7,137 @@ import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.DialogUtils;
 import de.saring.util.unitcalc.FormatUtils.SpeedView;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
+import org.jdesktop.application.Action;
+
+import javax.inject.Inject;
+import javax.swing.*;
+import javax.swing.UIManager.LookAndFeelInfo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class is the implementation of the Options dialog.
-
- * @author  Stefan Saring
+ *
+ * @author Stefan Saring
  * @version 1.0
  */
 public class OptionsDialog extends JDialog {
-    private static final Logger LOGGER = Logger.getLogger (OptionsDialog.class.getName ()); 
+    private static final Logger LOGGER = Logger.getLogger(OptionsDialog.class.getName());
 
-    /** Constants for action and property names. */
+    /**
+     * Constants for action and property names.
+     */
     private static final String ACTION_OK = "st.dlg.options.ok";
     private static final String ACTION_CANCEL = "st.dlg.options.cancel";
 
-    private STContext context;
-    private STDocument document;
-    
-    /** 
+    private final STContext context;
+    private final STDocument document;
+
+    /**
      * Creates new OptionsDialog instance.
+     *
      * @param context the SportsTracker context
      * @param document the application document component
      */
     @Inject
-    public OptionsDialog (STContext context, STDocument document) {
-        super (context.getMainFrame (), true);
+    public OptionsDialog(STContext context, STDocument document) {
+        super(context.getMainFrame(), true);
         this.context = context;
         this.document = document;
-        initComponents ();
+        initComponents();
         setLocationRelativeTo(getParent());
-        setTextTranslations ();
-        this.getRootPane ().setDefaultButton (btOK);        
-        
+        setTextTranslations();
+        this.getRootPane().setDefaultButton(btOK);
+
         // setup actions
-        ActionMap actionMap = context.getSAFContext ().getActionMap (getClass (), this);
-        btOK.setAction (actionMap.get (ACTION_OK));
-        
+        ActionMap actionMap = context.getSAFContext().getActionMap(getClass(), this);
+        btOK.setAction(actionMap.get(ACTION_OK));
+
         javax.swing.Action aCancel = actionMap.get(ACTION_CANCEL);
         btCancel.setAction(aCancel);
         DialogUtils.setDialogEscapeKeyAction(this, aCancel);
 
-        setInitialValues ();
+        setInitialValues();
     }
 
     /**
      * Sets the text translations for all widgets where it's not done automatically.
      */
-    private void setTextTranslations () {
-        tabbedPane.setTitleAt (0, context.getResReader ().getString ("st.dlg.options.main.title"));
-        tabbedPane.setTitleAt (1, context.getResReader ().getString ("st.dlg.options.units.title"));
-        tabbedPane.setTitleAt (2, context.getResReader ().getString ("st.dlg.options.listview.title"));
-        tabbedPane.setTitleAt (3, context.getResReader ().getString ("st.dlg.options.exerciseviewer.title"));
+    private void setTextTranslations() {
+        tabbedPane.setTitleAt(0, context.getResReader().getString("st.dlg.options.main.title"));
+        tabbedPane.setTitleAt(1, context.getResReader().getString("st.dlg.options.units.title"));
+        tabbedPane.setTitleAt(2, context.getResReader().getString("st.dlg.options.listview.title"));
+        tabbedPane.setTitleAt(3, context.getResReader().getString("st.dlg.options.exerciseviewer.title"));
     }
-    
+
     /**
      * Sets the initial exercise values for all controls.
      */
-    private void setInitialValues () {
-        STOptions options = document.getOptions ();
-        
-        if (options.getInitialView () == STOptions.View.Calendar) {
-            rbCalendar.setSelected (true);
-        }
-        else { 
-            rbExerciseList.setSelected (true);
+    private void setInitialValues() {
+        STOptions options = document.getOptions();
+
+        if (options.getInitialView() == STOptions.View.Calendar) {
+            rbCalendar.setSelected(true);
+        } else {
+            rbExerciseList.setSelected(true);
         }
 
-        if (options.getUnitSystem () == UnitSystem.Metric) {
-            rbMetric.setSelected (true);
-        }
-        else { 
-            rbEnglish.setSelected (true);
-        }
-
-        if (options.getSpeedView () == SpeedView.DistancePerHour) {
-            rbDistanceHour.setSelected (true);
-        }
-        else { 
-            rbMinutesDistance.setSelected (true);
+        if (options.getUnitSystem() == UnitSystem.Metric) {
+            rbMetric.setSelected(true);
+        } else {
+            rbEnglish.setSelected(true);
         }
 
-        if (options.isWeekStartSunday ()) {
-            rbSunday.setSelected (true);
-        }
-        else { 
-            rbMonday.setSelected (true);
+        if (options.getSpeedView() == SpeedView.DistancePerHour) {
+            rbDistanceHour.setSelected(true);
+        } else {
+            rbMinutesDistance.setSelected(true);
         }
 
-        cbSecondGraph.setSelected (options.isDisplaySecondDiagram ());
-        cbSaveOnExit.setSelected (options.isSaveOnExit ());
+        if (options.isWeekStartSunday()) {
+            rbSunday.setSelected(true);
+        } else {
+            rbMonday.setSelected(true);
+        }
+
+        cbSecondGraph.setSelected(options.isDisplaySecondDiagram());
+        cbSaveOnExit.setSelected(options.isSaveOnExit());
 
         // fill combobox with all autocalculation types and select current type
-        cbDefaultAutoCalculation.removeAllItems ();
-        cbDefaultAutoCalculation.addItem (new AutoCalculationComboBoxItem (
-            AutoCalculation.Distance, context.getResReader ().getString ("st.dlg.options.distance.text")));        
-        cbDefaultAutoCalculation.addItem (new AutoCalculationComboBoxItem (
-            AutoCalculation.AvgSpeed, context.getResReader ().getString ("st.dlg.options.avg_speed.text")));
-        cbDefaultAutoCalculation.addItem (new AutoCalculationComboBoxItem (
-            AutoCalculation.Duration, context.getResReader ().getString ("st.dlg.options.duration.text")));
-        
-        for (int i = 0; i < cbDefaultAutoCalculation.getItemCount (); i++) {
-            AutoCalculationComboBoxItem item = (AutoCalculationComboBoxItem) cbDefaultAutoCalculation.getItemAt (i);
-            if (item.getAutoCalculation () == options.getDefaultAutoCalcuation ()) {
-                cbDefaultAutoCalculation.setSelectedItem (item);
+        cbDefaultAutoCalculation.removeAllItems();
+        cbDefaultAutoCalculation.addItem(new AutoCalculationComboBoxItem(
+                AutoCalculation.Distance, context.getResReader().getString("st.dlg.options.distance.text")));
+        cbDefaultAutoCalculation.addItem(new AutoCalculationComboBoxItem(
+                AutoCalculation.AvgSpeed, context.getResReader().getString("st.dlg.options.avg_speed.text")));
+        cbDefaultAutoCalculation.addItem(new AutoCalculationComboBoxItem(
+                AutoCalculation.Duration, context.getResReader().getString("st.dlg.options.duration.text")));
+
+        for (int i = 0; i < cbDefaultAutoCalculation.getItemCount(); i++) {
+            AutoCalculationComboBoxItem item = cbDefaultAutoCalculation.getItemAt(i);
+            if (item.getAutoCalculation() == options.getDefaultAutoCalcuation()) {
+                cbDefaultAutoCalculation.setSelectedItem(item);
                 break;
             }
         }
-        
+
         // listview options
-        cbShowAvgHeartrate.setSelected(options.isListViewShowAvgHeartrate ());
-        cbShowAscent.setSelected(options.isListViewShowAscent ());
-        cbShowEnergy.setSelected(options.isListViewShowEnergy ());
-        cbShowEquipment.setSelected(options.isListViewShowEquipment ());
-        cbShowComment.setSelected(options.isListViewShowComment ());
-        
+        cbShowAvgHeartrate.setSelected(options.isListViewShowAvgHeartrate());
+        cbShowAscent.setSelected(options.isListViewShowAscent());
+        cbShowEnergy.setSelected(options.isListViewShowEnergy());
+        cbShowEquipment.setSelected(options.isListViewShowEquipment());
+        cbShowComment.setSelected(options.isListViewShowComment());
+
         // fill combobox with all available look&feels and select current look&feel
-        LookAndFeelInfo[] lafInfos = UIManager.getInstalledLookAndFeels ();
-        String currentLAFClassName = UIManager.getLookAndFeel ().getClass ().getName ();        
-        cbLookAndFeel.removeAllItems ();
-        
+        LookAndFeelInfo[] lafInfos = UIManager.getInstalledLookAndFeels();
+        String currentLAFClassName = UIManager.getLookAndFeel().getClass().getName();
+        cbLookAndFeel.removeAllItems();
+
         for (LookAndFeelInfo info : lafInfos) {
-            LAFComboBoxItem cbItem = new LAFComboBoxItem (info);
-            cbLookAndFeel.addItem (cbItem);
-            
-            if (info.getClassName ().equals(currentLAFClassName)) {
-                cbLookAndFeel.setSelectedItem (cbItem);
+            LAFComboBoxItem cbItem = new LAFComboBoxItem(info);
+            cbLookAndFeel.addItem(cbItem);
+
+            if (info.getClassName().equals(currentLAFClassName)) {
+                cbLookAndFeel.setSelectedItem(cbItem);
             }
         }
     }
@@ -151,68 +145,68 @@ public class OptionsDialog extends JDialog {
     /**
      * Action for closing the dialog with the OK button.
      */
-    @Action(name=ACTION_OK)
-    public void ok () {
-        STOptions options = document.getOptions ();
-        
+    @Action(name = ACTION_OK)
+    public void ok() {
+        STOptions options = document.getOptions();
+
         // get options from widgets
-        options.setInitialView (rbCalendar.isSelected () ?
-            STOptions.View.Calendar : STOptions.View.List);
+        options.setInitialView(rbCalendar.isSelected() ?
+                STOptions.View.Calendar : STOptions.View.List);
 
-        options.setUnitSystem (rbMetric.isSelected () ?
-            UnitSystem.Metric : UnitSystem.English);
+        options.setUnitSystem(rbMetric.isSelected() ?
+                UnitSystem.Metric : UnitSystem.English);
 
-        options.setSpeedView (rbDistanceHour.isSelected () ?
-            SpeedView.DistancePerHour : SpeedView.MinutesPerDistance);
+        options.setSpeedView(rbDistanceHour.isSelected() ?
+                SpeedView.DistancePerHour : SpeedView.MinutesPerDistance);
 
-        options.setWeekStartSunday (rbSunday.isSelected ());
-        options.setDisplaySecondDiagram (cbSecondGraph.isSelected ());
-        options.setSaveOnExit (cbSaveOnExit.isSelected ());
-        
-        AutoCalculationComboBoxItem acItem = (AutoCalculationComboBoxItem) cbDefaultAutoCalculation.getSelectedItem (); 
-        options.setDefaultAutoCalcuation (acItem.getAutoCalculation ());
-        
-        LAFComboBoxItem lafItem = (LAFComboBoxItem) cbLookAndFeel.getSelectedItem ();
-        options.setLookAndFeelClassName (lafItem.getLookAndFeelInfo().getClassName ());
-        setLookAndFeel (options.getLookAndFeelClassName ());
-        
+        options.setWeekStartSunday(rbSunday.isSelected());
+        options.setDisplaySecondDiagram(cbSecondGraph.isSelected());
+        options.setSaveOnExit(cbSaveOnExit.isSelected());
+
+        AutoCalculationComboBoxItem acItem = (AutoCalculationComboBoxItem) cbDefaultAutoCalculation.getSelectedItem();
+        options.setDefaultAutoCalcuation(acItem.getAutoCalculation());
+
+        LAFComboBoxItem lafItem = (LAFComboBoxItem) cbLookAndFeel.getSelectedItem();
+        options.setLookAndFeelClassName(lafItem.getLookAndFeelInfo().getClassName());
+        setLookAndFeel(options.getLookAndFeelClassName());
+
         // list view options
-        options.setListViewShowAvgHeartrate (cbShowAvgHeartrate.isSelected());
-        options.setListViewShowEnergy (cbShowEnergy.isSelected());
-        options.setListViewShowAscent (cbShowAscent.isSelected());
-        options.setListViewShowEquipment (cbShowEquipment.isSelected());
-        options.setListViewShowComment (cbShowComment.isSelected());
-        
+        options.setListViewShowAvgHeartrate(cbShowAvgHeartrate.isSelected());
+        options.setListViewShowEnergy(cbShowEnergy.isSelected());
+        options.setListViewShowAscent(cbShowAscent.isSelected());
+        options.setListViewShowEquipment(cbShowEquipment.isSelected());
+        options.setListViewShowComment(cbShowComment.isSelected());
+
         // save new options and close dialog
-        document.storeOptions ();        
-        this.dispose ();
+        document.storeOptions();
+        this.dispose();
     }
-    
+
     /**
      * Action for closing the dialog with the Cancel button.
      */
-    @Action(name=ACTION_CANCEL)
-    public void cancel () {
-        this.dispose ();
+    @Action(name = ACTION_CANCEL)
+    public void cancel() {
+        this.dispose();
     }
 
     /**
      * Sets the specified look&feel for the whole GUI if it's not allready active yet.
+     *
      * @param lookAndFeelClassName the class name of the new look&feel
      */
-    private void setLookAndFeel (String lookAndFeelClassName) {
-        if (!UIManager.getLookAndFeel ().getClass ().getName ().equals (lookAndFeelClassName)) {            
+    private void setLookAndFeel(String lookAndFeelClassName) {
+        if (!UIManager.getLookAndFeel().getClass().getName().equals(lookAndFeelClassName)) {
             try {
-                UIManager.setLookAndFeel (lookAndFeelClassName);
-                SwingUtilities.updateComponentTreeUI (context.getMainFrame ());
-            }
-            catch (Exception e) {
-                LOGGER.log (Level.WARNING, "Failed to change look&feel to " + lookAndFeelClassName + "!", e);
+                UIManager.setLookAndFeel(lookAndFeelClassName);
+                SwingUtilities.updateComponentTreeUI(context.getMainFrame());
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "Failed to change look&feel to " + lookAndFeelClassName + "!", e);
             }
         }
     }
-    
-    /** 
+
+    /**
      * This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -231,9 +225,9 @@ public class OptionsDialog extends JDialog {
         rbCalendar = new javax.swing.JRadioButton();
         rbExerciseList = new javax.swing.JRadioButton();
         laDefaultAutoCalculation = new javax.swing.JLabel();
-        cbDefaultAutoCalculation = new javax.swing.JComboBox();
+        cbDefaultAutoCalculation = new javax.swing.JComboBox<>();
         laLookAndFeel = new javax.swing.JLabel();
-        cbLookAndFeel = new javax.swing.JComboBox();
+        cbLookAndFeel = new javax.swing.JComboBox<>();
         laSaveOnExit = new javax.swing.JLabel();
         cbSaveOnExit = new javax.swing.JCheckBox();
         paUnits = new javax.swing.JPanel();
@@ -284,14 +278,12 @@ public class OptionsDialog extends JDialog {
         laDefaultAutoCalculation.setText("_Default Automatic Calculation");
         laDefaultAutoCalculation.setName("st.dlg.options.defaultautocalc"); // NOI18N
 
-        cbDefaultAutoCalculation.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbDefaultAutoCalculation.setName("cbDefaultAutoCalculation"); // NOI18N
 
         laLookAndFeel.setFont(laLookAndFeel.getFont().deriveFont(laLookAndFeel.getFont().getStyle() | java.awt.Font.BOLD));
         laLookAndFeel.setText("_Look & Feel");
         laLookAndFeel.setName("st.dlg.options.lookandfeel"); // NOI18N
 
-        cbLookAndFeel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbLookAndFeel.setName("cbLookAndFeel"); // NOI18N
 
         laSaveOnExit.setFont(laSaveOnExit.getFont().deriveFont(laSaveOnExit.getFont().getStyle() | java.awt.Font.BOLD));
@@ -304,52 +296,52 @@ public class OptionsDialog extends JDialog {
         javax.swing.GroupLayout paMainLayout = new javax.swing.GroupLayout(paMain);
         paMain.setLayout(paMainLayout);
         paMainLayout.setHorizontalGroup(
-            paMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(paMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laInitialView)
-                    .addGroup(paMainLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(paMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbExerciseList)
-                            .addComponent(rbCalendar)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paMainLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(cbDefaultAutoCalculation, 0, 319, Short.MAX_VALUE))
-                    .addComponent(laDefaultAutoCalculation)
-                    .addGroup(paMainLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(cbLookAndFeel, 0, 319, Short.MAX_VALUE))
-                    .addComponent(laLookAndFeel)
-                    .addGroup(paMainLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(cbSaveOnExit))
-                    .addComponent(laSaveOnExit))
-                .addContainerGap())
+                paMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(paMainLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(paMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laInitialView)
+                                        .addGroup(paMainLayout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addGroup(paMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(rbExerciseList)
+                                                        .addComponent(rbCalendar)))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paMainLayout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addComponent(cbDefaultAutoCalculation, 0, 319, Short.MAX_VALUE))
+                                        .addComponent(laDefaultAutoCalculation)
+                                        .addGroup(paMainLayout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addComponent(cbLookAndFeel, 0, 319, Short.MAX_VALUE))
+                                        .addComponent(laLookAndFeel)
+                                        .addGroup(paMainLayout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addComponent(cbSaveOnExit))
+                                        .addComponent(laSaveOnExit))
+                                .addContainerGap())
         );
         paMainLayout.setVerticalGroup(
-            paMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(laInitialView)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbCalendar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbExerciseList)
-                .addGap(18, 18, 18)
-                .addComponent(laDefaultAutoCalculation)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbDefaultAutoCalculation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(laLookAndFeel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbLookAndFeel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(laSaveOnExit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbSaveOnExit)
-                .addContainerGap())
+                paMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(paMainLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(laInitialView)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbCalendar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbExerciseList)
+                                .addGap(18, 18, 18)
+                                .addComponent(laDefaultAutoCalculation)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbDefaultAutoCalculation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(laLookAndFeel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbLookAndFeel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(laSaveOnExit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbSaveOnExit)
+                                .addContainerGap())
         );
 
         tabbedPane.addTab("_Main", paMain);
@@ -395,52 +387,52 @@ public class OptionsDialog extends JDialog {
         javax.swing.GroupLayout paUnitsLayout = new javax.swing.GroupLayout(paUnits);
         paUnits.setLayout(paUnitsLayout);
         paUnitsLayout.setHorizontalGroup(
-            paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paUnitsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laUnitSystem)
-                    .addGroup(paUnitsLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbEnglish)
-                            .addComponent(rbMetric)))
-                    .addComponent(laSpeedView)
-                    .addGroup(paUnitsLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbMinutesDistance)
-                            .addComponent(rbDistanceHour)))
-                    .addComponent(laWeekStart)
-                    .addGroup(paUnitsLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbSunday)
-                            .addComponent(rbMonday))))
-                .addContainerGap(79, Short.MAX_VALUE))
+                paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(paUnitsLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laUnitSystem)
+                                        .addGroup(paUnitsLayout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addGroup(paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(rbEnglish)
+                                                        .addComponent(rbMetric)))
+                                        .addComponent(laSpeedView)
+                                        .addGroup(paUnitsLayout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addGroup(paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(rbMinutesDistance)
+                                                        .addComponent(rbDistanceHour)))
+                                        .addComponent(laWeekStart)
+                                        .addGroup(paUnitsLayout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addGroup(paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(rbSunday)
+                                                        .addComponent(rbMonday))))
+                                .addContainerGap(79, Short.MAX_VALUE))
         );
         paUnitsLayout.setVerticalGroup(
-            paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paUnitsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(laUnitSystem)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbMetric)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbEnglish)
-                .addGap(18, 18, 18)
-                .addComponent(laSpeedView)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbDistanceHour)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbMinutesDistance)
-                .addGap(18, 18, 18)
-                .addComponent(laWeekStart)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbMonday)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbSunday)
-                .addContainerGap())
+                paUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(paUnitsLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(laUnitSystem)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbMetric)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbEnglish)
+                                .addGap(18, 18, 18)
+                                .addComponent(laSpeedView)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbDistanceHour)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbMinutesDistance)
+                                .addGap(18, 18, 18)
+                                .addComponent(laWeekStart)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbMonday)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbSunday)
+                                .addContainerGap())
         );
 
         tabbedPane.addTab("_Units", paUnits);
@@ -469,37 +461,37 @@ public class OptionsDialog extends JDialog {
         javax.swing.GroupLayout paListViewLayout = new javax.swing.GroupLayout(paListView);
         paListView.setLayout(paListViewLayout);
         paListViewLayout.setHorizontalGroup(
-            paListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paListViewLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(paListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laOptionalFields)
-                    .addGroup(paListViewLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(paListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbShowAvgHeartrate)
-                            .addComponent(cbShowEnergy)
-                            .addComponent(cbShowAscent)
-                            .addComponent(cbShowEquipment)
-                            .addComponent(cbShowComment))))
-                .addContainerGap(168, Short.MAX_VALUE))
+                paListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(paListViewLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(paListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(laOptionalFields)
+                                        .addGroup(paListViewLayout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addGroup(paListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(cbShowAvgHeartrate)
+                                                        .addComponent(cbShowEnergy)
+                                                        .addComponent(cbShowAscent)
+                                                        .addComponent(cbShowEquipment)
+                                                        .addComponent(cbShowComment))))
+                                .addContainerGap(168, Short.MAX_VALUE))
         );
         paListViewLayout.setVerticalGroup(
-            paListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paListViewLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(laOptionalFields)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbShowAvgHeartrate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbShowAscent)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbShowEnergy)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbShowEquipment)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbShowComment)
-                .addGap(137, 137, 137))
+                paListViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(paListViewLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(laOptionalFields)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbShowAvgHeartrate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbShowAscent)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbShowEnergy)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbShowEquipment)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbShowComment)
+                                .addGap(137, 137, 137))
         );
 
         tabbedPane.addTab("_List View", paListView);
@@ -516,24 +508,24 @@ public class OptionsDialog extends JDialog {
         javax.swing.GroupLayout paExerciseViewerLayout = new javax.swing.GroupLayout(paExerciseViewer);
         paExerciseViewer.setLayout(paExerciseViewerLayout);
         paExerciseViewerLayout.setHorizontalGroup(
-            paExerciseViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paExerciseViewerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(paExerciseViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(paExerciseViewerLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(cbSecondGraph))
-                    .addComponent(laDiagram))
-                .addContainerGap(32, Short.MAX_VALUE))
+                paExerciseViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(paExerciseViewerLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(paExerciseViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(paExerciseViewerLayout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addComponent(cbSecondGraph))
+                                        .addComponent(laDiagram))
+                                .addContainerGap(32, Short.MAX_VALUE))
         );
         paExerciseViewerLayout.setVerticalGroup(
-            paExerciseViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(paExerciseViewerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(laDiagram)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbSecondGraph)
-                .addContainerGap())
+                paExerciseViewerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(paExerciseViewerLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(laDiagram)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbSecondGraph)
+                                .addContainerGap())
         );
 
         tabbedPane.addTab("_ExerciseViewer", paExerciseViewer);
@@ -547,30 +539,30 @@ public class OptionsDialog extends JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tabbedPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btCancel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btOK)))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(tabbedPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btCancel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btOK)))
+                                .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btCancel, btOK});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{btCancel, btOK});
 
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btOK)
-                    .addComponent(btCancel))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btOK)
+                                        .addComponent(btCancel))
+                                .addContainerGap())
         );
 
         pack();
@@ -583,8 +575,8 @@ public class OptionsDialog extends JDialog {
     private javax.swing.ButtonGroup bgWeekStart;
     private javax.swing.JButton btCancel;
     private javax.swing.JButton btOK;
-    private javax.swing.JComboBox cbDefaultAutoCalculation;
-    private javax.swing.JComboBox cbLookAndFeel;
+    private javax.swing.JComboBox<AutoCalculationComboBoxItem> cbDefaultAutoCalculation;
+    private javax.swing.JComboBox<LAFComboBoxItem> cbLookAndFeel;
     private javax.swing.JCheckBox cbSaveOnExit;
     private javax.swing.JCheckBox cbSecondGraph;
     private javax.swing.JCheckBox cbShowAscent;
@@ -620,19 +612,19 @@ public class OptionsDialog extends JDialog {
      * This class is for combobox items for the look & feel selection.
      */
     private static class LAFComboBoxItem {
-        private LookAndFeelInfo lookAndFeelInfo;
-        
-        public LAFComboBoxItem (LookAndFeelInfo lookAndFeelInfo) {
+        private final LookAndFeelInfo lookAndFeelInfo;
+
+        public LAFComboBoxItem(LookAndFeelInfo lookAndFeelInfo) {
             this.lookAndFeelInfo = lookAndFeelInfo;
         }
 
-        public LookAndFeelInfo getLookAndFeelInfo () {
+        public LookAndFeelInfo getLookAndFeelInfo() {
             return lookAndFeelInfo;
         }
 
         @Override
-        public String toString () {
-            return lookAndFeelInfo.getName ();
+        public String toString() {
+            return lookAndFeelInfo.getName();
         }
     }
 
@@ -640,20 +632,20 @@ public class OptionsDialog extends JDialog {
      * This class is for combobox items for automatic calculation type selection.
      */
     private static class AutoCalculationComboBoxItem {
-        private STOptions.AutoCalculation autoCalculation;
-        private String text;
+        private final STOptions.AutoCalculation autoCalculation;
+        private final String text;
 
-        public AutoCalculationComboBoxItem (AutoCalculation autoCalculation, String text) {
+        public AutoCalculationComboBoxItem(AutoCalculation autoCalculation, String text) {
             this.autoCalculation = autoCalculation;
             this.text = text;
         }
 
-        public AutoCalculation getAutoCalculation () {
+        public AutoCalculation getAutoCalculation() {
             return autoCalculation;
         }
 
         @Override
-        public String toString () {
+        public String toString() {
             return text;
         }
     }

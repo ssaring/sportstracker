@@ -6,79 +6,90 @@ import de.saring.util.data.IdObject;
 /**
  * This interface defines the view for displaying SportsTracker entries
  * (e.g. in a list or a calendar).
- * 
- * @author  Stefan Saring
+ *
+ * @author Stefan Saring
  * @version 1.0
  */
 public interface EntryView {
 
-    /** Enumeration of all available entry view types. */
-    enum ViewType { CALENDAR, EXERCISE_LIST, NOTE_LIST, WEIGHT_LIST }
-    
-    /** 
+    /**
+     * Enumeration of all available entry view types.
+     */
+    enum ViewType {
+        CALENDAR, EXERCISE_LIST, NOTE_LIST, WEIGHT_LIST
+    }
+
+    /**
      * Initializes the view after startup (not visible yet).
      */
-    void initView ();
+    void initView();
 
-    /** 
+    /**
      * Updates the view after data was modified.
      */
-    void updateView ();
+    void updateView();
 
     /**
      * This methods returns the number of selected exercises.
+     *
      * @return number of selected exercises
      */
-    int getSelectedExerciseCount ();
+    int getSelectedExerciseCount();
 
     /**
      * This methods returns the list of the currently selected exercise ID's.
+     *
      * @return array of the selected exercise ID's (can be empty)
      */
-    int[] getSelectedExerciseIDs ();
+    int[] getSelectedExerciseIDs();
 
     /**
      * This methods returns the number of selected notes.
+     *
      * @return number of selected notes
      */
-    int getSelectedNoteCount ();
+    int getSelectedNoteCount();
 
     /**
      * This methods returns the list of the currently selected note ID's.
+     *
      * @return array of the selected note ID's (can be empty)
      */
-    int[] getSelectedNoteIDs ();
+    int[] getSelectedNoteIDs();
 
     /**
      * This methods returns the number of selected weights.
+     *
      * @return number of selected weights
      */
-    int getSelectedWeightCount ();
+    int getSelectedWeightCount();
 
     /**
      * This methods returns the list of the currently selected weight ID's.
+     *
      * @return array of the selected weight ID's (can be empty)
      */
-    int[] getSelectedWeightIDs ();
+    int[] getSelectedWeightIDs();
 
     /**
      * Selects the specified entry (of type Exercise, Weight or Note) in this
-     * view. Not all views support all entry types (e.g. no Weight entry in 
-     * Note list). If not supported or the entry is not displayed, this method 
+     * view. Not all views support all entry types (e.g. no Weight entry in
+     * Note list). If not supported or the entry is not displayed, this method
      * does nothing.
-     * 
+     *
      * @param entry the entry to select
      */
     void selectEntry(IdObject entry);
-    
+
     /**
      * Removes the current selection in the page.
      */
-    void removeSelection ();
-    
+    void removeSelection();
+
     /**
      * Prints the entries displayed in this view.
+     *
      * @throws STException on printing problems
      */
-    void print () throws STException;
+    void print() throws STException;
 }

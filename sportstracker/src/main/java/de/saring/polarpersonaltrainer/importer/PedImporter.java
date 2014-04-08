@@ -9,23 +9,16 @@ import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.sportstracker.storage.XMLStorage;
-import java.util.Iterator;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.*;
 
 /**
  * This class in an importer of files exported from polarpersonaltrainer.com.
- *
+ * <p/>
  * It uses the PolarPedParser in the ExerciseViewer of SportsTracker.
- *
+ * <p/>
  * The extension of the files should be .ped.
  *
- * @author  Philippe Marzouk
+ * @author Philippe Marzouk
  * @version 1.0
  */
 public class PedImporter {
@@ -36,20 +29,24 @@ public class PedImporter {
     private static void printUsage(Options options) {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("PedImporter", options);
-        return;
     }
 
-    /** The directory where the application data of the user is stored. */
+    /**
+     * The directory where the application data of the user is stored.
+     */
     private static String dataDirectory;
     private static boolean dryRun = false;
     private ExerciseList exerciseList;
-    /** The sport type list of the user. */
+    /**
+     * The sport type list of the user.
+     */
     private SportTypeList sportTypeList;
-    IStorage storage;
+    private IStorage storage;
     private int addedExercises = 0;
 
     /**
      * Starts the importer.
+     *
      * @param args the command line arguments
      */
     @SuppressWarnings("static-access")
@@ -63,7 +60,7 @@ public class PedImporter {
         options.addOption(OptionBuilder.withLongOpt("dry-run").withDescription("if this parameter is set, no data is written to disk").create("n"));
 
         CommandLineParser parser = new GnuParser();
-        String filename = null;
+        String filename;
         int sportTypeId = 1;
         int sportSubTypeId = 1;
         try {
@@ -136,20 +133,18 @@ public class PedImporter {
             try {
                 EVExercise pedExercise = parser.parseExercise(filename, exerciseIndex);
 
-                Boolean found = false;
-                Iterator<Exercise> it = exerciseList.iterator();
-                while (it.hasNext()) {
-                    Exercise exercise = it.next();
-                    if (pedExercise.getDate().equals(exercise.getDate())) {
+                boolean found = false;
+                for (Exercise exercise : exerciseList) {
+                    if (pedExercise.getDateTime().equals(exercise.getDateTime())) {
                         found = true;
                         break;
                     }
                 }
 
-                if (found == false) {
+                if (!found) {
                     // add Exercise to the list
                     Exercise newExercise = new Exercise(exerciseList.getNewID());
-                    newExercise.setDate(pedExercise.getDate());
+                    newExercise.setDateTime(pedExercise.getDateTime());
                     newExercise.setAvgSpeed(pedExercise.getSpeed().getSpeedAVG());
                     newExercise.setIntensity(Exercise.IntensityType.NORMAL);
                     newExercise.setAvgHeartRate(pedExercise.getHeartRateAVG());
@@ -178,7 +173,7 @@ public class PedImporter {
 
         if (dryRun) {
             System.out.println("Dry run, nothing written to disk");
-        } else if (modified == true) {
+        } else if (modified) {
             storage.storeExerciseList(exerciseList, filename);
         }
         if (addedExercises > 0) {

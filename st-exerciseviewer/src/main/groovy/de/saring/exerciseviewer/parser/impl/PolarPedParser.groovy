@@ -1,16 +1,14 @@
 package de.saring.exerciseviewer.parser.impl
 
+import de.saring.exerciseviewer.core.EVException
+import de.saring.exerciseviewer.data.*
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
-import de.saring.exerciseviewer.data.EVExercise
-import de.saring.exerciseviewer.core.EVException
-import java.text.SimpleDateFormat
-import de.saring.util.unitcalc.FormatUtils;
-import de.saring.exerciseviewer.data.ExerciseSpeed
-import de.saring.util.unitcalc.CalculationUtils;
-import de.saring.exerciseviewer.data.RecordingMode
-import de.saring.exerciseviewer.data.Lap
-import de.saring.exerciseviewer.data.ExerciseSample
+import de.saring.util.unitcalc.CalculationUtils
+import de.saring.util.unitcalc.FormatUtils
+
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * This implementation of an ExerciseParser is for reading XML files from
@@ -23,7 +21,7 @@ import de.saring.exerciseviewer.data.ExerciseSample
  *
  * The extension of the files should be .ped.
  *
- * @author  Philippe Marzouk
+ * @author Philippe Marzouk
  * @version 0.30
  */
 class PolarPedParser extends AbstractExerciseParser {
@@ -43,7 +41,7 @@ class PolarPedParser extends AbstractExerciseParser {
      * @return the parser informations
      */
     @Override
-    ExerciseParserInfo getInfo () {
+    ExerciseParserInfo getInfo() {
         info
     }
 
@@ -58,21 +56,17 @@ class PolarPedParser extends AbstractExerciseParser {
      *
      * @param filename name of exercise file to parse
      * @return the parsed PVExercise object
-     * @throws PVException thrown on read/parse problems
+     * @throws EVException thrown on read/parse problems
      */
     @Override
-    EVExercise parseExercise (String filename) throws EVException {
+    EVExercise parseExercise(String filename) throws EVException {
         path = readPedFile(filename)
-        def EVExercise exercise = null
 
         if (exerciseCount >= 1) {
-            exercise = parseExercisePath (path, 0)
+            return parseExercisePath(path, 0)
         } else {
-            throw new EVException ("No exercise in file '${filename}' ...")
+            throw new EVException("No exercise in file '${filename}' ...")
         }
-        
-        return exercise
-
     }
 
     /**
@@ -81,14 +75,14 @@ class PolarPedParser extends AbstractExerciseParser {
      *
      * It is only intended to be called by PedImporter after a first call to parseExercise(String)
      * to be able to get the ExerciseCount.
-     * 
+     *
      * @param filename name of exercise file to parse
      * @param exerciseIdx the exercise record index (starting with 0) in the file
      * @return the parsed PVExercise object
-     * @throws PVException thrown on read/parse problems
+     * @throws EVException thrown on read/parse problems
      */
-    public EVExercise parseExercise (String filename, Integer exerciseIdx) throws EVException {
-        return parseExercisePath (path, exerciseIdx)
+    public EVExercise parseExercise(String filename, Integer exerciseIdx) throws EVException {
+        return parseExercisePath(path, exerciseIdx)
     }
 
     /**
@@ -98,7 +92,7 @@ class PolarPedParser extends AbstractExerciseParser {
 
         try {
             // get GPathResult object by using the XML slurper parser
-            def path = new XmlSlurper ().parse (new File (filename))
+            def path = new XmlSlurper().parse(new File(filename))
 
             // we can't rely on the count attribute of calendar-items as
             // it counts other nodes like fitness-data.
@@ -106,28 +100,27 @@ class PolarPedParser extends AbstractExerciseParser {
 
             return path
         } catch (Exception e) {
-            throw new EVException ("Failed to parse the Polar Personal Trainer exercise file '${filename}' ...", e)
+            throw new EVException("Failed to parse the Polar Personal Trainer exercise file '${filename}' ...", e)
         }
     }
 
     /**
      * Parses the exercise data.
      */
-    private EVExercise parseExercisePath (path, Integer exerciseID) throws EVException {
+    private EVExercise parseExercisePath(path, Integer exerciseID) throws EVException {
         // parse basic exercise data
-        EVExercise exercise = new EVExercise ()
+        EVExercise exercise = new EVExercise()
         exercise.fileType = EVExercise.ExerciseFileType.PED
 
         if (exerciseID >= getExerciseCount()) {
-            throw new EVException ("There is no exercise '${exerciseID}' in current file")
+            throw new EVException("There is no exercise '${exerciseID}' in current file")
         }
 
         // Exercise Date
-        def calDate = Calendar.getInstance ()
-        def dateTime = path."calendar-items".exercise[exerciseID].time.text()
-        exercise.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(dateTime)
+        String dateTime = path."calendar-items".exercise[exerciseID].time.text()
+        exercise.dateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss.S'))
 
-        exercise.recordingMode = new RecordingMode ()
+        exercise.recordingMode = new RecordingMode()
         exercise.recordingMode.speed = true
         exercise.recordingMode.cadence = false
         exercise.recordingMode.altitude = false
@@ -144,7 +137,7 @@ class PolarPedParser extends AbstractExerciseParser {
         speed.distance = distance
 
         // calculate average speed
-        if((duration != null) && (distance != null)) {
+        if ((duration != null) && (distance != null)) {
             def averageSpeed = CalculationUtils.calculateAvgSpeed((float) (distance / 1000), (int) exerciseDuration)
             speed.speedAVG = averageSpeed
         }
@@ -155,10 +148,10 @@ class PolarPedParser extends AbstractExerciseParser {
         exercise.energy = pathToInteger(path."calendar-items".exercise[exerciseID].result.calories)
 
         // Heart rate average
-        exercise.heartRateAVG =   pathToInteger(path."calendar-items".exercise[exerciseID].result."heart-rate".average)
+        exercise.heartRateAVG = pathToInteger(path."calendar-items".exercise[exerciseID].result."heart-rate".average)
 
         // Heart rate maximum
-        exercise.heartRateMax =   pathToInteger(path."calendar-items".exercise[exerciseID].result."heart-rate".maximum)
+        exercise.heartRateMax = pathToInteger(path."calendar-items".exercise[exerciseID].result."heart-rate".maximum)
 
         // set an empty LapList and SampleList
         exercise.lapList = new Lap[0]

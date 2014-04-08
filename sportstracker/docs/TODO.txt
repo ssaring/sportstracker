@@ -1,12 +1,27 @@
 SportsTracker-TODO
 ==================
 
-Java Webstart: 
-- since Java 7u40 there are security warnings on each ST start due to missing 
-  signed certificate
-- drop Java WebStart, there will be no signed certificates
-- remove Java WebStart files from project
-- update installation documentation in ReadMe.txt and on the website
+Java 8 migration status:
+- all SportsTracker modules are now compiling in JDK 8 mode
+  - only st-exerciseviewer is still in JDK 7 mode, because the
+    groovy-eclipse-compiler for mixed Java/Groovy compilation does not support
+    JDK 8 mode yet => change as soon as support is available
+- full use of Lambdas in modules st-util and sportstracker (st-exerciseviewer
+  is still in Java 7 mode, because of mixed Groovy/Java compilation)
+- full use new of new Java Date API (JSR 310) in all SportsTracker modules
+- documentation has been updated for Java 8
+- IDE support:
+  - IDEA (13.1) works fine, NetBeans 8.0 too
+  - problems with Eclipse on last checks
+
+Dependency Injection:
+- use Dagger as an alternative to the Guice framework,
+  URL: http://square.github.io/dagger/
+  -> almost same interface (JSR 330), but DI done on compilation without 
+     reflection instead at runtime 
+  -> much faster startup performance
+  -> see Devoxx 2013 talk about Dagger from Jake Wharton
+- Alternative: Guice 4.0
 
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead

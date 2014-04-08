@@ -1,14 +1,14 @@
 package de.saring.util.data;
 
-import org.easymock.EasyMock;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for IdObjectListChangeListener usage in IdObjectList. Test for
- * a list without listeners are allready in IdObjectListTest.
+ * Unit tests for IdObjectListChangeListener usage in IdObjectList. Test for a
+ * list without listeners are allready in IdObjectListTest.
  *
  * @author Stefan Saring
  */
@@ -18,20 +18,15 @@ public class IdObjectListChangeListenerTest {
     private IdObjectListChangeListener listenerMock;
 
     @Before
-    public void setUp () {
-        idObjectList = new IdObjectList<> ();
-        idObjectList.set (new DummyIdObject (1));
-        idObjectList.set (new DummyIdObject (2));
-        idObjectList.set (new DummyIdObject (3));
+    public void setUp() {
+        idObjectList = new IdObjectList<>();
+        idObjectList.set(new DummyIdObject(1));
+        idObjectList.set(new DummyIdObject(2));
+        idObjectList.set(new DummyIdObject(3));
 
         // create and init the listener mock
-        listenerMock = EasyMock.createMock (IdObjectListChangeListener.class);
-        idObjectList.addListChangeListener (listenerMock);
-    }
-
-    @After
-    public void tearDown () {
-        EasyMock.verify (listenerMock);
+        listenerMock = mock(IdObjectListChangeListener.class);
+        idObjectList.addListChangeListener(listenerMock);
     }
 
     /**
@@ -39,27 +34,27 @@ public class IdObjectListChangeListenerTest {
      * (replaced in the list).
      */
     @Test
-    public void testSetReplace () {
+    public void testSetReplace() {
         DummyIdObject changedObject = new DummyIdObject(2);
-        listenerMock.listChanged(changedObject);
-        EasyMock.replay (listenerMock);
 
-        idObjectList.set (changedObject);
-        assertEquals (3, idObjectList.size ());
+        idObjectList.set(changedObject);
+
+        assertEquals(3, idObjectList.size());
+        verify(listenerMock).listChanged(changedObject);
     }
-    
+
     /**
-     * Test: Listener must be called when storing an object with a new ID
-     * (added to the list).
+     * Test: Listener must be called when storing an object with a new ID (added
+     * to the list).
      */
     @Test
-    public void testSetAdd () {
+    public void testSetAdd() {
         DummyIdObject newObject = new DummyIdObject(5);
-        listenerMock.listChanged (newObject);
-        EasyMock.replay (listenerMock);
 
-        idObjectList.set (newObject);
-        assertEquals (4, idObjectList.size ());
+        idObjectList.set(newObject);
+
+        assertEquals(4, idObjectList.size());
+        verify(listenerMock).listChanged(newObject);
     }
 
     /**
@@ -67,67 +62,65 @@ public class IdObjectListChangeListenerTest {
      * with the same ID (replaced in the list).
      */
     @Test
-    public void testSetReplaceTwoListeners () {
+    public void testSetReplaceTwoListeners() {
         DummyIdObject changedObject = new DummyIdObject(2);
-        
-        listenerMock.listChanged(changedObject);
-        EasyMock.replay (listenerMock);
 
-        IdObjectListChangeListener listenerMock2  = EasyMock.createMock (IdObjectListChangeListener.class);
-        idObjectList.addListChangeListener (listenerMock2);
-        listenerMock2.listChanged(changedObject);
-        EasyMock.replay (listenerMock2);
+        IdObjectListChangeListener listenerMock2 = mock(IdObjectListChangeListener.class);
+        idObjectList.addListChangeListener(listenerMock2);
 
-        idObjectList.set (changedObject);
-        assertEquals (3, idObjectList.size ());
+        idObjectList.set(changedObject);
+        assertEquals(3, idObjectList.size());
 
-        EasyMock.verify (listenerMock2);
+        verify(listenerMock).listChanged(changedObject);
+        verify(listenerMock2).listChanged(changedObject);
     }
 
     /**
      * Test: Listener must be called when removing an object with a known ID.
      */
     @Test
-    public void testRemoveSuccess () {
-        listenerMock.listChanged(null);
-        EasyMock.replay (listenerMock);
+    public void testRemoveSuccess() {
+        assertTrue(idObjectList.removeByID(2));
 
-        assertTrue (idObjectList.removeByID (2));
-        assertEquals (2, idObjectList.size ());
+        assertEquals(2, idObjectList.size());
+        verify(listenerMock).listChanged(null);
     }
 
     /**
-     * Test: Listener must not be called when removing an object with an unknown ID.
+     * Test: Listener must not be called when removing an object with an unknown
+     * ID.
      */
     @Test
-    public void testRemoveFailed () {
-        EasyMock.replay (listenerMock);
+    public void testRemoveFailed() {
+        assertFalse(idObjectList.removeByID(5));
 
-        assertFalse (idObjectList.removeByID (5));
-        assertEquals (3, idObjectList.size ());
+        assertEquals(3, idObjectList.size());
+        verifyZeroInteractions(listenerMock);
     }
 
     /**
      * Test: The read-methods must not call the Listener.
      */
     @Test
-    public void testMethodsWithoutListenerNotification () {
-        EasyMock.replay (listenerMock);
+    public void testMethodsWithoutListenerNotification() {
 
-        assertEquals (2, idObjectList.getAt (1).getId ());
-        assertEquals (2, idObjectList.getByID (2).getId ());
-        assertEquals (2, idObjectList.indexOf (idObjectList.getAt (2)));
-        assertEquals (4, idObjectList.getNewID ());
-        assertEquals (3, idObjectList.size ());
-        assertEquals (1, idObjectList.iterator ().next ().getId ());
+        assertEquals(2, idObjectList.getAt(1).getId());
+        assertEquals(2, idObjectList.getByID(2).getId());
+        assertEquals(2, idObjectList.indexOf(idObjectList.getAt(2)));
+        assertEquals(4, idObjectList.getNewID());
+        assertEquals(3, idObjectList.size());
+        assertEquals(1, idObjectList.iterator().next().getId());
+
+        verifyZeroInteractions(listenerMock);
     }
 
     /**
      * Subclass of abstract class IdObject for testing.
      */
     static class DummyIdObject extends IdObject {
-        public DummyIdObject (int id) {
-            super (id);
+
+        public DummyIdObject(int id) {
+            super(id);
         }
     }
 }
