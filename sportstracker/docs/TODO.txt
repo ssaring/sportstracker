@@ -9,10 +9,7 @@ Java 8 migration status:
 - full use of Lambdas in modules st-util and sportstracker (st-exerciseviewer
   is still in Java 7 mode, because of mixed Groovy/Java compilation)
 - full use new of new Java Date API (JSR 310) in all SportsTracker modules
-- documentation has been updated for Java 8
-- IDE support:
-  - IDEA (13.1) works fine, NetBeans 8.0 too
-  - problems with Eclipse on last checks
+- IDE support: IDEA (13.1) works fine, NetBeans 8.0 too, Eclipse had problems
 
 Dependency Injection:
 - use Dagger as an alternative to the Guice framework,
