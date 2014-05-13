@@ -3,6 +3,11 @@ Changelog
 
 v6.0.0:
  SportsTracker changes:
+  - use of no_aop version of Guice 3.0, is smaller and has less dependencies
+  - update of JFreeChart to 1.0.17
+
+v6.0.0:
+ SportsTracker changes:
   - switched compiler to Java 8 (except for module st-exerciseviewer)
   - replaced mocking framework EasyMock 3.2 with Mockito 1.9.5 
     (much better API and easier to use)

@@ -346,9 +346,9 @@ The SportsTracker project uses the following libraries:
   - Groovy 2.1.7 (http://groovy.codehaus.org)
       License: Apache License v2.0
   - Guice 3.0 (http://code.google.com/p/google-guice/)
-      Includes: aopalliance-1.0.jar, javax.inject-1.jar
+      Includes: javax.inject-1.jar
       License: Apache License v2.0
-  - JFreeChart 1.0.15 (http://www.jfree.org/)
+  - JFreeChart 1.0.17 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
   - JDOM 2.0.2 (http://www.jdom.org)
       License: Apache-style open source license
@@ -370,7 +370,7 @@ The SportsTracker project uses the following libraries:
       License URL: http://www.thisisant.com/pages/ant/fit-license
 
 All dependencies will be downloaded automatically by Maven. JFreeChart and the
-FIT library are missing in the Maven centrol repository, so I've created my own
+FIT library are missing in the Maven central repository, so I've created my own
 repository for them. It's available at: http://saring.de/st-maven-repo/
 
 
@@ -438,4 +438,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2014/04/13
+2014/05/13

@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <groovy.version>2.1.7</groovy.version>
+        <groovy.version>2.3.0</groovy.version>
     </properties>
     
     <modules>
@@ -49,6 +49,14 @@
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>3.0</version>
+            <classifier>no_aop</classifier>
+            <exclusions>
+                <!-- not needed for the no_aop version of Guice -->
+                <exclusion>
+                    <groupId>aopalliance</groupId>
+                    <artifactId>aopalliance</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
@@ -104,7 +112,7 @@
         <dependency>
             <groupId>org.jfree</groupId>
             <artifactId>jfreechart</artifactId>
-            <version>1.0.15</version>
+            <version>1.0.17</version>
             <exclusions>
                 <!-- Exclude all not needed dependecies -->
                 <exclusion>
