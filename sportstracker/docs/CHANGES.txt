@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v6.0.0:
+v6.1.0:
  SportsTracker changes:
   - use of no_aop version of Guice 3.0, is smaller and has less dependencies
   - update of JFreeChart to 1.0.17
