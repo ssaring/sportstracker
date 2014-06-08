@@ -343,7 +343,7 @@ The SportsTracker project uses the following libraries:
   - BSAF 1.9.2 (Better Swing Application Framework)
     (http://kenai.com/projects/bsaf)
       License: Lesser General Public License 2.1 (LGPL)
-  - Groovy 2.1.7 (http://groovy.codehaus.org)
+  - Groovy 2.3.2 (http://groovy.codehaus.org)
       License: Apache License v2.0
   - Guice 3.0 (http://code.google.com/p/google-guice/)
       Includes: javax.inject-1.jar
@@ -352,9 +352,11 @@ The SportsTracker project uses the following libraries:
       License: Lesser General Public License (LGPL)
   - JDOM 2.0.2 (http://www.jdom.org)
       License: Apache-style open source license
-  - SwingX 1.6.3 (https://swingx.dev.java.net/)
+  - SwingX 1.6.5-1 (https://swingx.dev.java.net/)
       License: Lesser General Public License (LGPL)
-  - SwingX-WS 1.0 (https://swingx-ws.dev.java.net/)
+  - JXMapViewer2 1.3.1 instead of SwingX-WS
+      URL: https://github.com/msteiger/jxmapviewer2
+      Includes: commons-logging-1.1.1
       License: Lesser General Public License (LGPL)
   - MiG Layout 3.7.4 (http://www.miglayout.com/)
       License: BSD License
