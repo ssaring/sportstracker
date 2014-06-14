@@ -4,6 +4,8 @@ SportsTracker-TODO
 - st-exerciseviewer now uses the groovy-eclipse-compiler 2.9.0-01-SNAPSHOT
   which supports Java 1.8 code
   -> use Java 8 language features in the st-exerciseviewer Java classes
+    -> done in packages core and data
+      -> proceed with package gui
   -> remove the Codehaus Snapshot Repository from master POM when the
      groovy-eclipse-compiler 2.9.0-01 final release is available
 

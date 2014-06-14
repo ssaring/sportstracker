@@ -1,6 +1,7 @@
 package de.saring.exerciseviewer.data;
 
 import java.time.LocalDateTime;
+import java.util.stream.Stream;
 
 /**
  * This class represents an recorded exercise. There is all the data of an
@@ -346,24 +347,15 @@ public final class EVExercise {
         if (this.temperature != null) sBuilder.append(this.temperature);
 
         if (this.heartRateLimits != null) {
-            for (int i = 0; i < this.heartRateLimits.length; i++) {
-                sBuilder.append("arrayIndex ").append(i).append(": ");
-                sBuilder.append(this.heartRateLimits[i]);
-            }
+            Stream.of(this.heartRateLimits).forEach(sBuilder::append);
         }
 
         if (this.lapList != null) {
-            for (int i = 0; i < this.lapList.length; i++) {
-                sBuilder.append("arrayIndex ").append(i).append(": ");
-                sBuilder.append(this.lapList[i]);
-            }
+            Stream.of(this.lapList).forEach(sBuilder::append);
         }
 
         if (this.sampleList != null) {
-            for (int i = 0; i < this.sampleList.length; i++) {
-                sBuilder.append("arrayIndex ").append(i).append(": ");
-                sBuilder.append(this.sampleList[i]);
-            }
+            Stream.of(this.sampleList).forEach(sBuilder::append);
         }
 
         return sBuilder.toString();
