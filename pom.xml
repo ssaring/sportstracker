@@ -27,7 +27,14 @@
             <url>http://saring.de/st-maven-repo/</url>
         </repository>
     </repositories>
-    
+    <pluginRepositories>
+        <!-- Codehause snapshot repository is needed for the groovy-eclipse-compiler plugin snapshot -->
+        <pluginRepository>
+            <id>Codehaus snapshot repository</id>
+            <url>http://nexus.codehaus.org/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <build>
         <plugins>
             <plugin>
