@@ -393,19 +393,22 @@ language), here are the most important reasons:
 Source Code Management
 ----------------------
 
-The Source Code Management (SCM) repository of this project it hosted at 
-SourceForge.net. Subversion was used until SportStracker 4.2.1, since version
-4.3.0 the development has been switched to Mercurial.
+The SportsTracker project uses Git for Source Code Management (SCM), the project
+repository is hosted at GitHub. 
+URL: https://github.com/ssaring/sportstracker
+
+Subversion was used until SportStracker 4.2.1, since version 4.3.0 the 
+development has been switched to Mercurial and since version 6.1.0 to Git.
 
 The SVN history was not imported to the Mercurial repository, there are too 
 much revisions, which are not interesting anymore (also from Mono/.NET past).
-So we're able to start with a lean Mercurial repository.
-The SVN repository will stay online at SourceForge for beeing able to access 
+So we used the chance to start with a lean Mercurial repository.
+The SVN repository will stay online at SourceForge for being able to access 
 all history revisions, if really needed. But there will be no future commits
-to SVN aymore, they will go all to the Mercurial repository.
+to SVN aymore, they will all go to the Git repository.
 
-You can find further details for the SCM usage at the SourceForge.net project
-site.
+You can find further details for the SCM usage and the collaboration workflow
+at the GitHub project site and in the Git / GitHub documentation.
 
 
 Contact
@@ -440,4 +443,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2014/05/13
+2014/07/15
