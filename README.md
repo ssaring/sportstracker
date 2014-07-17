@@ -25,6 +25,5 @@ ExerciseViewer application.
  * provides package downloads, an issue tracker and a forum for discussions
 * GitHub project site: https://github.com/ssaring/sportstracker/
  * provides source code management and is for integration of pull requests
-
 * SportsTracker documentation: [README.txt](sportstracker/docs/README.txt)
 * SportsTracker license: [GPL v2](sportstracker/docs/LICENSE.txt)
