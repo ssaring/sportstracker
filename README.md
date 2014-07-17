@@ -22,4 +22,5 @@ You can organize them by attaching the recorded files to the exercise
 entries. When adding new exercises you can import the data from the 
 recorded exercise files.
 
-Further informations can be found in the file README.txt
+Further informations can be found in the file [README.txt]
+(sportstracker/docs/README.txt).
