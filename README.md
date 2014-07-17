@@ -22,8 +22,8 @@ ExerciseViewer application.
 
 * SportsTracker website: http://www.saring.de/sportstracker/
 * SourceForge project site: https://sourceforge.net/projects/sportstracker/
-* SportsTracker documentation: [README.txt](sportstracker/docs/README.txt).
-* SportsTracker license: [GPL v2](sportstracker/docs/LICENSE.txt).
+* SportsTracker documentation: [README.txt](sportstracker/docs/README.txt)
+* SportsTracker license: [GPL v2](sportstracker/docs/LICENSE.txt)
 
 The SourceForge project site provides package downloads, an issue tracker
 and a forum for discussions. This GitHub repository is currently just for
