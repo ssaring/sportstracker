@@ -21,7 +21,9 @@ ExerciseViewer application.
 Further informations can be found in the file [README.txt]
 (sportstracker/docs/README.txt).
 
-### Links
+The License of SportsTracker is [GPL v2](sportstracker/docs/LICENSE.txt).
+
+## Links
 
 * SportsTracker website: http://www.saring.de/sportstracker/
 * SourceForge project site: https://sourceforge.net/projects/sportstracker/
