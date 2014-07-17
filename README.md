@@ -18,15 +18,12 @@ If you own a heartrate monitor with a computer interface you can import the
 recorded exercise files and evaluate the diagrams with the integrated
 ExerciseViewer application.
 
-Further informations can be found in the file [README.txt]
-(sportstracker/docs/README.txt).
-
-The License of SportsTracker is [GPL v2](sportstracker/docs/LICENSE.txt).
-
 ## Links
 
 * SportsTracker website: http://www.saring.de/sportstracker/
 * SourceForge project site: https://sourceforge.net/projects/sportstracker/
+* SportsTracker documentation: [README.txt](sportstracker/docs/README.txt).
+* SportsTracker license: [GPL v2](sportstracker/docs/LICENSE.txt).
 
 The SourceForge project site provides package downloads, an issue tracker
 and a forum for discussions. This GitHub repository is currently just for
