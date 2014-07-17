@@ -420,11 +420,15 @@ http://www.saring.de/sportstracker
 You are welcome to use the forum and the bug system on the Sourceforge
 project page (http://sourceforge.net/projects/sportstracker) when you
 have comments, suggestions or problems with bugs.
-The most recent version of this tool can also be found there. If you're 
-interested in the current development version you can get it from CVS.
+The most recent version of this tool can also be found there.
 
-If you want to provide a translation for your language take a look at
-I18N.txt and send me your translation for the SVN-version by mail.
+If you want to contribute improvements or translations, feel free to fork the
+GitHub repository and submit Pull Requests. It would be great when bigger 
+changes could be discussed before starting the implementation.
+
+Before creating a translation for your language please take a look at the file
+I18N.txt. Translations can also be send by mail, if you are not familiar with
+GitHub usage.
 
 For direct email contact you can use the address: projects@saring.de 
 
@@ -443,4 +447,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2014/07/15
+2014/07/17
