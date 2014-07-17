@@ -1,5 +1,4 @@
-SportsTracker
-=============
+## SportsTracker
 
 SportsTracker is an application for people who want to record their
 sporting activities. It is not bound to a specific kind of sport, the user
@@ -24,3 +23,12 @@ recorded exercise files.
 
 Further informations can be found in the file [README.txt]
 (sportstracker/docs/README.txt).
+
+### Links
+
+* SportsTracker website: http://www.saring.de/sportstracker/
+* SourceForge project site: https://sourceforge.net/projects/sportstracker/
+
+The SourceForge project site provides package downloads, an issue tracker
+and a forum for discussions. This GitHub repository is currently just for
+source code management integration of pull requests.
