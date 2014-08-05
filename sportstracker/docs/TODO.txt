@@ -1,23 +1,12 @@
 SportsTracker-TODO
 ==================
 
-- st-exerciseviewer now uses the groovy-eclipse-compiler 2.9.0-01-SNAPSHOT
-  which supports Java 1.8 code
-  -> use Java 8 language features in the st-exerciseviewer Java classes
-    -> done in packages core and data
-      -> proceed with package gui
-  -> remove the Codehaus Snapshot Repository from master POM when the
-     groovy-eclipse-compiler 2.9.0-01 final release is available
-
 Java 8 migration status:
-- all SportsTracker modules are now compiling in JDK 8 mode
-  - only st-exerciseviewer is still in JDK 7 mode, because the
-    groovy-eclipse-compiler for mixed Java/Groovy compilation does not support
-    JDK 8 mode yet
-- full use of Lambdas in modules st-util and sportstracker (st-exerciseviewer
-  is still in Java 7 mode, because of mixed Groovy/Java compilation)
-- full use new of new Java Date API (JSR 310) in all SportsTracker modules
-- IDE support: IDEA (13.1) works fine, NetBeans 8.0 too, Eclipse had problems
+- full use of Lambdas and the new Java Date API (JSR 310) in all modules
+- the Parser implementations of the ExerciseViewer has not been updated for
+  using the latest Java 8 features 
+  => they are isolated and not the base for further development
+- IDE support: works fine in IDEA 13.1, NetBeans 8.0 and Eclipse 4.4
 
 Dependency Injection:
 - use Dagger as an alternative to the Guice framework,

@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <groovy.version>2.3.2</groovy.version>
+        <groovy.version>2.3.3</groovy.version>
     </properties>
     
     <modules>
@@ -27,13 +27,6 @@
             <url>http://saring.de/st-maven-repo/</url>
         </repository>
     </repositories>
-    <pluginRepositories>
-        <!-- Codehause snapshot repository is needed for the groovy-eclipse-compiler plugin snapshot -->
-        <pluginRepository>
-            <id>Codehaus snapshot repository</id>
-            <url>http://nexus.codehaus.org/snapshots/</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <build>
         <plugins>
@@ -141,6 +134,11 @@
             <groupId>org.swinglabs.swingx</groupId>
             <artifactId>swingx-all</artifactId>
             <version>1.6.5-1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>8.0.6</version>
         </dependency>
         <!-- Common test dependencies -->
         <dependency>
