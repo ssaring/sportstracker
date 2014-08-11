@@ -17,11 +17,6 @@ recorded exercise files and evaluate the diagrams with the integrated
 ExerciseViewer application.
 
 
-## Build Status
-
-[![Build Status](https://travis-ci.org/ssaring/sportstracker.svg?branch=master)](https://travis-ci.org/ssaring/sportstracker)
-
-
 ## Links
 
 * SportsTracker website: http://www.saring.de/sportstracker/
@@ -31,3 +26,7 @@ ExerciseViewer application.
  * provides source code management and is for integration of pull requests
 * SportsTracker documentation: [README.txt](sportstracker/docs/README.txt)
 * SportsTracker license: [GPL v2](sportstracker/docs/LICENSE.txt)
+
+#### Build Status
+
+[![Build Status](https://travis-ci.org/ssaring/sportstracker.svg?branch=master)](https://travis-ci.org/ssaring/sportstracker)
