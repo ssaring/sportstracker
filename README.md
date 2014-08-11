@@ -18,8 +18,7 @@ ExerciseViewer application.
 
 ## Links
 
-[![Build Status](https://travis-ci.org/ssaring/sportstracker.svg?branch=master)](https://travis-ci.org/ssaring/sportstracker)
-
+* Travis CI: [![Build Status](https://travis-ci.org/ssaring/sportstracker.svg?branch=master)](https://travis-ci.org/ssaring/sportstracker)
 * SportsTracker website: http://www.saring.de/sportstracker/
 * SourceForge project site: https://sourceforge.net/projects/sportstracker/
  * provides package downloads, an issue tracker and a forum for discussions
