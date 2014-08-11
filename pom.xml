@@ -135,6 +135,11 @@
             <artifactId>swingx-all</artifactId>
             <version>1.6.5-1</version>
         </dependency>
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>8.0.6</version>
+        </dependency>
         <!-- Common test dependencies -->
         <dependency>
             <groupId>junit</groupId>

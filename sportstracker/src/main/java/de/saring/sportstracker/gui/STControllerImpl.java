@@ -7,9 +7,11 @@ import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.dialogs.*;
+import de.saring.sportstracker.gui.dialogsfx.AboutDialogController;
 import de.saring.sportstracker.gui.views.EntryView;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
+import javafx.application.Platform;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -60,11 +62,12 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<OverviewDialog> prOverviewDialog;
     @Inject
-    private Provider<AboutDialog> prAboutDialog;
-    @Inject
     private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
     @Inject
     private Provider<EVMain> prExerciseViewer;
+
+    @Inject
+    private Provider<AboutDialogController> prAboutDialogController;
 
     /**
      * The action map of the controller class.
@@ -573,7 +576,8 @@ public class STControllerImpl implements STController {
      */
     @Action(name = ACTION_ABOUT)
     public void showAboutDialog() {
-        context.showDialog(prAboutDialog.get());
+        // needs to be executed on the JavaFX application thread
+        Platform.runLater(() -> prAboutDialogController.get().show(null));
     }
 
     @Override

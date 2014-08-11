@@ -5,6 +5,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.sportstracker.core.STException;
+import de.saring.util.AppResources;
 import org.jdesktop.application.View;
 
 import javax.swing.*;
@@ -76,6 +77,10 @@ public class STMain extends SportsTracker {
                 bind(STDocument.class).to(STDocumentImpl.class);
                 bind(STView.class).to(STViewImpl.class);
                 bind(STController.class).to(STControllerImpl.class);
+
+                // create and bind the initialized AppResources, so they can be accessed from everywhere
+                AppResources resources = new AppResources("de.saring.sportstracker.gui.resources.SportsTracker");
+                bind(AppResources.class).toInstance(resources);
             }
         });
 
@@ -159,6 +164,9 @@ public class STMain extends SportsTracker {
     public static void main(String args[]) {
         // Mac specific intialization
         STViewImpl.preInit();
+
+        // start the dummy JavaFX application (needed while migrating from Swing to JavaFX)
+        new Thread(STFXApplication::launchDummyApplication).start();
 
         launch(STMain.class, args);
     }

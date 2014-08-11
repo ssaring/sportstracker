@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="460.0" spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox spacing="16.0">
+         <children>
+            <VBox alignment="CENTER">
+               <children>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/st-logo-64.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+            <VBox spacing="12.0">
+               <children>
+                  <Label text="%st.dlg.about.sportstracker.text">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label snapToPixel="false" text="%st.dlg.about.description.text" wrapText="true" />
+                  <Label text="%st.dlg.about.copyright.text" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <tabs>
+          <Tab text="%st.dlg.about.title.authors">
+            <content>
+              <AnchorPane>
+                     <children>
+                        <TextArea editable="false" text="%st.dlg.about.authors.text" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="%st.dlg.about.title.translators">
+            <content>
+                <AnchorPane>
+                    <children>
+                        <TextArea editable="false" text="%st.dlg.about.translators.text" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</VBox>

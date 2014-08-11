@@ -20,6 +20,7 @@
     <orderEntry type="library" name="Maven: org.jfree:jcommon:1.0.21" level="project" />
     <orderEntry type="library" name="Maven: com.miglayout:miglayout:3.7.4" level="project" />
     <orderEntry type="library" name="Maven: org.swinglabs.swingx:swingx-all:1.6.5-1" level="project" />
+    <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:8.0.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.11" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.groovy:groovy-test:2.3.3" level="project" />
