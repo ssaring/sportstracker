@@ -27,6 +27,6 @@ ExerciseViewer application.
 * SportsTracker documentation: [README.txt](sportstracker/docs/README.txt)
 * SportsTracker license: [GPL v2](sportstracker/docs/LICENSE.txt)
 
-#### Build Status
+### Build Status
 
 [![Build Status](https://travis-ci.org/ssaring/sportstracker.svg?branch=master)](https://travis-ci.org/ssaring/sportstracker)
