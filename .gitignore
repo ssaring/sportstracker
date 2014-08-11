@@ -15,7 +15,6 @@ target
 *.iml
 *.ipr
 *.iws
-.idea
 nbactions.xml
 
 # ignore IDEA project files for local workspace settings
