@@ -16,7 +16,8 @@ If you own a heartrate monitor with a computer interface you can import the
 recorded exercise files and evaluate the diagrams with the integrated
 ExerciseViewer application.
 
-#### Build Status
+
+## Build Status
 
 [![Build Status](https://travis-ci.org/ssaring/sportstracker.svg?branch=master)](https://travis-ci.org/ssaring/sportstracker)
 
