@@ -1,7 +1,9 @@
 package de.saring.sportstracker.gui;
 
+import de.saring.util.AppResources;
 import de.saring.util.ResourceReader;
 import de.saring.util.unitcalc.FormatUtils;
+import javafx.stage.Stage;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -22,10 +24,13 @@ public class STContextImpl implements STContext {
 
     private final ApplicationContext appContext;
 
-    /**
-     * The helper class for reading application resources.
-     */
+    private final STFXApplication fxApplication;
+
+    /** The helper class for reading application resources (for the Swing Application Framework UI). */
     private final ResourceReader resReader;
+
+    /** The provider of application text resources for the JavaFX based UI. */
+    private AppResources fxResources;
 
     /**
      * The format utils for the current unit system.
@@ -36,12 +41,15 @@ public class STContextImpl implements STContext {
      * Standard c'tor.
      *
      * @param appContext the ApplicationContext of the Swing Application Framework
+     * @param fxApplication the JavaFX Application instance
      */
-    public STContextImpl(ApplicationContext appContext) {
+    public STContextImpl(ApplicationContext appContext, STFXApplication fxApplication) {
         this.appContext = appContext;
+        this.fxApplication = fxApplication;
 
-        // initialize the I18N helper class
+        // initialize the I18N helper classes
         this.resReader = new ResourceReader(appContext.getResourceMap());
+        this.fxResources = new AppResources("de.saring.sportstracker.gui.resources.SportsTracker");
     }
 
     @Override
@@ -84,6 +92,16 @@ public class STContextImpl implements STContext {
     @Override
     public void setFormatUtils(FormatUtils formatUtils) {
         this.formatUtils = formatUtils;
+    }
+
+    @Override
+    public Stage getPrimaryStage() {
+        return fxApplication.getPrimaryStage();
+    }
+
+    @Override
+    public AppResources getFxResources() {
+        return fxResources;
     }
 
     /**

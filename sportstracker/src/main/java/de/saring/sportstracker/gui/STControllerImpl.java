@@ -576,8 +576,13 @@ public class STControllerImpl implements STController {
      */
     @Action(name = ACTION_ABOUT)
     public void showAboutDialog() {
-        // needs to be executed on the JavaFX application thread
-        Platform.runLater(() -> prAboutDialogController.get().show(null));
+        // TODO remove workarounds after migration of main window to JavaFX
+        // JavaFX UI code needs to be executed on the JavaFX application thread.
+        // Bring dummy JavaFX window to front, is always behind the Swing window.
+        Platform.runLater(() -> {
+            context.getPrimaryStage().toFront();
+            prAboutDialogController.get().show(context.getPrimaryStage());
+        });
     }
 
     @Override

@@ -3,12 +3,10 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - AboutDialog (proof of concept for dialog migration)
-  - ControlsFX Bug I18N: Close-action in dialogs has umlaut errors in "Schließen"
-    -> check bug or create a patch
-  - make the dummy JavaFX Stage available in the STView or STContext, needed for parents in dialogs
-  - can the title bar of the dummy FX window be disabled? It's not visible when size is 0x0 (at least on Mac OS)
   - create Notes for the migration strategy and concept
-  - fix resource and I18N problems in AboutDialog
+  - fix resource problems in AboutDialog
+  - ControlsFX Bug I18N: Close-action in dialogs has umlaut errors in "Schließen"
+    -> seems to be fixed in upcoming ControlsFX 8.0.7
   - remove Swing based AboutDialog
 
 Java 8 migration status:

@@ -1,7 +1,6 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
-
-import de.saring.util.AppResources;
+import de.saring.sportstracker.gui.STContext;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -25,17 +24,17 @@ import java.io.IOException;
  */
 public abstract class AbstractDialogController {
 
-    protected AppResources resources;
+    protected STContext context;
     protected GuiceFxmlLoader guiceFxmlLoader;
 
     /**
      * Standard c'tor for dependency injection.
      *
-     * @param resources the application resources
+     * @param context the SportsTracker UI context
      * @param guiceFxmlLoader the Guice FXML loader
      */
-    public AbstractDialogController(final AppResources resources, final GuiceFxmlLoader guiceFxmlLoader) {
-        this.resources = resources;
+    public AbstractDialogController(final STContext context, final GuiceFxmlLoader guiceFxmlLoader) {
+        this.context = context;
         this.guiceFxmlLoader = guiceFxmlLoader;
     }
 
@@ -92,7 +91,7 @@ public abstract class AbstractDialogController {
      * @return button text
      */
     protected String getOkButtonText() {
-        return resources.getString("dialog.ok");
+        return context.getFxResources().getString("dialog.ok");
     }
 
     /**
@@ -138,7 +137,7 @@ public abstract class AbstractDialogController {
     private Parent loadDialogContent(final String fxmlFilename) {
         try {
             return guiceFxmlLoader.load(AbstractDialogController.class.getResource(fxmlFilename),
-                    resources.getResourceBundle());
+                    context.getFxResources().getResourceBundle());
         } catch (IOException e) {
             throw new RuntimeException("Failed to load the dialog FXML resource '" + fxmlFilename + "'!", e);
         }

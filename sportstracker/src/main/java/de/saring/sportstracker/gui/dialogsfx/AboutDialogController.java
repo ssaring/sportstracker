@@ -1,6 +1,6 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
-import de.saring.util.AppResources;
+import de.saring.sportstracker.gui.STContext;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.stage.Window;
 
@@ -18,12 +18,12 @@ public class AboutDialogController extends AbstractDialogController {
     /**
      * Standard c'tor for dependency injection.
      *
-     * @param resources the application resources
+     * @param context the SportsTracker UI context
      * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public AboutDialogController(final AppResources resources, final GuiceFxmlLoader guiceFxmlLoader) {
-        super(resources, guiceFxmlLoader);
+    public AboutDialogController(final STContext context, final GuiceFxmlLoader guiceFxmlLoader) {
+        super(context, guiceFxmlLoader);
     }
 
     /**
@@ -32,7 +32,7 @@ public class AboutDialogController extends AbstractDialogController {
      * @param parent parent window of the dialog
      */
     public void show(final Window parent) {
-        showInfoDialog("/fxml/AboutDialog.fxml", null, resources.getString("st.dlg.about.title"));
+        showInfoDialog("/fxml/AboutDialog.fxml", parent, context.getFxResources().getString("st.dlg.about.title"));
     }
 
     @Override

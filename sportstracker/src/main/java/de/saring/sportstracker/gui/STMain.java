@@ -5,7 +5,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.sportstracker.core.STException;
-import de.saring.util.AppResources;
 import org.jdesktop.application.View;
 
 import javax.swing.*;
@@ -69,7 +68,7 @@ public class STMain extends SportsTracker {
             public void configure() {
 
                 // create and bind SportsTracker GUI context, which can be used everywhere
-                context = new STContextImpl(getContext());
+                context = new STContextImpl(getContext(), STFXApplication.getInstance());
                 bind(STContext.class).toInstance(context);
                 bind(EVContext.class).toInstance(context);
 
@@ -77,10 +76,6 @@ public class STMain extends SportsTracker {
                 bind(STDocument.class).to(STDocumentImpl.class);
                 bind(STView.class).to(STViewImpl.class);
                 bind(STController.class).to(STControllerImpl.class);
-
-                // create and bind the initialized AppResources, so they can be accessed from everywhere
-                AppResources resources = new AppResources("de.saring.sportstracker.gui.resources.SportsTracker");
-                bind(AppResources.class).toInstance(resources);
             }
         });
 
