@@ -21,11 +21,20 @@
             </VBox>
             <VBox spacing="12.0">
                <children>
-                  <Label text="%st.dlg.about.sportstracker.text">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Label>
+                  <HBox spacing="6.0">
+                     <children>
+                         <Label text="%application.title">
+                             <font>
+                                 <Font name="System Bold" size="13.0" />
+                             </font>
+                         </Label>
+                         <Label text="%application.version">
+                             <font>
+                                 <Font name="System Bold" size="13.0" />
+                             </font>
+                         </Label>
+                     </children>
+                  </HBox>
                   <Label snapToPixel="false" text="%st.dlg.about.description.text" wrapText="true" />
                   <Label text="%st.dlg.about.copyright.text" />
                </children>

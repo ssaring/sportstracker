@@ -44,6 +44,10 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 6.1.0:
+- application.title (new, no translations needed)
+- application.version (new, no translations needed)
+
 SportsTracker 5.7.0:
 - st.dlg.exercise.error.import_console (new)
 - st.dlg.exercise.error.import (removed)
