@@ -2,6 +2,9 @@ package de.saring.sportstracker.gui.dialogsfx;
 
 import de.saring.sportstracker.gui.STContext;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import javafx.stage.Window;
 
 import javax.inject.Inject;
@@ -14,6 +17,11 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class AboutDialogController extends AbstractDialogController {
+
+    @FXML
+    private TextArea taAuthors;
+    @FXML
+    private TextArea taTranslators;
 
     /**
      * Standard c'tor for dependency injection.
@@ -37,6 +45,11 @@ public class AboutDialogController extends AbstractDialogController {
 
     @Override
     protected void showInitialValues() {
-        // no operations ...
+
+        // Workaround: always show vertical scroll bars (otherwise they are displayed when the TextArea gets the focus)
+        Platform.runLater(() -> {
+            taAuthors.setWrapText(true);
+            taTranslators.setWrapText(true);
+        });
     }
 }

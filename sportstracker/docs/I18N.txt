@@ -38,7 +38,7 @@ positions and sizes in the directory $HOME/.sportstracker/ (e.g.
 
 
 Stefan Saring
-2008/01/13
+2014/08/16
 
 
 History of resource changes for each release
@@ -47,6 +47,9 @@ History of resource changes for each release
 SportsTracker 6.1.0:
 - application.title (new, no translations needed)
 - application.version (new, no translations needed)
+
+- st.dlg.about.close.Action.text (removed)
+- st.dlg.about.sportstracker.text (removed)
 
 SportsTracker 5.7.0:
 - st.dlg.exercise.error.import_console (new)
