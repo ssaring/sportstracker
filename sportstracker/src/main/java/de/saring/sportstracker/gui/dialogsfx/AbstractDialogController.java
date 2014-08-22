@@ -47,12 +47,13 @@ public abstract class AbstractDialogController {
      */
     protected void showInfoDialog(final String fxmlFilename, final Window parent, final String title) {
 
-        Parent root = loadDialogContent(fxmlFilename);
+        final Parent root = loadDialogContent(fxmlFilename);
         showInitialValues();
 
         // show dialog
-        Dialog dlg = createDialog(parent, title, root);
+        final Dialog dlg = createDialog(parent, title, root);
         dlg.getActions().addAll(Dialog.Actions.CLOSE);
+        fakeModalDialog(dlg);
         dlg.show();
     }
 
@@ -82,6 +83,7 @@ public abstract class AbstractDialogController {
         // show dialog
         Dialog dlg = createDialog(parent, title, root);
         dlg.getActions().addAll(actionOk, Dialog.Actions.CANCEL);
+        fakeModalDialog(dlg);
         return dlg.show() == actionOk;
     }
 
@@ -148,5 +150,29 @@ public abstract class AbstractDialogController {
             Dialog dlg = (Dialog) event.getSource();
             dlg.hide();
         }
+    }
+
+    /**
+     * Unfortunately it's not possible to show a modal JavaFX dialog on top of a Swing main window (JFrame).
+     * The workaround is to disable main Swing window and it's menu when the dialog is shown. And enable
+     * them again when the dialog has been closed.
+     * TODO: remove when the main window has been migrated to JavaFX
+     *
+     * @param dialog Dialog
+     */
+    private void fakeModalDialog(final Dialog dialog) {
+
+        // disable main Swing window and it's menu when the dialog is shown
+        final javax.swing.JFrame swingMainFrame = context.getMainFrame();
+        dialog.getWindow().setOnShown(e -> {
+            swingMainFrame.setEnabled(false);
+            swingMainFrame.getJMenuBar().setEnabled(false);
+        });
+
+        // enable main Swing window and it's menu when the dialog has been closed
+        dialog.getWindow().setOnHidden(e -> {
+            swingMainFrame.setEnabled(true);
+            swingMainFrame.getJMenuBar().setEnabled(true);
+        });
     }
 }

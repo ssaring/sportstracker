@@ -584,7 +584,7 @@ public class STControllerImpl implements STController {
             // bring dummy JavaFX window to front, is always behind the Swing window
             // context.getPrimaryStage().toFront();
 
-            // TODO move the placement and modal functionality to an external method
+            // TODO move the placement and modal functionality to an external method (e.g. in AbstractDialogController)
 
             // place the transparent dummy JavaFX main window in the center of the Swing window
             // => the JavaFX dialog uses the dummy window as parent, so it's placed in the center of the Swing window

@@ -3,7 +3,6 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - AboutDialog (proof of concept for dialog migration)
-  - create Notes for the migration strategy and concept
   - ControlsFX Bug I18N: Close-action in dialogs has umlaut errors in "Schließen"
     -> seems to be fixed in upcoming ControlsFX 8.0.7
   - remove Swing based AboutDialog
