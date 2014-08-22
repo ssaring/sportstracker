@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import org.controlsfx.control.ButtonBar;
@@ -47,14 +48,16 @@ public abstract class AbstractDialogController {
      */
     protected void showInfoDialog(final String fxmlFilename, final Window parent, final String title) {
 
-        final Parent root = loadDialogContent(fxmlFilename);
-        showInitialValues();
+        executeOnJavaFXThread(() -> {
+            final Parent root = loadDialogContent(fxmlFilename);
+            showInitialValues();
 
-        // show dialog
-        final Dialog dlg = createDialog(parent, title, root);
-        dlg.getActions().addAll(Dialog.Actions.CLOSE);
-        fakeModalDialog(dlg);
-        dlg.show();
+            // show dialog
+            final Dialog dlg = createDialog(parent, title, root);
+            dlg.getActions().addAll(Dialog.Actions.CLOSE);
+            applyJavaFXToSwingMigrationWorkarounds(dlg);
+            dlg.show();
+        });
     }
 
     /**
@@ -68,6 +71,7 @@ public abstract class AbstractDialogController {
      * @return true if the dialog has been closed successfully with OK (no validation errors)
      */
     protected boolean showEditDialog(final String fxmlFilename, final Window parent, final String title) {
+        // TODO to be executed on JavaFX thread!
 
         Parent root = loadDialogContent(fxmlFilename);
         showInitialValues();
@@ -83,7 +87,7 @@ public abstract class AbstractDialogController {
         // show dialog
         Dialog dlg = createDialog(parent, title, root);
         dlg.getActions().addAll(actionOk, Dialog.Actions.CANCEL);
-        fakeModalDialog(dlg);
+        applyJavaFXToSwingMigrationWorkarounds(dlg);
         return dlg.show() == actionOk;
     }
 
@@ -152,11 +156,42 @@ public abstract class AbstractDialogController {
         }
     }
 
+    private void executeOnJavaFXThread(Runnable task) {
+        // TODO: remove this function when the main window has been migrated to JavaFX
+        if (Platform.isFxApplicationThread()) {
+            task.run();
+        } else {
+            Platform.runLater(task);
+        }
+    }
+
+    private void applyJavaFXToSwingMigrationWorkarounds(final Dialog dialog) {
+        // TODO: remove these functions when the main window has been migrated to JavaFX
+        centerDialogOnSwingFrame();
+        fakeModalDialog(dialog);
+    }
+
+    /**
+     * Places the Dialog to be shown in the center of the main Swing window (JFrame). This is done
+     * by placing the transparent dummy JavaFX main window in the center of the Swing window.
+     * The JavaFX dialog uses the dummy window as parent, so it's placed in the center.
+     */
+    private void centerDialogOnSwingFrame() {
+        final java.awt.Rectangle swingFrameBounds = context.getMainFrame().getBounds();
+        final Stage fxStage = context.getPrimaryStage();
+        fxStage.setX(swingFrameBounds.getCenterX());
+        fxStage.setY(swingFrameBounds.getCenterY());
+
+        // problem: the new Stage position is not being used for the dialog
+        // workaround: hide and show the dummy stage (is invisible anyway), then it works
+        fxStage.hide();
+        fxStage.show();
+    }
+
     /**
      * Unfortunately it's not possible to show a modal JavaFX dialog on top of a Swing main window (JFrame).
      * The workaround is to disable main Swing window and it's menu when the dialog is shown. And enable
      * them again when the dialog has been closed.
-     * TODO: remove when the main window has been migrated to JavaFX
      *
      * @param dialog Dialog
      */

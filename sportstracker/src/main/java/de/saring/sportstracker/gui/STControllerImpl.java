@@ -11,8 +11,6 @@ import de.saring.sportstracker.gui.dialogsfx.AboutDialogController;
 import de.saring.sportstracker.gui.views.EntryView;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
-import javafx.application.Platform;
-import javafx.stage.Stage;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -20,7 +18,6 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.swing.*;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.time.LocalDate;
@@ -578,28 +575,7 @@ public class STControllerImpl implements STController {
      */
     @Action(name = ACTION_ABOUT)
     public void showAboutDialog() {
-        // TODO remove workarounds after migration of main window to JavaFX
-        // JavaFX UI code needs to be executed on the JavaFX application thread.
-        Platform.runLater(() -> {
-            // bring dummy JavaFX window to front, is always behind the Swing window
-            // context.getPrimaryStage().toFront();
-
-            // TODO move the placement and modal functionality to an external method (e.g. in AbstractDialogController)
-
-            // place the transparent dummy JavaFX main window in the center of the Swing window
-            // => the JavaFX dialog uses the dummy window as parent, so it's placed in the center of the Swing window
-            final Rectangle swingFrameBounds = context.getMainFrame().getBounds();
-            final Stage fxStage = context.getPrimaryStage();
-            fxStage.setX(swingFrameBounds.getCenterX());
-            fxStage.setY(swingFrameBounds.getCenterY());
-
-            // problem: the new Stage position is not being used for the dialog
-            // workaround: hide and show the dummy stage (is invisible anyway), then it works
-            fxStage.hide();
-            fxStage.show();
-
-            prAboutDialogController.get().show(context.getPrimaryStage());
-        });
+        prAboutDialogController.get().show(context.getPrimaryStage());
     }
 
     @Override
