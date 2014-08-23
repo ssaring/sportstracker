@@ -6,6 +6,8 @@ JavaFX Migration:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the
     center of the main Swing window (works on Mac OS X)
+    => maybe an ControlsFX bug?
+       (see https://bitbucket.org/controlsfx/controlsfx/issue/345/unable-to-change-dialog-position)
   - the Windows taskbar also shows an Icon for the transparent dummy JavaFX
     Stage -> can this be hidden?
 - AboutDialog (proof of concept for dialog migration)
