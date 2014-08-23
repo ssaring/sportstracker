@@ -2,8 +2,13 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- JavaFX/Swing combination problems on Windows:
+  - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
+  - the JavaFX dialog is always shown in the center of the screen, not in the
+    center of the main Swing window (works on Mac OS X)
+  - the Windows taskbar also shows an Icon for the transparent dummy JavaFX
+    Stage -> can this be hidden?
 - AboutDialog (proof of concept for dialog migration)
-  - test behavior on Windows
   - ControlsFX Bug I18N: Close-action in dialogs has umlaut errors in "Schließen"
     -> seems to be fixed in upcoming ControlsFX 8.0.7
   - remove Swing based AboutDialog
