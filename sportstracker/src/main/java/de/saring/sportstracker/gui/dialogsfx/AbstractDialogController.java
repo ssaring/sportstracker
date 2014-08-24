@@ -208,6 +208,7 @@ public abstract class AbstractDialogController {
         dialog.getWindow().setOnHidden(e -> {
             swingMainFrame.setEnabled(true);
             swingMainFrame.getJMenuBar().setEnabled(true);
+            swingMainFrame.toFront();
         });
     }
 }
