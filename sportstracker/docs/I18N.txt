@@ -44,7 +44,7 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
-SportsTracker 6.1.0:
+SportsTracker 7.0.0:
 - application.title (new, no translations needed)
 - application.version (new, no translations needed)
 
