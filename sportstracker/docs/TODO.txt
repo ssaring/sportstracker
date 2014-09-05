@@ -3,10 +3,6 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - JavaFX dialogs needs to close when pressing ESC
-- Current work:
-  - Port of Note dialog:
-    - dialog is feature complete
-    - remove NoteDialog when completed
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the
@@ -18,7 +14,6 @@ JavaFX Migration:
 - AboutDialog (proof of concept for dialog migration)
   - ControlsFX Bug I18N: Close-action in dialogs has umlaut errors in "Schließen"
     -> seems to be fixed in upcoming ControlsFX 8.0.7
-  - remove Swing based AboutDialog
 
 Java 8 migration status:
 - full use of Lambdas and the new Java Date API (JSR 310) in all modules
