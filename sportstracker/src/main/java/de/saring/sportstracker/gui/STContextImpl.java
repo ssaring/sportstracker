@@ -3,7 +3,10 @@ package de.saring.sportstracker.gui;
 import de.saring.util.AppResources;
 import de.saring.util.ResourceReader;
 import de.saring.util.unitcalc.FormatUtils;
-import javafx.stage.Stage;
+import javafx.stage.*;
+import javafx.stage.Window;
+import org.controlsfx.dialog.DialogStyle;
+import org.controlsfx.dialog.Dialogs;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -77,6 +80,17 @@ public class STContextImpl implements STContext {
     public int showConfirmDialog(Component parent, String titleKey, String messageKey) {
         return JOptionPane.showConfirmDialog(parent, resReader.getString(messageKey),
                 resReader.getString(titleKey), JOptionPane.YES_NO_OPTION);
+    }
+
+    @Override
+    public void showFxErrorDialog(Window parent, String titleKey, String messageKey) {
+        Dialogs.create()
+                .owner(parent)
+                .style(DialogStyle.NATIVE)
+                .masthead(null)
+                .title(fxResources.getString(titleKey))
+                .message(fxResources.getString(messageKey))
+                .showError();
     }
 
     @Override

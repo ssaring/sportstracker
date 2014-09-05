@@ -50,7 +50,7 @@ public abstract class AbstractDialogController {
 
         executeOnJavaFXThread(() -> {
             final Parent root = loadDialogContent(fxmlFilename);
-            showInitialValues();
+            setInitialValues();
 
             // show dialog
             final Dialog dlg = createDialog(parent, title, root);
@@ -67,28 +67,27 @@ public abstract class AbstractDialogController {
      * @param fxmlFilename FXML filename of the dialog content
      * @param parent parent window of the dialog
      * @param title dialog title text
-     *
-     * @return true if the dialog has been closed successfully with OK (no validation errors)
      */
-    protected boolean showEditDialog(final String fxmlFilename, final Window parent, final String title) {
-        // TODO to be executed on JavaFX thread!
+    protected void showEditDialog(final String fxmlFilename, final Window parent, final String title) {
 
-        Parent root = loadDialogContent(fxmlFilename);
-        showInitialValues();
+        executeOnJavaFXThread(() -> {
+            final Parent root = loadDialogContent(fxmlFilename);
+            setInitialValues();
 
-        // define the action when user presses the OK button (default)
-        Action actionOk = new AbstractAction(getOkButtonText()) {
-            public void handle(final ActionEvent event) {
-                onOk(event);
-            }
-        };
-        ButtonBar.setType(actionOk, ButtonBar.ButtonType.OK_DONE);
+            // define the action when user presses the OK button (default)
+            Action actionOk = new AbstractAction(getOkButtonText()) {
+                public void handle(final ActionEvent event) {
+                    onOk(event);
+                }
+            };
+            ButtonBar.setType(actionOk, ButtonBar.ButtonType.OK_DONE);
 
-        // show dialog
-        Dialog dlg = createDialog(parent, title, root);
-        dlg.getActions().addAll(actionOk, Dialog.Actions.CANCEL);
-        applyJavaFXToSwingMigrationWorkarounds(dlg);
-        return dlg.show() == actionOk;
+            // show dialog
+            final Dialog dlg = createDialog(parent, title, root);
+            dlg.getActions().addAll(actionOk, Dialog.Actions.CANCEL);
+            applyJavaFXToSwingMigrationWorkarounds(dlg);
+            dlg.show();
+        });
     }
 
     /**
@@ -97,13 +96,13 @@ public abstract class AbstractDialogController {
      * @return button text
      */
     protected String getOkButtonText() {
-        return context.getFxResources().getString("dialog.ok");
+        return context.getFxResources().getString("common.ok");
     }
 
     /**
      * Setups the dialog content controls and shows the initial values of the domain object to be edited.
      */
-    protected abstract void showInitialValues();
+    protected abstract void setInitialValues();
 
     /**
      * For edit dialogs only: Validates the inputs. On input errors an error message needs to be displayed.

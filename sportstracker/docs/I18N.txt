@@ -48,8 +48,13 @@ SportsTracker 7.0.0:
 - application.title (new, no translations needed)
 - application.version (new, no translations needed)
 
+- common.ok (new)
+
+- st.dlg.note.error.time (new)
+
 - st.dlg.about.close.Action.text (removed)
 - st.dlg.about.sportstracker.text (removed)
+
 
 SportsTracker 5.7.0:
 - st.dlg.exercise.error.import_console (new)

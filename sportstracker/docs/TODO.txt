@@ -2,6 +2,12 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- Current work:
+  - Port of Note dialog:
+    - dialog is feature complete
+      -> see TODOs in  NoteDialogController
+    - remove Resources for OK and Cancel buttons?
+    - remove NoteDialog when completed
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the

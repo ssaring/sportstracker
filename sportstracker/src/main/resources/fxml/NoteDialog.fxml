@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="460.0" spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.NoteDialogController">
+   <children>
+      <HBox alignment="BASELINE_LEFT" spacing="8.0" VBox.vgrow="NEVER">
+         <children>
+            <Label text="%st.dlg.note.date.text" HBox.hgrow="NEVER" />
+            <DatePicker fx:id="dpDate" maxWidth="140.0" HBox.hgrow="NEVER" />
+            <Label text="%st.dlg.note.time.text" HBox.hgrow="NEVER">
+               <padding>
+                  <Insets left="16.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="tfHour" prefColumnCount="2" HBox.hgrow="NEVER" />
+            <Label text=":" HBox.hgrow="NEVER" />
+            <TextField fx:id="tfMinute" prefColumnCount="2" HBox.hgrow="NEVER" />
+         </children>
+      </HBox>
+      <VBox spacing="8.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label text="%st.dlg.note.text.text" />
+            <TextArea fx:id="taText" VBox.vgrow="ALWAYS" wrapText="true" />
+         </children>
+      </VBox>
+   </children>
+</VBox>

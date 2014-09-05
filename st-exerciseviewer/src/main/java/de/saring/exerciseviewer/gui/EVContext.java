@@ -2,6 +2,7 @@ package de.saring.exerciseviewer.gui;
 
 import de.saring.util.ResourceReader;
 import de.saring.util.unitcalc.FormatUtils;
+import javafx.stage.*;
 import org.jdesktop.application.ApplicationContext;
 
 import javax.swing.*;
@@ -60,6 +61,16 @@ public interface EVContext {
      * @return an int indicating the option selected by the user
      */
     int showConfirmDialog(Component parent, String titleKey, String messageKey);
+
+    /**
+     * Displays a JavaFX modal message dialog of type Error with the specified message title and message
+     * for the specified parent window.
+     *
+     * @param parent the parent component of the message dialog
+     * @param titleKey the resource key for the dialog title text
+     * @param messageKey the resource key for the message text
+     */
+    void showFxErrorDialog(javafx.stage.Window parent, String titleKey, String messageKey);
 
     /**
      * Returns the helper class for reading resources from the applications properties

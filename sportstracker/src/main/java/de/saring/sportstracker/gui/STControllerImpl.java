@@ -8,6 +8,7 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.dialogs.*;
 import de.saring.sportstracker.gui.dialogsfx.AboutDialogController;
+import de.saring.sportstracker.gui.dialogsfx.NoteDialogController;
 import de.saring.sportstracker.gui.views.EntryView;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
@@ -47,8 +48,6 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<ExerciseDialog> prExerciseDialog;
     @Inject
-    private Provider<NoteDialog> prNoteDialog;
-    @Inject
     private Provider<WeightDialog> prWeightDialog;
     @Inject
     private Provider<OptionsDialog> prOptionsDialog;
@@ -67,6 +66,8 @@ public class STControllerImpl implements STController {
 
     @Inject
     private Provider<AboutDialogController> prAboutDialogController;
+    @Inject
+    private Provider<NoteDialogController> prNoteDialogController;
 
     /**
      * The action map of the controller class.
@@ -272,9 +273,7 @@ public class STControllerImpl implements STController {
         Note newNote = new Note(document.getNoteList().getNewID());
         newNote.setDateTime(getNoonDateTimeForDate(dateForNewEntries));
 
-        NoteDialog dlg = prNoteDialog.get();
-        dlg.setNote(newNote);
-        context.showDialog(dlg);
+        prNoteDialogController.get().show(context.getPrimaryStage(), newNote);
     }
 
     @Override
@@ -333,10 +332,8 @@ public class STControllerImpl implements STController {
      * @param noteID ID of the note entry
      */
     private void editNote(int noteID) {
-        Note selNote = document.getNoteList().getByID(noteID);
-        NoteDialog dlg = prNoteDialog.get();
-        dlg.setNote(selNote);
-        context.showDialog(dlg);
+        Note selectedNote = document.getNoteList().getByID(noteID);
+        prNoteDialogController.get().show(context.getPrimaryStage(), selectedNote);
     }
 
     /**
@@ -388,13 +385,10 @@ public class STControllerImpl implements STController {
      */
     private void copyNote(int noteID) {
 
-        Note selNote = document.getNoteList().getByID(noteID);
-        Note copiedNote = createNoteCopy(selNote);
+        Note selectedNote = document.getNoteList().getByID(noteID);
+        Note copiedNote = createNoteCopy(selectedNote);
 
-        // start note dialog for the copied note
-        NoteDialog dlg = prNoteDialog.get();
-        dlg.setNote(copiedNote);
-        context.showDialog(dlg);
+        prNoteDialogController.get().show(context.getPrimaryStage(), copiedNote);
     }
 
     /**

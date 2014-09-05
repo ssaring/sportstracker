@@ -14,6 +14,9 @@ v7.0.0:
   - switched compiler to Java 8 in module st-exerciseviewer 
     (already done in all other modules)
   - use of Java 8 Lambda features in module st-exerciseviewer
+  - full rewrite of the user interface by using JavaFX instead Swing:
+    - About dialog
+    - Note dialog
 
 v6.0.0:
  SportsTracker changes:
