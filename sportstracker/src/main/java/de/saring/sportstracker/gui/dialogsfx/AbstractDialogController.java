@@ -200,15 +200,19 @@ public abstract class AbstractDialogController {
         // disable main Swing window and it's menu when the dialog is shown
         final javax.swing.JFrame swingMainFrame = context.getMainFrame();
         dialog.getWindow().setOnShown(e -> {
-            swingMainFrame.setEnabled(false);
-            swingMainFrame.getJMenuBar().setEnabled(false);
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                swingMainFrame.setEnabled(false);
+                swingMainFrame.getJMenuBar().setEnabled(false);
+            });
         });
 
         // enable main Swing window and it's menu when the dialog has been closed
         dialog.getWindow().setOnHidden(e -> {
-            swingMainFrame.setEnabled(true);
-            swingMainFrame.getJMenuBar().setEnabled(true);
-            swingMainFrame.toFront();
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                swingMainFrame.setEnabled(true);
+                swingMainFrame.getJMenuBar().setEnabled(true);
+                swingMainFrame.toFront();
+            });
         });
     }
 }
