@@ -51,6 +51,8 @@ SportsTracker 7.0.0:
 - common.ok (new)
 
 - st.dlg.note.error.time (new)
+- st.dlg.note.ok.Action.text (removed)
+- st.dlg.note.cancel.Action.text (removed)
 
 - st.dlg.about.close.Action.text (removed)
 - st.dlg.about.sportstracker.text (removed)
