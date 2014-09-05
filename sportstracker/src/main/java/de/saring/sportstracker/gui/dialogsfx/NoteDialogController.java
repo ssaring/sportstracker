@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.dialogsfx;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.sportstracker.gui.util.InputValidators;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -12,7 +13,6 @@ import javafx.stage.Window;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.text.NumberFormat;
 import java.time.LocalDateTime;
 
 /**
@@ -28,9 +28,11 @@ public class NoteDialogController extends AbstractDialogController {
     @FXML
     private DatePicker dpDate;
 
+    // TODO use formatted TextField, will be introduced in JavaFX future
     @FXML
     private TextField tfHour;
 
+    // TODO use formatted TextField, will be introduced in JavaFX future
     @FXML
     private TextField tfMinute;
 
@@ -75,7 +77,7 @@ public class NoteDialogController extends AbstractDialogController {
         dpDate.setValue(note.getDateTime().toLocalDate());
         tfHour.setText(String.format("%02d", note.getDateTime().getHour()));
         tfMinute.setText(String.format("%02d", note.getDateTime().getMinute()));
-        taText.setText(note.getText() == null ? "" : note.getText());
+        taText.setText(note.getText());
     }
 
     @Override
@@ -85,8 +87,6 @@ public class NoteDialogController extends AbstractDialogController {
         // => so we don't modify the original Note
         Note newNote = new Note(note.getId());
 
-        // TODO extract the InputValidators to a util class?
-
         // check date input
         if (dpDate.getValue() == null) {
             context.showFxErrorDialog(dpDate.getScene().getWindow(),
@@ -95,33 +95,16 @@ public class NoteDialogController extends AbstractDialogController {
             return false;
         }
 
-        // check hour input
-        int hour;
-        try {
-            hour = NumberFormat.getInstance().parse(tfHour.getText()).intValue();
-            if (hour < 0 || hour > 23) {
-                throw new Exception("The hour value must be in range 0..23!");
-            }
-        } catch (Exception e) {
-            context.showFxErrorDialog(tfHour.getScene().getWindow(),
-                    "common.error", "st.dlg.note.error.time");
-            tfHour.selectAll();
-            tfHour.requestFocus();
+        // check time inputs
+        Integer hour = InputValidators.getRequiredTextControlIntegerValue(context, tfHour, 0, 23,
+                "common.error", "st.dlg.note.error.time");
+        if (hour == null) {
             return false;
         }
 
-        // check minute input
-        int minute;
-        try {
-            minute = NumberFormat.getInstance().parse(tfMinute.getText()).intValue();
-            if (minute < 0 || minute > 59) {
-                throw new Exception("The minute value must be in range 0..59!");
-            }
-        } catch (Exception e) {
-            context.showFxErrorDialog(tfMinute.getScene().getWindow(),
-                    "common.error", "st.dlg.note.error.time");
-            tfMinute.selectAll();
-            tfMinute.requestFocus();
+        Integer minute = InputValidators.getRequiredTextControlIntegerValue(context, tfMinute, 0, 59,
+                "common.error", "st.dlg.note.error.time");
+        if (minute == null) {
             return false;
         }
 
@@ -130,16 +113,14 @@ public class NoteDialogController extends AbstractDialogController {
         newNote.setDateTime(newDateTime);
 
         // get note text
-        String strText = taText.getText().trim();
-        if (strText.length() == 0) {
-            context.showFxErrorDialog(taText.getScene().getWindow(),
-                    "common.error", "st.dlg.note.error.no_text");
-            taText.requestFocus();
+        String strText = InputValidators.getRequiredTextControlValue(context, taText,
+                "common.error", "st.dlg.note.error.no_text");
+        if (strText == null) {
             return false;
         }
         newNote.setText(strText);
 
-        // finally store the new Note and close dialog
+        // finally store the new Note
         document.getNoteList().set(newNote);
         return true;
     }
