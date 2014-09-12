@@ -28,11 +28,11 @@ public class NoteDialogController extends AbstractDialogController {
     @FXML
     private DatePicker dpDate;
 
-    // TODO use formatted TextField, will be introduced in JavaFX future
+    // TODO use formatted TextField, will be introduced in JavaFX 8u40
     @FXML
     private TextField tfHour;
 
-    // TODO use formatted TextField, will be introduced in JavaFX future
+    // TODO use formatted TextField, will be introduced in JavaFX 8u40
     @FXML
     private TextField tfMinute;
 

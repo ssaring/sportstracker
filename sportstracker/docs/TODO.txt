@@ -14,6 +14,8 @@ JavaFX Migration:
 - AboutDialog (proof of concept for dialog migration)
   - ControlsFX Bug I18N: Close-action in dialogs has umlaut errors in "Schließen"
     -> seems to be fixed in upcoming ControlsFX 8.0.7
+- Use Dialogs, Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
+  => will be introduced in Java 8u40 (Dec. 2014)
 
 Java 8 migration status:
 - full use of Lambdas and the new Java Date API (JSR 310) in all modules
