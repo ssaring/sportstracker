@@ -15,6 +15,7 @@ import org.controlsfx.control.action.AbstractAction;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.DialogStyle;
+import org.controlsfx.validation.ValidationSupport;
 
 import java.io.IOException;
 
@@ -27,6 +28,9 @@ public abstract class AbstractDialogController {
 
     protected STContext context;
     protected GuiceFxmlLoader guiceFxmlLoader;
+
+    /** ValidationSupport of tis dialog, is null in Info dialogs. */
+    protected ValidationSupport validationSupport;
 
     /**
      * Standard c'tor for dependency injection.
@@ -50,7 +54,7 @@ public abstract class AbstractDialogController {
 
         executeOnJavaFXThread(() -> {
             final Parent root = loadDialogContent(fxmlFilename);
-            setInitialValues();
+            setupDialogControls();
 
             // show dialog
             final Dialog dlg = createDialog(parent, title, root);
@@ -71,8 +75,6 @@ public abstract class AbstractDialogController {
     protected void showEditDialog(final String fxmlFilename, final Window parent, final String title) {
 
         executeOnJavaFXThread(() -> {
-            final Parent root = loadDialogContent(fxmlFilename);
-            setInitialValues();
 
             // define the action when user presses the OK button (default)
             Action actionOk = new AbstractAction(getOkButtonText()) {
@@ -81,6 +83,13 @@ public abstract class AbstractDialogController {
                 }
             };
             ButtonBar.setType(actionOk, ButtonBar.ButtonType.OK_DONE);
+
+            // bind validation to OK action, must only be enabled when there are no errors
+            this.validationSupport = new ValidationSupport();
+            actionOk.disabledProperty().bind(validationSupport.invalidProperty());
+
+            final Parent root = loadDialogContent(fxmlFilename);
+            setupDialogControls();
 
             // show dialog
             final Dialog dlg = createDialog(parent, title, root);
@@ -100,9 +109,10 @@ public abstract class AbstractDialogController {
     }
 
     /**
-     * Setups the dialog content controls and shows the initial values of the domain object to be edited.
+     * Setups the dialog content controls before the dialog will be displayed. Usually the binding
+     * between the model and the UI controls and the validation is defined here.
      */
-    protected abstract void setInitialValues();
+    protected abstract void setupDialogControls();
 
     /**
      * For edit dialogs only: Validates the inputs. On input errors an error message needs to be displayed.
@@ -129,7 +139,6 @@ public abstract class AbstractDialogController {
             }
         });
     }
-
 
     private Dialog createDialog(final Window parent, final String title, final Parent root) {
         Dialog dlg = new Dialog(parent, title, false, DialogStyle.NATIVE);

@@ -44,7 +44,7 @@ public class AboutDialogController extends AbstractDialogController {
     }
 
     @Override
-    protected void setInitialValues() {
+    protected void setupDialogControls() {
 
         // Workaround: always show vertical scroll bars (otherwise they are displayed when the TextArea gets the focus)
         Platform.runLater(() -> {
