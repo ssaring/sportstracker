@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.dialogsfx;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -95,22 +96,12 @@ public class NoteDialogController extends AbstractDialogController {
                 Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.note.error.date")));
         validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfHour, context.getFxResources().getString("st.dlg.note.error.time"),
-                        !isValueIntegerBetween(newValue, 0, 23)));
+                        !ValidationUtils.isValueIntegerBetween(newValue, 0, 23)));
         validationSupport.registerValidator(tfMinute, true, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfMinute, context.getFxResources().getString("st.dlg.note.error.time"),
-                        !isValueIntegerBetween(newValue, 0, 59)));
+                        !ValidationUtils.isValueIntegerBetween(newValue, 0, 59)));
         validationSupport.registerValidator(taText,
                 Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.note.error.no_text")));
-    }
-
-    // TODO move to a util class and create unit tests
-    private boolean isValueIntegerBetween(final String value, final int minValue, final int maxValue) {
-        try {
-            final int intValue = Integer.parseInt(value);
-            return intValue >= minValue && intValue <= maxValue;
-        } catch (Exception e) {
-            return false;
-        }
     }
 
     @Override
@@ -121,8 +112,6 @@ public class NoteDialogController extends AbstractDialogController {
         document.getNoteList().set(newNote);
         return true;
     }
-
-    // TODO move class to a separate file?
 
     /**
      * This ViewModel class provides JavaFX properties of all Note attributes to be edited in the dialog.

@@ -2,8 +2,7 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- see TODOs in NoteDialogController (Validation!)
-  - document ViewModel and binding in migration concept
+- document ViewModel and binding in migration concept (see NoteDialogController as an example)
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the
