@@ -2,7 +2,9 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- document ViewModel and binding in migration concept (see NoteDialogController as an example)
+- NoteDialogControl:
+  - document ViewModel and binding in migration concept as proof of concept for edit dialogs
+  - ControlsFX validation: use a a subtle color (dark grey) in the upper left corner of validated controls (CSS?)
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the
