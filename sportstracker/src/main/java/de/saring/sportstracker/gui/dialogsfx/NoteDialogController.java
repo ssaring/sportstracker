@@ -12,11 +12,14 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
+import org.controlsfx.validation.ValidationResult;
+import org.controlsfx.validation.Validator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -79,14 +82,36 @@ public class NoteDialogController extends AbstractDialogController {
         showEditDialog("/fxml/NoteDialog.fxml", parent, dlgTitle);
     }
 
-    // TODO rename method???
     @Override
-    protected void setInitialValues() {
+    protected void setupDialogControls() {
 
+        // setup binding between view model and the UI controls
         dpDate.valueProperty().bindBidirectional(noteModel.date);
         tfHour.textProperty().bindBidirectional(noteModel.hour, new NumberStringConverter("00"));
         tfMinute.textProperty().bindBidirectional(noteModel.minute, new NumberStringConverter("00"));
         taText.textProperty().bindBidirectional(noteModel.text);
+
+        // setup validation of the UI controls
+        validationSupport.registerValidator(dpDate,
+                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.note.error.date")));
+        validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
+                ValidationResult.fromErrorIf(tfHour, context.getFxResources().getString("st.dlg.note.error.time"),
+                        !isValueIntegerBetween(newValue, 0, 23)));
+        validationSupport.registerValidator(tfMinute, true, (Control control, String newValue) ->
+                ValidationResult.fromErrorIf(tfMinute, context.getFxResources().getString("st.dlg.note.error.time"),
+                        !isValueIntegerBetween(newValue, 0, 59)));
+        validationSupport.registerValidator(taText,
+                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.note.error.no_text")));
+    }
+
+    // TODO move to a util class and create unit tests
+    private boolean isValueIntegerBetween(final String value, final int minValue, final int maxValue) {
+        try {
+            final int intValue = Integer.parseInt(value);
+            return intValue >= minValue && intValue <= maxValue;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
@@ -150,26 +175,6 @@ public class NoteDialogController extends AbstractDialogController {
             this.hour = new SimpleIntegerProperty(note.getDateTime().getHour());
             this.minute = new SimpleIntegerProperty(note.getDateTime().getMinute());
             this.text = new SimpleStringProperty(note.getText());
-
-            // define validators which check every value change
-            // TODO can't be done this way => use frameworks such as JideFX or ControlsFX for validation!
-//            this.date.addListener((observable, oldValue, newValue) -> {
-//                if (newValue == null) {
-//                    this.date.set(oldValue);
-//                }
-//            });
-//
-//            this.hour.addListener((observable, oldValue, newValue) -> {
-//                if (newValue == null || newValue.intValue() < 0 || newValue.intValue() > 23) {
-//                    this.hour.set(oldValue.intValue());
-//                }
-//            });
-//
-//            this.minute.addListener((observable, oldValue, newValue) -> {
-//                if (newValue == null || newValue.intValue() < 0 || newValue.intValue() > 59) {
-//                    this.minute.set(oldValue.intValue());
-//                }
-//            });
         }
 
         /**
