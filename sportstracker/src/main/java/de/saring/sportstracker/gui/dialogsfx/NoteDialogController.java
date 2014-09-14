@@ -3,7 +3,6 @@ package de.saring.sportstracker.gui.dialogsfx;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.sportstracker.gui.util.InputValidators;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -117,34 +116,7 @@ public class NoteDialogController extends AbstractDialogController {
     @Override
     protected boolean validateAndStore() {
 
-        // TODO use frameworks such as JideFX or ControlsFX for validation
-
-        // check date input
-        if (noteModel.date.getValue() == null) {
-            context.showFxErrorDialog(dpDate.getScene().getWindow(),
-                    "common.error", "st.dlg.note.error.date");
-            dpDate.requestFocus();
-            return false;
-        }
-
-        // check time inputs
-        if (InputValidators.getRequiredTextControlIntegerValue(context, tfHour, 0, 23,
-                "common.error", "st.dlg.note.error.time") == null) {
-            return false;
-        }
-
-        if (InputValidators.getRequiredTextControlIntegerValue(context, tfMinute, 0, 59,
-                "common.error", "st.dlg.note.error.time") == null) {
-            return false;
-        }
-
-        // get note text
-        if (InputValidators.getRequiredTextControlValue(context, taText,
-                "common.error", "st.dlg.note.error.no_text") == null) {
-            return false;
-        }
-
-        // finally store the new Note
+        // store the new Note, no further validation needed
         final Note newNote = noteModel.getNote();
         document.getNoteList().set(newNote);
         return true;
