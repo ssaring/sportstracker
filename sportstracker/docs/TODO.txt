@@ -2,8 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- Weight dialog:
-  - delete old WeightDialog
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the
