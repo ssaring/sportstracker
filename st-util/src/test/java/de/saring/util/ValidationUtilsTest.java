@@ -1,6 +1,10 @@
 package de.saring.util;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Locale;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -11,6 +15,25 @@ import static org.junit.Assert.assertTrue;
  * @author Stefan Saring
  */
 public class ValidationUtilsTest {
+
+    private static Locale defaultLocale;
+
+    /**
+     * Set default locale to GERMAN, because the number validation tests are locale dependent.
+     */
+    @BeforeClass
+    public static void initLocale() {
+        defaultLocale = Locale.getDefault();
+        Locale.setDefault(Locale.GERMAN);
+    }
+
+    /**
+     * Reset default locale to previous value.
+     */
+    @AfterClass
+    public static void resetLocale() {
+        Locale.setDefault(defaultLocale);
+    }
 
     /**
      * Tests the method isValueIntegerBetween() for success conditions.
@@ -32,5 +55,34 @@ public class ValidationUtilsTest {
         assertFalse(ValidationUtils.isValueIntegerBetween("foo", 0, 23));
         assertFalse(ValidationUtils.isValueIntegerBetween("-1", 0, 23));
         assertFalse(ValidationUtils.isValueIntegerBetween("24", 0, 23));
+    }
+
+    /**
+     * Tests the method isValueDoubleBetween() for success conditions.
+     */
+    @Test
+    public void testIsValueDoubleBetween() {
+        assertTrue(ValidationUtils.isValueDoubleBetween("0", 0, 100));
+        assertTrue(ValidationUtils.isValueDoubleBetween("100", 0, 100));
+        assertTrue(ValidationUtils.isValueDoubleBetween("0,1", 0, 100));
+        assertTrue(ValidationUtils.isValueDoubleBetween("99,9", 0, 100));
+        assertTrue(ValidationUtils.isValueDoubleBetween("-1,0", -2, 0));
+        assertTrue(ValidationUtils.isValueDoubleBetween("100,3", 0, 100.3));
+    }
+
+    /**
+     * Tests the method isValueDoubleBetween() for failure conditions.
+     */
+    @Test
+    public void testIsValueDoubleBetweenFailed() {
+        assertFalse(ValidationUtils.isValueDoubleBetween(null, 0, 100));
+        assertFalse(ValidationUtils.isValueDoubleBetween("", 0, 100));
+        assertFalse(ValidationUtils.isValueDoubleBetween("foo", 0, 100));
+        assertFalse(ValidationUtils.isValueDoubleBetween("-1", 0, 100));
+        assertFalse(ValidationUtils.isValueDoubleBetween("101", 0, 100));
+        assertFalse(ValidationUtils.isValueDoubleBetween("-0,1", 0, 100));
+        assertFalse(ValidationUtils.isValueDoubleBetween("100,1", 0, 100));
+        assertFalse(ValidationUtils.isValueDoubleBetween("100.0", 0, 100)); // 100.0 is evaluated to 1000
+        assertFalse(ValidationUtils.isValueDoubleBetween("100,11", 0, 100.1));
     }
 }

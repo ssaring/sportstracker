@@ -51,7 +51,7 @@ public class NoteDialogController extends AbstractDialogController {
     @FXML
     private TextArea taText;
 
-    /** Model (MVC) of the edited Note. */
+    /** ViewModel of the edited Note. */
     private NoteModel noteModel;
 
     /**

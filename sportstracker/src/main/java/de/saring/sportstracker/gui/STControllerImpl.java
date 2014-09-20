@@ -9,6 +9,7 @@ import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.dialogs.*;
 import de.saring.sportstracker.gui.dialogsfx.AboutDialogController;
 import de.saring.sportstracker.gui.dialogsfx.NoteDialogController;
+import de.saring.sportstracker.gui.dialogsfx.WeightDialogController;
 import de.saring.sportstracker.gui.views.EntryView;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
@@ -48,8 +49,6 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<ExerciseDialog> prExerciseDialog;
     @Inject
-    private Provider<WeightDialog> prWeightDialog;
-    @Inject
     private Provider<OptionsDialog> prOptionsDialog;
     @Inject
     private Provider<FilterDialog> prFilterDialog;
@@ -68,6 +67,8 @@ public class STControllerImpl implements STController {
     private Provider<AboutDialogController> prAboutDialogController;
     @Inject
     private Provider<NoteDialogController> prNoteDialogController;
+    @Inject
+    private Provider<WeightDialogController> prWeightDialogController;
 
     /**
      * The action map of the controller class.
@@ -290,9 +291,7 @@ public class STControllerImpl implements STController {
             newWeight.setValue(lastWeight.getValue());
         }
 
-        WeightDialog dlg = prWeightDialog.get();
-        dlg.setWeight(newWeight);
-        context.showDialog(dlg);
+        prWeightDialogController.get().show(context.getPrimaryStage(), newWeight);
     }
 
     @Override
@@ -342,10 +341,8 @@ public class STControllerImpl implements STController {
      * @param weightID ID of the weight entry
      */
     private void editWeight(int weightID) {
-        Weight selWeight = document.getWeightList().getByID(weightID);
-        WeightDialog dlg = prWeightDialog.get();
-        dlg.setWeight(selWeight);
-        context.showDialog(dlg);
+        Weight selectedWeight = document.getWeightList().getByID(weightID);
+        prWeightDialogController.get().show(context.getPrimaryStage(), selectedWeight);
     }
 
     @Override
@@ -401,10 +398,7 @@ public class STControllerImpl implements STController {
         Weight selWeight = document.getWeightList().getByID(weightID);
         Weight copiedWeight = createWeightCopy(selWeight);
 
-        // start weight dialog for the copied weight
-        WeightDialog dlg = prWeightDialog.get();
-        dlg.setWeight(copiedWeight);
-        context.showDialog(dlg);
+        prWeightDialogController.get().show(context.getPrimaryStage(), copiedWeight);
     }
 
     @Override

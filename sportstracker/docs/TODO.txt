@@ -2,6 +2,8 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- Weight dialog:
+  - delete old WeightDialog
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the
@@ -13,11 +15,18 @@ JavaFX Migration:
 - AboutDialog (proof of concept for dialog migration)
   - ControlsFX Bug I18N: Close-action in dialogs has umlaut errors in "Schließen"
     -> seems to be fixed in upcoming ControlsFX 8.0.7
+- Use Maven JavaFX Plugin 8.1, see details in
+  http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
 - Use Dialogs, Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
   => will be introduced in Java 8u40 (Dec. 2014)
 - JavaFX Bug RT-38644: https://javafx-jira.kenai.com/browse/RT-38644 (created)
   - User can't close Dialogs with ESC when the DatePicker has the focus
   -> is planned to be fixed in JavaFX 8u40
+
+JavaFX Migration status - completed:
+- About Dialog
+- Note Dialog
+- Weight Dialog
 
 Java 8 migration status:
 - full use of Lambdas and the new Java Date API (JSR 310) in all modules
