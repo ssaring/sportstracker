@@ -152,7 +152,7 @@
               </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="taComment" text="%st.dlg.exercise.comment.title">
+            <Tab text="%st.dlg.exercise.comment.title">
               <content>
                 <AnchorPane>
                      <children>
