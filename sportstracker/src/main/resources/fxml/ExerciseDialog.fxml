@@ -84,14 +84,79 @@
           </Tab>
           <Tab text="%st.dlg.exercise.optional.title">
             <content>
-              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                  <children>
+                      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="32.0">
+                          <children>
+                              <GridPane hgap="12.0" vgap="12.0">
+                                  <columnConstraints>
+                                      <ColumnConstraints hgrow="NEVER" />
+                                      <ColumnConstraints hgrow="NEVER" />
+                                  </columnConstraints>
+                                  <rowConstraints>
+                                      <RowConstraints vgrow="SOMETIMES" />
+                                      <RowConstraints vgrow="SOMETIMES" />
+                                      <RowConstraints vgrow="SOMETIMES" />
+                                  </rowConstraints>
+                                  <children>
+                                      <Label text="%st.dlg.exercise.ascent.text" />
+                                      <Label text="%st.dlg.exercise.avg_heartrate.text" GridPane.rowIndex="1" />
+                                      <Label text="%st.dlg.exercise.calories.text" GridPane.rowIndex="2" />
+                                      <TextField fx:id="tfAscent" GridPane.columnIndex="1" />
+                                      <TextField fx:id="tfAvgHeartrate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                      <TextField fx:id="tfCalories" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                  </children>
+                              </GridPane>
+                              <GridPane hgap="12.0" vgap="12.0">
+                                  <columnConstraints>
+                                      <ColumnConstraints hgrow="NEVER" />
+                                      <ColumnConstraints hgrow="ALWAYS" />
+                                    <ColumnConstraints hgrow="NEVER" />
+                                  </columnConstraints>
+                                  <rowConstraints>
+                                      <RowConstraints vgrow="SOMETIMES" />
+                                      <RowConstraints vgrow="SOMETIMES" />
+                                      <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                  </rowConstraints>
+                                  <children>
+                                      <Label text="%st.dlg.exercise.equipment.text" />
+                                      <Label text="%st.dlg.exercise.hrm_file.text" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets top="24.0" />
+                                       </GridPane.margin></Label>
+                                      <ChoiceBox fx:id="cbEquipment" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" />
+                                      <TextField fx:id="tfHrmFile" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets top="24.0" />
+                                       </GridPane.margin></TextField>
+                                    <Button mnemonicParsing="false" text="%st.dlg.exercise.hrm_browse.Action.text" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets top="24.0" />
+                                       </GridPane.margin>
+                                    </Button>
+                                    <HBox fillHeight="false" spacing="12.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
+                                       <children>
+                                          <Button mnemonicParsing="false" text="%st.dlg.exercise.hrm_view.Action.text" />
+                                          <Button mnemonicParsing="false" text="%st.dlg.exercise.hrm_import.Action.text" />
+                                       </children>
+                                    </HBox>
+                                  </children>
+                              </GridPane>
+                          </children>
+                          <padding>
+                              <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                          </padding>
+                      </VBox>
+                  </children>
+              </AnchorPane>
             </content>
           </Tab>
             <Tab fx:id="taComment" text="%st.dlg.exercise.comment.title">
               <content>
                 <AnchorPane>
                      <children>
-                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="12.0">
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
                            <children>
                               <TextArea fx:id="taComment" wrapText="true" VBox.vgrow="ALWAYS" />
                               <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.exercise.copy_comment.Action.text" textAlignment="CENTER" />
