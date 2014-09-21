@@ -3,10 +3,7 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - ExerciseDialog:
-  - complete SceneBuilder layout
-    - Tab Main: Done
-    - Tab Optional: Done, but does not uses the full size
-    - Tab Comment: Done, but does not uses the full size
+  - FXML layout is DONE
   - use new dialog in STController
   - see TODOs in Controller class
   - cleanup I18N properties
