@@ -2,6 +2,12 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- ExerciseDialog:
+  - complete SceneBuilder layout
+  - use new dialog in STController
+  - see TODOs in Controller class
+  - cleanup I18N properties
+  - remove old dialog
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the
