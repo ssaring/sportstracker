@@ -3,24 +3,18 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - don't use fixed dialog sizes in Note and Weight Dialog, there will be problems with different locales
+  (some label texts are cut in WeightDialog)
   => use computed size as prefered size and define the prefered columns and rows in text area controls
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
-      -> normal is 1em, the dialog.css defines 1.083333em; /*13px;*/
-      -> this can be OK for dialog which just show a message text
-      -> this is not OK for dialogs with custom content
-         => inconsistent look with the rest of the application
       - Workaround: dlg.getDialogPane().setStyle("-fx-font-size: 1em;");
-      => TODO: file a bug in the JavaFX issue tracker
-    - It's quite tricky to add a custom validation when the user presses
-      OK in the dialog, the dialog is always being closed
-      - Workaround: lookup the OK button and add a EventFilter for ActionEvent.Action
-        - this filter validates the dialog input and consumes the action event in case of errors
-      - TODO: file a bug / feature request in the JavaFX issue tracker
-  - some label texts are cut => don't use fix dialog dimensions in all dialogs
-    => use prefered column / rows for textareas instead
-  - check in, also add not that Models has been renamed to ViewModels
+      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38818
+    - It's quite tricky to add a custom validation when the user presses OK in the dialog,
+      the dialog is always being closed
+      - Workaround: lookup the OK button and add a EventFilter for ActionEvent.Action.
+        This filter validates the dialog input and consumes the action event in case of errors.
+      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38819
 - ExerciseDialog:
   - FXML layout is DONE
   - use new dialog in STController
