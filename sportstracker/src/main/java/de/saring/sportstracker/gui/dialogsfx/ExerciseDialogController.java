@@ -53,7 +53,7 @@ public class ExerciseDialogController extends AbstractDialogController {
     private TextArea taComment;
 
     /** ViewModel of the edited Exercise. */
-    private ExerciseModel exerciseModel;
+    private ExerciseViewModel exerciseViewModel;
 
     /**
      * Standard c'tor for dependency injection.
@@ -75,7 +75,7 @@ public class ExerciseDialogController extends AbstractDialogController {
      * @param exercise Exercise to be edited
      */
     public void show(final Window parent, final Exercise exercise) {
-        this.exerciseModel = new ExerciseModel(exercise, document.getOptions().getUnitSystem());
+        this.exerciseViewModel = new ExerciseViewModel(exercise, document.getOptions().getUnitSystem());
 
         final boolean newExercise = document.getExerciseList().getByID(exercise.getId()) == null;
         final String dlgTitleKey = newExercise ? "st.dlg.exercise.title.add" : "st.dlg.exercise.title";
@@ -90,10 +90,10 @@ public class ExerciseDialogController extends AbstractDialogController {
         // TODO laWeightUnit.setText(context.getFormatUtils().getWeightUnitName());
 
         // setup binding between view model and the UI controls
-        dpDate.valueProperty().bindBidirectional(exerciseModel.date);
-        tfHour.textProperty().bindBidirectional(exerciseModel.hour, new NumberStringConverter("00"));
-        tfMinute.textProperty().bindBidirectional(exerciseModel.minute, new NumberStringConverter("00"));
-        taComment.textProperty().bindBidirectional(exerciseModel.comment);
+        dpDate.valueProperty().bindBidirectional(exerciseViewModel.date);
+        tfHour.textProperty().bindBidirectional(exerciseViewModel.hour, new NumberStringConverter("00"));
+        tfMinute.textProperty().bindBidirectional(exerciseViewModel.minute, new NumberStringConverter("00"));
+        taComment.textProperty().bindBidirectional(exerciseViewModel.comment);
 
         // setup validation of the UI controls
         validationSupport.registerValidator(dpDate,
@@ -110,16 +110,17 @@ public class ExerciseDialogController extends AbstractDialogController {
     protected boolean validateAndStore() {
 
         // store the new Exercise, no further validation needed
-        final Exercise newExercise = exerciseModel.getExercise();
+        final Exercise newExercise = exerciseViewModel.getExercise();
         document.getExerciseList().set(newExercise);
         return true;
     }
+
 
     /**
      * This ViewModel class provides JavaFX properties of all Exercise attributes to be edited in the dialog.
      * So they can be bound to the appropriate dialog view controls.
      */
-    private static final class ExerciseModel {
+    private static final class ExerciseViewModel {
 
         private final int id;
         private final UnitSystem unitSystem;
@@ -132,12 +133,12 @@ public class ExerciseDialogController extends AbstractDialogController {
         // TODO add all missing attributes
 
         /**
-         * Creates the ExerciseModel with JavaFX properties for the passed Exercise object.
+         * Creates the ExerciseViewModel with JavaFX properties for the passed Exercise object.
          *
          * @param exercise Exercise to be edited
          * @param unitSystem the unit system currently used in the UI
          */
-        public ExerciseModel(final Exercise exercise, final UnitSystem unitSystem) {
+        public ExerciseViewModel(final Exercise exercise, final UnitSystem unitSystem) {
             this.id = exercise.getId();
             this.date = new SimpleObjectProperty(exercise.getDateTime().toLocalDate());
             this.hour = new SimpleIntegerProperty(exercise.getDateTime().getHour());

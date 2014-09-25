@@ -2,6 +2,8 @@ package de.saring.sportstracker.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -43,8 +45,7 @@ public class STFXApplication extends Application {
 
         // the dummy JavaFX window should be as invisible as possible
         primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.setMaxWidth(1);
-        primaryStage.setMaxHeight(1);
+        primaryStage.setScene(new Scene(new Pane(), 1, 1));
         primaryStage.centerOnScreen();
 
         // place dummy stage in center of screen, then the dialogs will be placed there too

@@ -52,7 +52,7 @@ public class NoteDialogController extends AbstractDialogController {
     private TextArea taText;
 
     /** ViewModel of the edited Note. */
-    private NoteModel noteModel;
+    private NoteViewModel noteViewModel;
 
     /**
      * Standard c'tor for dependency injection.
@@ -74,7 +74,7 @@ public class NoteDialogController extends AbstractDialogController {
      * @param note Note to be edited
      */
     public void show(final Window parent, final Note note) {
-        this.noteModel = new NoteModel(note);
+        this.noteViewModel = new NoteViewModel(note);
 
         final String dlgTitleKey = note.getText() == null ? "st.dlg.note.title.add" : "st.dlg.note.title";
         final String dlgTitle = context.getFxResources().getString(dlgTitleKey);
@@ -86,10 +86,10 @@ public class NoteDialogController extends AbstractDialogController {
     protected void setupDialogControls() {
 
         // setup binding between view model and the UI controls
-        dpDate.valueProperty().bindBidirectional(noteModel.date);
-        tfHour.textProperty().bindBidirectional(noteModel.hour, new NumberStringConverter("00"));
-        tfMinute.textProperty().bindBidirectional(noteModel.minute, new NumberStringConverter("00"));
-        taText.textProperty().bindBidirectional(noteModel.text);
+        dpDate.valueProperty().bindBidirectional(noteViewModel.date);
+        tfHour.textProperty().bindBidirectional(noteViewModel.hour, new NumberStringConverter("00"));
+        tfMinute.textProperty().bindBidirectional(noteViewModel.minute, new NumberStringConverter("00"));
+        taText.textProperty().bindBidirectional(noteViewModel.text);
 
         // setup validation of the UI controls
         validationSupport.registerValidator(dpDate,
@@ -108,7 +108,7 @@ public class NoteDialogController extends AbstractDialogController {
     protected boolean validateAndStore() {
 
         // store the new Note, no further validation needed
-        final Note newNote = noteModel.getNote();
+        final Note newNote = noteViewModel.getNote();
         document.getNoteList().set(newNote);
         return true;
     }
@@ -117,7 +117,7 @@ public class NoteDialogController extends AbstractDialogController {
      * This ViewModel class provides JavaFX properties of all Note attributes to be edited in the dialog.
      * So they can be bound to the appropriate dialog view controls.
      */
-    private static final class NoteModel {
+    private static final class NoteViewModel {
 
         private final int id;
         private final ObjectProperty<LocalDate> date;
@@ -126,11 +126,11 @@ public class NoteDialogController extends AbstractDialogController {
         private final StringProperty text;
 
         /**
-         * Creates the NoteModel with JavaFX properties for the passed Note object.
+         * Creates the NoteViewModel with JavaFX properties for the passed Note object.
          *
          * @param note Note to be edited
          */
-        public NoteModel(final Note note) {
+        public NoteViewModel(final Note note) {
             this.id = note.getId();
             this.date = new SimpleObjectProperty(note.getDateTime().toLocalDate());
             this.hour = new SimpleIntegerProperty(note.getDateTime().getHour());

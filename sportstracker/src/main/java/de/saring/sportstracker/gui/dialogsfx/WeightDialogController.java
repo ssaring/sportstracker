@@ -63,7 +63,7 @@ public class WeightDialogController extends AbstractDialogController {
     private TextArea taComment;
 
     /** ViewModel of the edited Weight. */
-    private WeightModel weightModel;
+    private WeightViewModel weightViewModel;
 
     /**
      * Standard c'tor for dependency injection.
@@ -85,7 +85,7 @@ public class WeightDialogController extends AbstractDialogController {
      * @param weight Weight to be edited
      */
     public void show(final Window parent, final Weight weight) {
-        this.weightModel = new WeightModel(weight, document.getOptions().getUnitSystem());
+        this.weightViewModel = new WeightViewModel(weight, document.getOptions().getUnitSystem());
 
         final boolean newWeight = document.getWeightList().getByID(weight.getId()) == null;
         final String dlgTitleKey = newWeight ? "st.dlg.weight.title.add" : "st.dlg.weight.title";
@@ -100,11 +100,11 @@ public class WeightDialogController extends AbstractDialogController {
         laWeightUnit.setText(context.getFormatUtils().getWeightUnitName());
 
         // setup binding between view model and the UI controls
-        dpDate.valueProperty().bindBidirectional(weightModel.date);
-        tfHour.textProperty().bindBidirectional(weightModel.hour, new NumberStringConverter("00"));
-        tfMinute.textProperty().bindBidirectional(weightModel.minute, new NumberStringConverter("00"));
-        tfValue.textProperty().bindBidirectional(weightModel.value, new NumberStringConverter());
-        taComment.textProperty().bindBidirectional(weightModel.comment);
+        dpDate.valueProperty().bindBidirectional(weightViewModel.date);
+        tfHour.textProperty().bindBidirectional(weightViewModel.hour, new NumberStringConverter("00"));
+        tfMinute.textProperty().bindBidirectional(weightViewModel.minute, new NumberStringConverter("00"));
+        tfValue.textProperty().bindBidirectional(weightViewModel.value, new NumberStringConverter());
+        taComment.textProperty().bindBidirectional(weightViewModel.comment);
 
         // setup validation of the UI controls
         validationSupport.registerValidator(dpDate,
@@ -120,11 +120,11 @@ public class WeightDialogController extends AbstractDialogController {
                         !ValidationUtils.isValueDoubleBetween(newValue, 0.1d, 1000)));
     }
 
-    @Override
-    protected boolean validateAndStore() {
+        @Override
+        protected boolean validateAndStore() {
 
         // store the new Weight, no further validation needed
-        final Weight newWeight = weightModel.getWeight();
+        final Weight newWeight = weightViewModel.getWeight();
         document.getWeightList().set(newWeight);
         return true;
     }
@@ -133,7 +133,7 @@ public class WeightDialogController extends AbstractDialogController {
      * This ViewModel class provides JavaFX properties of all Weight attributes to be edited in the dialog.
      * So they can be bound to the appropriate dialog view controls.
      */
-    private static final class WeightModel {
+    private static final class WeightViewModel {
 
         private final int id;
         private final UnitSystem unitSystem;
@@ -145,12 +145,12 @@ public class WeightDialogController extends AbstractDialogController {
         private final StringProperty comment;
 
         /**
-         * Creates the WeightModel with JavaFX properties for the passed Weight object.
+         * Creates the WeightViewModel with JavaFX properties for the passed Weight object.
          *
          * @param weight Weight to be edited
          * @param unitSystem the unit system currently used in the UI
          */
-        public WeightModel(final Weight weight, final UnitSystem unitSystem) {
+        public WeightViewModel(final Weight weight, final UnitSystem unitSystem) {
             this.id = weight.getId();
             this.date = new SimpleObjectProperty(weight.getDateTime().toLocalDate());
             this.hour = new SimpleIntegerProperty(weight.getDateTime().getHour());

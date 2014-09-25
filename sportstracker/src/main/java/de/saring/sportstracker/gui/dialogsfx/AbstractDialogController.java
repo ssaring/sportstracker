@@ -5,16 +5,15 @@ import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import org.controlsfx.control.ButtonBar;
-import org.controlsfx.control.action.AbstractAction;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.DialogStyle;
 import org.controlsfx.validation.ValidationSupport;
 
 import java.io.IOException;
@@ -56,17 +55,17 @@ public abstract class AbstractDialogController {
             final Parent root = loadDialogContent(fxmlFilename);
             setupDialogControls();
 
-            // show dialog
-            final Dialog dlg = createDialog(parent, title, root);
-            dlg.getActions().addAll(Dialog.Actions.CLOSE);
+            // create and show dialog
+            final Dialog<ButtonType> dlg = createDialog(parent, title, root);
+            dlg.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
             applyJavaFXToSwingMigrationWorkarounds(dlg);
-            dlg.show();
+            dlg.showAndWait();
         });
     }
 
     /**
-     * Displays the edit dialog for the specified FXML file. The dialog contains an OK and a Cancel button,
-     * the OK button text can be changed via {@link #getOkButtonText()}.
+     * Displays the edit dialog for the specified FXML file. The dialog contains an OK and a Cancel button.
+     * The OK button is only enabled, when there are no errors found by the configured ValidationSupport.
      *
      * @param fxmlFilename FXML filename of the dialog content
      * @param parent parent window of the dialog
@@ -75,37 +74,35 @@ public abstract class AbstractDialogController {
     protected void showEditDialog(final String fxmlFilename, final Window parent, final String title) {
 
         executeOnJavaFXThread(() -> {
-
-            // define the action when user presses the OK button (default)
-            Action actionOk = new AbstractAction(getOkButtonText()) {
-                public void handle(final ActionEvent event) {
-                    onOk(event);
-                }
-            };
-            ButtonBar.setType(actionOk, ButtonBar.ButtonType.OK_DONE);
-
-            // bind validation to OK action, must only be enabled when there are no errors
             this.validationSupport = new ValidationSupport();
-            actionOk.disabledProperty().bind(validationSupport.invalidProperty());
 
             final Parent root = loadDialogContent(fxmlFilename);
             setupDialogControls();
 
-            // show dialog
-            final Dialog dlg = createDialog(parent, title, root);
-            dlg.getActions().addAll(actionOk, Dialog.Actions.CANCEL);
-            applyJavaFXToSwingMigrationWorkarounds(dlg);
-            dlg.show();
-        });
-    }
+            // create and setup dialog
+            final Dialog<ButtonType> dlg = createDialog(parent, title, root);
+            final DialogPane dlgPane = dlg.getDialogPane();
 
-    /**
-     * Returns the text to be shown in the OK action button of the dialog.
-     *
-     * @return button text
-     */
-    protected String getOkButtonText() {
-        return context.getFxResources().getString("common.ok");
+            dlgPane.getButtonTypes().add(ButtonType.OK);
+            dlgPane.getButtonTypes().add(ButtonType.CANCEL);
+
+            // bind validation to OK button, must only be enabled when there are no errors
+            final Button btOk = (Button) dlg.getDialogPane().lookupButton(ButtonType.OK);
+            btOk.disableProperty().bind(validationSupport.invalidProperty());
+
+            // set action event filter for custom dialog validation and storing the result
+            // => don't close the dialog on errors
+            btOk.addEventFilter(ActionEvent.ACTION, (event) -> {
+                if (!validateAndStore()) {
+                    event.consume();
+                }
+            });
+
+            applyJavaFXToSwingMigrationWorkarounds(dlg);
+
+            // show dialog
+            dlg.showAndWait();
+        });
     }
 
     /**
@@ -140,11 +137,17 @@ public abstract class AbstractDialogController {
         });
     }
 
-    private Dialog createDialog(final Window parent, final String title, final Parent root) {
-        Dialog dlg = new Dialog(parent, title, false, DialogStyle.NATIVE);
+    private Dialog<ButtonType> createDialog(final Window parent, final String title, final Parent root) {
+        final Dialog<ButtonType> dlg = new Dialog();
+        dlg.initOwner(parent);
+
+        // TODO remove when fixed in OpenJFX-Dialogs
+        // workaround for disabling bigger font size of custom dialog content
+        dlg.getDialogPane().setStyle("-fx-font-size: 1em;");
+
+        dlg.setTitle(title);
+        dlg.getDialogPane().setContent(root);
         dlg.setResizable(false);
-        dlg.setIconifiable(false);
-        dlg.setContent(root);
         return dlg;
     }
 
@@ -157,11 +160,14 @@ public abstract class AbstractDialogController {
         }
     }
 
-    private void onOk(final ActionEvent event) {
-        if (validateAndStore()) {
-            Dialog dlg = (Dialog) event.getSource();
-            dlg.hide();
-        }
+    /**
+     * Invokes the passed task on the Swing UI thread (asynchronously).
+     *
+     * @param task task to execute
+     */
+    protected void executeOnSwingThread(Runnable task) {
+        // TODO: remove this function when the main window has been migrated to JavaFX
+        javax.swing.SwingUtilities.invokeLater(() -> task.run());
     }
 
     private void executeOnJavaFXThread(Runnable task) {
@@ -207,16 +213,16 @@ public abstract class AbstractDialogController {
 
         // disable main Swing window and it's menu when the dialog is shown
         final javax.swing.JFrame swingMainFrame = context.getMainFrame();
-        dialog.getWindow().setOnShown(e -> {
-            javax.swing.SwingUtilities.invokeLater(() -> {
+        dialog.setOnShown(e -> {
+            executeOnSwingThread(() -> {
                 swingMainFrame.setEnabled(false);
                 swingMainFrame.getJMenuBar().setEnabled(false);
             });
         });
 
         // enable main Swing window and it's menu when the dialog has been closed
-        dialog.getWindow().setOnHidden(e -> {
-            javax.swing.SwingUtilities.invokeLater(() -> {
+        dialog.setOnHidden(e -> {
+            executeOnSwingThread(() -> {
                 swingMainFrame.setEnabled(true);
                 swingMainFrame.getJMenuBar().setEnabled(true);
                 swingMainFrame.toFront();
