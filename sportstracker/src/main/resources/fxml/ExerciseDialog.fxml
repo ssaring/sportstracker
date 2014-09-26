@@ -61,8 +61,8 @@
                           <RowConstraints vgrow="SOMETIMES" />
                         </rowConstraints>
                          <children>
-                            <Label text="%st.dlg.exercise.distance.text" />
-                            <Label text="%st.dlg.exercise.avg_speed.text" GridPane.rowIndex="1" />
+                            <Label fx:id="laDistance" text="%st.dlg.exercise.distance.text" />
+                            <Label fx:id="laAvgSpeed" text="%st.dlg.exercise.avg_speed.text" GridPane.rowIndex="1" />
                             <Label text="%st.dlg.exercise.duration.text" GridPane.rowIndex="2" />
                             <TextField fx:id="tfDistance" GridPane.columnIndex="1" />
                             <TextField fx:id="tfAvgSpeed" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -94,7 +94,7 @@
                               <RowConstraints vgrow="SOMETIMES" />
                           </rowConstraints>
                           <children>
-                              <Label text="%st.dlg.exercise.ascent.text" />
+                              <Label fx:id="laAscent" text="%st.dlg.exercise.ascent.text" />
                               <Label text="%st.dlg.exercise.avg_heartrate.text" GridPane.rowIndex="1" />
                               <Label text="%st.dlg.exercise.calories.text" GridPane.rowIndex="2" />
                               <TextField fx:id="tfAscent" GridPane.columnIndex="1" />

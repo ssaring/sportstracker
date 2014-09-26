@@ -15,6 +15,7 @@ import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
@@ -24,6 +25,7 @@ import org.controlsfx.validation.Validator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -51,6 +53,14 @@ public class ExerciseDialogController extends AbstractDialogController {
 
     @FXML
     private TextArea taComment;
+
+    @FXML
+    private Label laDistance;
+    @FXML
+    private Label laAvgSpeed;
+    @FXML
+    private Label laAscent;
+
 
     /** ViewModel of the edited Exercise. */
     private ExerciseViewModel exerciseViewModel;
@@ -87,7 +97,10 @@ public class ExerciseDialogController extends AbstractDialogController {
     @Override
     protected void setupDialogControls() {
 
-        // TODO laWeightUnit.setText(context.getFormatUtils().getWeightUnitName());
+        // insert unit names in input labels with placeholders
+        laDistance.setText(String.format(laDistance.getText(), context.getFormatUtils().getDistanceUnitName()));
+        laAvgSpeed.setText(String.format(laAvgSpeed.getText(), context.getFormatUtils().getSpeedUnitName()));
+        laAscent.setText(String.format(laAscent.getText(), context.getFormatUtils().getAltitudeUnitName()));
 
         // setup binding between view model and the UI controls
         dpDate.valueProperty().bindBidirectional(exerciseViewModel.date);
