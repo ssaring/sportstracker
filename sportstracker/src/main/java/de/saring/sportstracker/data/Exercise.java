@@ -86,6 +86,7 @@ public final class Exercise extends IdDateObject implements Cloneable {
         /**
          * Static resource reader is needed for string creation.
          */
+        // TODO remove the resource reader instance from the domain class !!!
         private static ResourceReader resReader;
 
         public static void setResReader(ResourceReader resReader) {

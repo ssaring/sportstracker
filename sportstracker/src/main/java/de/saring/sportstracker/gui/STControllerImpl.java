@@ -580,10 +580,6 @@ public class STControllerImpl implements STController {
 
             // TODO
             // start exercise dialog for it and import the HRM data
-//            ExerciseDialog dlg = prExerciseDialog.get();
-//            dlg.setExercise(newExercise);
-//            dlg.importHRMFile();
-//            context.showDialog(dlg);
         }
         return true;
     }
@@ -678,6 +674,7 @@ public class STControllerImpl implements STController {
     private Exercise createNewExercise(LocalDate date) {
         Exercise exercise = new Exercise(document.getExerciseList().getNewID());
         exercise.setDateTime(getNoonDateTimeForDate(date));
+        exercise.setIntensity(Exercise.IntensityType.NORMAL);
         return exercise;
     }
 

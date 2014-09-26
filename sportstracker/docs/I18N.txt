@@ -61,6 +61,9 @@ SportsTracker 7.0.0:
 - st.dlg.weight.ok.Action.text (removed)
 - st.dlg.weight.cancel.Action.text (removed)
 
+- st.dlg.exercise.error.time (new)
+- st.dlg.exercise.equipment.none.text (removed)
+
 
 SportsTracker 5.7.0:
 - st.dlg.exercise.error.import_console (new)

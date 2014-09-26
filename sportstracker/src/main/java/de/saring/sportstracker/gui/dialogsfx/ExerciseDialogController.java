@@ -1,6 +1,10 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
+import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.Exercise.IntensityType;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.ValidationUtils;
@@ -12,23 +16,26 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
+import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 
 /**
  * Controller (MVC) class of the Wieght dialog for editing / adding Exercise entries.
@@ -55,9 +62,23 @@ public class ExerciseDialogController extends AbstractDialogController {
     private TextArea taComment;
 
     @FXML
+    private ChoiceBox<SportType> cbSportType;
+
+    @FXML
+    private ChoiceBox<SportSubType> cbSportSubtype;
+
+    @FXML
+    private ChoiceBox<IntensityType> cbIntensity;
+
+    @FXML
+    private ChoiceBox<Equipment> cbEquipment;
+
+    @FXML
     private Label laDistance;
+
     @FXML
     private Label laAvgSpeed;
+
     @FXML
     private Label laAscent;
 
@@ -102,21 +123,34 @@ public class ExerciseDialogController extends AbstractDialogController {
         laAvgSpeed.setText(String.format(laAvgSpeed.getText(), context.getFormatUtils().getSpeedUnitName()));
         laAscent.setText(String.format(laAscent.getText(), context.getFormatUtils().getAltitudeUnitName()));
 
+        setupChoiceBoxes();
+        fillSportTypeDependentChoiceBoxes();
+
         // setup binding between view model and the UI controls
         dpDate.valueProperty().bindBidirectional(exerciseViewModel.date);
         tfHour.textProperty().bindBidirectional(exerciseViewModel.hour, new NumberStringConverter("00"));
         tfMinute.textProperty().bindBidirectional(exerciseViewModel.minute, new NumberStringConverter("00"));
+        cbSportType.valueProperty().bindBidirectional(exerciseViewModel.sportType);
+        cbSportSubtype.valueProperty().bindBidirectional(exerciseViewModel.sportSubType);
+        cbIntensity.valueProperty().bindBidirectional(exerciseViewModel.intensity);
+        cbEquipment.valueProperty().bindBidirectional(exerciseViewModel.equipment);
         taComment.textProperty().bindBidirectional(exerciseViewModel.comment);
 
         // setup validation of the UI controls
         validationSupport.registerValidator(dpDate,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.weight.error.date")));
+                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.date")));
         validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfHour, context.getFxResources().getString("st.dlg.weight.error.time"),
+                ValidationResult.fromErrorIf(tfHour, context.getFxResources().getString("st.dlg.exercise.error.time"),
                         !ValidationUtils.isValueIntegerBetween(newValue, 0, 23)));
         validationSupport.registerValidator(tfMinute, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfMinute, context.getFxResources().getString("st.dlg.weight.error.time"),
+                ValidationResult.fromErrorIf(tfMinute, context.getFxResources().getString("st.dlg.exercise.error.time"),
                         !ValidationUtils.isValueIntegerBetween(newValue, 0, 59)));
+        validationSupport.registerValidator(cbSportType,
+                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.no_sport_type")));
+        validationSupport.registerValidator(cbSportSubtype,
+                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.no_sport_subtype")));
+        validationSupport.registerValidator(cbIntensity,
+                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.no_intensity")));
     }
 
     @Override
@@ -128,6 +162,73 @@ public class ExerciseDialogController extends AbstractDialogController {
         return true;
     }
 
+    /**
+     * Initializes all ChoiceBoxes by defining the String converters. ChoiceBoxes with fixed values
+     * (SportType, Intensity) will be filled with possible values.
+     */
+    private void setupChoiceBoxes() {
+
+        cbSportType.setConverter(new StringConverter<SportType>() {
+            @Override
+            public String toString(final SportType sportType) {
+                return sportType.getName();
+            }
+
+            @Override
+            public SportType fromString(final String string) {
+                throw new UnsupportedOperationException();
+            }
+        });
+
+        cbSportSubtype.setConverter(new StringConverter<SportSubType>() {
+            @Override
+            public String toString(final SportSubType sportSubType) {
+                return sportSubType.getName();
+            }
+
+            @Override
+            public SportSubType fromString(final String string) {
+                throw new UnsupportedOperationException();
+            }
+        });
+
+        cbEquipment.setConverter(new StringConverter<Equipment>() {
+            @Override
+            public String toString(final Equipment equipment) {
+                return equipment.getName();
+            }
+
+            @Override
+            public Equipment fromString(final String string) {
+                throw new UnsupportedOperationException();
+            }
+        });
+
+        document.getSportTypeList().forEach(sportType -> cbSportType.getItems().add(sportType));
+        cbIntensity.getItems().addAll(Arrays.asList(IntensityType.values()));
+
+        // update the sport type dependent choiceboxes on each sport type selection change
+        cbSportType.addEventHandler(ActionEvent.ACTION, event -> fillSportTypeDependentChoiceBoxes());
+    }
+
+    /**
+     * Fills all ChoiceBoxes with values dependent on the selected sport type.
+     */
+    private void fillSportTypeDependentChoiceBoxes() {
+        cbSportSubtype.getItems().clear();
+        cbEquipment.getItems().clear();
+
+        final SportType selectedSportType = cbSportType.getValue();
+        if (selectedSportType != null) {
+            selectedSportType.getSportSubTypeList().forEach(sportSubType ->
+                    cbSportSubtype.getItems().add(sportSubType));
+            selectedSportType.getEquipmentList().forEach(equipment ->
+                    cbEquipment.getItems().add(equipment));
+        }
+
+        // disable equipment ChoiceBox when no sport type selected or no equipments defined
+        cbEquipment.setDisable(selectedSportType == null || selectedSportType.getEquipmentList().size() == 0);
+    }
 
     /**
      * This ViewModel class provides JavaFX properties of all Exercise attributes to be edited in the dialog.
@@ -141,6 +242,10 @@ public class ExerciseDialogController extends AbstractDialogController {
         private final ObjectProperty<LocalDate> date;
         private final IntegerProperty hour;
         private final IntegerProperty minute;
+        private final ObjectProperty<SportType> sportType;
+        private final ObjectProperty<SportSubType> sportSubType;
+        private final ObjectProperty<IntensityType> intensity;
+        private final ObjectProperty<Equipment> equipment;
         private final StringProperty comment;
 
         // TODO add all missing attributes
@@ -156,6 +261,10 @@ public class ExerciseDialogController extends AbstractDialogController {
             this.date = new SimpleObjectProperty(exercise.getDateTime().toLocalDate());
             this.hour = new SimpleIntegerProperty(exercise.getDateTime().getHour());
             this.minute = new SimpleIntegerProperty(exercise.getDateTime().getMinute());
+            this.sportType= new SimpleObjectProperty(exercise.getSportType());
+            this.sportSubType = new SimpleObjectProperty(exercise.getSportSubType());
+            this.intensity = new SimpleObjectProperty(exercise.getIntensity());
+            this.equipment = new SimpleObjectProperty(exercise.getEquipment());
             this.comment = new SimpleStringProperty(exercise.getComment() == null ? "" : exercise.getComment());
 
             // TODO convert weight value when english unit system is enabled
@@ -173,6 +282,10 @@ public class ExerciseDialogController extends AbstractDialogController {
         public Exercise getExercise() {
             final Exercise exercise = new Exercise(id);
             exercise.setDateTime(LocalDateTime.of(date.get(), LocalTime.of(hour.getValue(), minute.getValue())));
+            exercise.setSportType(sportType.getValue());
+            exercise.setSportSubType(sportSubType.getValue());
+            exercise.setIntensity(intensity.getValue());
+            exercise.setEquipment(equipment.getValue());
             exercise.setComment(comment.getValue().trim());
 
             // ignore empty strings

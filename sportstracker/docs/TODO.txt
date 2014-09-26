@@ -15,7 +15,7 @@ JavaFX Migration:
 - ExerciseDialog:
   - FXML layout: DONE
   - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
-  - see TODOs in Controller class
+  - ExerciseDialogController: see TODOs
   - cleanup I18N properties
   - remove old dialog
 - JavaFX/Swing combination problems on Windows:
