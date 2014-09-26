@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
@@ -9,7 +10,7 @@
 
 <HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.ExerciseDialogController">
    <children>
-      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
+      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #c0c0c0;" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
         <tabs>
           <Tab text="%st.dlg.exercise.main.title">
             <content>
@@ -73,7 +74,7 @@
                       </GridPane>
                    </children>
                    <padding>
-                      <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                      <Insets bottom="16.0" left="12.0" right="12.0" top="16.0" />
                    </padding>
                 </VBox>
             </content>
@@ -139,7 +140,7 @@
                       </GridPane>
                   </children>
                   <padding>
-                      <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                      <Insets bottom="16.0" left="12.0" right="12.0" top="16.0" />
                   </padding>
               </VBox>
             </content>
@@ -152,7 +153,7 @@
                       <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.exercise.copy_comment.Action.text" textAlignment="CENTER" />
                    </children>
                    <padding>
-                      <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                      <Insets bottom="16.0" left="12.0" right="12.0" top="16.0" />
                    </padding>
                 </VBox>
               </content>
