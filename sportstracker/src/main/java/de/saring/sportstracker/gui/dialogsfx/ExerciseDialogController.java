@@ -10,6 +10,7 @@ import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -18,6 +19,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
@@ -74,6 +76,9 @@ public class ExerciseDialogController extends AbstractDialogController {
     private ChoiceBox<Equipment> cbEquipment;
 
     @FXML
+    private TextField tfHrmFile;
+
+    @FXML
     private Label laDistance;
 
     @FXML
@@ -81,6 +86,12 @@ public class ExerciseDialogController extends AbstractDialogController {
 
     @FXML
     private Label laAscent;
+
+    @FXML
+    private Button btViewHrmFile;
+
+    @FXML
+    private Button btImportHrmFile;
 
 
     /** ViewModel of the edited Exercise. */
@@ -134,6 +145,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         cbSportSubtype.valueProperty().bindBidirectional(exerciseViewModel.sportSubType);
         cbIntensity.valueProperty().bindBidirectional(exerciseViewModel.intensity);
         cbEquipment.valueProperty().bindBidirectional(exerciseViewModel.equipment);
+        tfHrmFile.textProperty().bindBidirectional(exerciseViewModel.hrmFile);
         taComment.textProperty().bindBidirectional(exerciseViewModel.comment);
 
         // setup validation of the UI controls
@@ -151,6 +163,10 @@ public class ExerciseDialogController extends AbstractDialogController {
                 Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.no_sport_subtype")));
         validationSupport.registerValidator(cbIntensity,
                 Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.no_intensity")));
+
+        // enable View and Import HRM buttons only when an HRM file is specified
+        btViewHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
+        btImportHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
     }
 
     @Override
@@ -168,6 +184,8 @@ public class ExerciseDialogController extends AbstractDialogController {
      */
     private void setupChoiceBoxes() {
 
+        // TODO woud be good when SportType, SportSubType and Equipment would implement a Nameable interface
+        // => then a generic converter would be sufficient for all choice boxes
         cbSportType.setConverter(new StringConverter<SportType>() {
             @Override
             public String toString(final SportType sportType) {
@@ -246,6 +264,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         private final ObjectProperty<SportSubType> sportSubType;
         private final ObjectProperty<IntensityType> intensity;
         private final ObjectProperty<Equipment> equipment;
+        private final StringProperty hrmFile;
         private final StringProperty comment;
 
         // TODO add all missing attributes
@@ -265,6 +284,8 @@ public class ExerciseDialogController extends AbstractDialogController {
             this.sportSubType = new SimpleObjectProperty(exercise.getSportSubType());
             this.intensity = new SimpleObjectProperty(exercise.getIntensity());
             this.equipment = new SimpleObjectProperty(exercise.getEquipment());
+            // TODO create helper method getTextOrEmptyString()
+            this.hrmFile = new SimpleStringProperty(exercise.getHrmFile() == null ? "" : exercise.getHrmFile());
             this.comment = new SimpleStringProperty(exercise.getComment() == null ? "" : exercise.getComment());
 
             // TODO convert weight value when english unit system is enabled
@@ -286,9 +307,14 @@ public class ExerciseDialogController extends AbstractDialogController {
             exercise.setSportSubType(sportSubType.getValue());
             exercise.setIntensity(intensity.getValue());
             exercise.setEquipment(equipment.getValue());
+            exercise.setHrmFile(hrmFile.getValue().trim());
             exercise.setComment(comment.getValue().trim());
 
+            // TODO create helper method getTrimmedTextOrNull()
             // ignore empty strings
+            if (exercise.getHrmFile().length() == 0) {
+                exercise.setHrmFile(null);
+            }
             if (exercise.getComment().length() == 0) {
                 exercise.setComment(null);
             }
