@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="460.0" spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.WeightDialogController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.WeightDialogController">
    <children>
        <GridPane hgap="8.0" vgap="16.0">
            <columnConstraints>
@@ -41,7 +41,7 @@
       <VBox spacing="8.0" VBox.vgrow="ALWAYS">
          <children>
             <Label text="%st.dlg.weight.comment.text" />
-            <TextArea fx:id="taComment" wrapText="true" VBox.vgrow="ALWAYS" />
+            <TextArea fx:id="taComment" prefColumnCount="38" prefRowCount="5" wrapText="true" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

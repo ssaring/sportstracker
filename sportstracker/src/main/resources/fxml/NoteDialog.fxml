@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="460.0" spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.NoteDialogController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.NoteDialogController">
    <children>
       <HBox alignment="BASELINE_LEFT" spacing="8.0" VBox.vgrow="NEVER">
          <children>
@@ -26,7 +26,7 @@
       <VBox spacing="8.0" VBox.vgrow="ALWAYS">
          <children>
             <Label text="%st.dlg.note.text.text" />
-            <TextArea fx:id="taText" VBox.vgrow="ALWAYS" wrapText="true" />
+            <TextArea fx:id="taText" prefColumnCount="38" prefRowCount="9" wrapText="true" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

@@ -2,9 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- don't use fixed dialog sizes in Note and Weight Dialog, there will be problems with different locales
-  (some label texts are cut in WeightDialog)
-  => use computed size as prefered size and define the prefered columns and rows in text area controls
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
