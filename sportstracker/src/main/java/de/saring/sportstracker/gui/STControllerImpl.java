@@ -8,6 +8,7 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.dialogs.*;
 import de.saring.sportstracker.gui.dialogsfx.AboutDialogController;
+import de.saring.sportstracker.gui.dialogsfx.ExerciseDialogController;
 import de.saring.sportstracker.gui.dialogsfx.NoteDialogController;
 import de.saring.sportstracker.gui.dialogsfx.WeightDialogController;
 import de.saring.sportstracker.gui.views.EntryView;
@@ -47,8 +48,6 @@ public class STControllerImpl implements STController {
     private final STView view;
 
     @Inject
-    private Provider<ExerciseDialog> prExerciseDialog;
-    @Inject
     private Provider<OptionsDialog> prOptionsDialog;
     @Inject
     private Provider<FilterDialog> prFilterDialog;
@@ -65,6 +64,8 @@ public class STControllerImpl implements STController {
 
     @Inject
     private Provider<AboutDialogController> prAboutDialogController;
+    @Inject
+    private Provider<ExerciseDialogController> prExerciseDialogController;
     @Inject
     private Provider<NoteDialogController> prNoteDialogController;
     @Inject
@@ -262,9 +263,7 @@ public class STControllerImpl implements STController {
 
         // start exercise dialog for a new created exercise
         Exercise newExercise = createNewExercise(dateForNewEntries);
-        ExerciseDialog dlg = prExerciseDialog.get();
-        dlg.setExercise(newExercise);
-        context.showDialog(dlg);
+        prExerciseDialogController.get().show(context.getPrimaryStage(), newExercise);
     }
 
     @Override
@@ -320,9 +319,7 @@ public class STControllerImpl implements STController {
      */
     private void editExercise(int exerciseID) {
         Exercise selExercise = document.getExerciseList().getByID(exerciseID);
-        ExerciseDialog dlg = prExerciseDialog.get();
-        dlg.setExercise(selExercise);
-        context.showDialog(dlg);
+        prExerciseDialogController.get().show(context.getPrimaryStage(), selExercise);
     }
 
     /**
@@ -370,9 +367,7 @@ public class STControllerImpl implements STController {
         Exercise copiedExercise = createExerciseCopy(selExercise);
 
         // start exercise dialog for the copied exercise
-        ExerciseDialog dlg = prExerciseDialog.get();
-        dlg.setExercise(copiedExercise);
-        context.showDialog(dlg);
+        prExerciseDialogController.get().show(context.getPrimaryStage(), copiedExercise);
     }
 
     /**
@@ -583,11 +578,12 @@ public class STControllerImpl implements STController {
             Exercise newExercise = createNewExercise(null);
             newExercise.setHrmFile(filename);
 
+            // TODO
             // start exercise dialog for it and import the HRM data
-            ExerciseDialog dlg = prExerciseDialog.get();
-            dlg.setExercise(newExercise);
-            dlg.importHRMFile();
-            context.showDialog(dlg);
+//            ExerciseDialog dlg = prExerciseDialog.get();
+//            dlg.setExercise(newExercise);
+//            dlg.importHRMFile();
+//            context.showDialog(dlg);
         }
         return true;
     }

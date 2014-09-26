@@ -13,8 +13,8 @@ JavaFX Migration:
         This filter validates the dialog input and consumes the action event in case of errors.
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38819
 - ExerciseDialog:
-  - FXML layout is DONE
-  - use new dialog in STController
+  - FXML layout: DONE
+  - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
   - see TODOs in Controller class
   - cleanup I18N properties
   - remove old dialog
