@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="460.0" spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.AboutDialogController">
+<VBox spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.AboutDialogController">
    <children>
       <HBox spacing="16.0">
          <children>
@@ -35,7 +35,7 @@
                          </Label>
                      </children>
                   </HBox>
-                  <Label snapToPixel="false" text="%st.dlg.about.description.text" wrapText="true" />
+                  <Label maxWidth="400.0" snapToPixel="false" text="%st.dlg.about.description.text" wrapText="true" />
                   <Label text="%st.dlg.about.copyright.text" />
                </children>
             </VBox>
@@ -56,7 +56,7 @@
             <content>
                 <AnchorPane>
                     <children>
-                        <TextArea fx:id="taTranslators" editable="false" text="%st.dlg.about.translators.text" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextArea fx:id="taTranslators" editable="false" prefColumnCount="38" text="%st.dlg.about.translators.text" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
             </content>
