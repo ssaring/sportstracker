@@ -58,6 +58,28 @@ public class ValidationUtilsTest {
     }
 
     /**
+     * Tests the method isOptionalValueIntegerBetween() for success conditions.
+     */
+    @Test
+    public void testIsOptionalValueIntegerBetweenSuccess() {
+        assertTrue(ValidationUtils.isOptionalValueIntegerBetween(null, 0, 23));
+        assertTrue(ValidationUtils.isOptionalValueIntegerBetween("  ", 0, 23));
+        assertTrue(ValidationUtils.isOptionalValueIntegerBetween("0", 0, 23));
+        assertTrue(ValidationUtils.isOptionalValueIntegerBetween("10", 0, 23));
+        assertTrue(ValidationUtils.isOptionalValueIntegerBetween("23", 0, 23));
+    }
+
+    /**
+     * Tests the method isOptionalValueIntegerBetween() for failure conditions.
+     */
+    @Test
+    public void testIsOptionalValueIntegerBetweenFailed() {
+        assertFalse(ValidationUtils.isOptionalValueIntegerBetween("foo", 0, 23));
+        assertFalse(ValidationUtils.isOptionalValueIntegerBetween("-1", 0, 23));
+        assertFalse(ValidationUtils.isOptionalValueIntegerBetween("24", 0, 23));
+    }
+
+    /**
      * Tests the method isValueDoubleBetween() for success conditions.
      */
     @Test

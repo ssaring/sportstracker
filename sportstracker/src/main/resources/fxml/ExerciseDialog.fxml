@@ -67,9 +67,12 @@
                             <TextField fx:id="tfDistance" GridPane.columnIndex="1" />
                             <TextField fx:id="tfAvgSpeed" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             <TextField fx:id="tfDuration" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                            <RadioButton fx:id="rbAutoCalcDistance" mnemonicParsing="false" text="%st.dlg.exercise.auto_calc_distance.Action.text" GridPane.columnIndex="2" />
-                            <RadioButton fx:id="rbAutoCalcAvgSpeed" mnemonicParsing="false" text="%st.dlg.exercise.auto_calc_avg_speed.Action.text" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                            <RadioButton fx:id="rbAutoCalcDuration" mnemonicParsing="false" text="%st.dlg.exercise.auto_calc_duration.Action.text" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                            <RadioButton fx:id="rbAutoCalcDistance" mnemonicParsing="false" text="%st.dlg.exercise.auto_calc_distance.Action.text" GridPane.columnIndex="2">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="autoCalc" />
+                                 </toggleGroup></RadioButton>
+                            <RadioButton fx:id="rbAutoCalcAvgSpeed" mnemonicParsing="false" text="%st.dlg.exercise.auto_calc_avg_speed.Action.text" toggleGroup="$autoCalc" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                            <RadioButton fx:id="rbAutoCalcDuration" mnemonicParsing="false" selected="true" text="%st.dlg.exercise.auto_calc_duration.Action.text" toggleGroup="$autoCalc" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                          </children>
                       </GridPane>
                    </children>

@@ -9,6 +9,7 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -74,6 +75,15 @@ public class ExerciseDialogController extends AbstractDialogController {
 
     @FXML
     private ChoiceBox<Equipment> cbEquipment;
+
+    @FXML
+    private TextField tfAscent;
+
+    @FXML
+    private TextField tfAvgHeartrate;
+
+    @FXML
+    private TextField tfCalories;
 
     @FXML
     private TextField tfHrmFile;
@@ -145,6 +155,9 @@ public class ExerciseDialogController extends AbstractDialogController {
         cbSportSubtype.valueProperty().bindBidirectional(exerciseViewModel.sportSubType);
         cbIntensity.valueProperty().bindBidirectional(exerciseViewModel.intensity);
         cbEquipment.valueProperty().bindBidirectional(exerciseViewModel.equipment);
+        tfAscent.textProperty().bindBidirectional(exerciseViewModel.ascent, new NumberStringConverter());
+        tfAvgHeartrate.textProperty().bindBidirectional(exerciseViewModel.avgHeartRate, new NumberStringConverter());
+        tfCalories.textProperty().bindBidirectional(exerciseViewModel.calories, new NumberStringConverter());
         tfHrmFile.textProperty().bindBidirectional(exerciseViewModel.hrmFile);
         taComment.textProperty().bindBidirectional(exerciseViewModel.comment);
 
@@ -163,6 +176,26 @@ public class ExerciseDialogController extends AbstractDialogController {
                 Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.no_sport_subtype")));
         validationSupport.registerValidator(cbIntensity,
                 Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.no_intensity")));
+        validationSupport.registerValidator(tfAscent, false, (Control control, String newValue) ->
+                ValidationResult.fromErrorIf(tfAscent, context.getFxResources().getString("st.dlg.exercise.error.ascent"),
+                        !ValidationUtils.isOptionalValueIntegerBetween(newValue, 0, Integer.MAX_VALUE)));
+        validationSupport.registerValidator(tfAvgHeartrate, false, (Control control, String newValue) ->
+                ValidationResult.fromErrorIf(tfAvgHeartrate, context.getFxResources().getString("st.dlg.exercise.error.avg_heartrate"),
+                        !ValidationUtils.isOptionalValueIntegerBetween(newValue, 0, 299)));
+        validationSupport.registerValidator(tfCalories, false, (Control control, String newValue) ->
+                ValidationResult.fromErrorIf(tfCalories, context.getFxResources().getString("st.dlg.exercise.error.calories"),
+                        !ValidationUtils.isOptionalValueIntegerBetween(newValue, 0, Integer.MAX_VALUE)));
+
+        // don't display initial value "0" when optional inputs are not specified
+        if (exerciseViewModel.ascent.getValue() == 0) {
+            tfAscent.setText("");
+        }
+        if (exerciseViewModel.avgHeartRate.getValue() == 0) {
+            tfAvgHeartrate.setText("");
+        }
+        if (exerciseViewModel.calories.getValue() == 0) {
+            tfCalories.setText("");
+        }
 
         // enable View and Import HRM buttons only when an HRM file is specified
         btViewHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
@@ -263,6 +296,9 @@ public class ExerciseDialogController extends AbstractDialogController {
         private final ObjectProperty<SportType> sportType;
         private final ObjectProperty<SportSubType> sportSubType;
         private final ObjectProperty<IntensityType> intensity;
+        private final IntegerProperty avgHeartRate;
+        private final IntegerProperty ascent;
+        private final IntegerProperty calories;
         private final ObjectProperty<Equipment> equipment;
         private final StringProperty hrmFile;
         private final StringProperty comment;
@@ -284,15 +320,18 @@ public class ExerciseDialogController extends AbstractDialogController {
             this.sportSubType = new SimpleObjectProperty(exercise.getSportSubType());
             this.intensity = new SimpleObjectProperty(exercise.getIntensity());
             this.equipment = new SimpleObjectProperty(exercise.getEquipment());
+            this.avgHeartRate = new SimpleIntegerProperty(exercise.getAvgHeartRate());
+            this.ascent = new SimpleIntegerProperty(exercise.getAscent());
+            this.calories = new SimpleIntegerProperty(exercise.getCalories());
             // TODO create helper method getTextOrEmptyString()
             this.hrmFile = new SimpleStringProperty(exercise.getHrmFile() == null ? "" : exercise.getHrmFile());
             this.comment = new SimpleStringProperty(exercise.getComment() == null ? "" : exercise.getComment());
 
-            // TODO convert weight value when english unit system is enabled
+            // convert weight value when english unit system is enabled
             this.unitSystem = unitSystem;
-//            if (unitSystem == UnitSystem.English) {
-//                this.value.set((float) ConvertUtils.convertKilogram2Lbs(weight.getValue()));
-//            }
+              if (unitSystem == UnitSystem.English) {
+                  this.ascent.set(ConvertUtils.convertMeter2Feet(exercise.getAscent()));
+              }
         }
 
         /**
@@ -306,6 +345,9 @@ public class ExerciseDialogController extends AbstractDialogController {
             exercise.setSportType(sportType.getValue());
             exercise.setSportSubType(sportSubType.getValue());
             exercise.setIntensity(intensity.getValue());
+            exercise.setAvgHeartRate(avgHeartRate.getValue());
+            exercise.setAscent(ascent.getValue());
+            exercise.setCalories(calories.getValue());
             exercise.setEquipment(equipment.getValue());
             exercise.setHrmFile(hrmFile.getValue().trim());
             exercise.setComment(comment.getValue().trim());
@@ -319,10 +361,10 @@ public class ExerciseDialogController extends AbstractDialogController {
                 exercise.setComment(null);
             }
 
-            // TODO convert weight value when english unit system is enabled
-//            if (unitSystem == UnitSystem.English) {
-//                exercise.setValue((float) ConvertUtils.convertLbs2Kilogram(exercise.getValue()));
-//            }
+            // convert weight value when english unit system is enabled
+            if (unitSystem == UnitSystem.English) {
+                exercise.setAscent(ConvertUtils.convertFeet2Meter(exercise.getAscent()));
+            }
             return exercise;
         }
     }
