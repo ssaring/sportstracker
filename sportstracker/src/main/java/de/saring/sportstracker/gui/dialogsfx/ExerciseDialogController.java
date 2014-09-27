@@ -9,8 +9,8 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
 import de.saring.util.unitcalc.ConvertUtils;
-import de.saring.util.unitcalc.FormatUtils;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.FloatProperty;
@@ -410,36 +410,6 @@ public class ExerciseDialogController extends AbstractDialogController {
                 exercise.setAscent(ConvertUtils.convertFeet2Meter(exercise.getAscent()));
             }
             return exercise;
-        }
-    }
-
-    /**
-     * Class for converting a time duration in seconds from the integer value to a string formatted
-     * in the pattern hh:mm:ss in both directions.
-     */
-    // TODO extract to st-util and create unit tests?
-    private static class TimeInSecondsToStringConverter extends StringConverter<Number> {
-
-        private final FormatUtils formatUtils;
-
-        public TimeInSecondsToStringConverter (final FormatUtils formatUtils) {
-            this.formatUtils = formatUtils;
-        }
-
-        @Override
-        public String toString(final Number nValue) {
-            if (nValue == null) {
-                return "";
-            }
-            return formatUtils.seconds2TimeString(nValue.intValue());
-        }
-
-        @Override
-        public Number fromString(final String strValue) {
-            if (strValue == null) {
-                return null;
-            }
-            return formatUtils.timeString2TotalSeconds(strValue.trim());
         }
     }
 }

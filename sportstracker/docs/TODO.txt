@@ -20,6 +20,7 @@ JavaFX Migration:
     - add autocalc behavior
     - add HRM features for browse, view and import
   - cleanup I18N properties
+  - test all dialog use cases
   - remove old dialog
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
