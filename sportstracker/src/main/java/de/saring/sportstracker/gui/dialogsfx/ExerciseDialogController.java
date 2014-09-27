@@ -82,6 +82,9 @@ public class ExerciseDialogController extends AbstractDialogController {
     private TextField tfAvgSpeed;
 
     @FXML
+    private TextField tfDuration;
+
+    @FXML
     private TextField tfAscent;
 
     @FXML
@@ -147,6 +150,8 @@ public class ExerciseDialogController extends AbstractDialogController {
     @Override
     protected void setupDialogControls() {
 
+        // TODO add support for duration only sport types !!!
+
         // insert unit names in input labels with placeholders
         laDistance.setText(String.format(laDistance.getText(), context.getFormatUtils().getDistanceUnitName()));
         laAvgSpeed.setText(String.format(laAvgSpeed.getText(), context.getFormatUtils().getSpeedUnitName()));
@@ -164,6 +169,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         cbIntensity.valueProperty().bindBidirectional(exerciseViewModel.intensity);
         tfDistance.textProperty().bindBidirectional(exerciseViewModel.distance, new NumberStringConverter());
         tfAvgSpeed.textProperty().bindBidirectional(exerciseViewModel.avgSpeed, new NumberStringConverter());
+        tfDuration.textProperty().bindBidirectional(exerciseViewModel.duration, new NumberStringConverter());
 
         tfAscent.textProperty().bindBidirectional(exerciseViewModel.ascent, new NumberStringConverter());
         tfAvgHeartrate.textProperty().bindBidirectional(exerciseViewModel.avgHeartRate, new NumberStringConverter());
@@ -194,6 +200,9 @@ public class ExerciseDialogController extends AbstractDialogController {
         validationSupport.registerValidator(tfAvgSpeed, true, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfAvgSpeed, context.getFxResources().getString("st.dlg.exercise.error.avg_speed"),
                         !ValidationUtils.isValueDoubleBetween(newValue, 0, Float.MAX_VALUE)));
+        validationSupport.registerValidator(tfDuration, true, (Control control, String newValue) ->
+                ValidationResult.fromErrorIf(tfDuration, context.getFxResources().getString("st.dlg.exercise.error.duration"),
+                        !ValidationUtils.isValueDoubleBetween(newValue, 0, Integer.MAX_VALUE)));
 
         validationSupport.registerValidator(tfAscent, false, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfAscent, context.getFxResources().getString("st.dlg.exercise.error.ascent"),
@@ -317,14 +326,13 @@ public class ExerciseDialogController extends AbstractDialogController {
         private final ObjectProperty<IntensityType> intensity;
         private final FloatProperty distance;
         private final FloatProperty avgSpeed;
+        private final IntegerProperty duration;
         private final IntegerProperty avgHeartRate;
         private final IntegerProperty ascent;
         private final IntegerProperty calories;
         private final ObjectProperty<Equipment> equipment;
         private final StringProperty hrmFile;
         private final StringProperty comment;
-
-        // TODO add all missing attributes
 
         /**
          * Creates the ExerciseViewModel with JavaFX properties for the passed Exercise object.
@@ -342,6 +350,7 @@ public class ExerciseDialogController extends AbstractDialogController {
             this.intensity = new SimpleObjectProperty(exercise.getIntensity());
             this.distance = new SimpleFloatProperty(exercise.getDistance());
             this.avgSpeed = new SimpleFloatProperty(exercise.getAvgSpeed());
+            this.duration = new SimpleIntegerProperty(exercise.getDuration());
             this.equipment = new SimpleObjectProperty(exercise.getEquipment());
             this.avgHeartRate = new SimpleIntegerProperty(exercise.getAvgHeartRate());
             this.ascent = new SimpleIntegerProperty(exercise.getAscent());
@@ -372,6 +381,7 @@ public class ExerciseDialogController extends AbstractDialogController {
             exercise.setIntensity(intensity.getValue());
             exercise.setDistance(distance.getValue());
             exercise.setAvgSpeed(avgSpeed.getValue());
+            exercise.setDuration(duration.getValue());
             exercise.setAvgHeartRate(avgHeartRate.getValue());
             exercise.setAscent(ascent.getValue());
             exercise.setCalories(calories.getValue());
