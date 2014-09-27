@@ -160,6 +160,8 @@ public class ExerciseDialogController extends AbstractDialogController {
         setupChoiceBoxes();
         fillSportTypeDependentChoiceBoxes();
 
+        // TODO are inputs if "0" for duration, distance, avg speed valid?
+
         // setup binding between view model and the UI controls
         dpDate.valueProperty().bindBidirectional(exerciseViewModel.date);
         tfHour.textProperty().bindBidirectional(exerciseViewModel.hour, new NumberStringConverter("00"));
@@ -168,8 +170,29 @@ public class ExerciseDialogController extends AbstractDialogController {
         cbSportSubtype.valueProperty().bindBidirectional(exerciseViewModel.sportSubType);
         cbIntensity.valueProperty().bindBidirectional(exerciseViewModel.intensity);
         tfDistance.textProperty().bindBidirectional(exerciseViewModel.distance, new NumberStringConverter());
+        // TODO test with other time format setting !
         tfAvgSpeed.textProperty().bindBidirectional(exerciseViewModel.avgSpeed, new NumberStringConverter());
-        tfDuration.textProperty().bindBidirectional(exerciseViewModel.duration, new NumberStringConverter());
+
+        // TODO validation does not work properly, it only shows error on empty values!
+        // TODO extract class !
+        tfDuration.textProperty().bindBidirectional(exerciseViewModel.duration, new StringConverter<Number>() {
+
+            @Override
+            public String toString(final Number nValue) {
+                if (nValue == null) {
+                    return "";
+                }
+                return context.getFormatUtils().seconds2TimeString(nValue.intValue());
+            }
+
+            @Override
+            public Number fromString(final String strValue) {
+                if (strValue == null) {
+                    return null;
+                }
+                return context.getFormatUtils().timeString2TotalSeconds(strValue.trim());
+            }
+        });
 
         tfAscent.textProperty().bindBidirectional(exerciseViewModel.ascent, new NumberStringConverter());
         tfAvgHeartrate.textProperty().bindBidirectional(exerciseViewModel.avgHeartRate, new NumberStringConverter());
@@ -202,7 +225,7 @@ public class ExerciseDialogController extends AbstractDialogController {
                         !ValidationUtils.isValueDoubleBetween(newValue, 0, Float.MAX_VALUE)));
         validationSupport.registerValidator(tfDuration, true, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfDuration, context.getFxResources().getString("st.dlg.exercise.error.duration"),
-                        !ValidationUtils.isValueDoubleBetween(newValue, 0, Integer.MAX_VALUE)));
+                        !ValidationUtils.isValueTimeInSecondsBetween(newValue, 0, Integer.MAX_VALUE)));
 
         validationSupport.registerValidator(tfAscent, false, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfAscent, context.getFxResources().getString("st.dlg.exercise.error.ascent"),

@@ -107,4 +107,34 @@ public class ValidationUtilsTest {
         assertFalse(ValidationUtils.isValueDoubleBetween("100.0", 0, 100)); // 100.0 is evaluated to 1000
         assertFalse(ValidationUtils.isValueDoubleBetween("100,11", 0, 100.1));
     }
+
+    /**
+     * Tests the method isValueTimeInSecondsBetween() for success conditions.
+     */
+    @Test
+    public void testIsValueTimeInSecondsBetweenSuccess() {
+        assertTrue(ValidationUtils.isValueTimeInSecondsBetween("0", 0, 3600));
+        assertTrue(ValidationUtils.isValueTimeInSecondsBetween("59:0", 0, 3600));
+        assertTrue(ValidationUtils.isValueTimeInSecondsBetween("59:59", 0, 3600));
+        assertTrue(ValidationUtils.isValueTimeInSecondsBetween("0000:59:59", 0, 3600));
+        assertTrue(ValidationUtils.isValueTimeInSecondsBetween("1:0:0", 0, 3600));
+    }
+
+    /**
+     * Tests the method isValueTimeInSecondsBetween() for failure conditions.
+     */
+    @Test
+    public void testIsValueTimeInSecondsBetweenFailed() {
+        assertFalse(ValidationUtils.isValueTimeInSecondsBetween(null, 0, 3600));
+        assertFalse(ValidationUtils.isValueTimeInSecondsBetween("", 0, 3600));
+        assertFalse(ValidationUtils.isValueTimeInSecondsBetween("foo", 0, 3600));
+        assertFalse(ValidationUtils.isValueTimeInSecondsBetween("0:59", 60, 3600));
+        assertFalse(ValidationUtils.isValueTimeInSecondsBetween("0:0:59", 60, 3600));
+        assertFalse(ValidationUtils.isValueTimeInSecondsBetween("1:00:01", 60, 3600));
+
+        assertFalse(ValidationUtils.isValueTimeInSecondsBetween("0:10:10a", 0, 3600));
+        assertFalse(ValidationUtils.isValueTimeInSecondsBetween("0a:10:10", 0, 3600));
+        assertFalse(ValidationUtils.isValueTimeInSecondsBetween("0:1a:10", 0, 3600));
+        assertFalse(ValidationUtils.isValueTimeInSecondsBetween("0::10", 0, 3600));
+    }
 }

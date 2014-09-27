@@ -1,5 +1,7 @@
 package de.saring.util;
 
+import de.saring.util.unitcalc.FormatUtils;
+
 import java.text.NumberFormat;
 
 /**
@@ -60,5 +62,19 @@ public final class ValidationUtils {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * Checks the specified String value whether this is an valid time in seconds value in the specified range.
+     * This method does not support negative second values!
+     *
+     * @param value value to check
+     * @param minValue minimum value
+     * @param maxValue maximum value
+     * @return true when it's an valid time in seconds value and in the specified range
+     */
+    public static boolean isValueTimeInSecondsBetween(final String value, final int minValue, final int maxValue) {
+        final int seconds = new FormatUtils(null, null).timeString2TotalSeconds(value);
+        return seconds >= minValue && seconds <= maxValue;
     }
 }
