@@ -7,6 +7,7 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.StringUtils;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
@@ -28,6 +29,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
@@ -84,6 +86,15 @@ public class ExerciseDialogController extends AbstractDialogController {
 
     @FXML
     private TextField tfDuration;
+
+    @FXML
+    private RadioButton rbAutoCalcDistance;
+
+    @FXML
+    private RadioButton rbAutoCalcAvgSpeed;
+
+    @FXML
+    private RadioButton rbAutoCalcDuration;
 
     @FXML
     private TextField tfAscent;
@@ -230,6 +241,8 @@ public class ExerciseDialogController extends AbstractDialogController {
             tfCalories.setText("");
         }
 
+        setupAutoCalculation();
+
         // enable View and Import HRM buttons only when an HRM file is specified
         btViewHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
         btImportHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
@@ -315,6 +328,31 @@ public class ExerciseDialogController extends AbstractDialogController {
     }
 
     /**
+     * Setup of the automatic calculation of distance, avg speed or duration depending on the
+     * user preferences. The selected auto calculation field will get disabled. The user can
+     * also select another field for auto calculation.
+     */
+    private void setupAutoCalculation() {
+        tfDistance.disableProperty().bind(rbAutoCalcDistance.selectedProperty());
+        tfAvgSpeed.disableProperty().bind(rbAutoCalcAvgSpeed.selectedProperty());
+        tfDuration.disableProperty().bind(rbAutoCalcDuration.selectedProperty());
+
+        // set current automatic calculation type from preferences
+        switch (document.getOptions().getDefaultAutoCalcuation()) {
+            case Distance:
+                rbAutoCalcDistance.setSelected(true);
+                break;
+            case AvgSpeed:
+                rbAutoCalcAvgSpeed.setSelected(true);
+                break;
+            default:
+                rbAutoCalcDuration.setSelected(true);
+        }
+
+        // TODO setup the listener for performing the auto calculation
+    }
+
+    /**
      * This ViewModel class provides JavaFX properties of all Exercise attributes to be edited in the dialog.
      * So they can be bound to the appropriate dialog view controls.
      */
@@ -360,9 +398,8 @@ public class ExerciseDialogController extends AbstractDialogController {
             this.avgHeartRate = new SimpleIntegerProperty(exercise.getAvgHeartRate());
             this.ascent = new SimpleIntegerProperty(exercise.getAscent());
             this.calories = new SimpleIntegerProperty(exercise.getCalories());
-            // TODO create helper method getTextOrEmptyString()
-            this.hrmFile = new SimpleStringProperty(exercise.getHrmFile() == null ? "" : exercise.getHrmFile());
-            this.comment = new SimpleStringProperty(exercise.getComment() == null ? "" : exercise.getComment());
+            this.hrmFile = new SimpleStringProperty(StringUtils.getTextOrEmptyString(exercise.getHrmFile()));
+            this.comment = new SimpleStringProperty(StringUtils.getTextOrEmptyString(exercise.getComment()));
 
             // convert weight value when english unit system is enabled
             this.unitSystem = unitSystem;
@@ -391,17 +428,9 @@ public class ExerciseDialogController extends AbstractDialogController {
             exercise.setAscent(ascent.getValue());
             exercise.setCalories(calories.getValue());
             exercise.setEquipment(equipment.getValue());
-            exercise.setHrmFile(hrmFile.getValue().trim());
-            exercise.setComment(comment.getValue().trim());
-
-            // TODO create helper method getTrimmedTextOrNull()
-            // ignore empty strings
-            if (exercise.getHrmFile().length() == 0) {
-                exercise.setHrmFile(null);
-            }
-            if (exercise.getComment().length() == 0) {
-                exercise.setComment(null);
-            }
+            // ignore empty text for optional inputs
+            exercise.setHrmFile(StringUtils.getTrimmedTextOrNull(hrmFile.getValue()));
+            exercise.setComment(StringUtils.getTrimmedTextOrNull(comment.getValue()));
 
             // convert weight value when english unit system is enabled
             if (unitSystem == UnitSystem.English) {

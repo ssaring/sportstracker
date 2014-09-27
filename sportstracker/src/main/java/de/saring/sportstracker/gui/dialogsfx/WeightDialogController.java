@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.dialogsfx;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.StringUtils;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import de.saring.util.unitcalc.ConvertUtils;
@@ -156,7 +157,7 @@ public class WeightDialogController extends AbstractDialogController {
             this.hour = new SimpleIntegerProperty(weight.getDateTime().getHour());
             this.minute = new SimpleIntegerProperty(weight.getDateTime().getMinute());
             this.value = new SimpleFloatProperty(weight.getValue());
-            this.comment = new SimpleStringProperty(weight.getComment() == null ? "" : weight.getComment());
+            this.comment = new SimpleStringProperty(StringUtils.getTextOrEmptyString(weight.getComment()));
 
             // convert weight value when english unit system is enabled
             this.unitSystem = unitSystem;
@@ -174,12 +175,8 @@ public class WeightDialogController extends AbstractDialogController {
             final Weight weight = new Weight(id);
             weight.setDateTime(LocalDateTime.of(date.get(), LocalTime.of(hour.getValue(), minute.getValue())));
             weight.setValue(value.get());
-            weight.setComment(comment.getValue().trim());
-
-            // ignore empty strings
-            if (weight.getComment().length() == 0) {
-                weight.setComment(null);
-            }
+            // ignore empty text for optional inputs
+            weight.setComment(StringUtils.getTrimmedTextOrNull(comment.getValue()));
 
             // convert weight value when english unit system is enabled
             if (unitSystem == UnitSystem.English) {
