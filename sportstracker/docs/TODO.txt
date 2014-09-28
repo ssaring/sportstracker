@@ -1,8 +1,6 @@
 SportsTracker-TODO
 ==================
 
-- add unit tests for class StringUtil
-
 JavaFX Migration:
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
