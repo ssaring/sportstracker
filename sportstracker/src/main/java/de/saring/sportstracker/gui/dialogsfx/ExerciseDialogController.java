@@ -11,12 +11,15 @@ import de.saring.util.StringUtils;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
+import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -329,7 +332,7 @@ public class ExerciseDialogController extends AbstractDialogController {
 
     /**
      * Setup of the automatic calculation of distance, avg speed or duration depending on the
-     * user preferences. The selected auto calculation field will get disabled. The user can
+     * user preferences. The selected auto calculation textfield will get disabled. The user can
      * also select another field for auto calculation.
      */
     private void setupAutoCalculation() {
@@ -337,19 +340,21 @@ public class ExerciseDialogController extends AbstractDialogController {
         tfAvgSpeed.disableProperty().bind(rbAutoCalcAvgSpeed.selectedProperty());
         tfDuration.disableProperty().bind(rbAutoCalcDuration.selectedProperty());
 
-        // set current automatic calculation type from preferences
+        rbAutoCalcDistance.selectedProperty().bindBidirectional(exerciseViewModel.autoCalcDistance);
+        rbAutoCalcAvgSpeed.selectedProperty().bindBidirectional(exerciseViewModel.autoCalcAvgSpeed);
+        rbAutoCalcDuration.selectedProperty().bindBidirectional(exerciseViewModel.autoCalcDuration);
+
+        // set initial automatic calculation type from preferences
         switch (document.getOptions().getDefaultAutoCalcuation()) {
             case Distance:
-                rbAutoCalcDistance.setSelected(true);
+                exerciseViewModel.autoCalcDistance.set(true);
                 break;
             case AvgSpeed:
-                rbAutoCalcAvgSpeed.setSelected(true);
+                exerciseViewModel.autoCalcAvgSpeed.set(true);
                 break;
             default:
-                rbAutoCalcDuration.setSelected(true);
+                exerciseViewModel.autoCalcDuration.set(true);
         }
-
-        // TODO setup the listener for performing the auto calculation
     }
 
     /**
@@ -357,6 +362,8 @@ public class ExerciseDialogController extends AbstractDialogController {
      * So they can be bound to the appropriate dialog view controls.
      */
     private static final class ExerciseViewModel {
+
+        // TODO make ExerciseViewModel a public regular class and add unit tests for auto calculation
 
         private final int id;
         private final UnitSystem unitSystem;
@@ -377,10 +384,14 @@ public class ExerciseDialogController extends AbstractDialogController {
         private final StringProperty hrmFile;
         private final StringProperty comment;
 
+        private final BooleanProperty autoCalcDistance = new SimpleBooleanProperty(false);
+        private final BooleanProperty autoCalcAvgSpeed = new SimpleBooleanProperty(false);
+        private final BooleanProperty autoCalcDuration = new SimpleBooleanProperty(false);
+
         /**
          * Creates the ExerciseViewModel with JavaFX properties for the passed Exercise object.
          *
-         * @param exercise Exercise to be edited
+         * @param exercise   Exercise to be edited
          * @param unitSystem the unit system currently used in the UI
          */
         public ExerciseViewModel(final Exercise exercise, final UnitSystem unitSystem) {
@@ -388,7 +399,7 @@ public class ExerciseDialogController extends AbstractDialogController {
             this.date = new SimpleObjectProperty(exercise.getDateTime().toLocalDate());
             this.hour = new SimpleIntegerProperty(exercise.getDateTime().getHour());
             this.minute = new SimpleIntegerProperty(exercise.getDateTime().getMinute());
-            this.sportType= new SimpleObjectProperty(exercise.getSportType());
+            this.sportType = new SimpleObjectProperty(exercise.getSportType());
             this.sportSubType = new SimpleObjectProperty(exercise.getSportSubType());
             this.intensity = new SimpleObjectProperty(exercise.getIntensity());
             this.distance = new SimpleFloatProperty(exercise.getDistance());
@@ -403,11 +414,13 @@ public class ExerciseDialogController extends AbstractDialogController {
 
             // convert weight value when english unit system is enabled
             this.unitSystem = unitSystem;
-              if (unitSystem == UnitSystem.English) {
-                  this.distance.set((float) ConvertUtils.convertKilometer2Miles(exercise.getDistance(), false));
-                  this.avgSpeed.set((float) ConvertUtils.convertKilometer2Miles(exercise.getAvgSpeed(), false));
-                  this.ascent.set(ConvertUtils.convertMeter2Feet(exercise.getAscent()));
-              }
+            if (unitSystem == UnitSystem.English) {
+                this.distance.set((float) ConvertUtils.convertKilometer2Miles(exercise.getDistance(), false));
+                this.avgSpeed.set((float) ConvertUtils.convertKilometer2Miles(exercise.getAvgSpeed(), false));
+                this.ascent.set(ConvertUtils.convertMeter2Feet(exercise.getAscent()));
+            }
+
+            setupChangeListenersForAutoCalculation(exercise, unitSystem);
         }
 
         /**
@@ -439,6 +452,59 @@ public class ExerciseDialogController extends AbstractDialogController {
                 exercise.setAscent(ConvertUtils.convertFeet2Meter(exercise.getAscent()));
             }
             return exercise;
+        }
+
+        /**
+         * Setup the value change listeners which perform the automatic calculation depending on the current
+         * auto calculation mode.
+         */
+        private void setupChangeListenersForAutoCalculation(Exercise exercise, UnitSystem unitSystem) {
+            distance.addListener((observable, oldValue, newValue) -> {
+                if (!autoCalcDistance.get()) {
+                    autoCalculate();
+                }
+            });
+
+            avgSpeed.addListener((observable, oldValue, newValue) -> {
+                if (!autoCalcAvgSpeed.get()) {
+                    autoCalculate();
+                }
+            });
+
+            duration.addListener((observable, oldValue, newValue) -> {
+                if (!autoCalcDuration.get()) {
+                    autoCalculate();
+                }
+            });
+        }
+
+        /**
+         * Performs the calculation of the value which needs to be calculated automatically. The
+         * calculated value will be 0 when one of the other values is 0 or not available.
+         * The current unit system can be ignored here, all inputs are using the same.
+         */
+        private void autoCalculate() {
+            if (autoCalcDistance.get()) {
+                if (avgSpeed.get() > 0 && duration.get() > 0) {
+                    distance.set(CalculationUtils.calculateDistance(avgSpeed.get(), duration.get()));
+                } else {
+                    distance.set(0);
+                }
+            } else if (autoCalcAvgSpeed.get()) {
+                if (distance.get() > 0 && duration.get() > 0) {
+                    avgSpeed.set(CalculationUtils.calculateAvgSpeed(distance.get(), duration.get()));
+                } else {
+                    avgSpeed.set(0);
+                }
+            } else if (autoCalcDuration.get()) {
+                if (distance.get() > 0 && avgSpeed.get() > 0) {
+                    duration.set(CalculationUtils.calculateDuration(distance.get(), avgSpeed.get()));
+                } else {
+                    duration.set(0);
+                }
+            } else {
+                throw new IllegalStateException("Invalid auto calculation mode!");
+            }
         }
     }
 }

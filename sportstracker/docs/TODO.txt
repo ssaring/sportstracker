@@ -2,6 +2,18 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- ExerciseDialog:
+  - FXML layout: DONE
+  - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
+  - ExerciseDialogController: see TODOs
+    - add autocalc behavior
+      -> DONE => test! Also test english unit mode and speed input in mm:ss.
+    - are values of 0 for distance, avg speed and duration OK? => check old implementation
+    - add mode for sport types without distance (also for auto calculation)
+    - add HRM features for browse, view and import
+  - cleanup I18N properties
+  - test all dialog use cases
+  - remove old dialog
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
@@ -12,16 +24,6 @@ JavaFX Migration:
       - Workaround: lookup the OK button and add a EventFilter for ActionEvent.Action.
         This filter validates the dialog input and consumes the action event in case of errors.
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38819
-- ExerciseDialog:
-  - FXML layout: DONE
-  - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
-  - ExerciseDialogController: see TODOs
-    - add attribute duration
-    - add autocalc behavior
-    - add HRM features for browse, view and import
-  - cleanup I18N properties
-  - test all dialog use cases
-  - remove old dialog
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the
