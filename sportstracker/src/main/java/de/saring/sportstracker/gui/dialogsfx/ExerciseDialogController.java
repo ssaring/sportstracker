@@ -165,8 +165,6 @@ public class ExerciseDialogController extends AbstractDialogController {
     @Override
     protected void setupDialogControls() {
 
-        // TODO add support for duration only sport types !!!
-
         // insert unit names in input labels with placeholders
         laDistance.setText(String.format(laDistance.getText(), context.getFormatUtils().getDistanceUnitName()));
         laAvgSpeed.setText(String.format(laAvgSpeed.getText(), context.getFormatUtils().getSpeedUnitName()));
@@ -185,7 +183,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         cbSportSubtype.valueProperty().bindBidirectional(exerciseViewModel.sportSubType);
         cbIntensity.valueProperty().bindBidirectional(exerciseViewModel.intensity);
         tfDistance.textProperty().bindBidirectional(exerciseViewModel.distance, new NumberStringConverter());
-        // TODO test with other time format setting !
+        // TODO test with other avg speed format setting !
         tfAvgSpeed.textProperty().bindBidirectional(exerciseViewModel.avgSpeed, new NumberStringConverter());
         tfDuration.textProperty().bindBidirectional(exerciseViewModel.duration,
                 new TimeInSecondsToStringConverter(context.getFormatUtils()));
@@ -233,6 +231,8 @@ public class ExerciseDialogController extends AbstractDialogController {
                 ValidationResult.fromErrorIf(tfCalories, context.getFxResources().getString("st.dlg.exercise.error.calories"),
                         !ValidationUtils.isOptionalValueIntegerBetween(newValue, 0, Integer.MAX_VALUE)));
 
+        setupAutoCalculation();
+
         // don't display initial value "0" when optional inputs are not specified
         if (exerciseViewModel.ascent.getValue() == 0) {
             tfAscent.setText("");
@@ -243,8 +243,6 @@ public class ExerciseDialogController extends AbstractDialogController {
         if (exerciseViewModel.calories.getValue() == 0) {
             tfCalories.setText("");
         }
-
-        setupAutoCalculation();
 
         // enable View and Import HRM buttons only when an HRM file is specified
         btViewHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
@@ -333,16 +331,35 @@ public class ExerciseDialogController extends AbstractDialogController {
     /**
      * Setup of the automatic calculation of distance, avg speed or duration depending on the
      * user preferences. The selected auto calculation textfield will get disabled. The user can
-     * also select another field for auto calculation.
+     * also select another field for auto calculation.<br/>
+     * The automatic calculation selection will be disabled when the current sport type does not
+     * record the distance.
      */
     private void setupAutoCalculation() {
-        tfDistance.disableProperty().bind(rbAutoCalcDistance.selectedProperty());
-        tfAvgSpeed.disableProperty().bind(rbAutoCalcAvgSpeed.selectedProperty());
-        tfDuration.disableProperty().bind(rbAutoCalcDuration.selectedProperty());
+
+        // disable the textfields for distance and avg speed when the value is calculated automatically
+        // or when the current sport type does not record the distance
+        tfDistance.disableProperty().bind(Bindings.or(
+                rbAutoCalcDistance.selectedProperty(),
+                exerciseViewModel.sportTypeRecordDistance.not()));
+        tfAvgSpeed.disableProperty().bind(Bindings.or(
+                rbAutoCalcAvgSpeed.selectedProperty(),
+                exerciseViewModel.sportTypeRecordDistance.not()));
+
+        // disable the textfield for duration when the value is calculated automatically
+        // and when the current sport type records the distance
+        tfDuration.disableProperty().bind(Bindings.and(
+                rbAutoCalcDuration.selectedProperty(),
+                exerciseViewModel.sportTypeRecordDistance));
 
         rbAutoCalcDistance.selectedProperty().bindBidirectional(exerciseViewModel.autoCalcDistance);
         rbAutoCalcAvgSpeed.selectedProperty().bindBidirectional(exerciseViewModel.autoCalcAvgSpeed);
         rbAutoCalcDuration.selectedProperty().bindBidirectional(exerciseViewModel.autoCalcDuration);
+
+        // disable automatic calculation radioboxes when the current sport type does not record the distance
+        rbAutoCalcDistance.disableProperty().bind(exerciseViewModel.sportTypeRecordDistance.not());
+        rbAutoCalcAvgSpeed.disableProperty().bind(exerciseViewModel.sportTypeRecordDistance.not());
+        rbAutoCalcDuration.disableProperty().bind(exerciseViewModel.sportTypeRecordDistance.not());
 
         // set initial automatic calculation type from preferences
         switch (document.getOptions().getDefaultAutoCalcuation()) {
@@ -384,6 +401,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         private final StringProperty hrmFile;
         private final StringProperty comment;
 
+        private final BooleanProperty sportTypeRecordDistance = new SimpleBooleanProperty(false);
         private final BooleanProperty autoCalcDistance = new SimpleBooleanProperty(false);
         private final BooleanProperty autoCalcAvgSpeed = new SimpleBooleanProperty(false);
         private final BooleanProperty autoCalcDuration = new SimpleBooleanProperty(false);
@@ -420,6 +438,7 @@ public class ExerciseDialogController extends AbstractDialogController {
                 this.ascent.set(ConvertUtils.convertMeter2Feet(exercise.getAscent()));
             }
 
+            setupSportTypeRecordDistance();
             setupChangeListenersForAutoCalculation(exercise, unitSystem);
         }
 
@@ -455,6 +474,24 @@ public class ExerciseDialogController extends AbstractDialogController {
         }
 
         /**
+         * Setup of the sportTypeRecordDistance property. It will be updated every time the sport type
+         * changes. When the new sport type does not record the distance, then the distance and avg speed
+         * values will be set to 0.
+         */
+        private void setupSportTypeRecordDistance() {
+            sportTypeRecordDistance.set(sportType.get().isRecordDistance());
+
+            sportType.addListener((observable, oldValue, newValue) -> {
+                sportTypeRecordDistance.set(newValue.isRecordDistance());
+
+                if (!sportTypeRecordDistance.get()) {
+                    distance.set(0);
+                    avgSpeed.set(0);
+                }
+            });
+        }
+
+        /**
          * Setup the value change listeners which perform the automatic calculation depending on the current
          * auto calculation mode.
          */
@@ -481,29 +518,33 @@ public class ExerciseDialogController extends AbstractDialogController {
         /**
          * Performs the calculation of the value which needs to be calculated automatically. The
          * calculated value will be 0 when one of the other values is 0 or not available.
-         * The current unit system can be ignored here, all inputs are using the same.
+         * The current unit system can be ignored here, all inputs are using the same.<br/>
+         * The calculation will not be performed when the current sport type does not records
+         * the distance!
          */
         private void autoCalculate() {
-            if (autoCalcDistance.get()) {
-                if (avgSpeed.get() > 0 && duration.get() > 0) {
-                    distance.set(CalculationUtils.calculateDistance(avgSpeed.get(), duration.get()));
+            if (sportTypeRecordDistance.get()) {
+                if (autoCalcDistance.get()) {
+                    if (avgSpeed.get() > 0 && duration.get() > 0) {
+                        distance.set(CalculationUtils.calculateDistance(avgSpeed.get(), duration.get()));
+                    } else {
+                        distance.set(0);
+                    }
+                } else if (autoCalcAvgSpeed.get()) {
+                    if (distance.get() > 0 && duration.get() > 0) {
+                        avgSpeed.set(CalculationUtils.calculateAvgSpeed(distance.get(), duration.get()));
+                    } else {
+                        avgSpeed.set(0);
+                    }
+                } else if (autoCalcDuration.get()) {
+                    if (distance.get() > 0 && avgSpeed.get() > 0) {
+                        duration.set(CalculationUtils.calculateDuration(distance.get(), avgSpeed.get()));
+                    } else {
+                        duration.set(0);
+                    }
                 } else {
-                    distance.set(0);
+                    throw new IllegalStateException("Invalid auto calculation mode!");
                 }
-            } else if (autoCalcAvgSpeed.get()) {
-                if (distance.get() > 0 && duration.get() > 0) {
-                    avgSpeed.set(CalculationUtils.calculateAvgSpeed(distance.get(), duration.get()));
-                } else {
-                    avgSpeed.set(0);
-                }
-            } else if (autoCalcDuration.get()) {
-                if (distance.get() > 0 && avgSpeed.get() > 0) {
-                    duration.set(CalculationUtils.calculateDuration(distance.get(), avgSpeed.get()));
-                } else {
-                    duration.set(0);
-                }
-            } else {
-                throw new IllegalStateException("Invalid auto calculation mode!");
             }
         }
     }
