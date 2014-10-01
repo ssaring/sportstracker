@@ -2,6 +2,8 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- Update to ControlFX 8.20.7
+  - ValidationSupport now support Predicates, can these be used?
 - ExerciseDialog:
   - FXML layout: DONE
   - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
