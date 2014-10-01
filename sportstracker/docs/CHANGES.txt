@@ -14,6 +14,8 @@ v7.0.0:
   - switched compiler to Java 8 in module st-exerciseviewer 
     (already done in all other modules)
   - use of Java 8 Lambda features in module st-exerciseviewer
+  - bugfix: adding an exercise via drag & drop of a HRM exercise file is now
+    also possible when there are no exercises yet (but a sport type must exist)
   - full rewrite of the user interface by using JavaFX instead Swing
     (user interfaces are now declared in FXML using SceneBuilder)
     - migrated UI components:

@@ -563,7 +563,7 @@ public class STControllerImpl implements STController {
 
     @Override
     public boolean dropHrmFile(String filename, Exercise exercise) {
-        if (!checkForExistingExercises()) {
+        if (!checkForExistingSportTypes()) {
             return false;
         }
 
