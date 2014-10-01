@@ -479,7 +479,7 @@ public class ExerciseDialogController extends AbstractDialogController {
          * values will be set to 0.
          */
         private void setupSportTypeRecordDistance() {
-            sportTypeRecordDistance.set(sportType.get().isRecordDistance());
+            sportTypeRecordDistance.set(sportType.get() == null || sportType.get().isRecordDistance());
 
             sportType.addListener((observable, oldValue, newValue) -> {
                 sportTypeRecordDistance.set(newValue.isRecordDistance());
