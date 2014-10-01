@@ -203,8 +203,8 @@ one single HRM file from the systems file manager and drop it to a day cell in
 the calendar view. If there is an exercise entry under the mouse cursor then 
 the HRM file will be assigned to this exercise. Otherwise a new exercise will
 be created and the data will be imported from the HRM file.
-Drag & drop has been successfully tested on Linux (Gnome 2.24 and KDE 4.1) and
-Windows (XP).
+Drag & drop has been successfully tested on Linux (Gnome 2.24 and KDE 4.1),
+Windows (XP and 7) and Mac OS X (10.9).
 
 For the creation of statistics the user needs to specify at least the 
 calculation filter for the time range, e.g. the current month. It's also 
