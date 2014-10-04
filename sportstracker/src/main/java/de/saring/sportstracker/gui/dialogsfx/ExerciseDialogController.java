@@ -247,6 +247,8 @@ public class ExerciseDialogController extends AbstractDialogController {
         // enable View and Import HRM buttons only when an HRM file is specified
         btViewHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
         btImportHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
+
+        // TODO add behavior for copy the comment from last similar exercise
     }
 
     @Override
