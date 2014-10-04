@@ -2,7 +2,6 @@ package de.saring.exerciseviewer.gui;
 
 import de.saring.util.ResourceReader;
 import de.saring.util.unitcalc.FormatUtils;
-import javafx.stage.*;
 import org.jdesktop.application.ApplicationContext;
 
 import javax.swing.*;
