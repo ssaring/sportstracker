@@ -10,6 +10,7 @@ import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import de.saring.util.gui.javafx.SpeedToStringConverter;
 import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
@@ -183,8 +184,8 @@ public class ExerciseDialogController extends AbstractDialogController {
         cbSportSubtype.valueProperty().bindBidirectional(exerciseViewModel.sportSubType);
         cbIntensity.valueProperty().bindBidirectional(exerciseViewModel.intensity);
         tfDistance.textProperty().bindBidirectional(exerciseViewModel.distance, new NumberStringConverter());
-        // TODO test with other avg speed format setting !
-        tfAvgSpeed.textProperty().bindBidirectional(exerciseViewModel.avgSpeed, new NumberStringConverter());
+        tfAvgSpeed.textProperty().bindBidirectional(exerciseViewModel.avgSpeed,
+                new SpeedToStringConverter(context.getFormatUtils()));
         tfDuration.textProperty().bindBidirectional(exerciseViewModel.duration,
                 new TimeInSecondsToStringConverter(context.getFormatUtils()));
 

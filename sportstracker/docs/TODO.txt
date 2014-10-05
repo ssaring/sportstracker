@@ -10,9 +10,8 @@ JavaFX Migration:
       -> DONE => test! Also test english unit mode and speed input in mm:ss.
     - support for sport types without distance
       -> DONE => test!
-    - add support for AvgSpeed mode min/km:
-      - add a custom converter to tfAvgSpeed, similar to tfDuration
-      - this converter implements the toString/fromString by using the formatter and converter util classes
+    - support for AvgSpeed mode min/km:
+      -> DONE => test!
     - are values of 0 for distance, avg speed and duration OK? => check old implementation
     - add HRM features for browse, view and import
   - cleanup I18N properties
