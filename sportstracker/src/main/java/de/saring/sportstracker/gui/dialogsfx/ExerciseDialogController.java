@@ -174,8 +174,6 @@ public class ExerciseDialogController extends AbstractDialogController {
         setupChoiceBoxes();
         fillSportTypeDependentChoiceBoxes();
 
-        // TODO are inputs if "0" for duration, distance, avg speed valid?
-
         // setup binding between view model and the UI controls
         dpDate.valueProperty().bindBidirectional(exerciseViewModel.date);
         tfHour.textProperty().bindBidirectional(exerciseViewModel.hour, new NumberStringConverter("00"));
@@ -214,13 +212,15 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         validationSupport.registerValidator(tfDistance, true, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfDistance, context.getFxResources().getString("st.dlg.exercise.error.distance"),
-                        !ValidationUtils.isValueDoubleBetween(newValue, 0, Float.MAX_VALUE)));
+                        !ValidationUtils.isValueDoubleBetween(newValue,
+                                exerciseViewModel.sportTypeRecordDistance.get() ? 0.001f : 0, Float.MAX_VALUE)));
         validationSupport.registerValidator(tfAvgSpeed, true, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfAvgSpeed, context.getFxResources().getString("st.dlg.exercise.error.avg_speed"),
-                        !ValidationUtils.isValueDoubleBetween(newValue, 0, Float.MAX_VALUE)));
+                        !ValidationUtils.isValueDoubleBetween(newValue,
+                                exerciseViewModel.sportTypeRecordDistance.get() ? 0.001f : 0, Float.MAX_VALUE)));
         validationSupport.registerValidator(tfDuration, true, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfDuration, context.getFxResources().getString("st.dlg.exercise.error.duration"),
-                        !ValidationUtils.isValueTimeInSecondsBetween(newValue, 0, Integer.MAX_VALUE)));
+                        !ValidationUtils.isValueTimeInSecondsBetween(newValue, 1, Integer.MAX_VALUE)));
 
         validationSupport.registerValidator(tfAscent, false, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfAscent, context.getFxResources().getString("st.dlg.exercise.error.ascent"),
@@ -233,17 +233,6 @@ public class ExerciseDialogController extends AbstractDialogController {
                         !ValidationUtils.isOptionalValueIntegerBetween(newValue, 0, Integer.MAX_VALUE)));
 
         setupAutoCalculation();
-
-        // don't display initial value "0" when optional inputs are not specified
-        if (exerciseViewModel.ascent.getValue() == 0) {
-            tfAscent.setText("");
-        }
-        if (exerciseViewModel.avgHeartRate.getValue() == 0) {
-            tfAvgHeartrate.setText("");
-        }
-        if (exerciseViewModel.calories.getValue() == 0) {
-            tfCalories.setText("");
-        }
 
         // enable View and Import HRM buttons only when an HRM file is specified
         btViewHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
@@ -267,7 +256,7 @@ public class ExerciseDialogController extends AbstractDialogController {
      */
     private void setupChoiceBoxes() {
 
-        // TODO woud be good when SportType, SportSubType and Equipment would implement a Nameable interface
+        // TODO would be good when SportType, SportSubType and Equipment would implement a Nameable interface
         // => then a generic converter would be sufficient for all choice boxes
         cbSportType.setConverter(new StringConverter<SportType>() {
             @Override
@@ -491,6 +480,15 @@ public class ExerciseDialogController extends AbstractDialogController {
                     distance.set(0);
                     avgSpeed.set(0);
                 }
+
+                autoCalculate();
+
+                // force value changes for distance and avg speed, so the validation will be executed
+                // depending on the new selected sport type (no other way to fire the event)
+                distance.set(distance.get() + 1);
+                distance.set(distance.get() - 1);
+                avgSpeed.set(avgSpeed.get() + 1);
+                avgSpeed.set(avgSpeed.get() - 1);
             });
         }
 

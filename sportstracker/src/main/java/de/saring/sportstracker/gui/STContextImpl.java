@@ -85,6 +85,7 @@ public class STContextImpl implements STContext {
     public void showFxErrorDialog(Window parent, String titleKey, String messageKey) {
         final Alert alert = new Alert(Alert.AlertType.ERROR, fxResources.getString(messageKey));
         alert.setTitle(fxResources.getString(titleKey));
+        alert.setHeaderText(null);
         alert.showAndWait();
     }
 

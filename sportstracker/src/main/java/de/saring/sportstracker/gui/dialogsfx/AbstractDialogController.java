@@ -5,6 +5,7 @@ import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
@@ -120,6 +121,17 @@ public abstract class AbstractDialogController {
      */
     protected boolean validateAndStore() {
         return true;
+    }
+
+    /**
+     * Returns the window of the specified control.
+     *
+     * @param control control
+     * @return Window
+     */
+    protected Window getWindow(final Control control) {
+        final Scene scene = control.getScene();
+        return scene == null ? null : scene.getWindow();
     }
 
     /**

@@ -12,7 +12,6 @@ JavaFX Migration:
       -> DONE => test!
     - support for AvgSpeed mode min/km:
       -> DONE => test!
-    - are values of 0 for distance, avg speed and duration OK? => check old implementation
     - add HRM features for browse, view and import
   - cleanup I18N properties
   - test all dialog use cases
