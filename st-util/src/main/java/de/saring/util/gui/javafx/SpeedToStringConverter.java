@@ -18,6 +18,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class SpeedToStringConverter extends StringConverter<Number> {
 
+    private static final String ZERO_SPEED_TIME = "00:00";
+
     private final FormatUtils formatUtils;
     private final NumberFormat numberFormat;
 
@@ -46,7 +48,7 @@ public class SpeedToStringConverter extends StringConverter<Number> {
                 return numberFormat.format(nValue.floatValue());
             case MinutesPerDistance:
                 if (speed == 0) {
-                    return "N/A";
+                    return ZERO_SPEED_TIME;
                 }
                 return formatUtils.seconds2MinuteTimeString((int) (3600 / speed));
             default:
@@ -57,11 +59,16 @@ public class SpeedToStringConverter extends StringConverter<Number> {
     @Override
     public Number fromString(final String strValue) {
         try {
+            final String strValueTrimmed = strValue.trim();
+
             switch (formatUtils.getSpeedView()) {
                 case DistancePerHour:
-                    return NumberFormat.getInstance().parse(strValue.trim()).floatValue();
+                    return NumberFormat.getInstance().parse(strValueTrimmed).floatValue();
                 case MinutesPerDistance:
-                    final LocalTime time = LocalTime.parse("00:" + strValue.trim(), DateTimeFormatter.ISO_LOCAL_TIME);
+                    if (ZERO_SPEED_TIME.equals(strValueTrimmed)) {
+                        return 0f;
+                    }
+                    final LocalTime time = LocalTime.parse("00:" + strValueTrimmed, DateTimeFormatter.ISO_LOCAL_TIME);
                     return 3600 / (float) (time.getMinute() * 60 + time.getSecond());
                 default:
                     throw new IllegalArgumentException("Invalid SpeedView " + formatUtils.getSpeedView() + "!");

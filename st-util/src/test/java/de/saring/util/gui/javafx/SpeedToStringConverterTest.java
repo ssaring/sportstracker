@@ -60,7 +60,7 @@ public class SpeedToStringConverterTest {
                 new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.MinutesPerDistance));
 
         assertEquals("", CONVERTER.toString(null));
-        assertEquals("N/A", CONVERTER.toString(0));
+        assertEquals("00:00", CONVERTER.toString(0));
         assertEquals("03:00", CONVERTER.toString(20f));
         assertEquals("02:30", CONVERTER.toString(24f));
         assertEquals("00:29", CONVERTER.toString(123.456f));
@@ -99,6 +99,7 @@ public class SpeedToStringConverterTest {
         assertEquals(-1f, CONVERTER.fromString("0:0").floatValue(), 0.0001f);
         assertEquals(-1f, CONVERTER.fromString("2:2").floatValue(), 0.0001f);
 
+        assertEquals(0f, CONVERTER.fromString("00:00").floatValue(), 0.0001f);
         assertEquals(30f, CONVERTER.fromString("02:00").floatValue(), 0.0001f);
         assertEquals(24f, CONVERTER.fromString("02:30").floatValue(), 0.0001f);
         assertEquals(124.138f, CONVERTER.fromString("00:29").floatValue(), 0.001f);

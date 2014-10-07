@@ -1,18 +1,19 @@
 SportsTracker-TODO
 ==================
 
+Bugs:
+- Wenn minutes/km Modus, dann kann man keine Sportart ohne Strecke angeben => AVG is "N/A" und invalid
+
 JavaFX Migration:
 - ExerciseDialog:
   - FXML layout: DONE
   - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
   - ExerciseDialogController: see TODOs
-    - add autocalc behavior
-      -> DONE => test! Also test english unit mode and speed input in mm:ss.
-    - support for sport types without distance
-      -> DONE => test!
-    - support for AvgSpeed mode min/km:
-      -> DONE => test!
     - add HRM features for browse, view and import
+    - don't show initial value 0 for optional textfields when no data is available
+    - add autocalc behavior => DONE (tested)
+    - support for sport types without distance => DONE (tested)
+    - support for AvgSpeed mode min/km => DONE (tested)
   - cleanup I18N properties
   - test all dialog use cases
   - check old ExerciseDialog -> has something been forgotten?
