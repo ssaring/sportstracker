@@ -7,25 +7,11 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.StringUtils;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import de.saring.util.gui.javafx.SpeedToStringConverter;
 import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
-import de.saring.util.unitcalc.CalculationUtils;
-import de.saring.util.unitcalc.ConvertUtils;
-import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -44,9 +30,6 @@ import org.controlsfx.validation.Validator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Arrays;
 
 /**
@@ -386,190 +369,6 @@ public class ExerciseDialogController extends AbstractDialogController {
                 break;
             default:
                 exerciseViewModel.autoCalcDuration.set(true);
-        }
-    }
-
-    /**
-     * This ViewModel class provides JavaFX properties of all Exercise attributes to be edited in the dialog.
-     * So they can be bound to the appropriate dialog view controls.
-     */
-    private static final class ExerciseViewModel {
-
-        // TODO make ExerciseViewModel a public regular class and add unit tests for auto calculation
-
-        private final int id;
-        private final UnitSystem unitSystem;
-
-        private final ObjectProperty<LocalDate> date;
-        private final IntegerProperty hour;
-        private final IntegerProperty minute;
-        private final ObjectProperty<SportType> sportType;
-        private final ObjectProperty<SportSubType> sportSubType;
-        private final ObjectProperty<IntensityType> intensity;
-        private final FloatProperty distance;
-        private final FloatProperty avgSpeed;
-        private final IntegerProperty duration;
-        private final IntegerProperty avgHeartRate;
-        private final IntegerProperty ascent;
-        private final IntegerProperty calories;
-        private final ObjectProperty<Equipment> equipment;
-        private final StringProperty hrmFile;
-        private final StringProperty comment;
-
-        private final BooleanProperty sportTypeRecordDistance = new SimpleBooleanProperty(false);
-        private final BooleanProperty autoCalcDistance = new SimpleBooleanProperty(false);
-        private final BooleanProperty autoCalcAvgSpeed = new SimpleBooleanProperty(false);
-        private final BooleanProperty autoCalcDuration = new SimpleBooleanProperty(false);
-
-        /**
-         * Creates the ExerciseViewModel with JavaFX properties for the passed Exercise object.
-         *
-         * @param exercise   Exercise to be edited
-         * @param unitSystem the unit system currently used in the UI
-         */
-        public ExerciseViewModel(final Exercise exercise, final UnitSystem unitSystem) {
-            this.id = exercise.getId();
-            this.date = new SimpleObjectProperty(exercise.getDateTime().toLocalDate());
-            this.hour = new SimpleIntegerProperty(exercise.getDateTime().getHour());
-            this.minute = new SimpleIntegerProperty(exercise.getDateTime().getMinute());
-            this.sportType = new SimpleObjectProperty(exercise.getSportType());
-            this.sportSubType = new SimpleObjectProperty(exercise.getSportSubType());
-            this.intensity = new SimpleObjectProperty(exercise.getIntensity());
-            this.distance = new SimpleFloatProperty(exercise.getDistance());
-            this.avgSpeed = new SimpleFloatProperty(exercise.getAvgSpeed());
-            this.duration = new SimpleIntegerProperty(exercise.getDuration());
-            this.equipment = new SimpleObjectProperty(exercise.getEquipment());
-            this.avgHeartRate = new SimpleIntegerProperty(exercise.getAvgHeartRate());
-            this.ascent = new SimpleIntegerProperty(exercise.getAscent());
-            this.calories = new SimpleIntegerProperty(exercise.getCalories());
-            this.hrmFile = new SimpleStringProperty(StringUtils.getTextOrEmptyString(exercise.getHrmFile()));
-            this.comment = new SimpleStringProperty(StringUtils.getTextOrEmptyString(exercise.getComment()));
-
-            // convert weight value when english unit system is enabled
-            this.unitSystem = unitSystem;
-            if (unitSystem == UnitSystem.English) {
-                this.distance.set((float) ConvertUtils.convertKilometer2Miles(exercise.getDistance(), false));
-                this.avgSpeed.set((float) ConvertUtils.convertKilometer2Miles(exercise.getAvgSpeed(), false));
-                this.ascent.set(ConvertUtils.convertMeter2Feet(exercise.getAscent()));
-            }
-
-            setupSportTypeRecordDistance();
-            setupChangeListenersForAutoCalculation(exercise, unitSystem);
-        }
-
-        /**
-         * Creates a new Exercise domain object from the edited JavaFX properties.
-         *
-         * @return Exercise
-         */
-        public Exercise getExercise() {
-            final Exercise exercise = new Exercise(id);
-            exercise.setDateTime(LocalDateTime.of(date.get(), LocalTime.of(hour.getValue(), minute.getValue())));
-            exercise.setSportType(sportType.getValue());
-            exercise.setSportSubType(sportSubType.getValue());
-            exercise.setIntensity(intensity.getValue());
-            exercise.setDistance(distance.getValue());
-            exercise.setAvgSpeed(avgSpeed.getValue());
-            exercise.setDuration(duration.getValue());
-            exercise.setAvgHeartRate(avgHeartRate.getValue());
-            exercise.setAscent(ascent.getValue());
-            exercise.setCalories(calories.getValue());
-            exercise.setEquipment(equipment.getValue());
-            // ignore empty text for optional inputs
-            exercise.setHrmFile(StringUtils.getTrimmedTextOrNull(hrmFile.getValue()));
-            exercise.setComment(StringUtils.getTrimmedTextOrNull(comment.getValue()));
-
-            // convert weight value when english unit system is enabled
-            if (unitSystem == UnitSystem.English) {
-                exercise.setDistance((float) ConvertUtils.convertMiles2Kilometer(exercise.getDistance()));
-                exercise.setAvgSpeed((float) ConvertUtils.convertMiles2Kilometer(exercise.getAvgSpeed()));
-                exercise.setAscent(ConvertUtils.convertFeet2Meter(exercise.getAscent()));
-            }
-            return exercise;
-        }
-
-        /**
-         * Setup of the sportTypeRecordDistance property. It will be updated every time the sport type
-         * changes. When the new sport type does not record the distance, then the distance and avg speed
-         * values will be set to 0.
-         */
-        private void setupSportTypeRecordDistance() {
-            sportTypeRecordDistance.set(sportType.get() == null || sportType.get().isRecordDistance());
-
-            sportType.addListener((observable, oldValue, newValue) -> {
-                sportTypeRecordDistance.set(newValue.isRecordDistance());
-
-                if (!sportTypeRecordDistance.get()) {
-                    distance.set(0);
-                    avgSpeed.set(0);
-                }
-
-                autoCalculate();
-
-                // force value changes for distance and avg speed, so the validation will be executed
-                // depending on the new selected sport type (no other way to fire the event)
-                distance.set(distance.get() + 1);
-                distance.set(distance.get() - 1);
-                avgSpeed.set(avgSpeed.get() + 1);
-                avgSpeed.set(avgSpeed.get() - 1);
-            });
-        }
-
-        /**
-         * Setup the value change listeners which perform the automatic calculation depending on the current
-         * auto calculation mode.
-         */
-        private void setupChangeListenersForAutoCalculation(Exercise exercise, UnitSystem unitSystem) {
-            distance.addListener((observable, oldValue, newValue) -> {
-                if (!autoCalcDistance.get()) {
-                    autoCalculate();
-                }
-            });
-
-            avgSpeed.addListener((observable, oldValue, newValue) -> {
-                if (!autoCalcAvgSpeed.get()) {
-                    autoCalculate();
-                }
-            });
-
-            duration.addListener((observable, oldValue, newValue) -> {
-                if (!autoCalcDuration.get()) {
-                    autoCalculate();
-                }
-            });
-        }
-
-        /**
-         * Performs the calculation of the value which needs to be calculated automatically. The
-         * calculated value will be 0 when one of the other values is 0 or not available.
-         * The current unit system can be ignored here, all inputs are using the same.<br/>
-         * The calculation will not be performed when the current sport type does not records
-         * the distance!
-         */
-        private void autoCalculate() {
-            if (sportTypeRecordDistance.get()) {
-                if (autoCalcDistance.get()) {
-                    if (avgSpeed.get() > 0 && duration.get() > 0) {
-                        distance.set(CalculationUtils.calculateDistance(avgSpeed.get(), duration.get()));
-                    } else {
-                        distance.set(0);
-                    }
-                } else if (autoCalcAvgSpeed.get()) {
-                    if (distance.get() > 0 && duration.get() > 0) {
-                        avgSpeed.set(CalculationUtils.calculateAvgSpeed(distance.get(), duration.get()));
-                    } else {
-                        avgSpeed.set(0);
-                    }
-                } else if (autoCalcDuration.get()) {
-                    if (distance.get() > 0 && avgSpeed.get() > 0) {
-                        duration.set(CalculationUtils.calculateDuration(distance.get(), avgSpeed.get()));
-                    } else {
-                        duration.set(0);
-                    }
-                } else {
-                    throw new IllegalStateException("Invalid auto calculation mode!");
-                }
-            }
         }
     }
 }
