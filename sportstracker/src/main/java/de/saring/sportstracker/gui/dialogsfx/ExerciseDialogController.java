@@ -174,7 +174,42 @@ public class ExerciseDialogController extends AbstractDialogController {
         setupChoiceBoxes();
         fillSportTypeDependentChoiceBoxes();
 
-        // setup binding between view model and the UI controls
+        setupBinding();
+        setupValidation();
+        setupAutoCalculation();
+
+        // enable View and Import HRM buttons only when an HRM file is specified
+        btViewHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
+        btImportHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
+
+        // don't display value '0' for optional inputs when no data available
+        if (exerciseViewModel.ascent.get() == 0) {
+            tfAscent.setText("");
+        }
+        if (exerciseViewModel.avgHeartRate.get() == 0) {
+            tfAvgHeartrate.setText("");
+        }
+        if (exerciseViewModel.calories.get() == 0) {
+            tfCalories.setText("");
+        }
+
+        // TODO add behavior for copy the comment from last similar exercise
+    }
+
+    @Override
+    protected boolean validateAndStore() {
+
+        // store the new Exercise, no further validation needed
+        final Exercise newExercise = exerciseViewModel.getExercise();
+        document.getExerciseList().set(newExercise);
+        return true;
+    }
+
+    /**
+     * Setup of the binding between view model and the UI controls.
+     */
+    private void setupBinding() {
+
         dpDate.valueProperty().bindBidirectional(exerciseViewModel.date);
         tfHour.textProperty().bindBidirectional(exerciseViewModel.hour, new NumberStringConverter("00"));
         tfMinute.textProperty().bindBidirectional(exerciseViewModel.minute, new NumberStringConverter("00"));
@@ -193,8 +228,13 @@ public class ExerciseDialogController extends AbstractDialogController {
         cbEquipment.valueProperty().bindBidirectional(exerciseViewModel.equipment);
         tfHrmFile.textProperty().bindBidirectional(exerciseViewModel.hrmFile);
         taComment.textProperty().bindBidirectional(exerciseViewModel.comment);
+    }
 
-        // setup validation of the UI controls
+    /**
+     * Setup of the validation of the UI controls.
+     */
+    private void setupValidation() {
+
         validationSupport.registerValidator(dpDate,
                 Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.date")));
         validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
@@ -231,34 +271,6 @@ public class ExerciseDialogController extends AbstractDialogController {
         validationSupport.registerValidator(tfCalories, false, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfCalories, context.getFxResources().getString("st.dlg.exercise.error.calories"),
                         !ValidationUtils.isOptionalValueIntegerBetween(newValue, 0, Integer.MAX_VALUE)));
-
-        setupAutoCalculation();
-
-        // enable View and Import HRM buttons only when an HRM file is specified
-        btViewHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
-        btImportHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
-
-        // don't display value '0' for optional inputs when no data available
-        if (exerciseViewModel.ascent.get() == 0) {
-            tfAscent.setText("");
-        }
-        if (exerciseViewModel.avgHeartRate.get() == 0) {
-            tfAvgHeartrate.setText("");
-        }
-        if (exerciseViewModel.calories.get() == 0) {
-            tfCalories.setText("");
-        }
-
-        // TODO add behavior for copy the comment from last similar exercise
-    }
-
-    @Override
-    protected boolean validateAndStore() {
-
-        // store the new Exercise, no further validation needed
-        final Exercise newExercise = exerciseViewModel.getExercise();
-        document.getExerciseList().set(newExercise);
-        return true;
     }
 
     /**
