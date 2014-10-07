@@ -238,6 +238,17 @@ public class ExerciseDialogController extends AbstractDialogController {
         btViewHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
         btImportHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
 
+        // don't display value '0' for optional inputs when no data available
+        if (exerciseViewModel.ascent.get() == 0) {
+            tfAscent.setText("");
+        }
+        if (exerciseViewModel.avgHeartRate.get() == 0) {
+            tfAvgHeartrate.setText("");
+        }
+        if (exerciseViewModel.calories.get() == 0) {
+            tfCalories.setText("");
+        }
+
         // TODO add behavior for copy the comment from last similar exercise
     }
 
