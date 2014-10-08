@@ -1,6 +1,12 @@
 SportsTracker-TODO
 ==================
 
+JavaFX Dialog bugs for AlertDialog =>file a bug ticket:
+- the font size is too big (for message text and buttons)
+  -> inconsistent look with the other application
+- there must be no fullscreen button in the title bar
+- dialog is always placed in screen center, not related to the owner/parent
+
 JavaFX Migration:
 - ExerciseDialog:
   - FXML layout: DONE
