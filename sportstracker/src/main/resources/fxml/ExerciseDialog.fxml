@@ -153,7 +153,7 @@
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
                    <children>
                       <TextArea fx:id="taComment" wrapText="true" VBox.vgrow="ALWAYS" />
-                      <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.exercise.copy_comment.Action.text" textAlignment="CENTER" />
+                      <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCopyComment" text="%st.dlg.exercise.copy_comment.Action.text" textAlignment="CENTER" />
                    </children>
                    <padding>
                       <Insets bottom="16.0" left="12.0" right="12.0" top="16.0" />

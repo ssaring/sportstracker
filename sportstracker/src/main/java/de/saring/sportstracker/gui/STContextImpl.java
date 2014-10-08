@@ -5,7 +5,6 @@ import de.saring.util.ResourceReader;
 import de.saring.util.unitcalc.FormatUtils;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -82,8 +81,8 @@ public class STContextImpl implements STContext {
     }
 
     @Override
-    public void showFxErrorDialog(Window parent, String titleKey, String messageKey) {
-        final Alert alert = new Alert(Alert.AlertType.ERROR, fxResources.getString(messageKey));
+    public void showFxMessageDialog(javafx.stage.Window parent, Alert.AlertType alertType, String titleKey, String messageKey) {
+        final Alert alert = new Alert(alertType, fxResources.getString(messageKey));
         alert.setTitle(fxResources.getString(titleKey));
         alert.setHeaderText(null);
         alert.showAndWait();

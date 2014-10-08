@@ -14,6 +14,7 @@ import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
@@ -113,9 +114,15 @@ public class ExerciseDialogController extends AbstractDialogController {
     @FXML
     private Button btImportHrmFile;
 
-
     /** ViewModel of the edited Exercise. */
     private ExerciseViewModel exerciseViewModel;
+
+    /**
+     * Index of the previous similar exercise in the exercise list from which
+     * the last comment has been copied. It's null when it was not used yet.
+     */
+    private Integer previousExerciseIndex = null;
+
 
     /**
      * Standard c'tor for dependency injection.
@@ -175,8 +182,6 @@ public class ExerciseDialogController extends AbstractDialogController {
         if (exerciseViewModel.calories.get() == 0) {
             tfCalories.setText("");
         }
-
-        // TODO add behavior for copy the comment from last similar exercise
     }
 
     @Override
@@ -305,6 +310,9 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         // update the sport type dependent choiceboxes on each sport type selection change
         cbSportType.addEventHandler(ActionEvent.ACTION, event -> fillSportTypeDependentChoiceBoxes());
+
+        // reset the previous exercise index for copying the comment on sport type / subtype changes
+        cbSportSubtype.addEventHandler(ActionEvent.ACTION, event -> previousExerciseIndex = null);
     }
 
     /**
@@ -370,5 +378,58 @@ public class ExerciseDialogController extends AbstractDialogController {
             default:
                 exerciseViewModel.autoCalcDuration.set(true);
         }
+    }
+
+    /**
+     * Action handler for copying the comment from the previous similar exercise.
+     */
+    @FXML
+    private void onCopyComment(final ActionEvent event) {
+
+        // get selected sport type and subtype (must be selected)
+        final SportType selectedSportType = exerciseViewModel.sportType.get();
+        final SportSubType selectedSportSubType = exerciseViewModel.sportSubType.get();
+
+        if (selectedSportType == null || selectedSportSubType == null) {
+            context.showFxMessageDialog(getWindow(taComment), Alert.AlertType.ERROR,
+                    "common.error", "st.dlg.exercise.error.no_sport_and_subtype");
+            return;
+        }
+
+        // find the start index for searching the previous exercise when not done yet
+        // => get index of current exercise or use the last index when not found
+        if (previousExerciseIndex == null) {
+            int indexCurrentExercise =
+                    document.getExerciseList().indexOf(exerciseViewModel.getExercise());
+            if (indexCurrentExercise == -1) {
+                indexCurrentExercise = document.getExerciseList().size();
+            }
+            previousExerciseIndex = indexCurrentExercise;
+        }
+
+        // check all exercises before the previous exercise
+        int currentSearchIndex = previousExerciseIndex - 1;
+        while (currentSearchIndex >= 0) {
+
+            Exercise tempExercise = document.getExerciseList().getAt(currentSearchIndex);
+
+            // has the current checked exercise the same sport type and subtype?
+            if ((tempExercise.getSportType().getId() == selectedSportType.getId()) &&
+                    (tempExercise.getSportSubType().getId() == selectedSportSubType.getId())) {
+
+                // the current checked exercise is similar => copy comment when there is one
+                if (tempExercise.getComment() != null && tempExercise.getComment().length() > 0) {
+                    exerciseViewModel.comment.set(tempExercise.getComment());
+                    previousExerciseIndex = currentSearchIndex;
+                    return;
+                }
+            }
+            currentSearchIndex--;
+        }
+
+        // nothing found => delete previous index, so searching will start from the end again
+        previousExerciseIndex = null;
+        context.showFxMessageDialog(getWindow(taComment), Alert.AlertType.INFORMATION,
+                "common.info", "st.dlg.exercise.error.no_previous_exercise");
     }
 }
