@@ -7,7 +7,7 @@ JavaFX Migration:
   - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
   - ExerciseDialogController: see TODOs
     - add HRM features for browse, view and import
-    - add unit tests for ExerciseViewModel
+    - add unit tests for untested ExerciseViewModel methods
     - add autocalc behavior => DONE (tested)
     - support for sport types without distance => DONE (tested)
     - support for AvgSpeed mode min/km => DONE (tested)
