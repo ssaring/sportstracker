@@ -1,12 +1,6 @@
 SportsTracker-TODO
 ==================
 
-JavaFX Dialog bugs for AlertDialog =>file a bug ticket:
-- the font size is too big (for message text and buttons)
-  -> inconsistent look with the other application
-- there must be no fullscreen button in the title bar
-- dialog is always placed in screen center, not related to the owner/parent
-
 JavaFX Migration:
 - ExerciseDialog:
   - FXML layout: DONE
@@ -26,12 +20,15 @@ JavaFX Migration:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
       - Workaround: dlg.getDialogPane().setStyle("-fx-font-size: 1em;");
-      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38818
+      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38818 => fixed in JavaFX 8u40
+        -> remove in AbstractDialogController and STContextImpl when bugfix is available
     - It's quite tricky to add a custom validation when the user presses OK in the dialog,
       the dialog is always being closed
       - Workaround: lookup the OK button and add a EventFilter for ActionEvent.Action.
         This filter validates the dialog input and consumes the action event in case of errors.
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38819
+    - Alert dialogs must not have fullscreen and minimize window buttons
+      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38946
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the
