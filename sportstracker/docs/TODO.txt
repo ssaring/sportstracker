@@ -15,8 +15,6 @@ JavaFX Migration:
   - test all dialog use cases
   - check old ExerciseDialog -> has something been forgotten?
   - remove old dialog
-- Weight Dialog:
-  - extract ViewModel classes and add unit tests (see Exercise Dialog)
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)

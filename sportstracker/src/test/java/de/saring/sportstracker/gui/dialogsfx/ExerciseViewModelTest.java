@@ -26,7 +26,7 @@ public class ExerciseViewModelTest {
     @Before
     public void setUp() {
         exercise = new Exercise(123);
-        exercise.setDateTime(LocalDateTime.of(2014, 10, 20, 7, 30, 40));
+        exercise.setDateTime(LocalDateTime.of(2014, 10, 20, 7, 30, 0));
         exercise.setSportType(new SportType(234));
         exercise.setSportSubType(new SportSubType(345));
         exercise.setDuration(3600);
@@ -56,6 +56,7 @@ public class ExerciseViewModelTest {
         // test without modifications
         Exercise unmodifiedExercise = viewModel.getExercise();
         assertEquals(exercise.getId(), unmodifiedExercise.getId());
+        assertEquals(exercise.getDateTime(), unmodifiedExercise.getDateTime());
         assertEquals(exercise.getSportType(), unmodifiedExercise.getSportType());
         assertEquals(exercise.getSportSubType(), unmodifiedExercise.getSportSubType());
         assertEquals(exercise.getDuration(), unmodifiedExercise.getDuration());
@@ -73,7 +74,7 @@ public class ExerciseViewModelTest {
         viewModel.hour.set(14);
         viewModel.minute.set(45);
         viewModel.distance.set(150f);
-        viewModel.comment.set("Bar Foo");
+        viewModel.comment.set("  Bar Foo  ");
 
         Exercise modifiedExercise = viewModel.getExercise();
         assertEquals(LocalDateTime.of(2014, 10, 20, 14, 45, 0), modifiedExercise.getDateTime());
