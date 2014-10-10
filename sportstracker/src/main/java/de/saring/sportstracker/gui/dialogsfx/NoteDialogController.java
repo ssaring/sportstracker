@@ -5,12 +5,6 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
@@ -23,9 +17,6 @@ import org.controlsfx.validation.Validator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 /**
  * Controller (MVC) class of the Note dialog for editing / adding Note entries.
@@ -111,43 +102,5 @@ public class NoteDialogController extends AbstractDialogController {
         final Note newNote = noteViewModel.getNote();
         document.getNoteList().set(newNote);
         return true;
-    }
-
-    /**
-     * This ViewModel class provides JavaFX properties of all Note attributes to be edited in the dialog.
-     * So they can be bound to the appropriate dialog view controls.
-     */
-    private static final class NoteViewModel {
-
-        private final int id;
-        private final ObjectProperty<LocalDate> date;
-        private final IntegerProperty hour;
-        private final IntegerProperty minute;
-        private final StringProperty text;
-
-        /**
-         * Creates the NoteViewModel with JavaFX properties for the passed Note object.
-         *
-         * @param note Note to be edited
-         */
-        public NoteViewModel(final Note note) {
-            this.id = note.getId();
-            this.date = new SimpleObjectProperty(note.getDateTime().toLocalDate());
-            this.hour = new SimpleIntegerProperty(note.getDateTime().getHour());
-            this.minute = new SimpleIntegerProperty(note.getDateTime().getMinute());
-            this.text = new SimpleStringProperty(note.getText());
-        }
-
-        /**
-         * Creates a new Note domain object from the edited JavaFX properties.
-         *
-         * @return Note
-         */
-        public Note getNote() {
-            final Note note = new Note(id);
-            note.setDateTime(LocalDateTime.of(date.get(), LocalTime.of(hour.getValue(), minute.getValue())));
-            note.setText(text.getValue().trim());
-            return note;
-        }
     }
 }
