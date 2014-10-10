@@ -55,7 +55,7 @@ public class ExerciseViewModel {
     public final BooleanProperty sportTypeRecordDistance = new SimpleBooleanProperty(false);
     public final BooleanProperty autoCalcDistance = new SimpleBooleanProperty(false);
     public final BooleanProperty autoCalcAvgSpeed = new SimpleBooleanProperty(false);
-    public final BooleanProperty autoCalcDuration = new SimpleBooleanProperty(false);
+    public final BooleanProperty autoCalcDuration = new SimpleBooleanProperty(true);
 
     /**
      * Creates the ExerciseViewModel with JavaFX properties for the passed Exercise object.

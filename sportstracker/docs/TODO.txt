@@ -7,7 +7,6 @@ JavaFX Migration:
   - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
   - ExerciseDialogController: see TODOs
     - add HRM features for browse, view and import
-    - add unit tests for untested ExerciseViewModel methods
     - add autocalc behavior => DONE (tested)
     - support for sport types without distance => DONE (tested)
     - support for AvgSpeed mode min/km => DONE (tested)
@@ -16,6 +15,8 @@ JavaFX Migration:
   - test all dialog use cases
   - check old ExerciseDialog -> has something been forgotten?
   - remove old dialog
+- Note and Weight Dialog:
+  - extract ViewModel classes and add unit tests (see Exercise Dialog)
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)

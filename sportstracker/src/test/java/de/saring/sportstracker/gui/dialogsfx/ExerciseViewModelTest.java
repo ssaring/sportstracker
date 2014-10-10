@@ -1,6 +1,8 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
@@ -44,9 +46,7 @@ public class ExerciseViewModelTest {
      */
     @Test
     public void testGetExerciseWithMetricUnits() {
-
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise, FormatUtils.UnitSystem.Metric);
-        viewModel.autoCalcDuration.set(true);
 
         // test that metric units are not converted
         assertEquals(exercise.getDistance(), viewModel.distance.get(), 0.0001f);
@@ -83,9 +83,7 @@ public class ExerciseViewModelTest {
      */
     @Test
     public void testGetExerciseWithEnglishUnits() {
-
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise, FormatUtils.UnitSystem.English);
-        viewModel.autoCalcDuration.set(true);
 
         // test that metric units are converted to english units
         assertEquals(71.4577, viewModel.distance.get(), 0.0001f);
@@ -97,5 +95,112 @@ public class ExerciseViewModelTest {
         assertEquals(exercise.getDistance(), unmodifiedExercise.getDistance(), 0.0001f);
         assertEquals(exercise.getAvgSpeed(), unmodifiedExercise.getAvgSpeed(), 0.0001f);
         assertEquals(exercise.getAscent(), unmodifiedExercise.getAscent());
+    }
+
+    /**
+     * Test of the sport type change listener, which resets the distance and avg speed
+     * properties when the new sport type does not records the distance.
+     */
+    @Test
+    public void testSportTypeListener() {
+        ExerciseViewModel viewModel = new ExerciseViewModel(exercise, FormatUtils.UnitSystem.Metric);
+
+        // test with sport type where the distance is recorded
+        SportType stWithDistance = new SportType(100);
+        stWithDistance.setRecordDistance(true);
+        viewModel.sportType.set(stWithDistance);
+
+        assertEquals(exercise.getDistance(), viewModel.distance.get(), 0.0001f);
+        assertEquals(exercise.getAvgSpeed(), viewModel.avgSpeed.get(), 0.0001f);
+        assertTrue(exercise.getDuration() > 0);
+        assertTrue(viewModel.sportTypeRecordDistance.get());
+
+        // test with sport type where the distance is not recorded
+        SportType stWithoutDistance = new SportType(101);
+        stWithoutDistance.setRecordDistance(false);
+        viewModel.sportType.set(stWithoutDistance);
+
+        assertEquals(0f, viewModel.distance.get(), 0.0001f);
+        assertEquals(0f, viewModel.avgSpeed.get(), 0.0001f);
+        assertTrue(exercise.getDuration() > 0);
+        assertFalse(viewModel.sportTypeRecordDistance.get());
+    }
+
+    /**
+     * Test of the automatic calculation of the distance on changes of the avg speed or duration values.
+     */
+    @Test
+    public void testAutoCalculationOfDistance() {
+
+        exercise.setDistance(100f);
+        exercise.setAvgSpeed(25f);
+        exercise.setDuration(4 * 3600);
+
+        ExerciseViewModel viewModel = new ExerciseViewModel(exercise, FormatUtils.UnitSystem.Metric);
+        viewModel.autoCalcDistance.set(true);
+        viewModel.autoCalcAvgSpeed.set(false);
+        viewModel.autoCalcDuration.set(false);
+
+        // change avg speed
+        viewModel.avgSpeed.set(20f);
+        assertEquals(80f, viewModel.distance.get(), 0.0001f);
+        assertEquals(4 * 3600, viewModel.duration.get());
+
+        // change duration
+        viewModel.duration.set((int) (4.75 * 3600));
+        assertEquals(95f, viewModel.distance.get(), 0.0001f);
+        assertEquals(20f, viewModel.avgSpeed.get(), 0.0001f);
+    }
+
+    /**
+     * Test of the automatic calculation of the avg speed on changes of the distance or duration values.
+     */
+    @Test
+    public void testAutoCalculationOfAvgSpeed() {
+
+        exercise.setDistance(100f);
+        exercise.setAvgSpeed(25f);
+        exercise.setDuration(4 * 3600);
+
+        ExerciseViewModel viewModel = new ExerciseViewModel(exercise, FormatUtils.UnitSystem.Metric);
+        viewModel.autoCalcDistance.set(false);
+        viewModel.autoCalcAvgSpeed.set(true);
+        viewModel.autoCalcDuration.set(false);
+
+        // change distance
+        viewModel.distance.set(110f);
+        assertEquals(27.5f, viewModel.avgSpeed.get(), 0.0001f);
+        assertEquals(4 * 3600, viewModel.duration.get());
+
+        // change duration
+        viewModel.duration.set((int) (3.5 * 3600));
+        assertEquals(110f, viewModel.distance.get(), 0.0001f);
+        assertEquals(31.4286f, viewModel.avgSpeed.get(), 0.0001f);
+    }
+
+    /**
+     * Test of the automatic calculation of the duration on changes of the distance or avg speed values.
+     */
+    @Test
+    public void testAutoCalculationOfDuration() {
+
+        exercise.setDistance(100f);
+        exercise.setAvgSpeed(25f);
+        exercise.setDuration(4 * 3600);
+
+        ExerciseViewModel viewModel = new ExerciseViewModel(exercise, FormatUtils.UnitSystem.Metric);
+        viewModel.autoCalcDistance.set(false);
+        viewModel.autoCalcAvgSpeed.set(false);
+        viewModel.autoCalcDuration.set(true);
+
+        // change distance
+        viewModel.distance.set(112.5f);
+        assertEquals(25f, viewModel.avgSpeed.get(), 0.0001f);
+        assertEquals((int) (4.5 * 3600), viewModel.duration.get());
+
+        // change avg speed
+        viewModel.avgSpeed.set(30f);
+        assertEquals(112.5f, viewModel.distance.get(), 0.0001f);
+        assertEquals((int) (3.75 * 3600), viewModel.duration.get());
     }
 }
