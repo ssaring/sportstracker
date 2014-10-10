@@ -69,7 +69,7 @@ public class ExerciseParserFactory {
 
     /**
      * Returns the list of all ExerciseParserInfo objects for all available parser
-     * implementations (usefull e.g. for File Open dialogs for list of suffixes).
+     * implementations (useful e.g. for File Open dialogs for list of suffixes).
      *
      * @return list of ExerciseParserInfo objects for all parser implementations
      */

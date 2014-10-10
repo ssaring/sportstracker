@@ -7,6 +7,7 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.StringUtils;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import de.saring.util.gui.javafx.SpeedToStringConverter;
@@ -30,7 +31,9 @@ import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
+import java.io.File;
 import java.util.Arrays;
 
 /**
@@ -42,6 +45,9 @@ import java.util.Arrays;
 public class ExerciseDialogController extends AbstractDialogController {
 
     private final STDocument document;
+
+    @Inject
+    private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
 
     @FXML
     private DatePicker dpDate;
@@ -377,6 +383,22 @@ public class ExerciseDialogController extends AbstractDialogController {
                 break;
             default:
                 exerciseViewModel.autoCalcDuration.set(true);
+        }
+    }
+
+    /**
+     * Action handler for selecting an HRM exercise file in the FileChooser.
+     */
+    @FXML
+    private void onBrowseHrmFile(final ActionEvent event) {
+
+        // do we have an initial HRM file for the dialog?
+        final String strHRMFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.get());
+
+        // show file open dialog and display selected filename
+        final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(document.getOptions(), strHRMFile);
+        if (selectedFile != null) {
+            exerciseViewModel.hrmFile.set(selectedFile.getAbsolutePath());
         }
     }
 

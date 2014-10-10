@@ -128,7 +128,7 @@
                                <GridPane.margin>
                                   <Insets top="24.0" />
                                </GridPane.margin></TextField>
-                            <Button mnemonicParsing="false" text="%st.dlg.exercise.hrm_browse.Action.text" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                            <Button mnemonicParsing="false" onAction="#onBrowseHrmFile" text="%st.dlg.exercise.hrm_browse.Action.text" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                <GridPane.margin>
                                   <Insets top="24.0" />
                                </GridPane.margin>

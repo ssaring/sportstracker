@@ -5,6 +5,15 @@ JavaFX Migration:
 - ExerciseDialog:
   - FXML layout: DONE
   - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
+  - Port of HRMFileOpenDialog and use in ExerciseDialog and Main Window
+    - Mac Problems:
+      - FileChoose dialog shows no title
+      - the initial file is not selected (it only selects the directory)
+      - there is no extension filter for All files (*.*)
+        -> workaround: add first filter "All Files", remove filter "All Ex.Viewer Files"
+    => Test FileChooser on Windows
+    => see TODOs in HRMFileOpenDialog and ExerciseDialogController
+    => remove old dialog when not needed anymore
   - ExerciseDialogController: see TODOs
     - add HRM features for browse, view and import
     - add autocalc behavior => DONE (tested)
