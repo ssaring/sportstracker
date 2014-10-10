@@ -15,7 +15,7 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 
 /**
- * Unit tests of class ExerciseViewModelTest.
+ * Unit tests of class ExerciseViewModel.
  *
  * @author Stefan Saring
  */
@@ -70,10 +70,13 @@ public class ExerciseViewModelTest {
         assertEquals(exercise.getComment(), unmodifiedExercise.getComment());
 
         // test after modifications
+        viewModel.hour.set(14);
+        viewModel.minute.set(45);
         viewModel.distance.set(150f);
         viewModel.comment.set("Bar Foo");
 
         Exercise modifiedExercise = viewModel.getExercise();
+        assertEquals(LocalDateTime.of(2014, 10, 20, 14, 45, 0), modifiedExercise.getDateTime());
         assertEquals(150f, modifiedExercise.getDistance(), 0.0001f);
         assertEquals("Bar Foo", modifiedExercise.getComment());
     }
