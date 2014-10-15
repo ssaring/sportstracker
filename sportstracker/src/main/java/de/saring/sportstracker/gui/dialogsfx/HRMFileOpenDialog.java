@@ -51,7 +51,6 @@ public class HRMFileOpenDialog {
         final File fInitialFile = initialFile == null ? null : new File(initialFile);
         if (fInitialFile != null && fInitialFile.exists() && fInitialFile.isFile()) {
             fileChooser.setInitialDirectory(fInitialFile.getParentFile());
-            fileChooser.setInitialFileName(fInitialFile.getName());
         } else {
             // use previous exercise directory as initial directory when available
             File initialDirectory;
@@ -91,9 +90,9 @@ public class HRMFileOpenDialog {
         List<ExerciseParserInfo> parserInfos = ExerciseParserFactory.getExerciseParserInfos();
         List<String> lAllExtensions = new ArrayList<>();
 
-        // append a file filter for all ExerciseViewer file extensions
+        // append a file filter for all files
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
-                context.getFxResources().getString("st.dlg.hrm_file_open.filter_all"), "*.*"));
+                context.getFxResources().getString("st.dlg.hrm_file_open.filter_all_files"), "*.*"));
 
         parserInfos.forEach(parserInfo -> {
             final String filterName = String.format(
@@ -106,8 +105,11 @@ public class HRMFileOpenDialog {
 
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(filterName, extendedSuffixes));
 
-            // append the parsers suffixes to the list of all extensions
             lAllExtensions.addAll(extendedSuffixes);
         });
+
+        // append a file filter for all ExerciseViewer file extensions
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
+                context.getFxResources().getString("st.dlg.hrm_file_open.filter_all"), lAllExtensions));
     }
 }
