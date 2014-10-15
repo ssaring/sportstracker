@@ -1,5 +1,8 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.parser.ExerciseParser;
+import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Exercise.IntensityType;
@@ -34,7 +37,10 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Controller (MVC) class of the Wieght dialog for editing / adding Exercise entries.
@@ -43,6 +49,8 @@ import java.util.Arrays;
  */
 @Singleton
 public class ExerciseDialogController extends AbstractDialogController {
+
+    private static final Logger LOGGER = Logger.getLogger(ExerciseDialogController.class.getName());
 
     private final STDocument document;
 
@@ -393,14 +401,70 @@ public class ExerciseDialogController extends AbstractDialogController {
     private void onBrowseHrmFile(final ActionEvent event) {
 
         // do we have an initial HRM file for the dialog?
-        final String strHRMFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.get());
+        final String hrmFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.get());
 
         // show file open dialog and display selected filename
-        final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(document.getOptions(), strHRMFile);
+        final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(document.getOptions(), hrmFile);
         if (selectedFile != null) {
             exerciseViewModel.hrmFile.set(selectedFile.getAbsolutePath());
         }
     }
+
+    /**
+     * Action handler for importing the exercise data from the selected HRM file.
+     */
+    @FXML
+    private void onImportHrmFile(final ActionEvent event) {
+
+        final String hrmFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.get());
+        if (hrmFile == null) {
+            return;
+        }
+
+        // parse exercise file
+        EVExercise pvExercise = null;
+        try {
+            ExerciseParser parser = ExerciseParserFactory.getParser(hrmFile);
+            pvExercise = parser.parseExercise(hrmFile);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Failed to parse exercise file!", e);
+            context.showFxMessageDialog(getWindow(tfHrmFile), Alert.AlertType.ERROR, "common.error",
+                    "st.dlg.exercise.error.import_console", hrmFile);
+            return;
+        }
+
+        // fill dialog widgets with values from parsed HRM exercise
+        final LocalDateTime pvExerciseDateTime = pvExercise.getDateTime();
+        if (pvExerciseDateTime != null) {
+            exerciseViewModel.date.setValue(pvExerciseDateTime.toLocalDate());
+            exerciseViewModel.hour.set(pvExerciseDateTime.getHour());
+            exerciseViewModel.minute.set(pvExerciseDateTime.getMinute());
+        }
+
+        // TODO proceed
+        /* tfDuration.setText(formatUtils.seconds2TimeString(pvExercise.getDuration() / 10));
+        tfAvgHeartrate.setText(String.valueOf(pvExercise.getHeartRateAVG()));
+        tfCalories.setText(String.valueOf(pvExercise.getEnergy()));
+
+        // fill speed-related values
+        if (pvExercise.getSpeed() != null) {
+
+            tfAvgSpeed.setText(formatUtils.speedToStringWithoutUnitName(
+                    pvExercise.getSpeed().getSpeedAVG(), 3));
+            tfDistance.setText(formatUtils.distanceToStringWithoutUnitName(
+                    pvExercise.getSpeed().getDistance() / 1000f, 3));
+
+            // imported distance, AVG and duration are often not in correct relation
+            // => calculate the selected value automatically
+            calculateAutomaticValue();
+        }
+
+        // fill ascent-related values
+        if (pvExercise.getAltitude() != null) {
+            tfAscent.setText(formatUtils.heightToStringWithoutUnitName(pvExercise.getAltitude().getAscent()));
+        } */
+    }
+
 
     /**
      * Action handler for copying the comment from the previous similar exercise.

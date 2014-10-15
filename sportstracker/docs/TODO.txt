@@ -10,6 +10,7 @@ JavaFX Migration:
   - FXML layout: DONE
   - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
   - ExerciseDialogController: see TODOs
+    - complete "Import HRM file", see TODOs in ExerciseDialogController
     - add HRM features for browse, view and import
     - add autocalc behavior => DONE (tested)
     - support for sport types without distance => DONE (tested)
@@ -32,6 +33,8 @@ JavaFX Migration:
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38819
     - Alert dialogs must not have fullscreen and minimize window buttons
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38946
+    - Alert dialogs does not show the complete message when longer than 2 lines
+      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38998
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the

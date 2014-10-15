@@ -136,7 +136,7 @@
                             <HBox fillHeight="false" spacing="12.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
                                <children>
                                   <Button fx:id="btViewHrmFile" mnemonicParsing="false" text="%st.dlg.exercise.hrm_view.Action.text" />
-                                  <Button fx:id="btImportHrmFile" mnemonicParsing="false" text="%st.dlg.exercise.hrm_import.Action.text" />
+                                  <Button fx:id="btImportHrmFile" mnemonicParsing="false" onAction="#onImportHrmFile" text="%st.dlg.exercise.hrm_import.Action.text" />
                                </children>
                             </HBox>
                           </children>

@@ -81,11 +81,20 @@ public class STContextImpl implements STContext {
     }
 
     @Override
-    public void showFxMessageDialog(javafx.stage.Window parent, Alert.AlertType alertType, String titleKey, String messageKey) {
-        final Alert alert = new Alert(alertType, fxResources.getString(messageKey));
+    public void showFxMessageDialog(javafx.stage.Window parent, Alert.AlertType alertType, String titleKey,
+                                    String messageKey, Object... arguments) {
+
+        // replace placeholders in message with arguments if specified
+        String message = fxResources.getString(messageKey);
+        if (arguments.length > 0) {
+            message = String.format(message, arguments);
+        }
+
+        final Alert alert = new Alert(alertType, message);
         alert.initOwner(parent);
         alert.setTitle(fxResources.getString(titleKey));
         alert.setHeaderText(null);
+        alert.setResizable(true);
         // TODO remove when fixed in OpenJFX-Dialogs
         // workaround for disabling bigger font size of custom dialog content
         alert.getDialogPane().setStyle("-fx-font-size: 1em;");

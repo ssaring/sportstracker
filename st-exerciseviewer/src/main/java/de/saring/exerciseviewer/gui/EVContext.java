@@ -70,8 +70,10 @@ public interface EVContext {
      * @param alertType the type of the message dialog
      * @param titleKey the resource key for the dialog title text
      * @param messageKey the resource key for the message text
+     * @param arguments list of objects which needs to be inserted in the message text (optional)
      */
-    void showFxMessageDialog(javafx.stage.Window parent, Alert.AlertType alertType, String titleKey, String messageKey);
+    void showFxMessageDialog(javafx.stage.Window parent, Alert.AlertType alertType, String titleKey,
+                             String messageKey, Object... arguments);
 
     /**
      * Returns the helper class for reading resources from the applications properties
