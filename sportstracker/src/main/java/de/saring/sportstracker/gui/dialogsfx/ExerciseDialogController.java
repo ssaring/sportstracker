@@ -15,6 +15,8 @@ import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import de.saring.util.gui.javafx.SpeedToStringConverter;
 import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
+import de.saring.util.unitcalc.ConvertUtils;
+import de.saring.util.unitcalc.FormatUtils;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -441,28 +443,29 @@ public class ExerciseDialogController extends AbstractDialogController {
             exerciseViewModel.minute.set(pvExerciseDateTime.getMinute());
         }
 
-        // TODO proceed
-        /* tfDuration.setText(formatUtils.seconds2TimeString(pvExercise.getDuration() / 10));
-        tfAvgHeartrate.setText(String.valueOf(pvExercise.getHeartRateAVG()));
-        tfCalories.setText(String.valueOf(pvExercise.getEnergy()));
+        exerciseViewModel.avgHeartRate.set(pvExercise.getHeartRateAVG());
+        exerciseViewModel.calories.set(pvExercise.getEnergy());
 
-        // fill speed-related values
+        int importedDuration = pvExercise.getDuration() / 10;
+
+        // fill speed-related values if available, otherwise just the duration
         if (pvExercise.getSpeed() != null) {
-
-            tfAvgSpeed.setText(formatUtils.speedToStringWithoutUnitName(
-                    pvExercise.getSpeed().getSpeedAVG(), 3));
-            tfDistance.setText(formatUtils.distanceToStringWithoutUnitName(
-                    pvExercise.getSpeed().getDistance() / 1000f, 3));
-
-            // imported distance, AVG and duration are often not in correct relation
-            // => calculate the selected value automatically
-            calculateAutomaticValue();
+            exerciseViewModel.setAutoCalcFields(
+                    pvExercise.getSpeed().getDistance() / 1000f,
+                    pvExercise.getSpeed().getSpeedAVG(),
+                    importedDuration);
+        } else {
+            exerciseViewModel.duration.set(importedDuration);
         }
 
         // fill ascent-related values
         if (pvExercise.getAltitude() != null) {
-            tfAscent.setText(formatUtils.heightToStringWithoutUnitName(pvExercise.getAltitude().getAscent()));
-        } */
+            exerciseViewModel.ascent.set(pvExercise.getAltitude().getAscent());
+
+            if (document.getOptions().getUnitSystem() == FormatUtils.UnitSystem.English) {
+                exerciseViewModel.ascent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.ascent.get()));
+            }
+        }
     }
 
 

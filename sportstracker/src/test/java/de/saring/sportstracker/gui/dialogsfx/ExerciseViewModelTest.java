@@ -207,4 +207,97 @@ public class ExerciseViewModelTest {
         assertEquals(112.5f, viewModel.distance.get(), 0.0001f);
         assertEquals((int) (3.75 * 3600), viewModel.duration.get());
     }
+
+    /**
+     * Test of method setAutoCalcFields() when the distance is being calculated automatically.
+     */
+    @Test
+    public void testSetAutoCalcFieldsWithAutomaticDistance() {
+
+        exercise.setDistance(100f);
+        exercise.setAvgSpeed(25f);
+        exercise.setDuration(4 * 3600);
+
+        ExerciseViewModel viewModel = new ExerciseViewModel(exercise, FormatUtils.UnitSystem.Metric);
+        viewModel.autoCalcDistance.set(true);
+        viewModel.autoCalcAvgSpeed.set(false);
+        viewModel.autoCalcDuration.set(false);
+
+        viewModel.setAutoCalcFields(120f, 40f, 5 * 3600);
+
+        // the distance must not be set, must be calculated properly instead
+        assertEquals(200f, viewModel.distance.get(), 0.0001f);
+        assertEquals(40f, viewModel.avgSpeed.get(), 0.0001f);
+        assertEquals(5 * 3600, viewModel.duration.get());
+    }
+
+    /**
+     * Test of method setAutoCalcFields() when the avg speed is being calculated automatically.
+     */
+    @Test
+    public void testSetAutoCalcFieldsWithAutomaticAvgSpeed() {
+
+        exercise.setDistance(100f);
+        exercise.setAvgSpeed(25f);
+        exercise.setDuration(4 * 3600);
+
+        ExerciseViewModel viewModel = new ExerciseViewModel(exercise, FormatUtils.UnitSystem.Metric);
+        viewModel.autoCalcDistance.set(false);
+        viewModel.autoCalcAvgSpeed.set(true);
+        viewModel.autoCalcDuration.set(false);
+
+        viewModel.setAutoCalcFields(120f, 40f, 5 * 3600);
+
+        // the avg speed must not be set, must be calculated properly instead
+        assertEquals(120f, viewModel.distance.get(), 0.0001f);
+        assertEquals(24f, viewModel.avgSpeed.get(), 0.0001f);
+        assertEquals(5 * 3600, viewModel.duration.get());
+    }
+
+    /**
+     * Test of method setAutoCalcFields() when the duration is being calculated automatically.
+     */
+    @Test
+    public void testSetAutoCalcFieldsWithAutomaticDuration() {
+
+        exercise.setDistance(100f);
+        exercise.setAvgSpeed(25f);
+        exercise.setDuration(4 * 3600);
+
+        ExerciseViewModel viewModel = new ExerciseViewModel(exercise, FormatUtils.UnitSystem.Metric);
+        viewModel.autoCalcDistance.set(false);
+        viewModel.autoCalcAvgSpeed.set(false);
+        viewModel.autoCalcDuration.set(true);
+
+        viewModel.setAutoCalcFields(120f, 40f, 5 * 3600);
+
+        // the duration must not be set, must be calculated properly instead
+        assertEquals(120f, viewModel.distance.get(), 0.0001f);
+        assertEquals(40f, viewModel.avgSpeed.get(), 0.0001f);
+        assertEquals(3 * 3600, viewModel.duration.get());
+    }
+
+    /**
+     * Test of method setAutoCalcFields() when the duration is being calculated automatically.
+     * The specified distance and avg speed must be converted to english unit system.
+     */
+    @Test
+    public void testSetAutoCalcFieldsWithAutomaticDurationAndEnglishUnits() {
+
+        exercise.setDistance(100f);
+        exercise.setAvgSpeed(25f);
+        exercise.setDuration(4 * 3600);
+
+        ExerciseViewModel viewModel = new ExerciseViewModel(exercise, FormatUtils.UnitSystem.English);
+        viewModel.autoCalcDistance.set(false);
+        viewModel.autoCalcAvgSpeed.set(false);
+        viewModel.autoCalcDuration.set(true);
+
+        viewModel.setAutoCalcFields(120f, 40f, 5 * 3600);
+
+        // the duration must not be set, must be calculated properly instead
+        assertEquals(74.5645f, viewModel.distance.get(), 0.0001f);
+        assertEquals(24.8548f, viewModel.avgSpeed.get(), 0.0001f);
+        assertEquals(3 * 3600, viewModel.duration.get());
+    }
 }

@@ -6,12 +6,12 @@ JavaFX Migration:
   - FXML layout: DONE
   - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
   - ExerciseDialogController: see TODOs
-    - complete "Import HRM file", see TODOs in ExerciseDialogController
-    - add HRM features for browse, view and import
+    - add "View HRM" feature
     - add autocalc behavior => DONE (tested)
     - support for sport types without distance => DONE (tested)
     - support for AvgSpeed mode min/km => DONE (tested)
     - copy comment from previous exercise => DONE (tested)
+    - add HRM import => DONE (tested)
   - cleanup I18N properties
   - test all dialog use cases
   - check old ExerciseDialog -> has something been forgotten?

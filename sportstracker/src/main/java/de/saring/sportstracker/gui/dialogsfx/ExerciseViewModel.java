@@ -125,6 +125,35 @@ public class ExerciseViewModel {
     }
 
     /**
+     * Sets the new values for the properties distance, avg speed and duration depending on the current
+     * auto calculation mode. The auto calculated field will not be set, to ensure consistent data.
+     *
+     * @param newDistance new distance in km (will be converted when english unit system is used)
+     * @param newAvgSpeed new avg speed in km/h (will be converted when english unit system is used)
+     * @param newDuration new duration in seconds
+     */
+    public void setAutoCalcFields(final float newDistance, final float newAvgSpeed, final int newDuration) {
+
+        if (!autoCalcDistance.get()) {
+            if (unitSystem == FormatUtils.UnitSystem.English) {
+                this.distance.set((float) ConvertUtils.convertKilometer2Miles(newDistance, false));
+            } else {
+                this.distance.set(newDistance);
+            }
+        }
+        if (!autoCalcAvgSpeed.get()) {
+            if (unitSystem == FormatUtils.UnitSystem.English) {
+                this.avgSpeed.set((float) ConvertUtils.convertKilometer2Miles(newAvgSpeed, false));
+            } else {
+                this.avgSpeed.set(newAvgSpeed);
+            }
+        }
+        if (!autoCalcDuration.get()) {
+            this.duration.set(newDuration);
+        }
+    }
+
+    /**
      * Setup of the sportTypeRecordDistance property. It will be updated every time the sport type
      * changes. When the new sport type does not record the distance, then the distance and avg speed
      * values will be set to 0.
