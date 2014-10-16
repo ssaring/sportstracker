@@ -4,7 +4,6 @@ SportsTracker-TODO
 JavaFX Migration:
 - ExerciseDialog:
   - FXML layout: DONE
-  - usage in STController: DONE, but not not for Drag&Drop yet! (see TODO)
   - ExerciseDialogController: see TODOs
     - add "View HRM" feature
     - add autocalc behavior => DONE (tested)
@@ -12,6 +11,7 @@ JavaFX Migration:
     - support for AvgSpeed mode min/km => DONE (tested)
     - copy comment from previous exercise => DONE (tested)
     - add HRM import => DONE (tested)
+    - add Drag&Drop of HRM files to main window => DONE (tested)
   - cleanup I18N properties
   - test all dialog use cases
   - check old ExerciseDialog -> has something been forgotten?

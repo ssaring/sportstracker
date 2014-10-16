@@ -263,7 +263,7 @@ public class STControllerImpl implements STController {
 
         // start exercise dialog for a new created exercise
         Exercise newExercise = createNewExercise(dateForNewEntries);
-        prExerciseDialogController.get().show(context.getPrimaryStage(), newExercise);
+        prExerciseDialogController.get().show(context.getPrimaryStage(), newExercise, false);
     }
 
     @Override
@@ -319,7 +319,7 @@ public class STControllerImpl implements STController {
      */
     private void editExercise(int exerciseID) {
         Exercise selExercise = document.getExerciseList().getByID(exerciseID);
-        prExerciseDialogController.get().show(context.getPrimaryStage(), selExercise);
+        prExerciseDialogController.get().show(context.getPrimaryStage(), selExercise, false);
     }
 
     /**
@@ -367,7 +367,7 @@ public class STControllerImpl implements STController {
         Exercise copiedExercise = createExerciseCopy(selExercise);
 
         // start exercise dialog for the copied exercise
-        prExerciseDialogController.get().show(context.getPrimaryStage(), copiedExercise);
+        prExerciseDialogController.get().show(context.getPrimaryStage(), copiedExercise, false);
     }
 
     /**
@@ -578,8 +578,8 @@ public class STControllerImpl implements STController {
             Exercise newExercise = createNewExercise(null);
             newExercise.setHrmFile(filename);
 
-            // TODO
             // start exercise dialog for it and import the HRM data
+            prExerciseDialogController.get().show(context.getPrimaryStage(), newExercise, true);
         }
         return true;
     }

@@ -17,6 +17,7 @@ import de.saring.util.gui.javafx.SpeedToStringConverter;
 import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -133,6 +134,9 @@ public class ExerciseDialogController extends AbstractDialogController {
     /** ViewModel of the edited Exercise. */
     private ExerciseViewModel exerciseViewModel;
 
+    /** Flag whether the HRM file specified in the passed exercise needs to be imported when starting the dialog. */
+    private boolean importHrmFileOnStart = false;
+
     /**
      * Index of the previous similar exercise in the exercise list from which
      * the last comment has been copied. It's null when it was not used yet.
@@ -158,9 +162,12 @@ public class ExerciseDialogController extends AbstractDialogController {
      *
      * @param parent parent window of the dialog
      * @param exercise Exercise to be edited
+     * @param importHrmFileOnStart flag for importing the HRM file specified in the exercise
+     *                             (e.g. when dropping exercise files to main window)
      */
-    public void show(final Window parent, final Exercise exercise) {
+    public void show(final Window parent, final Exercise exercise, boolean importHrmFileOnStart) {
         this.exerciseViewModel = new ExerciseViewModel(exercise, document.getOptions().getUnitSystem());
+        this.importHrmFileOnStart = importHrmFileOnStart;
 
         final boolean newExercise = document.getExerciseList().getByID(exercise.getId()) == null;
         final String dlgTitleKey = newExercise ? "st.dlg.exercise.title.add" : "st.dlg.exercise.title";
@@ -197,6 +204,11 @@ public class ExerciseDialogController extends AbstractDialogController {
         }
         if (exerciseViewModel.calories.get() == 0) {
             tfCalories.setText("");
+        }
+
+        // import HRM file when requested at dialog startup
+        if (importHrmFileOnStart && StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.get()) != null) {
+            Platform.runLater(() -> onImportHrmFile(null));
         }
     }
 
