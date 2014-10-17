@@ -2,17 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- ExerciseDialog:
-  - FXML layout: DONE
-  - ExerciseDialogController: see TODOs
-    - remove spinner helper methods in GuiCreateUtils
-    - add autocalc behavior => DONE (tested)
-    - support for sport types without distance => DONE (tested)
-    - support for AvgSpeed mode min/km => DONE (tested)
-    - copy comment from previous exercise => DONE (tested)
-    - add HRM import => DONE (tested)
-    - add "View HRM" feature => DONE (tested)
-    - add Drag&Drop of HRM files to main window => DONE (tested)
 - HRMFileOpenDialog JavaFX port
   - complete implementation and use in Exercise Dialog => DONE
   - use new HRMFileOpenDialog in main window
@@ -55,6 +44,8 @@ JavaFX Migration status - completed:
 - About Dialog
 - Note Dialog
 - Weight Dialog
+- Exercise Dialog
+- HRM File Open Dialog
 - Use of openjfx-dialog backport library from JavaFX 8u40
 
 Java 8 migration status:
