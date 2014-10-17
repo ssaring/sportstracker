@@ -182,7 +182,12 @@ public abstract class AbstractDialogController {
         javax.swing.SwingUtilities.invokeLater(() -> task.run());
     }
 
-    private void executeOnJavaFXThread(Runnable task) {
+    /**
+     * Invokes the passed task on the JavaFX UI thread (asynchronously).
+     *
+     * @param task task to execute
+     */
+    protected void executeOnJavaFXThread(Runnable task) {
         // TODO: remove this function when the main window has been migrated to JavaFX
         if (Platform.isFxApplicationThread()) {
             task.run();

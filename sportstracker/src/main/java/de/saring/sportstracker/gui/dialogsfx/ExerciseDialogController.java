@@ -1,6 +1,7 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
 import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.gui.EVMain;
 import de.saring.exerciseviewer.parser.ExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 import de.saring.sportstracker.data.Equipment;
@@ -59,6 +60,9 @@ public class ExerciseDialogController extends AbstractDialogController {
 
     @Inject
     private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
+
+    @Inject
+    private Provider<EVMain> prExerciseViewer;
 
     @FXML
     private DatePicker dpDate;
@@ -421,6 +425,25 @@ public class ExerciseDialogController extends AbstractDialogController {
         final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(document.getOptions(), hrmFile);
         if (selectedFile != null) {
             exerciseViewModel.hrmFile.set(selectedFile.getAbsolutePath());
+        }
+    }
+
+    /**
+     * Action handler for viewing the selected HRM. It starts the ExerciseViewer sub-application, which
+     * parses the HRM file and displays the data.
+     */
+    @FXML
+    private void onViewHrmFile(final ActionEvent event) {
+
+        final String hrmFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.getValue());
+        if (hrmFile != null) {
+            final EVMain pv = prExerciseViewer.get();
+            // ExerciseViewer is Swing based => execute on Swing UI thread (will bring main window to front, hides this dialog)
+            executeOnSwingThread(() -> {
+                pv.showExercise(hrmFile, document.getOptions(), true);
+                // after ExerciseViewer is closed, bring this JavaFX dialog to front again
+                executeOnJavaFXThread(() -> context.getPrimaryStage().toFront());
+            });
         }
     }
 
