@@ -62,7 +62,6 @@ SportsTracker 7.0.0:
 - st.dlg.weight.cancel.Action.text (removed)
 
 - st.dlg.exercise.error.time (new)
-- st.dlg.exercise.equipment.none.text (removed)
 - st.dlg.exercise.calc_distance.Action.text (removed)
 - st.dlg.exercise.calc_avg_speed.Action.text (removed)
 - st.dlg.exercise.calc_duration.Action.text (removed)

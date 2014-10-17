@@ -141,6 +141,9 @@ public class ExerciseDialogController extends AbstractDialogController {
     /** Flag whether the HRM file specified in the passed exercise needs to be imported when starting the dialog. */
     private boolean importHrmFileOnStart = false;
 
+    /** Equipment for selection "none", same for all sport types. */
+    private final Equipment equipmentNone;
+
     /**
      * Index of the previous similar exercise in the exercise list from which
      * the last comment has been copied. It's null when it was not used yet.
@@ -159,6 +162,9 @@ public class ExerciseDialogController extends AbstractDialogController {
                                     final GuiceFxmlLoader guiceFxmlLoader) {
         super(context, guiceFxmlLoader);
         this.document = document;
+
+        equipmentNone = new Equipment(Integer.MAX_VALUE);
+        equipmentNone.setName(context.getFxResources().getString("st.dlg.exercise.equipment.none.text"));
     }
 
     /**
@@ -172,6 +178,11 @@ public class ExerciseDialogController extends AbstractDialogController {
     public void show(final Window parent, final Exercise exercise, boolean importHrmFileOnStart) {
         this.exerciseViewModel = new ExerciseViewModel(exercise, document.getOptions().getUnitSystem());
         this.importHrmFileOnStart = importHrmFileOnStart;
+
+        // if no equipment is specified for exercise => use dummy equipment "none"
+        if (exerciseViewModel.equipment.get() == null) {
+            exerciseViewModel.equipment.set(equipmentNone);
+        }
 
         final boolean newExercise = document.getExerciseList().getByID(exercise.getId()) == null;
         final String dlgTitleKey = newExercise ? "st.dlg.exercise.title.add" : "st.dlg.exercise.title";
@@ -218,9 +229,14 @@ public class ExerciseDialogController extends AbstractDialogController {
 
     @Override
     protected boolean validateAndStore() {
+        final Exercise newExercise = exerciseViewModel.getExercise();
+
+        // if selected equipment is "none" -> remove this dummy selection
+        if (equipmentNone.equals(newExercise.getEquipment())) {
+            newExercise.setEquipment(null);
+        }
 
         // store the new Exercise, no further validation needed
-        final Exercise newExercise = exerciseViewModel.getExercise();
         document.getExerciseList().set(newExercise);
         return true;
     }
@@ -353,6 +369,7 @@ public class ExerciseDialogController extends AbstractDialogController {
     private void fillSportTypeDependentChoiceBoxes() {
         cbSportSubtype.getItems().clear();
         cbEquipment.getItems().clear();
+        cbEquipment.getItems().add(equipmentNone);
 
         final SportType selectedSportType = cbSportType.getValue();
         if (selectedSportType != null) {
@@ -362,8 +379,13 @@ public class ExerciseDialogController extends AbstractDialogController {
                     cbEquipment.getItems().add(equipment));
         }
 
-        // disable equipment ChoiceBox when no sport type selected or no equipments defined
-        cbEquipment.setDisable(selectedSportType == null || selectedSportType.getEquipmentList().size() == 0);
+        // select equipment "none" when exercise contains no equipment
+        if (exerciseViewModel.equipment.get() == null) {
+            exerciseViewModel.equipment.set(equipmentNone);
+        }
+
+        // disable equipment ChoiceBox when no sport type selected
+        cbEquipment.setDisable(selectedSportType == null);
     }
 
     /**

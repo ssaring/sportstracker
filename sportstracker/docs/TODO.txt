@@ -5,6 +5,7 @@ JavaFX Migration:
 - ExerciseDialog:
   - FXML layout: DONE
   - ExerciseDialogController: see TODOs
+    - remove spinner helper methods in GuiCreateUtils
     - add autocalc behavior => DONE (tested)
     - support for sport types without distance => DONE (tested)
     - support for AvgSpeed mode min/km => DONE (tested)
