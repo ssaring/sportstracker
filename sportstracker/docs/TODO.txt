@@ -13,8 +13,6 @@ JavaFX Migration:
     - add HRM import => DONE (tested)
     - add "View HRM" feature => DONE (tested)
     - add Drag&Drop of HRM files to main window => DONE (tested)
-  - check old ExerciseDialog -> has something been forgotten?
-  - remove old dialog
 - HRMFileOpenDialog JavaFX port
   - complete implementation and use in Exercise Dialog => DONE
   - use new HRMFileOpenDialog in main window
