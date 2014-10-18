@@ -2,8 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- HRMFileOpenDialog JavaFX port
-  - remove old dialog when not needed anymore
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
