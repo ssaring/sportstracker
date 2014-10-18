@@ -6,14 +6,20 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
-import de.saring.sportstracker.gui.dialogs.*;
+import de.saring.sportstracker.gui.dialogs.FilterDialog;
+import de.saring.sportstracker.gui.dialogs.OptionsDialog;
+import de.saring.sportstracker.gui.dialogs.OverviewDialog;
+import de.saring.sportstracker.gui.dialogs.SportTypeListDialog;
+import de.saring.sportstracker.gui.dialogs.StatisticDialog;
 import de.saring.sportstracker.gui.dialogsfx.AboutDialogController;
 import de.saring.sportstracker.gui.dialogsfx.ExerciseDialogController;
+import de.saring.sportstracker.gui.dialogsfx.HRMFileOpenDialog;
 import de.saring.sportstracker.gui.dialogsfx.NoteDialogController;
 import de.saring.sportstracker.gui.dialogsfx.WeightDialogController;
 import de.saring.sportstracker.gui.views.EntryView;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
+import javafx.application.Platform;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Task;
 
@@ -58,8 +64,6 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<OverviewDialog> prOverviewDialog;
     @Inject
-    private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
-    @Inject
     private Provider<EVMain> prExerciseViewer;
 
     @Inject
@@ -70,6 +74,8 @@ public class STControllerImpl implements STController {
     private Provider<NoteDialogController> prNoteDialogController;
     @Inject
     private Provider<WeightDialogController> prWeightDialogController;
+    @Inject
+    private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
 
     /**
      * The action map of the controller class.
@@ -222,14 +228,19 @@ public class STControllerImpl implements STController {
     @Action(name = ACTION_OPEN_EXERCISEVIEWER)
     public void openExerciseViewer() {
 
-        // show file open dialog for HRM file selection
-        File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(document.getOptions(), null);
-        if (selectedFile != null) {
+        // TODO remove Swing / FX UI thread handling when the main window is also JavaFX based
+        // show file open dialog for HRM file selection (on JavaFX UI thread)
+        Platform.runLater(() -> {
+            final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(document.getOptions(), null);
+            if (selectedFile != null) {
 
-            // start ExerciseViewer 
-            EVMain pv = prExerciseViewer.get();
-            pv.showExercise(selectedFile.getAbsolutePath(), document.getOptions(), false);
-        }
+                // start ExerciseViewer (on Swing UI thread)
+                SwingUtilities.invokeLater(() -> {
+                    EVMain pv = prExerciseViewer.get();
+                    pv.showExercise(selectedFile.getAbsolutePath(), document.getOptions(), false);
+                });
+            }
+        });
     }
 
     /**

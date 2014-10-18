@@ -3,8 +3,6 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - HRMFileOpenDialog JavaFX port
-  - complete implementation and use in Exercise Dialog => DONE
-  - use new HRMFileOpenDialog in main window
   - remove old dialog when not needed anymore
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
@@ -45,7 +43,8 @@ JavaFX Migration status - completed:
 - Note Dialog
 - Weight Dialog
 - Exercise Dialog
-- HRM File Open Dialog
+- HRM File Open Dialog (from File->Open action it is not modal and is not
+  placed in center of ST window, it is fixed when ST main window used JavaFX)
 - Use of openjfx-dialog backport library from JavaFX 8u40
 
 Java 8 migration status:
