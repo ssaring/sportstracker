@@ -2,6 +2,11 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- Overview Dialog:
+  - define / completeFXML layout
+  - see TODOs in OverviewDialogController
+  - remove unused I18N resources
+  - remove old OverviewDialog
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)

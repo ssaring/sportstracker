@@ -8,13 +8,13 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.dialogs.FilterDialog;
 import de.saring.sportstracker.gui.dialogs.OptionsDialog;
-import de.saring.sportstracker.gui.dialogs.OverviewDialog;
 import de.saring.sportstracker.gui.dialogs.SportTypeListDialog;
 import de.saring.sportstracker.gui.dialogs.StatisticDialog;
 import de.saring.sportstracker.gui.dialogsfx.AboutDialogController;
 import de.saring.sportstracker.gui.dialogsfx.ExerciseDialogController;
 import de.saring.sportstracker.gui.dialogsfx.HRMFileOpenDialog;
 import de.saring.sportstracker.gui.dialogsfx.NoteDialogController;
+import de.saring.sportstracker.gui.dialogsfx.OverviewDialogController;
 import de.saring.sportstracker.gui.dialogsfx.WeightDialogController;
 import de.saring.sportstracker.gui.views.EntryView;
 import de.saring.util.data.IdDateObject;
@@ -62,8 +62,6 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<StatisticDialog> prStatisticDialog;
     @Inject
-    private Provider<OverviewDialog> prOverviewDialog;
-    @Inject
     private Provider<EVMain> prExerciseViewer;
 
     @Inject
@@ -76,6 +74,8 @@ public class STControllerImpl implements STController {
     private Provider<WeightDialogController> prWeightDialogController;
     @Inject
     private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
+    @Inject
+    private Provider<OverviewDialogController> prOverviewDialogController;
 
     /**
      * The action map of the controller class.
@@ -561,7 +561,7 @@ public class STControllerImpl implements STController {
             return;
         }
 
-        context.showDialog(prOverviewDialog.get());
+        prOverviewDialogController.get().show(context.getPrimaryStage());
     }
 
     /**

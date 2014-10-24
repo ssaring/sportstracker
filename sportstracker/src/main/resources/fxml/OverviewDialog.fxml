@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.OverviewDialogController">
+   <children>
+      <VBox spacing="12.0">
+         <children>
+            <Label text="%st.dlg.overview.time_range.text">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="cbTimeRange" prefWidth="150.0">
+               <VBox.margin>
+                  <Insets left="24.0" />
+               </VBox.margin>
+            </ChoiceBox>
+         </children>
+      </VBox>
+      <Pane fx:id="pDiagram" prefHeight="440.0" prefWidth="900.0" />
+      <VBox spacing="12.0">
+         <children>
+            <Label text="%st.dlg.overview.options.text">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" spacing="24.0">
+               <padding>
+                  <Insets left="24.0" />
+               </padding>
+               <children>
+                  <Label text="%st.dlg.overview.display.text" />
+                  <ChoiceBox fx:id="cbDisplay" prefWidth="150.0" />
+                  <Label text="%st.dlg.overview.for.text" />
+                  <ChoiceBox fx:id="cbSportTypeMode" prefWidth="150.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>
