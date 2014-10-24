@@ -21,8 +21,8 @@
     <orderEntry type="library" name="Maven: org.jdesktop.bsaf:bsaf:1.9.2" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy:2.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy-xml:2.3.3" level="project" />
-    <orderEntry type="library" name="Maven: org.jfree:jfreechart:1.0.17" level="project" />
-    <orderEntry type="library" name="Maven: org.jfree:jcommon:1.0.21" level="project" />
+    <orderEntry type="library" name="Maven: org.jfree:jfreechart:1.0.19" level="project" />
+    <orderEntry type="library" name="Maven: org.jfree:jcommon:1.0.23" level="project" />
     <orderEntry type="library" name="Maven: com.miglayout:miglayout:3.7.4" level="project" />
     <orderEntry type="library" name="Maven: org.swinglabs.swingx:swingx-all:1.6.5-1" level="project" />
     <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:8.20.7" level="project" />

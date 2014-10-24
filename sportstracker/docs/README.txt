@@ -348,7 +348,7 @@ The SportsTracker project uses the following libraries:
   - Guice 3.0 (http://code.google.com/p/google-guice/)
       Includes: javax.inject-1.jar
       License: Apache License v2.0
-  - JFreeChart 1.0.17 (http://www.jfree.org/)
+  - JFreeChart 1.0.19 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
   - JDOM 2.0.2 (http://www.jdom.org)
       License: Apache-style open source license
@@ -449,4 +449,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2014/08/22
+2014/10/24
