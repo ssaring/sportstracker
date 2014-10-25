@@ -78,7 +78,8 @@ public class OverviewDialogController extends AbstractDialogController {
         cbSportTypeMode.getItems().addAll(Arrays.asList(OverviewType.values()));
         cbSportTypeMode.getSelectionModel().select(OverviewType.EACH_SPLITTED);
 
-        // TODO width of the choice boxes does not match the text width!
+        // TODO setup spinner for year selection
+
         // TODO setup chart
     }
 

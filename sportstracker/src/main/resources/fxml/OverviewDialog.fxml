@@ -16,7 +16,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="cbTimeRange" prefWidth="150.0">
+            <ChoiceBox fx:id="cbTimeRange">
                <VBox.margin>
                   <Insets left="24.0" />
                </VBox.margin>
@@ -37,9 +37,9 @@
                </padding>
                <children>
                   <Label text="%st.dlg.overview.display.text" />
-                  <ChoiceBox fx:id="cbDisplay" prefWidth="150.0" />
+                  <ChoiceBox fx:id="cbDisplay" />
                   <Label text="%st.dlg.overview.for.text" />
-                  <ChoiceBox fx:id="cbSportTypeMode" prefWidth="150.0" />
+                  <ChoiceBox fx:id="cbSportTypeMode" />
                </children>
             </HBox>
          </children>
