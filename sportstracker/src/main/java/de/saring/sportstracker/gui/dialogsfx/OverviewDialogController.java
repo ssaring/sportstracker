@@ -5,10 +5,12 @@ import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.AppResources;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.beans.binding.Bindings;
+import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Window;
+import org.jfree.chart.ChartPanel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -29,7 +31,7 @@ public class OverviewDialogController extends AbstractDialogController {
     private final STDocument document;
 
     /** The panel containing the current chart. */
-    // TODO private final ChartPanel chartPanel;
+    private final ChartPanel chartPanel;
 
     @FXML
     private ChoiceBox<TimeRangeType> cbTimeRange;
@@ -42,6 +44,8 @@ public class OverviewDialogController extends AbstractDialogController {
 
     @FXML
     private Pane pDiagram;
+    @FXML
+    private SwingNode snDiagram;
 
     /**
      * Standard c'tor for dependency injection.
@@ -59,6 +63,8 @@ public class OverviewDialogController extends AbstractDialogController {
         TimeRangeType.appResources = context.getFxResources();
         ValueType.appResources = context.getFxResources();
         OverviewType.appResources = context.getFxResources();
+
+        chartPanel = new ChartPanel(null);
     }
 
     /**
@@ -72,12 +78,11 @@ public class OverviewDialogController extends AbstractDialogController {
 
     @Override
     protected void setupDialogControls() {
-        initChoiceBoxes();
-
-        // TODO setup chart
+        setupChoiceBoxes();
+        setupChart();
     }
 
-    private void initChoiceBoxes() {
+    private void setupChoiceBoxes() {
         cbTimeRange.getItems().addAll(Arrays.asList(TimeRangeType.values()));
         cbTimeRange.getSelectionModel().select(TimeRangeType.LAST_12_MONTHS);
 
@@ -94,6 +99,18 @@ public class OverviewDialogController extends AbstractDialogController {
         }
         cbYear.getSelectionModel().select(Integer.valueOf(LocalDate.now().getYear()));
         cbYear.visibleProperty().bind(Bindings.notEqual(cbTimeRange.valueProperty(), TimeRangeType.LAST_12_MONTHS));
+    }
+
+    private void setupChart() {
+        // TODO use JavaFX version of JFreeChart here, remove SwingNode snDiagram
+        // => is not available in the Maven Central repo
+        // => compile localle (see ReadMe) and deploy to repo at saring.de
+
+        executeOnSwingThread(() -> {
+            chartPanel.setMinimumSize(new java.awt.Dimension((int) pDiagram.getPrefWidth(), (int) pDiagram.getPrefHeight()));
+            snDiagram.setContent(chartPanel);
+            snDiagram.autosize();
+        });
     }
 
     /**
