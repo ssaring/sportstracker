@@ -78,7 +78,14 @@ public class OverviewDialogController extends AbstractDialogController {
      * @param parent parent window of the dialog
      */
     public void show(final Window parent) {
-        showInfoDialog("/fxml/OverviewDialog.fxml", parent, context.getFxResources().getString("st.dlg.overview.title"));
+
+        // display in title when exercise filter is being used
+        String dlgTitle = context.getFxResources().getString("st.dlg.overview.title");
+        if (document.isFilterEnabled()) {
+            dlgTitle += " " + context.getFxResources().getString("st.dlg.overview.title.filter");
+        }
+
+        showInfoDialog("/fxml/OverviewDialog.fxml", parent, dlgTitle);
     }
 
     @Override
