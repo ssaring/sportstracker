@@ -1,6 +1,8 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
 import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.AppResources;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -9,6 +11,7 @@ import javafx.stage.Window;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Arrays;
 
 /**
  * Controller (MVC) class of the Overview dialog of the SportsTracker application.
@@ -21,13 +24,17 @@ import javax.inject.Singleton;
 @Singleton
 public class OverviewDialogController extends AbstractDialogController {
 
-    // TODO use generic classes
+    private final STDocument document;
+
+    /** The panel containing the current chart. */
+    // TODO private final ChartPanel chartPanel;
+
     @FXML
-    private ChoiceBox<?> cbTimeRange;
+    private ChoiceBox<TimeRangeType> cbTimeRange;
     @FXML
-    private ChoiceBox<?> cbDisplay;
+    private ChoiceBox<ValueType> cbDisplay;
     @FXML
-    private ChoiceBox<?> cbSportTypeMode;
+    private ChoiceBox<OverviewType> cbSportTypeMode;
 
     @FXML
     private Pane pDiagram;
@@ -36,11 +43,18 @@ public class OverviewDialogController extends AbstractDialogController {
      * Standard c'tor for dependency injection.
      *
      * @param context the SportsTracker UI context
+     * @param document the SportsTracker model/document
      * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public OverviewDialogController(final STContext context, final GuiceFxmlLoader guiceFxmlLoader) {
+    public OverviewDialogController(final STContext context, final STDocument document,
+                                    final GuiceFxmlLoader guiceFxmlLoader) {
         super(context, guiceFxmlLoader);
+        this.document = document;
+
+        TimeRangeType.appResources = context.getFxResources();
+        ValueType.appResources = context.getFxResources();
+        OverviewType.appResources = context.getFxResources();
     }
 
     /**
@@ -54,6 +68,97 @@ public class OverviewDialogController extends AbstractDialogController {
 
     @Override
     protected void setupDialogControls() {
-        // TODO setup combo boxes and chart
+        // fill choice boxes
+        cbTimeRange.getItems().addAll(Arrays.asList(TimeRangeType.values()));
+        cbTimeRange.getSelectionModel().select(TimeRangeType.LAST_12_MONTHS);
+
+        cbDisplay.getItems().addAll(Arrays.asList(ValueType.values()));
+        cbDisplay.getSelectionModel().select(ValueType.DISTANCE);
+
+        cbSportTypeMode.getItems().addAll(Arrays.asList(OverviewType.values()));
+        cbSportTypeMode.getSelectionModel().select(OverviewType.EACH_SPLITTED);
+
+        // TODO width of the choice boxes does not match the text width!
+        // TODO setup chart
+    }
+
+    /**
+     * This is the list of possible time ranges displayed in diagram.
+     * This enum also provides the localized displayed enum names.
+     */
+    private enum TimeRangeType {
+        /**
+         * In total 13 months: current month and last 12 before (good
+         * for compare current month and the one from year before).
+         */
+        LAST_12_MONTHS("st.dlg.overview.time_range.last_12_months.text"),
+        MONTHS_OF_YEAR("st.dlg.overview.time_range.months_of_year.text"),
+        WEEKS_OF_YEAR("st.dlg.overview.time_range.weeks_of_year.text"),
+        LAST_10_YEARS("st.dlg.overview.time_range.ten_years.text");
+
+        private static AppResources appResources;
+
+        private String resourceKey;
+
+        private TimeRangeType(final String resourceKey) {
+            this.resourceKey = resourceKey;
+        }
+
+        @Override
+        public String toString() {
+            return appResources.getString(resourceKey);
+        }
+    }
+
+    /**
+     * This is the list of possible value types displayed in diagram.
+     * This enum also provides the localized displayed enum names.
+     */
+    private enum ValueType {
+        DISTANCE("st.dlg.overview.display.distance_sum.text"),
+        DURATION("st.dlg.overview.display.duration_sum.text"),
+        ASCENT("st.dlg.overview.display.ascent_sum.text"),
+        CALORIES("st.dlg.overview.display.calorie_sum.text"),
+        EXERCISES("st.dlg.overview.display.exercise_count.text"),
+        AVG_SPEED("st.dlg.overview.display.avg_speed.text"),
+        SPORTSUBTYPE("st.dlg.overview.display.sportsubtype_distance.text"),
+        EQUIPMENT("st.dlg.overview.display.equipment_distance.text"),
+        WEIGHT("st.dlg.overview.display.weight.text");
+
+        private static AppResources appResources;
+
+        private String resourceKey;
+
+        private ValueType(final String resourceKey) {
+            this.resourceKey = resourceKey;
+        }
+
+        @Override
+        public String toString() {
+            return appResources.getString(resourceKey);
+        }
+    }
+
+    /**
+     * This is the list of possible overview types to draw in diagram.
+     * This enum also provides the localized displayed enum names.
+     */
+    private enum OverviewType {
+        EACH_SPLITTED("st.dlg.overview.sport_type.each_splitted.text"),
+        EACH_STACKED("st.dlg.overview.sport_type.each_stacked.text"),
+        ALL_SUMMARY("st.dlg.overview.sport_type.all_summary.text");
+
+        private static AppResources appResources;
+
+        private String resourceKey;
+
+        private OverviewType(final String resourceKey) {
+            this.resourceKey = resourceKey;
+        }
+
+        @Override
+        public String toString() {
+            return appResources.getString(resourceKey);
+        }
     }
 }
