@@ -6,8 +6,10 @@ import de.saring.util.AppResources;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.beans.binding.Bindings;
 import javafx.embed.swing.SwingNode;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Window;
 import org.jfree.chart.ChartPanel;
@@ -47,6 +49,9 @@ public class OverviewDialogController extends AbstractDialogController {
     @FXML
     private SwingNode snDiagram;
 
+    @FXML
+    private Label laFor;
+
     /**
      * Standard c'tor for dependency injection.
      *
@@ -79,7 +84,8 @@ public class OverviewDialogController extends AbstractDialogController {
     @Override
     protected void setupDialogControls() {
         setupChoiceBoxes();
-        setupChart();
+        setupDiagram();
+        updateDiagram();
     }
 
     private void setupChoiceBoxes() {
@@ -99,9 +105,19 @@ public class OverviewDialogController extends AbstractDialogController {
         }
         cbYear.getSelectionModel().select(Integer.valueOf(LocalDate.now().getYear()));
         cbYear.visibleProperty().bind(Bindings.notEqual(cbTimeRange.valueProperty(), TimeRangeType.LAST_12_MONTHS));
+
+        // the sport type mode selection must not be visible for the ValueType WEIGHT
+        cbSportTypeMode.visibleProperty().bind(Bindings.notEqual(cbDisplay.valueProperty(), ValueType.WEIGHT));
+        laFor.visibleProperty().bind(cbSportTypeMode.visibleProperty());
+
+        // set listeners for updating the diagram on selection changes
+        cbTimeRange.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
+        cbYear.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
+        cbDisplay.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
+        cbSportTypeMode.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
     }
 
-    private void setupChart() {
+    private void setupDiagram() {
         // TODO use JavaFX version of JFreeChart here, remove SwingNode snDiagram
         // => is not available in the Maven Central repo
         // => compile localle (see ReadMe) and deploy to repo at saring.de
@@ -111,6 +127,14 @@ public class OverviewDialogController extends AbstractDialogController {
             snDiagram.setContent(chartPanel);
             snDiagram.autosize();
         });
+    }
+
+    /**
+     * Draws the Overview diagram according to the current selections.
+     */
+    private void updateDiagram() {
+        // TODO
+        System.out.println("updateDiagram()");
     }
 
     /**

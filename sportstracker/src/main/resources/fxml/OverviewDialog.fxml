@@ -51,7 +51,7 @@
                <children>
                   <Label text="%st.dlg.overview.display.text" />
                   <ChoiceBox fx:id="cbDisplay" />
-                  <Label text="%st.dlg.overview.for.text" />
+                  <Label fx:id="laFor" text="%st.dlg.overview.for.text" />
                   <ChoiceBox fx:id="cbSportTypeMode" />
                </children>
             </HBox>
