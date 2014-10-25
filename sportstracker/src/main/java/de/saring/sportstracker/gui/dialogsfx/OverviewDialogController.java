@@ -4,6 +4,7 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.AppResources;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Pane;
@@ -11,6 +12,7 @@ import javafx.stage.Window;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 /**
@@ -31,6 +33,8 @@ public class OverviewDialogController extends AbstractDialogController {
 
     @FXML
     private ChoiceBox<TimeRangeType> cbTimeRange;
+    @FXML
+    private ChoiceBox<Integer> cbYear;
     @FXML
     private ChoiceBox<ValueType> cbDisplay;
     @FXML
@@ -68,7 +72,12 @@ public class OverviewDialogController extends AbstractDialogController {
 
     @Override
     protected void setupDialogControls() {
-        // fill choice boxes
+        initChoiceBoxes();
+
+        // TODO setup chart
+    }
+
+    private void initChoiceBoxes() {
         cbTimeRange.getItems().addAll(Arrays.asList(TimeRangeType.values()));
         cbTimeRange.getSelectionModel().select(TimeRangeType.LAST_12_MONTHS);
 
@@ -78,9 +87,13 @@ public class OverviewDialogController extends AbstractDialogController {
         cbSportTypeMode.getItems().addAll(Arrays.asList(OverviewType.values()));
         cbSportTypeMode.getSelectionModel().select(OverviewType.EACH_SPLITTED);
 
-        // TODO setup spinner for year selection
-
-        // TODO setup chart
+        // init choicebox for year selection, must not be visible for time range type "last 12 months"
+        // TODO use spinner control, will be available in JavaFX 9
+        for (int i = 1950; i <= 2070; i++) {
+            cbYear.getItems().addAll(i);
+        }
+        cbYear.getSelectionModel().select(Integer.valueOf(LocalDate.now().getYear()));
+        cbYear.visibleProperty().bind(Bindings.notEqual(cbTimeRange.valueProperty(), TimeRangeType.LAST_12_MONTHS));
     }
 
     /**

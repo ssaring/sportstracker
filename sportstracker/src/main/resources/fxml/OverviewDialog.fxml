@@ -16,11 +16,19 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="cbTimeRange">
-               <VBox.margin>
+            <HBox spacing="24.0">
+               <children>
+                  <ChoiceBox fx:id="cbTimeRange">
+                     <VBox.margin>
+                        <Insets left="24.0" />
+                     </VBox.margin>
+                  </ChoiceBox>
+                  <ChoiceBox fx:id="cbYear" />
+               </children>
+               <padding>
                   <Insets left="24.0" />
-               </VBox.margin>
-            </ChoiceBox>
+               </padding>
+            </HBox>
          </children>
       </VBox>
       <Pane fx:id="pDiagram" prefHeight="440.0" prefWidth="900.0" />
