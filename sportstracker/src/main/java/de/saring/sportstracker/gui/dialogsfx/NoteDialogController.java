@@ -49,6 +49,7 @@ public class NoteDialogController extends AbstractDialogController {
      * Standard c'tor for dependency injection.
      *
      * @param context the SportsTracker UI context
+     * @param document the SportsTracker model/document
      * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
