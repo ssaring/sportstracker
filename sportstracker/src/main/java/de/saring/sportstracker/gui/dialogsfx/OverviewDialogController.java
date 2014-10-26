@@ -25,6 +25,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Window;
+import javafx.util.StringConverter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -69,7 +70,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
     private final STDocument document;
 
-    /** The panel containing the current chart (chart can't be added in ScenBuilder). */
+    /** The panel containing the current chart (chart can't be added in SceneBuilder). */
     private final ChartPanel chartPanel;
 
     @FXML
@@ -85,6 +86,8 @@ public class OverviewDialogController extends AbstractDialogController {
 
     @FXML
     private Pane pDiagram;
+
+    // TODO remove when switched to JavaFX ChartViewer (also from FXML)
     @FXML
     private SwingNode snDiagram;
 
@@ -149,6 +152,19 @@ public class OverviewDialogController extends AbstractDialogController {
         document.getSportTypeList().forEach(sportType -> cbSportTypeList.getItems().add(sportType));
         cbSportTypeList.getSelectionModel().select(0);
 
+        // TODO same converter as in ExerciseDialogController => refactor
+        cbSportTypeList.setConverter(new StringConverter<SportType>() {
+            @Override
+            public String toString(final SportType sportType) {
+                return sportType.getName();
+            }
+
+            @Override
+            public SportType fromString(final String string) {
+                throw new UnsupportedOperationException();
+            }
+        });
+
         // init choicebox for year selection, must not be visible for time range type "last 12 months"
         // TODO use spinner control, will be available in JavaFX 9
         for (int i = 1950; i <= 2070; i++) {
@@ -170,10 +186,7 @@ public class OverviewDialogController extends AbstractDialogController {
     }
 
     private void setupDiagram() {
-        // TODO use JavaFX version of JFreeChart here, remove SwingNode snDiagram
-        // => is not available in the Maven Central repo
-        // => compile localle (see ReadMe) and deploy to repo at saring.de
-
+        // TODO remove workaround when using JavaFX ChartViewer
         executeOnSwingThread(() -> {
             chartPanel.setMinimumSize(new java.awt.Dimension((int) pDiagram.getPrefWidth(), (int) pDiagram.getPrefHeight()));
             snDiagram.setContent(chartPanel);
@@ -185,7 +198,7 @@ public class OverviewDialogController extends AbstractDialogController {
      * Draws the Overview diagram according to the current selections.
      */
     private void updateDiagram() {
-        // TODO remove workaround when using JavaFX ChartPanel
+        // TODO remove workaround when using JavaFX ChartViewer
         executeOnSwingThread(this::updateDiagramImpl);
     }
 
