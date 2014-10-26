@@ -1,6 +1,7 @@
 package de.saring.sportstracker.data;
 
 import de.saring.util.data.IdObject;
+import de.saring.util.data.Nameable;
 
 /**
  * This class defines one possible equipment of a sport type (e.g. the specific
@@ -9,7 +10,7 @@ import de.saring.util.data.IdObject;
  * @author Stefan Saring
  * @version 1.0
  */
-public final class Equipment extends IdObject implements Cloneable {
+public final class Equipment extends IdObject implements Nameable, Cloneable {
 
     /**
      * Name of the equipment.
@@ -25,6 +26,7 @@ public final class Equipment extends IdObject implements Cloneable {
         super(id);
     }
 
+    @Override
     public String getName() {
         return name;
     }

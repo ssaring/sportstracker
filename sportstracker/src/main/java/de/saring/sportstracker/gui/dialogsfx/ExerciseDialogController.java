@@ -14,6 +14,7 @@ import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import de.saring.util.gui.javafx.NameableStringConverter;
 import de.saring.util.gui.javafx.SpeedToStringConverter;
 import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
 import de.saring.util.unitcalc.ConvertUtils;
@@ -32,7 +33,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
-import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
@@ -316,43 +316,9 @@ public class ExerciseDialogController extends AbstractDialogController {
      */
     private void setupChoiceBoxes() {
 
-        // TODO would be good when SportType, SportSubType and Equipment would implement a Nameable interface
-        // => then a generic converter would be sufficient for all choice boxes
-        cbSportType.setConverter(new StringConverter<SportType>() {
-            @Override
-            public String toString(final SportType sportType) {
-                return sportType.getName();
-            }
-
-            @Override
-            public SportType fromString(final String string) {
-                throw new UnsupportedOperationException();
-            }
-        });
-
-        cbSportSubtype.setConverter(new StringConverter<SportSubType>() {
-            @Override
-            public String toString(final SportSubType sportSubType) {
-                return sportSubType.getName();
-            }
-
-            @Override
-            public SportSubType fromString(final String string) {
-                throw new UnsupportedOperationException();
-            }
-        });
-
-        cbEquipment.setConverter(new StringConverter<Equipment>() {
-            @Override
-            public String toString(final Equipment equipment) {
-                return equipment.getName();
-            }
-
-            @Override
-            public Equipment fromString(final String string) {
-                throw new UnsupportedOperationException();
-            }
-        });
+        cbSportType.setConverter(new NameableStringConverter<>());
+        cbSportSubtype.setConverter(new NameableStringConverter<>());
+        cbEquipment.setConverter(new NameableStringConverter<>());
 
         document.getSportTypeList().forEach(sportType -> cbSportType.getItems().add(sportType));
         cbIntensity.getItems().addAll(Arrays.asList(IntensityType.values()));

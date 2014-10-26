@@ -1,6 +1,7 @@
 package de.saring.sportstracker.data;
 
 import de.saring.util.data.IdObject;
+import de.saring.util.data.Nameable;
 
 /**
  * This class contains all informations of a subtype of a sport type (e.g.
@@ -9,7 +10,7 @@ import de.saring.util.data.IdObject;
  * @author Stefan Saring
  * @version 1.0
  */
-public final class SportSubType extends IdObject implements Cloneable {
+public final class SportSubType extends IdObject implements Nameable, Cloneable {
 
     /**
      * Name of sport subtype.
@@ -25,6 +26,7 @@ public final class SportSubType extends IdObject implements Cloneable {
         super(id);
     }
 
+    @Override
     public String getName() {
         return name;
     }

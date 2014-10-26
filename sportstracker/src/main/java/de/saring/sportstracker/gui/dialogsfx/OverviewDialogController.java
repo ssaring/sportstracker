@@ -13,6 +13,7 @@ import de.saring.util.AppResources;
 import de.saring.util.Date310Utils;
 import de.saring.util.data.IdObjectList;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import de.saring.util.gui.javafx.NameableStringConverter;
 import de.saring.util.gui.jfreechart.ChartUtils;
 import de.saring.util.gui.jfreechart.StackedRenderer;
 import de.saring.util.unitcalc.ConvertUtils;
@@ -25,7 +26,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Window;
-import javafx.util.StringConverter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -151,21 +151,9 @@ public class OverviewDialogController extends AbstractDialogController {
         cbSportTypeMode.getItems().addAll(Arrays.asList(OverviewType.values()));
         cbSportTypeMode.getSelectionModel().select(OverviewType.EACH_SPLITTED);
 
+        cbSportTypeList.setConverter(new NameableStringConverter<>());
         document.getSportTypeList().forEach(sportType -> cbSportTypeList.getItems().add(sportType));
         cbSportTypeList.getSelectionModel().select(0);
-
-        // TODO same converter as in ExerciseDialogController => refactor
-        cbSportTypeList.setConverter(new StringConverter<SportType>() {
-            @Override
-            public String toString(final SportType sportType) {
-                return sportType.getName();
-            }
-
-            @Override
-            public SportType fromString(final String string) {
-                throw new UnsupportedOperationException();
-            }
-        });
 
         // init choice box for year selection, must not be visible for time range type "last 12 months"
         // TODO use spinner control, will be available in JavaFX 9

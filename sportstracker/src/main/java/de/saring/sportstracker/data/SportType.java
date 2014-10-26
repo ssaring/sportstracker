@@ -2,6 +2,7 @@ package de.saring.sportstracker.data;
 
 import de.saring.util.data.IdObject;
 import de.saring.util.data.IdObjectList;
+import de.saring.util.data.Nameable;
 
 import java.awt.*;
 
@@ -11,7 +12,7 @@ import java.awt.*;
  * @author Stefan Saring
  * @version 1.0
  */
-public final class SportType extends IdObject implements Cloneable {
+public final class SportType extends IdObject implements Nameable, Cloneable {
 
     /**
      * Name of sport type.
@@ -53,6 +54,7 @@ public final class SportType extends IdObject implements Cloneable {
         super(id);
     }
 
+    @Override
     public String getName() {
         return name;
     }
