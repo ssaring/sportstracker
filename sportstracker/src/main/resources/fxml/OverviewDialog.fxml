@@ -53,6 +53,7 @@
                   <ChoiceBox fx:id="cbDisplay" />
                   <Label fx:id="laFor" text="%st.dlg.overview.for.text" />
                   <ChoiceBox fx:id="cbSportTypeMode" />
+                  <Label fx:id="laForSportType" text="%st.dlg.overview.for_sport_type.text" />
                   <ChoiceBox fx:id="cbSportTypeList" />
                </children>
             </HBox>

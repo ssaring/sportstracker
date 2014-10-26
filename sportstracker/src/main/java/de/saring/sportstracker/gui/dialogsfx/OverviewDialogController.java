@@ -93,6 +93,8 @@ public class OverviewDialogController extends AbstractDialogController {
 
     @FXML
     private Label laFor;
+    @FXML
+    private Label laForSportType;
 
     /**
      * Standard c'tor for dependency injection.
@@ -138,17 +140,17 @@ public class OverviewDialogController extends AbstractDialogController {
     }
 
     private void setupChoiceBoxes() {
+
+        // fill choice boxes
         cbTimeRange.getItems().addAll(Arrays.asList(TimeRangeType.values()));
         cbTimeRange.getSelectionModel().select(TimeRangeType.LAST_12_MONTHS);
 
         cbDisplay.getItems().addAll(Arrays.asList(ValueType.values()));
         cbDisplay.getSelectionModel().select(ValueType.DISTANCE);
 
-        // TODO the sport type mode must not be visible for ValueType equipment
         cbSportTypeMode.getItems().addAll(Arrays.asList(OverviewType.values()));
         cbSportTypeMode.getSelectionModel().select(OverviewType.EACH_SPLITTED);
 
-        // TODO the sport type list must only be visible for ValueType equipment
         document.getSportTypeList().forEach(sportType -> cbSportTypeList.getItems().add(sportType));
         cbSportTypeList.getSelectionModel().select(0);
 
@@ -165,7 +167,7 @@ public class OverviewDialogController extends AbstractDialogController {
             }
         });
 
-        // init choicebox for year selection, must not be visible for time range type "last 12 months"
+        // init choice box for year selection, must not be visible for time range type "last 12 months"
         // TODO use spinner control, will be available in JavaFX 9
         for (int i = 1950; i <= 2070; i++) {
             cbYear.getItems().addAll(i);
@@ -173,9 +175,19 @@ public class OverviewDialogController extends AbstractDialogController {
         cbYear.getSelectionModel().select(Integer.valueOf(LocalDate.now().getYear()));
         cbYear.visibleProperty().bind(Bindings.notEqual(cbTimeRange.valueProperty(), TimeRangeType.LAST_12_MONTHS));
 
-        // the sport type mode selection must not be visible for the ValueType WEIGHT
-        cbSportTypeMode.visibleProperty().bind(Bindings.notEqual(cbDisplay.valueProperty(), ValueType.WEIGHT));
+        // the sport type mode selection must not be visible for the ValueType SPORTSUBTYPE, EQUIPMENT and WEIGHT
+        cbSportTypeMode.visibleProperty().bind(Bindings.and(
+                Bindings.notEqual(cbDisplay.valueProperty(), ValueType.WEIGHT),
+                Bindings.and(
+                        Bindings.notEqual(cbDisplay.valueProperty(), ValueType.SPORTSUBTYPE),
+                        Bindings.notEqual(cbDisplay.valueProperty(), ValueType.EQUIPMENT))));
         laFor.visibleProperty().bind(cbSportTypeMode.visibleProperty());
+
+        // the sport type list selection must only be visible for the ValueType SPORTSUBTYPE and EQUIPMENT
+        cbSportTypeList.visibleProperty().bind(Bindings.or(
+                Bindings.equal(cbDisplay.valueProperty(), ValueType.SPORTSUBTYPE),
+                Bindings.equal(cbDisplay.valueProperty(), ValueType.EQUIPMENT)));
+        laForSportType.visibleProperty().bind(cbSportTypeList.visibleProperty());
 
         // set listeners for updating the diagram on selection changes
         cbTimeRange.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
@@ -730,7 +742,7 @@ public class OverviewDialogController extends AbstractDialogController {
             case LAST_10_YEARS:
                 return 10;
             default:
-                throw new IllegalArgumentException("Unknow TimeRangeType!");
+                throw new IllegalArgumentException("Unknown TimeRangeType!");
         }
     }
 
