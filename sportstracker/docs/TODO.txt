@@ -3,7 +3,6 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - Overview Dialog:
-  - remove old OverviewDialog
   - use JavaFX version of JFreeChart (see TODOs), not possible with version 1.0.19 yet
     (has a lot of problems: CSS errors, missing features, API will be changed,
      artifact is not available in the Maven Central repo)
@@ -48,6 +47,7 @@ JavaFX Migration status - completed:
 - Exercise Dialog
 - HRM File Open Dialog (from File->Open action it is not modal and is not
   placed in center of ST window, it is fixed when ST main window used JavaFX)
+- Overview Dialog (still using Swing version of JFreeChart, see TODOs)
 - Use of openjfx-dialog backport library from JavaFX 8u40
 
 Java 8 migration status:
