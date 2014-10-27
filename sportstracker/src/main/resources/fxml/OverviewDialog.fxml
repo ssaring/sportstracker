@@ -44,17 +44,25 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER_LEFT" spacing="24.0">
+            <HBox fx:id="hBoxOptions" alignment="CENTER_LEFT" spacing="24.0">
                <padding>
                   <Insets left="24.0" />
                </padding>
                <children>
                   <Label text="%st.dlg.overview.display.text" />
                   <ChoiceBox fx:id="cbDisplay" />
-                  <Label fx:id="laFor" text="%st.dlg.overview.for.text" />
-                  <ChoiceBox fx:id="cbSportTypeMode" />
-                  <Label fx:id="laForSportType" text="%st.dlg.overview.for_sport_type.text" />
-                  <ChoiceBox fx:id="cbSportTypeList" />
+                  <HBox fx:id="hBoxSportTypeMode" alignment="CENTER_LEFT" spacing="24.0">
+                     <children>
+                        <Label text="%st.dlg.overview.for.text" />
+                        <ChoiceBox fx:id="cbSportTypeMode" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="hBoxSportTypeList" alignment="CENTER_LEFT" spacing="24.0">
+                     <children>
+                        <Label text="%st.dlg.overview.for_sport_type.text" />
+                        <ChoiceBox fx:id="cbSportTypeList" />
+                     </children>
+                  </HBox>
                </children>
             </HBox>
          </children>

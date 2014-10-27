@@ -23,7 +23,7 @@ import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Window;
 import org.jfree.chart.ChartFactory;
@@ -92,9 +92,12 @@ public class OverviewDialogController extends AbstractDialogController {
     private SwingNode snDiagram;
 
     @FXML
-    private Label laFor;
+    private HBox hBoxOptions;
     @FXML
-    private Label laForSportType;
+    private HBox hBoxSportTypeMode;
+    @FXML
+    private HBox hBoxSportTypeList;
+
 
     /**
      * Standard c'tor for dependency injection.
@@ -163,20 +166,6 @@ public class OverviewDialogController extends AbstractDialogController {
         cbYear.getSelectionModel().select(Integer.valueOf(LocalDate.now().getYear()));
         cbYear.visibleProperty().bind(Bindings.notEqual(cbTimeRange.valueProperty(), TimeRangeType.LAST_12_MONTHS));
 
-        // the sport type mode selection must not be visible for the ValueType SPORTSUBTYPE, EQUIPMENT and WEIGHT
-        cbSportTypeMode.visibleProperty().bind(Bindings.and(
-                Bindings.notEqual(cbDisplay.valueProperty(), ValueType.WEIGHT),
-                Bindings.and(
-                        Bindings.notEqual(cbDisplay.valueProperty(), ValueType.SPORTSUBTYPE),
-                        Bindings.notEqual(cbDisplay.valueProperty(), ValueType.EQUIPMENT))));
-        laFor.visibleProperty().bind(cbSportTypeMode.visibleProperty());
-
-        // the sport type list selection must only be visible for the ValueType SPORTSUBTYPE and EQUIPMENT
-        cbSportTypeList.visibleProperty().bind(Bindings.or(
-                Bindings.equal(cbDisplay.valueProperty(), ValueType.SPORTSUBTYPE),
-                Bindings.equal(cbDisplay.valueProperty(), ValueType.EQUIPMENT)));
-        laForSportType.visibleProperty().bind(cbSportTypeList.visibleProperty());
-
         // set listeners for updating the diagram on selection changes
         cbTimeRange.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
         cbYear.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
@@ -198,6 +187,8 @@ public class OverviewDialogController extends AbstractDialogController {
      * Draws the Overview diagram according to the current selections.
      */
     private void updateDiagram() {
+        updateOptionControls();
+
         // TODO remove workaround when using JavaFX ChartViewer
         executeOnSwingThread(this::updateDiagramImpl);
     }
@@ -357,6 +348,37 @@ public class OverviewDialogController extends AbstractDialogController {
 
         // add chart to panel
         chartPanel.setChart(chart);
+    }
+
+    private void updateOptionControls() {
+        final ValueType selectedValueType = cbDisplay.getValue();
+
+        // the sport type mode selection must not be visible for the ValueType SPORTSUBTYPE, EQUIPMENT and WEIGHT
+        final boolean sportTypeModeVisible =
+                selectedValueType != ValueType.SPORTSUBTYPE &&
+                        selectedValueType != ValueType.EQUIPMENT &&
+                        selectedValueType != ValueType.WEIGHT;
+
+        // the sport type list selection must only be visible for the ValueType SPORTSUBTYPE and EQUIPMENT
+        final boolean sportTypeListVisible =
+                selectedValueType == ValueType.SPORTSUBTYPE ||
+                        selectedValueType == ValueType.EQUIPMENT;
+
+        // add or remove sport type mode selection depending on visibility and current state
+        if (sportTypeModeVisible && !hBoxOptions.getChildren().contains(hBoxSportTypeMode)) {
+            hBoxOptions.getChildren().add(hBoxSportTypeMode);
+        }
+        if (!sportTypeModeVisible && hBoxOptions.getChildren().contains(hBoxSportTypeMode)) {
+            hBoxOptions.getChildren().remove(hBoxSportTypeMode);
+        }
+
+        // add or remove sport type list selection depending on visibility and current state
+        if (sportTypeListVisible && !hBoxOptions.getChildren().contains(hBoxSportTypeList)) {
+            hBoxOptions.getChildren().add(hBoxSportTypeList);
+        }
+        if (!sportTypeListVisible && hBoxOptions.getChildren().contains(hBoxSportTypeList)) {
+            hBoxOptions.getChildren().remove(hBoxSportTypeList);
+        }
     }
 
     /**

@@ -4,8 +4,6 @@ SportsTracker-TODO
 JavaFX Migration:
 - Overview Dialog:
   - see TODOs in OverviewDialogController
-  - layout problem, sport type list selection must be on the same place as sport
-    type mode selection
   - compare diagrams with ST 6.0 for all modes
   - remove unused I18N resources
   - remove old OverviewDialog
