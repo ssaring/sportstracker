@@ -272,7 +272,7 @@ public class DiagramPanel extends BasePanel {
                     false);                     // URLs
         }
 
-        ChartUtils.customizeChart(chart, chartPanel);
+        ChartUtils.customizeChart(chart, chartPanel, true);
 
         // set format of time domain axis (if active)
         XYPlot plot = (XYPlot) chart.getPlot();

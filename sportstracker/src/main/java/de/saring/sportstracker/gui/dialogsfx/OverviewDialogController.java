@@ -225,7 +225,7 @@ public class OverviewDialogController extends AbstractDialogController {
                 true,             // display tooltips
                 false);           // URLs
 
-        ChartUtils.customizeChart(chart, chartPanel);
+        ChartUtils.customizeChart(chart, chartPanel, false);
 
         // render unique filled shapes for each graph
         XYPlot plot = (XYPlot) chart.getPlot();

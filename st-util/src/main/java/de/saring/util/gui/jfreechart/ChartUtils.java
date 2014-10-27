@@ -24,9 +24,13 @@ public final class ChartUtils {
      *
      * @param chart the chart component
      * @param parent the parent component of the chart
+     * @param useParentBackground flag whether use the background color of the parent or not
      */
-    public static void customizeChart(JFreeChart chart, JComponent parent) {
-        chart.setBackgroundPaint(parent.getBackground());
+    public static void customizeChart(JFreeChart chart, JComponent parent, boolean useParentBackground) {
+        if (useParentBackground) {
+            chart.setBackgroundPaint(parent.getBackground());
+        }
+
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setBackgroundPaint(Color.WHITE);
         plot.setDomainGridlinePaint(Color.GRAY);
