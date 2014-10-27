@@ -71,6 +71,7 @@ SportsTracker 7.0.0:
 
 - st.dlg.hrm_file_open.filter_all_files (new)
 
+- st.dlg.overview.close.Action.text (removed)
 
 SportsTracker 5.7.0:
 - st.dlg.exercise.error.import_console (new)
