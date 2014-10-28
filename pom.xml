@@ -139,7 +139,7 @@
             <!-- Backported OpenJFX Dialog library is a dependency of ControlsFX, will be part of JavaFX in JDK 8u40-->
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>8.20.7</version>
+            <version>8.20.8</version>
         </dependency>
         <!-- Common test dependencies -->
         <dependency>

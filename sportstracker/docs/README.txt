@@ -360,7 +360,7 @@ The SportsTracker project uses the following libraries:
       License: Lesser General Public License (LGPL)
   - MiG Layout 3.7.4 (http://www.miglayout.com/)
       License: BSD License
-  - ControlsFX 8.0.6 (http://controlsfx.org/)
+  - ControlsFX 8.20.8 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - commons-cli 1.2 (http://commons.apache.org/cli/)
       License: Apache License v2.0
