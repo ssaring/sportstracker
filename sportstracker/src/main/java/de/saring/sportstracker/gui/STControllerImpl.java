@@ -8,13 +8,13 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.dialogs.FilterDialog;
 import de.saring.sportstracker.gui.dialogs.OptionsDialog;
-import de.saring.sportstracker.gui.dialogs.SportTypeListDialog;
 import de.saring.sportstracker.gui.dialogs.StatisticDialog;
 import de.saring.sportstracker.gui.dialogsfx.AboutDialogController;
 import de.saring.sportstracker.gui.dialogsfx.ExerciseDialogController;
 import de.saring.sportstracker.gui.dialogsfx.HRMFileOpenDialog;
 import de.saring.sportstracker.gui.dialogsfx.NoteDialogController;
 import de.saring.sportstracker.gui.dialogsfx.OverviewDialogController;
+import de.saring.sportstracker.gui.dialogsfx.SportTypeListDialogController;
 import de.saring.sportstracker.gui.dialogsfx.WeightDialogController;
 import de.saring.sportstracker.gui.views.EntryView;
 import de.saring.util.data.IdDateObject;
@@ -58,8 +58,6 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<FilterDialog> prFilterDialog;
     @Inject
-    private Provider<SportTypeListDialog> prSportTypeListDialog;
-    @Inject
     private Provider<StatisticDialog> prStatisticDialog;
     @Inject
     private Provider<EVMain> prExerciseViewer;
@@ -75,7 +73,10 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
     @Inject
+    private Provider<SportTypeListDialogController> prSportTypeListDialogController;
+    @Inject
     private Provider<OverviewDialogController> prOverviewDialogController;
+
 
     /**
      * The action map of the controller class.
@@ -529,7 +530,7 @@ public class STControllerImpl implements STController {
      */
     @Action(name = ACTION_SPORTTYPE_EDITOR)
     public void showSportTypeEditor() {
-        context.showDialog(prSportTypeListDialog.get());
+        prSportTypeListDialogController.get().show(context.getPrimaryStage());
 
         // sport type and subtype objects may have been changed 
         // => these will be new objects => update all exercises and the 
