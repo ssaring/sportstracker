@@ -3,8 +3,11 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - SportType Dialog:
-  - SportTypeDialog.fxml: DONE
+  - FXML: DONE
   - see TODOs in SportTypeListController
+  - remove Swing based Dialog and unused I18N properties
+- SportListType Dialog:
+  - FXML: DONE
 - Overview Dialog: migration completed and tested, except:
   - use JavaFX version of JFreeChart (see TODOs), not possible with version 1.0.19 yet
     (has a lot of problems: CSS errors, missing features, API will be changed,
