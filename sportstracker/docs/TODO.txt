@@ -42,6 +42,7 @@ JavaFX Migration:
     -> seems to be fixed in upcoming ControlsFX 8.0.7
 - Use Maven JavaFX Plugin 8.1, see details in
   http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
+- SportType: use JavaFX Color object when migration of main ST window completed
 - Use Dialogs, Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
   => will be introduced in Java 8u40 (Dec. 2014)
 - JavaFX Bug RT-38644: https://javafx-jira.kenai.com/browse/RT-38644 (created)
