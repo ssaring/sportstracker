@@ -4,6 +4,7 @@ SportsTracker-TODO
 JavaFX Migration:
 - SportType Dialog:
   - FXML: DONE
+  - add unit tests for ColorConverter and SportTypeViewModel
   - see TODOs in SportTypeDialogController
   - remove Swing based Dialog and unused I18N properties
 - Overview Dialog: migration completed and tested, except:

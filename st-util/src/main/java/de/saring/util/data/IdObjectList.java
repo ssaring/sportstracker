@@ -72,7 +72,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
     }
 
     /**
-     * Stores the specified IdObject in the list. If there is allready an
+     * Stores the specified IdObject in the list. If there is already an
      * IDObject with that ID then the old object will be overwritten. Otherwise
      * the new one will be added to the end of the list.
      *

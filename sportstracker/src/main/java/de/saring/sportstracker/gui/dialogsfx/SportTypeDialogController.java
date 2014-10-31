@@ -54,7 +54,7 @@ public class SportTypeDialogController extends AbstractDialogController {
 
 
     /** ViewModel of the edited SportType. */
-    // TODO private NoteViewModel noteViewModel;
+    private SportTypeViewModel sportTypeViewModel;
 
     /**
      * Standard c'tor for dependency injection.
@@ -78,7 +78,7 @@ public class SportTypeDialogController extends AbstractDialogController {
      * @param sportType sport type to be edited
      */
     public void show(final Window parent, final SportType sportType) {
-        // TODO this.noteViewModel = new NoteViewModel(note);
+        this.sportTypeViewModel = new SportTypeViewModel(sportType);
 
         final String dlgTitleKey = sportType.getName() == null ?
                 "st.dlg.sporttype.title.add" : "st.dlg.sporttype.title";
@@ -90,14 +90,14 @@ public class SportTypeDialogController extends AbstractDialogController {
     @Override
     protected void setupDialogControls() {
 
-        /* TODO
         // setup binding between view model and the UI controls
-        dpDate.valueProperty().bindBidirectional(noteViewModel.date);
-        tfHour.textProperty().bindBidirectional(noteViewModel.hour, new NumberStringConverter("00"));
-        tfMinute.textProperty().bindBidirectional(noteViewModel.minute, new NumberStringConverter("00"));
-        taText.textProperty().bindBidirectional(noteViewModel.text);
+        tfName.textProperty().bindBidirectional(sportTypeViewModel.name);
+        cbRecordDistance.selectedProperty().bindBidirectional(sportTypeViewModel.recordDistance);
+        cpColor.valueProperty().bindBidirectional(sportTypeViewModel.color);
+        liSportSubtypes.setItems(sportTypeViewModel.sportSubTypes);
+        liEquipments.setItems(sportTypeViewModel.equipments);
 
-        // setup validation of the UI controls
+        /* TODO setup validation of the UI controls
         validationSupport.registerValidator(dpDate,
                 Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.note.error.date")));
         validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
