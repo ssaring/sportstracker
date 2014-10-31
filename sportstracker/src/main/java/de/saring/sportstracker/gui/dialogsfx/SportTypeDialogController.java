@@ -6,6 +6,7 @@ import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import de.saring.util.gui.javafx.NameableListCell;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -89,6 +90,9 @@ public class SportTypeDialogController extends AbstractDialogController {
 
     @Override
     protected void setupDialogControls() {
+
+        liSportSubtypes.setCellFactory(list -> new NameableListCell<>());
+        liEquipments.setCellFactory(list -> new NameableListCell<>());
 
         // setup binding between view model and the UI controls
         tfName.textProperty().bindBidirectional(sportTypeViewModel.name);

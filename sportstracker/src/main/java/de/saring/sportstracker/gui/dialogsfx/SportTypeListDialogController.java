@@ -6,6 +6,7 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.ColorConverter;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import de.saring.util.gui.javafx.NameableListCell;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
@@ -15,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 import javafx.stage.Window;
@@ -168,13 +168,11 @@ public class SportTypeListDialogController extends AbstractDialogController {
     /**
      * Custom ListCell implementation for displaying the sport types in the ListView by using its name and color.
      */
-    private static class SportTypeListCell extends ListCell<SportType> {
+    private static class SportTypeListCell extends NameableListCell<SportType> {
 
         @Override
         protected void updateItem(final SportType item, final boolean empty) {
             super.updateItem(item, empty);
-
-            setText(item == null ? null : item.getName());
 
             if (item != null) {
                 setTextFill(ColorConverter.toFxColor(item.getColor()));
