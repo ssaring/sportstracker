@@ -33,7 +33,7 @@ public class NoteViewModelTest {
 
         // test without modifications
         Note unmodifiedNote = viewModel.getNote();
-        assertEquals(note.getId(), note.getId());
+        assertEquals(note.getId(), unmodifiedNote.getId());
         assertEquals(note.getDateTime(), unmodifiedNote.getDateTime());
         assertEquals(note.getText(), unmodifiedNote.getText());
 

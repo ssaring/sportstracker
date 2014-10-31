@@ -17,8 +17,7 @@ public final class ColorConverter {
      * @return the AWT Color object
      */
     public static java.awt.Color toAwtColor(final javafx.scene.paint.Color fxColor) {
-        return new java.awt.Color((float) fxColor.getRed() * 255f, (float) fxColor.getGreen() * 255f,
-                (float) fxColor.getBlue() * 255f);
+        return new java.awt.Color((float) fxColor.getRed(), (float) fxColor.getGreen(), (float) fxColor.getBlue());
     }
 
     /**
