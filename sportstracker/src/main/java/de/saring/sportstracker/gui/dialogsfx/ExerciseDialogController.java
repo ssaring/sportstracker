@@ -411,7 +411,8 @@ public class ExerciseDialogController extends AbstractDialogController {
         final String hrmFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.get());
 
         // show file open dialog and display selected filename
-        final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(document.getOptions(), hrmFile);
+        final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(
+                getWindow(tfHrmFile), document.getOptions(), hrmFile);
         if (selectedFile != null) {
             exerciseViewModel.hrmFile.set(selectedFile.getAbsolutePath());
         }

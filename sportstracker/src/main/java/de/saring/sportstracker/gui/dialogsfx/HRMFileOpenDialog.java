@@ -5,6 +5,7 @@ import de.saring.exerciseviewer.parser.ExerciseParserInfo;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.gui.STContext;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -36,11 +37,12 @@ public class HRMFileOpenDialog {
      * Displays the HRM File Open dialog and returns the selected file or null
      * when the user has nothing selected.
      *
+     * @param parent the parent window
      * @param options the application options
      * @param initialFile the filename to be initially selected (optional)
      * @return the selected file or null when nothing selected
      */
-    public File selectHRMFile(final STOptions options, final String initialFile) {
+    public File selectHRMFile(final Window parent, final STOptions options, final String initialFile) {
 
         // create file chooser
         final FileChooser fileChooser = new FileChooser();
@@ -69,7 +71,7 @@ public class HRMFileOpenDialog {
         }
 
         // display file chooser
-        final File selectedFile = fileChooser.showOpenDialog(context.getPrimaryStage());
+        final File selectedFile = fileChooser.showOpenDialog(parent);
         if (selectedFile == null) {
             // nothing selected
             return null;

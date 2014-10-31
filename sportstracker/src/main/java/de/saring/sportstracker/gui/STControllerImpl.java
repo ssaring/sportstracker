@@ -232,7 +232,8 @@ public class STControllerImpl implements STController {
         // TODO remove Swing / FX UI thread handling when the main window is also JavaFX based
         // show file open dialog for HRM file selection (on JavaFX UI thread)
         Platform.runLater(() -> {
-            final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(document.getOptions(), null);
+            final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(
+                    context.getPrimaryStage(), document.getOptions(), null);
             if (selectedFile != null) {
 
                 // start ExerciseViewer (on Swing UI thread)
