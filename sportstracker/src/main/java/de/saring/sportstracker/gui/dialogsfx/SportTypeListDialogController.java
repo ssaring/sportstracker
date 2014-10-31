@@ -73,6 +73,13 @@ public class SportTypeListDialogController extends AbstractDialogController {
         liSportTypes.setCellFactory(list -> new SportTypeListCell());
         updateSportTypeList();
 
+        // start SportType edit dialog on double clicks in list
+        liSportTypes.setOnMouseClicked(event -> {
+            if (event.getClickCount() > 1) {
+                onEditSportType(null);
+            }
+        });
+
         // Edit and Delete buttons must be disabled when there is no selection in list
         final BooleanBinding selected = Bindings.isNull(liSportTypes.getSelectionModel().selectedItemProperty());
         btEdit.disableProperty().bind(selected);
@@ -91,7 +98,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
     @FXML
     private void onAddSportType(final ActionEvent event) {
 
-        // start edit dialog for a new created SportType object
+        // start SportType dialog for a new created SportType object
         final SportType newSportType = new SportType(document.getSportTypeList().getNewID());
         prSportTypeDialogController.get().show(getWindow(liSportTypes), newSportType);
         updateSportTypeList();
@@ -102,7 +109,13 @@ public class SportTypeListDialogController extends AbstractDialogController {
      */
     @FXML
     private void onEditSportType(final ActionEvent event) {
-        // TODO
+
+        // start SportType dialog for the selected sport type
+        final SportType selectedSportType = liSportTypes.getSelectionModel().getSelectedItem();
+        if (selectedSportType != null) {
+            prSportTypeDialogController.get().show(getWindow(liSportTypes), selectedSportType);
+            updateSportTypeList();
+        }
     }
 
     /**
