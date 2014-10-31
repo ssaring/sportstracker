@@ -68,6 +68,7 @@ public class SportTypeDialogController extends AbstractDialogController {
                                      final GuiceFxmlLoader guiceFxmlLoader) {
         super(context, guiceFxmlLoader);
         this.document = document;
+        setParentIsSwingWindow(false);
     }
 
     /**

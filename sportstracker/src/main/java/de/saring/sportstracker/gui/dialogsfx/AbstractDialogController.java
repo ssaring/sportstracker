@@ -32,6 +32,9 @@ public abstract class AbstractDialogController {
     /** ValidationSupport of tis dialog, is null in Info dialogs. */
     protected ValidationSupport validationSupport;
 
+    // TODO: remove this flag when the main window has been migrated to JavaFX
+    private boolean parentIsSwingWindow = true;
+
     /**
      * Standard c'tor for dependency injection.
      *
@@ -41,6 +44,16 @@ public abstract class AbstractDialogController {
     public AbstractDialogController(final STContext context, final GuiceFxmlLoader guiceFxmlLoader) {
         this.context = context;
         this.guiceFxmlLoader = guiceFxmlLoader;
+    }
+
+    /**
+     * Sets the flag which defines whether the parent window of this dialog is a Swing window (default) or not.
+     * Swing parents need extra workarounds. This method needs to be called before the show...() methods.
+     *
+     * @param parentIsSwingWindow flag for parent window type
+     */
+    public void setParentIsSwingWindow(final boolean parentIsSwingWindow) {
+        this.parentIsSwingWindow = parentIsSwingWindow;
     }
 
     /**
@@ -198,8 +211,10 @@ public abstract class AbstractDialogController {
 
     private void applyJavaFXToSwingMigrationWorkarounds(final Dialog dialog) {
         // TODO: remove these functions when the main window has been migrated to JavaFX
-        centerDialogOnSwingFrame();
-        fakeModalDialog(dialog);
+        if (parentIsSwingWindow) {
+            centerDialogOnSwingFrame();
+            fakeModalDialog(dialog);
+        }
     }
 
     /**

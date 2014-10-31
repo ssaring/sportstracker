@@ -8,6 +8,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Window;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 /**
@@ -35,6 +37,10 @@ public class SportTypeListDialogController extends AbstractDialogController {
     private Button btEdit;
     @FXML
     private Button btDelete;
+
+    @Inject
+    private Provider<SportTypeDialogController> prSportTypeDialogController;
+
 
     /**
      * Standard c'tor for dependency injection.
@@ -77,6 +83,34 @@ public class SportTypeListDialogController extends AbstractDialogController {
         final ObservableList<SportType> olSportTypes = FXCollections.observableArrayList();
         document.getSportTypeList().forEach(sportType -> olSportTypes.add(sportType));
         liSportTypes.setItems(olSportTypes);
+    }
+
+    /**
+     * Action for adding a new sport type.
+     */
+    @FXML
+    private void onAddSportType(final ActionEvent event) {
+
+        // start edit dialog for a new created SportType object
+        final SportType newSportType = new SportType(document.getSportTypeList().getNewID());
+        prSportTypeDialogController.get().show(getWindow(liSportTypes), newSportType);
+        updateSportTypeList();
+    }
+
+    /**
+     * Action for editing the selected sport type.
+     */
+    @FXML
+    private void onEditSportType(final ActionEvent event) {
+        // TODO
+    }
+
+    /**
+     * Action for deleting the selected sport type.
+     */
+    @FXML
+    private void onDeleteSportType(final ActionEvent event) {
+        // TODO
     }
 
     /**

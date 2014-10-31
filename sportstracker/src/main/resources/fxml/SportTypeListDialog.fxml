@@ -12,9 +12,9 @@
       <ListView fx:id="liSportTypes" prefHeight="240.0" prefWidth="320.0" />
       <VBox alignment="TOP_CENTER" spacing="16.0" HBox.hgrow="ALWAYS">
          <children>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.sporttype_list.add.Action.text" />
-            <Button fx:id="btEdit" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.sporttype_list.edit.Action.text" />
-            <Button fx:id="btDelete" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.sporttype_list.delete.Action.text" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddSportType" text="%st.dlg.sporttype_list.add.Action.text" />
+            <Button fx:id="btEdit" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEditSportType" text="%st.dlg.sporttype_list.edit.Action.text" />
+            <Button fx:id="btDelete" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDeleteSportType" text="%st.dlg.sporttype_list.delete.Action.text" />
          </children>
       </VBox>
    </children>
