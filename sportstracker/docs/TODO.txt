@@ -2,10 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- SportTypeList Dialog:
-  - FXML: DONE
-  - see TODOs in SportTypeListDialogController
-  - remove Swing based Dialog and unused I18N properties
 - SportType Dialog:
   - FXML: DONE
   - see TODOs in SportTypeDialogController
@@ -57,6 +53,7 @@ JavaFX Migration status - completed:
 - HRM File Open Dialog (from File->Open action it is not modal and is not
   placed in center of ST window, it is fixed when ST main window used JavaFX)
 - Overview Dialog (still using Swing version of JFreeChart, see TODOs)
+- Sport Type List Dialog
 - Use of openjfx-dialog backport library from JavaFX 8u40
 
 Java 8 migration status:

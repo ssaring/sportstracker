@@ -3,10 +3,12 @@ package de.saring.exerciseviewer.gui;
 import de.saring.util.ResourceReader;
 import de.saring.util.unitcalc.FormatUtils;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.jdesktop.application.ApplicationContext;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Optional;
 
 /**
  * This is the GUI context of the ExerciseViewer sub-application. It contains the
@@ -71,8 +73,9 @@ public interface EVContext {
      * @param titleKey the resource key for the dialog title text
      * @param messageKey the resource key for the message text
      * @param arguments list of objects which needs to be inserted in the message text (optional)
+     * @return An Optional that contains the result of the displayed dialog.
      */
-    void showFxMessageDialog(javafx.stage.Window parent, Alert.AlertType alertType, String titleKey,
+    Optional<ButtonType> showFxMessageDialog(javafx.stage.Window parent, Alert.AlertType alertType, String titleKey,
                              String messageKey, Object... arguments);
 
     /**

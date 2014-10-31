@@ -4,6 +4,7 @@ import de.saring.util.AppResources;
 import de.saring.util.ResourceReader;
 import de.saring.util.unitcalc.FormatUtils;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.SingleFrameApplication;
@@ -11,6 +12,7 @@ import org.jdesktop.application.SingleFrameApplication;
 import javax.inject.Singleton;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Optional;
 
 /**
  * Implementation of the GUI context of the SportsTracker application. It contains
@@ -81,8 +83,8 @@ public class STContextImpl implements STContext {
     }
 
     @Override
-    public void showFxMessageDialog(javafx.stage.Window parent, Alert.AlertType alertType, String titleKey,
-                                    String messageKey, Object... arguments) {
+    public Optional<ButtonType> showFxMessageDialog(final javafx.stage.Window parent, final Alert.AlertType alertType,
+            final String titleKey, final String messageKey, final Object... arguments) {
 
         // replace placeholders in message with arguments if specified
         String message = fxResources.getString(messageKey);
@@ -98,7 +100,7 @@ public class STContextImpl implements STContext {
         // TODO remove when fixed in OpenJFX-Dialogs
         // workaround for disabling bigger font size of custom dialog content
         alert.getDialogPane().setStyle("-fx-font-size: 1em;");
-        alert.showAndWait();
+        return alert.showAndWait();
     }
 
     @Override

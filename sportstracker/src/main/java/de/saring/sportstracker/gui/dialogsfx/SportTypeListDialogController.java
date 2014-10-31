@@ -1,5 +1,6 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
+import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
@@ -10,7 +11,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
@@ -19,6 +22,9 @@ import javafx.stage.Window;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Controller (MVC) class of the Sport Type List dialog of the SportsTracker application.
@@ -110,7 +116,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
     @FXML
     private void onEditSportType(final ActionEvent event) {
 
-        // start SportType dialog for the selected sport type
+        // start SportType dialog for the selected sport type (can be null due to double clicks)
         final SportType selectedSportType = liSportTypes.getSelectionModel().getSelectedItem();
         if (selectedSportType != null) {
             prSportTypeDialogController.get().show(getWindow(liSportTypes), selectedSportType);
@@ -123,7 +129,39 @@ public class SportTypeListDialogController extends AbstractDialogController {
      */
     @FXML
     private void onDeleteSportType(final ActionEvent event) {
-        // TODO
+
+        // display confirmation dialog
+        final Optional<ButtonType> resultDeleteSportType = context.showFxMessageDialog(
+                getWindow(liSportTypes), Alert.AlertType.CONFIRMATION,
+                "st.dlg.sporttype_list.confirm.delete.title", "st.dlg.sporttype_list.confirm.delete.text");
+        if (!resultDeleteSportType.isPresent() || resultDeleteSportType.get() != ButtonType.OK) {
+            return;
+        }
+
+        // are there any existing exercises for this sport type?
+        final SportType sportType = liSportTypes.getSelectionModel().getSelectedItem();
+        final List<Exercise> lRefExercises = document.getExerciseList().stream()
+                .filter(exercise -> exercise.getSportType().equals(sportType))
+                .collect(Collectors.toList());
+
+        // when there are referenced exercises => these exercises needs to be deleted too
+        if (!lRefExercises.isEmpty()) {
+
+            // show confirmation dialog for deleting exercises
+            final Optional<ButtonType> resultDeleteExercises = context.showFxMessageDialog(
+                    getWindow(liSportTypes), Alert.AlertType.CONFIRMATION,
+                    "st.dlg.sporttype_list.confirm.delete.title", "st.dlg.sporttype_list.confirm.delete_existing.text");
+            if (!resultDeleteExercises.isPresent() || resultDeleteExercises.get() != ButtonType.OK) {
+                return;
+            }
+
+            // delete reference exercises
+            lRefExercises.forEach(exercise -> document.getExerciseList().removeByID(exercise.getId()));
+        }
+
+        // finally delete the sport type
+        document.getSportTypeList().removeByID(sportType.getId());
+        updateSportTypeList();
     }
 
     /**
