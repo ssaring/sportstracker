@@ -96,8 +96,8 @@ public class STContextImpl implements STContext {
         alert.initOwner(parent);
         alert.setTitle(fxResources.getString(titleKey));
         alert.setHeaderText(null);
-        alert.setResizable(true);
         // TODO remove when fixed in OpenJFX-Dialogs
+        alert.setResizable(true);
         // workaround for disabling bigger font size of custom dialog content
         alert.getDialogPane().setStyle("-fx-font-size: 1em;");
         return alert.showAndWait();
