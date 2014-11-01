@@ -11,6 +11,7 @@ import de.saring.util.gui.javafx.NameableListCell;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
@@ -150,9 +151,23 @@ public class SportTypeDialogController extends AbstractDialogController {
     @Override
     protected boolean validateAndStore() {
 
-        /* TODO store the new SportType, no further validation needed
-        final Note newNote = noteViewModel.getNote();
-        document.getNoteList().set(newNote); */
+        // make sure that the entered name is not in use by other sport types yet
+        final SportType editedSportType = sportTypeViewModel.getSportType();
+        Optional<SportType> oSportTypeSameName = document.getSportTypeList().stream()
+                .filter(stTemp -> stTemp.getId() != sportTypeViewModel.id
+                        && stTemp.getName().equals(editedSportType.getName()))
+                .findFirst();
+
+        if (oSportTypeSameName.isPresent()) {
+            tfName.selectAll();
+            context.showFxMessageDialog(getWindow(tfName), Alert.AlertType.ERROR,
+                    "common.error", "st.dlg.sporttype.error.name_in_use");
+            tfName.requestFocus();
+            return false;
+        }
+
+        // store the edited SportType in the documents list
+        document.getSportTypeList().set(editedSportType);
         return true;
     }
 }

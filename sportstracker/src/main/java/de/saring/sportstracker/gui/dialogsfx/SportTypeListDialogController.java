@@ -95,6 +95,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
 
     private void updateSportTypeList() {
         final ObservableList<SportType> olSportTypes = FXCollections.observableArrayList();
+        liSportTypes.getItems().clear();
         document.getSportTypeList().forEach(sportType -> olSportTypes.add(sportType));
         liSportTypes.setItems(olSportTypes);
     }

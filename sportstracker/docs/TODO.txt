@@ -3,6 +3,8 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - SportType Dialog:
+  - Bug SportType modifications (e.g. color) must be visible in the calendar after closing the dialog
+    => update the SportType objects in existing Exercises when closing the SportTypeList dialog
   - FXML: DONE
   - see TODOs in SportTypeDialogController
   - remove Swing based Dialog and unused I18N properties
