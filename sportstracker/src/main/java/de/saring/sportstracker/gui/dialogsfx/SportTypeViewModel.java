@@ -22,7 +22,7 @@ import javafx.scene.paint.Color;
  */
 public class SportTypeViewModel {
 
-    private final int id;
+    public final int id;
     public final StringProperty name;
     public final BooleanProperty recordDistance;
     public final StringProperty icon;

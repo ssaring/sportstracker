@@ -1,6 +1,7 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
 import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
@@ -21,6 +22,7 @@ import org.controlsfx.validation.Validator;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controller (MVC) class of the Sport Type dialog for editing / adding SportType entries.
@@ -97,24 +99,29 @@ public class SportTypeDialogController extends AbstractDialogController {
 
     @Override
     protected void setupDialogControls() {
-
         liSportSubtypes.setCellFactory(list -> new NameableListCell<>());
         liEquipments.setCellFactory(list -> new NameableListCell<>());
 
-        // setup binding between view model and the UI controls
+        setupBinding();
+        setupValidation();
+    }
+
+    /**
+     * Setup of the binding between the view model and the UI controls.
+     */
+    private void setupBinding() {
         tfName.textProperty().bindBidirectional(sportTypeViewModel.name);
         cbRecordDistance.selectedProperty().bindBidirectional(sportTypeViewModel.recordDistance);
         cpColor.valueProperty().bindBidirectional(sportTypeViewModel.color);
         liSportSubtypes.setItems(sportTypeViewModel.sportSubTypes);
         liEquipments.setItems(sportTypeViewModel.equipments);
 
-        // setup validation of the UI controls
-        validationSupport.registerValidator(tfName,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.sporttype.error.no_name")));
-        validationSupport.registerValidator(liSportSubtypes,
-                Validator.createPredicateValidator(
-                        (List<SportSubType> sportSubTypes) -> !sportSubTypes.isEmpty(),
-                        context.getFxResources().getString("st.dlg.sporttype.error.no_subtype")));
+        // the record distance mode can only be changed, when no exercises exists for
+        // this sport type => disable checkbox, when such exercises were found
+        Optional<Exercise> oExercise = document.getExerciseList().stream()
+                .filter(exercise -> exercise.getSportType().getId() == sportTypeViewModel.id)
+                .findFirst();
+        cbRecordDistance.setDisable(oExercise.isPresent());
 
         // Edit and Delete buttons must be disabled when there is no selection in the appropriate list
         final BooleanBinding sportSubtypeSelected = Bindings.isNull(
@@ -126,6 +133,18 @@ public class SportTypeDialogController extends AbstractDialogController {
                 liEquipments.getSelectionModel().selectedItemProperty());
         btEquipmentEdit.disableProperty().bind(equipmentSelected);
         btEquipmentDelete.disableProperty().bind(equipmentSelected);
+    }
+
+    /**
+     * Setup of the validation of the UI controls.
+     */
+    private void setupValidation() {
+        validationSupport.registerValidator(tfName,
+                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.sporttype.error.no_name")));
+        validationSupport.registerValidator(liSportSubtypes,
+                Validator.createPredicateValidator(
+                        (List<SportSubType> sportSubTypes) -> !sportSubTypes.isEmpty(),
+                        context.getFxResources().getString("st.dlg.sporttype.error.no_subtype")));
     }
 
     @Override
