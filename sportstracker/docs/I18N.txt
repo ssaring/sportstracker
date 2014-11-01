@@ -78,6 +78,9 @@ SportsTracker 7.0.0:
 
 - st.dlg.sporttype.confirm.delete_subtype_existing.text (edited)
 - st.dlg.sporttype.confirm.delete_equipment_existing.text (edited)
+- st.dlg.sporttype.ok.Action.text (removed)
+- st.dlg.sporttype.cancel.Action.text (removed)
+- st.dlg.sporttype.colorchooser.title (removed)
 
 SportsTracker 5.7.0:
 - st.dlg.exercise.error.import_console (new)

@@ -5,7 +5,7 @@ JavaFX Migration:
 - SportType Dialog:
   - FXML: DONE
   - Controller: DONE
-  - remove Swing based Dialog and unused I18N properties
+  - remove Swing based Dialog
 - test: Add SportType in SportTypeList Dialog (all other use cases are tested)
 - Overview Dialog: migration completed and tested, except:
   - use JavaFX version of JFreeChart (see TODOs), not possible with version 1.0.19 yet

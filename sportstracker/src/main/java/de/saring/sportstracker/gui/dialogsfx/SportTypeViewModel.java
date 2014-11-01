@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.dialogsfx;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
+import de.saring.util.StringUtils;
 import de.saring.util.data.IdObjectList;
 import de.saring.util.gui.javafx.ColorConverter;
 import javafx.beans.property.BooleanProperty;
@@ -57,7 +58,7 @@ public class SportTypeViewModel {
         final SportType sportType = new SportType(id);
         sportType.setName(name.getValue().trim());
         sportType.setRecordDistance(recordDistance.getValue());
-        sportType.setIcon(icon.getValue().trim());
+        sportType.setIcon(StringUtils.getTrimmedTextOrNull(icon.getValue()));
         sportType.setColor(ColorConverter.toAwtColor(color.getValue()));
 
         sportSubtypes.forEach(sportSubType -> sportType.getSportSubTypeList().set(sportSubType));
