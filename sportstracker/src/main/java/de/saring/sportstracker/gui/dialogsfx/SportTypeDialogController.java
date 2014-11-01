@@ -7,6 +7,8 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import de.saring.util.gui.javafx.NameableListCell;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -14,9 +16,11 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
+import org.controlsfx.validation.Validator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.List;
 
 /**
  * Controller (MVC) class of the Sport Type dialog for editing / adding SportType entries.
@@ -101,17 +105,24 @@ public class SportTypeDialogController extends AbstractDialogController {
         liSportSubtypes.setItems(sportTypeViewModel.sportSubTypes);
         liEquipments.setItems(sportTypeViewModel.equipments);
 
-        /* TODO setup validation of the UI controls
-        validationSupport.registerValidator(dpDate,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.note.error.date")));
-        validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfHour, context.getFxResources().getString("st.dlg.note.error.time"),
-                        !ValidationUtils.isValueIntegerBetween(newValue, 0, 23)));
-        validationSupport.registerValidator(tfMinute, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfMinute, context.getFxResources().getString("st.dlg.note.error.time"),
-                        !ValidationUtils.isValueIntegerBetween(newValue, 0, 59)));
-        validationSupport.registerValidator(taText,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.note.error.no_text"))); */
+        // setup validation of the UI controls
+        validationSupport.registerValidator(tfName,
+                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.sporttype.error.no_name")));
+        validationSupport.registerValidator(liSportSubtypes,
+                Validator.createPredicateValidator(
+                        (List<SportSubType> sportSubTypes) -> !sportSubTypes.isEmpty(),
+                        context.getFxResources().getString("st.dlg.sporttype.error.no_subtype")));
+
+        // Edit and Delete buttons must be disabled when there is no selection in the appropriate list
+        final BooleanBinding sportSubtypeSelected = Bindings.isNull(
+                liSportSubtypes.getSelectionModel().selectedItemProperty());
+        btSportSubtypeEdit.disableProperty().bind(sportSubtypeSelected);
+        btSportSubtypeDelete.disableProperty().bind(sportSubtypeSelected);
+
+        final BooleanBinding equipmentSelected = Bindings.isNull(
+                liEquipments.getSelectionModel().selectedItemProperty());
+        btEquipmentEdit.disableProperty().bind(equipmentSelected);
+        btEquipmentDelete.disableProperty().bind(equipmentSelected);
     }
 
     @Override
