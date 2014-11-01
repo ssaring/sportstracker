@@ -448,6 +448,15 @@ public class SportTypeDialogController extends AbstractDialogController {
         }
     }
 
+    /**
+     * Displays a text input dialog for the specified parameters.
+     *
+     * @param parent parent window of the input dialog
+     * @param titleKey resource key for the dialog title
+     * @param messageKey resource key for the dialog message
+     * @param initialValue initial text value to be displayed
+     * @return Optional containing the entered String (can be empty text) or Optional.empty() when the user has cancelled the dialog
+     */
     private Optional<String> showTextInputDialog(final Window parent, final String titleKey, final String messageKey,
                                                  final String initialValue) {
         final TextInputDialog inputDlg = new TextInputDialog(initialValue == null ? "" : initialValue);

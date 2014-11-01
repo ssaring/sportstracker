@@ -2,11 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- SportType Dialog:
-  - FXML: DONE
-  - Controller: DONE
-  - remove Swing based Dialog
-- test: Add SportType in SportTypeList Dialog (all other use cases are tested)
 - Overview Dialog: migration completed and tested, except:
   - use JavaFX version of JFreeChart (see TODOs), not possible with version 1.0.19 yet
     (has a lot of problems: CSS errors, missing features, API will be changed,
@@ -16,7 +11,7 @@ JavaFX Migration:
     - dialog pane font size is too large (at least on Mac OS X)
       - Workaround: dlg.getDialogPane().setStyle("-fx-font-size: 1em;");
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38818 => fixed in JavaFX 8u40
-        -> remove in AbstractDialogController and STContextImpl when bugfix is available
+        -> remove in AbstractDialogController, STContextImpl and SportTypeDialogController when bugfix is available
     - It's quite tricky to add a custom validation when the user presses OK in the dialog,
       the dialog is always being closed
       - Workaround: lookup the OK button and add a EventFilter for ActionEvent.Action.
@@ -55,6 +50,7 @@ JavaFX Migration status - completed:
   placed in center of ST window, it is fixed when ST main window used JavaFX)
 - Overview Dialog (still using Swing version of JFreeChart, see TODOs)
 - Sport Type List Dialog
+- Sport Type Dialog
 - Use of openjfx-dialog backport library from JavaFX 8u40
 
 Java 8 migration status:
