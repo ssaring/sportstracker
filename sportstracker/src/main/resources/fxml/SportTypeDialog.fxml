@@ -52,9 +52,9 @@
                   <ListView fx:id="liSportSubtypes" prefHeight="140.0" prefWidth="340.0" />
                   <VBox alignment="TOP_CENTER" spacing="16.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.sporttype.add_subtype.Action.text" />
-                        <Button fx:id="btSportSubtypeEdit" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.sporttype.edit_subtype.Action.text" />
-                        <Button fx:id="btSportSubtypeDelete" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.sporttype.delete_subtype.Action.text" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddSportSubtype" text="%st.dlg.sporttype.add_subtype.Action.text" />
+                        <Button fx:id="btSportSubtypeEdit" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEditSportSubtype" text="%st.dlg.sporttype.edit_subtype.Action.text" />
+                        <Button fx:id="btSportSubtypeDelete" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDeleteSportSubtype" text="%st.dlg.sporttype.delete_subtype.Action.text" />
                      </children>
                   </VBox>
                </children>

@@ -67,8 +67,8 @@ public class SportTypeViewModelTest {
         viewModel.recordDistance.set(true);
         viewModel.color.set(new javafx.scene.paint.Color(1.0d, 0.5d, 0d, 1d));
 
-        viewModel.sportSubTypes.remove(new SportSubType(200));
-        viewModel.equipments.add(new Equipment(302));
+        viewModel.sportSubtypes.removeByID(200);
+        viewModel.equipments.set(new Equipment(302));
 
         SportType modifiedSportType = viewModel.getSportType();
         assertEquals("Bar Foo", modifiedSportType.getName());

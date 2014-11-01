@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.dialogsfx;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
+import de.saring.util.data.IdObjectList;
 import de.saring.util.gui.javafx.ColorConverter;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -10,8 +11,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
 /**
@@ -27,8 +26,10 @@ public class SportTypeViewModel {
     public final BooleanProperty recordDistance;
     public final StringProperty icon;
     public final ObjectProperty<Color> color;
-    public final ObservableList<SportSubType> sportSubTypes;
-    public final ObservableList<Equipment> equipments;
+
+    // ObservableLists are not being used here, the dialog needs features of IdObjectList
+    public final IdObjectList<SportSubType> sportSubtypes;
+    public final IdObjectList<Equipment> equipments;
 
     /**
      * Creates the SportTypeViewModel with JavaFX properties for the passed SportType object.
@@ -43,11 +44,8 @@ public class SportTypeViewModel {
         this.color = new SimpleObjectProperty<>(sportType.getColor() == null ?
                 Color.BLACK : ColorConverter.toFxColor(sportType.getColor()));
 
-        this.sportSubTypes = FXCollections.observableArrayList();
-        sportType.getSportSubTypeList().forEach(sportSubType -> sportSubTypes.add(sportSubType));
-
-        this.equipments = FXCollections.observableArrayList();
-        sportType.getEquipmentList().forEach(equipment -> equipments.add(equipment));
+        this.sportSubtypes = sportType.getSportSubTypeList();
+        this.equipments = sportType.getEquipmentList();
     }
 
     /**
@@ -62,7 +60,7 @@ public class SportTypeViewModel {
         sportType.setIcon(icon.getValue().trim());
         sportType.setColor(ColorConverter.toAwtColor(color.getValue()));
 
-        sportSubTypes.forEach(sportSubType -> sportType.getSportSubTypeList().set(sportSubType));
+        sportSubtypes.forEach(sportSubType -> sportType.getSportSubTypeList().set(sportSubType));
         equipments.forEach(equipment -> sportType.getEquipmentList().set(equipment));
         return sportType;
     }
