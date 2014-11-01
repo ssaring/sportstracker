@@ -531,15 +531,19 @@ public class STControllerImpl implements STController {
      */
     @Action(name = ACTION_SPORTTYPE_EDITOR)
     public void showSportTypeEditor() {
-        prSportTypeListDialogController.get().show(context.getPrimaryStage());
+        final SportTypeListDialogController controller = prSportTypeListDialogController.get();
 
-        // sport type and subtype objects may have been changed 
-        // => these will be new objects => update all exercises and the 
-        // current filter, they need to reference to these new objects
-        SportTypeList stList = document.getSportTypeList();
-        document.getExerciseList().updateSportTypes(stList);
-        document.getCurrentFilter().updateSportTypes(stList);
-        view.updateView();
+        // sport type and subtype objects may have been changed  => these will be new objects
+        // => update all exercises and the current filter when the dialog closes, they need
+        // to reference to these new objects
+        controller.setAfterCloseBehavior(() -> {
+            SportTypeList stList = document.getSportTypeList();
+            document.getExerciseList().updateSportTypes(stList);
+            document.getCurrentFilter().updateSportTypes(stList);
+            SwingUtilities.invokeLater(view::updateView);
+        });
+
+        controller.show(context.getPrimaryStage());
     }
 
     /**

@@ -35,6 +35,8 @@ public abstract class AbstractDialogController {
     // TODO: remove this flag when the main window has been migrated to JavaFX
     private boolean parentIsSwingWindow = true;
 
+    private Runnable afterCloseBehavior;
+
     /**
      * Standard c'tor for dependency injection.
      *
@@ -57,6 +59,17 @@ public abstract class AbstractDialogController {
     }
 
     /**
+     * Sets the function/runnable which needs to be called after the dialog has been closed (no matter
+     * which action has been used).<br/>
+     * BEWARE: this runnable will be called on the JavaFX UI thread!
+     *
+     * @param afterCloseBehavior function to be called
+     */
+    public void setAfterCloseBehavior(final Runnable afterCloseBehavior) {
+        this.afterCloseBehavior = afterCloseBehavior;
+    }
+
+    /**
      * Displays the information dialog for the specified FXML file. The dialog contains only a Close button.
      *
      * @param fxmlFilename FXML filename of the dialog content
@@ -74,6 +87,10 @@ public abstract class AbstractDialogController {
             dlg.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
             applyJavaFXToSwingMigrationWorkarounds(dlg);
             dlg.showAndWait();
+
+            if (afterCloseBehavior != null) {
+                afterCloseBehavior.run();
+            }
         });
     }
 
@@ -116,6 +133,10 @@ public abstract class AbstractDialogController {
 
             // show dialog
             dlg.showAndWait();
+
+            if (afterCloseBehavior != null) {
+                afterCloseBehavior.run();
+            }
         });
     }
 
