@@ -22,7 +22,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.stage.Window;
 import org.controlsfx.validation.Validator;
 
@@ -294,7 +293,7 @@ public class SportTypeDialogController extends AbstractDialogController {
 
         while (true) {
             // display text input dialog for sport subtype name
-            final Optional<String> oResult = showTextInputDialog(
+            final Optional<String> oResult = context.showFxTextInputDialog(
                     getWindow(liSportSubtypes), dlgTitleKey, "st.dlg.sportsubtype.name", strName);
 
             // exit when user has pressed Cancel button
@@ -413,7 +412,7 @@ public class SportTypeDialogController extends AbstractDialogController {
 
         while (true) {
             // display text input dialog for equipment name
-            final Optional<String> oResult = showTextInputDialog(
+            final Optional<String> oResult = context.showFxTextInputDialog(
                     getWindow(liEquipments), dlgTitleKey, "st.dlg.equipment.name", strName);
 
             // exit when user has pressed Cancel button
@@ -446,27 +445,5 @@ public class SportTypeDialogController extends AbstractDialogController {
                 }
             }
         }
-    }
-
-    /**
-     * Displays a text input dialog for the specified parameters.
-     *
-     * @param parent parent window of the input dialog
-     * @param titleKey resource key for the dialog title
-     * @param messageKey resource key for the dialog message
-     * @param initialValue initial text value to be displayed
-     * @return Optional containing the entered String (can be empty text) or Optional.empty() when the user has cancelled the dialog
-     */
-    private Optional<String> showTextInputDialog(final Window parent, final String titleKey, final String messageKey,
-                                                 final String initialValue) {
-        final TextInputDialog inputDlg = new TextInputDialog(initialValue == null ? "" : initialValue);
-        inputDlg.initOwner(parent);
-        inputDlg.setTitle(context.getFxResources().getString(titleKey));
-        inputDlg.setContentText(context.getFxResources().getString(messageKey));
-        inputDlg.setHeaderText(null);
-        // TODO remove when fixed in OpenJFX-Dialogs
-        // workaround for disabling bigger font size of custom dialog content
-        inputDlg.getDialogPane().setStyle("-fx-font-size: 1em;");
-        return inputDlg.showAndWait();
     }
 }

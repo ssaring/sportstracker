@@ -11,7 +11,7 @@ JavaFX Migration:
     - dialog pane font size is too large (at least on Mac OS X)
       - Workaround: dlg.getDialogPane().setStyle("-fx-font-size: 1em;");
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38818 => fixed in JavaFX 8u40
-        -> remove in AbstractDialogController, STContextImpl and SportTypeDialogController when bugfix is available
+        -> remove in AbstractDialogController and STContextImpl when bugfix is available
     - It's quite tricky to add a custom validation when the user presses OK in the dialog,
       the dialog is always being closed
       - Workaround: lookup the OK button and add a EventFilter for ActionEvent.Action.

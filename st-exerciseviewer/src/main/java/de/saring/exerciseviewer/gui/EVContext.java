@@ -79,6 +79,18 @@ public interface EVContext {
                              String messageKey, Object... arguments);
 
     /**
+     * Displays a JavaFX modal text input dialog for the specified parameters.
+     *
+     * @param parent parent window of the input dialog
+     * @param titleKey resource key for the dialog title
+     * @param messageKey resource key for the dialog message
+     * @param initialValue initial text value to be displayed
+     * @return Optional containing the entered String (can be empty text) or Optional.empty() when the user has cancelled the dialog
+     */
+    Optional<String> showFxTextInputDialog(javafx.stage.Window parent, String titleKey, String messageKey,
+            String initialValue);
+
+    /**
      * Returns the helper class for reading resources from the applications properties
      * files for the current locale.
      *

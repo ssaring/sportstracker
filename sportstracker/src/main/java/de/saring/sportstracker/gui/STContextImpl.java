@@ -5,7 +5,8 @@ import de.saring.util.ResourceReader;
 import de.saring.util.unitcalc.FormatUtils;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage;
+import javafx.scene.control.TextInputDialog;
+import javafx.stage.*;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -101,6 +102,21 @@ public class STContextImpl implements STContext {
         // workaround for disabling bigger font size of custom dialog content
         alert.getDialogPane().setStyle("-fx-font-size: 1em;");
         return alert.showAndWait();
+    }
+
+    @Override
+    public Optional<String> showFxTextInputDialog(final javafx.stage.Window parent, final String titleKey,
+            final String messageKey, final String initialValue) {
+
+        final TextInputDialog inputDlg = new TextInputDialog(initialValue == null ? "" : initialValue);
+        inputDlg.initOwner(parent);
+        inputDlg.setTitle(getFxResources().getString(titleKey));
+        inputDlg.setContentText(getFxResources().getString(messageKey));
+        inputDlg.setHeaderText(null);
+        // TODO remove when fixed in OpenJFX-Dialogs
+        // workaround for disabling bigger font size of custom dialog content
+        inputDlg.getDialogPane().setStyle("-fx-font-size: 1em;");
+        return inputDlg.showAndWait();
     }
 
     @Override
