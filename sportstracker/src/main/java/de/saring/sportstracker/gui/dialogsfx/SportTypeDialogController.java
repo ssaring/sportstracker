@@ -83,7 +83,10 @@ public class SportTypeDialogController extends AbstractDialogController {
      * @param sportType sport type to be edited
      */
     public void show(final Window parent, final SportType sportType) {
-        this.sportTypeViewModel = new SportTypeViewModel(sportType);
+
+        // use a copy of the SportType to be edited
+        // => prevents source object modification when dialog is closed using the "Cancel" action
+        this.sportTypeViewModel = new SportTypeViewModel(sportType.clone());
 
         final String dlgTitleKey = sportType.getName() == null ?
                 "st.dlg.sporttype.title.add" : "st.dlg.sporttype.title";
