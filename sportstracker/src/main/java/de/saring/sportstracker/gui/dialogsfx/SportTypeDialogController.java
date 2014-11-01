@@ -123,7 +123,12 @@ public class SportTypeDialogController extends AbstractDialogController {
             }
         });
 
-        // TODO add double click for equipment list
+        // start Equipment edit dialog on double clicks in list
+        liEquipments.setOnMouseClicked(event -> {
+            if (event.getClickCount() > 1) {
+                onEditEquipment(null);
+            }
+        });
     }
 
     /**
@@ -289,17 +294,10 @@ public class SportTypeDialogController extends AbstractDialogController {
 
         while (true) {
             // display text input dialog for sport subtype name
-            final TextInputDialog inputDlg = new TextInputDialog(strName == null ? "" : strName);
-            inputDlg.initOwner(getWindow(liSportSubtypes));
-            inputDlg.setTitle(context.getFxResources().getString(dlgTitleKey));
-            inputDlg.setContentText(context.getFxResources().getString("st.dlg.sportsubtype.name"));
-            inputDlg.setHeaderText(null);
-            // TODO remove when fixed in OpenJFX-Dialogs
-            // workaround for disabling bigger font size of custom dialog content
-            inputDlg.getDialogPane().setStyle("-fx-font-size: 1em;");
+            final Optional<String> oResult = showTextInputDialog(
+                    getWindow(liSportSubtypes), dlgTitleKey, "st.dlg.sportsubtype.name", strName);
 
-            // show dialog and exit when user has pressed Cancel button
-            final Optional<String> oResult = inputDlg.showAndWait();
+            // exit when user has pressed Cancel button
             if (!oResult.isPresent()) {
                 return;
             }
@@ -329,5 +327,137 @@ public class SportTypeDialogController extends AbstractDialogController {
                 }
             }
         }
+    }
+
+    /**
+     * Action for adding a new equipment.
+     */
+    @FXML
+    private void onAddEquipment(final ActionEvent event) {
+
+        // create a new Equipment object and display in the edit dialog
+        Equipment newEquipment = new Equipment(sportTypeViewModel.equipments.getNewID());
+        editEquipment(newEquipment);
+    }
+
+    /**
+     * Action for editing the selected equipment.
+     */
+    @FXML
+    private void onEditEquipment(final ActionEvent event) {
+
+        // display edit dialog for selected equipment
+        final Equipment selectedEquipment = liEquipments.getSelectionModel().getSelectedItem();
+        if (selectedEquipment!= null) {
+            editEquipment(selectedEquipment);
+        }
+    }
+
+    /**
+     * Action for deleting the selected equipment.
+     */
+    @FXML
+    private void onDeleteEquipment(final ActionEvent event) {
+
+        // display confirmation dialog
+        final Optional<ButtonType> resultDeleteEquipment = context.showFxMessageDialog(
+                getWindow(liEquipments), Alert.AlertType.CONFIRMATION,
+                "st.dlg.sporttype.confirm.delete_equipment.title", "st.dlg.sporttype.confirm.delete_equipment.text");
+        if (!resultDeleteEquipment.isPresent() || resultDeleteEquipment.get() != ButtonType.OK) {
+            return;
+        }
+
+        // are there any existing exercises for this equipment?
+        final Equipment selectedEquipment = liEquipments.getSelectionModel().getSelectedItem();
+
+        List<Exercise> lRefExercises = document.getExerciseList().stream()
+                .filter(exercise -> exercise.getSportType().getId() == sportTypeViewModel.id
+                        && exercise.getEquipment() != null && exercise.getEquipment().equals(selectedEquipment))
+                .collect(Collectors.toList());
+
+        // when there are referenced exercises => the equipment must be deleted in those too
+        if (lRefExercises.size() > 0) {
+
+            // show confirmation message box again
+            final Optional<ButtonType> resultDeleteEqInExercises = context.showFxMessageDialog(
+                    getWindow(liEquipments), Alert.AlertType.CONFIRMATION,
+                    "st.dlg.sporttype.confirm.delete_equipment.title",
+                    "st.dlg.sporttype.confirm.delete_equipment_existing.text");
+            if (!resultDeleteEqInExercises.isPresent() || resultDeleteEqInExercises.get() != ButtonType.OK) {
+                return;
+            }
+
+            // delete equipment in all exercises which use it
+            lRefExercises.forEach(exercise -> exercise.setEquipment(null));
+        }
+
+        // finally delete the equipment
+        sportTypeViewModel.equipments.removeByID(selectedEquipment.getId());
+        updateEquipmentList();
+    }
+
+    /**
+     * Displays the add/edit dialog for the specified equipment name (includes
+     * error checking and dialog redisplay). The modified equipment will be
+     * stored in the sport type.
+     *
+     * @param equipment the equipment to be edited
+     */
+    private void editEquipment(final Equipment equipment) {
+
+        // start with current subtype name
+        String strName = equipment.getName();
+
+        // title text depends on editing a new or an existing equipment
+        final String dlgTitleKey = strName == null ? "st.dlg.equipment.add.title" : "st.dlg.equipment.edit.title";
+
+        while (true) {
+            // display text input dialog for equipment name
+            final Optional<String> oResult = showTextInputDialog(
+                    getWindow(liEquipments), dlgTitleKey, "st.dlg.equipment.name", strName);
+
+            // exit when user has pressed Cancel button
+            if (!oResult.isPresent()) {
+                return;
+            }
+            strName = StringUtils.getTrimmedTextOrNull(oResult.get());
+
+            // check the entered name => display error messages on problems
+            if (strName == null) {
+                // no name was entered
+                context.showFxMessageDialog(getWindow(liEquipments), Alert.AlertType.ERROR,
+                        "common.error", "st.dlg.equipment.error.no_name");
+            } else {
+                // make sure that the entered name is not in use by other equipment's yet
+                final String enteredName = strName;
+                Optional<Equipment> oEquipmnentConflict = sportTypeViewModel.equipments.stream()
+                        .filter(eqTemp -> eqTemp.getId() != equipment.getId() && eqTemp.getName().equals(enteredName))
+                        .findFirst();
+
+                if (oEquipmnentConflict.isPresent()) {
+                    context.showFxMessageDialog(getWindow(liEquipments), Alert.AlertType.ERROR,
+                            "common.error", "st.dlg.equipment.error.in_use");
+                } else {
+                    // the name is OK, store the modified equipment and update the list
+                    equipment.setName(strName);
+                    sportTypeViewModel.equipments.set(equipment);
+                    updateEquipmentList();
+                    return;
+                }
+            }
+        }
+    }
+
+    private Optional<String> showTextInputDialog(final Window parent, final String titleKey, final String messageKey,
+                                                 final String initialValue) {
+        final TextInputDialog inputDlg = new TextInputDialog(initialValue == null ? "" : initialValue);
+        inputDlg.initOwner(parent);
+        inputDlg.setTitle(context.getFxResources().getString(titleKey));
+        inputDlg.setContentText(context.getFxResources().getString(messageKey));
+        inputDlg.setHeaderText(null);
+        // TODO remove when fixed in OpenJFX-Dialogs
+        // workaround for disabling bigger font size of custom dialog content
+        inputDlg.getDialogPane().setStyle("-fx-font-size: 1em;");
+        return inputDlg.showAndWait();
     }
 }

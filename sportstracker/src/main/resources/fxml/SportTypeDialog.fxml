@@ -32,7 +32,10 @@
                   <Label text="%st.dlg.sporttype.color.text" GridPane.rowIndex="2" />
                   <TextField fx:id="tfName" GridPane.columnIndex="1" />
                   <CheckBox fx:id="cbRecordDistance" mnemonicParsing="false" text="%st.dlg.sporttype.record_distance.text" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ColorPicker fx:id="cpColor" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ColorPicker fx:id="cpColor" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <tooltip>
+                        <Tooltip text="%st.dlg.sporttype.select.Action.shortDescription" />
+                     </tooltip></ColorPicker>
                </children>
                <padding>
                   <Insets left="24.0" />
@@ -76,9 +79,9 @@
                        <ListView fx:id="liEquipments" prefHeight="140.0" prefWidth="340.0" />
                        <VBox alignment="TOP_CENTER" spacing="16.0" HBox.hgrow="ALWAYS">
                            <children>
-                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.sporttype.add_equipment.Action.text" />
-                               <Button fx:id="btEquipmentEdit" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.sporttype.edit_equipment.Action.text" />
-                               <Button fx:id="btEquipmentDelete" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.sporttype.delete_equipment.Action.text" />
+                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddEquipment" text="%st.dlg.sporttype.add_equipment.Action.text" />
+                               <Button fx:id="btEquipmentEdit" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEditEquipment" text="%st.dlg.sporttype.edit_equipment.Action.text" />
+                               <Button fx:id="btEquipmentDelete" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDeleteEquipment" text="%st.dlg.sporttype.delete_equipment.Action.text" />
                            </children>
                        </VBox>
                    </children>
