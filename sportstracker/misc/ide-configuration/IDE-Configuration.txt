@@ -1,0 +1,68 @@
+IDE Configuration
+=================
+
+All SportsTracker developers should use the same coding style and format. The
+main benefits of a consistent code format are:
+
+* code is easier to read
+* less problems when merging files
+* code reviews contain just the feature changes, 
+  not tons of custom formatting changes
+
+Most IDE's provide tools to ensure a consistent code format. For SportsTracker
+there is an Eclipse Formatter configuration (ST-Formatter.xml) and an Organize
+Imports configuration (ST-Imports.importorder).
+These configurations can be used in Eclipse and in IntelliJ IDEA.
+
+Developers should configure their IDE's as described below and always format
+their code changes by using the formatter and the imports organizer. Only the
+modified source code parts needs to be formatted, not the whole files or 
+packages.
+
+
+Eclipse configuration (version 4.4):
+------------------------------------
+
+- Preferences:
+  - General -> Workspace:
+    - Text file encoding: UTF-8
+  - General -> Editors - Text Editors:
+    - (x) Insert spaces for tabs
+  - Java -> Code Style -> Formatter: 
+    - Import file "ST-Formatter.xml" and select active profile "SportsTracker"
+  - Java -> Code Style -> Organize Imports: 
+    - Import file "ST-Imports.importorder"
+    - Number of imports needed for .*: 999
+    - Number of static imports needed for .*: 999
+  - Java -> Editor -> Save Actions: 
+    - (x) Perform the selected actions on save
+        (x) Format source code
+           (x) Format edited lines
+        (x) Organize imports
+  - XML -> XML Files -> Editor:
+    - Line Width: 120
+    - (x) Indent using spaces
+    - Indentation size: 4
+
+    
+IntelliJ IDEA configuration (version 13.1):
+-------------------------------------------
+
+- File -> Settings:
+  - Plugins: 
+    - install plugin "Eclipse Code Formatter" (version 4.9.0) and restart IDEA
+  - Eclipse Code Formatter:
+    - (x) Use the Eclipse code formatter
+    - Eclipse Java Formatter config file: 
+      - select file "ST-Formatter.xml" 
+    - Java Formatter Profile:
+      - select "SportsTracker"
+    - (x) Optimize imports
+    - Import order:
+       - (x) From file: 
+         - select file ST-Imports.importorder
+- Formatter must be used manually on the edited files (Code -> Reformat Code)
+  with the selected options:
+  (x) File '...'
+  (x) Organize imports
+  (x) Only VCS changed text

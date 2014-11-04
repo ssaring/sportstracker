@@ -307,7 +307,7 @@ Tested IDE's (should work an any IDE with Maven support)
     => preferred IDE, project files are in VCS
   - NetBeans IDE 8.0 (from http://www.netbeans.org)
     (Maven support is included, Groovy plugin needs to be installed)
-  - Eclipse 4.3 (from http://eclipse.org) with following plugins:
+  - Eclipse 4.4 (from http://eclipse.org) with following plugins:
     - Groovy-Eclipse (from http://groovy.codehaus.org/Eclipse+Plugin)
       - with Groovy-Eclipse Feature
       - with Groovy Compiler Feature
@@ -337,6 +337,11 @@ SportStracker can be started from the IDE by executing the class
 It can also be started from command line after execution of "mvn package"
 with the command (inside the project root directory):
   java -jar sportstracker/target/sportstracker-x.y.z.jar
+
+It's important to ensure a consistent code format and style all over the
+project. That's why all developers need to use the same configuration for their
+IDE. This configuration and the documentation can be found in the directory
+'sportstracker/misc/ide-configuration'.
 
 The SportsTracker project uses the following libraries:
 
