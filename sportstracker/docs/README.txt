@@ -331,6 +331,8 @@ In NetBeans you can open the project by "Open project", you need to select the
 project root directory and import all required projects.
 In Eclipse you can open the project by "Import -> Existing Maven Projects",
 you need to select the project root directory with all child modules here.
+IntelliJ IDEA users need to import the project by "File -> Import Project...",
+select the SportsTracker root directory and import it as a Maven project.
 
 SportStracker can be started from the IDE by executing the class
 "de.saring.sportstracker.gui.STMain".
@@ -454,4 +456,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2014/10/24
+2014/11/06
