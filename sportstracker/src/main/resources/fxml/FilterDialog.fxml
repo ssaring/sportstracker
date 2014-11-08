@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.embed.swing.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="24.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.FilterDialogController">
+   <children>
+      <VBox spacing="12.0">
+         <children>
+            <Label text="%st.dlg.filter.time_period.text">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" spacing="16.0">
+               <children>
+                  <Label maxWidth="140.0" text="%st.dlg.filter.from.text" />
+                  <DatePicker fx:id="dbBegin" maxWidth="140.0" />
+                  <Label maxWidth="140.0" text="%st.dlg.filter.to.text" />
+                  <DatePicker fx:id="dpEnd" maxWidth="140.0" />
+               </children>
+               <padding>
+                  <Insets left="24.0" />
+               </padding>
+            </HBox>
+            <GridPane hgap="24.0">
+              <columnConstraints>
+                  <ColumnConstraints percentWidth="25.0" />
+                  <ColumnConstraints percentWidth="25.0" />
+                <ColumnConstraints percentWidth="25.0" />
+                <ColumnConstraints percentWidth="25.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints />
+              </rowConstraints>
+               <children>
+               </children>
+               <padding>
+                  <Insets left="24.0" />
+               </padding>
+            </GridPane>
+            <HBox spacing="24.0">
+               <children>
+                  <Button mnemonicParsing="false" text="%st.dlg.filter.current_week.Action.text" />
+                  <Button mnemonicParsing="false" text="%st.dlg.filter.current_month.Action.text" />
+                  <Button mnemonicParsing="false" text="%st.dlg.filter.current_year.Action.text" />
+                  <Button mnemonicParsing="false" text="%st.dlg.filter.all_time.Action.text" />
+               </children>
+               <padding>
+                  <Insets left="24.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox spacing="20.0">
+         <children>
+            <Label text="%st.dlg.filter.filter.text">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <GridPane hgap="24.0" vgap="8.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+              </rowConstraints>
+               <padding>
+                  <Insets left="24.0" />
+               </padding>
+               <children>
+                  <Label text="%st.dlg.filter.sport_type.text" />
+                  <Label text="%st.dlg.filter.sport_subtype.text" GridPane.columnIndex="1" />
+                  <Label text="%st.dlg.filter.intensity.text" GridPane.columnIndex="2" />
+                  <ChoiceBox fx:id="cbSportType" maxWidth="1.7976931348623157E308" minWidth="120.0" GridPane.rowIndex="1" />
+                  <ChoiceBox fx:id="cbSportSubtype" maxWidth="1.7976931348623157E308" minWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ChoiceBox fx:id="cbIntensity" maxWidth="1.7976931348623157E308" minWidth="120.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <BorderPane>
+               <left>
+                  <Label text="%st.dlg.filter.equipment.text" BorderPane.alignment="CENTER">
+                     <padding>
+                        <Insets right="16.0" />
+                     </padding></Label>
+               </left>
+               <center>
+                  <ChoiceBox fx:id="cbEquipment" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER" />
+               </center>
+               <padding>
+                  <Insets left="24.0" />
+               </padding>
+            </BorderPane>
+            <BorderPane>
+               <left>
+                  <Label text="%st.dlg.filter.string_comments.text" BorderPane.alignment="CENTER">
+                     <padding>
+                        <Insets right="16.0" />
+                     </padding></Label>
+               </left>
+               <center>
+                  <TextField fx:id="tfComment" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER" />
+               </center>
+               <padding>
+                  <Insets left="24.0" />
+               </padding>
+            </BorderPane>
+            <HBox alignment="CENTER_LEFT" spacing="16.0">
+               <children>
+                  <CheckBox fx:id="cbRegExpression" mnemonicParsing="false" text="%st.dlg.filter.reg_expression.text" />
+               </children>
+               <padding>
+                  <Insets left="24.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>
