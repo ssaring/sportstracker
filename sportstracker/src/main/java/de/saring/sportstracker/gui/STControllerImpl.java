@@ -6,11 +6,11 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
-import de.saring.sportstracker.gui.dialogs.FilterDialog;
 import de.saring.sportstracker.gui.dialogs.OptionsDialog;
 import de.saring.sportstracker.gui.dialogs.StatisticDialog;
 import de.saring.sportstracker.gui.dialogsfx.AboutDialogController;
 import de.saring.sportstracker.gui.dialogsfx.ExerciseDialogController;
+import de.saring.sportstracker.gui.dialogsfx.FilterDialogController;
 import de.saring.sportstracker.gui.dialogsfx.HRMFileOpenDialog;
 import de.saring.sportstracker.gui.dialogsfx.NoteDialogController;
 import de.saring.sportstracker.gui.dialogsfx.OverviewDialogController;
@@ -56,8 +56,6 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<OptionsDialog> prOptionsDialog;
     @Inject
-    private Provider<FilterDialog> prFilterDialog;
-    @Inject
     private Provider<StatisticDialog> prStatisticDialog;
     @Inject
     private Provider<EVMain> prExerciseViewer;
@@ -76,6 +74,8 @@ public class STControllerImpl implements STController {
     private Provider<SportTypeListDialogController> prSportTypeListDialogController;
     @Inject
     private Provider<OverviewDialogController> prOverviewDialogController;
+    @Inject
+    private Provider<FilterDialogController> prFilterDialogController;
 
 
     /**
@@ -505,16 +505,14 @@ public class STControllerImpl implements STController {
      */
     @Action(name = ACTION_FILTER_EXERCISES)
     public void filterExercises() {
-        FilterDialog dlg = prFilterDialog.get();
-        dlg.setInitialFilter(document.getCurrentFilter());
-        context.showDialog(dlg);
+        prFilterDialogController.get().show(context.getPrimaryStage(), document.getCurrentFilter());
 
-        // set and enable filter when available
-        if (dlg.getSelectedFilter() != null) {
-            document.setCurrentFilter(dlg.getSelectedFilter());
-            document.setFilterEnabled(true);
-            view.updateView();
-        }
+        // TODO set and enable filter when available
+//        if (dlg.getSelectedFilter() != null) {
+//            document.setCurrentFilter(dlg.getSelectedFilter());
+//            document.setFilterEnabled(true);
+//            view.updateView();
+//        }
     }
 
     /**

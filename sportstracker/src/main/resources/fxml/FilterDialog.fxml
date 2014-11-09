@@ -20,7 +20,7 @@
             <HBox alignment="CENTER_LEFT" spacing="16.0">
                <children>
                   <Label maxWidth="140.0" text="%st.dlg.filter.from.text" />
-                  <DatePicker fx:id="dbBegin" maxWidth="140.0" />
+                  <DatePicker fx:id="dpStart" maxWidth="140.0" />
                   <Label maxWidth="140.0" text="%st.dlg.filter.to.text" />
                   <DatePicker fx:id="dpEnd" maxWidth="140.0" />
                </children>
