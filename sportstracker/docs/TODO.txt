@@ -4,8 +4,8 @@ SportsTracker-TODO
 JavaFX Migration:
 - Filter Dialog:
   - FXML: Done
+  - ViewModel: Done, incl. unit tests
   - Controller: see TODOs
-  - ViewModel: see TODOs and add unit tests
   - STControllerImpl: see TODO
 - Overview Dialog: migration completed and tested, except:
   - use JavaFX version of JFreeChart (see TODOs), not possible with version 1.0.19 yet

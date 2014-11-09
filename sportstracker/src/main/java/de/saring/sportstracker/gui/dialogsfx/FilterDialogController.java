@@ -1,9 +1,5 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
-import de.saring.sportstracker.data.Equipment;
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.SportSubType;
-import de.saring.sportstracker.data.SportType;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -14,7 +10,11 @@ import javafx.stage.Window;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.ExerciseFilter;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
