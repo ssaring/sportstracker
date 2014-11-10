@@ -46,10 +46,10 @@
             </GridPane>
             <TilePane hgap="24.0" prefColumns="4">
                <children>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.filter.current_week.Action.text" />
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.filter.current_month.Action.text" />
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.filter.current_year.Action.text" />
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%st.dlg.filter.all_time.Action.text" />
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCurrentWeek" text="%st.dlg.filter.current_week.Action.text" />
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCurrentMonth" text="%st.dlg.filter.current_month.Action.text" />
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCurrentYear" text="%st.dlg.filter.current_year.Action.text" />
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAllTime" text="%st.dlg.filter.all_time.Action.text" />
                </children>
                <VBox.margin>
                   <Insets left="24.0" />

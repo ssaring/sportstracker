@@ -1,5 +1,10 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -9,6 +14,8 @@ import javafx.stage.Window;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import org.controlsfx.validation.Validator;
 
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
@@ -80,24 +87,38 @@ public class FilterDialogController extends AbstractDialogController {
 
     @Override
     protected void setupDialogControls() {
+        setupBinding();
+        setupValidation();
 
-        // // TODO setup binding between view model and the UI controls
-        // dpDate.valueProperty().bindBidirectional(noteViewModel.date);
-        // tfHour.textProperty().bindBidirectional(noteViewModel.hour, new NumberStringConverter("00"));
-        // tfMinute.textProperty().bindBidirectional(noteViewModel.minute, new NumberStringConverter("00"));
-        // taText.textProperty().bindBidirectional(noteViewModel.text);
-        //
-        // // setup validation of the UI controls
-        // validationSupport.registerValidator(dpDate,
-        // Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.note.error.date")));
-        // validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
-        // ValidationResult.fromErrorIf(tfHour, context.getFxResources().getString("st.dlg.note.error.time"),
-        // !ValidationUtils.isValueIntegerBetween(newValue, 0, 23)));
-        // validationSupport.registerValidator(tfMinute, true, (Control control, String newValue) ->
-        // ValidationResult.fromErrorIf(tfMinute, context.getFxResources().getString("st.dlg.note.error.time"),
-        // !ValidationUtils.isValueIntegerBetween(newValue, 0, 59)));
-        // validationSupport.registerValidator(taText,
-        // Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.note.error.no_text")));
+        // TODO setup choice boxes for sport type, subtype, intensity and equipment
+    }
+
+    /**
+     * Setup of the validation of the UI controls.
+     */
+    private void setupValidation() {
+
+        validationSupport.registerValidator(dpStart,
+                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.filter.error.date")));
+        validationSupport.registerValidator(dpEnd,
+                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.filter.error.date")));
+
+        // TODO add validation: end date must not be before start date
+    }
+
+    /**
+     * Setup of the binding between view model and the UI controls.
+     */
+    private void setupBinding() {
+
+        dpStart.valueProperty().bindBidirectional(filterViewModel.dateStart);
+        dpEnd.valueProperty().bindBidirectional(filterViewModel.dateEnd);
+        cbSportType.valueProperty().bindBidirectional(filterViewModel.sportType);
+        cbSportSubtype.valueProperty().bindBidirectional(filterViewModel.sportSubtype);
+        cbIntensity.valueProperty().bindBidirectional(filterViewModel.intensity);
+        cbEquipment.valueProperty().bindBidirectional(filterViewModel.equipment);
+        tfComment.textProperty().bindBidirectional(filterViewModel.commentSubString);
+        cbRegExpression.selectedProperty().bindBidirectional(filterViewModel.regularExpressionMode);
     }
 
     @Override
@@ -107,5 +128,50 @@ public class FilterDialogController extends AbstractDialogController {
         // final ExerciseFilter newFilter = filterViewModel.getExerciseFilter();
         // document.setCurrentFilter(newFilter);
         return true;
+    }
+
+    /**
+     * Action for setting the filter time period for the current week.
+     */
+    @FXML
+    private void onCurrentWeek(final ActionEvent event) {
+        LocalDate now = LocalDate.now();
+
+        // get first day of week, depending whether it's configured as sunday or monday
+        LocalDate firstDayOfWeek = document.getOptions().isWeekStartSunday() ? now.with(TemporalAdjusters
+                .previousOrSame(DayOfWeek.SUNDAY)) : now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate lastDayOfWeek = firstDayOfWeek.plusDays(6);
+
+        filterViewModel.dateStart.set(firstDayOfWeek);
+        filterViewModel.dateEnd.set(lastDayOfWeek);
+    }
+
+    /**
+     * Action for setting the filter time period for the current month.
+     */
+    @FXML
+    private void onCurrentMonth(final ActionEvent event) {
+        LocalDate now = LocalDate.now();
+        filterViewModel.dateStart.set(now.with(TemporalAdjusters.firstDayOfMonth()));
+        filterViewModel.dateEnd.set(now.with(TemporalAdjusters.lastDayOfMonth()));
+    }
+
+    /**
+     * Action for setting the filter time period for the current year.
+     */
+    @FXML
+    private void onCurrentYear(final ActionEvent event) {
+        LocalDate now = LocalDate.now();
+        filterViewModel.dateStart.set(now.with(TemporalAdjusters.firstDayOfYear()));
+        filterViewModel.dateEnd.set(now.with(TemporalAdjusters.lastDayOfYear()));
+    }
+
+    /**
+     * Action for setting the filter time period for all the time.
+     */
+    @FXML
+    private void onAllTime(final ActionEvent event) {
+        filterViewModel.dateStart.set(LocalDate.of(1900, 1, 1));
+        filterViewModel.dateEnd.set(LocalDate.of(2999, 12, 31));
     }
 }
