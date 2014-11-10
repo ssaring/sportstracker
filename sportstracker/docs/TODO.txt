@@ -17,15 +17,12 @@ JavaFX Migration:
       - Workaround: dlg.getDialogPane().setStyle("-fx-font-size: 1em;");
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38818 => fixed in JavaFX 8u40
         -> remove in AbstractDialogController and STContextImpl when bugfix is available
-    - It's quite tricky to add a custom validation when the user presses OK in the dialog,
-      the dialog is always being closed
-      - Workaround: lookup the OK button and add a EventFilter for ActionEvent.Action.
-        This filter validates the dialog input and consumes the action event in case of errors.
-      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38819
     - Alert dialogs must not have fullscreen and minimize window buttons
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38946
     - Alert dialogs does not show the complete message when longer than 2 lines
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38998
+- Exercise/Note/Weight tables: use PropertyExtractor concept for displaying data changes,
+  see http://www.jensd.de/wordpress/?p=1650
 - JavaFX/Swing combination problems on Windows:
   - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
   - the JavaFX dialog is always shown in the center of the screen, not in the
