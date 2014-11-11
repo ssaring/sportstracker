@@ -3,9 +3,11 @@ package de.saring.sportstracker.gui.dialogsfx;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Arrays;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -25,6 +27,7 @@ import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import de.saring.util.gui.javafx.NameableStringConverter;
 
 /**
  * Controller (MVC) class of the Filter dialog for setting filter criteria to be used
@@ -57,6 +60,15 @@ public class FilterDialogController extends AbstractDialogController {
     @FXML
     private CheckBox cbRegExpression;
 
+    /** SportType for selection "all". */
+    private final SportType sportTypeAll;
+
+    /** Sport subtype for selection "all", same for all sport types. */
+    private final SportSubType sportSubtypeAll;
+
+    /** Equipment for selection "all", same for all sport types. */
+    private final Equipment equipmentAll;
+
     /** ViewModel of the edited Filter. */
     private FilterViewModel filterViewModel;
 
@@ -72,6 +84,16 @@ public class FilterDialogController extends AbstractDialogController {
             final GuiceFxmlLoader guiceFxmlLoader) {
         super(context, guiceFxmlLoader);
         this.document = document;
+
+        final String resourceAll = context.getFxResources().getString("st.dlg.filter.all.text");
+        sportTypeAll = new SportType(Integer.MAX_VALUE);
+        sportTypeAll.setName(resourceAll);
+
+        sportSubtypeAll = new SportSubType(Integer.MAX_VALUE);
+        sportSubtypeAll.setName(resourceAll);
+
+        equipmentAll = new Equipment(Integer.MAX_VALUE);
+        equipmentAll.setName(resourceAll);
     }
 
     /**
@@ -87,10 +109,9 @@ public class FilterDialogController extends AbstractDialogController {
 
     @Override
     protected void setupDialogControls() {
+        setupChoiceBoxes();
         setupBinding();
         setupValidation();
-
-        // TODO setup choice boxes for sport type, subtype, intensity and equipment
     }
 
     /**
@@ -102,8 +123,6 @@ public class FilterDialogController extends AbstractDialogController {
                 Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.filter.error.date")));
         validationSupport.registerValidator(dpEnd,
                 Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.filter.error.date")));
-
-        // TODO add validation: end date must not be before start date
     }
 
     /**
@@ -121,11 +140,91 @@ public class FilterDialogController extends AbstractDialogController {
         cbRegExpression.selectedProperty().bindBidirectional(filterViewModel.regularExpressionMode);
     }
 
+    /**
+     * Initializes all ChoiceBoxes by defining the String converters. ChoiceBoxes with fixed values
+     * (SportType, Intensity) will be filled with possible values.
+     */
+    private void setupChoiceBoxes() {
+
+        cbSportType.setConverter(new NameableStringConverter<>());
+        cbSportSubtype.setConverter(new NameableStringConverter<>());
+        cbEquipment.setConverter(new NameableStringConverter<>());
+
+        cbSportType.getItems().add(sportTypeAll);
+        document.getSportTypeList().forEach(sportType -> cbSportType.getItems().add(sportType));
+
+        // TODO cbIntensity.getItems().add(intensityAll);
+        cbIntensity.getItems().addAll(Arrays.asList(Exercise.IntensityType.values()));
+
+        // sport subtype and equipment items depend so sport type selection, just add "all" here
+        cbSportSubtype.getItems().add(sportSubtypeAll);
+        cbEquipment.getItems().add(equipmentAll);
+
+        // update the sport type specific choiceboxes on each sport type selection change
+        cbSportType.addEventHandler(ActionEvent.ACTION, event -> fillSportTypeDependentChoiceBoxes());
+
+        // select dummy sport type and intensity "all" when the filter contains no sport type or intensity
+        if (filterViewModel.sportType.get() == null) {
+            filterViewModel.sportType.set(sportTypeAll);
+        }
+        // TODO same for intensity choicebox
+    }
+
+    /**
+     * Fills all ChoiceBoxes with values dependent on the selected sport type.
+     */
+    private void fillSportTypeDependentChoiceBoxes() {
+
+        cbSportSubtype.getItems().clear();
+        cbEquipment.getItems().clear();
+        cbSportSubtype.getItems().add(sportSubtypeAll);
+        cbEquipment.getItems().add(equipmentAll);
+
+        final SportType selectedSportType = cbSportType.getValue();
+        if (selectedSportType != null && !selectedSportType.equals(sportTypeAll)) {
+            selectedSportType.getSportSubTypeList()
+                    .forEach(sportSubType -> cbSportSubtype.getItems().add(sportSubType));
+            selectedSportType.getEquipmentList().forEach(equipment -> cbEquipment.getItems().add(equipment));
+        }
+
+        // select sport subtype and equipment "all" when the filter contains no sport subtype and equipment
+        if (filterViewModel.sportSubtype.get() == null) {
+            filterViewModel.sportSubtype.set(sportSubtypeAll);
+        }
+
+        if (filterViewModel.equipment.get() == null) {
+            filterViewModel.equipment.set(equipmentAll);
+        }
+    }
+
     @Override
     protected boolean validateAndStore() {
+        final ExerciseFilter newFilter = filterViewModel.getExerciseFilter();
 
-        // // TODO store the new ExerciseFilter, no further validation needed
-        // final ExerciseFilter newFilter = filterViewModel.getExerciseFilter();
+        // make sure that start date is before end date
+        if (newFilter.getDateEnd().isBefore(newFilter.getDateStart())) {
+            dpEnd.getEditor().selectAll();
+            context.showFxMessageDialog(getWindow(dpEnd), Alert.AlertType.ERROR, "common.error",
+                    "st.dlg.filter.error.start_after_end");
+            dpEnd.getEditor().requestFocus();
+            return false;
+        }
+
+        // if selected sport type, subtype, intensity or equipment is "all" -> remove this dummy selection
+        if (sportTypeAll.equals(newFilter.getSportType())) {
+            newFilter.setSportType(null);
+        }
+        if (sportSubtypeAll.equals(newFilter.getSportSubType())) {
+            newFilter.setSportSubType(null);
+        }
+        if (equipmentAll.equals(newFilter.getEquipment())) {
+            newFilter.setEquipment(null);
+        }
+        // TODO remove dummy selection for intensity
+
+        // TODO must end date
+
+        // TODO store and apply filter
         // document.setCurrentFilter(newFilter);
         return true;
     }
