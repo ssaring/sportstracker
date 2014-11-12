@@ -3,7 +3,7 @@ package de.saring.sportstracker.gui.dialogsfx;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Arrays;
+import java.util.stream.Stream;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,7 +50,7 @@ public class FilterDialogController extends AbstractDialogController {
     @FXML
     private ChoiceBox<SportSubType> cbSportSubtype;
     @FXML
-    private ChoiceBox<Exercise.IntensityType> cbIntensity;
+    private ChoiceBox<FilterViewModel.IntensityItem> cbIntensity;
     @FXML
     private ChoiceBox<Equipment> cbEquipment;
 
@@ -94,6 +94,8 @@ public class FilterDialogController extends AbstractDialogController {
 
         equipmentAll = new Equipment(Integer.MAX_VALUE);
         equipmentAll.setName(resourceAll);
+
+        FilterViewModel.IntensityItem.nameAll = resourceAll;
     }
 
     /**
@@ -148,13 +150,15 @@ public class FilterDialogController extends AbstractDialogController {
 
         cbSportType.setConverter(new NameableStringConverter<>());
         cbSportSubtype.setConverter(new NameableStringConverter<>());
+        cbIntensity.setConverter(new NameableStringConverter<>());
         cbEquipment.setConverter(new NameableStringConverter<>());
 
         cbSportType.getItems().add(sportTypeAll);
         document.getSportTypeList().forEach(sportType -> cbSportType.getItems().add(sportType));
 
-        // TODO cbIntensity.getItems().add(intensityAll);
-        cbIntensity.getItems().addAll(Arrays.asList(Exercise.IntensityType.values()));
+        cbIntensity.getItems().add(new FilterViewModel.IntensityItem(null));
+        Stream.of(Exercise.IntensityType.values()).forEach(
+                intensityType -> cbIntensity.getItems().add(new FilterViewModel.IntensityItem(intensityType)));
 
         // sport subtype and equipment items depend so sport type selection, just add "all" here
         cbSportSubtype.getItems().add(sportSubtypeAll);
@@ -163,11 +167,10 @@ public class FilterDialogController extends AbstractDialogController {
         // update the sport type specific choiceboxes on each sport type selection change
         cbSportType.addEventHandler(ActionEvent.ACTION, event -> fillSportTypeDependentChoiceBoxes());
 
-        // select dummy sport type and intensity "all" when the filter contains no sport type or intensity
+        // select dummy sport type "all" when the filter contains no sport type
         if (filterViewModel.sportType.get() == null) {
             filterViewModel.sportType.set(sportTypeAll);
         }
-        // TODO same for intensity choicebox
     }
 
     /**
@@ -210,7 +213,7 @@ public class FilterDialogController extends AbstractDialogController {
             return false;
         }
 
-        // if selected sport type, subtype, intensity or equipment is "all" -> remove this dummy selection
+        // if selected sport type, subtype or equipment is "all" -> remove this dummy selection
         if (sportTypeAll.equals(newFilter.getSportType())) {
             newFilter.setSportType(null);
         }
@@ -220,9 +223,6 @@ public class FilterDialogController extends AbstractDialogController {
         if (equipmentAll.equals(newFilter.getEquipment())) {
             newFilter.setEquipment(null);
         }
-        // TODO remove dummy selection for intensity
-
-        // TODO must end date
 
         // TODO store and apply filter
         // document.setCurrentFilter(newFilter);

@@ -1,6 +1,7 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.time.LocalDate;
 
@@ -56,11 +57,13 @@ public class FilterViewModelTest {
         // test after modifications
         viewModel.dateEnd.set(LocalDate.of(2014, 12, 31));
         viewModel.sportSubtype.set(new SportSubType(201));
+        viewModel.intensity.set(new FilterViewModel.IntensityItem(null));
         viewModel.commentSubString.set("   Bar Foo    ");
 
         ExerciseFilter modifiedFilter = viewModel.getExerciseFilter();
         assertEquals(LocalDate.of(2014, 12, 31), modifiedFilter.getDateEnd());
         assertEquals(201, modifiedFilter.getSportSubType().getId());
+        assertNull(modifiedFilter.getIntensity());
         assertEquals("Bar Foo", modifiedFilter.getCommentSubString());
     }
 }
