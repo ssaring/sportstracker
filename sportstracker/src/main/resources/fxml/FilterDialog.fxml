@@ -60,9 +60,9 @@
       <VBox spacing="20.0">
          <children>
             <Label text="%st.dlg.filter.filter.text">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
+                <font>
+                    <Font name="System Bold" size="13.0" />
+                </font>
             </Label>
             <GridPane hgap="24.0" vgap="8.0">
               <columnConstraints>

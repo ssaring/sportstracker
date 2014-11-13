@@ -505,14 +505,20 @@ public class STControllerImpl implements STController {
      */
     @Action(name = ACTION_FILTER_EXERCISES)
     public void filterExercises() {
-        prFilterDialogController.get().show(context.getPrimaryStage(), document.getCurrentFilter());
+        final FilterDialogController controller = prFilterDialogController.get();
 
-        // TODO set and enable filter when available
-//        if (dlg.getSelectedFilter() != null) {
-//            document.setCurrentFilter(dlg.getSelectedFilter());
-//            document.setFilterEnabled(true);
-//            view.updateView();
-//        }
+        controller.setAfterCloseBehavior(() -> {
+            // set and enable filter when available after dialog has been closed
+            controller.getSelectedFilter().ifPresent(selectedFilter ->
+                // TODO: don't use Swing UI thread main window migrated to JavaFX
+                SwingUtilities.invokeLater(() -> {
+                    document.setCurrentFilter(selectedFilter);
+                    document.setFilterEnabled(true);
+                    view.updateView();
+                }));
+        });
+
+        controller.show(context.getPrimaryStage(), document.getCurrentFilter());
     }
 
     /**

@@ -3,6 +3,8 @@ package de.saring.sportstracker.gui.dialogsfx;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import javafx.event.ActionEvent;
@@ -72,6 +74,9 @@ public class FilterDialogController extends AbstractDialogController {
     /** ViewModel of the edited Filter. */
     private FilterViewModel filterViewModel;
 
+    private Optional<ExerciseFilter> selectedFilter = Optional.empty();
+
+
     /**
      * Standard c'tor for dependency injection.
      *
@@ -106,7 +111,19 @@ public class FilterDialogController extends AbstractDialogController {
      */
     public void show(final Window parent, final ExerciseFilter filter) {
         this.filterViewModel = new FilterViewModel(filter);
+        this.selectedFilter = Optional.empty();
+
         showEditDialog("/fxml/FilterDialog.fxml", parent, context.getFxResources().getString("st.dlg.filter.title"));
+    }
+
+    /**
+     * Returns the exercise filter selected by the user when the dialog was closed with OK.
+     * Otherwise an empty Optional will be returned.
+     *
+     * @return the selected exercise filter if available
+     */
+    public Optional<ExerciseFilter> getSelectedFilter() {
+        return selectedFilter;
     }
 
     @Override
@@ -224,8 +241,22 @@ public class FilterDialogController extends AbstractDialogController {
             newFilter.setEquipment(null);
         }
 
-        // TODO store and apply filter
-        // document.setCurrentFilter(newFilter);
+        // check regular expression, when this mode is enabled
+        if (newFilter.isRegularExpressionMode() && newFilter.getCommentSubString() != null) {
+            try {
+                Pattern.compile(newFilter.getCommentSubString());
+            } catch (Exception e) {
+                // syntax error in regular expression => the user has to correct it
+                tfComment.selectAll();
+                context.showFxMessageDialog(getWindow(tfComment), Alert.AlertType.ERROR,
+                        "common.error", "st.dlg.filter.error.reg_expression_error");
+                tfComment.requestFocus();
+                return false;
+            }
+        }
+
+        // everything is OK => store the created filter
+        selectedFilter = Optional.of(newFilter);
         return true;
     }
 
