@@ -1,5 +1,7 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
+import de.saring.sportstracker.data.ExerciseFilter;
+import de.saring.util.StringUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -11,6 +13,9 @@ import javax.inject.Singleton;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 /**
  * Controller (MVC) class of the Statistic dialog.
@@ -35,6 +40,10 @@ public class StatisticDialogController extends AbstractDialogController {
     @FXML
     private Label laCommentValue;
 
+    /** The exercise filter used for statistic calculation. */
+    private ExerciseFilter statisticFilter;
+
+
     /**
      * Standard c'tor for dependency injection.
      *
@@ -58,17 +67,63 @@ public class StatisticDialogController extends AbstractDialogController {
 
         // TODO display calculate action button
 
+        // start with current filter criteria stored in document => user can change it
+        statisticFilter = document.getCurrentFilter();
+
         showInfoDialog("/fxml/StatisticDialog.fxml", parent,
                 context.getFxResources().getString("st.dlg.statistic.title"));
     }
 
     @Override
     protected void setupDialogControls() {
-        // TODO display filter values
+        // the controls are read only, so binding and view model is not needed here
+        displayFilterValues();
     }
 
     /**
-     * Action for changing the current statistic filter.
+     * Displays the values of the current filter.
+     */
+    private void displayFilterValues() {
+
+        // create string for filter timespan
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
+        final String strTimeSpan = statisticFilter.getDateStart().format(dateFormatter) +
+                " - " + statisticFilter.getDateEnd().format(dateFormatter);
+
+        // create strings for sport type, subtype, intensity, equipment
+        final String strAll = context.getFxResources().getString("st.dlg.statistic.all.text");
+        final String strSportType = statisticFilter.getSportType() == null ? strAll :
+            statisticFilter.getSportType().getName();
+
+        final String strSportSubtype = statisticFilter.getSportSubType() == null ? strAll :
+            statisticFilter.getSportSubType().getName();
+
+        final String strIntensity = statisticFilter.getIntensity() == null ? strAll :
+            statisticFilter.getIntensity().toString();
+
+        final String strEquipment = statisticFilter.getEquipment() == null ? strAll :
+            statisticFilter.getEquipment().getName();
+
+        // create comment string
+        String strComment = context.getFxResources().getString("st.dlg.statistic.no_comment.text");
+        if (StringUtils.getTrimmedTextOrNull(statisticFilter.getCommentSubString()) != null) {
+            strComment = statisticFilter.getCommentSubString();
+            if (statisticFilter.isRegularExpressionMode()) {
+                strComment += " " + context.getFxResources().getString("st.dlg.statistic.reg_expression.text");
+            }
+        }
+
+        // display created strings
+        laTimespanValue.setText(strTimeSpan);
+        laSportTypeValue.setText(strSportType);
+        laSportSubtypeValue.setText(strSportSubtype);
+        laIntensityValue.setText(strIntensity);
+        laEquipmentValue.setText(strEquipment);
+        laCommentValue.setText(strComment);
+    }
+
+    /**
+     * Action for changing the exercise filter for the statistic calculation.
      */
     @FXML
     private void onChange(final ActionEvent event) {
