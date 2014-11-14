@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Window;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import de.saring.sportstracker.gui.STContext;
@@ -26,6 +27,9 @@ import java.time.format.FormatStyle;
 public class StatisticDialogController extends AbstractDialogController {
 
     private final STDocument document;
+
+    @Inject
+    private Provider<FilterDialogController> prFilterDialogController;
 
     @FXML
     private Label laTimespanValue;
@@ -127,6 +131,17 @@ public class StatisticDialogController extends AbstractDialogController {
      */
     @FXML
     private void onChange(final ActionEvent event) {
-        // TODO
+
+        // show Filter dialog for current filter and use the selected filter afterwards
+        final FilterDialogController controller = prFilterDialogController.get();
+        controller.setParentIsSwingWindow(false);
+
+        controller.setAfterCloseBehavior(() ->
+            controller.getSelectedFilter().ifPresent(selectedFilter -> {
+                statisticFilter = selectedFilter;
+                displayFilterValues();
+            }));
+
+        controller.show(context.getPrimaryStage(), statisticFilter);
     }
 }

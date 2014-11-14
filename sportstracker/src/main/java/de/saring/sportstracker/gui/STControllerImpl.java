@@ -506,6 +506,7 @@ public class STControllerImpl implements STController {
     @Action(name = ACTION_FILTER_EXERCISES)
     public void filterExercises() {
         final FilterDialogController controller = prFilterDialogController.get();
+        controller.setParentIsSwingWindow(true);
 
         controller.setAfterCloseBehavior(() -> {
             // set and enable filter when available after dialog has been closed
