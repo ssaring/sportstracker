@@ -7,7 +7,6 @@ import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.dialogs.OptionsDialog;
-import de.saring.sportstracker.gui.dialogs.StatisticDialog;
 import de.saring.sportstracker.gui.dialogsfx.AboutDialogController;
 import de.saring.sportstracker.gui.dialogsfx.ExerciseDialogController;
 import de.saring.sportstracker.gui.dialogsfx.FilterDialogController;
@@ -15,6 +14,7 @@ import de.saring.sportstracker.gui.dialogsfx.HRMFileOpenDialog;
 import de.saring.sportstracker.gui.dialogsfx.NoteDialogController;
 import de.saring.sportstracker.gui.dialogsfx.OverviewDialogController;
 import de.saring.sportstracker.gui.dialogsfx.SportTypeListDialogController;
+import de.saring.sportstracker.gui.dialogsfx.StatisticDialogController;
 import de.saring.sportstracker.gui.dialogsfx.WeightDialogController;
 import de.saring.sportstracker.gui.views.EntryView;
 import de.saring.util.data.IdDateObject;
@@ -56,8 +56,6 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<OptionsDialog> prOptionsDialog;
     @Inject
-    private Provider<StatisticDialog> prStatisticDialog;
-    @Inject
     private Provider<EVMain> prExerciseViewer;
 
     @Inject
@@ -76,6 +74,8 @@ public class STControllerImpl implements STController {
     private Provider<OverviewDialogController> prOverviewDialogController;
     @Inject
     private Provider<FilterDialogController> prFilterDialogController;
+    @Inject
+    private Provider<StatisticDialogController> prStatisticDialogController;
 
 
     /**
@@ -559,7 +559,7 @@ public class STControllerImpl implements STController {
             return;
         }
 
-        context.showDialog(prStatisticDialog.get());
+        prStatisticDialogController.get().show(context.getPrimaryStage());
     }
 
     /**

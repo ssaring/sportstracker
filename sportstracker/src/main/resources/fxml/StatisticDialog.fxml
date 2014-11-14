@@ -19,11 +19,14 @@
             </Label>
             <Button mnemonicParsing="false" onAction="#onChange" text="%st.dlg.statistic.change_filter.Action.text" />
          </children>
+         <padding>
+            <Insets right="2.0" />
+         </padding>
       </HBox>
       <GridPane hgap="16.0" vgap="12.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="260.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="280.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints vgrow="SOMETIMES" />
