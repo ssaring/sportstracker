@@ -3,18 +3,9 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - Statistic Dialog:
-  - FXML: Done
   - see TODOs in StatisticDialogController
-  - remove old Swing based StatisticDialog
-  - remove unused I18N properties
 - Filter Dialog:
-  - FXML: Done
-    - bug: label "Filter" is not shown in bold font, as specified in FXML (at least on Mac OS X)
-  - ViewModel: Done, incl. unit tests
-  - Controller: Done
-  - use new JavaFX based FilterDialog in StatisticDialog
-    - remove old Swing based FilterDialog
-    - remove unused I18N properties
+  - bug: label "Filter" is not shown in bold font, as specified in FXML (at least on Mac OS X)
 - Overview Dialog: migration completed and tested, except:
   - use JavaFX version of JFreeChart (see TODOs), not possible with version 1.0.19 yet
     (has a lot of problems: CSS errors, missing features, API will be changed,
@@ -61,6 +52,8 @@ JavaFX Migration status - completed:
 - Overview Dialog (still using Swing version of JFreeChart, see TODOs)
 - Sport Type List Dialog
 - Sport Type Dialog
+- Filter Dialog
+- Statistic Dialog
 - Use of openjfx-dialog backport library from JavaFX 8u40
 
 Java 8 migration status:

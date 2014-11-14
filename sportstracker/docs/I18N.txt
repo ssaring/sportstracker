@@ -82,6 +82,11 @@ SportsTracker 7.0.0:
 - st.dlg.sporttype.cancel.Action.text (removed)
 - st.dlg.sporttype.colorchooser.title (removed)
 
+- st.dlg.filter.ok.Action.text (removed)
+- st.dlg.filter.cancel.Action.text (removed)
+
+- st.dlg.statistic.close.Action.text (removed)
+
 SportsTracker 5.7.0:
 - st.dlg.exercise.error.import_console (new)
 - st.dlg.exercise.error.import (removed)

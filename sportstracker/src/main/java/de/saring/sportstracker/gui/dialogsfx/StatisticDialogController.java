@@ -144,4 +144,30 @@ public class StatisticDialogController extends AbstractDialogController {
 
         controller.show(context.getPrimaryStage(), statisticFilter);
     }
+
+    /**
+     * Action for calculation of the statistic and displaying the result.
+     */
+    private void onCalculate(final ActionEvent event) {
+
+// TODO
+//        // search for exercises with the selected filter criterias
+//        IdObjectList<Exercise> lFoundExercises =
+//                document.getExerciseList().getExercisesForFilter(statFilter);
+//
+//        // make sure that at least one exercise was found
+//        if (lFoundExercises.size() == 0) {
+//            context.showMessageDialog(this, JOptionPane.INFORMATION_MESSAGE,
+//                    "common.info", "st.dlg.statistic.info.no_exercises_found");
+//            return;
+//        }
+//
+//        // calculate statistic
+//        StatisticCalculator statistic = new StatisticCalculator(lFoundExercises);
+//
+//        // finally display results in dialog
+//        StatisticResultsDialog dlg = prStatisticResultsDialog.get();
+//        dlg.setStatisticResults(statistic);
+//        context.showDialog(dlg);
+    }
 }
