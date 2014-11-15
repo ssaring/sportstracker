@@ -85,6 +85,7 @@ SportsTracker 7.0.0:
 - st.dlg.filter.ok.Action.text (removed)
 - st.dlg.filter.cancel.Action.text (removed)
 
+- st.dlg.statistic.info.no_exercises_found (edited)
 - st.dlg.statistic.close.Action.text (removed)
 
 SportsTracker 5.7.0:

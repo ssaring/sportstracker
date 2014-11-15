@@ -1,9 +1,18 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
+import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.ExerciseFilter;
+import de.saring.sportstracker.data.statistic.StatisticCalculator;
+import de.saring.sportstracker.gui.dialogs.StatisticResultsDialog;
 import de.saring.util.StringUtils;
+import de.saring.util.data.IdObjectList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.stage.Window;
 
@@ -30,6 +39,9 @@ public class StatisticDialogController extends AbstractDialogController {
 
     @Inject
     private Provider<FilterDialogController> prFilterDialogController;
+
+    @Inject
+    private Provider<StatisticResultsDialog> prStatisticResultsDialog;
 
     @FXML
     private Label laTimespanValue;
@@ -69,8 +81,6 @@ public class StatisticDialogController extends AbstractDialogController {
      */
     public void show(final Window parent) {
 
-        // TODO display calculate action button
-
         // start with current filter criteria stored in document => user can change it
         statisticFilter = document.getCurrentFilter();
 
@@ -82,6 +92,23 @@ public class StatisticDialogController extends AbstractDialogController {
     protected void setupDialogControls() {
         // the controls are read only, so binding and view model is not needed here
         displayFilterValues();
+    }
+
+    @Override
+    protected void addCustomButtons(final DialogPane dialogPane) {
+
+        // add 'Calculate' button to button bar
+        final ButtonType bTypeCalculate = new ButtonType(context.getFxResources().getString(
+                "st.dlg.statistic.calculate.Action.text"), ButtonBar.ButtonData.OK_DONE);
+        dialogPane.getButtonTypes().add(bTypeCalculate);
+        final Button buttonCalculate = (Button) dialogPane.lookupButton(bTypeCalculate);
+
+        // set action event filter for this custom button
+        // => the event must be consumed, otherwise the dialog will be closed
+        buttonCalculate.addEventFilter(ActionEvent.ACTION, (event) -> {
+            event.consume();
+            onCalculate(event);
+        });
     }
 
     /**
@@ -150,24 +177,25 @@ public class StatisticDialogController extends AbstractDialogController {
      */
     private void onCalculate(final ActionEvent event) {
 
-// TODO
-//        // search for exercises with the selected filter criterias
-//        IdObjectList<Exercise> lFoundExercises =
-//                document.getExerciseList().getExercisesForFilter(statFilter);
-//
-//        // make sure that at least one exercise was found
-//        if (lFoundExercises.size() == 0) {
-//            context.showMessageDialog(this, JOptionPane.INFORMATION_MESSAGE,
-//                    "common.info", "st.dlg.statistic.info.no_exercises_found");
-//            return;
-//        }
-//
-//        // calculate statistic
-//        StatisticCalculator statistic = new StatisticCalculator(lFoundExercises);
-//
-//        // finally display results in dialog
-//        StatisticResultsDialog dlg = prStatisticResultsDialog.get();
-//        dlg.setStatisticResults(statistic);
-//        context.showDialog(dlg);
+        // search for exercises with the selected filter criteria
+        final IdObjectList<Exercise> lFoundExercises =
+                document.getExerciseList().getExercisesForFilter(statisticFilter);
+
+        // make sure that at least one exercise was found
+        if (lFoundExercises.size() == 0) {
+            context.showFxMessageDialog(getWindow(laTimespanValue), Alert.AlertType.INFORMATION,
+                    "common.info", "st.dlg.statistic.info.no_exercises_found");
+            return;
+        }
+
+        // calculate statistic
+        final StatisticCalculator statistic = new StatisticCalculator(lFoundExercises);
+
+        // finally display results in dialog
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            final StatisticResultsDialog dlg = prStatisticResultsDialog.get();
+            dlg.setStatisticResults(statistic);
+            context.showDialog(dlg);
+        });
     }
 }

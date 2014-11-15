@@ -2,8 +2,7 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- Statistic Dialog:
-  - see TODOs in StatisticDialogController
+- Statistic Result Dialog:
 - Filter Dialog:
   - bug: label "Filter" is not shown in bold font, as specified in FXML (at least on Mac OS X)
 - Overview Dialog: migration completed and tested, except:

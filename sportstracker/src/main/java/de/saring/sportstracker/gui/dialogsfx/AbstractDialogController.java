@@ -85,6 +85,7 @@ public abstract class AbstractDialogController {
             // create and show dialog
             final Dialog<ButtonType> dlg = createDialog(parent, title, root);
             dlg.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+            addCustomButtons(dlg.getDialogPane());
             applyJavaFXToSwingMigrationWorkarounds(dlg);
             dlg.showAndWait();
 
@@ -116,6 +117,7 @@ public abstract class AbstractDialogController {
 
             dlgPane.getButtonTypes().add(ButtonType.OK);
             dlgPane.getButtonTypes().add(ButtonType.CANCEL);
+            addCustomButtons(dlgPane);
 
             // bind validation to OK button, must only be enabled when there are no errors
             final Button btOk = (Button) dlg.getDialogPane().lookupButton(ButtonType.OK);
@@ -145,6 +147,15 @@ public abstract class AbstractDialogController {
      * between the model and the UI controls and the validation is defined here.
      */
     protected abstract void setupDialogControls();
+
+    /**
+     * Adds custom button bar buttons to the dialog. The default implementation does nothing, subclasses
+     * can add custom behaviour here.
+     *
+     * @param dialogPane DialogPane
+     */
+    protected void addCustomButtons(final DialogPane dialogPane) {
+    }
 
     /**
      * For edit dialogs only: Validates the inputs. On input errors an error message needs to be displayed.
