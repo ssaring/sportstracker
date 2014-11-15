@@ -3,6 +3,10 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - Statistic Result Dialog:
+  - FXML: Done
+  - Controller: missing
+  - remove unused I18N properties
+  - remove Swing version
 - Filter Dialog:
   - bug: label "Filter" is not shown in bold font, as specified in FXML (at least on Mac OS X)
 - Overview Dialog: migration completed and tested, except:

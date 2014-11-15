@@ -8,48 +8,189 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.StatisticResultDialogController">
-   <children>
-      <HBox alignment="CENTER_LEFT">
-         <children>
-            <Label maxWidth="1.7976931348623157E308" text="%st.dlg.statistic_results.total.text" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
-         </children>
-         <padding>
-            <Insets right="2.0" />
-         </padding>
-      </HBox>
-      <GridPane hgap="16.0" vgap="10.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="160.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="%st.dlg.statistic_results.total_exercises.text" />
-            <Label fx:id="laTotalExercisesValue" text="%common.n_a_" GridPane.columnIndex="1" />
-            <Label text="%st.dlg.statistic_results.total_distance.text" GridPane.rowIndex="1" />
-            <Label fx:id="laTotalDistanceValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="%st.dlg.statistic_results.total_duration.text" GridPane.rowIndex="2" />
-            <Label fx:id="laTotalDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="%st.dlg.statistic_results.total_ascent.text" GridPane.rowIndex="3" />
-            <Label fx:id="laTotalAscentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="4" />
-            <Label fx:id="laTotalEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-         </children>
-         <VBox.margin>
-            <Insets left="24.0" />
-         </VBox.margin>
-      </GridPane>
-   </children>
-</VBox>
+<GridPane hgap="24.0" vgap="24.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.StatisticResultDialogController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" />
+        <ColumnConstraints hgrow="SOMETIMES" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <VBox spacing="16.0">
+            <children>
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <Label text="%st.dlg.statistic_results.total.text">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <GridPane hgap="16.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="160.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="%st.dlg.statistic_results.total_exercises.text" />
+                        <Label fx:id="laTotalExercisesValue" text="%common.n_a_" GridPane.columnIndex="1" />
+                        <Label text="%st.dlg.statistic_results.total_distance.text" GridPane.rowIndex="1" />
+                        <Label fx:id="laTotalDistanceValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="%st.dlg.statistic_results.total_duration.text" GridPane.rowIndex="2" />
+                        <Label fx:id="laTotalDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="%st.dlg.statistic_results.total_ascent.text" GridPane.rowIndex="3" />
+                        <Label fx:id="laTotalAscentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="4" />
+                        <Label fx:id="laTotalEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    </children>
+                    <VBox.margin>
+                        <Insets left="24.0" />
+                    </VBox.margin>
+                </GridPane>
+            </children>
+        </VBox>
+        <VBox spacing="16.0" GridPane.columnIndex="1">
+            <children>
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <Label text="%st.dlg.statistic_results.average.text">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <GridPane hgap="16.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="160.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="%st.dlg.statistic_results.distance.text" />
+                        <Label fx:id="laAvgDistanceValue" text="%common.n_a_" GridPane.columnIndex="1" />
+                        <Label text="%st.dlg.statistic_results.avg_speed.text" GridPane.rowIndex="1" />
+                        <Label fx:id="laAvgAvgSpeedValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="%st.dlg.statistic_results.duration.text" GridPane.rowIndex="2" />
+                        <Label fx:id="laAvgDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="%st.dlg.statistic_results.ascent.text" GridPane.rowIndex="3" />
+                        <Label fx:id="laAvgAscentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="%st.dlg.statistic_results.avg_heartrate.text" GridPane.rowIndex="4" />
+                        <Label fx:id="laAvgAvgHeartrateValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="5" />
+                        <Label fx:id="laAvgEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    </children>
+                    <VBox.margin>
+                        <Insets left="24.0" />
+                    </VBox.margin>
+                </GridPane>
+            </children>
+        </VBox>
+        <VBox spacing="16.0" GridPane.rowIndex="1">
+            <children>
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <Label text="%st.dlg.statistic_results.minimum.text">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <GridPane hgap="16.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="160.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="%st.dlg.statistic_results.distance.text" />
+                        <Label fx:id="laMinDistanceValue" text="%common.n_a_" GridPane.columnIndex="1" />
+                        <Label text="%st.dlg.statistic_results.avg_speed.text" GridPane.rowIndex="1" />
+                        <Label fx:id="laMinAvgSpeedValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="%st.dlg.statistic_results.duration.text" GridPane.rowIndex="2" />
+                        <Label fx:id="laMinDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="%st.dlg.statistic_results.ascent.text" GridPane.rowIndex="3" />
+                        <Label fx:id="laMinAscentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="%st.dlg.statistic_results.avg_heartrate.text" GridPane.rowIndex="4" />
+                        <Label fx:id="laMinAvgHeartrateValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="5" />
+                        <Label fx:id="laMinEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    </children>
+                    <VBox.margin>
+                        <Insets left="24.0" />
+                    </VBox.margin>
+                </GridPane>
+            </children>
+        </VBox>
+        <VBox spacing="16.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <children>
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <Label text="%st.dlg.statistic_results.maximum.text">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <GridPane hgap="16.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="160.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="%st.dlg.statistic_results.distance.text" />
+                        <Label fx:id="laMaxDistanceValue" text="%common.n_a_" GridPane.columnIndex="1" />
+                        <Label text="%st.dlg.statistic_results.avg_speed.text" GridPane.rowIndex="1" />
+                        <Label fx:id="laMaxAvgSpeedValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="%st.dlg.statistic_results.duration.text" GridPane.rowIndex="2" />
+                        <Label fx:id="laMaxDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="%st.dlg.statistic_results.ascent.text" GridPane.rowIndex="3" />
+                        <Label fx:id="laMaxAscentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="%st.dlg.statistic_results.avg_heartrate.text" GridPane.rowIndex="4" />
+                        <Label fx:id="laMaxAvgHeartrateValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="5" />
+                        <Label fx:id="laMaxEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    </children>
+                    <VBox.margin>
+                        <Insets left="24.0" />
+                    </VBox.margin>
+                </GridPane>
+            </children>
+        </VBox>
+    </children>
+</GridPane>
