@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.PreferencesDialogController">
+   <children>
+      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #c0c0c0;" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
+        <tabs>
+          <Tab text="%st.dlg.options.main.title">
+            <content>
+                <VBox spacing="32.0">
+                   <children>
+                        <VBox spacing="12.0">
+                           <children>
+                              <Label style="-fx-font-weight: bold;" text="%st.dlg.options.initial_view.text" />
+                              <RadioButton fx:id="rbInitialViewCalendar" mnemonicParsing="false" selected="true" text="%st.dlg.options.calendar.text">
+                                 <padding>
+                                    <Insets left="24.0" />
+                                 </padding>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="tgInitialView" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="rbInitialViewExerciseList" mnemonicParsing="false" text="%st.dlg.options.exercise_list.text" toggleGroup="$tgInitialView">
+                                 <VBox.margin>
+                                    <Insets left="24.0" />
+                                 </VBox.margin>
+                              </RadioButton>
+                           </children>
+                        </VBox>
+                       <VBox spacing="12.0">
+                           <children>
+                               <Label style="-fx-font-weight: bold;" text="%st.dlg.options.defaultautocalc.text" />
+                              <ChoiceBox fx:id="cbAutomaticCalculation" maxWidth="1.7976931348623157E308">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets left="24.0" />
+                                 </VBox.margin>
+                              </ChoiceBox>
+                           </children>
+                       </VBox>
+                       <VBox spacing="12.0">
+                           <children>
+                               <Label style="-fx-font-weight: bold;" text="%st.dlg.options.save_exit.text" />
+                              <CheckBox fx:id="cbSaveOnExit" mnemonicParsing="false" text="%st.dlg.options.autosave_exit.text">
+                                 <VBox.margin>
+                                    <Insets left="24.0" />
+                                 </VBox.margin>
+                              </CheckBox>
+                           </children>
+                       </VBox>
+                   </children>
+                   <padding>
+                      <Insets bottom="16.0" left="12.0" right="12.0" top="16.0" />
+                   </padding>
+                </VBox>
+            </content>
+          </Tab>
+          <Tab text="%st.dlg.options.units.title">
+            <content>
+              <VBox spacing="32.0">
+                  <children>
+                      <VBox spacing="12.0">
+                          <children>
+                              <Label style="-fx-font-weight: bold;" text="%st.dlg.options.unit_system.text" />
+                              <RadioButton fx:id="rbUnitsMetric" mnemonicParsing="false" selected="true" text="%st.dlg.options.metric.text">
+                                  <padding>
+                                      <Insets left="24.0" />
+                                  </padding>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="tgUnitSystem" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="rbUnitsEnglish" mnemonicParsing="false" text="%st.dlg.options.english.text" toggleGroup="$tgUnitSystem">
+                                  <VBox.margin>
+                                      <Insets left="24.0" />
+                                  </VBox.margin>
+                              </RadioButton>
+                          </children>
+                      </VBox>
+                      <VBox spacing="12.0">
+                          <children>
+                              <Label style="-fx-font-weight: bold;" text="%st.dlg.options.speed_unit.text" />
+                              <RadioButton fx:id="rbSpeedUnitDistance" mnemonicParsing="false" selected="true" text="%st.dlg.options.distance_hour.text">
+                                  <padding>
+                                      <Insets left="24.0" />
+                                  </padding>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="tgSpeedUnitView" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="rbSpeedUnitMinutes" mnemonicParsing="false" text="%st.dlg.options.minutes_distance.text" toggleGroup="$tgSpeedUnitView">
+                                  <VBox.margin>
+                                      <Insets left="24.0" />
+                                  </VBox.margin>
+                              </RadioButton>
+                          </children>
+                      </VBox>
+                      <VBox spacing="12.0">
+                          <children>
+                              <Label style="-fx-font-weight: bold;" text="%st.dlg.options.week_start.text" />
+                              <RadioButton fx:id="rbWeekStartMonday" mnemonicParsing="false" selected="true" text="%st.dlg.options.monday.text">
+                                  <padding>
+                                      <Insets left="24.0" />
+                                  </padding>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="tgWeekStart" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="rbWeekStartSunday" mnemonicParsing="false" text="%st.dlg.options.sunday.text" toggleGroup="$tgWeekStart">
+                                  <VBox.margin>
+                                      <Insets left="24.0" />
+                                  </VBox.margin>
+                              </RadioButton>
+                          </children>
+                      </VBox>
+                  </children>
+                  <padding>
+                      <Insets bottom="16.0" left="12.0" right="12.0" top="16.0" />
+                  </padding>
+              </VBox>
+            </content>
+          </Tab>
+          <Tab text="%st.dlg.options.listview.title">
+            <content>
+              <VBox spacing="32.0">
+                  <children>
+                      <VBox spacing="12.0">
+                          <children>
+                              <Label style="-fx-font-weight: bold;" text="%st.dlg.options.list_optional_fields.text" />
+                              <VBox spacing="12.0">
+                                 <children>
+                                    <CheckBox fx:id="cbOptionalAvgHeartrate" mnemonicParsing="false" text="%st.dlg.options.show_avg_heartrate.text" />
+                                    <CheckBox fx:id="cbOptionalAscent" mnemonicParsing="false" text="%st.dlg.options.show_ascent.text" />
+                                    <CheckBox fx:id="cbOptionalEnergy" mnemonicParsing="false" text="%st.dlg.options.show_energy.text" />
+                                    <CheckBox fx:id="cbOptionalEquipment" mnemonicParsing="false" text="%st.dlg.options.show_equipment.text" />
+                                    <CheckBox fx:id="cbOptionalComment" mnemonicParsing="false" text="%st.dlg.options.show_comment.text" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="24.0" />
+                                 </VBox.margin>
+                              </VBox>
+                          </children>
+                      </VBox>
+                  </children>
+                 <padding>
+                    <Insets bottom="16.0" left="12.0" right="12.0" top="16.0" />
+                 </padding>
+              </VBox>
+            </content>
+          </Tab>
+          <Tab text="%st.dlg.options.exerciseviewer.title">
+              <content>
+                <VBox spacing="32.0">
+                    <children>
+                        <VBox spacing="12.0">
+                            <children>
+                                <Label style="-fx-font-weight: bold;" text="%st.dlg.options.diagram.text" />
+                                  <CheckBox fx:id="cbDiagramTwoGraphs" mnemonicParsing="false" text="%st.dlg.options.second_graph.text">
+                                 <VBox.margin>
+                                    <Insets left="24.0" />
+                                 </VBox.margin>
+                              </CheckBox>
+                            </children>
+                        </VBox>
+                    </children>
+                  <padding>
+                    <Insets bottom="16.0" left="12.0" right="12.0" top="16.0" />
+                  </padding>
+                </VBox>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</HBox>
