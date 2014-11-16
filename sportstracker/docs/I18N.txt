@@ -88,6 +88,8 @@ SportsTracker 7.0.0:
 - st.dlg.statistic.info.no_exercises_found (edited)
 - st.dlg.statistic.close.Action.text (removed)
 
+- st.dlg.statistic_results.close.Action.text (removed)
+
 SportsTracker 5.7.0:
 - st.dlg.exercise.error.import_console (new)
 - st.dlg.exercise.error.import (removed)
