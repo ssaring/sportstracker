@@ -57,6 +57,7 @@ JavaFX Migration status - completed:
 - Filter Dialog
 - Statistic Dialog
 - Statistic Result Dialog
+- Preferences Dialog
 - Use of openjfx-dialog backport library from JavaFX 8u40
 
 Java 8 migration status:

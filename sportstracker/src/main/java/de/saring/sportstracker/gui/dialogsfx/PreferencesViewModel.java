@@ -1,6 +1,10 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
 import de.saring.sportstracker.core.STOptions;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 /**
  * This ViewModel class provides JavaFX properties of all STOptions attributes to be edited in the dialog.
@@ -10,7 +14,16 @@ import de.saring.sportstracker.core.STOptions;
  */
 public class PreferencesViewModel {
 
-    // TODO public final IntegerProperty hour;
+    public final ObjectProperty<STOptions.AutoCalculation> defaultAutoCalculation;
+    public final BooleanProperty saveOnExit;
+
+    public final BooleanProperty listViewShowAvgHeartrate;
+    public final BooleanProperty listViewShowAscent;
+    public final BooleanProperty listViewShowEnergy;
+    public final BooleanProperty listViewShowEquipment;
+    public final BooleanProperty listViewShowComment;
+
+    public final BooleanProperty evDisplaySecondDiagram;
 
     /**
      * Creates the PreferencesViewModel with JavaFX properties for the passed STOptions object.
@@ -18,7 +31,18 @@ public class PreferencesViewModel {
      * @param options options to be edited
      */
     public PreferencesViewModel(final STOptions options) {
-        // TODO this.hour = new SimpleIntegerProperty(note.getDateTime().getHour());
+
+        // TODO add missing
+        this.defaultAutoCalculation = new SimpleObjectProperty<>(options.getDefaultAutoCalcuation());
+        this.saveOnExit = new SimpleBooleanProperty(options.isSaveOnExit());
+
+        this.listViewShowAvgHeartrate = new SimpleBooleanProperty(options.isListViewShowAvgHeartrate());
+        this.listViewShowAscent = new SimpleBooleanProperty(options.isListViewShowAscent());
+        this.listViewShowEnergy = new SimpleBooleanProperty(options.isListViewShowEnergy());
+        this.listViewShowEquipment = new SimpleBooleanProperty(options.isListViewShowEquipment());
+        this.listViewShowComment = new SimpleBooleanProperty(options.isDisplaySecondDiagram());
+
+        this.evDisplaySecondDiagram = new SimpleBooleanProperty(options.isDisplaySecondDiagram());
     }
 
     /**
@@ -28,7 +52,17 @@ public class PreferencesViewModel {
      */
     public STOptions getOptions() {
         final STOptions options = new STOptions();
-        // TODO note.setDateTime(LocalDateTime.of(date.get(), LocalTime.of(hour.getValue(), minute.getValue())));
+        // TODO add missing
+        options.setDefaultAutoCalcuation(defaultAutoCalculation.get());
+        options.setSaveOnExit(saveOnExit.get());
+
+        options.setListViewShowAvgHeartrate(listViewShowAvgHeartrate.get());
+        options.setListViewShowAscent(listViewShowAscent.get());
+        options.setListViewShowEnergy(listViewShowEnergy.get());
+        options.setListViewShowEquipment(listViewShowEquipment.get());
+        options.setListViewShowComment(listViewShowComment.get());
+
+        options.setDisplaySecondDiagram(evDisplaySecondDiagram.get());
         return options;
     }
 }

@@ -14,6 +14,8 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
 
+import java.util.stream.Stream;
+
 /**
  * Controller (MVC) class of the Preferences dialog for editing the application preferences / options.
  *
@@ -24,16 +26,17 @@ public class PreferencesDialogController extends AbstractDialogController {
 
     private final STDocument document;
 
+    // tab "Main"
     @FXML
     private RadioButton rbInitialViewCalendar;
     @FXML
     private RadioButton rbInitialViewExerciseList;
     @FXML
-    // TODO specify type
-    private ChoiceBox<?> cbAutomaticCalculation;
+    private ChoiceBox<STOptions.AutoCalculation> cbAutomaticCalculation;
     @FXML
     private CheckBox cbSaveOnExit;
 
+    // tab "Units"
     @FXML
     private RadioButton rbUnitsMetric;
     @FXML
@@ -47,6 +50,7 @@ public class PreferencesDialogController extends AbstractDialogController {
     @FXML
     private RadioButton rbWeekStartSunday;
 
+    // tab "List View"
     @FXML
     private CheckBox cbOptionalAvgHeartrate;
     @FXML
@@ -58,6 +62,7 @@ public class PreferencesDialogController extends AbstractDialogController {
     @FXML
     private CheckBox cbOptionalComment;
 
+    // tab "ExerciseViewer"
     @FXML
     private CheckBox cbDiagramTwoGraphs;
 
@@ -92,11 +97,20 @@ public class PreferencesDialogController extends AbstractDialogController {
 
     @Override
     protected void setupDialogControls() {
+        setupChoiceBoxes();
 
         // setup binding between view model and the UI controls
-        // TODO dpDate.valueProperty().bindBidirectional(noteViewModel.date);
+        // (validation is not needed here)
+        cbAutomaticCalculation.valueProperty().bindBidirectional(preferencesViewModel.defaultAutoCalculation);
+        cbSaveOnExit.selectedProperty().bindBidirectional(preferencesViewModel.saveOnExit);
 
-        // validation is not needed here
+        cbOptionalAvgHeartrate.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowAvgHeartrate);
+        cbOptionalAscent.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowAscent);
+        cbOptionalEnergy.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowEnergy);
+        cbOptionalEquipment.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowEquipment);
+        cbOptionalComment.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowComment);
+
+        cbDiagramTwoGraphs.selectedProperty().bindBidirectional(preferencesViewModel.evDisplaySecondDiagram);
     }
 
     @Override
@@ -107,5 +121,12 @@ public class PreferencesDialogController extends AbstractDialogController {
         // TODO document.setOptions(options);
         document.storeOptions();
         return true;
+    }
+
+    private void setupChoiceBoxes() {
+
+        // TODO display readable and translated names for items
+        Stream.of(STOptions.AutoCalculation.values()).forEach((autoCalculation) ->
+                cbAutomaticCalculation.getItems().add(autoCalculation));
     }
 }
