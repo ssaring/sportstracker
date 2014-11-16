@@ -6,13 +6,13 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
-import de.saring.sportstracker.gui.dialogs.OptionsDialog;
 import de.saring.sportstracker.gui.dialogsfx.AboutDialogController;
 import de.saring.sportstracker.gui.dialogsfx.ExerciseDialogController;
 import de.saring.sportstracker.gui.dialogsfx.FilterDialogController;
 import de.saring.sportstracker.gui.dialogsfx.HRMFileOpenDialog;
 import de.saring.sportstracker.gui.dialogsfx.NoteDialogController;
 import de.saring.sportstracker.gui.dialogsfx.OverviewDialogController;
+import de.saring.sportstracker.gui.dialogsfx.PreferencesDialogController;
 import de.saring.sportstracker.gui.dialogsfx.SportTypeListDialogController;
 import de.saring.sportstracker.gui.dialogsfx.StatisticDialogController;
 import de.saring.sportstracker.gui.dialogsfx.WeightDialogController;
@@ -54,11 +54,6 @@ public class STControllerImpl implements STController {
     private final STView view;
 
     @Inject
-    private Provider<OptionsDialog> prOptionsDialog;
-    @Inject
-    private Provider<EVMain> prExerciseViewer;
-
-    @Inject
     private Provider<AboutDialogController> prAboutDialogController;
     @Inject
     private Provider<ExerciseDialogController> prExerciseDialogController;
@@ -76,6 +71,11 @@ public class STControllerImpl implements STController {
     private Provider<FilterDialogController> prFilterDialogController;
     @Inject
     private Provider<StatisticDialogController> prStatisticDialogController;
+    @Inject
+    private Provider<PreferencesDialogController> prPreferencesDialogController;
+
+    @Inject
+    private Provider<EVMain> prExerciseViewer;
 
 
     /**
@@ -463,9 +463,11 @@ public class STControllerImpl implements STController {
      */
     @Action(name = ACTION_PREFERENCES)
     public void editPreferences() {
-        context.showDialog(prOptionsDialog.get());
-        // unit system may be changed
-        view.updateView();
+
+        final PreferencesDialogController controller = prPreferencesDialogController.get();
+        // update view after dialog was closed, preferences (e.g. unit system) might be changed
+        controller.setAfterCloseBehavior(() -> SwingUtilities.invokeLater(view::updateView));
+        controller.show(context.getPrimaryStage());
     }
 
     /**

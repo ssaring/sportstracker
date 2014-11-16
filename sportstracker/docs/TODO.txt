@@ -4,8 +4,8 @@ SportsTracker-TODO
 JavaFX Migration:
 - Preferences Dialog:
   - FXML: Done
-  - Controller: TODO
-  - ViewModel: TODO
+  - ViewModel: see TODOs, add unit tests
+  - Controller: see TODOs
   - remove old Swing based Options Dialog and package dialogs
   - remove unused I18N resources
 - Overview Dialog: migration completed and tested, except:
