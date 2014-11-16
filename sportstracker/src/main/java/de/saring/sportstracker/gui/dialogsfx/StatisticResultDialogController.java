@@ -1,5 +1,6 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
+import de.saring.util.unitcalc.FormatUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Window;
@@ -31,19 +32,6 @@ public class StatisticResultDialogController extends AbstractDialogController {
     private Label laTotalEnergyValue;
 
     @FXML
-    private Label laMinDistanceValue;
-    @FXML
-    private Label laMinAvgSpeedValue;
-    @FXML
-    private Label laMinDurationValue;
-    @FXML
-    private Label laMinAscentValue;
-    @FXML
-    private Label laMinAvgHeartrateValue;
-    @FXML
-    private Label laMinEnergyValue;
-
-    @FXML
     private Label laAvgDistanceValue;
     @FXML
     private Label laAvgAvgSpeedValue;
@@ -55,6 +43,19 @@ public class StatisticResultDialogController extends AbstractDialogController {
     private Label laAvgAvgHeartrateValue;
     @FXML
     private Label laAvgEnergyValue;
+
+    @FXML
+    private Label laMinDistanceValue;
+    @FXML
+    private Label laMinAvgSpeedValue;
+    @FXML
+    private Label laMinDurationValue;
+    @FXML
+    private Label laMinAscentValue;
+    @FXML
+    private Label laMinAvgHeartrateValue;
+    @FXML
+    private Label laMinEnergyValue;
 
     @FXML
     private Label laMaxDistanceValue;
@@ -105,7 +106,45 @@ public class StatisticResultDialogController extends AbstractDialogController {
     }
 
     private void displayStatisticResultValues() {
+        final FormatUtils formatUtils = context.getFormatUtils();
+        final String empty = "";
 
-        // TODO
+        // display total values
+        laTotalExercisesValue.setText(String.valueOf(statisticResult.getExerciseCount()));
+        laTotalDistanceValue.setText(formatUtils.distanceToString(statisticResult.getTotalDistance(), 2));
+        laTotalDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getTotalDuration()) + " (hh:mm:ss)");
+        laTotalAscentValue.setText(formatUtils.heightToString(statisticResult.getTotalAscent()));
+        laTotalEnergyValue.setText(statisticResult.getTotalCalories() > 0 ?
+                formatUtils.caloriesToString(statisticResult.getTotalCalories()) : empty);
+
+        // display average values
+        laAvgDistanceValue.setText(formatUtils.distanceToString(statisticResult.getAvgDistance(), 2));
+        laAvgAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getAvgSpeed(), 2));
+        laAvgDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getAvgDuration()) + " (hh:mm:ss)");
+        laAvgAscentValue.setText(formatUtils.heightToString(statisticResult.getAvgAscent()));
+        laAvgAvgHeartrateValue.setText(statisticResult.getAvgHeartRate() > 0 ?
+                formatUtils.heartRateToString(statisticResult.getAvgHeartRate()) : empty);
+        laAvgEnergyValue.setText(statisticResult.getAvgCalories() > 0 ?
+                formatUtils.caloriesToString(statisticResult.getAvgCalories()) : empty);
+
+        // display minimum values
+        laMinDistanceValue.setText(formatUtils.distanceToString(statisticResult.getMinDistance(), 2));
+        laMinAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getMinAvgSpeed(), 2));
+        laMinDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getMinDuration()) + " (hh:mm:ss)");
+        laMinAscentValue.setText(formatUtils.heightToString(statisticResult.getMinAscent()));
+        laMinAvgHeartrateValue.setText(statisticResult.getMinAvgHeartRate() > 0 ?
+                formatUtils.heartRateToString(statisticResult.getMinAvgHeartRate()) : empty);
+        laMinEnergyValue.setText(statisticResult.getMinCalories() > 0 ?
+                formatUtils.caloriesToString(statisticResult.getMinCalories()) : empty);
+
+        // display maximum values
+        laMaxDistanceValue.setText(formatUtils.distanceToString(statisticResult.getMaxDistance(), 2));
+        laMaxAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getMaxAvgSpeed(), 2));
+        laMaxDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getMaxDuration()) + " (hh:mm:ss)");
+        laMaxAscentValue.setText(formatUtils.heightToString(statisticResult.getMaxAscent()));
+        laMaxAvgHeartrateValue.setText(statisticResult.getMaxAvgHeartRate() > 0 ?
+                formatUtils.heartRateToString(statisticResult.getMaxAvgHeartRate()) : empty);
+        laMaxEnergyValue.setText(statisticResult.getMaxCalories() > 0 ?
+                formatUtils.caloriesToString(statisticResult.getMaxCalories()) : empty);
     }
 }
