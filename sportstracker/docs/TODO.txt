@@ -2,11 +2,10 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- Statistic Result Dialog:
-  - completed, tests needed
-  - bug: labels "Min, Avg, Max" are not shown in bold font, as specified in FXML (at least on Mac OS X)
-- Filter Dialog:
-  - bug: label "Filter" is not shown in bold font, as specified in FXML (at least on Mac OS X)
+- Dialog bugs:
+  - Statistic Result Dialog: labels "Min, Avg, Max" are not shown in bold font, as specified in FXML
+    (at least on Mac OS X)
+  - Filter Dialog: label "Filter" is not shown in bold font, as specified in FXML (at least on Mac OS X)
 - Overview Dialog: migration completed and tested, except:
   - use JavaFX version of JFreeChart (see TODOs), not possible with version 1.0.19 yet
     (has a lot of problems: CSS errors, missing features, API will be changed,
@@ -55,6 +54,7 @@ JavaFX Migration status - completed:
 - Sport Type Dialog
 - Filter Dialog
 - Statistic Dialog
+- Statistic Result Dialog
 - Use of openjfx-dialog backport library from JavaFX 8u40
 
 Java 8 migration status:
