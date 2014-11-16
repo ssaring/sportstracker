@@ -11,11 +11,7 @@
    <children>
       <VBox spacing="12.0">
          <children>
-            <Label text="%st.dlg.sporttype.properties.text">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
+            <Label style="-fx-font-weight: bold;" text="%st.dlg.sporttype.properties.text" />
             <GridPane hgap="12.0" vgap="12.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="NEVER" />
@@ -45,11 +41,7 @@
       </VBox>
       <VBox spacing="12.0">
          <children>
-            <Label text="%st.dlg.sporttype.subtypes.text">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
+            <Label style="-fx-font-weight: bold;" text="%st.dlg.sporttype.subtypes.text" />
             <HBox spacing="16.0">
                <children>
                   <ListView fx:id="liSportSubtypes" prefHeight="140.0" prefWidth="340.0" />
@@ -69,11 +61,7 @@
       </VBox>
        <VBox spacing="12.0">
            <children>
-               <Label text="%st.dlg.sporttype.equipment.text">
-                   <font>
-                       <Font name="System Bold" size="13.0" />
-                   </font>
-               </Label>
+               <Label style="-fx-font-weight: bold;" text="%st.dlg.sporttype.equipment.text" />
                <HBox spacing="16.0">
                    <children>
                        <ListView fx:id="liEquipments" prefHeight="140.0" prefWidth="340.0" />

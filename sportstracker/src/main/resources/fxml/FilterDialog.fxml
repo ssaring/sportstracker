@@ -12,11 +12,7 @@
    <children>
       <VBox spacing="12.0">
          <children>
-            <Label text="%st.dlg.filter.time_period.text">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
+            <Label style="-fx-font-weight: bold;" text="%st.dlg.filter.time_period.text" />
             <HBox alignment="CENTER_LEFT" spacing="16.0">
                <children>
                   <Label maxWidth="140.0" text="%st.dlg.filter.from.text" />
@@ -59,11 +55,7 @@
       </VBox>
       <VBox spacing="20.0">
          <children>
-            <Label text="%st.dlg.filter.filter.text">
-                <font>
-                    <Font name="System Bold" size="13.0" />
-                </font>
-            </Label>
+            <Label style="-fx-font-weight: bold;" text="%st.dlg.filter.filter.text" />
             <GridPane hgap="24.0" vgap="8.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" />

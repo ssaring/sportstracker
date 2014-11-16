@@ -12,11 +12,7 @@
    <children>
       <HBox alignment="CENTER_LEFT">
          <children>
-            <Label maxWidth="1.7976931348623157E308" text="%st.dlg.statistic.current_filter.text" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
+            <Label maxWidth="1.7976931348623157E308" style="-fx-font-weight: bold;" text="%st.dlg.statistic.current_filter.text" HBox.hgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#onChange" text="%st.dlg.statistic.change_filter.Action.text" />
          </children>
          <padding>

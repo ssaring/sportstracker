@@ -22,11 +22,7 @@
             <children>
                 <HBox alignment="CENTER_LEFT">
                     <children>
-                        <Label text="%st.dlg.statistic_results.total.text">
-                            <font>
-                                <Font name="System Bold" size="13.0" />
-                            </font>
-                        </Label>
+                        <Label style="-fx-font-weight: bold;" text="%st.dlg.statistic_results.total.text" />
                     </children>
                 </HBox>
                 <GridPane hgap="16.0" vgap="10.0">
@@ -64,11 +60,7 @@
             <children>
                 <HBox alignment="CENTER_LEFT">
                     <children>
-                        <Label text="%st.dlg.statistic_results.average.text">
-                            <font>
-                                <Font name="System Bold" size="13.0" />
-                            </font>
-                        </Label>
+                        <Label style="-fx-font-weight: bold;" text="%st.dlg.statistic_results.average.text" />
                     </children>
                 </HBox>
                 <GridPane hgap="16.0" vgap="10.0">
@@ -108,11 +100,7 @@
             <children>
                 <HBox alignment="CENTER_LEFT">
                     <children>
-                        <Label text="%st.dlg.statistic_results.minimum.text">
-                            <font>
-                                <Font name="System Bold" size="13.0" />
-                            </font>
-                        </Label>
+                        <Label style="-fx-font-weight: bold;" text="%st.dlg.statistic_results.minimum.text" />
                     </children>
                 </HBox>
                 <GridPane hgap="16.0" vgap="10.0">
@@ -152,11 +140,7 @@
             <children>
                 <HBox alignment="CENTER_LEFT">
                     <children>
-                        <Label text="%st.dlg.statistic_results.maximum.text">
-                            <font>
-                                <Font name="System Bold" size="13.0" />
-                            </font>
-                        </Label>
+                        <Label style="-fx-font-weight: bold;" text="%st.dlg.statistic_results.maximum.text" />
                     </children>
                 </HBox>
                 <GridPane hgap="16.0" vgap="10.0">

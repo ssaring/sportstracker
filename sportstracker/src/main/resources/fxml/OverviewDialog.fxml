@@ -12,11 +12,7 @@
    <children>
       <VBox spacing="12.0">
          <children>
-            <Label text="%st.dlg.overview.time_range.text">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
+            <Label style="-fx-font-weight: bold;" text="%st.dlg.overview.time_range.text" />
             <HBox spacing="24.0">
                <children>
                   <ChoiceBox fx:id="cbTimeRange">
@@ -39,11 +35,7 @@
       </Pane>
       <VBox spacing="12.0">
          <children>
-            <Label text="%st.dlg.overview.options.text">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
+            <Label style="-fx-font-weight: bold;" text="%st.dlg.overview.options.text" />
             <HBox fx:id="hBoxOptions" alignment="CENTER_LEFT" spacing="24.0">
                <padding>
                   <Insets left="24.0" />
