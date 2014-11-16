@@ -3,7 +3,6 @@ package de.saring.sportstracker.gui.dialogsfx;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.ExerciseFilter;
 import de.saring.sportstracker.data.statistic.StatisticCalculator;
-import de.saring.sportstracker.gui.dialogs.StatisticResultsDialog;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObjectList;
 import javafx.event.ActionEvent;
@@ -41,7 +40,7 @@ public class StatisticDialogController extends AbstractDialogController {
     private Provider<FilterDialogController> prFilterDialogController;
 
     @Inject
-    private Provider<StatisticResultsDialog> prStatisticResultsDialog;
+    private Provider<StatisticResultDialogController> prStatisticResultDialogController;
 
     @FXML
     private Label laTimespanValue;
@@ -192,10 +191,6 @@ public class StatisticDialogController extends AbstractDialogController {
         final StatisticCalculator statistic = new StatisticCalculator(lFoundExercises);
 
         // finally display results in dialog
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            final StatisticResultsDialog dlg = prStatisticResultsDialog.get();
-            dlg.setStatisticResults(statistic);
-            context.showDialog(dlg);
-        });
+        prStatisticResultDialogController.get().show(getWindow(laTimespanValue), statistic);
     }
 }
