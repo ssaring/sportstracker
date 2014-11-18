@@ -100,11 +100,6 @@ public class STOptions implements EVOptions, Serializable {
      */
     private String previousExerciseDirectory;
 
-    /**
-     * The class name of the Look&Feel to be used. It's optional and can be
-     * null - the system look&feel will be used then.
-     */
-    private String lookAndFeelClassName;
 
     public View getInitialView() {
         return initialView;
@@ -214,12 +209,15 @@ public class STOptions implements EVOptions, Serializable {
         this.previousExerciseDirectory = previousExerciseDirectory;
     }
 
+    @Deprecated
     public String getLookAndFeelClassName() {
-        return lookAndFeelClassName;
+        // this dummy method was not deleted for compatibility reasons when loading options from file
+        return null;
     }
 
+    @Deprecated
     public void setLookAndFeelClassName(String lookAndFeelClassName) {
-        this.lookAndFeelClassName = lookAndFeelClassName;
+        // this dummy method was not deleted for compatibility reasons when loading options from file
     }
 
     /**
@@ -243,7 +241,6 @@ public class STOptions implements EVOptions, Serializable {
         options.listViewShowEquipment = false;
         options.listViewShowComment = false;
         options.previousExerciseDirectory = null;
-        options.lookAndFeelClassName = null;
         return options;
     }
 }

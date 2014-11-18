@@ -83,7 +83,7 @@ public class STMain extends SportsTracker {
         document = injector.getInstance(STDocument.class);
         document.evaluateCommandLineParameters(cmdLineParameters);
         document.loadOptions();
-        initLookAndFeel(document.getOptions().getLookAndFeelClassName());
+        initLookAndFeel();
 
         // create the controller and add the exit listener
         controller = injector.getInstance(STController.class);
@@ -134,16 +134,10 @@ public class STMain extends SportsTracker {
     }
 
     /**
-     * Initializes the Look&Feel of the application. Must be done before creating the view
-     * components.
-     *
-     * @param lookAndFeelClassName class name of the look and feel (or null for system default)
+     * Initializes the Look&Feel of the application, it always uses the system default Look&Feel.
      */
-    private void initLookAndFeel(String lookAndFeelClassName) {
-        if (lookAndFeelClassName == null) {
-            lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
-        }
-
+    private void initLookAndFeel() {
+        String lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
         try {
             UIManager.setLookAndFeel(lookAndFeelClassName);
         } catch (Exception e) {
