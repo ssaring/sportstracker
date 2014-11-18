@@ -94,10 +94,10 @@
                                       <Insets left="24.0" />
                                   </padding>
                                  <toggleGroup>
-                                    <ToggleGroup fx:id="tgSpeedUnitView" />
+                                    <ToggleGroup fx:id="tgSpeedView" />
                                  </toggleGroup>
                               </RadioButton>
-                              <RadioButton fx:id="rbSpeedUnitMinutes" mnemonicParsing="false" text="%st.dlg.options.minutes_distance.text" toggleGroup="$tgSpeedUnitView">
+                              <RadioButton fx:id="rbSpeedUnitMinutes" mnemonicParsing="false" text="%st.dlg.options.minutes_distance.text" toggleGroup="$tgSpeedView">
                                   <VBox.margin>
                                       <Insets left="24.0" />
                                   </VBox.margin>

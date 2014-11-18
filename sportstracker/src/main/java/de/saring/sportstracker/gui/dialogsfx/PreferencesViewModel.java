@@ -1,6 +1,7 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
 import de.saring.sportstracker.core.STOptions;
+import de.saring.util.unitcalc.FormatUtils;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -14,8 +15,13 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class PreferencesViewModel {
 
+    public final ObjectProperty<STOptions.View> initialView;
     public final ObjectProperty<STOptions.AutoCalculation> defaultAutoCalculation;
     public final BooleanProperty saveOnExit;
+
+    public final ObjectProperty<FormatUtils.UnitSystem> unitSystem;
+    public final ObjectProperty<FormatUtils.SpeedView> speedView;
+    public final BooleanProperty weekStartMonday;
 
     public final BooleanProperty listViewShowAvgHeartrate;
     public final BooleanProperty listViewShowAscent;
@@ -32,9 +38,13 @@ public class PreferencesViewModel {
      */
     public PreferencesViewModel(final STOptions options) {
 
-        // TODO add missing
+        this.initialView = new SimpleObjectProperty<>(options.getInitialView());
         this.defaultAutoCalculation = new SimpleObjectProperty<>(options.getDefaultAutoCalcuation());
         this.saveOnExit = new SimpleBooleanProperty(options.isSaveOnExit());
+
+        this.unitSystem = new SimpleObjectProperty<>(options.getUnitSystem());
+        this.speedView = new SimpleObjectProperty<>(options.getSpeedView());
+        this.weekStartMonday = new SimpleBooleanProperty(options.isWeekStartSunday());
 
         this.listViewShowAvgHeartrate = new SimpleBooleanProperty(options.isListViewShowAvgHeartrate());
         this.listViewShowAscent = new SimpleBooleanProperty(options.isListViewShowAscent());
@@ -46,15 +56,19 @@ public class PreferencesViewModel {
     }
 
     /**
-     * Creates a new STOptions object from the edited JavaFX properties.
+     * Stores the value of the edited JavaFX properties in the passed STOptions object.
      *
-     * @return STOptions
+     * @param options options object for storing
      */
-    public STOptions getOptions() {
-        final STOptions options = new STOptions();
-        // TODO add missing
+    public void storeInOptions(final STOptions options) {
+
+        options.setInitialView(initialView.get());
         options.setDefaultAutoCalcuation(defaultAutoCalculation.get());
         options.setSaveOnExit(saveOnExit.get());
+
+        options.setUnitSystem(unitSystem.get());
+        options.setSpeedView(speedView.get());
+        options.setWeekStartSunday(!weekStartMonday.get());
 
         options.setListViewShowAvgHeartrate(listViewShowAvgHeartrate.get());
         options.setListViewShowAscent(listViewShowAscent.get());
@@ -63,6 +77,5 @@ public class PreferencesViewModel {
         options.setListViewShowComment(listViewShowComment.get());
 
         options.setDisplaySecondDiagram(evDisplaySecondDiagram.get());
-        return options;
     }
 }

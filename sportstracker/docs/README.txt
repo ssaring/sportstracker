@@ -379,6 +379,8 @@ The SportsTracker project uses the following libraries:
       URL: http://www.thisisant.com/pages/products/fit-sdk
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: http://www.thisisant.com/pages/ant/fit-license
+  - jfx-testrunner 1.1 (https://github.com/sialcasa/jfx-testrunner)
+      License: Apache License v2.0
 
 All dependencies will be downloaded automatically by Maven. JFreeChart and the
 FIT library are missing in the Maven central repository, so I've created my own

@@ -1,9 +1,12 @@
 package de.saring.sportstracker.gui.dialogsfx;
 
+import de.saring.util.gui.javafx.BindingUtils;
+import de.saring.util.unitcalc.FormatUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Window;
 
 import javax.inject.Inject;
@@ -32,6 +35,8 @@ public class PreferencesDialogController extends AbstractDialogController {
     @FXML
     private RadioButton rbInitialViewExerciseList;
     @FXML
+    private ToggleGroup tgInitialView;
+    @FXML
     private ChoiceBox<STOptions.AutoCalculation> cbAutomaticCalculation;
     @FXML
     private CheckBox cbSaveOnExit;
@@ -42,9 +47,13 @@ public class PreferencesDialogController extends AbstractDialogController {
     @FXML
     private RadioButton rbUnitsEnglish;
     @FXML
+    private ToggleGroup tgUnitSystem;
+    @FXML
     private RadioButton rbSpeedUnitDistance;
     @FXML
     private RadioButton rbSpeedUnitMinutes;
+    @FXML
+    private ToggleGroup tgSpeedView;
     @FXML
     private RadioButton rbWeekStartMonday;
     @FXML
@@ -68,6 +77,7 @@ public class PreferencesDialogController extends AbstractDialogController {
 
     /** ViewModel of the edited options. */
     private PreferencesViewModel preferencesViewModel;
+
 
     /**
      * Standard c'tor for dependency injection.
@@ -97,12 +107,18 @@ public class PreferencesDialogController extends AbstractDialogController {
 
     @Override
     protected void setupDialogControls() {
-        setupChoiceBoxes();
+        setupSelectionControls();
 
         // setup binding between view model and the UI controls
         // (validation is not needed here)
+        BindingUtils.bindToggleGroupToProperty(tgInitialView, preferencesViewModel.initialView);
         cbAutomaticCalculation.valueProperty().bindBidirectional(preferencesViewModel.defaultAutoCalculation);
         cbSaveOnExit.selectedProperty().bindBidirectional(preferencesViewModel.saveOnExit);
+
+        BindingUtils.bindToggleGroupToProperty(tgUnitSystem, preferencesViewModel.unitSystem);
+        BindingUtils.bindToggleGroupToProperty(tgSpeedView, preferencesViewModel.speedView);
+        // TODO setup similar binding for Week start
+        rbWeekStartMonday.selectedProperty().bindBidirectional(preferencesViewModel.weekStartMonday);
 
         cbOptionalAvgHeartrate.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowAvgHeartrate);
         cbOptionalAscent.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowAscent);
@@ -117,13 +133,22 @@ public class PreferencesDialogController extends AbstractDialogController {
     protected boolean validateAndStore() {
 
         // store the new preferences, no further validation needed
-        final STOptions options = preferencesViewModel.getOptions();
-        // TODO document.setOptions(options);
+        preferencesViewModel.storeInOptions(document.getOptions());
         document.storeOptions();
         return true;
     }
 
-    private void setupChoiceBoxes() {
+    private void setupSelectionControls() {
+
+        // store selection objects as user data in radio buttons
+        rbInitialViewCalendar.setUserData(STOptions.View.Calendar);
+        rbInitialViewExerciseList.setUserData(STOptions.View.List);
+
+        rbUnitsMetric.setUserData(FormatUtils.UnitSystem.Metric);
+        rbUnitsEnglish.setUserData(FormatUtils.UnitSystem.English);
+
+        rbSpeedUnitDistance.setUserData(FormatUtils.SpeedView.DistancePerHour);
+        rbSpeedUnitMinutes.setUserData(FormatUtils.SpeedView.MinutesPerDistance);
 
         // TODO display readable and translated names for items
         Stream.of(STOptions.AutoCalculation.values()).forEach((autoCalculation) ->

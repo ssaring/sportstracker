@@ -6,6 +6,7 @@ JavaFX Migration:
   - FXML: Done
   - ViewModel: see TODOs, add unit tests
   - Controller: see TODOs
+  - remove Look&Feel option from STOptions
   - remove old Swing based Options Dialog and package dialogs
   - remove unused I18N resources
 - Overview Dialog: migration completed and tested, except:
