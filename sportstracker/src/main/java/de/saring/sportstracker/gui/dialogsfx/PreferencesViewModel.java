@@ -61,7 +61,7 @@ public class PreferencesViewModel {
         this.listViewShowAscent = new SimpleBooleanProperty(options.isListViewShowAscent());
         this.listViewShowEnergy = new SimpleBooleanProperty(options.isListViewShowEnergy());
         this.listViewShowEquipment = new SimpleBooleanProperty(options.isListViewShowEquipment());
-        this.listViewShowComment = new SimpleBooleanProperty(options.isDisplaySecondDiagram());
+        this.listViewShowComment = new SimpleBooleanProperty(options.isListViewShowComment());
 
         this.evDisplaySecondDiagram = new SimpleBooleanProperty(options.isDisplaySecondDiagram());
     }
