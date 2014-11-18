@@ -15,13 +15,24 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class PreferencesViewModel {
 
+    /**
+     * List of possible week start days.
+     */
+    public enum WeekStart {
+
+        /** Week starts at monday. */
+        MONDAY,
+        /** Week starts at sunday. */
+        SUNDAY
+    }
+    
     public final ObjectProperty<STOptions.View> initialView;
     public final ObjectProperty<STOptions.AutoCalculation> defaultAutoCalculation;
     public final BooleanProperty saveOnExit;
 
     public final ObjectProperty<FormatUtils.UnitSystem> unitSystem;
     public final ObjectProperty<FormatUtils.SpeedView> speedView;
-    public final BooleanProperty weekStartMonday;
+    public final ObjectProperty<WeekStart> weekStart;
 
     public final BooleanProperty listViewShowAvgHeartrate;
     public final BooleanProperty listViewShowAscent;
@@ -44,7 +55,7 @@ public class PreferencesViewModel {
 
         this.unitSystem = new SimpleObjectProperty<>(options.getUnitSystem());
         this.speedView = new SimpleObjectProperty<>(options.getSpeedView());
-        this.weekStartMonday = new SimpleBooleanProperty(options.isWeekStartSunday());
+        this.weekStart = new SimpleObjectProperty<>(options.isWeekStartSunday() ? WeekStart.SUNDAY : WeekStart.MONDAY);
 
         this.listViewShowAvgHeartrate = new SimpleBooleanProperty(options.isListViewShowAvgHeartrate());
         this.listViewShowAscent = new SimpleBooleanProperty(options.isListViewShowAscent());
@@ -68,7 +79,7 @@ public class PreferencesViewModel {
 
         options.setUnitSystem(unitSystem.get());
         options.setSpeedView(speedView.get());
-        options.setWeekStartSunday(!weekStartMonday.get());
+        options.setWeekStartSunday(weekStart.get() == WeekStart.SUNDAY);
 
         options.setListViewShowAvgHeartrate(listViewShowAvgHeartrate.get());
         options.setListViewShowAscent(listViewShowAscent.get());

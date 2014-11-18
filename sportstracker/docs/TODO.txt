@@ -4,7 +4,7 @@ SportsTracker-TODO
 JavaFX Migration:
 - Preferences Dialog:
   - FXML: Done
-  - ViewModel: see TODOs, add unit tests
+  - ViewModel: add unit tests
   - Controller: see TODOs
   - remove Look&Feel option from STOptions
   - remove old Swing based Options Dialog and package dialogs

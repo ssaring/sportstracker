@@ -29,7 +29,7 @@ public class PreferencesDialogController extends AbstractDialogController {
 
     private final STDocument document;
 
-    // tab "Main"
+    // tab pane "Main"
     @FXML
     private RadioButton rbInitialViewCalendar;
     @FXML
@@ -41,7 +41,7 @@ public class PreferencesDialogController extends AbstractDialogController {
     @FXML
     private CheckBox cbSaveOnExit;
 
-    // tab "Units"
+    // tab pane "Units"
     @FXML
     private RadioButton rbUnitsMetric;
     @FXML
@@ -58,8 +58,10 @@ public class PreferencesDialogController extends AbstractDialogController {
     private RadioButton rbWeekStartMonday;
     @FXML
     private RadioButton rbWeekStartSunday;
+    @FXML
+    private ToggleGroup tgWeekStart;
 
-    // tab "List View"
+    // tab pane "List View"
     @FXML
     private CheckBox cbOptionalAvgHeartrate;
     @FXML
@@ -71,7 +73,7 @@ public class PreferencesDialogController extends AbstractDialogController {
     @FXML
     private CheckBox cbOptionalComment;
 
-    // tab "ExerciseViewer"
+    // tab pane "ExerciseViewer"
     @FXML
     private CheckBox cbDiagramTwoGraphs;
 
@@ -117,8 +119,7 @@ public class PreferencesDialogController extends AbstractDialogController {
 
         BindingUtils.bindToggleGroupToProperty(tgUnitSystem, preferencesViewModel.unitSystem);
         BindingUtils.bindToggleGroupToProperty(tgSpeedView, preferencesViewModel.speedView);
-        // TODO setup similar binding for Week start
-        rbWeekStartMonday.selectedProperty().bindBidirectional(preferencesViewModel.weekStartMonday);
+        BindingUtils.bindToggleGroupToProperty(tgWeekStart, preferencesViewModel.weekStart);
 
         cbOptionalAvgHeartrate.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowAvgHeartrate);
         cbOptionalAscent.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowAscent);
@@ -149,6 +150,9 @@ public class PreferencesDialogController extends AbstractDialogController {
 
         rbSpeedUnitDistance.setUserData(FormatUtils.SpeedView.DistancePerHour);
         rbSpeedUnitMinutes.setUserData(FormatUtils.SpeedView.MinutesPerDistance);
+
+        rbWeekStartMonday.setUserData(PreferencesViewModel.WeekStart.MONDAY);
+        rbWeekStartSunday.setUserData(PreferencesViewModel.WeekStart.SUNDAY);
 
         // TODO display readable and translated names for items
         Stream.of(STOptions.AutoCalculation.values()).forEach((autoCalculation) ->
