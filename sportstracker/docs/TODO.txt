@@ -2,10 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- Preferences Dialog:
-  - FXML: Done
-  - Controller: Done
-  - ViewModel: add unit tests
 - Overview Dialog: migration completed and tested, except:
   - use JavaFX version of JFreeChart (see TODOs), not possible with version 1.0.19 yet
     (has a lot of problems: CSS errors, missing features, API will be changed,
