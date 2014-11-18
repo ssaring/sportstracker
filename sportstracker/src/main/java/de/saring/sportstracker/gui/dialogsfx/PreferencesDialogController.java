@@ -16,6 +16,7 @@ import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import javafx.util.StringConverter;
 
 import java.util.stream.Stream;
 
@@ -154,8 +155,30 @@ public class PreferencesDialogController extends AbstractDialogController {
         rbWeekStartMonday.setUserData(PreferencesViewModel.WeekStart.MONDAY);
         rbWeekStartSunday.setUserData(PreferencesViewModel.WeekStart.SUNDAY);
 
-        // TODO display readable and translated names for items
+        // fill autocalculation choice box, display localized names the enum items
         Stream.of(STOptions.AutoCalculation.values()).forEach((autoCalculation) ->
                 cbAutomaticCalculation.getItems().add(autoCalculation));
+
+        cbAutomaticCalculation.setConverter(new StringConverter<STOptions.AutoCalculation>() {
+
+            @Override
+            public String toString(final STOptions.AutoCalculation autoCalculation) {
+                switch (autoCalculation) {
+                    case Distance:
+                        return context.getFxResources().getString("st.dlg.options.distance.text");
+                    case AvgSpeed:
+                        return context.getFxResources().getString("st.dlg.options.avg_speed.text");
+                    case Duration:
+                        return context.getFxResources().getString("st.dlg.options.duration.text");
+                    default:
+                        return "";
+                }
+            }
+
+            @Override
+            public STOptions.AutoCalculation fromString(final String string) {
+                return null;
+            }
+        });
     }
 }
