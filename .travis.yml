@@ -1,5 +1,10 @@
 language: java
 
+# start X-server for GUI tests (xvfb)
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
 jdk:
     - oraclejdk8
 
