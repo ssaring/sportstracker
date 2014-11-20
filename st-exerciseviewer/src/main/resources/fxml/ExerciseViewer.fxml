@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.EVController">
+    <children>
+        <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="400.0" style="-fx-border-color: #c0c0c0;" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab fx:id="tabMain" text="%pv.view.main">
+                    <content>
+                    </content>
+                </Tab>
+                <Tab fx:id="tabOptional" text="%pv.view.optional">
+                    <content>
+                    </content>
+                </Tab>
+                <Tab fx:id="tabLaps" text="%pv.view.laps">
+                    <content>
+                    </content>
+                </Tab>
+                <Tab fx:id="tabSamples" text="%pv.view.samples">
+                    <content>
+                    </content>
+                </Tab>
+                <Tab fx:id="tabDiagram" text="%pv.view.diagram">
+                    <content>
+                    </content>
+                </Tab>
+                <Tab fx:id="tabTrack" text="%pv.view.track">
+                    <content>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <HBox alignment="CENTER_RIGHT">
+            <children>
+                <Button cancelButton="true" onAction="#onClose" text="%pv.view.close.Action.text">
+                    <padding>
+                        <Insets bottom="6.0" left="16.0" right="16.0" top="6.0" />
+                    </padding>
+                </Button>
+            </children>
+        </HBox>
+    </children>
+    <padding>
+        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+    </padding>
+</VBox>
