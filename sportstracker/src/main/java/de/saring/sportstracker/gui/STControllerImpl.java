@@ -236,11 +236,9 @@ public class STControllerImpl implements STController {
                     context.getPrimaryStage(), document.getOptions(), null);
             if (selectedFile != null) {
 
-                // start ExerciseViewer (on Swing UI thread)
-                SwingUtilities.invokeLater(() -> {
-                    EVMain pv = prExerciseViewer.get();
-                    pv.showExercise(selectedFile.getAbsolutePath(), document.getOptions(), false);
-                });
+                // start ExerciseViewer
+                prExerciseViewer.get().showExercise(selectedFile.getAbsolutePath(), document.getOptions(),
+                        context.getPrimaryStage(), false);
             }
         });
     }
@@ -454,8 +452,12 @@ public class STControllerImpl implements STController {
         // (special checks not needed here, done by the STView:updateExerciseActions() method)
         int exerciseID = view.getCurrentView().getSelectedExerciseIDs()[0];
         Exercise exercise = document.getExerciseList().getByID(exerciseID);
-        EVMain pv = prExerciseViewer.get();
-        pv.showExercise(exercise.getHrmFile(), document.getOptions(), false);
+
+        // TODO remove runLater() when main window uses JavaFX
+        Platform.runLater(() -> {
+            EVMain pv = prExerciseViewer.get();
+            pv.showExercise(exercise.getHrmFile(), document.getOptions(), context.getPrimaryStage(), false);
+        });
     }
 
     /**

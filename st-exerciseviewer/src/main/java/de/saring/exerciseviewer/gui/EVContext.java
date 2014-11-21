@@ -1,9 +1,11 @@
 package de.saring.exerciseviewer.gui;
 
+import de.saring.util.AppResources;
 import de.saring.util.ResourceReader;
 import de.saring.util.unitcalc.FormatUtils;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 import org.jdesktop.application.ApplicationContext;
 
 import javax.swing.*;
@@ -32,6 +34,13 @@ public interface EVContext {
      * @return the main frame of the application
      */
     JFrame getMainFrame();
+
+    /**
+     * Returns the primary stage (main window) of the JavaFX application.
+     *
+     * @return Stage
+     */
+    Stage getPrimaryStage();
 
     /**
      * Displays the specified dialog. This will be delegated to SingleFrameApplication.show(),
@@ -97,6 +106,13 @@ public interface EVContext {
      * @return the helper class for reading resources
      */
     ResourceReader getResReader();
+
+    /**
+     * Returns the provider of application text resources for the JavaFX based UI.
+     *
+     * @return AppResources
+     */
+    AppResources getFxResources();
 
     /**
      * Returns the format utils class for the current unit system.

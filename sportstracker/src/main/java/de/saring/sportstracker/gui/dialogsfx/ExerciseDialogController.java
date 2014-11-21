@@ -427,13 +427,7 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         final String hrmFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.getValue());
         if (hrmFile != null) {
-            final EVMain pv = prExerciseViewer.get();
-            // ExerciseViewer is Swing based => execute on Swing UI thread (will bring main window to front, hides this dialog)
-            executeOnSwingThread(() -> {
-                pv.showExercise(hrmFile, document.getOptions(), true);
-                // after ExerciseViewer is closed, bring this JavaFX dialog to front again
-                executeOnJavaFXThread(() -> context.getPrimaryStage().toFront());
-            });
+            prExerciseViewer.get().showExercise(hrmFile, document.getOptions(), getWindow(tfHrmFile), true);
         }
     }
 

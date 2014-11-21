@@ -4,8 +4,10 @@ SportsTracker-TODO
 JavaFX Migration:
 - ExerciseViewer:
   - FXML of main window: Done
-  - Controller: Todo
-  - Remove old Swing ExerciseViewer and unused methods in EVContext
+  - EVController: see TODOs
+  - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
+  - Bug: EV window is always placed in screen center, not placed at center of parent window
+  - Remove old Swing ExerciseViewer (EVView and old panel classes) and unused methods in EVContext
 - Overview Dialog: migration completed and tested, except:
   - use JavaFX version of JFreeChart (see TODOs), not possible with version 1.0.19 yet
     (has a lot of problems: CSS errors, missing features, API will be changed,
