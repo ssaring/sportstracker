@@ -4,6 +4,10 @@ SportsTracker-TODO
 JavaFX Migration:
 - ExerciseViewer:
   - FXML of main window: Done
+  - SamplePanelController:
+    - see TODOs
+    - complete layout
+    - compare with SamplePanelCode
   - EVController: see TODOs
   - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
   - Bug: EV window is always placed in screen center, not placed at center of parent window

@@ -2,6 +2,7 @@ package de.saring.exerciseviewer.gui;
 
 import java.io.IOException;
 
+import de.saring.exerciseviewer.gui.panelsfx.SamplePanelController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,8 +22,10 @@ public class EVController {
 
     private static final String FXML_FILE = "/fxml/ExerciseViewer.fxml";
 
-    private EVContext context;
-    private EVDocument document;
+    private final EVContext context;
+
+    // TODO add missing controllers
+    private final SamplePanelController samplePanelController;
 
     private Stage stage;
 
@@ -48,7 +51,8 @@ public class EVController {
      */
     public EVController(final EVContext context, final EVDocument document) {
         this.context = context;
-        this.document = document;
+
+        this.samplePanelController = new SamplePanelController(context, document);
     }
 
     /**
@@ -70,10 +74,10 @@ public class EVController {
             loader.setControllerFactory(controllerClass -> this);
             root = loader.load();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load the dialog FXML resource '" + FXML_FILE + "'!", e);
+            throw new RuntimeException("Failed to load the FXML resource '" + FXML_FILE + "'!", e);
         }
 
-        setupDialogControls();
+        setupPanels();
 
         // create scene and show dialog
         final Scene scene = new Scene(root);
@@ -82,8 +86,10 @@ public class EVController {
         stage.show();
     }
 
-    private void setupDialogControls() {
+    private void setupPanels() {
+
         // TODO
+        tabSamples.setContent(samplePanelController.loadAndSetupPanelContent());
     }
 
     /**

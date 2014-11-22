@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panelsfx.SamplePanelController">
+    <children>
+        <TableView fx:id="tvSamples">
+            <columns>
+                <TableColumn fx:id="tcTime" prefWidth="90" text="%pv.samples.time" />
+                <TableColumn fx:id="tcHeartrate" prefWidth="90" text="%pv.samples.heartrate" />
+                <TableColumn fx:id="tcAltitude" prefWidth="90" text="%pv.samples.altitude" />
+                <TableColumn fx:id="tcSpeed" prefWidth="90" text="%pv.samples.speed" />
+                <TableColumn fx:id="tcDistance" prefWidth="90" text="%pv.samples.distance" />
+                <TableColumn fx:id="tcCadence" prefWidth="90" text="%pv.samples.cadence" />
+                <TableColumn fx:id="tcTemperature" prefWidth="90" text="%pv.samples.temperature" />
+            </columns>
+        </TableView>
+    </children>
+    <padding>
+        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+    </padding>
+</VBox>
