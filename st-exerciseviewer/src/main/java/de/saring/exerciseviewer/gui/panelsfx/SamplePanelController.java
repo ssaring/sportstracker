@@ -3,12 +3,12 @@ package de.saring.exerciseviewer.gui.panelsfx;
 import java.io.IOException;
 
 import de.saring.exerciseviewer.data.RecordingMode;
+import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -96,71 +96,29 @@ public class SamplePanelController {
         tcCadence.setCellValueFactory(new PropertyValueFactory<>("cadence"));
         tcTemperature.setCellValueFactory(new PropertyValueFactory<>("temperature"));
 
-        // setup specific number cell factories
+        // setup custom number cell factories for all table columns
         final RecordingMode recordingMode = document.getExercise().getRecordingMode();
 
-        tcTime.setCellFactory(column -> new TableCell<ExerciseSample, Number>() {
-            @Override
-            protected void updateItem(final Number value, final boolean empty) {
-                super.updateItem(value, empty);
-                setText(empty || value == null ? null :
-                        context.getFormatUtils().seconds2TimeString(value.intValue() / 1000));
-            }
-        });
+        tcTime.setCellFactory(new FormattedNumberCellFactory<>(value ->
+            context.getFormatUtils().seconds2TimeString(value.intValue() / 1000)));
 
-        tcHeartrate.setCellFactory(column -> new TableCell<ExerciseSample, Number>() {
-            @Override
-            protected void updateItem(final Number value, final boolean empty) {
-                super.updateItem(value, empty);
-                setText(empty || value == null ? null :
-                        context.getFormatUtils().heartRateToString(value.intValue()));
-            }
-        });
+        tcHeartrate.setCellFactory(new FormattedNumberCellFactory<>(value ->
+                context.getFormatUtils().heartRateToString(value.intValue())));
 
-        tcAltitude.setCellFactory(column -> new TableCell<ExerciseSample, Number>() {
-            @Override
-            protected void updateItem(final Number value, final boolean empty) {
-                super.updateItem(value, empty);
-                setText(empty || value == null || !recordingMode.isAltitude() ? null :
-                        context.getFormatUtils().heightToString(value.intValue()));
-            }
-        });
+        tcAltitude.setCellFactory(new FormattedNumberCellFactory<>(value -> recordingMode.isAltitude() ?
+                context.getFormatUtils().heightToString(value.intValue()) : null));
 
-        tcSpeed.setCellFactory(column -> new TableCell<ExerciseSample, Number>() {
-            @Override
-            protected void updateItem(final Number value, final boolean empty) {
-                super.updateItem(value, empty);
-                setText(empty || value == null || !recordingMode.isSpeed() ? null :
-                        context.getFormatUtils().speedToString(value.floatValue(), 2));
-            }
-        });
+        tcSpeed.setCellFactory(new FormattedNumberCellFactory<>(value -> recordingMode.isSpeed() ?
+                context.getFormatUtils().speedToString(value.floatValue(), 2) : null));
 
-        tcDistance.setCellFactory(column -> new TableCell<ExerciseSample, Number>() {
-            @Override
-            protected void updateItem(final Number value, final boolean empty) {
-                super.updateItem(value, empty);
-                setText(empty || value == null || !recordingMode.isSpeed() ? null :
-                        context.getFormatUtils().distanceToString(value.doubleValue() / 1000d, 3));
-            }
-        });
+        tcDistance.setCellFactory(new FormattedNumberCellFactory<>(value -> recordingMode.isSpeed() ?
+                context.getFormatUtils().distanceToString(value.doubleValue() / 1000d, 3) : null));
 
-        tcCadence.setCellFactory(column -> new TableCell<ExerciseSample, Number>() {
-            @Override
-            protected void updateItem(final Number value, final boolean empty) {
-                super.updateItem(value, empty);
-                setText(empty || value == null || !recordingMode.isCadence() ? null :
-                        context.getFormatUtils().cadenceToString(value.intValue()));
-            }
-        });
+        tcCadence.setCellFactory(new FormattedNumberCellFactory<>(value -> recordingMode.isCadence() ?
+                context.getFormatUtils().cadenceToString(value.intValue()) : null));
 
-        tcTemperature.setCellFactory(column -> new TableCell<ExerciseSample, Number>() {
-            @Override
-            protected void updateItem(final Number value, final boolean empty) {
-                super.updateItem(value, empty);
-                setText(empty || value == null || !recordingMode.isTemperature() ? null :
-                        context.getFormatUtils().temperatureToString(value.shortValue()));
-            }
-        });
+        tcTemperature.setCellFactory(new FormattedNumberCellFactory<>(value -> recordingMode.isTemperature() ?
+                context.getFormatUtils().temperatureToString(value.shortValue()) : null));
 
         // set table data
         tvSamples.setPlaceholder(new Label(context.getFxResources().getString("pv.info.no_data_available")));
