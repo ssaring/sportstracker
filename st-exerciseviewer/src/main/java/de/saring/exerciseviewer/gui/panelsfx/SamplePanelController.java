@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -161,9 +162,10 @@ public class SamplePanelController {
             }
         });
 
-        // TODO null check?
-        // TODO special text when no samples available?
-        tvSamples.setItems(FXCollections.observableArrayList(document.getExercise().getSampleList()));
+        // set table data
+        tvSamples.setPlaceholder(new Label(context.getFxResources().getString("pv.info.no_data_available")));
+        final ExerciseSample[] samples = document.getExercise().getSampleList();
+        tvSamples.setItems(FXCollections.observableArrayList(samples == null ? new ExerciseSample[0] : samples));
 
         // default sort is the time column
         tvSamples.getSortOrder().add(tcTime);
