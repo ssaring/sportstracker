@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panelsfx.SamplePanelController">
+<VBox stylesheets="@SamplePanel.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panelsfx.SamplePanelController">
     <children>
         <TableView fx:id="tvSamples">
             <columns>

@@ -1,0 +1,4 @@
+/* table column header must not use bold font */
+.table-view .column-header .label {
+    -fx-font-weight: normal;
+}
