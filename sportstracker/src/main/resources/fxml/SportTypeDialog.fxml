@@ -7,11 +7,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="24.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.SportTypeDialogController">
+<VBox spacing="24.0" stylesheets="@SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.SportTypeDialogController">
    <children>
       <VBox spacing="12.0">
          <children>
-            <Label style="-fx-font-weight: bold;" text="%st.dlg.sporttype.properties.text" />
+            <Label styleClass="label-header" text="%st.dlg.sporttype.properties.text" />
             <GridPane hgap="12.0" vgap="12.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="NEVER" />
@@ -41,7 +41,7 @@
       </VBox>
       <VBox spacing="12.0">
          <children>
-            <Label style="-fx-font-weight: bold;" text="%st.dlg.sporttype.subtypes.text" />
+            <Label styleClass="label-header" text="%st.dlg.sporttype.subtypes.text" />
             <HBox spacing="16.0">
                <children>
                   <ListView fx:id="liSportSubtypes" prefHeight="140.0" prefWidth="340.0" />
@@ -61,7 +61,7 @@
       </VBox>
        <VBox spacing="12.0">
            <children>
-               <Label style="-fx-font-weight: bold;" text="%st.dlg.sporttype.equipment.text" />
+               <Label styleClass="label-header" text="%st.dlg.sporttype.equipment.text" />
                <HBox spacing="16.0">
                    <children>
                        <ListView fx:id="liEquipments" prefHeight="140.0" prefWidth="340.0" />

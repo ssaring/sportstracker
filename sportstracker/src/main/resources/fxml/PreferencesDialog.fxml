@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.PreferencesDialogController">
+<HBox stylesheets="@SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.PreferencesDialogController">
    <children>
       <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #c0c0c0;" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
         <tabs>
@@ -18,7 +18,7 @@
                    <children>
                         <VBox spacing="12.0">
                            <children>
-                              <Label style="-fx-font-weight: bold;" text="%st.dlg.options.initial_view.text" />
+                              <Label styleClass="label-header" text="%st.dlg.options.initial_view.text" />
                               <RadioButton fx:id="rbInitialViewCalendar" mnemonicParsing="false" selected="true" text="%st.dlg.options.calendar.text">
                                  <padding>
                                     <Insets left="24.0" />
@@ -36,7 +36,7 @@
                         </VBox>
                        <VBox spacing="12.0">
                            <children>
-                               <Label style="-fx-font-weight: bold;" text="%st.dlg.options.defaultautocalc.text" />
+                               <Label styleClass="label-header" text="%st.dlg.options.defaultautocalc.text" />
                               <ChoiceBox fx:id="cbAutomaticCalculation" maxWidth="1.7976931348623157E308">
                                  <opaqueInsets>
                                     <Insets />
@@ -49,7 +49,7 @@
                        </VBox>
                        <VBox spacing="12.0">
                            <children>
-                               <Label style="-fx-font-weight: bold;" text="%st.dlg.options.save_exit.text" />
+                               <Label styleClass="label-header" text="%st.dlg.options.save_exit.text" />
                               <CheckBox fx:id="cbSaveOnExit" mnemonicParsing="false" text="%st.dlg.options.autosave_exit.text">
                                  <VBox.margin>
                                     <Insets left="24.0" />
@@ -70,7 +70,7 @@
                   <children>
                       <VBox spacing="12.0">
                           <children>
-                              <Label style="-fx-font-weight: bold;" text="%st.dlg.options.unit_system.text" />
+                              <Label styleClass="label-header" text="%st.dlg.options.unit_system.text" />
                               <RadioButton fx:id="rbUnitsMetric" mnemonicParsing="false" selected="true" text="%st.dlg.options.metric.text">
                                   <padding>
                                       <Insets left="24.0" />
@@ -88,7 +88,7 @@
                       </VBox>
                       <VBox spacing="12.0">
                           <children>
-                              <Label style="-fx-font-weight: bold;" text="%st.dlg.options.speed_unit.text" />
+                              <Label styleClass="label-header" text="%st.dlg.options.speed_unit.text" />
                               <RadioButton fx:id="rbSpeedUnitDistance" mnemonicParsing="false" selected="true" text="%st.dlg.options.distance_hour.text">
                                   <padding>
                                       <Insets left="24.0" />
@@ -106,7 +106,7 @@
                       </VBox>
                       <VBox spacing="12.0">
                           <children>
-                              <Label style="-fx-font-weight: bold;" text="%st.dlg.options.week_start.text" />
+                              <Label styleClass="label-header" text="%st.dlg.options.week_start.text" />
                               <RadioButton fx:id="rbWeekStartMonday" mnemonicParsing="false" selected="true" text="%st.dlg.options.monday.text">
                                   <padding>
                                       <Insets left="24.0" />
@@ -135,7 +135,7 @@
                   <children>
                       <VBox spacing="12.0">
                           <children>
-                              <Label style="-fx-font-weight: bold;" text="%st.dlg.options.list_optional_fields.text" />
+                              <Label styleClass="label-header" text="%st.dlg.options.list_optional_fields.text" />
                               <VBox spacing="12.0">
                                  <children>
                                     <CheckBox fx:id="cbOptionalAvgHeartrate" mnemonicParsing="false" text="%st.dlg.options.show_avg_heartrate.text" />
@@ -163,7 +163,7 @@
                     <children>
                         <VBox spacing="12.0">
                             <children>
-                                <Label style="-fx-font-weight: bold;" text="%st.dlg.options.diagram.text" />
+                                <Label styleClass="label-header" text="%st.dlg.options.diagram.text" />
                                   <CheckBox fx:id="cbDiagramTwoGraphs" mnemonicParsing="false" text="%st.dlg.options.second_graph.text">
                                  <VBox.margin>
                                     <Insets left="24.0" />

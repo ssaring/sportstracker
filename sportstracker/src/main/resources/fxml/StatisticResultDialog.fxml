@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane hgap="24.0" vgap="24.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.StatisticResultDialogController">
+<GridPane stylesheets="@SportsTracker.css" hgap="24.0" vgap="24.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.StatisticResultDialogController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
         <ColumnConstraints hgrow="SOMETIMES" />
@@ -22,7 +22,7 @@
             <children>
                 <HBox alignment="CENTER_LEFT">
                     <children>
-                        <Label style="-fx-font-weight: bold;" text="%st.dlg.statistic_results.total.text" />
+                        <Label styleClass="label-header" text="%st.dlg.statistic_results.total.text" />
                     </children>
                 </HBox>
                 <GridPane hgap="16.0" vgap="10.0">
@@ -60,7 +60,7 @@
             <children>
                 <HBox alignment="CENTER_LEFT">
                     <children>
-                        <Label style="-fx-font-weight: bold;" text="%st.dlg.statistic_results.average.text" />
+                        <Label styleClass="label-header" text="%st.dlg.statistic_results.average.text" />
                     </children>
                 </HBox>
                 <GridPane hgap="16.0" vgap="10.0">
@@ -100,7 +100,7 @@
             <children>
                 <HBox alignment="CENTER_LEFT">
                     <children>
-                        <Label style="-fx-font-weight: bold;" text="%st.dlg.statistic_results.minimum.text" />
+                        <Label styleClass="label-header" text="%st.dlg.statistic_results.minimum.text" />
                     </children>
                 </HBox>
                 <GridPane hgap="16.0" vgap="10.0">
@@ -140,7 +140,7 @@
             <children>
                 <HBox alignment="CENTER_LEFT">
                     <children>
-                        <Label style="-fx-font-weight: bold;" text="%st.dlg.statistic_results.maximum.text" />
+                        <Label styleClass="label-header" text="%st.dlg.statistic_results.maximum.text" />
                     </children>
                 </HBox>
                 <GridPane hgap="16.0" vgap="10.0">

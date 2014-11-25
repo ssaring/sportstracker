@@ -8,11 +8,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.OverviewDialogController">
+<VBox spacing="16.0" stylesheets="@SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.OverviewDialogController">
    <children>
       <VBox spacing="12.0">
          <children>
-            <Label style="-fx-font-weight: bold;" text="%st.dlg.overview.time_range.text" />
+            <Label styleClass="label-header" text="%st.dlg.overview.time_range.text" />
             <HBox spacing="24.0">
                <children>
                   <ChoiceBox fx:id="cbTimeRange">
@@ -35,7 +35,7 @@
       </Pane>
       <VBox spacing="12.0">
          <children>
-            <Label style="-fx-font-weight: bold;" text="%st.dlg.overview.options.text" />
+            <Label styleClass="label-header" text="%st.dlg.overview.options.text" />
             <HBox fx:id="hBoxOptions" alignment="CENTER_LEFT" spacing="24.0">
                <padding>
                   <Insets left="24.0" />

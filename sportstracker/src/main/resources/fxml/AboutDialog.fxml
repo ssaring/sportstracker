@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.AboutDialogController">
+<VBox spacing="16.0" stylesheets="@SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.AboutDialogController">
    <children>
       <HBox spacing="16.0">
          <children>
@@ -23,8 +23,8 @@
                <children>
                   <HBox spacing="6.0">
                      <children>
-                         <Label style="-fx-font-weight: bold;" text="%application.title" />
-                         <Label style="-fx-font-weight: bold;" text="%application.version" />
+                         <Label styleClass="label-header" text="%application.title" />
+                         <Label styleClass="label-header" text="%application.version" />
                      </children>
                   </HBox>
                   <Label maxWidth="400.0" snapToPixel="false" text="%st.dlg.about.description.text" wrapText="true" />
