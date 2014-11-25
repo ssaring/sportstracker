@@ -8,9 +8,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.ExerciseDialogController">
+<HBox stylesheets="@SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.ExerciseDialogController">
    <children>
-      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #c0c0c0;" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
+      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="tabpane-bordered" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
         <tabs>
           <Tab text="%st.dlg.exercise.main.title">
             <content>

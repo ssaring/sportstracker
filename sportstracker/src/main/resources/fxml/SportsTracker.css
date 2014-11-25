@@ -8,3 +8,8 @@
 .label-header {
     -fx-font-weight: bold;
 }
+
+/* bordered tab pane (otherwise frame is not visible) */
+.tabpane-bordered {
+    -fx-border-color: #c0c0c0;
+}

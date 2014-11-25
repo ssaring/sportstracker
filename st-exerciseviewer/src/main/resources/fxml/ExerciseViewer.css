@@ -9,6 +9,11 @@
     -fx-font-weight: bold;
 }
 
+/* bordered tab pane (otherwise frame is not visible) */
+.tabpane-bordered {
+    -fx-border-color: #c0c0c0;
+}
+
 /* table column header must not use bold font */
 .table-view .column-header .label {
     -fx-font-weight: normal;
