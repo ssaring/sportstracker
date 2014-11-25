@@ -1,0 +1,15 @@
+/********************************************
+ *                                          *
+ *   ExerciseViewer CSS definitions.        *
+ *                                          *
+ ********************************************/
+
+/* bold label for section headers */
+.label-header {
+    -fx-font-weight: bold;
+}
+
+/* table column header must not use bold font */
+.table-view .column-header .label {
+    -fx-font-weight: normal;
+}
