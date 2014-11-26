@@ -2,6 +2,7 @@ package de.saring.exerciseviewer.gui;
 
 import java.io.IOException;
 
+import de.saring.exerciseviewer.gui.panelsfx.LapPanelController;
 import de.saring.exerciseviewer.gui.panelsfx.SamplePanelController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +26,7 @@ public class EVController {
     private final EVContext context;
 
     // TODO add missing controllers
+    private final LapPanelController lapPanelController;
     private final SamplePanelController samplePanelController;
 
     private Stage stage;
@@ -52,6 +54,7 @@ public class EVController {
     public EVController(final EVContext context, final EVDocument document) {
         this.context = context;
 
+        this.lapPanelController = new LapPanelController(context, document);
         this.samplePanelController = new SamplePanelController(context, document);
     }
 
@@ -89,6 +92,7 @@ public class EVController {
     private void setupPanels() {
 
         // TODO
+        tabLaps.setContent(lapPanelController.loadAndSetupPanelContent());
         tabSamples.setContent(samplePanelController.loadAndSetupPanelContent());
     }
 
