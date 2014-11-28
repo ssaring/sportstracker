@@ -8,8 +8,9 @@ JavaFX Migration:
   - Optional Panel: TODO
   - Laps Panel:
     - FXML: Done
+    - Controller: completed
+      - test, compare with Swing version and test different format options
       - define proper column width
-    - Controller: see TODOs
   - Sample Panel: Done & tested
   - Diagram Panel: TODO
   - Track Panel: TODO
