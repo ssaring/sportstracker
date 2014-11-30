@@ -11,21 +11,21 @@
 <VBox spacing="12.0" stylesheets="@ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panelsfx.LapPanelController">
     <children>
       <Label styleClass="label-header" text="%pv.laps.recorded_laps.text" />
-        <TableView fx:id="tvLaps" prefWidth="200.0">
+        <TableView fx:id="tvLaps" prefWidth="400.0">
             <columns>
-                <TableColumn fx:id="tcLap" prefWidth="90" text="%pv.laps.lap" />
-                <TableColumn fx:id="tcLapTime" prefWidth="90" text="%pv.laps.lap_time" />
-                <TableColumn fx:id="tcSplitTime" prefWidth="90" text="%pv.laps.split_time" />
-                <TableColumn fx:id="tcHeartrate" prefWidth="90" text="%pv.laps.heartrate" />
-                <TableColumn fx:id="tcAvgHeartrate" prefWidth="90" text="%pv.laps.avg_heartrate" />
-                <TableColumn fx:id="tcMaxHeartrate" prefWidth="90" text="%pv.laps.max_heartrate" />
-                <TableColumn fx:id="tcEndSpeed" prefWidth="90" text="%pv.laps.end_speed" />
-                <TableColumn fx:id="tcAvgSpeed" prefWidth="90" text="%pv.laps.avg_speed" />
-                <TableColumn fx:id="tcDistance" prefWidth="90" text="%pv.laps.distance" />
-                <TableColumn fx:id="tcCadence" prefWidth="90" text="%pv.laps.cadence" />
-                <TableColumn fx:id="tcAltitude" prefWidth="90" text="%pv.laps.altitude" />
-                <TableColumn fx:id="tcAscent" prefWidth="90" text="%pv.laps.ascent" />
-                <TableColumn fx:id="tcTemperature" prefWidth="90" text="%pv.laps.temperature" />
+                <TableColumn fx:id="tcLap" prefWidth="60.0" text="%pv.laps.lap" />
+                <TableColumn fx:id="tcLapTime" prefWidth="90.0" text="%pv.laps.lap_time" />
+                <TableColumn fx:id="tcSplitTime" prefWidth="90.0" text="%pv.laps.split_time" />
+                <TableColumn fx:id="tcHeartrate" text="%pv.laps.heartrate" />
+                <TableColumn fx:id="tcAvgHeartrate" text="%pv.laps.avg_heartrate" />
+                <TableColumn fx:id="tcMaxHeartrate" text="%pv.laps.max_heartrate" />
+                <TableColumn fx:id="tcEndSpeed" prefWidth="100.0" text="%pv.laps.end_speed" />
+                <TableColumn fx:id="tcAvgSpeed" prefWidth="100.0" text="%pv.laps.avg_speed" />
+                <TableColumn fx:id="tcDistance" prefWidth="100.0" text="%pv.laps.distance" />
+                <TableColumn fx:id="tcCadence" prefWidth="90.0" text="%pv.laps.cadence" />
+                <TableColumn fx:id="tcAltitude" prefWidth="90.0" text="%pv.laps.altitude" />
+                <TableColumn fx:id="tcAscent" prefWidth="90.0" text="%pv.laps.ascent" />
+                <TableColumn fx:id="tcTemperature" prefWidth="90.0" text="%pv.laps.temperature" />
             </columns>
         </TableView>
     </children>

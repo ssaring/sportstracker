@@ -10,7 +10,6 @@ JavaFX Migration:
     - FXML: Done
     - Controller: completed
       - test, compare with Swing version and test different format options
-      - define proper column width
   - Sample Panel: Done & tested
   - Diagram Panel: TODO
   - Track Panel: TODO
