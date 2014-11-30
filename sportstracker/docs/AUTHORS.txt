@@ -36,7 +36,7 @@ Translators (alphabetical order):
   Dutch:   Eric Spierings <ericspierings@netscape.net>
   French:  Nicolas Ollivier <nicollivier@gmail.com>
   German:  Stefan Saring <projects@saring.de>
+  Korean:  Tae Young Ko <oscetic@gmail.com>
   Polish:  Zbigniew Ogledzki <zgibek@gazeta.pl>
   Spanish: Asier Urio Larrea <asieriko@gmail.com>,
            Luis Llorente Campo <luisllorente@luisllorente.com>
-

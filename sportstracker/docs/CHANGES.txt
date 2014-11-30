@@ -27,6 +27,8 @@ v7.0.0:
       - Exercise dialog
       - HRM File Open dialog
       - Overview dialog
+ Translations:
+  - added korean translation provided by Tae Young Ko <oscetic@gmail.com>
 
 v6.0.0:
  SportsTracker changes:
