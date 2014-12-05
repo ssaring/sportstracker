@@ -5,8 +5,8 @@ JavaFX Migration:
 - ExerciseViewer:
   - Main EV window: Done (FXML, EVController, EVMain)
   - Main Panel:
-    - FXML: almost done (check place right from GridPanes, label column width)
-    - Controller: TODO
+    - FXML: Done
+    - Controller: see TODOs
   - Optional Panel: TODO
   - Laps Panel: Done & tested
   - Sample Panel: Done & tested

@@ -10,7 +10,7 @@
 
 <VBox spacing="20.0" stylesheets="@ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.EVController">
     <children>
-        <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="400.0" styleClass="tabpane-bordered" tabClosingPolicy="UNAVAILABLE">
+        <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="400.0" styleClass="tabpane-bordered" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
             <tabs>
                 <Tab fx:id="tabMain" text="%pv.view.main">
                     <content>

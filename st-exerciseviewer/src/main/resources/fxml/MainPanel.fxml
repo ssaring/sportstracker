@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane stylesheets="@ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panelsfx.MainPanelController">
+<GridPane hgap="48.0" stylesheets="@ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panelsfx.MainPanelController">
     <columnConstraints>
         <ColumnConstraints percentWidth="50.0" />
         <ColumnConstraints percentWidth="50.0" />
@@ -26,7 +26,7 @@
                         <GridPane hgap="16.0" vgap="10.0">
                             <columnConstraints>
                                 <ColumnConstraints />
-                                <ColumnConstraints minWidth="160.0" />
+                                <ColumnConstraints />
                             </columnConstraints>
                             <children>
                                 <Label text="%pv.main.type.text" />
@@ -63,7 +63,7 @@
                         <GridPane hgap="16.0" vgap="10.0">
                             <columnConstraints>
                                 <ColumnConstraints />
-                                <ColumnConstraints minWidth="160.0" />
+                                <ColumnConstraints />
                             </columnConstraints>
                             <children>
                                 <Label text="%pv.main.average.text" />
@@ -91,7 +91,7 @@
                         <GridPane hgap="16.0" vgap="10.0">
                             <columnConstraints>
                                 <ColumnConstraints />
-                                <ColumnConstraints minWidth="160.0" />
+                                <ColumnConstraints />
                             </columnConstraints>
                             <children>
                                 <Label text="%pv.main.range.text" />
@@ -117,8 +117,85 @@
                 </VBox>
             </children>
         </VBox>
+        <VBox spacing="32.0" GridPane.columnIndex="1">
+            <children>
+                <VBox spacing="16.0">
+                    <children>
+                        <HBox alignment="CENTER_LEFT">
+                            <children>
+                                <Label styleClass="label-header" text="%pv.main.recording_mode.text" />
+                            </children>
+                        </HBox>
+                        <GridPane hgap="16.0" vgap="10.0">
+                            <columnConstraints>
+                                <ColumnConstraints />
+                                <ColumnConstraints />
+                            </columnConstraints>
+                            <children>
+                                <Label text="%pv.main.speed.text" />
+                                <Label fx:id="laModeSpeedValue" text="%common.disabled" GridPane.columnIndex="1" />
+                                <Label text="%pv.main.altitude.text" GridPane.rowIndex="1" />
+                                <Label fx:id="laModeAltitudeValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label text="%pv.main.cadence.text" GridPane.rowIndex="2" />
+                                <Label fx:id="laModeCadendeValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label text="%pv.main.power.text" GridPane.rowIndex="3" />
+                                <Label fx:id="laModePowerValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                            </children>
+                            <VBox.margin>
+                                <Insets left="24.0" />
+                            </VBox.margin>
+                            <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                            </rowConstraints>
+                        </GridPane>
+                    </children>
+                </VBox>
+                <VBox spacing="16.0">
+                    <children>
+                        <HBox alignment="CENTER_LEFT">
+                            <children>
+                                <Label styleClass="label-header" text="%pv.main.statistics.text" />
+                            </children>
+                        </HBox>
+                        <GridPane hgap="16.0" vgap="10.0">
+                            <columnConstraints>
+                                <ColumnConstraints />
+                                <ColumnConstraints />
+                            </columnConstraints>
+                            <children>
+                                <Label text="%pv.main.total_exercise_time.text" />
+                                <Label fx:id="laTotalExerciseTimeValue" text="%common.n_a_" GridPane.columnIndex="1" />
+                                <Label text="%pv.main.total_riding_time.text" GridPane.rowIndex="1" />
+                                <Label fx:id="laTotalRidingTimeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label text="%pv.main.total_energy.text" GridPane.rowIndex="2" />
+                                <Label fx:id="laTotalEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label text="%pv.main.odometer.text" GridPane.rowIndex="3" />
+                                <Label fx:id="laOdometerValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                            </children>
+                            <VBox.margin>
+                                <Insets left="24.0" />
+                            </VBox.margin>
+                            <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                            </rowConstraints>
+                        </GridPane>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
     </children>
    <rowConstraints>
       <RowConstraints />
    </rowConstraints>
+   <padding>
+      <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+   </padding>
 </GridPane>
