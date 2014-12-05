@@ -95,6 +95,10 @@ Mac OS X integration:
 General TODOs:
 --------------
 
+- Use JPA for database persistence instead of XML files
+  - Derby or SQLite are interesting options, SQLite links:
+    - https://bitbucket.org/xerial/sqlite-jdbc/overview  (mature JDBC driver)
+    - https://github.com/sqlitebrowser/sqlitebrowser  (SQLite database client)
 - Import feature for devices connected via USB
   - New Tab in Options dialog with these settings:
     - Device directory/drive
