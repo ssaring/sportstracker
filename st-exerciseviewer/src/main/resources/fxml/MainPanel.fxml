@@ -95,7 +95,7 @@
                             </columnConstraints>
                             <children>
                                 <Label text="%pv.main.range.text" />
-                                <ChoiceBox fx:id="cbHeartrateRanges" prefWidth="100.0" GridPane.columnIndex="1" />
+                                <ChoiceBox fx:id="cbHeartrateRanges" prefWidth="140.0" GridPane.columnIndex="1" />
                                 <Label text="%pv.main.time_below.text" GridPane.rowIndex="1" />
                                 <Label fx:id="laTimeBelowValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label text="%pv.main.time_within.text" GridPane.rowIndex="2" />

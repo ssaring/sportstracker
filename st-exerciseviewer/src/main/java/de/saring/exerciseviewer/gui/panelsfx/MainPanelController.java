@@ -1,23 +1,19 @@
 package de.saring.exerciseviewer.gui.panelsfx;
 
-import de.saring.util.unitcalc.FormatUtils;
-import javafx.collections.FXCollections;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import de.saring.exerciseviewer.data.EVExercise;
-import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.data.HeartRateLimit;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.exerciseviewer.gui.EVDocument;
-import de.saring.util.gui.javafx.FormattedNumberCellFactory;
-import de.saring.util.gui.javafx.NumberCellFactory;
-
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+import de.saring.util.unitcalc.FormatUtils;
+import javafx.util.StringConverter;
 
 /**
  * Controller (MVC) class of the "Main" panel, which displays all the main exercise data.
@@ -42,8 +38,8 @@ public class MainPanelController extends AbstractPanelController {
     @FXML
     private Label laHeartrateMaxValue;
 
-    // TODO @FXML
-    // private ChoiceBox<?> cbHeartrateRanges;
+    @FXML
+    private ChoiceBox<HeartRateLimit> cbHeartrateRanges;
     @FXML
     private Label laTimeBelowValue;
     @FXML
@@ -69,7 +65,6 @@ public class MainPanelController extends AbstractPanelController {
     @FXML
     private Label laOdometerValue;
 
-    
     /**
      * Standard c'tor for dependency injection.
      *
@@ -87,10 +82,8 @@ public class MainPanelController extends AbstractPanelController {
 
     @Override
     protected void setupPanel() {
-
         showExerciseData();
-
-        // TODO fillHeartRateRanges();
+        setupHeartrateRangeSelection();
     }
 
     private void showExerciseData() {
@@ -154,6 +147,61 @@ public class MainPanelController extends AbstractPanelController {
         if (exercise.getOdometer() != 0) {
             laOdometerValue.setText(formatUtils.distanceToString(exercise.getOdometer(), 2));
         }
+    }
+
+    /**
+     * Fills the heartrate range selection choicebox with the ranges stored in the exercise and selects
+     * the first one. When no ranges are available, the selection will be disabled.<br/>
+     */
+    private void setupHeartrateRangeSelection() {
+
+        cbHeartrateRanges.addEventHandler(ActionEvent.ACTION, event -> updateHeartRateRangeTimes());
+
+        cbHeartrateRanges.setConverter(new StringConverter<HeartRateLimit>() {
+            @Override
+            public String toString(final HeartRateLimit limit) {
+                final String unitName = limit.isAbsoluteRange() ? "bpm" : "%";
+                return "" + limit.getLowerHeartRate() + " - " + limit.getUpperHeartRate() + " " + unitName;
+            }
+
+            @Override
+            public HeartRateLimit fromString(String string) {
+                throw new UnsupportedOperationException();
+            }
+        });
+
+        final EVExercise exercise = getDocument().getExercise();
+        if (exercise.getHeartRateLimits() != null && exercise.getHeartRateLimits().length > 0) {
+            cbHeartrateRanges.getItems().addAll(exercise.getHeartRateLimits());
+            cbHeartrateRanges.getSelectionModel().select(0);
+        } else {
+            cbHeartrateRanges.setDisable(true);
+        }
+    }
+
+    /**
+     * Updates the heartrate time value labels with the values of the current selected range.
+     */
+    private void updateHeartRateRangeTimes() {
+
+        final EVExercise exercise = getDocument().getExercise();
+        final FormatUtils formatUtils = getContext().getFormatUtils();
+        final HeartRateLimit limit = cbHeartrateRanges.getValue();
+
+        // calculate percentages of times below, within and above
+        int percentsBelow = 0, percentsWithin = 0, percentsAbove = 0;
+        if (exercise.getDuration() > 0) {
+            percentsBelow = (int) Math.round(limit.getTimeBelow() / (double) exercise.getDuration() * 10 * 100);
+            percentsWithin = (int) Math.round(limit.getTimeWithin() / (double) exercise.getDuration() * 10 * 100);
+            percentsAbove = (int) Math.round(limit.getTimeAbove() / (double) exercise.getDuration() * 10 * 100);
+        }
+
+        laTimeBelowValue.setText(formatUtils.seconds2TimeString(limit.getTimeBelow()) + "   (" + percentsBelow + " %)");
+        laTimeWithinValue.setText(formatUtils.seconds2TimeString(limit.getTimeWithin()) + "   (" + percentsWithin + " %)");
+        laTimeAboveValue.setText(formatUtils.seconds2TimeString(limit.getTimeAbove()) + "   (" + percentsAbove + " %)");
+
+        // TODO update heartrate range in diagram
+        // diagramPanel.displayDiagramForHeartrateRange(index);
     }
 
     private String boolean2EnabledString(final boolean enabled) {

@@ -6,7 +6,9 @@ JavaFX Migration:
   - Main EV window: Done (FXML, EVController, EVMain)
   - Main Panel:
     - FXML: Done
-    - Controller: see TODOs
+    - Controller:
+      - implementation done, test!
+      - see TODO, when DiagramPanel is completed
   - Optional Panel: TODO
   - Laps Panel: Done & tested
   - Sample Panel: Done & tested
