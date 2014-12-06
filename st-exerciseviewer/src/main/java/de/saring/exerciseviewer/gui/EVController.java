@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import de.saring.exerciseviewer.gui.panelsfx.LapPanelController;
 import de.saring.exerciseviewer.gui.panelsfx.MainPanelController;
+import de.saring.exerciseviewer.gui.panelsfx.OptionalPanelController;
 import de.saring.exerciseviewer.gui.panelsfx.SamplePanelController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +29,7 @@ public class EVController {
 
     // TODO add missing controllers
     private final MainPanelController mainPanelController;
+    private final OptionalPanelController optionalPanelController;
     private final LapPanelController lapPanelController;
     private final SamplePanelController samplePanelController;
 
@@ -57,6 +59,7 @@ public class EVController {
         this.context = context;
 
         this.mainPanelController = new MainPanelController(context, document);
+        this.optionalPanelController = new OptionalPanelController(context, document);
         this.lapPanelController = new LapPanelController(context, document);
         this.samplePanelController = new SamplePanelController(context, document);
     }
@@ -96,6 +99,7 @@ public class EVController {
 
         // TODO
         tabMain.setContent(mainPanelController.loadAndSetupPanelContent());
+        tabOptional.setContent(optionalPanelController.loadAndSetupPanelContent());
         tabLaps.setContent(lapPanelController.loadAndSetupPanelContent());
         tabSamples.setContent(samplePanelController.loadAndSetupPanelContent());
     }

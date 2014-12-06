@@ -4,12 +4,9 @@ SportsTracker-TODO
 JavaFX Migration:
 - ExerciseViewer:
   - Main EV window: Done (FXML, EVController, EVMain)
-  - Main Panel:
-    - FXML: Done
-    - Controller:
-      - implementation done, test!
-      - see TODO, when DiagramPanel is completed
-  - Optional Panel: TODO
+  - Main Panel: Done, needs to be tested!
+    - see TODO, when DiagramPanel is completed
+  - Optional Panel: Done, needs to be tested!
   - Laps Panel: Done & tested
   - Sample Panel: Done & tested
   - Diagram Panel: TODO
