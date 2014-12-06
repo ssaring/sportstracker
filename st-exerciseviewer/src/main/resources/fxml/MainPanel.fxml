@@ -14,7 +14,7 @@
         <ColumnConstraints percentWidth="50.0" />
     </columnConstraints>
     <children>
-        <VBox spacing="32.0">
+        <VBox spacing="28.0">
             <children>
                 <VBox spacing="16.0">
                     <children>
@@ -117,7 +117,7 @@
                 </VBox>
             </children>
         </VBox>
-        <VBox spacing="32.0" GridPane.columnIndex="1">
+        <VBox spacing="28.0" GridPane.columnIndex="1">
             <children>
                 <VBox spacing="16.0">
                     <children>
