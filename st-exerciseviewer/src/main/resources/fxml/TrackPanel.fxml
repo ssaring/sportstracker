@@ -15,6 +15,6 @@
         <SwingNode fx:id="snMapViewer" />
     </children>
    <padding>
-      <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
    </padding>
 </StackPane>

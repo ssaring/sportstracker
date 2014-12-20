@@ -10,7 +10,7 @@ JavaFX Migration:
   - Laps Panel: Done & tested
   - Sample Panel: Done & tested
   - Diagram Panel: TODO
-  - Track Panel: TODO
+  - Track Panel: Done & tested
   - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
   - Bug: EV window is always placed in screen center, not placed at center of parent window
   - Remove old Swing ExerciseViewer (EVView and old panel classes) and unused methods in EVContext
@@ -47,6 +47,7 @@ JavaFX Migration:
 - Use Maven JavaFX Plugin 8.1, see details in
   http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
 - SportType: use JavaFX Color object when migration of main ST window completed
+- Exercise Viewer: use a JavaFX based map viewer, currently it's the Swing based JXMapKit
 - Use Dialogs, Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
   => will be introduced in Java 8u40 (Dec. 2014)
 - JavaFX Bug RT-38644: https://javafx-jira.kenai.com/browse/RT-38644 (created)
