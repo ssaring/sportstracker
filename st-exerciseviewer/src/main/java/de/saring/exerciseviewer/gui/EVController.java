@@ -6,6 +6,7 @@ import de.saring.exerciseviewer.gui.panelsfx.LapPanelController;
 import de.saring.exerciseviewer.gui.panelsfx.MainPanelController;
 import de.saring.exerciseviewer.gui.panelsfx.OptionalPanelController;
 import de.saring.exerciseviewer.gui.panelsfx.SamplePanelController;
+import de.saring.exerciseviewer.gui.panelsfx.TrackPanelController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +33,7 @@ public class EVController {
     private final OptionalPanelController optionalPanelController;
     private final LapPanelController lapPanelController;
     private final SamplePanelController samplePanelController;
+    private final TrackPanelController trackPanelController;
 
     private Stage stage;
 
@@ -62,6 +64,7 @@ public class EVController {
         this.optionalPanelController = new OptionalPanelController(context, document);
         this.lapPanelController = new LapPanelController(context, document);
         this.samplePanelController = new SamplePanelController(context, document);
+        this.trackPanelController = new TrackPanelController(context, document);
     }
 
     /**
@@ -102,6 +105,7 @@ public class EVController {
         tabOptional.setContent(optionalPanelController.loadAndSetupPanelContent());
         tabLaps.setContent(lapPanelController.loadAndSetupPanelContent());
         tabSamples.setContent(samplePanelController.loadAndSetupPanelContent());
+        tabTrack.setContent(trackPanelController.loadAndSetupPanelContent());
     }
 
     /**
