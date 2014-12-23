@@ -42,9 +42,27 @@ public class DiagramPanelController extends AbstractPanelController {
     }
 
     /**
-     * The list of possible value types to be shown on the diagram axes.
+     * The list of possible value types to be shown on the diagram axes. This enum also provides
+     * the keys of the localized displayed enum names.
      */
     private enum AxisType {
-        Nothing, Heartrate, Altitude, Speed, Cadence, Temperature, Time, Distance;
+        NOTHING("pv.diagram.axis.nothing"),
+        HEARTRATE("pv.diagram.axis.heartrate"),
+        ALTITUDE("pv.diagram.axis.altitude"),
+        SPEED("pv.diagram.axis.speed"),
+        CADENCE("pv.diagram.axis.cadence"),
+        TEMPERATURE("pv.diagram.axis.temperature"),
+        TIME("pv.diagram.axis.time"),
+        DISTANCE("pv.diagram.axis.distance");
+
+        private String resourceKey;
+
+        private AxisType(final String resourceKey) {
+            this.resourceKey = resourceKey;
+        }
+
+        public String getResourceKey() {
+            return resourceKey;
+        }
     }
 }
