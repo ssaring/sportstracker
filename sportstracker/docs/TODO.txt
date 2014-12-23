@@ -11,6 +11,7 @@ JavaFX Migration:
   - Sample Panel: Done & tested
   - Diagram Panel: TODO
   - Track Panel: Done & tested
+    - Bug: on Windows the map does not zooms to the track initially (works on OS X)
   - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
   - Bug: EV window is always placed in screen center, not placed at center of parent window
   - Remove old Swing ExerciseViewer (EVView and old panel classes) and unused methods in EVContext
