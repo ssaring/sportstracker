@@ -113,8 +113,6 @@ public class TrackPanelController extends AbstractPanelController {
         if (!showTrackExecuted) {
             showTrackExecuted = true;
 
-            System.out.println("Init!");
-
             EVExercise exercise = getDocument().getExercise();
             if (exercise.getRecordingMode().isLocation()) {
 
