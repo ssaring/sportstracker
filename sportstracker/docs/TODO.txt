@@ -9,7 +9,9 @@ JavaFX Migration:
   - Optional Panel: Done & tested
   - Laps Panel: Done & tested
   - Sample Panel: Done & tested
-  - Diagram Panel: TODO
+  - Diagram Panel:
+    - FXML: Done
+    - Controller: see TODOs
   - Track Panel: Done & tested
   - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
   - Bug: EV window is always placed in screen center, not placed at center of parent window

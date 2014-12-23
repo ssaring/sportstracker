@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import de.saring.exerciseviewer.gui.panelsfx.DiagramPanelController;
 import de.saring.exerciseviewer.gui.panelsfx.LapPanelController;
 import de.saring.exerciseviewer.gui.panelsfx.MainPanelController;
 import de.saring.exerciseviewer.gui.panelsfx.OptionalPanelController;
@@ -29,11 +30,11 @@ public class EVController {
 
     private final EVContext context;
 
-    // TODO add missing controllers
     private final MainPanelController mainPanelController;
     private final OptionalPanelController optionalPanelController;
     private final LapPanelController lapPanelController;
     private final SamplePanelController samplePanelController;
+    private final DiagramPanelController diagramPanelController;
     private final TrackPanelController trackPanelController;
 
     private Stage stage;
@@ -64,6 +65,7 @@ public class EVController {
         this.optionalPanelController = new OptionalPanelController(context, document);
         this.lapPanelController = new LapPanelController(context, document);
         this.samplePanelController = new SamplePanelController(context, document);
+        this.diagramPanelController = new DiagramPanelController(context, document);
         this.trackPanelController = new TrackPanelController(context, document);
     }
 
@@ -100,11 +102,11 @@ public class EVController {
 
     private void setupPanels() {
 
-        // TODO
         tabMain.setContent(mainPanelController.loadAndSetupPanelContent());
         tabOptional.setContent(optionalPanelController.loadAndSetupPanelContent());
         tabLaps.setContent(lapPanelController.loadAndSetupPanelContent());
         tabSamples.setContent(samplePanelController.loadAndSetupPanelContent());
+        tabDiagram.setContent(diagramPanelController.loadAndSetupPanelContent());
         tabTrack.setContent(trackPanelController.loadAndSetupPanelContent());
 
         // display exercise track not before the user wants to see it (prevent long startup delays)
