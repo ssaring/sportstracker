@@ -17,10 +17,10 @@ import java.util.List;
 
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 
 import javax.swing.SwingUtilities;
 
-import javafx.geometry.Bounds;
 import org.jdesktop.swingx.JXMapKit;
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
@@ -57,6 +57,9 @@ public class TrackPanelController extends AbstractPanelController {
 
     private JXMapKit mapKit;
 
+    /** Flag whether the exercise track has already been shown. */
+    private boolean showTrackExecuted = false;
+
     /**
      * Standard c'tor for dependency injection.
      *
@@ -74,22 +77,15 @@ public class TrackPanelController extends AbstractPanelController {
 
     @Override
     protected void setupPanel() {
-        displayTrack();
-    }
 
-    /**
-     * Shows the exercise track in the map viewer (if track data is available).
-     */
-    private void displayTrack() {
+        // setup the map viewer (if track data is available).
         final EVExercise exercise = getDocument().getExercise();
-
         if (exercise.getRecordingMode().isLocation()) {
             SwingUtilities.invokeLater(() -> {
                 setupMapViewer();
-                showTrack(exercise);
             });
         } else {
-            // display label "No track data available" below the map viewer
+            // display the label "No track data available" behind the map viewer
             snMapViewer.setVisible(false);
         }
     }
@@ -110,19 +106,30 @@ public class TrackPanelController extends AbstractPanelController {
     }
 
     /**
-     * Displays the track of the specified exercise.
-     *
-     * @param exercise the exercise with track data
+     * Displays the track of the current exercise, if available. This method will be executed only
+     * once and should be called when the user wants to see the track (to prevent long startup delays).
      */
-    private void showTrack(EVExercise exercise) {
-        List<GeoPosition> sampleGeoPositions = createSampleGeoPositionList(exercise);
-        List<GeoPosition> lapGeoPositions = createLapGeoPositionList(exercise);
+    public void showTrack() {
+        if (!showTrackExecuted) {
+            showTrackExecuted = true;
 
-        if (!sampleGeoPositions.isEmpty()) {
-            // setup map zoom and position
-            setupZoomAndCenterPosition(sampleGeoPositions);
-            // display track
-            setupTrackPainter(sampleGeoPositions, lapGeoPositions);
+            System.out.println("Init!");
+
+            EVExercise exercise = getDocument().getExercise();
+            if (exercise.getRecordingMode().isLocation()) {
+
+                SwingUtilities.invokeLater(() -> {
+                    List<GeoPosition> sampleGeoPositions = createSampleGeoPositionList(exercise);
+                    List<GeoPosition> lapGeoPositions = createLapGeoPositionList(exercise);
+
+                    if (!sampleGeoPositions.isEmpty()) {
+                        // setup map zoom and position
+                        setupZoomAndCenterPosition(sampleGeoPositions);
+                        // display track
+                        setupTrackPainter(sampleGeoPositions, lapGeoPositions);
+                    }
+                });
+            }
         }
     }
 
@@ -141,11 +148,11 @@ public class TrackPanelController extends AbstractPanelController {
         GeoPosition gpCenter = new GeoPosition(gpRectangle.getCenterX(), gpRectangle.getCenterY());
         mapKit.setCenterPosition(gpCenter);
 
-        // calculate mapKit dimensions based on the parent panel dimensions (with a little offset)
+        // calculate mapKit dimensions based on the SwingNode dimensions (with a little offset)
         // (there's a bug in JXMapKit.getWidth/getHeight)
-        Bounds parentBounds = snMapViewer.getParent().getLayoutBounds();
-        int mapKitWidth = (int) parentBounds.getWidth() - 40;
-        int mapKitHeight = (int) parentBounds.getHeight() - 40;
+        Bounds mapViewerBounds = snMapViewer.getLayoutBounds();
+        int mapKitWidth = (int) mapViewerBounds.getWidth() - 30;
+        int mapKitHeight = (int) mapViewerBounds.getHeight() - 30;
 
         // start with zoom level for maximum details
         boolean fullTrackVisible = false;

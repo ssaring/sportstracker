@@ -2,11 +2,6 @@ package de.saring.exerciseviewer.gui;
 
 import java.io.IOException;
 
-import de.saring.exerciseviewer.gui.panelsfx.LapPanelController;
-import de.saring.exerciseviewer.gui.panelsfx.MainPanelController;
-import de.saring.exerciseviewer.gui.panelsfx.OptionalPanelController;
-import de.saring.exerciseviewer.gui.panelsfx.SamplePanelController;
-import de.saring.exerciseviewer.gui.panelsfx.TrackPanelController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +11,12 @@ import javafx.scene.control.Tab;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
+import de.saring.exerciseviewer.gui.panelsfx.LapPanelController;
+import de.saring.exerciseviewer.gui.panelsfx.MainPanelController;
+import de.saring.exerciseviewer.gui.panelsfx.OptionalPanelController;
+import de.saring.exerciseviewer.gui.panelsfx.SamplePanelController;
+import de.saring.exerciseviewer.gui.panelsfx.TrackPanelController;
 
 /**
  * Main Controller (MVC) class of the ExerciseViewer dialog window.
@@ -49,7 +50,6 @@ public class EVController {
     private Tab tabDiagram;
     @FXML
     private Tab tabTrack;
-
 
     /**
      * Standard c'tor for dependency injection.
@@ -106,6 +106,13 @@ public class EVController {
         tabLaps.setContent(lapPanelController.loadAndSetupPanelContent());
         tabSamples.setContent(samplePanelController.loadAndSetupPanelContent());
         tabTrack.setContent(trackPanelController.loadAndSetupPanelContent());
+
+        // display exercise track not before the user wants to see it (prevent long startup delays)
+        tabTrack.setOnSelectionChanged(event -> {
+            if (tabTrack.isSelected()) {
+                trackPanelController.showTrack();
+            }
+        });
     }
 
     /**
