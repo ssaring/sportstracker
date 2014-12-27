@@ -42,8 +42,8 @@ public class DiagramPanelController extends AbstractPanelController {
     }
 
     /**
-     * The list of possible value types to be shown on the diagram axes. This enum also provides
-     * the keys of the localized displayed enum names.
+     * The list of possible value types to be shown on the diagram axes. This enum also
+     * provides the keys of the localized displayed enum names.
      */
     private enum AxisType {
         NOTHING("pv.diagram.axis.nothing"),
