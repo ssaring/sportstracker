@@ -87,12 +87,7 @@ public class STContextImpl implements STContext {
     public Optional<ButtonType> showFxMessageDialog(final javafx.stage.Window parent, final Alert.AlertType alertType,
             final String titleKey, final String messageKey, final Object... arguments) {
 
-        // replace placeholders in message with arguments if specified
-        String message = fxResources.getString(messageKey);
-        if (arguments.length > 0) {
-            message = String.format(message, arguments);
-        }
-
+        final String message = fxResources.getString(messageKey, arguments);
         final Alert alert = new Alert(alertType, message);
         alert.initOwner(parent);
         alert.setTitle(fxResources.getString(titleKey));

@@ -36,11 +36,18 @@ public class AppResources {
      * Returns the String resource for the specified key.
      *
      * @param key resource key
+     * @param arguments list of objects which needs to be inserted in the message text (optional)
      * @return String resource value
      */
-    public String getString(final String key) {
+    public String getString(final String key, final Object... arguments) {
         try {
-            return resourceBundle.getString(key);
+            String stringValue = resourceBundle.getString(key);
+
+            // replace placeholders in message with arguments if specified
+            if (arguments.length > 0) {
+                stringValue = String.format(stringValue, arguments);
+            }
+            return stringValue;
         } catch (Exception e) {
             LOGGER.severe("Failed to get string resource for key '" + key + "'!");
             return "???";
