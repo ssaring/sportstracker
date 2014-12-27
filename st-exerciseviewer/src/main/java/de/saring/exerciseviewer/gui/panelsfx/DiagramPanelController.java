@@ -62,6 +62,8 @@ public class DiagramPanelController extends AbstractPanelController {
     /** The panel containing the current chart. */
     private final ChartPanel chartPanel;
 
+    private final AxisTypeStringConverter axisTypeStringConverter;
+
     /** The index of the exercise heartrate range to be highlighted. */
     private int highlightHeartrateRange = -1;
 
@@ -89,6 +91,8 @@ public class DiagramPanelController extends AbstractPanelController {
         super(context, document);
 
         chartPanel = new ChartPanel(null);
+        axisTypeStringConverter = new AxisTypeStringConverter(getContext().getFxResources(),
+                getContext().getFormatUtils());
     }
 
     @Override
@@ -116,9 +120,6 @@ public class DiagramPanelController extends AbstractPanelController {
         EVExercise exercise = getDocument().getExercise();
 
         // setup axis type name converter
-        final AxisTypeStringConverter axisTypeStringConverter = new AxisTypeStringConverter(getContext()
-                .getFxResources(), getContext().getFormatUtils());
-
         cbLeftAxis.setConverter(axisTypeStringConverter);
         cbRightAxis.setConverter(axisTypeStringConverter);
         cbBottomAxis.setConverter(axisTypeStringConverter);
@@ -252,16 +253,16 @@ public class DiagramPanelController extends AbstractPanelController {
         JFreeChart chart = null;
         if (fDomainAxisTime) {
             chart = ChartFactory.createTimeSeriesChart(null, // Title
-                    axisTypeBottom.toString(), // Y-axis label
-                    axisTypeLeft.toString(), // X-axis label
+                    axisTypeStringConverter.toString(axisTypeBottom), // Y-axis label
+                    axisTypeStringConverter.toString(axisTypeLeft), // X-axis label
                     dataset, // primary dataset
                     false, // display legend
                     true, // display tooltips
                     false); // URLs
         } else {
             chart = ChartFactory.createXYLineChart(null, // Title
-                    axisTypeBottom.toString(), // Y-axis label
-                    axisTypeLeft.toString(), // X-axis label
+                    axisTypeStringConverter.toString(axisTypeBottom), // Y-axis label
+                    axisTypeStringConverter.toString(axisTypeLeft), // X-axis label
                     dataset, // primary dataset
                     PlotOrientation.VERTICAL, // plot orientation
                     false, // display legend
@@ -285,7 +286,7 @@ public class DiagramPanelController extends AbstractPanelController {
         // setup right axis (when selected)
         if (sRight != null) {
 
-            final NumberAxis axisRight = new NumberAxis(axisTypeRight.toString());
+            final NumberAxis axisRight = new NumberAxis(axisTypeStringConverter.toString(axisTypeRight));
             axisRight.setAutoRangeIncludesZero(false);
             plot.setRangeAxis(1, axisRight);
             plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
@@ -442,7 +443,8 @@ public class DiagramPanelController extends AbstractPanelController {
      */
     private void setTooltipGenerator(final XYItemRenderer renderer, final AxisType domainAxis, final AxisType valueAxis) {
 
-        final String format = "" + domainAxis + ": {1}, " + valueAxis + ": {2}";
+        final String format = "" + axisTypeStringConverter.toString(domainAxis) + ": {1}, " +
+                axisTypeStringConverter.toString(valueAxis) + ": {2}";
 
         if (domainAxis == AxisType.TIME) {
             renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(format, new SimpleDateFormat("HH:mm"),

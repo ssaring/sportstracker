@@ -15,9 +15,9 @@ JavaFX Migration:
     - FXML: Done
     - Controller: see TODOs
       - chart must be resizable
-      - axes names and diagram tooltips must display localized enum name
       - update diagram on axis type changes
       - use another chart background color?
+      - test, compare with previous charts
   - Track Panel: Done & tested
   - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
   - Bug: EV window is always placed in screen center, not placed at center of parent window
