@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javafx.embed.swing.SwingNode;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Pane;
@@ -166,6 +167,11 @@ public class DiagramPanelController extends AbstractPanelController {
                 cbRightAxis.getSelectionModel().select(2);
             }
         }
+
+        // set listeners for updating the diagram on selection changes
+        cbLeftAxis.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
+        cbRightAxis.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
+        cbBottomAxis.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
     }
 
     /**

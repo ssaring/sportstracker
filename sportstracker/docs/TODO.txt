@@ -15,7 +15,6 @@ JavaFX Migration:
     - FXML: Done
     - Controller: see TODOs
       - chart must be resizable
-      - update diagram on axis type changes
       - use another chart background color?
       - test, compare with previous charts
   - Track Panel: Done & tested
