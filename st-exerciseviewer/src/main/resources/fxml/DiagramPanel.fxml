@@ -11,11 +11,12 @@
 
 <VBox spacing="16.0" stylesheets="@ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panelsfx.DiagramPanelController">
     <children>
-        <Pane fx:id="pDiagram" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="600.0" VBox.vgrow="ALWAYS">
+        <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <children>
-                <SwingNode fx:id="snDiagram" />
+                <SwingNode fx:id="snDiagram">
+            </SwingNode>
             </children>
-        </Pane>
+        </StackPane>
         <VBox spacing="12.0">
             <children>
                 <Label styleClass="label-header" text="%pv.diagram.axis_usage.text" />

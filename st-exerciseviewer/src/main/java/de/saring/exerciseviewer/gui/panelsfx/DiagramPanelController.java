@@ -8,7 +8,6 @@ import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 
 import org.jfree.chart.ChartFactory;
@@ -68,9 +67,6 @@ public class DiagramPanelController extends AbstractPanelController {
     /** The index of the exercise heartrate range to be highlighted. */
     private int highlightHeartrateRange = -1;
 
-    @FXML
-    private Pane pDiagram;
-
     // TODO remove when switched to JavaFX ChartViewer (also from FXML)
     @FXML
     private SwingNode snDiagram;
@@ -111,9 +107,7 @@ public class DiagramPanelController extends AbstractPanelController {
     private void setupDiagram() {
         // TODO remove workaround when using JavaFX ChartViewer
         javax.swing.SwingUtilities.invokeLater(() -> {
-            chartPanel.setMinimumSize(new java.awt.Dimension((int) pDiagram.getPrefWidth(), (int) pDiagram.getPrefHeight()));
             snDiagram.setContent(chartPanel);
-            snDiagram.autosize();
         });
     }
 

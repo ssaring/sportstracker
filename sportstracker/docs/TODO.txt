@@ -2,8 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- Test combined JavaFX and Swing UI handling on the same thread (on Windows and OS X!)
-  => does it solve the problems with the map and diagram components?
 - ExerciseViewer:
   - Main EV window: Done (FXML, EVController, EVMain)
   - Main Panel: Done & tested
@@ -14,7 +12,7 @@ JavaFX Migration:
   - Diagram Panel:
     - FXML: Done
     - Controller: see TODOs
-      - chart must be resizable
+      - chart must be re-rendered properly after resizing
       - use another chart background color?
       - test, compare with previous charts
   - Track Panel: Done & tested
