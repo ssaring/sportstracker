@@ -61,12 +61,14 @@ public class EVController {
     public EVController(final EVContext context, final EVDocument document) {
         this.context = context;
 
-        this.mainPanelController = new MainPanelController(context, document);
-        this.optionalPanelController = new OptionalPanelController(context, document);
-        this.lapPanelController = new LapPanelController(context, document);
-        this.samplePanelController = new SamplePanelController(context, document);
-        this.diagramPanelController = new DiagramPanelController(context, document);
-        this.trackPanelController = new TrackPanelController(context, document);
+        mainPanelController = new MainPanelController(context, document);
+        optionalPanelController = new OptionalPanelController(context, document);
+        lapPanelController = new LapPanelController(context, document);
+        samplePanelController = new SamplePanelController(context, document);
+        diagramPanelController = new DiagramPanelController(context, document);
+        trackPanelController = new TrackPanelController(context, document);
+
+        mainPanelController.setDiagramPanelController(diagramPanelController);
     }
 
     /**

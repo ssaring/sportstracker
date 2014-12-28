@@ -22,6 +22,8 @@ import javafx.util.StringConverter;
  */
 public class MainPanelController extends AbstractPanelController {
 
+    private DiagramPanelController diagramPanelController;
+
     @FXML
     private Label laTypeValue;
     @FXML
@@ -73,6 +75,15 @@ public class MainPanelController extends AbstractPanelController {
      */
     public MainPanelController(final EVContext context, final EVDocument document) {
         super(context, document);
+    }
+
+    /**
+     * Sets the diagram panel controller which is needed for hertrage range updates.
+     *
+     * @param diagramPanelController the diagram panel controller
+     */
+    public void setDiagramPanelController(final DiagramPanelController diagramPanelController) {
+        this.diagramPanelController = diagramPanelController;
     }
 
     @Override
@@ -200,8 +211,8 @@ public class MainPanelController extends AbstractPanelController {
         laTimeWithinValue.setText(formatUtils.seconds2TimeString(limit.getTimeWithin()) + "   (" + percentsWithin + " %)");
         laTimeAboveValue.setText(formatUtils.seconds2TimeString(limit.getTimeAbove()) + "   (" + percentsAbove + " %)");
 
-        // TODO update heartrate range in diagram
-        // diagramPanel.displayDiagramForHeartrateRange(index);
+        // update heartrate range in diagram
+        diagramPanelController.displayDiagramForHeartrateRange(limit);
     }
 
     private String boolean2EnabledString(final boolean enabled) {

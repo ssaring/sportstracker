@@ -64,8 +64,8 @@ public class DiagramPanelController extends AbstractPanelController {
 
     private final AxisTypeStringConverter axisTypeStringConverter;
 
-    /** The index of the exercise heartrate range to be highlighted. */
-    private int highlightHeartrateRange = -1;
+    /** The exercise heartrate range to be highlighted (null for no highlighting). */
+    private HeartRateLimit highlightHeartrateRange = null;
 
     // TODO remove when switched to JavaFX ChartViewer (also from FXML)
     @FXML
@@ -95,6 +95,20 @@ public class DiagramPanelController extends AbstractPanelController {
     @Override
     protected String getFxmlFilename() {
         return "/fxml/DiagramPanel.fxml";
+    }
+
+    /**
+     * Updates the diagram and highlights the specified heartrate range.
+     *
+     * @param heartrateRange heartrate range to highlight
+     */
+    public void displayDiagramForHeartrateRange(final HeartRateLimit heartrateRange) {
+        highlightHeartrateRange = heartrateRange;
+
+        // don't update the diagram when this panel was not initialized yet
+        if (chartPanel.getChart() != null) {
+            updateDiagram();
+        }
     }
 
     @Override
@@ -305,15 +319,14 @@ public class DiagramPanelController extends AbstractPanelController {
             setTooltipGenerator(rendererRight, axisTypeBottom, axisTypeRight);
         }
 
-        // highlight current selected (if presdent) heartrate range when displayed on left axis
-        if ((highlightHeartrateRange >= 0) && (axisTypeLeft == AxisType.HEARTRATE)) {
-            final HeartRateLimit currentLimit = exercise.getHeartRateLimits()[highlightHeartrateRange];
+        // highlight current selected (if set) heartrate range when displayed on left axis
+        if (highlightHeartrateRange != null && axisTypeLeft == AxisType.HEARTRATE) {
 
             // don't highlight percentual ranges (is not possible, the values
             // are absolute and the maximum heartrate is unknown)
-            if (currentLimit.isAbsoluteRange()) {
-                final Marker hrRangeMarker = new IntervalMarker(currentLimit.getLowerHeartRate(),
-                        currentLimit.getUpperHeartRate());
+            if (highlightHeartrateRange.isAbsoluteRange()) {
+                final Marker hrRangeMarker = new IntervalMarker(highlightHeartrateRange.getLowerHeartRate(),
+                        highlightHeartrateRange.getUpperHeartRate());
                 hrRangeMarker.setPaint(COLOR_MARKER_HEARTRATE);
                 hrRangeMarker.setAlpha(0.3f);
                 plot.addRangeMarker(hrRangeMarker);
