@@ -14,20 +14,19 @@ JavaFX Migration:
       - exceptions when selecting another heartrate range in main panel
         => probably a Swing / JavaFX interoperability problem
       - selected heartrate range is not transparent in diagram
+      - test chart viewer on Windows
       - test, compare with previous charts
   - Track Panel: Done & tested
   - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
   - Bug: EV window is always placed in screen center, not placed at center of parent window
   - Remove old Swing ExerciseViewer (EVView and old panel classes) and unused methods in EVContext
-- OverviewDialog:
-  - use JavaFX version of JFreeChart (see DiagramPaneController)
-  - remove old methods in ChartUtils
 - can SportsTracker.css and ExerciseViewer.css be merged into one file?
   (does the relative import in FXML work?)
 - Overview Dialog: migration completed and tested, except:
-  - use JavaFX version of JFreeChart (see TODOs),
+  - use JavaFX version of JFreeChart (see TODOs and DiagramPaneController)
   - artifact is not available in the Maven Central repo, using custom build from saring.de repository meanwhile
   - I've posted a request to the JFree forum: http://www.jfree.org/forum/viewtopic.php?f=3&t=117112
+  - remove deprecated method in ChartUtils
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
