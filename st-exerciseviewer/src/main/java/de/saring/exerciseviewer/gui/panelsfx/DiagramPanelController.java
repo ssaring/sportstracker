@@ -4,18 +4,19 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javafx.embed.swing.SwingNode;
+import de.saring.util.gui.jfreechart.ChartUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.StackPane;
 import javafx.util.StringConverter;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.fx.ChartViewer;
 import org.jfree.chart.labels.StandardXYToolTipGenerator;
 import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.Marker;
@@ -41,7 +42,6 @@ import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.AppResources;
-import de.saring.util.gui.jfreechart.ChartUtils;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
 
@@ -59,17 +59,16 @@ public class DiagramPanelController extends AbstractPanelController {
     private static final java.awt.Color COLOR_MARKER_LAP = new java.awt.Color(0f, 0.73f, 0f);
     private static final java.awt.Color COLOR_MARKER_HEARTRATE = java.awt.Color.LIGHT_GRAY;
 
-    /** The panel containing the current chart. */
-    private final ChartPanel chartPanel;
-
     private final AxisTypeStringConverter axisTypeStringConverter;
+
+    /** The viewer for the chart. */
+    private ChartViewer chartViewer;
 
     /** The exercise heartrate range to be highlighted (null for no highlighting). */
     private HeartRateLimit highlightHeartrateRange = null;
 
-    // TODO remove when switched to JavaFX ChartViewer (also from FXML)
     @FXML
-    private SwingNode snDiagram;
+    private StackPane spDiagram;
 
     @FXML
     private ChoiceBox<AxisType> cbLeftAxis;
@@ -87,7 +86,6 @@ public class DiagramPanelController extends AbstractPanelController {
     public DiagramPanelController(final EVContext context, final EVDocument document) {
         super(context, document);
 
-        chartPanel = new ChartPanel(null);
         axisTypeStringConverter = new AxisTypeStringConverter(getContext().getFxResources(),
                 getContext().getFormatUtils());
     }
@@ -106,23 +104,15 @@ public class DiagramPanelController extends AbstractPanelController {
         highlightHeartrateRange = heartrateRange;
 
         // don't update the diagram when this panel was not initialized yet
-        if (chartPanel.getChart() != null) {
+        if (chartViewer != null) {
             updateDiagram();
         }
     }
 
     @Override
     protected void setupPanel() {
-        setupDiagram();
         setupAxisChoiceBoxes();
         updateDiagram();
-    }
-
-    private void setupDiagram() {
-        // TODO remove workaround when using JavaFX ChartViewer
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            snDiagram.setContent(chartPanel);
-        });
     }
 
     private void setupAxisChoiceBoxes() {
@@ -186,11 +176,6 @@ public class DiagramPanelController extends AbstractPanelController {
      * Draws the diagram according to the current axis type selection and configuration settings.
      */
     private void updateDiagram() {
-        // TODO remove workaround when using JavaFX ChartViewer
-        javax.swing.SwingUtilities.invokeLater(this::updateDiagramImpl);
-    }
-
-    private void updateDiagramImpl() {
         final EVExercise exercise = getDocument().getExercise();
 
         final AxisType axisTypeLeft = cbLeftAxis.getValue();
@@ -284,8 +269,6 @@ public class DiagramPanelController extends AbstractPanelController {
                     false); // URLs
         }
 
-        ChartUtils.customizeChart(chart, chartPanel, true);
-
         // set format of time domain axis (if active)
         final XYPlot plot = (XYPlot) chart.getPlot();
 
@@ -363,8 +346,15 @@ public class DiagramPanelController extends AbstractPanelController {
             }
         }
 
-        // add chart to panel
-        chartPanel.setChart(chart);
+        ChartUtils.customizeChart(chart, spDiagram);
+
+        // display chart in viewer (chart viewer will be initialized lazily)
+        if (chartViewer == null) {
+            chartViewer = new ChartViewer(chart);
+            spDiagram.getChildren().addAll(chartViewer);
+        } else {
+            chartViewer.setChart(chart);
+        }
     }
 
     /**
