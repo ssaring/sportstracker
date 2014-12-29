@@ -21,6 +21,7 @@ import javafx.geometry.Bounds;
 
 import javax.swing.SwingUtilities;
 
+import javafx.scene.layout.StackPane;
 import org.jdesktop.swingx.JXMapKit;
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
@@ -53,6 +54,8 @@ public class TrackPanelController extends AbstractPanelController {
     private static final int TRACKPOINT_TOOLTIP_DISTANCE_BUFFER = 4;
 
     @FXML
+    private StackPane spTrack;
+
     private SwingNode snMapViewer;
 
     private JXMapKit mapKit;
@@ -78,15 +81,14 @@ public class TrackPanelController extends AbstractPanelController {
     @Override
     protected void setupPanel() {
 
-        // setup the map viewer (if track data is available).
+        // if track data is available: setup the map viewer and display it in a SwingNode
+        // (otherwise the StackPane displays the label "No track data available")
         final EVExercise exercise = getDocument().getExercise();
         if (exercise.getRecordingMode().isLocation()) {
-            SwingUtilities.invokeLater(() -> {
-                setupMapViewer();
-            });
-        } else {
-            // display the label "No track data available" behind the map viewer
-            snMapViewer.setVisible(false);
+            snMapViewer = new SwingNode();
+            spTrack.getChildren().add(snMapViewer);
+
+            SwingUtilities.invokeLater(this::setupMapViewer);
         }
     }
 
