@@ -57,7 +57,7 @@ public class DiagramPanelController extends AbstractPanelController {
     private static final java.awt.Color COLOR_AXIS_LEFT = java.awt.Color.RED;
     private static final java.awt.Color COLOR_AXIS_RIGHT = java.awt.Color.BLUE;
     private static final java.awt.Color COLOR_MARKER_LAP = new java.awt.Color(0f, 0.73f, 0f);
-    private static final java.awt.Color COLOR_MARKER_HEARTRATE = java.awt.Color.LIGHT_GRAY;
+    private static final java.awt.Color COLOR_MARKER_HEARTRATE = new java.awt.Color(0.65f, 0.65f, 0.65f, 0.3f);
 
     private final AxisTypeStringConverter axisTypeStringConverter;
 
@@ -311,7 +311,6 @@ public class DiagramPanelController extends AbstractPanelController {
                 final Marker hrRangeMarker = new IntervalMarker(highlightHeartrateRange.getLowerHeartRate(),
                         highlightHeartrateRange.getUpperHeartRate());
                 hrRangeMarker.setPaint(COLOR_MARKER_HEARTRATE);
-                hrRangeMarker.setAlpha(0.3f);
                 plot.addRangeMarker(hrRangeMarker);
             }
         }

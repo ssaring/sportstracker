@@ -11,10 +11,8 @@ JavaFX Migration:
   - Diagram Panel:
     - FXML: Done
     - Controller: see TODOs
-      - exceptions when selecting another heartrate range in main panel
+      - exceptions when selecting another axis type or heartrate range in main panel
         => probably a Swing / JavaFX interoperability problem
-      - selected heartrate range is not transparent in diagram
-      - test chart viewer on Windows
       - test, compare with previous charts
   - Track Panel: Done & tested
   - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
