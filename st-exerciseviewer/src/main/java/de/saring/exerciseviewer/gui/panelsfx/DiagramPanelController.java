@@ -57,7 +57,7 @@ public class DiagramPanelController extends AbstractPanelController {
     private static final java.awt.Color COLOR_AXIS_LEFT = java.awt.Color.RED;
     private static final java.awt.Color COLOR_AXIS_RIGHT = java.awt.Color.BLUE;
     private static final java.awt.Color COLOR_MARKER_LAP = new java.awt.Color(0f, 0.73f, 0f);
-    private static final java.awt.Color COLOR_MARKER_HEARTRATE = new java.awt.Color(0.65f, 0.65f, 0.65f, 0.3f);
+    private static final java.awt.Color COLOR_MARKER_HEARTRATE = new java.awt.Color(0.8f, 0.8f, 0.8f, 0.3f);
 
     private final AxisTypeStringConverter axisTypeStringConverter;
 
