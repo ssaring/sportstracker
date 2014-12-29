@@ -13,11 +13,15 @@ JavaFX Migration:
   - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
   - Bug: EV window is always placed in screen center, not placed at center of parent window
   - Remove old Swing ExerciseViewer (EVView and old panel classes) and unused methods in EVContext
+  - remember and restore dialog window size
 - can SportsTracker.css and ExerciseViewer.css be merged into one file?
   (does the relative import in FXML work?)
 - Overview Dialog: migration completed and tested, except:
   - use JavaFX version of JFreeChart (see TODOs and DiagramPaneController)
   - artifact is not available in the Maven Central repo, using custom build from saring.de repository meanwhile
+    - installation of custom build in local repository:
+      mvn install:install-file -Dfile=jfreechart-1.0.19.jar -DgroupId=org.jfree
+        -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
   - I've posted a request to the JFree forum: http://www.jfree.org/forum/viewtopic.php?f=3&t=117112
   - remove deprecated method in ChartUtils
 - Usage of openjfx-dialog status:
