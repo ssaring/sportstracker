@@ -3,6 +3,7 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - ExerciseViewer:
+  - Remove old Swing ExerciseViewer (EVView and old panel classes) and unused methods in EVContext
   - Main EV window: Done (FXML, EVController, EVMain)
   - Main Panel: Done & tested
   - Optional Panel: Done & tested
@@ -12,7 +13,6 @@ JavaFX Migration:
   - Track Panel: Done & tested
   - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
   - Bug: EV window is always placed in screen center, not placed at center of parent window
-  - Remove old Swing ExerciseViewer (EVView and old panel classes) and unused methods in EVContext
   - remember and restore dialog window size
 - can SportsTracker.css and ExerciseViewer.css be merged into one file?
   (does the relative import in FXML work?)

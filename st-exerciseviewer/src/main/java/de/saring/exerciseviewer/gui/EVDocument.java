@@ -44,8 +44,6 @@ public class EVDocument {
         exerciseFilename = filename;
     }
 
-    // ***** BEGIN: Getters and Setters ***** //
-
     public EVExercise getExercise() {
         return exercise;
     }
@@ -61,6 +59,4 @@ public class EVDocument {
     public void setOptions(EVOptions options) {
         this.options = options;
     }
-
-    // ***** END: Getters and Setters ***** //
 }
