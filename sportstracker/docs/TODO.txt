@@ -2,12 +2,9 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- ExerciseViewer: Done & tested
-  - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
-  - Bug: EV window is always placed in screen center, not placed at center of parent window
-  - remember and restore dialog window size
-- can SportsTracker.css and ExerciseViewer.css be merged into one file?
+- CSS: can SportsTracker.css and ExerciseViewer.css be merged into one file?
   (does the relative import in FXML work?)
+- SportsTracker and ExerciseViewer: store and restore window sizes, not for dialogs (positions too?)
 - Overview Dialog: migration completed and tested, except:
   - use JavaFX version of JFreeChart (see TODOs and DiagramPaneController)
   - artifact is not available in the Maven Central repo, using custom build from saring.de repository meanwhile
@@ -16,6 +13,12 @@ JavaFX Migration:
         -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
   - I've posted a request to the JFree forum: http://www.jfree.org/forum/viewtopic.php?f=3&t=117112
   - remove deprecated method in ChartUtils
+- ExerciseViewer: Done & tested
+  - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
+    => reason: Swing/JavaFX workarounds in AbstractDialogController#centerDialogOnSwingFrame()
+    => problem is solved when main ST window has been migrated to JavaFX
+  - Bug: EV window is always placed in screen center, not placed at center of parent window
+    => problem is solved when main ST window has been migrated to JavaFX
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
@@ -64,6 +67,7 @@ JavaFX Migration status - completed:
   - Statistic Dialog
   - Statistic Result Dialog
   - Preferences Dialog
+- Exercise Viewer sub-application
 - Use of openjfx-dialog backport library from JavaFX 8u40
 
 Java 8 migration status:
