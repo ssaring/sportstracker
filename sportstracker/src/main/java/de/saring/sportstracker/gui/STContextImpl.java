@@ -6,7 +6,7 @@ import de.saring.util.unitcalc.FormatUtils;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
-import javafx.stage.*;
+import javafx.stage.Stage;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -64,11 +64,6 @@ public class STContextImpl implements STContext {
     @Override
     public JFrame getMainFrame() {
         return getApplication().getMainFrame();
-    }
-
-    @Override
-    public void showDialog(JDialog dlg) {
-        getApplication().show(dlg);
     }
 
     @Override

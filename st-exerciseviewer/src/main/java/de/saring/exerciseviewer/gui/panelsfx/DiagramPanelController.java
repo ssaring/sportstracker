@@ -338,7 +338,7 @@ public class DiagramPanelController extends AbstractPanelController {
                 Marker lapMarker = new ValueMarker(lapSplitValue);
                 lapMarker.setPaint(COLOR_MARKER_LAP);
                 lapMarker.setStroke(new java.awt.BasicStroke(1.5f));
-                lapMarker.setLabel(getContext().getResReader().getString("pv.diagram.lap", i + 1));
+                lapMarker.setLabel(getContext().getFxResources().getString("pv.diagram.lap", i + 1));
                 lapMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
                 lapMarker.setLabelTextAnchor(TextAnchor.TOP_RIGHT);
                 plot.addDomainMarker(lapMarker);
