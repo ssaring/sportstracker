@@ -1,4 +1,4 @@
-package de.saring.exerciseviewer.gui.panelsfx;
+package de.saring.exerciseviewer.gui.panels;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

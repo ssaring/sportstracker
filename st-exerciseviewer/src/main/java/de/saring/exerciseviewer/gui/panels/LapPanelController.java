@@ -1,4 +1,4 @@
-package de.saring.exerciseviewer.gui.panelsfx;
+package de.saring.exerciseviewer.gui.panels;
 
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.Lap;

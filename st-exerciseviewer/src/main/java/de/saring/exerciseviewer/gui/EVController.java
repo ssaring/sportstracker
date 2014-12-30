@@ -12,12 +12,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import de.saring.exerciseviewer.gui.panelsfx.DiagramPanelController;
-import de.saring.exerciseviewer.gui.panelsfx.LapPanelController;
-import de.saring.exerciseviewer.gui.panelsfx.MainPanelController;
-import de.saring.exerciseviewer.gui.panelsfx.OptionalPanelController;
-import de.saring.exerciseviewer.gui.panelsfx.SamplePanelController;
-import de.saring.exerciseviewer.gui.panelsfx.TrackPanelController;
+import de.saring.exerciseviewer.gui.panels.DiagramPanelController;
+import de.saring.exerciseviewer.gui.panels.LapPanelController;
+import de.saring.exerciseviewer.gui.panels.MainPanelController;
+import de.saring.exerciseviewer.gui.panels.OptionalPanelController;
+import de.saring.exerciseviewer.gui.panels.SamplePanelController;
+import de.saring.exerciseviewer.gui.panels.TrackPanelController;
 
 /**
  * Main Controller (MVC) class of the ExerciseViewer dialog window.

@@ -1,4 +1,4 @@
-package de.saring.exerciseviewer.gui.panelsfx;
+package de.saring.exerciseviewer.gui.panels;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;

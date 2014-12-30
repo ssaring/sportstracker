@@ -1,4 +1,4 @@
-package de.saring.exerciseviewer.gui.panelsfx;
+package de.saring.exerciseviewer.gui.panels;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane hgap="48.0" stylesheets="@ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panelsfx.MainPanelController">
+<GridPane hgap="48.0" stylesheets="@ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.MainPanelController">
     <columnConstraints>
         <ColumnConstraints percentWidth="50.0" />
         <ColumnConstraints percentWidth="50.0" />
