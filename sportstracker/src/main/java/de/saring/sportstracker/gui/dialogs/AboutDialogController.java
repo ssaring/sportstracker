@@ -1,4 +1,4 @@
-package de.saring.sportstracker.gui.dialogsfx;
+package de.saring.sportstracker.gui.dialogs;
 
 import de.saring.sportstracker.gui.STContext;
 import de.saring.util.gui.javafx.GuiceFxmlLoader;

@@ -1,4 +1,4 @@
-package de.saring.sportstracker.gui.dialogsfx;
+package de.saring.sportstracker.gui.dialogs;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

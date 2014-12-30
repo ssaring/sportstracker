@@ -1,4 +1,4 @@
-package de.saring.sportstracker.gui.dialogsfx;
+package de.saring.sportstracker.gui.dialogs;
 
 import de.saring.util.unitcalc.FormatUtils;
 import javafx.fxml.FXML;

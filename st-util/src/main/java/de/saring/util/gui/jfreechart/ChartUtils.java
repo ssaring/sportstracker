@@ -42,7 +42,6 @@ public final class ChartUtils {
         plot.setRangeGridlinePaint(Color.GRAY);
 
         java.awt.Font diaFont = parent.getFont();
-        System.out.println(diaFont);
         plot.getDomainAxis().setTickLabelFont(diaFont);
         plot.getRangeAxis().setTickLabelFont(diaFont);
         plot.getDomainAxis().setLabelFont(diaFont);

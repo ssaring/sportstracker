@@ -1,4 +1,4 @@
-package de.saring.sportstracker.gui.dialogsfx;
+package de.saring.sportstracker.gui.dialogs;
 
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportType;

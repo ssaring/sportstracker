@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="16.0" stylesheets="@SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogsfx.StatisticDialogController">
+<VBox spacing="16.0" stylesheets="@SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogs.StatisticDialogController">
    <children>
       <HBox alignment="CENTER_LEFT">
          <children>

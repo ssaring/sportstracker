@@ -1,4 +1,4 @@
-package de.saring.sportstracker.gui.dialogsfx;
+package de.saring.sportstracker.gui.dialogs;
 
 import de.saring.sportstracker.data.Note;
 import javafx.beans.property.IntegerProperty;

@@ -1,4 +1,4 @@
-package de.saring.sportstracker.gui.dialogsfx;
+package de.saring.sportstracker.gui.dialogs;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
