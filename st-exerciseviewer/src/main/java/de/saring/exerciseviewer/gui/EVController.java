@@ -99,6 +99,13 @@ public class EVController {
         final Scene scene = new Scene(root);
         setCloseOnEscape(scene);
         stage.setScene(scene);
+
+        // set minimum ExerciseViewer window size to the computed preferred size
+        stage.setOnShown(event -> {
+            stage.setMinWidth(stage.getWidth());
+            stage.setMinHeight(stage.getHeight());
+        });
+
         stage.show();
     }
 
