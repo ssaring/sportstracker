@@ -1,10 +1,5 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.data.Weight;
-import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.ValidationUtils;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
@@ -13,18 +8,22 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
+
+import javax.inject.Inject;
+
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import de.saring.sportstracker.data.Weight;
+import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.ValidationUtils;
 
 /**
  * Controller (MVC) class of the Wieght dialog for editing / adding Weight entries.
  *
  * @author Stefan Saring
  */
-@Singleton
 public class WeightDialogController extends AbstractDialogController {
 
     private final STDocument document;
@@ -57,12 +56,10 @@ public class WeightDialogController extends AbstractDialogController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker model/document
-     * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public WeightDialogController(final STContext context, final STDocument document,
-                                  final GuiceFxmlLoader guiceFxmlLoader) {
-        super(context, guiceFxmlLoader);
+    public WeightDialogController(final STContext context, final STDocument document) {
+        super(context);
         this.document = document;
     }
 

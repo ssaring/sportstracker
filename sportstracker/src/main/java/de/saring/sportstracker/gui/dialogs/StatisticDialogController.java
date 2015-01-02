@@ -1,10 +1,8 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
-import de.saring.sportstracker.data.statistic.StatisticCalculator;
-import de.saring.util.StringUtils;
-import de.saring.util.data.IdObjectList;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,21 +15,20 @@ import javafx.stage.Window;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
-import javax.inject.Singleton;
 
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.ExerciseFilter;
+import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
-
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+import de.saring.util.StringUtils;
+import de.saring.util.data.IdObjectList;
 
 /**
  * Controller (MVC) class of the Statistic dialog.
  *
  * @author Stefan Saring
  */
-@Singleton
 public class StatisticDialogController extends AbstractDialogController {
 
     private final STDocument document;
@@ -64,12 +61,10 @@ public class StatisticDialogController extends AbstractDialogController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker model/document
-     * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public StatisticDialogController(final STContext context, final STDocument document,
-            final GuiceFxmlLoader guiceFxmlLoader) {
-        super(context, guiceFxmlLoader);
+    public StatisticDialogController(final STContext context, final STDocument document) {
+        super(context);
         this.document = document;
     }
 

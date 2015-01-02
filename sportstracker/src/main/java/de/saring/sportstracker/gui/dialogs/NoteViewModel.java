@@ -1,6 +1,9 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.data.Note;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -8,9 +11,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import de.saring.sportstracker.data.Note;
 
 /**
  * This ViewModel class provides JavaFX properties of all Note attributes to be edited in the dialog.

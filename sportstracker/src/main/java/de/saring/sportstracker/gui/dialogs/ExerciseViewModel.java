@@ -1,13 +1,9 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.data.Equipment;
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.SportSubType;
-import de.saring.sportstracker.data.SportType;
-import de.saring.util.StringUtils;
-import de.saring.util.unitcalc.CalculationUtils;
-import de.saring.util.unitcalc.ConvertUtils;
-import de.saring.util.unitcalc.FormatUtils;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
@@ -19,9 +15,14 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
+import de.saring.util.StringUtils;
+import de.saring.util.unitcalc.CalculationUtils;
+import de.saring.util.unitcalc.ConvertUtils;
+import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * This ViewModel class provides JavaFX properties of all Exercise attributes to be edited in the Exercise Dialog.

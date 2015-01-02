@@ -1,37 +1,30 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.core.STOptions;
-import de.saring.sportstracker.data.Equipment;
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
-import de.saring.sportstracker.data.SportSubType;
-import de.saring.sportstracker.data.SportType;
-import de.saring.sportstracker.data.Weight;
-import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.AppResources;
-import de.saring.util.Date310Utils;
-import de.saring.util.data.IdObjectList;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
-import de.saring.util.gui.javafx.NameableStringConverter;
-import de.saring.util.gui.jfreechart.ChartUtils;
-import de.saring.util.gui.jfreechart.StackedRenderer;
-import de.saring.util.unitcalc.ConvertUtils;
-import de.saring.util.unitcalc.FormatUtils;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.WeekFields;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+
 import javafx.beans.binding.Bindings;
-import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Window;
+
+import javax.inject.Inject;
+
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.DateTickUnitType;
+import org.jfree.chart.fx.ChartViewer;
 import org.jfree.chart.labels.StandardXYToolTipGenerator;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
@@ -46,16 +39,23 @@ import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.TextAnchor;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.WeekFields;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import de.saring.sportstracker.core.STOptions;
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.ExerciseFilter;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.data.Weight;
+import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.AppResources;
+import de.saring.util.Date310Utils;
+import de.saring.util.data.IdObjectList;
+import de.saring.util.gui.javafx.NameableStringConverter;
+import de.saring.util.gui.jfreechart.ChartUtils;
+import de.saring.util.gui.jfreechart.StackedRenderer;
+import de.saring.util.unitcalc.ConvertUtils;
+import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * Controller (MVC) class of the Overview dialog of the SportsTracker application.
@@ -65,13 +65,12 @@ import java.util.Date;
  *
  * @author Stefan Saring
  */
-@Singleton
 public class OverviewDialogController extends AbstractDialogController {
 
     private final STDocument document;
 
-    /** The panel containing the current chart (chart can't be added in SceneBuilder). */
-    private final ChartPanel chartPanel;
+    /** The viewer for the chart. */
+    private ChartViewer chartViewer;
 
     @FXML
     private ChoiceBox<TimeRangeType> cbTimeRange;
@@ -85,11 +84,7 @@ public class OverviewDialogController extends AbstractDialogController {
     private ChoiceBox<SportType> cbSportTypeList;
 
     @FXML
-    private Pane pDiagram;
-
-    // TODO remove when switched to JavaFX ChartViewer (also from FXML)
-    @FXML
-    private SwingNode snDiagram;
+    private StackPane spDiagram;
 
     @FXML
     private HBox hBoxOptions;
@@ -104,19 +99,15 @@ public class OverviewDialogController extends AbstractDialogController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker model/document
-     * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public OverviewDialogController(final STContext context, final STDocument document,
-                                    final GuiceFxmlLoader guiceFxmlLoader) {
-        super(context, guiceFxmlLoader);
+    public OverviewDialogController(final STContext context, final STDocument document) {
+        super(context);
         this.document = document;
 
         TimeRangeType.appResources = context.getFxResources();
         ValueType.appResources = context.getFxResources();
         OverviewType.appResources = context.getFxResources();
-
-        chartPanel = new ChartPanel(null);
     }
 
     /**
@@ -138,7 +129,6 @@ public class OverviewDialogController extends AbstractDialogController {
     @Override
     protected void setupDialogControls() {
         setupChoiceBoxes();
-        setupDiagram();
         updateDiagram();
     }
 
@@ -174,26 +164,11 @@ public class OverviewDialogController extends AbstractDialogController {
         cbSportTypeList.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
     }
 
-    private void setupDiagram() {
-        // TODO remove workaround when using JavaFX ChartViewer
-        executeOnSwingThread(() -> {
-            chartPanel.setMinimumSize(new java.awt.Dimension((int) pDiagram.getPrefWidth(), (int) pDiagram.getPrefHeight()));
-            snDiagram.setContent(chartPanel);
-            snDiagram.autosize();
-        });
-    }
-
     /**
      * Draws the Overview diagram according to the current selections.
      */
     private void updateDiagram() {
         updateOptionControls();
-
-        // TODO remove workaround when using JavaFX ChartViewer
-        executeOnSwingThread(this::updateDiagramImpl);
-    }
-
-    private void updateDiagramImpl() {
 
         // get selected time range and value type and its name to display
         TimeRangeType timeType = cbTimeRange.getValue();
@@ -224,8 +199,6 @@ public class OverviewDialogController extends AbstractDialogController {
                 true,             // display legend
                 true,             // display tooltips
                 false);           // URLs
-
-        ChartUtils.customizeChart(chart, chartPanel, false);
 
         // render unique filled shapes for each graph
         XYPlot plot = (XYPlot) chart.getPlot();
@@ -346,8 +319,15 @@ public class OverviewDialogController extends AbstractDialogController {
         // display legend next to the diagram on the right side
         chart.getLegend().setPosition(RectangleEdge.RIGHT);
 
-        // add chart to panel
-        chartPanel.setChart(chart);
+        ChartUtils.customizeChart(chart, spDiagram);
+
+        // display chart in viewer (chart viewer will be initialized lazily)
+        if (chartViewer == null) {
+            chartViewer = new ChartViewer(chart);
+            spDiagram.getChildren().addAll(chartViewer);
+        } else {
+            chartViewer.setChart(chart);
+        }
     }
 
     private void updateOptionControls() {

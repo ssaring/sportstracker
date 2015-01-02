@@ -1,11 +1,5 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.data.Equipment;
-import de.saring.sportstracker.data.SportSubType;
-import de.saring.sportstracker.data.SportType;
-import de.saring.util.StringUtils;
-import de.saring.util.data.IdObjectList;
-import de.saring.util.gui.javafx.ColorConverter;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -13,6 +7,13 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
+
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
+import de.saring.util.StringUtils;
+import de.saring.util.data.IdObjectList;
+import de.saring.util.gui.javafx.ColorConverter;
 
 /**
  * This ViewModel class provides JavaFX properties of all SportType attributes to be edited in the SportType dialog.

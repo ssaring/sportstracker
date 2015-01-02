@@ -1,23 +1,20 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.util.unitcalc.FormatUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Window;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * Controller (MVC) class of the dialog for displaying the results for the calculated exercise statistics.
  *
  * @author Stefan Saring
  */
-@Singleton
 public class StatisticResultDialogController extends AbstractDialogController {
 
     @FXML
@@ -78,11 +75,10 @@ public class StatisticResultDialogController extends AbstractDialogController {
      * Standard c'tor for dependency injection.
      *
      * @param context the SportsTracker UI context
-     * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public StatisticResultDialogController(final STContext context, final GuiceFxmlLoader guiceFxmlLoader) {
-        super(context, guiceFxmlLoader);
+    public StatisticResultDialogController(final STContext context) {
+        super(context);
         setParentIsSwingWindow(false);
     }
 

@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  * @version 1.0
  */
 public class STMain extends SportsTracker {
+
     private static final Logger LOGGER = Logger.getLogger(STMain.class.getName());
 
     /**

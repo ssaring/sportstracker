@@ -1,7 +1,7 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.gui.STContext;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import java.io.IOException;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
@@ -17,7 +17,8 @@ import javafx.stage.Window;
 
 import org.controlsfx.validation.ValidationSupport;
 
-import java.io.IOException;
+import de.saring.sportstracker.gui.STContext;
+import de.saring.util.gui.javafx.GuiceFxmlLoader;
 
 /**
  * Base class for the dialog controllers (MVC). It supports Information and Edit type dialogs.
@@ -27,7 +28,6 @@ import java.io.IOException;
 public abstract class AbstractDialogController {
 
     protected STContext context;
-    protected GuiceFxmlLoader guiceFxmlLoader;
 
     /** ValidationSupport of tis dialog, is null in Info dialogs. */
     protected ValidationSupport validationSupport;
@@ -41,11 +41,9 @@ public abstract class AbstractDialogController {
      * Standard c'tor for dependency injection.
      *
      * @param context the SportsTracker UI context
-     * @param guiceFxmlLoader the Guice FXML loader
      */
-    public AbstractDialogController(final STContext context, final GuiceFxmlLoader guiceFxmlLoader) {
+    public AbstractDialogController(final STContext context) {
         this.context = context;
-        this.guiceFxmlLoader = guiceFxmlLoader;
     }
 
     /**
@@ -210,8 +208,8 @@ public abstract class AbstractDialogController {
 
     private Parent loadDialogContent(final String fxmlFilename) {
         try {
-            return guiceFxmlLoader.load(AbstractDialogController.class.getResource(fxmlFilename),
-                    context.getFxResources().getResourceBundle());
+            return GuiceFxmlLoader.load(AbstractDialogController.class.getResource(fxmlFilename),
+                    context.getFxResources().getResourceBundle(), this);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load the dialog FXML resource '" + fxmlFilename + "'!", e);
         }

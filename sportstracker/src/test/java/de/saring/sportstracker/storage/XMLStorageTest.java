@@ -471,21 +471,4 @@ public class XMLStorageTest {
         assertEquals(weight3.getDateTime(), LocalDateTime.of(2009, 01, 07, 20, 21, 22));
         assertEquals(74.4, weight3.getValue(), 0.0001);
     }
-
-    /**
-     * Tests for reading my "productive" exercise data for performance checking.
-     * Disabled because works only for me...
-     *
-     @Test public void testPerformance () throws STException {
-     final String path = "/home/eddie/.sportstracker/";
-
-     long lStart = System.currentTimeMillis ();
-     SportTypeList sportTypeList = storage.readSportTypeList (path + "sport-types.xml");
-     long lEnd1 = System.currentTimeMillis ();
-     ExerciseList exerciseList = storage.readExerciseList (path + "exercises.xml", sportTypeList);
-     long lEnd2 = System.currentTimeMillis ();
-
-     System.out.println ("msec for reading sport types: " + (lEnd1 - lStart));
-     System.out.println ("msec for reading exercises: " + (lEnd2 - lEnd1));
-     }*/
 }

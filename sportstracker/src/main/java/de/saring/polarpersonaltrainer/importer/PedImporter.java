@@ -87,7 +87,7 @@ public class PedImporter {
                 dryRun = true;
             }
         } catch (ParseException exp) {
-            System.out.println("Usage error: " + exp.getMessage());
+            System.err.println("Usage error: " + exp.getMessage());
             printUsage(options);
             return;
         }
@@ -119,7 +119,7 @@ public class PedImporter {
         try {
             checkSuppliedSportType(sportTypeId, sportSubTypeId);
         } catch (EVException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             return;
         }
 

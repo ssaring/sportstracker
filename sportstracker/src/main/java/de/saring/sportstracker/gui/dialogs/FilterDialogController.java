@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.controlsfx.validation.Validator;
 
@@ -28,7 +27,6 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import de.saring.util.gui.javafx.NameableStringConverter;
 
 /**
@@ -37,7 +35,6 @@ import de.saring.util.gui.javafx.NameableStringConverter;
  *
  * @author Stefan Saring
  */
-@Singleton
 public class FilterDialogController extends AbstractDialogController {
 
     private final STDocument document;
@@ -82,12 +79,10 @@ public class FilterDialogController extends AbstractDialogController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker model/document
-     * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public FilterDialogController(final STContext context, final STDocument document,
-            final GuiceFxmlLoader guiceFxmlLoader) {
-        super(context, guiceFxmlLoader);
+    public FilterDialogController(final STContext context, final STDocument document) {
+        super(context);
         this.document = document;
 
         final String resourceAll = context.getFxResources().getString("st.dlg.filter.all.text");

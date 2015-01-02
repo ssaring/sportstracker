@@ -1,11 +1,12 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.core.STOptions;
-import de.saring.util.unitcalc.FormatUtils;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+
+import de.saring.sportstracker.core.STOptions;
+import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * This ViewModel class provides JavaFX properties of all STOptions attributes to be edited in the dialog.

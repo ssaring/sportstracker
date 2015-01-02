@@ -1,12 +1,9 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.SportType;
-import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.gui.javafx.ColorConverter;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
-import de.saring.util.gui.javafx.NameableListCell;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
@@ -22,17 +19,19 @@ import javafx.stage.Window;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
-import javax.inject.Singleton;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.gui.javafx.ColorConverter;
+import de.saring.util.gui.javafx.NameableListCell;
 
 /**
  * Controller (MVC) class of the Sport Type List dialog of the SportsTracker application.
  *
  * @author Stefan Saring
  */
-@Singleton
 public class SportTypeListDialogController extends AbstractDialogController {
 
     private final STDocument document;
@@ -54,12 +53,10 @@ public class SportTypeListDialogController extends AbstractDialogController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker model/document
-     * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public SportTypeListDialogController(final STContext context, final STDocument document,
-                                         final GuiceFxmlLoader guiceFxmlLoader) {
-        super(context, guiceFxmlLoader);
+    public SportTypeListDialogController(final STContext context, final STDocument document) {
+        super(context);
         this.document = document;
     }
 

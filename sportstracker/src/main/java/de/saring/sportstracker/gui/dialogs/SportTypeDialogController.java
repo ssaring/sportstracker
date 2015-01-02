@@ -1,14 +1,9 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.data.Equipment;
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.SportSubType;
-import de.saring.sportstracker.data.SportType;
-import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.StringUtils;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
-import de.saring.util.gui.javafx.NameableListCell;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
@@ -23,20 +18,25 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
-import org.controlsfx.validation.Validator;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
+import org.controlsfx.validation.Validator;
+
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.StringUtils;
+import de.saring.util.gui.javafx.NameableListCell;
 
 /**
  * Controller (MVC) class of the Sport Type dialog for editing / adding SportType entries.
  *
  * @author Stefan Saring
  */
-@Singleton
 public class SportTypeDialogController extends AbstractDialogController {
 
     private final STDocument document;
@@ -75,12 +75,10 @@ public class SportTypeDialogController extends AbstractDialogController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker model/document
-     * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public SportTypeDialogController(final STContext context, final STDocument document,
-                                     final GuiceFxmlLoader guiceFxmlLoader) {
-        super(context, guiceFxmlLoader);
+    public SportTypeDialogController(final STContext context, final STDocument document) {
+        super(context);
         this.document = document;
         setParentIsSwingWindow(false);
     }

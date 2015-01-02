@@ -1,24 +1,11 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.exerciseviewer.data.EVExercise;
-import de.saring.exerciseviewer.gui.EVMain;
-import de.saring.exerciseviewer.parser.ExerciseParser;
-import de.saring.exerciseviewer.parser.ExerciseParserFactory;
-import de.saring.sportstracker.data.Equipment;
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.Exercise.IntensityType;
-import de.saring.sportstracker.data.SportSubType;
-import de.saring.sportstracker.data.SportType;
-import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.StringUtils;
-import de.saring.util.ValidationUtils;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
-import de.saring.util.gui.javafx.NameableStringConverter;
-import de.saring.util.gui.javafx.SpeedToStringConverter;
-import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
-import de.saring.util.unitcalc.ConvertUtils;
-import de.saring.util.unitcalc.FormatUtils;
+import java.io.File;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -34,24 +21,37 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
-import org.controlsfx.validation.ValidationResult;
-import org.controlsfx.validation.Validator;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
-import javax.inject.Singleton;
-import java.io.File;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.controlsfx.validation.ValidationResult;
+import org.controlsfx.validation.Validator;
+
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.gui.EVMain;
+import de.saring.exerciseviewer.parser.ExerciseParser;
+import de.saring.exerciseviewer.parser.ExerciseParserFactory;
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.Exercise.IntensityType;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.StringUtils;
+import de.saring.util.ValidationUtils;
+import de.saring.util.gui.javafx.NameableStringConverter;
+import de.saring.util.gui.javafx.SpeedToStringConverter;
+import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
+import de.saring.util.unitcalc.ConvertUtils;
+import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * Controller (MVC) class of the Wieght dialog for editing / adding Exercise entries.
  *
  * @author Stefan Saring
  */
-@Singleton
 public class ExerciseDialogController extends AbstractDialogController {
 
     private static final Logger LOGGER = Logger.getLogger(ExerciseDialogController.class.getName());
@@ -156,12 +156,10 @@ public class ExerciseDialogController extends AbstractDialogController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker model/document
-     * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public ExerciseDialogController(final STContext context, final STDocument document,
-                                    final GuiceFxmlLoader guiceFxmlLoader) {
-        super(context, guiceFxmlLoader);
+    public ExerciseDialogController(final STContext context, final STDocument document) {
+        super(context);
         this.document = document;
 
         equipmentNone = new Equipment(Integer.MAX_VALUE);

@@ -1,31 +1,28 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.util.gui.javafx.BindingUtils;
-import de.saring.util.unitcalc.FormatUtils;
+import java.util.stream.Stream;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Window;
+import javafx.util.StringConverter;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
-import javafx.util.StringConverter;
-
-import java.util.stream.Stream;
+import de.saring.util.gui.javafx.BindingUtils;
+import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * Controller (MVC) class of the Preferences dialog for editing the application preferences / options.
  *
  * @author Stefan Saring
  */
-@Singleton
 public class PreferencesDialogController extends AbstractDialogController {
 
     private final STDocument document;
@@ -87,12 +84,10 @@ public class PreferencesDialogController extends AbstractDialogController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker model/document
-     * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public PreferencesDialogController(final STContext context, final STDocument document,
-            final GuiceFxmlLoader guiceFxmlLoader) {
-        super(context, guiceFxmlLoader);
+    public PreferencesDialogController(final STContext context, final STDocument document) {
+        super(context);
         this.document = document;
     }
 

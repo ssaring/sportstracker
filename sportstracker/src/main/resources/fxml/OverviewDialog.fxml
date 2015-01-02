@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.embed.swing.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
@@ -28,11 +27,7 @@
             </HBox>
          </children>
       </VBox>
-      <Pane fx:id="pDiagram" prefHeight="440.0" prefWidth="900.0">
-         <children>
-           <SwingNode fx:id="snDiagram" />
-         </children>
-      </Pane>
+      <StackPane fx:id="spDiagram" prefHeight="440.0" prefWidth="900.0" />
       <VBox spacing="12.0">
          <children>
             <Label styleClass="label-header" text="%st.dlg.overview.options.text" />

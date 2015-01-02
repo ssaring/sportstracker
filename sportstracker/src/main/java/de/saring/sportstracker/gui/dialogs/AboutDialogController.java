@@ -1,21 +1,19 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.gui.STContext;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.Window;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
+
+import de.saring.sportstracker.gui.STContext;
 
 /**
  * Controller (MVC) class of the About dialog window.
  *
  * @author Stefan Saring
  */
-@Singleton
 public class AboutDialogController extends AbstractDialogController {
 
     @FXML
@@ -27,11 +25,10 @@ public class AboutDialogController extends AbstractDialogController {
      * Standard c'tor for dependency injection.
      *
      * @param context the SportsTracker UI context
-     * @param guiceFxmlLoader the Guice FXML loader
      */
     @Inject
-    public AboutDialogController(final STContext context, final GuiceFxmlLoader guiceFxmlLoader) {
-        super(context, guiceFxmlLoader);
+    public AboutDialogController(final STContext context) {
+        super(context);
     }
 
     /**
