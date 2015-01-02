@@ -1,16 +1,14 @@
 SportsTracker-TODO
 ==================
 
-- OverviewDiagram too big?
-- Warnings in OverviewDiagram
-
 JavaFX Migration:
 - CSS: can SportsTracker.css and ExerciseViewer.css be merged into one file?
   (does the relative import in FXML work?)
 - SportsTracker and ExerciseViewer: store and restore window sizes, not for dialogs (positions too?)
 - JFreeChart usage (in Overview Dialog): migration completed and tested, except:
   - the JavaFX version of JFreeChart logs CSS warnings at initial chart display, but works properly
-    (maybe a problem with Dialogs API or openjfx-dialogs, problem does not exist in ExerciseViewer)
+    (problem does not exist in ExerciseViewer)
+    => probably a JavaFX bug which will be fixed in 8u40 ( https://javafx-jira.kenai.com/browse/RT-38640 )
   - artifact is not available in the Maven Central repo, using custom build from saring.de repository meanwhile
     -> I've posted a request to the JFree forum: http://www.jfree.org/forum/viewtopic.php?f=3&t=117112
   - installation of custom build in local repository:
@@ -51,6 +49,7 @@ JavaFX Migration:
 - JavaFX Bug RT-38644: https://javafx-jira.kenai.com/browse/RT-38644 (created)
   - User can't close Dialogs with ESC when the DatePicker has the focus
   -> is planned to be fixed in JavaFX 8u40
+- inspect memory usage of SportsTracker after migration (also with multiple opened ExerciseViewers)
 
 JavaFX Migration status - completed:
 - All SportsTracker dialogs
