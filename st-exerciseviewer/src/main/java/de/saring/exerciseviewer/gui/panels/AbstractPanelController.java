@@ -15,17 +15,25 @@ import de.saring.util.gui.javafx.FxmlLoader;
  */
 public abstract class AbstractPanelController {
 
-    private EVContext context;
+    private final EVContext context;
+
     private EVDocument document;
 
     /**
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
-     * @param document the ExerciseViewer model/document
      */
-    public AbstractPanelController(final EVContext context, final EVDocument document) {
+    public AbstractPanelController(final EVContext context) {
         this.context = context;
+    }
+
+    /**
+     * Sets the ExerciseViewer model/document.
+     *
+     * @param document document instance
+     */
+    public void setDocument(final EVDocument document) {
         this.document = document;
     }
 

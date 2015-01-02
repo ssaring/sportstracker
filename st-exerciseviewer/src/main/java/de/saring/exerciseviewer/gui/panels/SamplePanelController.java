@@ -10,8 +10,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import de.saring.exerciseviewer.data.ExerciseSample;
 import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.exerciseviewer.gui.EVContext;
-import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
+
+import javax.inject.Inject;
 
 /**
  * Controller (MVC) class of the "Samples" panel, which displays all recorded samples of the exercise in a table.
@@ -42,10 +43,10 @@ public class SamplePanelController extends AbstractPanelController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
-     * @param document the ExerciseViewer model/document
      */
-    public SamplePanelController(final EVContext context, final EVDocument document) {
-        super(context, document);
+    @Inject
+    public SamplePanelController(final EVContext context) {
+        super(context);
     }
 
     @Override

@@ -8,6 +8,8 @@ import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.unitcalc.FormatUtils;
 
+import javax.inject.Inject;
+
 /**
  * Controller (MVC) class of the "Optional" panel, which displays all the optional exercise data,
  * such as speed, altitude ...
@@ -50,10 +52,10 @@ public class OptionalPanelController extends AbstractPanelController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
-     * @param document the ExerciseViewer model/document
      */
-    public OptionalPanelController(final EVContext context, final EVDocument document) {
-        super(context, document);
+    @Inject
+    public OptionalPanelController(final EVContext context) {
+        super(context);
     }
 
     @Override

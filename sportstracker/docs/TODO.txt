@@ -1,7 +1,8 @@
 SportsTracker-TODO
 ==================
 
-- Use Guice in ExerciseViewer?
+- OverviewDiagram too big?
+- Warnings in OverviewDiagram
 
 JavaFX Migration:
 - CSS: can SportsTracker.css and ExerciseViewer.css be merged into one file?

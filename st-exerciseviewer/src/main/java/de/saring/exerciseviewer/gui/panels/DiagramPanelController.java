@@ -40,10 +40,11 @@ import de.saring.exerciseviewer.data.ExerciseSample;
 import de.saring.exerciseviewer.data.HeartRateLimit;
 import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.gui.EVContext;
-import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.AppResources;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
+
+import javax.inject.Inject;
 
 /**
  * Controller (MVC) class of the "Samples" panel, which displays the exercise graphically
@@ -81,10 +82,10 @@ public class DiagramPanelController extends AbstractPanelController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
-     * @param document the ExerciseViewer model/document
      */
-    public DiagramPanelController(final EVContext context, final EVDocument document) {
-        super(context, document);
+    @Inject
+    public DiagramPanelController(final EVContext context) {
+        super(context);
 
         axisTypeStringConverter = new AxisTypeStringConverter(getContext().getFxResources(),
                 getContext().getFormatUtils());

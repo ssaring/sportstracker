@@ -19,6 +19,7 @@ import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 
+import javax.inject.Inject;
 import javax.swing.SwingUtilities;
 
 import javafx.scene.layout.StackPane;
@@ -67,10 +68,10 @@ public class TrackPanelController extends AbstractPanelController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
-     * @param document the ExerciseViewer model/document
      */
-    public TrackPanelController(final EVContext context, final EVDocument document) {
-        super(context, document);
+    @Inject
+    public TrackPanelController(final EVContext context) {
+        super(context);
     }
 
     @Override

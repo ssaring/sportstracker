@@ -19,6 +19,8 @@ import de.saring.exerciseviewer.gui.panels.SamplePanelController;
 import de.saring.exerciseviewer.gui.panels.TrackPanelController;
 import de.saring.util.gui.javafx.FxmlLoader;
 
+import javax.inject.Inject;
+
 /**
  * Main Controller (MVC) class of the ExerciseViewer dialog window.
  *
@@ -30,12 +32,18 @@ public class EVController {
 
     private final EVContext context;
 
-    private final MainPanelController mainPanelController;
-    private final OptionalPanelController optionalPanelController;
-    private final LapPanelController lapPanelController;
-    private final SamplePanelController samplePanelController;
-    private final DiagramPanelController diagramPanelController;
-    private final TrackPanelController trackPanelController;
+    @Inject
+    private MainPanelController mainPanelController;
+    @Inject
+    private OptionalPanelController optionalPanelController;
+    @Inject
+    private LapPanelController lapPanelController;
+    @Inject
+    private SamplePanelController samplePanelController;
+    @Inject
+    private DiagramPanelController diagramPanelController;
+    @Inject
+    private TrackPanelController trackPanelController;
 
     private Stage stage;
 
@@ -56,19 +64,25 @@ public class EVController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
-     * @param document the ExerciseViewer model/document
      */
-    public EVController(final EVContext context, final EVDocument document) {
+    @Inject
+    public EVController(final EVContext context) {
         this.context = context;
+    }
 
-        mainPanelController = new MainPanelController(context, document);
-        optionalPanelController = new OptionalPanelController(context, document);
-        lapPanelController = new LapPanelController(context, document);
-        samplePanelController = new SamplePanelController(context, document);
-        diagramPanelController = new DiagramPanelController(context, document);
-        trackPanelController = new TrackPanelController(context, document);
-
-        mainPanelController.setDiagramPanelController(diagramPanelController);
+    /**
+     * Sets the document/model instance of the ExerciseViewer application. Dependency
+     * injection via Guice can't be used here, see comments in EVMain.
+     *
+     * @param document document instance
+     */
+    public void setDocument(final EVDocument document) {
+        mainPanelController.setDocument(document);
+        optionalPanelController.setDocument(document);
+        lapPanelController.setDocument(document);
+        samplePanelController.setDocument(document);
+        diagramPanelController.setDocument(document);
+        trackPanelController.setDocument(document);
     }
 
     /**
@@ -105,6 +119,9 @@ public class EVController {
     }
 
     private void setupPanels() {
+
+        // Guice dependency injection can't be used here, the same instance is needed there
+        mainPanelController.setDiagramPanelController(diagramPanelController);
 
         tabMain.setContent(mainPanelController.loadAndSetupPanelContent());
         tabOptional.setContent(optionalPanelController.loadAndSetupPanelContent());

@@ -26,23 +26,24 @@ public class EVMain {
     private static final String DIALOG_NAME = "ExerciseViewer";
 
     private final EVContext context;
-    private final EVDocument document;
     private final EVController controller;
+    private final EVDocument document;
 
     /**
      * Standard c'tor.
      *
      * @param context the ExerciseViewer context
+     * @param controller the ExerciseViewer controller
      */
     @Inject
-    public EVMain(final EVContext context) {
+    public EVMain(final EVContext context, final EVController controller) {
         this.context = context;
+        this.controller = controller;
 
-        // Guice can't be used inside ExerciseViewer for Dependency Injection, it doesn't support a window scope
-        // (ExerciseViewer can be started multiple times, each instance needs it own document and controller).
-        // Workaround: manual Dependency Injection.
+        // Guice can't be used for the document class, it doesn't support a window scope
+        // (ExerciseViewer can be started multiple times, each instance has it's own document)
         this.document = new EVDocument();
-        this.controller = new EVController(context, document);
+        controller.setDocument(document);
     }
 
     /**

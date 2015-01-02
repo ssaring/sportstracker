@@ -11,9 +11,10 @@ import javafx.scene.control.Label;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.HeartRateLimit;
 import de.saring.exerciseviewer.gui.EVContext;
-import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.unitcalc.FormatUtils;
 import javafx.util.StringConverter;
+
+import javax.inject.Inject;
 
 /**
  * Controller (MVC) class of the "Main" panel, which displays all the main exercise data.
@@ -71,10 +72,10 @@ public class MainPanelController extends AbstractPanelController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
-     * @param document the ExerciseViewer model/document
      */
-    public MainPanelController(final EVContext context, final EVDocument document) {
-        super(context, document);
+    @Inject
+    public MainPanelController(final EVContext context) {
+        super(context);
     }
 
     /**
