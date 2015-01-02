@@ -20,7 +20,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 
 import javax.inject.Inject;
-import javax.swing.SwingUtilities;
 
 import javafx.scene.layout.StackPane;
 import org.jdesktop.swingx.JXMapKit;
@@ -33,7 +32,6 @@ import de.saring.exerciseviewer.data.ExerciseSample;
 import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.Position;
 import de.saring.exerciseviewer.gui.EVContext;
-import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**
@@ -89,13 +87,15 @@ public class TrackPanelController extends AbstractPanelController {
             snMapViewer = new SwingNode();
             spTrack.getChildren().add(snMapViewer);
 
-            SwingUtilities.invokeLater(this::setupMapViewer);
+            javax.swing.SwingUtilities.invokeLater(this::setupMapViewer);
         }
     }
 
     private void setupMapViewer() {
         mapKit = new JXMapKit();
         mapKit.setDefaultProvider(JXMapKit.DefaultProviders.OpenStreetMaps);
+        // specify border here instead in FXML to prevent a drawing error in Swing->JavaFX integration
+        mapKit.setBorder(new javax.swing.border.EmptyBorder(8, 8, 8, 8));
 
         // add MouseMotionListener to the map for nearby sample lookup and tooltip creation
         mapKit.getMainMap().addMouseMotionListener(new MouseMotionAdapter() {
@@ -119,7 +119,7 @@ public class TrackPanelController extends AbstractPanelController {
             EVExercise exercise = getDocument().getExercise();
             if (exercise.getRecordingMode().isLocation()) {
 
-                SwingUtilities.invokeLater(() -> {
+                javax.swing.SwingUtilities.invokeLater(() -> {
                     List<GeoPosition> sampleGeoPositions = createSampleGeoPositionList(exercise);
                     List<GeoPosition> lapGeoPositions = createLapGeoPositionList(exercise);
 
