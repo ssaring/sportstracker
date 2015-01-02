@@ -18,7 +18,7 @@ import javafx.stage.Window;
 import org.controlsfx.validation.ValidationSupport;
 
 import de.saring.sportstracker.gui.STContext;
-import de.saring.util.gui.javafx.GuiceFxmlLoader;
+import de.saring.util.gui.javafx.FxmlLoader;
 
 /**
  * Base class for the dialog controllers (MVC). It supports Information and Edit type dialogs.
@@ -208,7 +208,7 @@ public abstract class AbstractDialogController {
 
     private Parent loadDialogContent(final String fxmlFilename) {
         try {
-            return GuiceFxmlLoader.load(AbstractDialogController.class.getResource(fxmlFilename),
+            return FxmlLoader.load(AbstractDialogController.class.getResource(fxmlFilename),
                     context.getFxResources().getResourceBundle(), this);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load the dialog FXML resource '" + fxmlFilename + "'!", e);

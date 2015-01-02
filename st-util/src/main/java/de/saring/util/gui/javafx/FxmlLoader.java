@@ -8,28 +8,30 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 /**
- * Enhances the JavaFX FXMLLoader for using Guice to inject the controller instances.
+ * Util class with helper methods for loading FXML layouts.
  *
  * @author Stefan Saring
  */
-public final class GuiceFxmlLoader {
+public final class FxmlLoader {
 
-    private GuiceFxmlLoader() {
+    private FxmlLoader() {
     }
 
-    // TODO
     /**
      * Loads the scene object hierarchy from the specified FXML document. This is a wrapper
-     * for the {@link FXMLLoader#load(URL, ResourceBundle)} method. The controller specified
-     * in the FXML file will be provided by the Guice Injector.
+     * for the {@link FXMLLoader#load(URL, ResourceBundle)} method. It uses the passed controller
+     * instead of creating a new controller class specified in the FXML file. The passed controller
+     * needs to be an instance of the same class.
      *
      * @param url URL of the FXML resource
      * @param resBundle the ResourceBundle to use for the FXML document
+     * @param controller controller to be used for the loaded hierarchy
      *
      * @return the loaded scene object hierarchy
      * @throws IOException
      */
-    public static Parent load(final URL url, final ResourceBundle resBundle, final Object controller) throws IOException {
+    public static Parent load(final URL url, final ResourceBundle resBundle, final Object controller)
+            throws IOException {
 
         final FXMLLoader loader = new FXMLLoader();
         loader.setLocation(url);
