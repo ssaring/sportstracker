@@ -2,8 +2,6 @@ package de.saring.util.gui.jfreechart;
 
 import java.awt.Color;
 
-import javafx.scene.layout.Pane;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 
@@ -18,19 +16,17 @@ public final class ChartUtils {
     }
 
     /**
-     * Customizes the chart for SportsTracker requirements. The chart background
-     * will be the same as the parent component background. The plot background
+     * Customizes the chart for SportsTracker requirements. The chart background is
+     * transparent, so it uses the parent component background. The plot background
      * is white and the gridlines are grey. The diagram will use the default font for
      * JavaFX labels, the default chart fonts are much bigger.
      *
      * @param chart the chart component
-     * @param parent the parent component of the chart
      */
-    public static void customizeChart(JFreeChart chart, Pane parent) {
+    public static void customizeChart(JFreeChart chart) {
 
-        // TODO currently there is no API to get the parent background color defined in CSS
-        // => use static color of JavaFX Modena skin meanwhile
-        chart.setBackgroundPaint(new Color(244, 244, 244));
+        // set transparent background paint, so the background color of the parent is used
+        chart.setBackgroundPaint(new Color(1.0f, 1.0f, 1.0f, 0f));
 
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setBackgroundPaint(Color.WHITE);

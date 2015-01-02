@@ -345,7 +345,7 @@ public class DiagramPanelController extends AbstractPanelController {
             }
         }
 
-        ChartUtils.customizeChart(chart, spDiagram);
+        ChartUtils.customizeChart(chart);
 
         // display chart in viewer (chart viewer will be initialized lazily)
         if (chartViewer == null) {

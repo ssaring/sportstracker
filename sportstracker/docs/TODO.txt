@@ -1,6 +1,8 @@
 SportsTracker-TODO
 ==================
 
+- Use Guice in ExerciseViewer?
+
 JavaFX Migration:
 - CSS: can SportsTracker.css and ExerciseViewer.css be merged into one file?
   (does the relative import in FXML work?)
@@ -13,7 +15,6 @@ JavaFX Migration:
   - installation of custom build in local repository:
     mvn install:install-file -Dfile=jfreechart-1.0.19.jar -DgroupId=org.jfree
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
-  - remove deprecated method in ChartUtils
 - ExerciseViewer: Done & tested
   - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
     => reason: Swing/JavaFX workarounds in AbstractDialogController#centerDialogOnSwingFrame()

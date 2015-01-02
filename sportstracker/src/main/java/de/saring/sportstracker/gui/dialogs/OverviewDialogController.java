@@ -319,7 +319,7 @@ public class OverviewDialogController extends AbstractDialogController {
         // display legend next to the diagram on the right side
         chart.getLegend().setPosition(RectangleEdge.RIGHT);
 
-        ChartUtils.customizeChart(chart, spDiagram);
+        ChartUtils.customizeChart(chart);
 
         // display chart in viewer (chart viewer will be initialized lazily)
         if (chartViewer == null) {
