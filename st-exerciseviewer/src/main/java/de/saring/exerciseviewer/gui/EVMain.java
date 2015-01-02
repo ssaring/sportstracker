@@ -43,6 +43,7 @@ public class EVMain {
         // The ExerciseViewer sub-application can be started multiple times in parallel, each with its
         // own document and controller objects which must be separated for all ExerciseViewer instances.
         // => Guice does not provide such a "Window" scope, so each ExerciseViewer uses its own Injector
+        // => so each ExerciseViewer has it's own injected @Singleton components
         final Injector injector = Guice.createInjector(new AbstractModule() {
             @Override
             public void configure() {

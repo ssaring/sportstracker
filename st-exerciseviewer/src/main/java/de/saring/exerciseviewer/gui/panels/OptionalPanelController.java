@@ -9,6 +9,7 @@ import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.unitcalc.FormatUtils;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Controller (MVC) class of the "Optional" panel, which displays all the optional exercise data,
@@ -16,6 +17,7 @@ import javax.inject.Inject;
  *
  * @author Stefan Saring
  */
+@Singleton
 public class OptionalPanelController extends AbstractPanelController {
 
     @FXML

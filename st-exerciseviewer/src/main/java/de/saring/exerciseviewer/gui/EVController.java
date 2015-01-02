@@ -105,9 +105,6 @@ public class EVController {
 
     private void setupPanels() {
 
-        // Guice dependency injection can't be used here, the same instance is needed there
-        mainPanelController.setDiagramPanelController(diagramPanelController);
-
         tabMain.setContent(mainPanelController.loadAndSetupPanelContent());
         tabOptional.setContent(optionalPanelController.loadAndSetupPanelContent());
         tabLaps.setContent(lapPanelController.loadAndSetupPanelContent());

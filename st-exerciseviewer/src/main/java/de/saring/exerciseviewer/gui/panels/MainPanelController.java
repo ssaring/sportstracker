@@ -16,14 +16,17 @@ import de.saring.util.unitcalc.FormatUtils;
 import javafx.util.StringConverter;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Controller (MVC) class of the "Main" panel, which displays all the main exercise data.
  *
  * @author Stefan Saring
  */
+@Singleton
 public class MainPanelController extends AbstractPanelController {
 
+    @Inject
     private DiagramPanelController diagramPanelController;
 
     @FXML
@@ -78,15 +81,6 @@ public class MainPanelController extends AbstractPanelController {
     @Inject
     public MainPanelController(final EVContext context, final EVDocument document) {
         super(context, document);
-    }
-
-    /**
-     * Sets the diagram panel controller which is needed for hertrage range updates.
-     *
-     * @param diagramPanelController the diagram panel controller
-     */
-    public void setDiagramPanelController(final DiagramPanelController diagramPanelController) {
-        this.diagramPanelController = diagramPanelController;
     }
 
     @Override

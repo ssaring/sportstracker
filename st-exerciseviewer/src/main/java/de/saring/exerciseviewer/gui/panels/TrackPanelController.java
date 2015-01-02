@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import javafx.scene.layout.StackPane;
 import org.jdesktop.swingx.JXMapKit;
@@ -44,6 +45,7 @@ import de.saring.util.unitcalc.FormatUtils;
  *
  * @author Stefan Saring
  */
+@Singleton
 public class TrackPanelController extends AbstractPanelController {
 
     private static final Color COLOR_START = new Color(180, 255, 180);

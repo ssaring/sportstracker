@@ -14,12 +14,14 @@ import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Controller (MVC) class of the "Samples" panel, which displays all recorded samples of the exercise in a table.
  *
  * @author Stefan Saring
  */
+@Singleton
 public class SamplePanelController extends AbstractPanelController {
 
     @FXML
