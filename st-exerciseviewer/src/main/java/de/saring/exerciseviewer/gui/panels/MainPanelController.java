@@ -3,6 +3,7 @@ package de.saring.exerciseviewer.gui.panels;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
+import de.saring.exerciseviewer.gui.EVDocument;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -72,10 +73,11 @@ public class MainPanelController extends AbstractPanelController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
+     * @param document the ExerciseViewer document / model
      */
     @Inject
-    public MainPanelController(final EVContext context) {
-        super(context);
+    public MainPanelController(final EVContext context, final EVDocument document) {
+        super(context, document);
     }
 
     /**

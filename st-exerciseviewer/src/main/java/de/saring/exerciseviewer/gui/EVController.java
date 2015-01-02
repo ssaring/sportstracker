@@ -71,21 +71,6 @@ public class EVController {
     }
 
     /**
-     * Sets the document/model instance of the ExerciseViewer application. Dependency
-     * injection via Guice can't be used here, see comments in EVMain.
-     *
-     * @param document document instance
-     */
-    public void setDocument(final EVDocument document) {
-        mainPanelController.setDocument(document);
-        optionalPanelController.setDocument(document);
-        lapPanelController.setDocument(document);
-        samplePanelController.setDocument(document);
-        diagramPanelController.setDocument(document);
-        trackPanelController.setDocument(document);
-    }
-
-    /**
      * Initializes and displays the ExerciseViewer dialog.
      *
      * @param stage the Stage to show the dialog in

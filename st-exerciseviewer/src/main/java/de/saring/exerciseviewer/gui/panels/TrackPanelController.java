@@ -15,6 +15,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.saring.exerciseviewer.gui.EVDocument;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -66,10 +67,11 @@ public class TrackPanelController extends AbstractPanelController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
+     * @param document the ExerciseViewer document / model
      */
     @Inject
-    public TrackPanelController(final EVContext context) {
-        super(context);
+    public TrackPanelController(final EVContext context, final EVDocument document) {
+        super(context, document);
     }
 
     @Override

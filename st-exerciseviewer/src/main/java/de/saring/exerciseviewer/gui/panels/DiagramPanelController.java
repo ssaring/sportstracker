@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.gui.jfreechart.ChartUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -82,10 +83,11 @@ public class DiagramPanelController extends AbstractPanelController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
+     * @param document the ExerciseViewer document / model
      */
     @Inject
-    public DiagramPanelController(final EVContext context) {
-        super(context);
+    public DiagramPanelController(final EVContext context, final EVDocument document) {
+        super(context, document);
 
         axisTypeStringConverter = new AxisTypeStringConverter(getContext().getFxResources(),
                 getContext().getFormatUtils());

@@ -3,6 +3,9 @@ package de.saring.exerciseviewer.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -13,9 +16,9 @@ import javax.inject.Inject;
 import de.saring.exerciseviewer.core.EVOptions;
 
 /**
- * This is the main class of the ExerciseViewer which start the "sub-application"
- * (is a child-dialog of the parent frame). It creates the document and the controller
- * instances of ExerciseViewer.
+ * This is the main class of the ExerciseViewer "sub-application" (is a child-dialog of the parent frame).
+ * It creates all the components via Guice dependency injection and starts the ExerciseViewer for the passed
+ * exercise.
  *
  * @author Stefan Saring
  */
@@ -25,25 +28,33 @@ public class EVMain {
 
     private static final String DIALOG_NAME = "ExerciseViewer";
 
-    private final EVContext context;
-    private final EVController controller;
     private final EVDocument document;
+    private final EVController controller;
+    private final EVContext context;
 
     /**
      * Standard c'tor.
      *
      * @param context the ExerciseViewer context
-     * @param controller the ExerciseViewer controller
      */
     @Inject
-    public EVMain(final EVContext context, final EVController controller) {
-        this.context = context;
-        this.controller = controller;
+    public EVMain(final EVContext context) {
 
-        // Guice can't be used for the document class, it doesn't support a window scope
-        // (ExerciseViewer can be started multiple times, each instance has it's own document)
-        this.document = new EVDocument();
-        controller.setDocument(document);
+        // The ExerciseViewer sub-application can be started multiple times in parallel, each with its
+        // own document and controller objects which must be separated for all ExerciseViewer instances.
+        // => Guice does not provide such a "Window" scope, so each ExerciseViewer uses its own Injector
+        final Injector injector = Guice.createInjector(new AbstractModule() {
+            @Override
+            public void configure() {
+                // use context provided by the SportsTracker application
+                bind(EVContext.class).toInstance(context);
+            }
+        });
+
+        // get the ExerciseViewer components via dependency injection
+        this.document = injector.getInstance(EVDocument.class);
+        this.controller = injector.getInstance(EVController.class);
+        this.context = injector.getInstance(EVContext.class);
     }
 
     /**

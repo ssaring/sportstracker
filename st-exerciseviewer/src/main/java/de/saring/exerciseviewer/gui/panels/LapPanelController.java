@@ -2,6 +2,7 @@ package de.saring.exerciseviewer.gui.panels;
 
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.gui.javafx.NumberCellFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -56,10 +57,11 @@ public class LapPanelController extends AbstractPanelController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
+     * @param document the ExerciseViewer document / model
      */
     @Inject
-    public LapPanelController(final EVContext context) {
-        super(context);
+    public LapPanelController(final EVContext context, final EVDocument document) {
+        super(context, document);
     }
 
     @Override

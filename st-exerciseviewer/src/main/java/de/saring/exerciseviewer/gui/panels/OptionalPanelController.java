@@ -52,10 +52,11 @@ public class OptionalPanelController extends AbstractPanelController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
+     * @param document the ExerciseViewer document / model
      */
     @Inject
-    public OptionalPanelController(final EVContext context) {
-        super(context);
+    public OptionalPanelController(final EVContext context, final EVDocument document) {
+        super(context, document);
     }
 
     @Override

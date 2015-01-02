@@ -1,5 +1,6 @@
 package de.saring.exerciseviewer.gui.panels;
 
+import de.saring.exerciseviewer.gui.EVDocument;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -43,10 +44,11 @@ public class SamplePanelController extends AbstractPanelController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
+     * @param document the ExerciseViewer document / model
      */
     @Inject
-    public SamplePanelController(final EVContext context) {
-        super(context);
+    public SamplePanelController(final EVContext context, final EVDocument document) {
+        super(context, document);
     }
 
     @Override
