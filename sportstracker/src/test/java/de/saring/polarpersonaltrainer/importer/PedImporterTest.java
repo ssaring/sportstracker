@@ -17,15 +17,18 @@ import static org.junit.Assert.assertTrue;
 public class PedImporterTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
     @Before
     public void setUp() {
         System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
     }
 
     @After
     public void cleanUpStreams() {
         System.setOut(null);
+        System.setErr(null);
     }
 
     /**
@@ -35,7 +38,7 @@ public class PedImporterTest {
     public void testRequiredArgs() {
         String[] args = null;
         PedImporter.main(args);
-        assertTrue(outContent.toString().startsWith("Usage error:"));
+        assertTrue(errContent.toString().startsWith("Usage error:"));
     }
 
     /**
@@ -45,7 +48,7 @@ public class PedImporterTest {
     public void testWrongSportType() {
         String[] args = {"-n", "-f", "../st-exerciseviewer/misc/testdata/polarpersonaltrainer/polar-ped-sample.ped", "-d", "misc/polarpersonaltrainer-importer/testdata", "-sportType", "5"};
         PedImporter.main(args);
-        assertTrue(outContent.toString().startsWith("sport-type id 5 not found"));
+        assertTrue(errContent.toString().startsWith("sport-type id 5 not found"));
     }
 
     /**
@@ -55,7 +58,7 @@ public class PedImporterTest {
     public void testWrongSportSubType() {
         String[] args = {"-n", "-f", "../st-exerciseviewer/misc/testdata/polarpersonaltrainer/polar-ped-sample.ped", "-d", "misc/polarpersonaltrainer-importer/testdata", "-sportSubType", "6"};
         PedImporter.main(args);
-        assertTrue(outContent.toString().startsWith("sport-subtype id 6 not found"));
+        assertTrue(errContent.toString().startsWith("sport-subtype id 6 not found"));
     }
 
     /**
