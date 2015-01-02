@@ -2,6 +2,7 @@ package de.saring.polarpersonaltrainer.importer;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -19,6 +20,9 @@ public class PedImporterTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
+    private final PrintStream defaultOut = System.out;
+    private final PrintStream defaulErr = System.err;
+
     @Before
     public void setUp() {
         System.setOut(new PrintStream(outContent));
@@ -27,8 +31,8 @@ public class PedImporterTest {
 
     @After
     public void cleanUpStreams() {
-        System.setOut(null);
-        System.setErr(null);
+        System.setOut(defaultOut);
+        System.setErr(defaulErr);
     }
 
     /**
