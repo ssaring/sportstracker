@@ -2,11 +2,11 @@ package de.saring.exerciseviewer.gui.panels;
 
 import java.io.IOException;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.exerciseviewer.gui.EVDocument;
+import de.saring.util.gui.javafx.FxmlLoader;
 
 /**
  * Abstract Controller (MVC) base class of for all ExerciseViewer panels.
@@ -39,12 +39,8 @@ public abstract class AbstractPanelController {
         Parent root;
 
         try {
-            // Guice and so GuiceLoader can't be used here, see comments in EVMain
-            final FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(this.getClass().getResource(fxmlFilename));
-            loader.setResources(context.getFxResources().getResourceBundle());
-            loader.setControllerFactory(controllerClass -> this);
-            root = loader.load();
+            root = FxmlLoader.load(this.getClass().getResource(fxmlFilename), context.getFxResources()
+                    .getResourceBundle(), this);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load the FXML resource '" + fxmlFilename + "'!", e);
         }

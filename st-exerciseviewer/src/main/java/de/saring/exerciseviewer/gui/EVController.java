@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -18,6 +17,7 @@ import de.saring.exerciseviewer.gui.panels.MainPanelController;
 import de.saring.exerciseviewer.gui.panels.OptionalPanelController;
 import de.saring.exerciseviewer.gui.panels.SamplePanelController;
 import de.saring.exerciseviewer.gui.panels.TrackPanelController;
+import de.saring.util.gui.javafx.FxmlLoader;
 
 /**
  * Main Controller (MVC) class of the ExerciseViewer dialog window.
@@ -82,13 +82,8 @@ public class EVController {
         // load dialog UI from FXML
         Parent root;
         try {
-            // Guice and so GuiceLoader can't be used here, see comments in EVMain
-            // (otherwise there are multiple controller instances per view)
-            final FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(EVController.class.getResource(FXML_FILE));
-            loader.setResources(context.getFxResources().getResourceBundle());
-            loader.setControllerFactory(controllerClass -> this);
-            root = loader.load();
+            root = FxmlLoader.load(EVController.class.getResource(FXML_FILE), context.getFxResources()
+                    .getResourceBundle(), this);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load the FXML resource '" + FXML_FILE + "'!", e);
         }
