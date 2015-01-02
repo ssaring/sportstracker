@@ -20,12 +20,14 @@ import de.saring.exerciseviewer.gui.panels.TrackPanelController;
 import de.saring.util.gui.javafx.FxmlLoader;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Main Controller (MVC) class of the ExerciseViewer dialog window.
  *
  * @author Stefan Saring
  */
+@Singleton
 public class EVController {
 
     private static final String FXML_FILE = "/fxml/ExerciseViewer.fxml";
