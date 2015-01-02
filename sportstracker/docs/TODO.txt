@@ -5,13 +5,14 @@ JavaFX Migration:
 - CSS: can SportsTracker.css and ExerciseViewer.css be merged into one file?
   (does the relative import in FXML work?)
 - SportsTracker and ExerciseViewer: store and restore window sizes, not for dialogs (positions too?)
-- Overview Dialog: migration completed and tested, except:
-  - use JavaFX version of JFreeChart (see TODOs and DiagramPaneController)
+- JFreeChart usage (in Overview Dialog): migration completed and tested, except:
+  - the JavaFX version of JFreeChart logs CSS warnings at initial chart display, but works properly
+    (maybe a problem with Dialogs API or openjfx-dialogs, problem does not exist in ExerciseViewer)
   - artifact is not available in the Maven Central repo, using custom build from saring.de repository meanwhile
-    - installation of custom build in local repository:
-      mvn install:install-file -Dfile=jfreechart-1.0.19.jar -DgroupId=org.jfree
-        -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
-  - I've posted a request to the JFree forum: http://www.jfree.org/forum/viewtopic.php?f=3&t=117112
+    -> I've posted a request to the JFree forum: http://www.jfree.org/forum/viewtopic.php?f=3&t=117112
+  - installation of custom build in local repository:
+    mvn install:install-file -Dfile=jfreechart-1.0.19.jar -DgroupId=org.jfree
+      -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
   - remove deprecated method in ChartUtils
 - ExerciseViewer: Done & tested
   - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
@@ -39,9 +40,6 @@ JavaFX Migration:
        (see https://bitbucket.org/controlsfx/controlsfx/issue/345/unable-to-change-dialog-position)
   - the Windows taskbar also shows an Icon for the transparent dummy JavaFX
     Stage -> can this be hidden?
-- AboutDialog (proof of concept for dialog migration)
-  - ControlsFX Bug I18N: Close-action in dialogs has umlaut errors in "Schließen"
-    -> seems to be fixed in upcoming ControlsFX 8.0.7
 - Use Maven JavaFX Plugin 8.1, see details in
   http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
 - SportType: use JavaFX Color object when migration of main ST window completed
