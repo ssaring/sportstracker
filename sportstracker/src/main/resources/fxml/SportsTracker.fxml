@@ -45,6 +45,89 @@
                             </tooltip>
                         </Button>
                         <Separator />
+                        <Button fx:id="btCalendarView" mnemonicParsing="false" onAction="#onCalendarView" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.calendar_view.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btExerciseListView" mnemonicParsing="false" onAction="#onExerciseListView" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.exercise_list_view.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btNoteListView" mnemonicParsing="false" onAction="#onNoteListView" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.note_list_view.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btWeightListView" mnemonicParsing="false" onAction="#onWeightListView" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.weight_list_view.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Separator />
+                        <Button fx:id="btFilterExercises" mnemonicParsing="false" onAction="#onFilterExercises" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.filter_exercises.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btFilterDisable" mnemonicParsing="false" onAction="#onFilterDisable" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.filter_disable.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Separator />
+                        <Button fx:id="btAddExercise" mnemonicParsing="false" onAction="#onAddExercise" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.exercise_add.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btAddNote" mnemonicParsing="false" onAction="#onAddNote" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.note_add.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btAddWeight" mnemonicParsing="false" onAction="#onAddWeight" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.weight_add.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btEditEntry" mnemonicParsing="false" onAction="#onEditEntry" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.entry_edit.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btCopyEntry" mnemonicParsing="false" onAction="#onCopyEntry" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.entry_copy.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btDeleteEntry" mnemonicParsing="false" onAction="#onDeleteEntry" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.entry_delete.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btViewHrm" mnemonicParsing="false" onAction="#onViewHrmFile" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.view_hrm.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Separator />
+                        <Button fx:id="btEditSportTypes" mnemonicParsing="false" onAction="#onEditSportTypes" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.sporttype_editor.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btStatistics" mnemonicParsing="false" onAction="#onStatistics" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.statistics.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btOverviewDiagram" mnemonicParsing="false" onAction="#onOverviewDiagram" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.overview_diagram.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
                     </items>
                 </ToolBar>
             </children>

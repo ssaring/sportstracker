@@ -43,3 +43,67 @@
 #btPrint {
     -fx-graphic: url("../icons/24/gtk-print.png");
 }
+
+#btCalendarView {
+    -fx-graphic: url("../icons/24/st-calendar.png");
+}
+
+#btExerciseListView {
+    -fx-graphic: url("../icons/24/st-exercise.png");
+}
+
+#btNoteListView {
+    -fx-graphic: url("../icons/24/st-note.png");
+}
+
+#btWeightListView {
+    -fx-graphic: url("../icons/24/st-weight.png");
+}
+
+#btFilterExercises {
+    -fx-graphic: url("../icons/24/gtk-zoom-fit.png");
+}
+
+#btFilterDisable {
+    -fx-graphic: url("../icons/24/gtk-zoom-out.png");
+}
+
+#btAddExercise {
+    -fx-graphic: url("../icons/24/st-exercise-add.png");
+}
+
+#btAddNote {
+    -fx-graphic: url("../icons/24/st-note-add.png");
+}
+
+#btAddWeight {
+    -fx-graphic: url("../icons/24/st-weight-add.png");
+}
+
+#btEditEntry {
+    -fx-graphic: url("../icons/24/gtk-edit.png");
+}
+
+#btCopyEntry {
+    -fx-graphic: url("../icons/24/gtk-copy.png");
+}
+
+#btDeleteEntry {
+    -fx-graphic: url("../icons/24/gtk-remove.png");
+}
+
+#btViewHrm {
+    -fx-graphic: url("../icons/24/st-hrm.png");
+}
+
+#btEditSportTypes {
+    -fx-graphic: url("../icons/24/gtk-properties.png");
+}
+
+#btStatistics {
+    -fx-graphic: url("../icons/24/st-statistics.png");
+}
+
+#btOverviewDiagram {
+    -fx-graphic: url("../icons/24/st-diagram.png");
+}

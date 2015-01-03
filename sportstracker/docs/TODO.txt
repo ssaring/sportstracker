@@ -4,7 +4,8 @@ SportsTracker-TODO
 JavaFX Migration:
 - SportsTracker main window:
   - FXML:
-    - started with menu and toolbar (not completed)
+    - menu: started, not completed
+    - toolbar: completed
     - update resources for key shortcuts, add changes to I18N or fix all translations
     - test on Windows, also Key shortcuts
 - CSS: can SportsTracker.css and ExerciseViewer.css be merged into one file?
