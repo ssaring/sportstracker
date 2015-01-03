@@ -4,10 +4,17 @@ SportsTracker-TODO
 JavaFX Migration:
 - SportsTracker main window:
   - FXML:
-    - menu: started, not completed
+    - menu: completed
     - toolbar: completed
-    - update resources for key shortcuts, add changes to I18N or fix all translations
-    - test on Windows, also Key shortcuts
+    - I18N: update resources for menu item key shortcuts in all translations (done for english) (_ instead of &)
+      - remove unused shortcut resources
+    - view area: missing
+    - status bar: completed, test with long messages
+    - test UI on Windows, also Key shortcuts (CTRL + ? on Windows, Apple + ? on Mac)
+    - add special support for Mac menu items (Preferences, About, ...)
+  - Controller: TODO
+    - add concept of actions which bundle menu items, toolbar buttons, context menu items
+      (see http://fxexperience.com/controlsfx/features/#actions, othwise bind disabled-property of same menu items)
 - CSS: can SportsTracker.css and ExerciseViewer.css be merged into one file?
   (does the relative import in FXML work?)
 - SportsTracker and ExerciseViewer: store and restore window sizes, not for dialogs (positions too?)
