@@ -13,3 +13,33 @@
 .tabpane-bordered {
     -fx-border-color: #c0c0c0;
 }
+
+/*******************************************/
+/*   ToolBar styles                        */
+/*******************************************/
+
+/* Toolbar button style: transparent borderless buttons with a small padding */
+.toolbarButton {
+    -fx-padding: 4 6;
+    -fx-background-color: transparent, transparent, transparent, transparent;
+}
+
+.toolbarButton:hover{
+    -fx-background-color: transparent, rgba(0,0,0,.1), rgba(0,0,0,.1), transparent;
+}
+
+.toolbarButton:armed {
+    -fx-background-color: transparent, rgba(0,0,0,.2), rgba(0,0,0,.2), transparent;
+}
+
+#btOpenHrmFile {
+    -fx-graphic: url("../icons/24/gtk-open.png");
+}
+
+#btSave {
+    -fx-graphic: url("../icons/24/gtk-save.png");
+}
+
+#btPrint {
+    -fx-graphic: url("../icons/24/gtk-print.png");
+}

@@ -2,6 +2,11 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- SportsTracker main window:
+  - FXML:
+    - started with menu and toolbar (not completed)
+    - update resources for key shortcuts, add changes to I18N or fix all translations
+    - test on Windows, also Key shortcuts
 - CSS: can SportsTracker.css and ExerciseViewer.css be merged into one file?
   (does the relative import in FXML work?)
 - SportsTracker and ExerciseViewer: store and restore window sizes, not for dialogs (positions too?)

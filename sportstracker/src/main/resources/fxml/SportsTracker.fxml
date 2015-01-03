@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="rootPane" stylesheets="@SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.STControllerImpl">
+    <center>
+        <TreeView fx:id="tvFooBar" prefHeight="400.0" prefWidth="600.0">
+            <BorderPane.margin>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            </BorderPane.margin>
+        </TreeView>
+    </center>
+    <top>
+        <VBox fillWidth="true" prefHeight="-1.0">
+            <children>
+                <MenuBar useSystemMenuBar="true">
+                    <menus>
+                        <Menu mnemonicParsing="true" text="%st.view.file.text">
+                            <items>
+                                <MenuItem mnemonicParsing="true" onAction="#onOpenHrmFile" text="%st.view.open_exerciseviewer.Action.text" />
+                                <MenuItem fx:id="miSave" mnemonicParsing="true" onAction="#onSave" text="%st.view.save.Action.text" />
+                                <MenuItem fx:id="miPrint" mnemonicParsing="true" onAction="#onPrint" text="%st.view.print.Action.text" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <ToolBar>
+                    <items>
+                        <Button fx:id="btOpenHrmFile" mnemonicParsing="false" onAction="#onOpenHrmFile" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.open_exerciseviewer.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btSave" mnemonicParsing="false" onAction="#onSave" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.save.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btPrint" mnemonicParsing="false" onAction="#onPrint" styleClass="toolbarButton" text="">
+                            <tooltip>
+                                <Tooltip text="%st.view.print.Action.shortDescription" />
+                            </tooltip>
+                        </Button>
+                        <Separator />
+                    </items>
+                </ToolBar>
+            </children>
+        </VBox>
+    </top>
+</BorderPane>
