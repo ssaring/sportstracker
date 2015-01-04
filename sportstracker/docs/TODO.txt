@@ -8,9 +8,12 @@ JavaFX Migration:
     - view area: missing
     - status bar: completed, test with long messages
     - add special support for Mac menu items (Preferences, About, ...)
-  - Controller: TODO
+  - STDocument:
+    - add support for persistent options (see TODOs)
+  - STController: TODO
     - add concept of actions which bundle menu items, toolbar buttons, context menu items?
       (see http://fxexperience.com/controlsfx/features/#actions, othwise bind disabled-property of same menu items)
+  - remove old Swing based UI classes (misc/gui-swing) and STMain.properties
 - CSS: can SportsTracker.css and ExerciseViewer.css be merged into one file?
   (does the relative import in FXML work?)
 - SportsTracker and ExerciseViewer: store and restore window sizes, not for dialogs (positions too?)

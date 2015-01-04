@@ -12,7 +12,6 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import org.controlsfx.validation.ValidationSupport;
@@ -32,9 +31,6 @@ public abstract class AbstractDialogController {
     /** ValidationSupport of tis dialog, is null in Info dialogs. */
     protected ValidationSupport validationSupport;
 
-    // TODO: remove this flag when the main window has been migrated to JavaFX
-    private boolean parentIsSwingWindow = true;
-
     private Runnable afterCloseBehavior;
 
     /**
@@ -44,16 +40,6 @@ public abstract class AbstractDialogController {
      */
     public AbstractDialogController(final STContext context) {
         this.context = context;
-    }
-
-    /**
-     * Sets the flag which defines whether the parent window of this dialog is a Swing window (default) or not.
-     * Swing parents need extra workarounds. This method needs to be called before the show...() methods.
-     *
-     * @param parentIsSwingWindow flag for parent window type
-     */
-    public void setParentIsSwingWindow(final boolean parentIsSwingWindow) {
-        this.parentIsSwingWindow = parentIsSwingWindow;
     }
 
     /**
@@ -76,21 +62,18 @@ public abstract class AbstractDialogController {
      */
     protected void showInfoDialog(final String fxmlFilename, final Window parent, final String title) {
 
-        executeOnJavaFXThread(() -> {
-            final Parent root = loadDialogContent(fxmlFilename);
-            setupDialogControls();
+        final Parent root = loadDialogContent(fxmlFilename);
+        setupDialogControls();
 
-            // create and show dialog
-            final Dialog<ButtonType> dlg = createDialog(parent, title, root);
-            dlg.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-            addCustomButtons(dlg.getDialogPane());
-            applyJavaFXToSwingMigrationWorkarounds(dlg);
-            dlg.showAndWait();
+        // create and show dialog
+        final Dialog<ButtonType> dlg = createDialog(parent, title, root);
+        dlg.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+        addCustomButtons(dlg.getDialogPane());
+        dlg.showAndWait();
 
-            if (afterCloseBehavior != null) {
-                afterCloseBehavior.run();
-            }
-        });
+        if (afterCloseBehavior != null) {
+            afterCloseBehavior.run();
+        }
     }
 
     /**
@@ -103,41 +86,37 @@ public abstract class AbstractDialogController {
      */
     protected void showEditDialog(final String fxmlFilename, final Window parent, final String title) {
 
-        executeOnJavaFXThread(() -> {
-            this.validationSupport = new ValidationSupport();
+        this.validationSupport = new ValidationSupport();
 
-            final Parent root = loadDialogContent(fxmlFilename);
-            setupDialogControls();
+        final Parent root = loadDialogContent(fxmlFilename);
+        setupDialogControls();
 
-            // create and setup dialog
-            final Dialog<ButtonType> dlg = createDialog(parent, title, root);
-            final DialogPane dlgPane = dlg.getDialogPane();
+        // create and setup dialog
+        final Dialog<ButtonType> dlg = createDialog(parent, title, root);
+        final DialogPane dlgPane = dlg.getDialogPane();
 
-            dlgPane.getButtonTypes().add(ButtonType.OK);
-            dlgPane.getButtonTypes().add(ButtonType.CANCEL);
-            addCustomButtons(dlgPane);
+        dlgPane.getButtonTypes().add(ButtonType.OK);
+        dlgPane.getButtonTypes().add(ButtonType.CANCEL);
+        addCustomButtons(dlgPane);
 
-            // bind validation to OK button, must only be enabled when there are no errors
-            final Button btOk = (Button) dlg.getDialogPane().lookupButton(ButtonType.OK);
-            btOk.disableProperty().bind(validationSupport.invalidProperty());
+        // bind validation to OK button, must only be enabled when there are no errors
+        final Button btOk = (Button) dlg.getDialogPane().lookupButton(ButtonType.OK);
+        btOk.disableProperty().bind(validationSupport.invalidProperty());
 
-            // set action event filter for custom dialog validation and storing the result
-            // => don't close the dialog on errors
-            btOk.addEventFilter(ActionEvent.ACTION, (event) -> {
-                if (!validateAndStore()) {
-                    event.consume();
-                }
-            });
-
-            applyJavaFXToSwingMigrationWorkarounds(dlg);
-
-            // show dialog
-            dlg.showAndWait();
-
-            if (afterCloseBehavior != null) {
-                afterCloseBehavior.run();
+        // set action event filter for custom dialog validation and storing the result
+        // => don't close the dialog on errors
+        btOk.addEventFilter(ActionEvent.ACTION, (event) -> {
+            if (!validateAndStore()) {
+                event.consume();
             }
         });
+
+        // show dialog
+        dlg.showAndWait();
+
+        if (afterCloseBehavior != null) {
+            afterCloseBehavior.run();
+        }
     }
 
     /**
@@ -184,7 +163,7 @@ public abstract class AbstractDialogController {
      * @param control control to focus
      */
     protected void focusInitialControl(final Control control) {
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
             control.requestFocus();
             if (control instanceof TextField) {
                 ((TextField) control).selectEnd();
@@ -208,87 +187,10 @@ public abstract class AbstractDialogController {
 
     private Parent loadDialogContent(final String fxmlFilename) {
         try {
-            return FxmlLoader.load(AbstractDialogController.class.getResource(fxmlFilename),
-                    context.getFxResources().getResourceBundle(), this);
+            return FxmlLoader.load(AbstractDialogController.class.getResource(fxmlFilename), context.getFxResources()
+                    .getResourceBundle(), this);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load the dialog FXML resource '" + fxmlFilename + "'!", e);
         }
-    }
-
-    /**
-     * Invokes the passed task on the Swing UI thread (asynchronously).
-     *
-     * @param task task to execute
-     */
-    protected void executeOnSwingThread(Runnable task) {
-        // TODO: remove this function when the main window has been migrated to JavaFX
-        javax.swing.SwingUtilities.invokeLater(() -> task.run());
-    }
-
-    /**
-     * Invokes the passed task on the JavaFX UI thread (asynchronously).
-     *
-     * @param task task to execute
-     */
-    protected void executeOnJavaFXThread(Runnable task) {
-        // TODO: remove this function when the main window has been migrated to JavaFX
-        if (Platform.isFxApplicationThread()) {
-            task.run();
-        } else {
-            Platform.runLater(task);
-        }
-    }
-
-    private void applyJavaFXToSwingMigrationWorkarounds(final Dialog dialog) {
-        // TODO: remove these functions when the main window has been migrated to JavaFX
-        if (parentIsSwingWindow) {
-            centerDialogOnSwingFrame();
-            fakeModalDialog(dialog);
-        }
-    }
-
-    /**
-     * Places the Dialog to be shown in the center of the main Swing window (JFrame). This is done
-     * by placing the transparent dummy JavaFX main window in the center of the Swing window.
-     * The JavaFX dialog uses the dummy window as parent, so it's placed in the center.
-     */
-    private void centerDialogOnSwingFrame() {
-        final java.awt.Rectangle swingFrameBounds = context.getMainFrame().getBounds();
-        final Stage fxStage = context.getPrimaryStage();
-        fxStage.setX(swingFrameBounds.getCenterX());
-        fxStage.setY(swingFrameBounds.getCenterY());
-
-        // problem: the new Stage position is not being used for the dialog
-        // workaround: hide and show the dummy stage (is invisible anyway), then it works
-        fxStage.hide();
-        fxStage.show();
-    }
-
-    /**
-     * Unfortunately it's not possible to show a modal JavaFX dialog on top of a Swing main window (JFrame).
-     * The workaround is to disable main Swing window and it's menu when the dialog is shown. And enable
-     * them again when the dialog has been closed.
-     *
-     * @param dialog Dialog
-     */
-    private void fakeModalDialog(final Dialog dialog) {
-
-        // disable main Swing window and it's menu when the dialog is shown
-        final javax.swing.JFrame swingMainFrame = context.getMainFrame();
-        dialog.setOnShown(e -> {
-            executeOnSwingThread(() -> {
-                swingMainFrame.setEnabled(false);
-                swingMainFrame.getJMenuBar().setEnabled(false);
-            });
-        });
-
-        // enable main Swing window and it's menu when the dialog has been closed
-        dialog.setOnHidden(e -> {
-            executeOnSwingThread(() -> {
-                swingMainFrame.setEnabled(true);
-                swingMainFrame.getJMenuBar().setEnabled(true);
-                swingMainFrame.toFront();
-            });
-        });
     }
 }

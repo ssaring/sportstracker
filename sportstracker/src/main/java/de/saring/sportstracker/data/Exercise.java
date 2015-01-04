@@ -1,10 +1,10 @@
 package de.saring.sportstracker.data;
 
-import de.saring.util.ResourceReader;
+import de.saring.util.AppResources;
 import de.saring.util.data.IdDateObject;
 
 /**
- * This class contains all informations of a single exercise (or workout).
+ * This class contains all information of a single exercise (or workout).
  *
  * @author Stefan Saring
  * @version 1.0
@@ -87,10 +87,10 @@ public final class Exercise extends IdDateObject implements Cloneable {
          * Static resource reader is needed for string creation.
          */
         // TODO remove the resource reader instance from the domain class !!!
-        private static ResourceReader resReader;
+        private static AppResources appResources;
 
-        public static void setResReader(ResourceReader resReader) {
-            IntensityType.resReader = resReader;
+        public static void setAppResources(AppResources appResources) {
+            IntensityType.appResources = appResources;
         }
 
         /**
@@ -113,17 +113,17 @@ public final class Exercise extends IdDateObject implements Cloneable {
         public String toString() {
             switch (this) {
                 case MINIMUM:
-                    return IntensityType.resReader.getString("st.intensity.minimum");
+                    return IntensityType.appResources.getString("st.intensity.minimum");
                 case LOW:
-                    return IntensityType.resReader.getString("st.intensity.low");
+                    return IntensityType.appResources.getString("st.intensity.low");
                 case NORMAL:
-                    return IntensityType.resReader.getString("st.intensity.normal");
+                    return IntensityType.appResources.getString("st.intensity.normal");
                 case HIGH:
-                    return IntensityType.resReader.getString("st.intensity.high");
+                    return IntensityType.appResources.getString("st.intensity.high");
                 case MAXIMUM:
-                    return IntensityType.resReader.getString("st.intensity.maximum");
+                    return IntensityType.appResources.getString("st.intensity.maximum");
                 case INTERVALS:
-                    return IntensityType.resReader.getString("st.intensity.intervals");
+                    return IntensityType.appResources.getString("st.intensity.intervals");
             }
             return "???";
         }

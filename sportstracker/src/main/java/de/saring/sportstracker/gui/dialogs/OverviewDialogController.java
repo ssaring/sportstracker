@@ -93,7 +93,6 @@ public class OverviewDialogController extends AbstractDialogController {
     @FXML
     private HBox hBoxSportTypeList;
 
-
     /**
      * Standard c'tor for dependency injection.
      *
@@ -191,14 +190,13 @@ public class OverviewDialogController extends AbstractDialogController {
         }
 
         // create chart
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(
-                null,             // Title
-                null,             // Y-axis label
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(null, // Title
+                null, // Y-axis label
                 vType.toString(), // X-axis label
-                dataset,          // primary dataset
-                true,             // display legend
-                true,             // display tooltips
-                false);           // URLs
+                dataset, // primary dataset
+                true, // display legend
+                true, // display tooltips
+                false); // URLs
 
         // render unique filled shapes for each graph
         XYPlot plot = (XYPlot) chart.getPlot();
@@ -245,8 +243,8 @@ public class OverviewDialogController extends AbstractDialogController {
 
         // setup tooltips: must display month, week or year and the value only
         String toolTipFormat = "{1}: {2}";
-        renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(toolTipFormat,
-                new SimpleDateFormat(dateFormatTooltip), new DecimalFormat()) {
+        renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(toolTipFormat, new SimpleDateFormat(
+                dateFormatTooltip), new DecimalFormat()) {
             @Override
             public String generateToolTip(XYDataset dataset, int series, int item) {
                 return dataset.getSeriesKey(series) + ", " + super.generateToolTip(dataset, series, item);
@@ -279,8 +277,8 @@ public class OverviewDialogController extends AbstractDialogController {
                 java.awt.Color tempColor = lGraphColors.get(i);
                 stackedRenderer.setSeriesPaint(i, tempColor);
             }
-            stackedRenderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(toolTipFormat,
-                    new SimpleDateFormat(dateFormatTooltip), new DecimalFormat()) {
+            stackedRenderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(toolTipFormat, new SimpleDateFormat(
+                    dateFormatTooltip), new DecimalFormat()) {
                 @Override
                 public String generateToolTip(XYDataset dataset, int series, int item) {
                     return dataset.getSeriesKey(series) + ", " + super.generateToolTip(dataset, series, item);
@@ -308,7 +306,7 @@ public class OverviewDialogController extends AbstractDialogController {
             LocalDate middleOfDecemberOfLastYear = firstDayOfYear.minusDays(15);
             Date dateMiddleOfDecemberOfLastYear = Date310Utils.localDateToDate(middleOfDecemberOfLastYear);
             ValueMarker newYearMarker = new ValueMarker(dateMiddleOfDecemberOfLastYear.getTime());
-            newYearMarker.setPaint(context.getResReader().getColor("st.dlg.overview.graph_color.year_break"));
+            newYearMarker.setPaint(new java.awt.Color(0x00b000));
             newYearMarker.setStroke(new java.awt.BasicStroke(0.8f));
             newYearMarker.setLabel(String.valueOf(firstDayOfYear.getYear()));
             newYearMarker.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
@@ -334,15 +332,12 @@ public class OverviewDialogController extends AbstractDialogController {
         final ValueType selectedValueType = cbDisplay.getValue();
 
         // the sport type mode selection must not be visible for the ValueType SPORTSUBTYPE, EQUIPMENT and WEIGHT
-        final boolean sportTypeModeVisible =
-                selectedValueType != ValueType.SPORTSUBTYPE &&
-                        selectedValueType != ValueType.EQUIPMENT &&
-                        selectedValueType != ValueType.WEIGHT;
+        final boolean sportTypeModeVisible = selectedValueType != ValueType.SPORTSUBTYPE
+                && selectedValueType != ValueType.EQUIPMENT && selectedValueType != ValueType.WEIGHT;
 
         // the sport type list selection must only be visible for the ValueType SPORTSUBTYPE and EQUIPMENT
-        final boolean sportTypeListVisible =
-                selectedValueType == ValueType.SPORTSUBTYPE ||
-                        selectedValueType == ValueType.EQUIPMENT;
+        final boolean sportTypeListVisible = selectedValueType == ValueType.SPORTSUBTYPE
+                || selectedValueType == ValueType.EQUIPMENT;
 
         // add or remove sport type mode selection depending on visibility and current state
         if (sportTypeModeVisible && !hBoxOptions.getChildren().contains(hBoxSportTypeMode)) {
@@ -379,7 +374,7 @@ public class OverviewDialogController extends AbstractDialogController {
         if (overviewType != OverviewType.EACH_SPLITTED) {
             // create one graph for sum of all sport types
             addExerciseTimeSeries(dataset, timeType, year, vType, null);
-            graphColors.add(context.getResReader().getColor("st.dlg.overview.graph_color.all_types"));
+            graphColors.add(new java.awt.Color(0xff0000));
         } else {
             // create a separate graph for each sport type
             for (SportType sportType : document.getSportTypeList()) {
@@ -401,12 +396,12 @@ public class OverviewDialogController extends AbstractDialogController {
      * @param valueType the type of values needs to be calculated
      * @param sportType the specific sport type to be calculated or null for the sum of all sport types
      */
-    private void addExerciseTimeSeries(TimeTableXYDataset dataset, TimeRangeType timeType, int year, ValueType valueType, SportType sportType) {
+    private void addExerciseTimeSeries(TimeTableXYDataset dataset, TimeRangeType timeType, int year,
+            ValueType valueType, SportType sportType) {
 
         // create the time series for specified time range and sport type
-        String seriesName = sportType != null ?
-                sportType.getName() :
-                context.getResReader().getString("st.dlg.overview.graph.all_types");
+        String seriesName = sportType != null ? sportType.getName() : context.getFxResources().getString(
+                "st.dlg.overview.graph.all_types");
 
         // process value calculation for each step of time range
         int timeStepCount = getTimeStepCount(timeType, year);
@@ -534,7 +529,7 @@ public class OverviewDialogController extends AbstractDialogController {
      * @param sportSubType the sport subtype to be shown in this series
      */
     private void addSportSubTypeTimeSeries(TimeTableXYDataset dataset, TimeRangeType timeType, int year,
-                                           SportType sportType, SportSubType sportSubType) {
+            SportType sportType, SportSubType sportSubType) {
 
         String seriesName = sportSubType.getName();
 
@@ -557,7 +552,8 @@ public class OverviewDialogController extends AbstractDialogController {
             // create distance sum of all found exercises
             double sumDistance = 0d;
             for (Exercise tempExercise : lExercises) {
-                // sum only exercises with same sport subtype (otherwise conflicts with the merged filter set in the view)
+                // sum only exercises with same sport subtype (otherwise conflicts with the merged filter set in the
+                // view)
                 if (sportSubType.equals(tempExercise.getSportSubType())) {
                     sumDistance += tempExercise.getDistance();
                 }
@@ -605,13 +601,14 @@ public class OverviewDialogController extends AbstractDialogController {
      * @param timeType time range for calculated values
      * @param year the year for calculation
      * @param sportType the sport type to be shown
-     * @param equipment the equipment to be shown in this series (when null, then calculate exercises with no equipment assigned only)
+     * @param equipment the equipment to be shown in this series (when null, then calculate exercises with no equipment
+     *            assigned only)
      */
     private void addEquipmentTimeSeries(TimeTableXYDataset dataset, TimeRangeType timeType, int year,
-                                        SportType sportType, Equipment equipment) {
+            SportType sportType, Equipment equipment) {
 
-        String seriesName = equipment != null ?
-                equipment.getName() : context.getResReader().getString("st.dlg.overview.equipment.not_specified");
+        String seriesName = equipment != null ? equipment.getName() : context.getFxResources().getString(
+                "st.dlg.overview.equipment.not_specified");
 
         // process value calculation for each step of time range
         int timeStepCount = getTimeStepCount(timeType, year);
@@ -662,7 +659,7 @@ public class OverviewDialogController extends AbstractDialogController {
         int year = cbYear.getValue();
 
         addWeightTimeSeries(dataset, timeType, year);
-        graphColors.add(context.getResReader().getColor("st.dlg.overview.graph_color.all_types"));
+        graphColors.add(new java.awt.Color(0xff0000));
     }
 
     /**
@@ -676,7 +673,7 @@ public class OverviewDialogController extends AbstractDialogController {
      */
     private void addWeightTimeSeries(TimeTableXYDataset dataset, TimeRangeType timeType, int year) {
 
-        String seriesName = context.getResReader().getString("st.dlg.overview.display.weight.text");
+        String seriesName = context.getFxResources().getString("st.dlg.overview.display.weight.text");
 
         // process value calculation for each step of time range
         int timeStepCount = getTimeStepCount(timeType, year);
@@ -745,8 +742,7 @@ public class OverviewDialogController extends AbstractDialogController {
      * @param timeStep the current time step in the graph
      * @return the created TimePeriod for the current time step
      */
-    private RegularTimePeriod createTimePeriodForTimeStep(
-            TimeRangeType timeType, int year, int timeStep) {
+    private RegularTimePeriod createTimePeriodForTimeStep(TimeRangeType timeType, int year, int timeStep) {
 
         switch (timeType) {
             case LAST_12_MONTHS:
@@ -779,8 +775,7 @@ public class OverviewDialogController extends AbstractDialogController {
      * @param timeStep the current time step in the graph
      * @return the created ExerciseFilter for the current time step
      */
-    private ExerciseFilter createExerciseFilterForTimeStep(
-            TimeRangeType timeType, int year, int timeStep) {
+    private ExerciseFilter createExerciseFilterForTimeStep(TimeRangeType timeType, int year, int timeStep) {
 
         ExerciseFilter filter = new ExerciseFilter();
         LocalDate now = LocalDate.now();
@@ -829,9 +824,14 @@ public class OverviewDialogController extends AbstractDialogController {
      * readable (if more colors are needed, then presets will be used).
      */
     private void addCustomGraphColors(java.util.List<java.awt.Color> graphColors) {
-        for (int i = 1; i <= 8; i++) {
-            graphColors.add(context.getResReader().getColor("st.dlg.overview.graph_color.graph" + i));
-        }
+        graphColors.add(new java.awt.Color(0xff5555));
+        graphColors.add(new java.awt.Color(0x5555ff));
+        graphColors.add(new java.awt.Color(0x3acc2e));
+        graphColors.add(new java.awt.Color(0xff8000));
+        graphColors.add(new java.awt.Color(0xff55ff));
+        graphColors.add(new java.awt.Color(0x31d5d5));
+        graphColors.add(new java.awt.Color(0xdc8686));
+        graphColors.add(new java.awt.Color(0x808080));
     }
 
     private LocalDate getStartDateForWeekOfYear(int year, int weekNr) {
@@ -873,8 +873,7 @@ public class OverviewDialogController extends AbstractDialogController {
             // merge sport type and subtype filter
             if (currentFilter.getSportType() != null) {
 
-                if (filter.getSportType() != null &&
-                        !currentFilter.getSportType().equals(filter.getSportType())) {
+                if (filter.getSportType() != null && !currentFilter.getSportType().equals(filter.getSportType())) {
                     // filters have different sport types => add a not existing sport type, so nothing will be found
                     filter.setSportType(new SportType(Integer.MIN_VALUE));
                 } else {
@@ -893,8 +892,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
             // merge equipment filter
             if (currentFilter.getEquipment() != null) {
-                if (filter.getEquipment() != null &&
-                        !currentFilter.getEquipment().equals(filter.getEquipment())) {
+                if (filter.getEquipment() != null && !currentFilter.getEquipment().equals(filter.getEquipment())) {
                     // filters have different equipments => add a not existing equipment, so nothing will be found
                     filter.setEquipment(new Equipment(Integer.MIN_VALUE));
                 } else {
@@ -918,9 +916,8 @@ public class OverviewDialogController extends AbstractDialogController {
      * @return the average weight value or 0 when no Weight entries found
      */
     private double getAverageWeightInTimeRange(ExerciseFilter filter) {
-        java.util.List<Weight> weightsInTimeRange =
-                document.getWeightList().getEntriesInDateRange(
-                        filter.getDateStart(), filter.getDateEnd());
+        java.util.List<Weight> weightsInTimeRange = document.getWeightList().getEntriesInDateRange(
+                filter.getDateStart(), filter.getDateEnd());
 
         if (weightsInTimeRange.isEmpty()) {
             return 0;
@@ -942,10 +939,10 @@ public class OverviewDialogController extends AbstractDialogController {
          * In total 13 months: current month and last 12 before (good
          * for compare current month and the one from year before).
          */
-        LAST_12_MONTHS("st.dlg.overview.time_range.last_12_months.text"),
-        MONTHS_OF_YEAR("st.dlg.overview.time_range.months_of_year.text"),
-        WEEKS_OF_YEAR("st.dlg.overview.time_range.weeks_of_year.text"),
-        LAST_10_YEARS("st.dlg.overview.time_range.ten_years.text");
+        LAST_12_MONTHS("st.dlg.overview.time_range.last_12_months.text"), MONTHS_OF_YEAR(
+                "st.dlg.overview.time_range.months_of_year.text"), WEEKS_OF_YEAR(
+                "st.dlg.overview.time_range.weeks_of_year.text"), LAST_10_YEARS(
+                "st.dlg.overview.time_range.ten_years.text");
 
         private static AppResources appResources;
 
@@ -966,15 +963,11 @@ public class OverviewDialogController extends AbstractDialogController {
      * This enum also provides the localized displayed enum names.
      */
     private enum ValueType {
-        DISTANCE("st.dlg.overview.display.distance_sum.text"),
-        DURATION("st.dlg.overview.display.duration_sum.text"),
-        ASCENT("st.dlg.overview.display.ascent_sum.text"),
-        CALORIES("st.dlg.overview.display.calorie_sum.text"),
-        EXERCISES("st.dlg.overview.display.exercise_count.text"),
-        AVG_SPEED("st.dlg.overview.display.avg_speed.text"),
-        SPORTSUBTYPE("st.dlg.overview.display.sportsubtype_distance.text"),
-        EQUIPMENT("st.dlg.overview.display.equipment_distance.text"),
-        WEIGHT("st.dlg.overview.display.weight.text");
+        DISTANCE("st.dlg.overview.display.distance_sum.text"), DURATION("st.dlg.overview.display.duration_sum.text"), ASCENT(
+                "st.dlg.overview.display.ascent_sum.text"), CALORIES("st.dlg.overview.display.calorie_sum.text"), EXERCISES(
+                "st.dlg.overview.display.exercise_count.text"), AVG_SPEED("st.dlg.overview.display.avg_speed.text"), SPORTSUBTYPE(
+                "st.dlg.overview.display.sportsubtype_distance.text"), EQUIPMENT(
+                "st.dlg.overview.display.equipment_distance.text"), WEIGHT("st.dlg.overview.display.weight.text");
 
         private static AppResources appResources;
 
@@ -995,9 +988,9 @@ public class OverviewDialogController extends AbstractDialogController {
      * This enum also provides the localized displayed enum names.
      */
     private enum OverviewType {
-        EACH_SPLITTED("st.dlg.overview.sport_type.each_splitted.text"),
-        EACH_STACKED("st.dlg.overview.sport_type.each_stacked.text"),
-        ALL_SUMMARY("st.dlg.overview.sport_type.all_summary.text");
+        EACH_SPLITTED("st.dlg.overview.sport_type.each_splitted.text"), EACH_STACKED(
+                "st.dlg.overview.sport_type.each_stacked.text"), ALL_SUMMARY(
+                "st.dlg.overview.sport_type.all_summary.text");
 
         private static AppResources appResources;
 

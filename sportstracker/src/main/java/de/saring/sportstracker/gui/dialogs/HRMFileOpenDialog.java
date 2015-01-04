@@ -48,7 +48,7 @@ public class HRMFileOpenDialog {
 
         // create file chooser
         final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(context.getResReader().getString("st.dlg.hrm_file_open.title"));
+        fileChooser.setTitle(context.getFxResources().getString("st.dlg.hrm_file_open.title"));
         addFileExtensionFilters(fileChooser);
 
         // do we need to select an initial file ?

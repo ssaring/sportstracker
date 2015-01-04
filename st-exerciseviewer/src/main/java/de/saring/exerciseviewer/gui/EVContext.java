@@ -18,14 +18,14 @@ import java.util.Optional;
 public interface EVContext {
 
     /**
-     * Returns the primary stage (main window) of the JavaFX application.
+     * Returns the primary stage (main window) of the application.
      *
      * @return Stage
      */
     Stage getPrimaryStage();
 
     /**
-     * Displays a JavaFX modal message dialog of the passed type with the specified message title and message
+     * Displays a modal message dialog of the passed type with the specified message title and message
      * for the specified parent window.
      *
      * @param parent the parent component of the message dialog
@@ -39,7 +39,7 @@ public interface EVContext {
                              String messageKey, Object... arguments);
 
     /**
-     * Displays a JavaFX modal text input dialog for the specified parameters.
+     * Displays a modal text input dialog for the specified parameters.
      *
      * @param parent parent window of the input dialog
      * @param titleKey resource key for the dialog title
@@ -50,7 +50,7 @@ public interface EVContext {
     Optional<String> showFxTextInputDialog(Window parent, String titleKey, String messageKey, String initialValue);
 
     /**
-     * Returns the provider of application text resources for the JavaFX based UI.
+     * Returns the provider of application text resources.
      *
      * @return AppResources
      */

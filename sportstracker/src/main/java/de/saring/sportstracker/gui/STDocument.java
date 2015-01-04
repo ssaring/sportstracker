@@ -1,12 +1,17 @@
 package de.saring.sportstracker.gui;
 
+import java.util.List;
+
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STOptions;
-import de.saring.sportstracker.data.*;
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.ExerciseFilter;
+import de.saring.sportstracker.data.ExerciseList;
+import de.saring.sportstracker.data.NoteList;
+import de.saring.sportstracker.data.SportTypeList;
+import de.saring.sportstracker.data.WeightList;
 import de.saring.util.data.IdDateObjectList;
 import de.saring.util.data.IdObjectListChangeListener;
-
-import java.util.List;
 
 /**
  * This interface provides all document (MVC) related data and functionality of the
@@ -21,7 +26,6 @@ public interface STDocument extends IdObjectListChangeListener {
      * Command line parameter for a specific data directory (optional).
      */
     String PARAMETER_DATA_DIR = "--datadir=";
-
 
     /**
      * ** BEGIN: Getters and Setters for application data ****

@@ -80,7 +80,6 @@ public class SportTypeDialogController extends AbstractDialogController {
     public SportTypeDialogController(final STContext context, final STDocument document) {
         super(context);
         this.document = document;
-        setParentIsSwingWindow(false);
     }
 
     /**

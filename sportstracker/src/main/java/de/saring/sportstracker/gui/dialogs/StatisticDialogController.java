@@ -155,7 +155,6 @@ public class StatisticDialogController extends AbstractDialogController {
 
         // show Filter dialog for current filter and use the selected filter afterwards
         final FilterDialogController controller = prFilterDialogController.get();
-        controller.setParentIsSwingWindow(false);
 
         controller.setAfterCloseBehavior(() ->
             controller.getSelectedFilter().ifPresent(selectedFilter -> {

@@ -79,7 +79,6 @@ public class StatisticResultDialogController extends AbstractDialogController {
     @Inject
     public StatisticResultDialogController(final STContext context) {
         super(context);
-        setParentIsSwingWindow(false);
     }
 
     /**
