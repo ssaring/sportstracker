@@ -36,7 +36,7 @@ public final class FxmlLoader {
         final FXMLLoader loader = new FXMLLoader();
         loader.setLocation(url);
         loader.setResources(resBundle);
-        loader.setControllerFactory(controllerClass -> controller);
+        loader.setController(controller);
         return (Parent) loader.load();
     }
 }
