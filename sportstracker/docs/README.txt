@@ -347,9 +347,6 @@ IDE. This configuration and the documentation can be found in the directory
 
 The SportsTracker project uses the following libraries:
 
-  - BSAF 1.9.2 (Better Swing Application Framework)
-    (http://kenai.com/projects/bsaf)
-      License: Lesser General Public License 2.1 (LGPL)
   - Groovy 2.3.3 (http://groovy.codehaus.org)
       License: Apache License v2.0
   - Guice 3.0 (http://code.google.com/p/google-guice/)
@@ -365,8 +362,6 @@ The SportsTracker project uses the following libraries:
       URL: https://github.com/msteiger/jxmapviewer2
       Includes: commons-logging-1.1.1
       License: Lesser General Public License (LGPL)
-  - MiG Layout 3.7.4 (http://www.miglayout.com/)
-      License: BSD License
   - ControlsFX 8.20.8 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - commons-cli 1.2 (http://commons.apache.org/cli/)
@@ -458,4 +453,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2014/11/06
+2015/01/04

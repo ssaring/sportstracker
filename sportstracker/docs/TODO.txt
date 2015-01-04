@@ -14,8 +14,9 @@ JavaFX Migration:
     - add concept of actions which bundle menu items, toolbar buttons, context menu items?
       (see http://fxexperience.com/controlsfx/features/#actions, othwise bind disabled-property of same menu items)
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties
-- CSS: can SportsTracker.css and ExerciseViewer.css be merged into one file?
-  (does the relative import in FXML work?)
+- CSS stylesheets:
+  - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
+  - compile CSS classes to BSS files - does it improve performance?
 - SportsTracker and ExerciseViewer: store and restore window sizes, not for dialogs (positions too?)
 - JFreeChart usage (in Overview Dialog): migration completed and tested, except:
   - the JavaFX version of JFreeChart logs CSS warnings at initial chart display, but works properly
