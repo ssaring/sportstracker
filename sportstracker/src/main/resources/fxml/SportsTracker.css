@@ -15,12 +15,17 @@
 }
 
 /*******************************************/
-/*   ToolBar styles                        */
+/*   Menu and ToolBar styles               */
 /*******************************************/
+
+/* MenuItems in the menu bar have a too small left padding => increase it (others are default from class menu-item) */
+.menuBarItem {
+    -fx-padding: 0.333333em 0.41777em 0.333333em 1em;  /* 4 5 4 12 */
+}
 
 /* Toolbar button style: transparent borderless buttons with a small padding */
 .toolbarButton {
-    -fx-padding: 4 6;
+    -fx-padding: 0.25em 0.333333em;  /* 4 5 */
     -fx-background-color: transparent, transparent, transparent, transparent;
 }
 
@@ -96,7 +101,7 @@
     -fx-graphic: url("../icons/24/st-hrm.png");
 }
 
-#btEditSportTypes {
+#btSportTypeEditor {
     -fx-graphic: url("../icons/24/gtk-properties.png");
 }
 

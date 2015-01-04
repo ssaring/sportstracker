@@ -15,24 +15,24 @@
                     <menus>
                         <Menu mnemonicParsing="true" text="%st.view.file.text">
                             <items>
-                                <MenuItem mnemonicParsing="true" onAction="#onOpenHrmFile" text="%st.view.open_exerciseviewer.Action.text">
+                                <MenuItem mnemonicParsing="true" onAction="#onOpenHrmFile" styleClass="menuBarItem" text="%st.view.open_exerciseviewer.Action.text">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                     </accelerator>
                                 </MenuItem>
-                                <MenuItem fx:id="miSave" mnemonicParsing="true" onAction="#onSave" text="%st.view.save.Action.text">
+                                <MenuItem fx:id="miSave" mnemonicParsing="true" onAction="#onSave" styleClass="menuBarItem" text="%st.view.save.Action.text">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                     </accelerator>
                                 </MenuItem>
                                 <SeparatorMenuItem />
-                                <MenuItem fx:id="miPrint" mnemonicParsing="true" onAction="#onPrint" text="%st.view.print.Action.text">
+                                <MenuItem fx:id="miPrint" mnemonicParsing="true" onAction="#onPrint" styleClass="menuBarItem" text="%st.view.print.Action.text">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="P" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                     </accelerator>
                                 </MenuItem>
                                 <SeparatorMenuItem />
-                                <MenuItem fx:id="miQuit" mnemonicParsing="true" onAction="#onQuit" text="%st.view.quit.Action.text">
+                                <MenuItem fx:id="miQuit" mnemonicParsing="true" onAction="#onQuit" styleClass="menuBarItem" text="%st.view.quit.Action.text">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="Q" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                     </accelerator>
@@ -41,39 +41,39 @@
                         </Menu>
                         <Menu mnemonicParsing="true" text="%st.view.edit.text">
                             <items>
-                                <MenuItem mnemonicParsing="true" onAction="#onAddExercise" text="%st.view.exercise_add.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onAddNote" text="%st.view.note_add.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onAddWeight" text="%st.view.weight_add.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onEditEntry" text="%st.view.entry_edit.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onCopyEntry" text="%st.view.entry_copy.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onDeleteEntry" text="%st.view.entry_delete.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onAddExercise" styleClass="menuBarItem" text="%st.view.exercise_add.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onAddNote" styleClass="menuBarItem" text="%st.view.note_add.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onAddWeight" styleClass="menuBarItem" text="%st.view.weight_add.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onEditEntry" styleClass="menuBarItem" text="%st.view.entry_edit.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onCopyEntry" styleClass="menuBarItem" text="%st.view.entry_copy.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onDeleteEntry" styleClass="menuBarItem" text="%st.view.entry_delete.Action.text" />
                                 <SeparatorMenuItem />
-                                <MenuItem mnemonicParsing="true" onAction="#onViewHrmFile" text="%st.view.view_hrm.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onViewHrmFile" styleClass="menuBarItem" text="%st.view.view_hrm.Action.text" />
                                 <SeparatorMenuItem />
-                                <MenuItem mnemonicParsing="true" onAction="#onPreferences" text="%st.view.preferences.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onPreferences" styleClass="menuBarItem" text="%st.view.preferences.Action.text" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="true" text="%st.view.view.text">
                             <items>
-                                <MenuItem mnemonicParsing="true" onAction="#onCalendarView" text="%st.view.calendar_view.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onExerciseListView" text="%st.view.exercise_list_view.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onNoteListView" text="%st.view.note_list_view.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onWeightListView" text="%st.view.weight_list_view.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onCalendarView" styleClass="menuBarItem" text="%st.view.calendar_view.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onExerciseListView" styleClass="menuBarItem" text="%st.view.exercise_list_view.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onNoteListView" styleClass="menuBarItem" text="%st.view.note_list_view.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onWeightListView" styleClass="menuBarItem" text="%st.view.weight_list_view.Action.text" />
                                 <SeparatorMenuItem />
-                                <MenuItem mnemonicParsing="true" onAction="#onFilterExercises" text="%st.view.filter_exercises.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onFilterDisable" text="%st.view.filter_disable.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onFilterExercises" styleClass="menuBarItem" text="%st.view.filter_exercises.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onFilterDisable" styleClass="menuBarItem" text="%st.view.filter_disable.Action.text" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="true" text="%st.view.tools.text">
                             <items>
-                                <MenuItem mnemonicParsing="true" onAction="#onSportTypeEditor" text="%st.view.sporttype_editor.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onStatistics" text="%st.view.statistics.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onOverviewDiagram" text="%st.view.overview_diagram.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onSportTypeEditor" styleClass="menuBarItem" text="%st.view.sporttype_editor.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onStatistics" styleClass="menuBarItem" text="%st.view.statistics.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onOverviewDiagram" styleClass="menuBarItem" text="%st.view.overview_diagram.Action.text" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="true" text="%st.view.help.text">
                             <items>
-                                <MenuItem mnemonicParsing="true" onAction="#onAbout" text="%st.view.about.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onAbout" styleClass="menuBarItem" text="%st.view.about.Action.text" />
                             </items>
                         </Menu>
                     </menus>
