@@ -27,7 +27,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -114,8 +113,11 @@ public class STControllerImpl implements STController {
                 new Image("icons/st-logo-32.png"), //
                 new Image("icons/st-logo-24.png"));
 
-        // register listener for window close / application exit
-        primaryStage.setOnCloseRequest(event -> onWindowCloseRequest(event));
+        // register listener for window close event
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            saveChangesAndExitApplication();
+        });
     }
 
     @Override
@@ -139,7 +141,8 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onSave(ActionEvent event) {
-        // TODO
+        showWaitCursor(true);
+        new Thread(new SaveTask(false)).start();
     }
 
     @Override
@@ -149,8 +152,7 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onQuit(ActionEvent event) {
-        // TODO
-        System.exit(0);
+        saveChangesAndExitApplication();
     }
 
     @Override
@@ -264,8 +266,8 @@ public class STControllerImpl implements STController {
     @Override
     public boolean checkForExistingSportTypes() {
         if (document.getSportTypeList().size() == 0) {
-            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, "common.error",
-                    "st.main.error.no_sporttype");
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
+                    "common.error", "st.main.error.no_sporttype");
             return false;
         }
         return true;
@@ -274,8 +276,8 @@ public class STControllerImpl implements STController {
     @Override
     public boolean checkForExistingExercises() {
         if (document.getExerciseList().size() == 0) {
-            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, "common.error",
-                    "st.main.error.no_exercise");
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
+                    "common.error", "st.main.error.no_exercise");
             return false;
         }
         return true;
@@ -291,16 +293,6 @@ public class STControllerImpl implements STController {
         // displayedExercises = document.getFilterableExerciseList();
         // currentView.updateView();
         // updateEntryActions();
-    }
-
-    /**
-     * The event handler is called when the user wants to close the main application window.
-     *
-     * @param event event
-     */
-    private void onWindowCloseRequest(final WindowEvent event) {
-        event.consume();
-        onQuit(null);
     }
 
     private void showWaitCursor(final boolean waitCursor) {
@@ -325,6 +317,45 @@ public class STControllerImpl implements STController {
     }
 
     /**
+     * Checks for unsaved application data and exits the application. When there is unsaved data then
+     * the user will be asked to save the data before (can also be saved without user confirmation when
+     * the 'save on exit' option is enabled in the preferences).<br/>
+     * The application will not be exited when the save action fails or when the user cancels the
+     * confirmation.<br/>
+     * When there is no unsaved data, the application will be exited immediately.
+     */
+    private void saveChangesAndExitApplication() {
+
+        if (document.isDirtyData()) {
+            if (!document.getOptions().isSaveOnExit()) {
+
+                // TODO display YES, NO, CANCEL options (otherwise the user can't exit without saving changes)
+                final Optional<ButtonType> oResult = context.showMessageDialog(context.getPrimaryStage(),
+                        Alert.AlertType.CONFIRMATION, "st.main.confirm.save_exit.title",
+                        "st.main.confirm.save_exit.text");
+
+                if (!oResult.isPresent() || oResult.get() != ButtonType.OK) {
+                    return;
+                }
+            }
+
+            // save unsaved changes and exit on success
+            showWaitCursor(true);
+            new Thread(new SaveTask(true)).start();
+        } else {
+            exitApplication();
+        }
+    }
+
+    /**
+     * Exits the SportsTracker application and releases the resources before.
+     */
+    private void exitApplication() {
+        context.getPrimaryStage().close();
+        System.exit(0);
+    }
+
+    /**
      * This class executes the loading action inside a background task without blocking the UI thread.
      * It also checks the existence of all attached exercise files.
      */
@@ -341,6 +372,7 @@ public class STControllerImpl implements STController {
 
         @Override
         protected void succeeded() {
+            LOGGER.info("Application data has been loaded successfully");
             super.succeeded();
             showWaitCursor(false);
 
@@ -357,8 +389,8 @@ public class STControllerImpl implements STController {
             showWaitCursor(false);
 
             LOGGER.log(Level.SEVERE, "Failed to load application data!", getException());
-            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, "common.error",
-                    "st.main.error.load_data");
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
+                    "common.error", "st.main.error.load_data");
         }
 
         private void displayCorruptExercises() {
@@ -377,9 +409,56 @@ public class STControllerImpl implements STController {
                     sb.append("\n");
                 }
 
-                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.WARNING, "common.warning",
-                        "st.main.error.missing_exercise_files", sb.toString());
+                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.WARNING, //
+                        "common.warning", "st.main.error.missing_exercise_files", sb.toString());
             }
         }
     }
+
+    /**
+     * This class executes the save action inside a background task without blocking the UI thread.
+     */
+    private class SaveTask extends Task<Void> {
+
+        private boolean exitOnSuccess;
+
+        /**
+         * Standard c'tor.
+         *
+         * @param exitOnSuccess flag for exiting the application after successful save
+         */
+        public SaveTask(final boolean exitOnSuccess) {
+            this.exitOnSuccess = exitOnSuccess;
+        }
+
+        @Override
+        protected Void call() throws Exception {
+            document.storeApplicationData();
+            return null;
+        }
+
+        @Override
+        protected void succeeded() {
+            LOGGER.info("Application data has been saved successfully");
+            super.succeeded();
+            showWaitCursor(false);
+
+            // TODO view.updateSaveAction();
+
+            if (exitOnSuccess) {
+                exitApplication();
+            }
+        }
+
+        @Override
+        protected void failed() {
+            super.failed();
+            showWaitCursor(false);
+
+            LOGGER.log(Level.SEVERE, "Failed to store application data!", getException());
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
+                    "common.error", "st.main.error.save_data");
+        }
+    }
+
 }

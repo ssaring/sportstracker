@@ -12,6 +12,7 @@ JavaFX Migration:
     - add special support for Mac menu items (Preferences, About, ...)
   - STApplication: Done
   - STController: see TODO
+    - TODO in saveChangesAndExitApplication()
     - add concept of actions which bundle menu items, toolbar buttons, context menu items?
       (see http://fxexperience.com/controlsfx/features/#actions, othwise bind disabled-property of same menu items)
   - STDocument:
