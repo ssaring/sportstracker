@@ -5,10 +5,21 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import de.saring.exerciseviewer.gui.EVMain;
+import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.gui.dialogs.AboutDialogController;
+import de.saring.sportstracker.gui.dialogs.HRMFileOpenDialog;
+import de.saring.util.gui.javafx.FxmlLoader;
+import de.saring.util.unitcalc.FormatUtils;
 import javafx.event.ActionEvent;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.logging.Logger;
 
 /**
@@ -25,6 +36,10 @@ public class STControllerImpl implements STController {
     private final STDocument document;
 
     @Inject
+    private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
+    @Inject
+    private Provider<EVMain> prExerciseViewer;
+    @Inject
     private Provider<AboutDialogController> prAboutDialogController;
 
     // @Inject
@@ -33,8 +48,6 @@ public class STControllerImpl implements STController {
     // private Provider<NoteDialogController> prNoteDialogController;
     // @Inject
     // private Provider<WeightDialogController> prWeightDialogController;
-    // @Inject
-    // private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
     // @Inject
     // private Provider<SportTypeListDialogController> prSportTypeListDialogController;
     // @Inject
@@ -46,8 +59,6 @@ public class STControllerImpl implements STController {
     // @Inject
     // private Provider<PreferencesDialogController> prPreferencesDialogController;
 
-    @Inject
-    private Provider<EVMain> prExerciseViewer;
 
     /**
      * Standard c'tor.
@@ -62,17 +73,43 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onWindowCloseRequest(final WindowEvent event) {
-        event.consume();
-        // TODO
+    public void initApplicationWindow() throws IOException {
+        final Stage primaryStage = this.context.getPrimaryStage();
 
-        LOGGER.info("Exiting application");
-        System.exit(0);
+        final Parent root = FxmlLoader.load(STController.class.getResource("/fxml/SportsTracker.fxml"), //
+                context.getFxResources().getResourceBundle(), this);
+
+        primaryStage.setScene(new Scene(root));
+
+        primaryStage.setTitle(MessageFormat.format(
+                "{0} {1}", //
+                context.getFxResources().getString("application.title"),
+                context.getFxResources().getString("application.version")));
+
+        primaryStage.getIcons().addAll( //
+                new Image("icons/st-logo-512.png"), //
+                new Image("icons/st-logo-256.png"), //
+                new Image("icons/st-logo-128.png"), //
+                new Image("icons/st-logo-64.png"), //
+                new Image("icons/st-logo-48.png"), //
+                new Image("icons/st-logo-32.png"), //
+                new Image("icons/st-logo-24.png"));
+
+        // register listener for window close / application exit
+        primaryStage.setOnCloseRequest(event -> onWindowCloseRequest(event));
     }
 
     @Override
     public void onOpenHrmFile(ActionEvent event) {
-        // TODO
+        // show file open dialog for HRM file selection
+        final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(
+                context.getPrimaryStage(), document.getOptions(), null);
+        if (selectedFile != null) {
+
+            // start ExerciseViewer
+            prExerciseViewer.get().showExercise(selectedFile.getAbsolutePath(), document.getOptions(),
+                    context.getPrimaryStage(), false);
+        }
     }
 
     @Override
@@ -88,6 +125,7 @@ public class STControllerImpl implements STController {
     @Override
     public void onQuit(ActionEvent event) {
         // TODO
+        System.exit(0);
     }
 
     @Override
@@ -177,6 +215,16 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onAbout(ActionEvent event) {
-        // TODO
+        prAboutDialogController.get().show(context.getPrimaryStage());
+    }
+
+    /**
+     * The event handler is called when the user wants to close the main application window.
+     *
+     * @param event event
+     */
+    private void onWindowCloseRequest(final WindowEvent event) {
+        event.consume();
+        onQuit(null);
     }
 }

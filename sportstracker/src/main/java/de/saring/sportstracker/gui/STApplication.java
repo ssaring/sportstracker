@@ -1,19 +1,21 @@
 package de.saring.sportstracker.gui;
 
-import java.text.MessageFormat;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.saring.exerciseviewer.gui.EVContext;
+import de.saring.sportstracker.core.STException;
 import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import de.saring.util.gui.javafx.FxmlLoader;
+
+import de.saring.exerciseviewer.gui.EVContext;
+import de.saring.sportstracker.core.STOptions;
+import de.saring.util.unitcalc.FormatUtils;
+import javafx.stage.WindowEvent;
 
 /**
  * This is the main class of SportsTracker which starts the entire application.
@@ -24,7 +26,9 @@ public class STApplication extends Application {
 
     private static final Logger LOGGER = Logger.getLogger(STApplication.class.getName());
 
-    private Injector injector;
+    private STDocument document;
+    private STContext context;
+    private STController controller;
 
     private Stage primaryStage;
 
@@ -32,7 +36,7 @@ public class STApplication extends Application {
     public void init() throws Exception {
 
         // setup the Guice injector
-        injector = Guice.createInjector(new AbstractModule() {
+        final Injector injector = Guice.createInjector(new AbstractModule() {
             @Override
             public void configure() {
                 bind(STApplication.class).toInstance(STApplication.this);
@@ -45,41 +49,26 @@ public class STApplication extends Application {
         });
 
         // initialize the document
-        final STDocument document = injector.getInstance(STDocument.class);
+        document = injector.getInstance(STDocument.class);
         document.evaluateCommandLineParameters(getParameters().getRaw());
         document.loadOptions();
+
+        // initialize the context (set format utils for current configuration)
+        context = injector.getInstance(STContext.class);
+        final STOptions options = document.getOptions();
+        context.setFormatUtils(new FormatUtils(options.getUnitSystem(), options.getSpeedView()));
+
+        controller = injector.getInstance(STController.class);
     }
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
-        // load and start the main application window
-        final STController controller = injector.getInstance(STController.class);
-        final STContext context = injector.getInstance(STContext.class);
+        // initialize and start the main application window
+        controller.initApplicationWindow();
 
-        // TODO move this to STController?
-        Parent root = FxmlLoader.load(STController.class.getResource("/fxml/SportsTracker.fxml"), //
-                context.getFxResources().getResourceBundle(), controller);
-
-        primaryStage.setScene(new Scene(root));
-
-        primaryStage.setTitle(MessageFormat.format(
-                "{0} {1}", //
-                context.getFxResources().getString("application.title"),
-                context.getFxResources().getString("application.version")));
-
-        primaryStage.getIcons().addAll( //
-                new Image("icons/st-logo-512.png"), //
-                new Image("icons/st-logo-256.png"), //
-                new Image("icons/st-logo-128.png"), //
-                new Image("icons/st-logo-64.png"), //
-                new Image("icons/st-logo-48.png"), //
-                new Image("icons/st-logo-32.png"), //
-                new Image("icons/st-logo-24.png"));
-
-        // register listener for window close / application exit
-        primaryStage.setOnCloseRequest(event -> controller.onWindowCloseRequest(event));
+        primaryStage.setOnShown(this::onShown);
         primaryStage.show();
     }
 
@@ -90,6 +79,27 @@ public class STApplication extends Application {
      */
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    /**
+     * This method is called after the application window has been shown, final UI setup can be done here.
+     *
+     * @param event window event
+     */
+    private void onShown(final WindowEvent event) {
+
+        // create application directory
+        // TODO test
+        try {
+            document.createApplicationDirectory();
+        } catch (STException se) {
+            LOGGER.log(Level.SEVERE, "Failed to create the application directory!", se);
+            context.showFxMessageDialog(primaryStage, Alert.AlertType.ERROR, "common.error",
+                    "st.main.error.create_dir");
+        }
+
+        // TODO load application data by starting the load action (executed in background)
+        // controller.startActionManually(STController.ACTION_LOAD);
     }
 
     /**

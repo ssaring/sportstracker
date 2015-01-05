@@ -3,6 +3,8 @@ package de.saring.sportstracker.gui;
 import javafx.event.ActionEvent;
 import javafx.stage.WindowEvent;
 
+import java.io.IOException;
+
 /**
  * This interface provides all controller (MVC) functionality of the SportsTracker main application window.
  *
@@ -11,11 +13,9 @@ import javafx.stage.WindowEvent;
 public interface STController {
 
     /**
-     * Called when the user wants to close the application.
-     *
-     * @param event WindowEvent
+     * Initializes the main SportsTracker application window (loaded from FXML).
      */
-    void onWindowCloseRequest(WindowEvent event);
+    void initApplicationWindow() throws IOException;
 
     /**
      * Event handler for action "Open HRM file in ExerciseViewer".
