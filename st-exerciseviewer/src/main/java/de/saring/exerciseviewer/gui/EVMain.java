@@ -76,7 +76,7 @@ public class EVMain {
             document.openExerciseFile(exerciseFilename);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to open exercise file " + exerciseFilename + "!", e);
-            context.showFxMessageDialog(parent, Alert.AlertType.ERROR, "common.error",
+            context.showMessageDialog(parent, Alert.AlertType.ERROR, "common.error",
                     "pv.error.read_exercise_console", exerciseFilename);
             return;
         }

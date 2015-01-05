@@ -91,7 +91,7 @@ public class DiagramPanelController extends AbstractPanelController {
     public DiagramPanelController(final EVContext context, final EVDocument document) {
         super(context, document);
 
-        axisTypeStringConverter = new AxisTypeStringConverter(getContext().getFxResources(),
+        axisTypeStringConverter = new AxisTypeStringConverter(getContext().getResources(),
                 getContext().getFormatUtils());
     }
 
@@ -343,7 +343,7 @@ public class DiagramPanelController extends AbstractPanelController {
                 Marker lapMarker = new ValueMarker(lapSplitValue);
                 lapMarker.setPaint(COLOR_MARKER_LAP);
                 lapMarker.setStroke(new java.awt.BasicStroke(1.5f));
-                lapMarker.setLabel(getContext().getFxResources().getString("pv.diagram.lap", i + 1));
+                lapMarker.setLabel(getContext().getResources().getString("pv.diagram.lap", i + 1));
                 lapMarker.setLabelAnchor(RectangleAnchor.TOP_LEFT);
                 lapMarker.setLabelTextAnchor(TextAnchor.TOP_RIGHT);
                 plot.addDomainMarker(lapMarker);

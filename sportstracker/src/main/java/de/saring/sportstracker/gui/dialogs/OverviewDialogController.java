@@ -104,9 +104,9 @@ public class OverviewDialogController extends AbstractDialogController {
         super(context);
         this.document = document;
 
-        TimeRangeType.appResources = context.getFxResources();
-        ValueType.appResources = context.getFxResources();
-        OverviewType.appResources = context.getFxResources();
+        TimeRangeType.appResources = context.getResources();
+        ValueType.appResources = context.getResources();
+        OverviewType.appResources = context.getResources();
     }
 
     /**
@@ -117,9 +117,9 @@ public class OverviewDialogController extends AbstractDialogController {
     public void show(final Window parent) {
 
         // display in title when exercise filter is being used
-        String dlgTitle = context.getFxResources().getString("st.dlg.overview.title");
+        String dlgTitle = context.getResources().getString("st.dlg.overview.title");
         if (document.isFilterEnabled()) {
-            dlgTitle += " " + context.getFxResources().getString("st.dlg.overview.title.filter");
+            dlgTitle += " " + context.getResources().getString("st.dlg.overview.title.filter");
         }
 
         showInfoDialog("/fxml/OverviewDialog.fxml", parent, dlgTitle);
@@ -400,7 +400,7 @@ public class OverviewDialogController extends AbstractDialogController {
             ValueType valueType, SportType sportType) {
 
         // create the time series for specified time range and sport type
-        String seriesName = sportType != null ? sportType.getName() : context.getFxResources().getString(
+        String seriesName = sportType != null ? sportType.getName() : context.getResources().getString(
                 "st.dlg.overview.graph.all_types");
 
         // process value calculation for each step of time range
@@ -607,7 +607,7 @@ public class OverviewDialogController extends AbstractDialogController {
     private void addEquipmentTimeSeries(TimeTableXYDataset dataset, TimeRangeType timeType, int year,
             SportType sportType, Equipment equipment) {
 
-        String seriesName = equipment != null ? equipment.getName() : context.getFxResources().getString(
+        String seriesName = equipment != null ? equipment.getName() : context.getResources().getString(
                 "st.dlg.overview.equipment.not_specified");
 
         // process value calculation for each step of time range
@@ -673,7 +673,7 @@ public class OverviewDialogController extends AbstractDialogController {
      */
     private void addWeightTimeSeries(TimeTableXYDataset dataset, TimeRangeType timeType, int year) {
 
-        String seriesName = context.getFxResources().getString("st.dlg.overview.display.weight.text");
+        String seriesName = context.getResources().getString("st.dlg.overview.display.weight.text");
 
         // process value calculation for each step of time range
         int timeStepCount = getTimeStepCount(timeType, year);

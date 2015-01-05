@@ -74,7 +74,7 @@ public class WeightDialogController extends AbstractDialogController {
 
         final boolean newWeight = document.getWeightList().getByID(weight.getId()) == null;
         final String dlgTitleKey = newWeight ? "st.dlg.weight.title.add" : "st.dlg.weight.title";
-        final String dlgTitle = context.getFxResources().getString(dlgTitleKey);
+        final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
         showEditDialog("/fxml/WeightDialog.fxml", parent, dlgTitle);
     }
@@ -93,15 +93,15 @@ public class WeightDialogController extends AbstractDialogController {
 
         // setup validation of the UI controls
         validationSupport.registerValidator(dpDate,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.weight.error.date")));
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.weight.error.date")));
         validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfHour, context.getFxResources().getString("st.dlg.weight.error.time"),
+                ValidationResult.fromErrorIf(tfHour, context.getResources().getString("st.dlg.weight.error.time"),
                         !ValidationUtils.isValueIntegerBetween(newValue, 0, 23)));
         validationSupport.registerValidator(tfMinute, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfMinute, context.getFxResources().getString("st.dlg.weight.error.time"),
+                ValidationResult.fromErrorIf(tfMinute, context.getResources().getString("st.dlg.weight.error.time"),
                         !ValidationUtils.isValueIntegerBetween(newValue, 0, 59)));
         validationSupport.registerValidator(tfValue, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfValue, context.getFxResources().getString("st.dlg.weight.error.weight"),
+                ValidationResult.fromErrorIf(tfValue, context.getResources().getString("st.dlg.weight.error.weight"),
                         !ValidationUtils.isValueDoubleBetween(newValue, 0.1d, 1000)));
     }
 

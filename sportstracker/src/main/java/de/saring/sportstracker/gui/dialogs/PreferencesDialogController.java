@@ -100,7 +100,7 @@ public class PreferencesDialogController extends AbstractDialogController {
         this.preferencesViewModel = new PreferencesViewModel(document.getOptions());
 
         showEditDialog("/fxml/PreferencesDialog.fxml", parent,
-                context.getFxResources().getString("st.dlg.options.title"));
+                context.getResources().getString("st.dlg.options.title"));
     }
 
     @Override
@@ -160,11 +160,11 @@ public class PreferencesDialogController extends AbstractDialogController {
             public String toString(final STOptions.AutoCalculation autoCalculation) {
                 switch (autoCalculation) {
                     case Distance:
-                        return context.getFxResources().getString("st.dlg.options.distance.text");
+                        return context.getResources().getString("st.dlg.options.distance.text");
                     case AvgSpeed:
-                        return context.getFxResources().getString("st.dlg.options.avg_speed.text");
+                        return context.getResources().getString("st.dlg.options.avg_speed.text");
                     case Duration:
-                        return context.getFxResources().getString("st.dlg.options.duration.text");
+                        return context.getResources().getString("st.dlg.options.duration.text");
                     default:
                         return "";
                 }

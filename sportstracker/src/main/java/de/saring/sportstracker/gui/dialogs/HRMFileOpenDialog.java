@@ -48,7 +48,7 @@ public class HRMFileOpenDialog {
 
         // create file chooser
         final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(context.getFxResources().getString("st.dlg.hrm_file_open.title"));
+        fileChooser.setTitle(context.getResources().getString("st.dlg.hrm_file_open.title"));
         addFileExtensionFilters(fileChooser);
 
         // do we need to select an initial file ?
@@ -96,11 +96,11 @@ public class HRMFileOpenDialog {
 
         // append a file filter for all files
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
-                context.getFxResources().getString("st.dlg.hrm_file_open.filter_all_files"), "*.*"));
+                context.getResources().getString("st.dlg.hrm_file_open.filter_all_files"), "*.*"));
 
         parserInfos.forEach(parserInfo -> {
             final String filterName = String.format(
-                    context.getFxResources().getString("st.dlg.hrm_file_open.filter_specific"), parserInfo.getName());
+                    context.getResources().getString("st.dlg.hrm_file_open.filter_specific"), parserInfo.getName());
 
             // extend all filename suffixes with prefix "*."
             final List<String> extendedSuffixes = Stream.of(parserInfo.getSuffixes())
@@ -114,6 +114,6 @@ public class HRMFileOpenDialog {
 
         // append a file filter for all ExerciseViewer file extensions
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
-                context.getFxResources().getString("st.dlg.hrm_file_open.filter_all"), lAllExtensions));
+                context.getResources().getString("st.dlg.hrm_file_open.filter_all"), lAllExtensions));
     }
 }

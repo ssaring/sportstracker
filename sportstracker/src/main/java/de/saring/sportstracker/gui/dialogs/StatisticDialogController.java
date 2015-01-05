@@ -79,7 +79,7 @@ public class StatisticDialogController extends AbstractDialogController {
         statisticFilter = document.getCurrentFilter();
 
         showInfoDialog("/fxml/StatisticDialog.fxml", parent,
-                context.getFxResources().getString("st.dlg.statistic.title"));
+                context.getResources().getString("st.dlg.statistic.title"));
     }
 
     @Override
@@ -92,7 +92,7 @@ public class StatisticDialogController extends AbstractDialogController {
     protected void addCustomButtons(final DialogPane dialogPane) {
 
         // add 'Calculate' button to button bar
-        final ButtonType bTypeCalculate = new ButtonType(context.getFxResources().getString(
+        final ButtonType bTypeCalculate = new ButtonType(context.getResources().getString(
                 "st.dlg.statistic.calculate.Action.text"), ButtonBar.ButtonData.OK_DONE);
         dialogPane.getButtonTypes().add(bTypeCalculate);
         final Button buttonCalculate = (Button) dialogPane.lookupButton(bTypeCalculate);
@@ -116,7 +116,7 @@ public class StatisticDialogController extends AbstractDialogController {
                 " - " + statisticFilter.getDateEnd().format(dateFormatter);
 
         // create strings for sport type, subtype, intensity, equipment
-        final String strAll = context.getFxResources().getString("st.dlg.statistic.all.text");
+        final String strAll = context.getResources().getString("st.dlg.statistic.all.text");
         final String strSportType = statisticFilter.getSportType() == null ? strAll :
             statisticFilter.getSportType().getName();
 
@@ -130,11 +130,11 @@ public class StatisticDialogController extends AbstractDialogController {
             statisticFilter.getEquipment().getName();
 
         // create comment string
-        String strComment = context.getFxResources().getString("st.dlg.statistic.no_comment.text");
+        String strComment = context.getResources().getString("st.dlg.statistic.no_comment.text");
         if (StringUtils.getTrimmedTextOrNull(statisticFilter.getCommentSubString()) != null) {
             strComment = statisticFilter.getCommentSubString();
             if (statisticFilter.isRegularExpressionMode()) {
-                strComment += " " + context.getFxResources().getString("st.dlg.statistic.reg_expression.text");
+                strComment += " " + context.getResources().getString("st.dlg.statistic.reg_expression.text");
             }
         }
 
@@ -176,7 +176,7 @@ public class StatisticDialogController extends AbstractDialogController {
 
         // make sure that at least one exercise was found
         if (lFoundExercises.size() == 0) {
-            context.showFxMessageDialog(getWindow(laTimespanValue), Alert.AlertType.INFORMATION,
+            context.showMessageDialog(getWindow(laTimespanValue), Alert.AlertType.INFORMATION,
                     "common.info", "st.dlg.statistic.info.no_exercises_found");
             return;
         }

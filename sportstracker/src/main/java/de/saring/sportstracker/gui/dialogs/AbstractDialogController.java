@@ -187,7 +187,7 @@ public abstract class AbstractDialogController {
 
     private Parent loadDialogContent(final String fxmlFilename) {
         try {
-            return FxmlLoader.load(AbstractDialogController.class.getResource(fxmlFilename), context.getFxResources()
+            return FxmlLoader.load(AbstractDialogController.class.getResource(fxmlFilename), context.getResources()
                     .getResourceBundle(), this);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load the dialog FXML resource '" + fxmlFilename + "'!", e);

@@ -89,13 +89,11 @@ public class STApplication extends Application {
     private void onShown(final WindowEvent event) {
 
         // create application directory
-        // TODO test
         try {
             document.createApplicationDirectory();
         } catch (STException se) {
             LOGGER.log(Level.SEVERE, "Failed to create the application directory!", se);
-            context.showFxMessageDialog(primaryStage, Alert.AlertType.ERROR, "common.error",
-                    "st.main.error.create_dir");
+            context.showMessageDialog(primaryStage, Alert.AlertType.ERROR, "common.error", "st.main.error.create_dir");
         }
 
         // TODO load application data by starting the load action (executed in background)

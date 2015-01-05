@@ -45,8 +45,8 @@ public class STContextImpl implements STContext {
     }
 
     @Override
-    public Optional<ButtonType> showFxMessageDialog(final javafx.stage.Window parent, final Alert.AlertType alertType,
-            final String titleKey, final String messageKey, final Object... arguments) {
+    public Optional<ButtonType> showMessageDialog(final javafx.stage.Window parent, final Alert.AlertType alertType,
+                                                  final String titleKey, final String messageKey, final Object... arguments) {
 
         final String message = fxResources.getString(messageKey, arguments);
         final Alert alert = new Alert(alertType, message);
@@ -61,13 +61,13 @@ public class STContextImpl implements STContext {
     }
 
     @Override
-    public Optional<String> showFxTextInputDialog(final javafx.stage.Window parent, final String titleKey,
-            final String messageKey, final String initialValue) {
+    public Optional<String> showTextInputDialog(final javafx.stage.Window parent, final String titleKey,
+                                                final String messageKey, final String initialValue) {
 
         final TextInputDialog inputDlg = new TextInputDialog(initialValue == null ? "" : initialValue);
         inputDlg.initOwner(parent);
-        inputDlg.setTitle(getFxResources().getString(titleKey));
-        inputDlg.setContentText(getFxResources().getString(messageKey));
+        inputDlg.setTitle(getResources().getString(titleKey));
+        inputDlg.setContentText(getResources().getString(messageKey));
         inputDlg.setHeaderText(null);
         // TODO remove when fixed in OpenJFX-Dialogs
         // workaround for disabling bigger font size of custom dialog content
@@ -91,7 +91,7 @@ public class STContextImpl implements STContext {
     }
 
     @Override
-    public AppResources getFxResources() {
+    public AppResources getResources() {
         return fxResources;
     }
 }

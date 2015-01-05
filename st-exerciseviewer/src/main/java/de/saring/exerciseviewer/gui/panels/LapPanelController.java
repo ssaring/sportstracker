@@ -117,7 +117,7 @@ public class LapPanelController extends AbstractPanelController {
                 getContext().getFormatUtils().temperatureToString(value.shortValue())));
 
         // set table data
-        tvLaps.setPlaceholder(new Label(getContext().getFxResources().getString("pv.info.no_data_available")));
+        tvLaps.setPlaceholder(new Label(getContext().getResources().getString("pv.info.no_data_available")));
         final LapRow[] lapRows = LapRow.createLapRows(getDocument().getExercise());
         tvLaps.setItems(FXCollections.observableArrayList(lapRows));
 

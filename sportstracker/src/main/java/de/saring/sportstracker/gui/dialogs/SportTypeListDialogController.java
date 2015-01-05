@@ -67,7 +67,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
      */
     public void show(final Window parent) {
         showInfoDialog("/fxml/SportTypeListDialog.fxml", parent,
-                context.getFxResources().getString("st.dlg.sporttype_list.title"));
+                context.getResources().getString("st.dlg.sporttype_list.title"));
     }
 
     @Override
@@ -130,7 +130,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
     private void onDeleteSportType(final ActionEvent event) {
 
         // display confirmation dialog
-        final Optional<ButtonType> resultDeleteSportType = context.showFxMessageDialog(
+        final Optional<ButtonType> resultDeleteSportType = context.showMessageDialog(
                 getWindow(liSportTypes), Alert.AlertType.CONFIRMATION,
                 "st.dlg.sporttype_list.confirm.delete.title", "st.dlg.sporttype_list.confirm.delete.text");
         if (!resultDeleteSportType.isPresent() || resultDeleteSportType.get() != ButtonType.OK) {
@@ -147,7 +147,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
         if (!lRefExercises.isEmpty()) {
 
             // show confirmation dialog for deleting exercises
-            final Optional<ButtonType> resultDeleteExercises = context.showFxMessageDialog(
+            final Optional<ButtonType> resultDeleteExercises = context.showMessageDialog(
                     getWindow(liSportTypes), Alert.AlertType.CONFIRMATION,
                     "st.dlg.sporttype_list.confirm.delete.title", "st.dlg.sporttype_list.confirm.delete_existing.text");
             if (!resultDeleteExercises.isPresent() || resultDeleteExercises.get() != ButtonType.OK) {

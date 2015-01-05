@@ -85,7 +85,7 @@ public class FilterDialogController extends AbstractDialogController {
         super(context);
         this.document = document;
 
-        final String resourceAll = context.getFxResources().getString("st.dlg.filter.all.text");
+        final String resourceAll = context.getResources().getString("st.dlg.filter.all.text");
         sportTypeAll = new SportType(Integer.MAX_VALUE);
         sportTypeAll.setName(resourceAll);
 
@@ -108,7 +108,7 @@ public class FilterDialogController extends AbstractDialogController {
         this.filterViewModel = new FilterViewModel(filter);
         this.selectedFilter = Optional.empty();
 
-        showEditDialog("/fxml/FilterDialog.fxml", parent, context.getFxResources().getString("st.dlg.filter.title"));
+        showEditDialog("/fxml/FilterDialog.fxml", parent, context.getResources().getString("st.dlg.filter.title"));
     }
 
     /**
@@ -134,9 +134,9 @@ public class FilterDialogController extends AbstractDialogController {
     private void setupValidation() {
 
         validationSupport.registerValidator(dpStart,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.filter.error.date")));
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.filter.error.date")));
         validationSupport.registerValidator(dpEnd,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.filter.error.date")));
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.filter.error.date")));
     }
 
     /**
@@ -219,7 +219,7 @@ public class FilterDialogController extends AbstractDialogController {
         // make sure that start date is before end date
         if (newFilter.getDateEnd().isBefore(newFilter.getDateStart())) {
             dpEnd.getEditor().selectAll();
-            context.showFxMessageDialog(getWindow(dpEnd), Alert.AlertType.ERROR, "common.error",
+            context.showMessageDialog(getWindow(dpEnd), Alert.AlertType.ERROR, "common.error",
                     "st.dlg.filter.error.start_after_end");
             dpEnd.getEditor().requestFocus();
             return false;
@@ -243,7 +243,7 @@ public class FilterDialogController extends AbstractDialogController {
             } catch (Exception e) {
                 // syntax error in regular expression => the user has to correct it
                 tfComment.selectAll();
-                context.showFxMessageDialog(getWindow(tfComment), Alert.AlertType.ERROR,
+                context.showMessageDialog(getWindow(tfComment), Alert.AlertType.ERROR,
                         "common.error", "st.dlg.filter.error.reg_expression_error");
                 tfComment.requestFocus();
                 return false;

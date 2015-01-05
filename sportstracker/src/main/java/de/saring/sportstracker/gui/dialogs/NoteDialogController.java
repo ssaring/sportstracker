@@ -66,7 +66,7 @@ public class NoteDialogController extends AbstractDialogController {
         this.noteViewModel = new NoteViewModel(note);
 
         final String dlgTitleKey = note.getText() == null ? "st.dlg.note.title.add" : "st.dlg.note.title";
-        final String dlgTitle = context.getFxResources().getString(dlgTitleKey);
+        final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
         showEditDialog("/fxml/NoteDialog.fxml", parent, dlgTitle);
     }
@@ -82,15 +82,15 @@ public class NoteDialogController extends AbstractDialogController {
 
         // setup validation of the UI controls
         validationSupport.registerValidator(dpDate,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.note.error.date")));
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.note.error.date")));
         validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfHour, context.getFxResources().getString("st.dlg.note.error.time"),
+                ValidationResult.fromErrorIf(tfHour, context.getResources().getString("st.dlg.note.error.time"),
                         !ValidationUtils.isValueIntegerBetween(newValue, 0, 23)));
         validationSupport.registerValidator(tfMinute, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfMinute, context.getFxResources().getString("st.dlg.note.error.time"),
+                ValidationResult.fromErrorIf(tfMinute, context.getResources().getString("st.dlg.note.error.time"),
                         !ValidationUtils.isValueIntegerBetween(newValue, 0, 59)));
         validationSupport.registerValidator(taText,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.note.error.no_text")));
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.note.error.no_text")));
     }
 
     @Override

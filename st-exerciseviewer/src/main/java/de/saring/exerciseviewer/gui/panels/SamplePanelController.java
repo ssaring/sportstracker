@@ -96,7 +96,7 @@ public class SamplePanelController extends AbstractPanelController {
                         value.shortValue()) : null));
 
         // set table data
-        tvSamples.setPlaceholder(new Label(getContext().getFxResources().getString("pv.info.no_data_available")));
+        tvSamples.setPlaceholder(new Label(getContext().getResources().getString("pv.info.no_data_available")));
         final ExerciseSample[] samples = getDocument().getExercise().getSampleList();
         tvSamples.setItems(FXCollections.observableArrayList(samples == null ? new ExerciseSample[0] : samples));
 

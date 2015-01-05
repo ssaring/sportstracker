@@ -35,8 +35,8 @@ public interface EVContext {
      * @param arguments list of objects which needs to be inserted in the message text (optional)
      * @return An Optional that contains the result of the displayed dialog.
      */
-    Optional<ButtonType> showFxMessageDialog(Window parent, Alert.AlertType alertType, String titleKey,
-                             String messageKey, Object... arguments);
+    Optional<ButtonType> showMessageDialog(Window parent, Alert.AlertType alertType, String titleKey,
+                                           String messageKey, Object... arguments);
 
     /**
      * Displays a modal text input dialog for the specified parameters.
@@ -47,14 +47,14 @@ public interface EVContext {
      * @param initialValue initial text value to be displayed
      * @return Optional containing the entered String (can be empty text) or Optional.empty() when the user has cancelled the dialog
      */
-    Optional<String> showFxTextInputDialog(Window parent, String titleKey, String messageKey, String initialValue);
+    Optional<String> showTextInputDialog(Window parent, String titleKey, String messageKey, String initialValue);
 
     /**
      * Returns the provider of application text resources.
      *
      * @return AppResources
      */
-    AppResources getFxResources();
+    AppResources getResources();
 
     /**
      * Returns the format utils class for the current unit system.

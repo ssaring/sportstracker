@@ -5,11 +5,9 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import de.saring.exerciseviewer.gui.EVMain;
-import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.gui.dialogs.AboutDialogController;
 import de.saring.sportstracker.gui.dialogs.HRMFileOpenDialog;
 import de.saring.util.gui.javafx.FxmlLoader;
-import de.saring.util.unitcalc.FormatUtils;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -77,14 +75,14 @@ public class STControllerImpl implements STController {
         final Stage primaryStage = this.context.getPrimaryStage();
 
         final Parent root = FxmlLoader.load(STController.class.getResource("/fxml/SportsTracker.fxml"), //
-                context.getFxResources().getResourceBundle(), this);
+                context.getResources().getResourceBundle(), this);
 
         primaryStage.setScene(new Scene(root));
 
         primaryStage.setTitle(MessageFormat.format(
                 "{0} {1}", //
-                context.getFxResources().getString("application.title"),
-                context.getFxResources().getString("application.version")));
+                context.getResources().getString("application.title"),
+                context.getResources().getString("application.version")));
 
         primaryStage.getIcons().addAll( //
                 new Image("icons/st-logo-512.png"), //

@@ -163,7 +163,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         this.document = document;
 
         equipmentNone = new Equipment(Integer.MAX_VALUE);
-        equipmentNone.setName(context.getFxResources().getString("st.dlg.exercise.equipment.none.text"));
+        equipmentNone.setName(context.getResources().getString("st.dlg.exercise.equipment.none.text"));
     }
 
     /**
@@ -185,7 +185,7 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         final boolean newExercise = document.getExerciseList().getByID(exercise.getId()) == null;
         final String dlgTitleKey = newExercise ? "st.dlg.exercise.title.add" : "st.dlg.exercise.title";
-        final String dlgTitle = context.getFxResources().getString(dlgTitleKey);
+        final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
         showEditDialog("/fxml/ExerciseDialog.fxml", parent, dlgTitle);
     }
@@ -271,40 +271,40 @@ public class ExerciseDialogController extends AbstractDialogController {
     private void setupValidation() {
 
         validationSupport.registerValidator(dpDate,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.date")));
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.exercise.error.date")));
         validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfHour, context.getFxResources().getString("st.dlg.exercise.error.time"),
+                ValidationResult.fromErrorIf(tfHour, context.getResources().getString("st.dlg.exercise.error.time"),
                         !ValidationUtils.isValueIntegerBetween(newValue, 0, 23)));
         validationSupport.registerValidator(tfMinute, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfMinute, context.getFxResources().getString("st.dlg.exercise.error.time"),
+                ValidationResult.fromErrorIf(tfMinute, context.getResources().getString("st.dlg.exercise.error.time"),
                         !ValidationUtils.isValueIntegerBetween(newValue, 0, 59)));
         validationSupport.registerValidator(cbSportType,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.no_sport_type")));
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.exercise.error.no_sport_type")));
         validationSupport.registerValidator(cbSportSubtype,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.no_sport_subtype")));
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.exercise.error.no_sport_subtype")));
         validationSupport.registerValidator(cbIntensity,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.exercise.error.no_intensity")));
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.exercise.error.no_intensity")));
 
         validationSupport.registerValidator(tfDistance, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfDistance, context.getFxResources().getString("st.dlg.exercise.error.distance"),
+                ValidationResult.fromErrorIf(tfDistance, context.getResources().getString("st.dlg.exercise.error.distance"),
                         !ValidationUtils.isValueDoubleBetween(newValue,
                                 exerciseViewModel.sportTypeRecordDistance.get() ? 0.001f : 0, Float.MAX_VALUE)));
         validationSupport.registerValidator(tfAvgSpeed, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfAvgSpeed, context.getFxResources().getString("st.dlg.exercise.error.avg_speed"),
+                ValidationResult.fromErrorIf(tfAvgSpeed, context.getResources().getString("st.dlg.exercise.error.avg_speed"),
                         !ValidationUtils.isValueDoubleBetween(newValue,
                                 exerciseViewModel.sportTypeRecordDistance.get() ? 0.001f : 0, Float.MAX_VALUE)));
         validationSupport.registerValidator(tfDuration, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfDuration, context.getFxResources().getString("st.dlg.exercise.error.duration"),
+                ValidationResult.fromErrorIf(tfDuration, context.getResources().getString("st.dlg.exercise.error.duration"),
                         !ValidationUtils.isValueTimeInSecondsBetween(newValue, 1, Integer.MAX_VALUE)));
 
         validationSupport.registerValidator(tfAscent, false, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfAscent, context.getFxResources().getString("st.dlg.exercise.error.ascent"),
+                ValidationResult.fromErrorIf(tfAscent, context.getResources().getString("st.dlg.exercise.error.ascent"),
                         !ValidationUtils.isOptionalValueIntegerBetween(newValue, 0, Integer.MAX_VALUE)));
         validationSupport.registerValidator(tfAvgHeartrate, false, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfAvgHeartrate, context.getFxResources().getString("st.dlg.exercise.error.avg_heartrate"),
+                ValidationResult.fromErrorIf(tfAvgHeartrate, context.getResources().getString("st.dlg.exercise.error.avg_heartrate"),
                         !ValidationUtils.isOptionalValueIntegerBetween(newValue, 0, 299)));
         validationSupport.registerValidator(tfCalories, false, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfCalories, context.getFxResources().getString("st.dlg.exercise.error.calories"),
+                ValidationResult.fromErrorIf(tfCalories, context.getResources().getString("st.dlg.exercise.error.calories"),
                         !ValidationUtils.isOptionalValueIntegerBetween(newValue, 0, Integer.MAX_VALUE)));
     }
 
@@ -447,7 +447,7 @@ public class ExerciseDialogController extends AbstractDialogController {
             pvExercise = parser.parseExercise(hrmFile);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to parse exercise file!", e);
-            context.showFxMessageDialog(getWindow(tfHrmFile), Alert.AlertType.ERROR, "common.error",
+            context.showMessageDialog(getWindow(tfHrmFile), Alert.AlertType.ERROR, "common.error",
                     "st.dlg.exercise.error.import_console", hrmFile);
             return;
         }
@@ -497,7 +497,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         final SportSubType selectedSportSubType = exerciseViewModel.sportSubType.get();
 
         if (selectedSportType == null || selectedSportSubType == null) {
-            context.showFxMessageDialog(getWindow(taComment), Alert.AlertType.ERROR,
+            context.showMessageDialog(getWindow(taComment), Alert.AlertType.ERROR,
                     "common.error", "st.dlg.exercise.error.no_sport_and_subtype");
             return;
         }
@@ -535,7 +535,7 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         // nothing found => delete previous index, so searching will start from the end again
         previousExerciseIndex = null;
-        context.showFxMessageDialog(getWindow(taComment), Alert.AlertType.INFORMATION,
+        context.showMessageDialog(getWindow(taComment), Alert.AlertType.INFORMATION,
                 "common.info", "st.dlg.exercise.error.no_previous_exercise");
     }
 }

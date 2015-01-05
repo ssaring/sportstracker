@@ -39,7 +39,7 @@ public abstract class AbstractPanelController {
         Parent root;
 
         try {
-            root = FxmlLoader.load(this.getClass().getResource(fxmlFilename), context.getFxResources()
+            root = FxmlLoader.load(this.getClass().getResource(fxmlFilename), context.getResources()
                     .getResourceBundle(), this);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load the FXML resource '" + fxmlFilename + "'!", e);

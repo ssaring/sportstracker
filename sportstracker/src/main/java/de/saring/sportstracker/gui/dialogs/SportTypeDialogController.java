@@ -96,7 +96,7 @@ public class SportTypeDialogController extends AbstractDialogController {
 
         final String dlgTitleKey = sportType.getName() == null ?
                 "st.dlg.sporttype.title.add" : "st.dlg.sporttype.title";
-        final String dlgTitle = context.getFxResources().getString(dlgTitleKey);
+        final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
         showEditDialog("/fxml/SportTypeDialog.fxml", parent, dlgTitle);
     }
@@ -159,7 +159,7 @@ public class SportTypeDialogController extends AbstractDialogController {
      */
     private void setupValidation() {
         validationSupport.registerValidator(tfName,
-                Validator.createEmptyValidator(context.getFxResources().getString("st.dlg.sporttype.error.no_name")));
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.sporttype.error.no_name")));
     }
 
     @Override
@@ -174,7 +174,7 @@ public class SportTypeDialogController extends AbstractDialogController {
 
         if (oSportTypeSameName.isPresent()) {
             tfName.selectAll();
-            context.showFxMessageDialog(getWindow(tfName), Alert.AlertType.ERROR,
+            context.showMessageDialog(getWindow(tfName), Alert.AlertType.ERROR,
                     "common.error", "st.dlg.sporttype.error.name_in_use");
             tfName.requestFocus();
             return false;
@@ -182,7 +182,7 @@ public class SportTypeDialogController extends AbstractDialogController {
 
         // make sure that there's at least one sport subtype
         if (editedSportType.getSportSubTypeList().size() == 0) {
-            context.showFxMessageDialog(getWindow(liSportSubtypes), Alert.AlertType.ERROR,
+            context.showMessageDialog(getWindow(liSportSubtypes), Alert.AlertType.ERROR,
                     "common.error", "st.dlg.sporttype.error.no_subtype");
             return false;
         }
@@ -237,7 +237,7 @@ public class SportTypeDialogController extends AbstractDialogController {
     private void onDeleteSportSubtype(final ActionEvent event) {
 
         // display confirmation dialog
-        final Optional<ButtonType> resultDeleteSportSubtype = context.showFxMessageDialog(
+        final Optional<ButtonType> resultDeleteSportSubtype = context.showMessageDialog(
                 getWindow(liSportSubtypes), Alert.AlertType.CONFIRMATION,
                 "st.dlg.sporttype.confirm.delete_subtype.title", "st.dlg.sporttype.confirm.delete_subtype.text");
         if (!resultDeleteSportSubtype.isPresent() || resultDeleteSportSubtype.get() != ButtonType.OK) {
@@ -256,7 +256,7 @@ public class SportTypeDialogController extends AbstractDialogController {
         if (!lRefExercises.isEmpty()) {
 
             // show confirmation message box again
-            final Optional<ButtonType> resultDeleteExistingExercises = context.showFxMessageDialog(
+            final Optional<ButtonType> resultDeleteExistingExercises = context.showMessageDialog(
                     getWindow(liSportSubtypes), Alert.AlertType.CONFIRMATION,
                     "st.dlg.sporttype.confirm.delete_subtype.title",
                     "st.dlg.sporttype.confirm.delete_subtype_existing.text");
@@ -290,7 +290,7 @@ public class SportTypeDialogController extends AbstractDialogController {
 
         while (true) {
             // display text input dialog for sport subtype name
-            final Optional<String> oResult = context.showFxTextInputDialog(
+            final Optional<String> oResult = context.showTextInputDialog(
                     getWindow(liSportSubtypes), dlgTitleKey, "st.dlg.sportsubtype.name", strName);
 
             // exit when user has pressed Cancel button
@@ -302,7 +302,7 @@ public class SportTypeDialogController extends AbstractDialogController {
             // check the entered name => display error messages on problems
             if (strName == null) {
                 // no name was entered
-                context.showFxMessageDialog(getWindow(liSportSubtypes), Alert.AlertType.ERROR,
+                context.showMessageDialog(getWindow(liSportSubtypes), Alert.AlertType.ERROR,
                         "common.error", "st.dlg.sportsubtype.error.no_name");
             } else {
                 // make sure that the entered name is not in use by other sport subtypes yet
@@ -312,7 +312,7 @@ public class SportTypeDialogController extends AbstractDialogController {
                         .findFirst();
 
                 if (oSportSubtypeConflict.isPresent()) {
-                    context.showFxMessageDialog(getWindow(liSportSubtypes), Alert.AlertType.ERROR,
+                    context.showMessageDialog(getWindow(liSportSubtypes), Alert.AlertType.ERROR,
                             "common.error", "st.dlg.sportsubtype.error.in_use");
                 } else {
                     // the name is OK, store the modified subtype and update the list
@@ -356,7 +356,7 @@ public class SportTypeDialogController extends AbstractDialogController {
     private void onDeleteEquipment(final ActionEvent event) {
 
         // display confirmation dialog
-        final Optional<ButtonType> resultDeleteEquipment = context.showFxMessageDialog(
+        final Optional<ButtonType> resultDeleteEquipment = context.showMessageDialog(
                 getWindow(liEquipments), Alert.AlertType.CONFIRMATION,
                 "st.dlg.sporttype.confirm.delete_equipment.title", "st.dlg.sporttype.confirm.delete_equipment.text");
         if (!resultDeleteEquipment.isPresent() || resultDeleteEquipment.get() != ButtonType.OK) {
@@ -375,7 +375,7 @@ public class SportTypeDialogController extends AbstractDialogController {
         if (lRefExercises.size() > 0) {
 
             // show confirmation message box again
-            final Optional<ButtonType> resultDeleteEqInExercises = context.showFxMessageDialog(
+            final Optional<ButtonType> resultDeleteEqInExercises = context.showMessageDialog(
                     getWindow(liEquipments), Alert.AlertType.CONFIRMATION,
                     "st.dlg.sporttype.confirm.delete_equipment.title",
                     "st.dlg.sporttype.confirm.delete_equipment_existing.text");
@@ -409,7 +409,7 @@ public class SportTypeDialogController extends AbstractDialogController {
 
         while (true) {
             // display text input dialog for equipment name
-            final Optional<String> oResult = context.showFxTextInputDialog(
+            final Optional<String> oResult = context.showTextInputDialog(
                     getWindow(liEquipments), dlgTitleKey, "st.dlg.equipment.name", strName);
 
             // exit when user has pressed Cancel button
@@ -421,7 +421,7 @@ public class SportTypeDialogController extends AbstractDialogController {
             // check the entered name => display error messages on problems
             if (strName == null) {
                 // no name was entered
-                context.showFxMessageDialog(getWindow(liEquipments), Alert.AlertType.ERROR,
+                context.showMessageDialog(getWindow(liEquipments), Alert.AlertType.ERROR,
                         "common.error", "st.dlg.equipment.error.no_name");
             } else {
                 // make sure that the entered name is not in use by other equipment's yet
@@ -431,7 +431,7 @@ public class SportTypeDialogController extends AbstractDialogController {
                         .findFirst();
 
                 if (oEquipmnentConflict.isPresent()) {
-                    context.showFxMessageDialog(getWindow(liEquipments), Alert.AlertType.ERROR,
+                    context.showMessageDialog(getWindow(liEquipments), Alert.AlertType.ERROR,
                             "common.error", "st.dlg.equipment.error.in_use");
                 } else {
                     // the name is OK, store the modified equipment and update the list

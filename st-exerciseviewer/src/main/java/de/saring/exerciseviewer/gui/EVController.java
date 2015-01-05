@@ -83,7 +83,7 @@ public class EVController {
         // load dialog UI from FXML
         Parent root;
         try {
-            root = FxmlLoader.load(EVController.class.getResource(FXML_FILE), context.getFxResources()
+            root = FxmlLoader.load(EVController.class.getResource(FXML_FILE), context.getResources()
                     .getResourceBundle(), this);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load the FXML resource '" + FXML_FILE + "'!", e);

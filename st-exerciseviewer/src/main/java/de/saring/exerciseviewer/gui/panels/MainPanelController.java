@@ -213,6 +213,6 @@ public class MainPanelController extends AbstractPanelController {
     }
 
     private String boolean2EnabledString(final boolean enabled) {
-        return getContext().getFxResources().getString(enabled ? "common.enabled" : "common.disabled");
+        return getContext().getResources().getString(enabled ? "common.enabled" : "common.disabled");
     }
 }

@@ -426,7 +426,7 @@ public class TrackPanelController extends AbstractPanelController {
     }
 
     private void appendToolTipLine(StringBuilder sb, String resourceKey, String value) {
-        sb.append(getContext().getFxResources().getString(resourceKey));
+        sb.append(getContext().getResources().getString(resourceKey));
         sb.append(": ").append(value).append("<br/>");
     }
 }

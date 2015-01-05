@@ -91,7 +91,7 @@ public class StatisticResultDialogController extends AbstractDialogController {
         this.statisticResult = statisticResult;
 
         showInfoDialog("/fxml/StatisticResultDialog.fxml", parent,
-                context.getFxResources().getString("st.dlg.statistic_results.title"));
+                context.getResources().getString("st.dlg.statistic_results.title"));
     }
 
     @Override
