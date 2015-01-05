@@ -31,8 +31,6 @@ public abstract class AbstractDialogController {
     /** ValidationSupport of tis dialog, is null in Info dialogs. */
     protected ValidationSupport validationSupport;
 
-    private Runnable afterCloseBehavior;
-
     /**
      * Standard c'tor for dependency injection.
      *
@@ -40,17 +38,6 @@ public abstract class AbstractDialogController {
      */
     public AbstractDialogController(final STContext context) {
         this.context = context;
-    }
-
-    /**
-     * Sets the function/runnable which needs to be called after the dialog has been closed (no matter
-     * which action has been used).<br/>
-     * BEWARE: this runnable will be called on the JavaFX UI thread!
-     *
-     * @param afterCloseBehavior function to be called
-     */
-    public void setAfterCloseBehavior(final Runnable afterCloseBehavior) {
-        this.afterCloseBehavior = afterCloseBehavior;
     }
 
     /**
@@ -70,10 +57,6 @@ public abstract class AbstractDialogController {
         dlg.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         addCustomButtons(dlg.getDialogPane());
         dlg.showAndWait();
-
-        if (afterCloseBehavior != null) {
-            afterCloseBehavior.run();
-        }
     }
 
     /**
@@ -113,10 +96,6 @@ public abstract class AbstractDialogController {
 
         // show dialog
         dlg.showAndWait();
-
-        if (afterCloseBehavior != null) {
-            afterCloseBehavior.run();
-        }
     }
 
     /**

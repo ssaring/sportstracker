@@ -186,10 +186,9 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onPreferences(ActionEvent event) {
-        final PreferencesDialogController controller = prPreferencesDialogController.get();
+        prPreferencesDialogController.get().show(context.getPrimaryStage());
         // update view after dialog was closed, preferences (e.g. unit system) might be changed
-        controller.setAfterCloseBehavior(this::updateView);
-        controller.show(context.getPrimaryStage());
+        updateView();
     }
 
     @Override
