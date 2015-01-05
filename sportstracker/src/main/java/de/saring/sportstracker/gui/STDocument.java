@@ -18,7 +18,6 @@ import de.saring.util.data.IdObjectListChangeListener;
  * SportsTracker application.
  *
  * @author Stefan Saring
- * @version 1.0
  */
 public interface STDocument extends IdObjectListChangeListener {
 
@@ -56,9 +55,9 @@ public interface STDocument extends IdObjectListChangeListener {
     /**
      * Evaluates the passed command line parameters.
      *
-     * @param parameters array of specified command line parameters
+     * @param parameters list of specified command line parameters
      */
-    void evaluateCommandLineParameters(String[] parameters);
+    void evaluateCommandLineParameters(List<String> parameters);
 
     /**
      * Loads the application options or creates default options when not available.

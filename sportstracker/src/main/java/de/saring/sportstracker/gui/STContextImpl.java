@@ -7,6 +7,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import de.saring.util.AppResources;
@@ -35,6 +36,7 @@ public class STContextImpl implements STContext {
      *
      * @param application the JavaFX Application instance
      */
+    @Inject
     public STContextImpl(STApplication application) {
         this.application = application;
 

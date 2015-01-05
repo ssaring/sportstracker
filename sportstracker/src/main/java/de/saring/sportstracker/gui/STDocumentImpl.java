@@ -28,7 +28,6 @@ import de.saring.util.data.IdObjectListChangeListener;
  * SportsTracker application.
  *
  * @author Stefan Saring
- * @version 1.0
  */
 @Singleton
 public class STDocumentImpl implements STDocument {
@@ -99,7 +98,7 @@ public class STDocumentImpl implements STDocument {
      * @param storage the data storage instance to be used
      */
     @Inject
-    public STDocumentImpl(STContext context, IStorage storage) {
+    public STDocumentImpl(final STContext context, final IStorage storage) {
         this.context = context;
         this.storage = storage;
 
@@ -166,16 +165,14 @@ public class STDocumentImpl implements STDocument {
     }
 
     @Override
-    public void evaluateCommandLineParameters(String[] parameters) {
-        if (parameters != null) {
-            for (String parameter : parameters) {
+    public void evaluateCommandLineParameters(final List<String> parameters) {
 
-                // check for a custom data directory (optional)
-                if (parameter.startsWith(PARAMETER_DATA_DIR)) {
-                    String dataDir = parameter.substring(PARAMETER_DATA_DIR.length()).trim();
-                    if (dataDir.length() > 0) {
-                        dataDirectory = dataDir;
-                    }
+        // check for a custom data directory (optional)
+        for (String parameter : parameters) {
+            if (parameter.startsWith(PARAMETER_DATA_DIR)) {
+                final String dataDir = parameter.substring(PARAMETER_DATA_DIR.length()).trim();
+                if (dataDir.length() > 0) {
+                    dataDirectory = dataDir;
                 }
             }
         }
