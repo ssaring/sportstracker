@@ -84,7 +84,6 @@ public class EVMain {
         // create stage
         final Stage stage = new Stage();
         stage.initOwner(parent);
-        stage.setAlwaysOnTop(true);
         stage.initModality(modal ? Modality.APPLICATION_MODAL : Modality.NONE);
         stage.setTitle(DIALOG_NAME + " - " + document.getExerciseFilename());
 

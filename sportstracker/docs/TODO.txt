@@ -33,11 +33,7 @@ JavaFX Migration:
     mvn install:install-file -Dfile=jfreechart-1.0.19.jar -DgroupId=org.jfree
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
 - ExerciseViewer: Done & tested
-  - Bug: when EV is opened from Calendar and a new Exercise Dialog is opened, the EV will be closed
-    => reason: Swing/JavaFX workarounds in AbstractDialogController#centerDialogOnSwingFrame()
-    => problem is solved when main ST window has been migrated to JavaFX
   - Bug: EV window is always placed in screen center, not placed at center of parent window
-    => problem is solved when main ST window has been migrated to JavaFX
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
@@ -50,14 +46,6 @@ JavaFX Migration:
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38998
 - Exercise/Note/Weight tables: use PropertyExtractor concept for displaying data changes,
   see http://www.jensd.de/wordpress/?p=1650
-- JavaFX/Swing combination problems on Windows:
-  - modality of JavaFX dialog windows works perfectly, better then on Mac OS X
-  - the JavaFX dialog is always shown in the center of the screen, not in the
-    center of the main Swing window (works on Mac OS X)
-    => maybe an ControlsFX bug?
-       (see https://bitbucket.org/controlsfx/controlsfx/issue/345/unable-to-change-dialog-position)
-  - the Windows taskbar also shows an Icon for the transparent dummy JavaFX
-    Stage -> can this be hidden?
 - Use Maven JavaFX Plugin 8.1, see details in
   http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
 - SportType: use JavaFX Color object when migration of main ST window completed
@@ -75,9 +63,8 @@ JavaFX Migration status - completed:
   - Note Dialog
   - Weight Dialog
   - Exercise Dialog
-  - HRM File Open Dialog (from File->Open action it is not modal and is not
-    placed in center of ST window, it is fixed when ST main window used JavaFX)
-  - Overview Dialog (still using Swing version of JFreeChart, see TODOs)
+  - HRM File Open Dialog
+  - Overview Dialog
   - Sport Type List Dialog
   - Sport Type Dialog
   - Filter Dialog
