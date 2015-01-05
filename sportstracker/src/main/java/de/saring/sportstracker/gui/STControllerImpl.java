@@ -303,7 +303,6 @@ public class STControllerImpl implements STController {
         onQuit(null);
     }
 
-    // TODO test on OS X, works fine on Windows
     private void showWaitCursor(final boolean waitCursor) {
         // TODO block application window while showing wait cursor
         // can be done by displaying a modal transparent dialog of size 0x0

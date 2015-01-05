@@ -12,7 +12,6 @@ JavaFX Migration:
     - add special support for Mac menu items (Preferences, About, ...)
   - STApplication: Done
   - STController: see TODO
-    - test file chooser for "Open HRM file" on Mac
     - add concept of actions which bundle menu items, toolbar buttons, context menu items?
       (see http://fxexperience.com/controlsfx/features/#actions, othwise bind disabled-property of same menu items)
   - STDocument:
