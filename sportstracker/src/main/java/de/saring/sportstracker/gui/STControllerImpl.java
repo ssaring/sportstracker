@@ -7,10 +7,12 @@ import javax.inject.Singleton;
 import de.saring.exerciseviewer.gui.EVMain;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.gui.dialogs.AboutDialogController;
 import de.saring.sportstracker.gui.dialogs.HRMFileOpenDialog;
 import de.saring.sportstracker.gui.dialogs.OverviewDialogController;
 import de.saring.sportstracker.gui.dialogs.PreferencesDialogController;
+import de.saring.sportstracker.gui.dialogs.SportTypeListDialogController;
 import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
 import de.saring.util.gui.javafx.FxmlLoader;
 import de.saring.util.unitcalc.FormatUtils;
@@ -53,13 +55,15 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<EVMain> prExerciseViewer;
     @Inject
-    private Provider<AboutDialogController> prAboutDialogController;
+    private Provider<SportTypeListDialogController> prSportTypeListDialogController;
     @Inject
     private Provider<StatisticDialogController> prStatisticDialogController;
     @Inject
     private Provider<OverviewDialogController> prOverviewDialogController;
     @Inject
     private Provider<PreferencesDialogController> prPreferencesDialogController;
+    @Inject
+    private Provider<AboutDialogController> prAboutDialogController;
 
     // @Inject
     // private Provider<ExerciseDialogController> prExerciseDialogController;
@@ -67,8 +71,6 @@ public class STControllerImpl implements STController {
     // private Provider<NoteDialogController> prNoteDialogController;
     // @Inject
     // private Provider<WeightDialogController> prWeightDialogController;
-    // @Inject
-    // private Provider<SportTypeListDialogController> prSportTypeListDialogController;
     // @Inject
     // private Provider<FilterDialogController> prFilterDialogController;
 
@@ -223,7 +225,15 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onSportTypeEditor(ActionEvent event) {
-        // TODO
+        prSportTypeListDialogController.get().show(context.getPrimaryStage());
+
+        // sport type and subtype objects may have been changed  => these will be new objects
+        // => update all exercises and the current filter when the dialog closes, they need
+        // to reference to these new objects
+        final SportTypeList stList = document.getSportTypeList();
+        document.getExerciseList().updateSportTypes(stList);
+        document.getCurrentFilter().updateSportTypes(stList);
+        updateView();
     }
 
     @Override
@@ -318,7 +328,7 @@ public class STControllerImpl implements STController {
             super.succeeded();
             showWaitCursor(false);
 
-            // TODO view.updateView();
+            updateView();
             // TODO view.registerViewForDataChanges();
 
             displayCorruptExercises();
