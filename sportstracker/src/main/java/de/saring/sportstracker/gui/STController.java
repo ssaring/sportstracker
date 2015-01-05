@@ -132,4 +132,25 @@ public interface STController {
      * Event handler for action "About SportsTracker".
      */
     void onAbout(ActionEvent event);
+
+    /**
+     * Checks for existing sport types. A message dialog will be displayed when
+     * there are no sport types available yet.
+     *
+     * @return true when there's at least one sport type
+     */
+    boolean checkForExistingSportTypes();
+
+    /**
+     * Checks for existing exercises. A message dialog will be displayed when
+     * there are no exercises available yet.
+     *
+     * @return true when there's at least one exercise
+     */
+    boolean checkForExistingExercises();
+
+    /**
+     * Updates the complete view to show the current application data.
+     */
+    void updateView();
 }

@@ -5,10 +5,15 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import de.saring.exerciseviewer.gui.EVMain;
+import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.dialogs.AboutDialogController;
 import de.saring.sportstracker.gui.dialogs.HRMFileOpenDialog;
+import de.saring.sportstracker.gui.dialogs.OverviewDialogController;
+import de.saring.sportstracker.gui.dialogs.PreferencesDialogController;
+import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
 import de.saring.util.gui.javafx.FxmlLoader;
+import de.saring.util.unitcalc.FormatUtils;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,6 +54,12 @@ public class STControllerImpl implements STController {
     private Provider<EVMain> prExerciseViewer;
     @Inject
     private Provider<AboutDialogController> prAboutDialogController;
+    @Inject
+    private Provider<StatisticDialogController> prStatisticDialogController;
+    @Inject
+    private Provider<OverviewDialogController> prOverviewDialogController;
+    @Inject
+    private Provider<PreferencesDialogController> prPreferencesDialogController;
 
     // @Inject
     // private Provider<ExerciseDialogController> prExerciseDialogController;
@@ -59,13 +70,7 @@ public class STControllerImpl implements STController {
     // @Inject
     // private Provider<SportTypeListDialogController> prSportTypeListDialogController;
     // @Inject
-    // private Provider<OverviewDialogController> prOverviewDialogController;
-    // @Inject
     // private Provider<FilterDialogController> prFilterDialogController;
-    // @Inject
-    // private Provider<StatisticDialogController> prStatisticDialogController;
-    // @Inject
-    // private Provider<PreferencesDialogController> prPreferencesDialogController;
 
     @FXML
     private Label laStatusBar;
@@ -181,7 +186,10 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onPreferences(ActionEvent event) {
-        // TODO
+        final PreferencesDialogController controller = prPreferencesDialogController.get();
+        // update view after dialog was closed, preferences (e.g. unit system) might be changed
+        controller.setAfterCloseBehavior(this::updateView);
+        controller.show(context.getPrimaryStage());
     }
 
     @Override
@@ -221,17 +229,57 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onStatistics(ActionEvent event) {
-        // TODO
+        if (!checkForExistingExercises()) {
+            return;
+        }
+
+        prStatisticDialogController.get().show(context.getPrimaryStage());
     }
 
     @Override
     public void onOverviewDiagram(ActionEvent event) {
-        // TODO
+        if (!checkForExistingExercises()) {
+            return;
+        }
+
+        prOverviewDialogController.get().show(context.getPrimaryStage());
     }
 
     @Override
     public void onAbout(ActionEvent event) {
         prAboutDialogController.get().show(context.getPrimaryStage());
+    }
+
+    @Override
+    public boolean checkForExistingSportTypes() {
+        if (document.getSportTypeList().size() == 0) {
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, "common.error",
+                    "st.main.error.no_sporttype");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkForExistingExercises() {
+        if (document.getExerciseList().size() == 0) {
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, "common.error",
+                    "st.main.error.no_exercise");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void updateView() {
+        // update format utils in context (setting may have changed)
+        final STOptions options = document.getOptions();
+        context.setFormatUtils(new FormatUtils(options.getUnitSystem(), options.getSpeedView()));
+
+        // TODO update list of exercises to be displayed and update current view
+        // displayedExercises = document.getFilterableExerciseList();
+        // currentView.updateView();
+        // updateEntryActions();
     }
 
     /**
@@ -247,6 +295,7 @@ public class STControllerImpl implements STController {
     // TODO test on OS X, works fine on Windows
     private void showWaitCursor(final boolean waitCursor) {
         // TODO block application window while showing wait cursor
+        // can be done by displaying a modal transparent dialog of size 0x0
         context.getPrimaryStage().getScene().setCursor(waitCursor ? Cursor.WAIT : Cursor.DEFAULT);
     }
 

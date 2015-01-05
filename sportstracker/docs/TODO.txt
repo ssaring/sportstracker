@@ -2,6 +2,8 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- OverviewDiagram:
+  - Bug: unit system is missing on vertical axis label
 - SportsTracker main window:
   - FXML:
     - menu + toolbar: completed (tested on Windows and Mac)
@@ -15,6 +17,7 @@ JavaFX Migration:
       (see http://fxexperience.com/controlsfx/features/#actions, othwise bind disabled-property of same menu items)
   - STDocument:
     - add support for persistent options (see TODOs)
+  - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties
 - CSS stylesheets:
   - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
