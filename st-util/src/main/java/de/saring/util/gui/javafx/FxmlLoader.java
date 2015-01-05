@@ -2,6 +2,7 @@ package de.saring.util.gui.javafx;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXMLLoader;
@@ -33,10 +34,23 @@ public final class FxmlLoader {
     public static Parent load(final URL url, final ResourceBundle resBundle, final Object controller)
             throws IOException {
 
+        Objects.requireNonNull(url);
+        Objects.requireNonNull(controller);
+
         final FXMLLoader loader = new FXMLLoader();
         loader.setLocation(url);
         loader.setResources(resBundle);
-        loader.setController(controller);
+
+        // setController() can't be used here, because the controller class is already specified in FXML
+        // (declaration in FXML is very helpful for validation and event handler selection in SceneBuilder)
+        loader.setControllerFactory(controllerClass -> {
+            if (controllerClass != null && !controllerClass.isInstance(controller)) {
+                throw new IllegalArgumentException("Invalid controller instance, expecting instance of class '" +
+                        controllerClass.getName() + "'!");
+            }
+            return controller;
+        });
+
         return (Parent) loader.load();
     }
 }
