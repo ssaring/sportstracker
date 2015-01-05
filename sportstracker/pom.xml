@@ -26,7 +26,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>                         
-                            <mainClass>de.saring.sportstracker.gui.STMain</mainClass>
+                            <mainClass>de.saring.sportstracker.gui.STApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

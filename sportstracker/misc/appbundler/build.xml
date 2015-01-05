@@ -15,7 +15,7 @@
             name="SportsTracker" 
             displayname="SportsTracker"
             identifier="de.saring.sportstracker"
-            mainclassname="de.saring.sportstracker.gui.STMain"
+            mainclassname="de.saring.sportstracker.gui.STApplication"
             icon="st-logo.icns">
             <!-- Since JDK 7u6 is available, we don't need to embed the JRE anymore :-) 
             <runtime dir="${java_home.dir}">

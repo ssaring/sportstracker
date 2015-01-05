@@ -335,7 +335,7 @@ IntelliJ IDEA users need to import the project by "File -> Import Project...",
 select the SportsTracker root directory and import it as a Maven project.
 
 SportStracker can be started from the IDE by executing the class
-"de.saring.sportstracker.gui.STMain".
+"de.saring.sportstracker.gui.STApplication".
 It can also be started from command line after execution of "mvn package"
 with the command (inside the project root directory):
   java -jar sportstracker/target/sportstracker-x.y.z.jar

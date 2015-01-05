@@ -8,9 +8,9 @@ JavaFX Migration:
     - view area: missing
     - status bar: completed, test with long messages
     - add special support for Mac menu items (Preferences, About, ...)
-  - STApplication: TODO
-    - set as main class in appbundler, Maven, ReadMe ...
-  - STController: TODO
+  - STApplication: see TODO
+  - STController: see TODO
+    - test file chooser for "Open HRM file" on Mac
     - add concept of actions which bundle menu items, toolbar buttons, context menu items?
       (see http://fxexperience.com/controlsfx/features/#actions, othwise bind disabled-property of same menu items)
   - STDocument:
