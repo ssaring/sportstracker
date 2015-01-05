@@ -21,14 +21,10 @@ import de.saring.util.data.IdObjectListChangeListener;
  */
 public interface STDocument extends IdObjectListChangeListener {
 
-    /**
-     * Command line parameter for a specific data directory (optional).
-     */
+    /** Command line parameter for a specific data directory (optional). */
     String PARAMETER_DATA_DIR = "--datadir=";
 
-    /**
-     * ** BEGIN: Getters and Setters for application data ****
-     */
+    // //// BEGIN: Getters and Setters for application data
 
     SportTypeList getSportTypeList();
 
@@ -50,7 +46,7 @@ public interface STDocument extends IdObjectListChangeListener {
 
     void setCurrentFilter(ExerciseFilter currentFilter);
 
-    /***** END: Getters and Setters for application data *****/
+    // //// END: Getters and Setters for application data
 
     /**
      * Evaluates the passed command line parameters.

@@ -5,10 +5,10 @@ JavaFX Migration:
 - SportsTracker main window:
   - FXML:
     - menu + toolbar: completed (tested on Windows and Mac)
+    - status bar: completed
     - view area: missing
-    - status bar: completed, test with long messages
     - add special support for Mac menu items (Preferences, About, ...)
-  - STApplication: see TODO
+  - STApplication: Done
   - STController: see TODO
     - test file chooser for "Open HRM file" on Mac
     - add concept of actions which bundle menu items, toolbar buttons, context menu items?

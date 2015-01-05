@@ -96,8 +96,8 @@ public class STApplication extends Application {
             context.showMessageDialog(primaryStage, Alert.AlertType.ERROR, "common.error", "st.main.error.create_dir");
         }
 
-        // TODO load application data by starting the load action (executed in background)
-        // controller.startActionManually(STController.ACTION_LOAD);
+        // load application data (executed in background)
+        controller.loadApplicationData();
     }
 
     /**

@@ -5,12 +5,18 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import de.saring.exerciseviewer.gui.EVMain;
+import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.dialogs.AboutDialogController;
 import de.saring.sportstracker.gui.dialogs.HRMFileOpenDialog;
 import de.saring.util.gui.javafx.FxmlLoader;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -18,6 +24,10 @@ import javafx.stage.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -57,6 +67,8 @@ public class STControllerImpl implements STController {
     // @Inject
     // private Provider<PreferencesDialogController> prPreferencesDialogController;
 
+    @FXML
+    private Label laStatusBar;
 
     /**
      * Standard c'tor.
@@ -95,6 +107,12 @@ public class STControllerImpl implements STController {
 
         // register listener for window close / application exit
         primaryStage.setOnCloseRequest(event -> onWindowCloseRequest(event));
+    }
+
+    @Override
+    public void loadApplicationData() {
+        showWaitCursor(true);
+        new Thread(new LoadTask()).start();
     }
 
     @Override
@@ -224,5 +242,70 @@ public class STControllerImpl implements STController {
     private void onWindowCloseRequest(final WindowEvent event) {
         event.consume();
         onQuit(null);
+    }
+
+    // TODO test on OS X, works fine on Windows
+    private void showWaitCursor(final boolean waitCursor) {
+        // TODO block application window while showing wait cursor
+        context.getPrimaryStage().getScene().setCursor(waitCursor ? Cursor.WAIT : Cursor.DEFAULT);
+    }
+
+    /**
+     * This class executes the loading action inside a background task without blocking the UI thread.
+     * It also checks the existence of all attached exercise files.
+     */
+    private class LoadTask extends Task<Void> {
+
+        private List<Exercise> corruptExercises;
+
+        @Override
+        protected Void call() throws Exception {
+            document.readApplicationData();
+            corruptExercises = document.checkExerciseFiles();
+            return null;
+        }
+
+        @Override
+        protected void succeeded() {
+            super.succeeded();
+            showWaitCursor(false);
+
+            // TODO view.updateView();
+            // TODO view.registerViewForDataChanges();
+
+            displayCorruptExercises();
+            // TODO askForDefiningSportTypes();
+        }
+
+        @Override
+        protected void failed() {
+            super.failed();
+            showWaitCursor(false);
+
+            LOGGER.log(Level.SEVERE, "Failed to load application data!", getException());
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, "common.error",
+                    "st.main.error.load_data");
+        }
+
+        private void displayCorruptExercises() {
+            if (corruptExercises != null && !corruptExercises.isEmpty()) {
+
+                StringBuilder sb = new StringBuilder();
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+
+                for (int i = 0; i < corruptExercises.size(); i++) {
+                    if (i > 15) {
+                        sb.append("...\n");
+                        break;
+                    }
+
+                    sb.append(corruptExercises.get(i).getDateTime().format(dateTimeFormatter));
+                    sb.append("\n");
+                }
+
+                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.WARNING, "common.warning",
+                        "st.main.error.missing_exercise_files", sb.toString());
+            }
+        }
     }
 }

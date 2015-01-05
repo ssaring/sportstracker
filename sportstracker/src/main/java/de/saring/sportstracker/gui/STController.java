@@ -18,6 +18,12 @@ public interface STController {
     void initApplicationWindow() throws IOException;
 
     /**
+     * Loads the SportsTracker user data asynchronously without blocking the UI. After completion the
+     * loaded data is displayed in the FX application thread (or showing an error message when failed).
+     */
+    void loadApplicationData();
+
+    /**
      * Event handler for action "Open HRM file in ExerciseViewer".
      */
     void onOpenHrmFile(ActionEvent event);
