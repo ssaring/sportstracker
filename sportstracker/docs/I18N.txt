@@ -52,6 +52,7 @@ SportsTracker 7.0.0:
 
 - st.main.error.create_dir (edited)
 - st.main.error.missing_exercise_files (edited)
+- st.main.confirm.define_first_sporttype (edited)
 
 - st.dlg.about.translators.text (edited)
 - st.dlg.about.close.Action.text (removed)

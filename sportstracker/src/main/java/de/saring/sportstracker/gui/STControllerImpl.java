@@ -23,6 +23,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -34,6 +35,7 @@ import java.text.MessageFormat;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -309,6 +311,21 @@ public class STControllerImpl implements STController {
     }
 
     /**
+     * Checks for existing sport types. When there are no sport types yet, then the user will be
+     * asked if he wants to define a sport type. If yes, then the sport type editor will be opened.
+     */
+    private void askForDefiningSportTypes() {
+        if (document.getSportTypeList().size() == 0) {
+            final Optional<ButtonType> oResult = context.showMessageDialog(context.getPrimaryStage(),
+                    Alert.AlertType.CONFIRMATION, "common.info", "st.main.confirm.define_first_sporttype");
+
+            if (oResult.isPresent() && oResult.get() == ButtonType.OK) {
+                onSportTypeEditor(null);
+            }
+        }
+    }
+
+    /**
      * This class executes the loading action inside a background task without blocking the UI thread.
      * It also checks the existence of all attached exercise files.
      */
@@ -332,7 +349,7 @@ public class STControllerImpl implements STController {
             // TODO view.registerViewForDataChanges();
 
             displayCorruptExercises();
-            // TODO askForDefiningSportTypes();
+            askForDefiningSportTypes();
         }
 
         @Override
