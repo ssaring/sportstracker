@@ -21,7 +21,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -139,7 +138,7 @@ public class STControllerImpl implements STController {
 
     @Override
     public void loadApplicationData() {
-        showWaitCursor(true);
+        context.blockMainWindow(true);
         new Thread(new LoadTask()).start();
     }
 
@@ -158,7 +157,7 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onSave(ActionEvent event) {
-        showWaitCursor(true);
+        context.blockMainWindow(true);
         new Thread(new SaveTask(false)).start();
     }
 
@@ -330,12 +329,6 @@ public class STControllerImpl implements STController {
         actionSaveDisabled.set(!document.isDirtyData());
     }
 
-    private void showWaitCursor(final boolean waitCursor) {
-        // TODO block application window while showing wait cursor
-        // can be done by displaying a modal transparent dialog of size 0x0
-        context.getPrimaryStage().getScene().setCursor(waitCursor ? Cursor.WAIT : Cursor.DEFAULT);
-    }
-
     /**
      * Checks for existing sport types. When there are no sport types yet, then the user will be
      * asked if he wants to define a sport type. If yes, then the sport type editor will be opened.
@@ -378,7 +371,7 @@ public class STControllerImpl implements STController {
             }
 
             // save unsaved changes and exit on success
-            showWaitCursor(true);
+            context.blockMainWindow(true);
             new Thread(new SaveTask(true)).start();
         } else {
             exitApplication();
@@ -403,6 +396,7 @@ public class STControllerImpl implements STController {
 
         @Override
         protected Void call() throws Exception {
+            LOGGER.info("Loading application data...");
             document.readApplicationData();
             corruptExercises = document.checkExerciseFiles();
             return null;
@@ -410,9 +404,8 @@ public class STControllerImpl implements STController {
 
         @Override
         protected void succeeded() {
-            LOGGER.info("Application data has been loaded successfully");
             super.succeeded();
-            showWaitCursor(false);
+            context.blockMainWindow(false);
 
             updateView();
             // TODO view.registerViewForDataChanges();
@@ -424,7 +417,7 @@ public class STControllerImpl implements STController {
         @Override
         protected void failed() {
             super.failed();
-            showWaitCursor(false);
+            context.blockMainWindow(false);
 
             LOGGER.log(Level.SEVERE, "Failed to load application data!", getException());
             context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
@@ -471,15 +464,15 @@ public class STControllerImpl implements STController {
 
         @Override
         protected Void call() throws Exception {
+            LOGGER.info("Saving application data...");
             document.storeApplicationData();
             return null;
         }
 
         @Override
         protected void succeeded() {
-            LOGGER.info("Application data has been saved successfully");
             super.succeeded();
-            showWaitCursor(false);
+            context.blockMainWindow(false);
             updateActionStatus();
 
             if (exitOnSuccess) {
@@ -490,7 +483,7 @@ public class STControllerImpl implements STController {
         @Override
         protected void failed() {
             super.failed();
-            showWaitCursor(false);
+            context.blockMainWindow(false);
 
             LOGGER.log(Level.SEVERE, "Failed to store application data!", getException());
             context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //

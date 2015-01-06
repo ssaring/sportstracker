@@ -2,17 +2,19 @@ package de.saring.sportstracker.gui;
 
 import java.util.Optional;
 
+import javafx.event.EventDispatcher;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import de.saring.util.AppResources;
 import de.saring.util.unitcalc.FormatUtils;
-import javafx.stage.Window;
 
 /**
  * Implementation of the GUI context of the SportsTracker application.
@@ -27,10 +29,17 @@ public class STContextImpl implements STContext {
     /** The provider of application text resources. */
     private AppResources fxResources;
 
-    /**
-     * The format utils for the current unit system.
-     */
+    /** The format utils for the current unit system. */
     private FormatUtils formatUtils;
+
+    /** The default Stage event dispatcher (is needed for unblocking). */
+    private EventDispatcher primaryStageEventDispatcher = null;
+
+    /** Event dispatches implementation which blocks all events from processing. */
+    private final EventDispatcher blockingEventDispatcher = (event, tail) -> {
+        event.consume();
+        return null;
+    };
 
     /**
      * Standard c'tor.
@@ -47,7 +56,7 @@ public class STContextImpl implements STContext {
 
     @Override
     public Optional<ButtonType> showMessageDialog(final Window parent, final Alert.AlertType alertType,
-                                                  final String titleKey, final String messageKey, final Object... arguments) {
+            final String titleKey, final String messageKey, final Object... arguments) {
 
         final String message = fxResources.getString(messageKey, arguments);
         final Alert alert = new Alert(alertType, message);
@@ -63,7 +72,7 @@ public class STContextImpl implements STContext {
 
     @Override
     public Optional<ButtonType> showConfirmationDialog(final Window parent, final String titleKey,
-                                                       final String messageKey, final ButtonType... buttonTypes) {
+            final String messageKey, final ButtonType... buttonTypes) {
 
         final Alert alert = new Alert(Alert.AlertType.CONFIRMATION, fxResources.getString(messageKey));
         alert.initOwner(parent);
@@ -82,10 +91,9 @@ public class STContextImpl implements STContext {
         return alert.showAndWait();
     }
 
-
     @Override
-    public Optional<String> showTextInputDialog(final Window parent, final String titleKey,
-                                                final String messageKey, final String initialValue) {
+    public Optional<String> showTextInputDialog(final Window parent, final String titleKey, final String messageKey,
+            final String initialValue) {
 
         final TextInputDialog inputDlg = new TextInputDialog(initialValue == null ? "" : initialValue);
         inputDlg.initOwner(parent);
@@ -116,5 +124,24 @@ public class STContextImpl implements STContext {
     @Override
     public AppResources getResources() {
         return fxResources;
+    }
+
+    @Override
+    public void blockMainWindow(final boolean blockWindow) {
+        final Stage primaryStage = getPrimaryStage();
+        final EventDispatcher currentEventDispatcher = primaryStage.getEventDispatcher();
+
+        if (blockWindow) {
+            if (currentEventDispatcher != blockingEventDispatcher) {
+                primaryStageEventDispatcher = currentEventDispatcher;
+                primaryStage.setEventDispatcher(blockingEventDispatcher);
+            }
+        } else {
+            if (currentEventDispatcher == blockingEventDispatcher) {
+                primaryStage.setEventDispatcher(primaryStageEventDispatcher);
+            }
+        }
+
+        primaryStage.getScene().setCursor(blockWindow ? Cursor.WAIT : Cursor.DEFAULT);
     }
 }

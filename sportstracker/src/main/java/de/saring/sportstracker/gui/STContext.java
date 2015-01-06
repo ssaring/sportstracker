@@ -19,4 +19,14 @@ public interface STContext extends EVContext {
      * @param formatUtils the FormatUtils instance to set
      */
     void setFormatUtils(FormatUtils formatUtils);
+
+    /**
+     * Blocks or unblocks the main application window, useful when running time consuming operations.
+     * All mouse and key events will be consumed and no actions will be started until this method is
+     * called for unblocking.<br/>
+     * The main windows shows a wait cursor while being blocked.
+     *
+     * @param blockWindow blocks the window if true or unblocks it when false
+     */
+    void blockMainWindow(boolean blockWindow);
 }
