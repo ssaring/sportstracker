@@ -29,6 +29,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -83,6 +84,9 @@ public class STControllerImpl implements STController {
 
     @FXML
     private Button btSave;
+
+    @FXML
+    private StackPane spViews;
 
     @FXML
     private Label laStatusBar;

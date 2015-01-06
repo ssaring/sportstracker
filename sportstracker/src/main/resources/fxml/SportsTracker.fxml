@@ -185,7 +185,7 @@
         </VBox>
     </top>
     <center>
-        <TreeView fx:id="tvFooBar" prefHeight="400.0" prefWidth="600.0" />
+        <StackPane fx:id="spViews" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
     </center>
    <bottom>
       <Label fx:id="laStatusBar" text="Status bar dummy message" BorderPane.alignment="CENTER_LEFT">
