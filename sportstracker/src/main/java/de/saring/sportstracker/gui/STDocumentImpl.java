@@ -72,9 +72,7 @@ public class STDocumentImpl implements STDocument {
      */
     private String dataDirectory;
 
-    /**
-     * This flag is true when data has been modified but not saved yet.
-     */
+    /** This flag is true when data has been modified but not saved yet. */
     private boolean dirtyData;
 
     /**
@@ -120,46 +118,57 @@ public class STDocumentImpl implements STDocument {
         currentFilter = ExerciseFilter.createDefaultExerciseFilter();
     }
 
+    @Override
     public SportTypeList getSportTypeList() {
         return sportTypeList;
     }
 
+    @Override
     public ExerciseList getExerciseList() {
         return exerciseList;
     }
 
+    @Override
     public NoteList getNoteList() {
         return noteList;
     }
 
+    @Override
     public WeightList getWeightList() {
         return weightList;
     }
 
+    @Override
     public STOptions getOptions() {
         return options;
     }
 
+    @Override
     public boolean isDirtyData() {
         return dirtyData;
     }
 
+    @Override
     public boolean isFilterEnabled() {
         return filterEnabled;
     }
 
+    @Override
     public void setFilterEnabled(boolean filterEnabled) {
         this.filterEnabled = filterEnabled;
     }
 
+    @Override
     public ExerciseFilter getCurrentFilter() {
         return currentFilter;
     }
 
+    @Override
     public void setCurrentFilter(ExerciseFilter currentFilter) {
         this.currentFilter = currentFilter;
     }
 
+    @Override
     public String getDataDirectory() {
         return dataDirectory;
     }

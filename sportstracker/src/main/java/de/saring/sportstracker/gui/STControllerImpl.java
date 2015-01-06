@@ -16,6 +16,8 @@ import de.saring.sportstracker.gui.dialogs.SportTypeListDialogController;
 import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
 import de.saring.util.gui.javafx.FxmlLoader;
 import de.saring.util.unitcalc.FormatUtils;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,8 +25,10 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -76,7 +80,17 @@ public class STControllerImpl implements STController {
     // private Provider<FilterDialogController> prFilterDialogController;
 
     @FXML
+    private MenuItem miSave;
+
+    @FXML
+    private Button btSave;
+
+    @FXML
     private Label laStatusBar;
+
+    /** Property for the disabled status of the Save action. */
+    private final BooleanProperty actionSaveDisabled = new SimpleBooleanProperty(true);
+
 
     /**
      * Standard c'tor.
@@ -112,6 +126,9 @@ public class STControllerImpl implements STController {
                 new Image("icons/st-logo-48.png"), //
                 new Image("icons/st-logo-32.png"), //
                 new Image("icons/st-logo-24.png"));
+
+        setupBindings();
+        updateView();
 
         // register listener for window close event
         primaryStage.setOnCloseRequest(event -> {
@@ -292,7 +309,25 @@ public class STControllerImpl implements STController {
         // TODO update list of exercises to be displayed and update current view
         // displayedExercises = document.getFilterableExerciseList();
         // currentView.updateView();
-        // updateEntryActions();
+        updateActionStatus();
+    }
+
+    /**
+     * Setup of bindings for the menu items and toolbar buttons.
+     */
+    private void setupBindings() {
+
+        // save actions are only enabled when there are unsaved changes
+        miSave.disableProperty().bind(actionSaveDisabled);
+        btSave.disableProperty().bind(actionSaveDisabled);
+    }
+
+    /**
+     * Updates the action status properties. The actions are enabled or disabled depending on
+     * the current entry selection and document state.
+     */
+    private void updateActionStatus() {
+        actionSaveDisabled.set(!document.isDirtyData());
     }
 
     private void showWaitCursor(final boolean waitCursor) {
@@ -307,10 +342,10 @@ public class STControllerImpl implements STController {
      */
     private void askForDefiningSportTypes() {
         if (document.getSportTypeList().size() == 0) {
-            final Optional<ButtonType> oResult = context.showMessageDialog(context.getPrimaryStage(),
-                    Alert.AlertType.CONFIRMATION, "common.info", "st.main.confirm.define_first_sporttype");
+            final Optional<ButtonType> oResult = context.showConfirmationDialog(context.getPrimaryStage(),
+                    "common.info", "st.main.confirm.define_first_sporttype", ButtonType.YES, ButtonType.NO);
 
-            if (oResult.isPresent() && oResult.get() == ButtonType.OK) {
+            if (oResult.isPresent() && oResult.get() == ButtonType.YES) {
                 onSportTypeEditor(null);
             }
         }
@@ -445,8 +480,7 @@ public class STControllerImpl implements STController {
             LOGGER.info("Application data has been saved successfully");
             super.succeeded();
             showWaitCursor(false);
-
-            // TODO view.updateSaveAction();
+            updateActionStatus();
 
             if (exitOnSuccess) {
                 exitApplication();
@@ -463,5 +497,4 @@ public class STControllerImpl implements STController {
                     "common.error", "st.main.error.save_data");
         }
     }
-
 }

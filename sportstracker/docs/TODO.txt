@@ -13,7 +13,7 @@ JavaFX Migration:
   - STApplication: Done
   - STController: see TODO
     - add concept of actions which bundle menu items, toolbar buttons, context menu items?
-      (see http://fxexperience.com/controlsfx/features/#actions, othwise bind disabled-property of same menu items)
+      (see http://fxexperience.com/controlsfx/features/#actions )
   - STDocument:
     - add support for persistent options (see TODOs)
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)

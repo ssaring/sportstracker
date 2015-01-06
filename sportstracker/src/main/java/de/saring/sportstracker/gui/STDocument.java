@@ -46,6 +46,8 @@ public interface STDocument extends IdObjectListChangeListener {
 
     void setCurrentFilter(ExerciseFilter currentFilter);
 
+    String getDataDirectory();
+
     // //// END: Getters and Setters for application data
 
     /**
