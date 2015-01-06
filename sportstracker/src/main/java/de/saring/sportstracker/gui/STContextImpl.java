@@ -12,6 +12,7 @@ import javax.inject.Singleton;
 
 import de.saring.util.AppResources;
 import de.saring.util.unitcalc.FormatUtils;
+import javafx.stage.Window;
 
 /**
  * Implementation of the GUI context of the SportsTracker application.
@@ -45,7 +46,7 @@ public class STContextImpl implements STContext {
     }
 
     @Override
-    public Optional<ButtonType> showMessageDialog(final javafx.stage.Window parent, final Alert.AlertType alertType,
+    public Optional<ButtonType> showMessageDialog(final Window parent, final Alert.AlertType alertType,
                                                   final String titleKey, final String messageKey, final Object... arguments) {
 
         final String message = fxResources.getString(messageKey, arguments);
@@ -61,7 +62,29 @@ public class STContextImpl implements STContext {
     }
 
     @Override
-    public Optional<String> showTextInputDialog(final javafx.stage.Window parent, final String titleKey,
+    public Optional<ButtonType> showConfirmationDialog(final Window parent, final String titleKey,
+                                                       final String messageKey, final ButtonType... buttonTypes) {
+
+        final Alert alert = new Alert(Alert.AlertType.CONFIRMATION, fxResources.getString(messageKey));
+        alert.initOwner(parent);
+        alert.setTitle(fxResources.getString(titleKey));
+        alert.setHeaderText(null);
+        // TODO remove when fixed in OpenJFX-Dialogs
+        alert.setResizable(true);
+        // workaround for disabling bigger font size of custom dialog content
+        alert.getDialogPane().setStyle("-fx-font-size: 1em;");
+
+        // add custom button types if specified
+        if (buttonTypes.length > 0) {
+            alert.getButtonTypes().setAll(buttonTypes);
+        }
+
+        return alert.showAndWait();
+    }
+
+
+    @Override
+    public Optional<String> showTextInputDialog(final Window parent, final String titleKey,
                                                 final String messageKey, final String initialValue) {
 
         final TextInputDialog inputDlg = new TextInputDialog(initialValue == null ? "" : initialValue);

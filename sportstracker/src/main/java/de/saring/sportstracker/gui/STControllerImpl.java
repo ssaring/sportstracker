@@ -329,13 +329,16 @@ public class STControllerImpl implements STController {
         if (document.isDirtyData()) {
             if (!document.getOptions().isSaveOnExit()) {
 
-                // TODO display YES, NO, CANCEL options (otherwise the user can't exit without saving changes)
-                final Optional<ButtonType> oResult = context.showMessageDialog(context.getPrimaryStage(),
-                        Alert.AlertType.CONFIRMATION, "st.main.confirm.save_exit.title",
-                        "st.main.confirm.save_exit.text");
+                final Optional<ButtonType> oResult = context.showConfirmationDialog(context.getPrimaryStage(), //
+                        "st.main.confirm.save_exit.title", "st.main.confirm.save_exit.text", //
+                        ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 
-                if (!oResult.isPresent() || oResult.get() != ButtonType.OK) {
+                if (!oResult.isPresent() || oResult.get() == ButtonType.CANCEL) {
+                    // cancel the application exit
                     return;
+                } else if (oResult.get() == ButtonType.NO) {
+                    // exit without saving unsaved changes
+                    exitApplication();
                 }
             }
 

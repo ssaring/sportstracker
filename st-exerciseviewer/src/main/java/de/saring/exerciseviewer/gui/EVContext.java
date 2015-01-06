@@ -33,10 +33,24 @@ public interface EVContext {
      * @param titleKey the resource key for the dialog title text
      * @param messageKey the resource key for the message text
      * @param arguments list of objects which needs to be inserted in the message text (optional)
-     * @return An Optional that contains the result of the displayed dialog.
+     * @return an Optional that contains the result (selected button type) of the displayed dialog.
      */
     Optional<ButtonType> showMessageDialog(Window parent, Alert.AlertType alertType, String titleKey,
                                            String messageKey, Object... arguments);
+
+    /**
+     * Displays a modal confirmation dialog for the specified parameters. By default the dialog
+     * displays the OK and Cancel buttons, this can be changed by passing the ButtonTypes to be
+     * shown (the default buttons are removed then).
+     *
+     * @param parent parent window of the input dialog
+     * @param titleKey resource key for the dialog title
+     * @param messageKey resource key for the dialog message
+     * @param buttonTypes list of buttons to be displayed as confirmation options (optional)
+     * @return an Optional that contains the result (selected button type) of the displayed dialog.
+     */
+    Optional<ButtonType> showConfirmationDialog(Window parent, final String titleKey, String messageKey,
+                                                ButtonType... buttonTypes);
 
     /**
      * Displays a modal text input dialog for the specified parameters.
