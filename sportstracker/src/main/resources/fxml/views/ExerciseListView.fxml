@@ -8,14 +8,14 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="12.0" stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.SamplePanelController">
+<VBox stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.views.listview.ExerciseListViewController">
     <children>
         <TableView fx:id="tvExercises">
             <columns>
                 <TableColumn fx:id="tcDate" prefWidth="90.0" text="%st.exerciselistview.date" />
-                <TableColumn fx:id="tcSportType" prefWidth="90.0" text="%st.exerciselistview.type" />
-                <TableColumn fx:id="tcSportSubtype" prefWidth="90.0" text="%st.exerciselistview.subtype" />
-                <TableColumn fx:id="tcDuration" prefWidth="90.0" text="%st.exerciselistview.duration" />
+                <TableColumn fx:id="tcSportType" prefWidth="100.0" text="%st.exerciselistview.type" />
+                <TableColumn fx:id="tcSportSubtype" prefWidth="100.0" text="%st.exerciselistview.subtype" />
+                <TableColumn fx:id="tcDuration" prefWidth="80.0" text="%st.exerciselistview.duration" />
                 <TableColumn fx:id="tcIntensity" prefWidth="90.0" text="%st.exerciselistview.intensity" />
                 <TableColumn fx:id="tcDistance" prefWidth="90.0" text="%st.exerciselistview.distance" />
                 <TableColumn fx:id="tcAvgSpeed" prefWidth="90.0" text="%st.exerciselistview.avg_speed" />
@@ -23,14 +23,11 @@
                 <TableColumn fx:id="tcAscent" prefWidth="90.0" text="%st.exerciselistview.ascent" />
                 <TableColumn fx:id="tcEnergy" prefWidth="90.0" text="%st.exerciselistview.energy" />
                 <TableColumn fx:id="tcEquipment" prefWidth="90.0" text="%st.exerciselistview.equipment" />
-                <TableColumn fx:id="tcComment" prefWidth="90.0" text="%st.exerciselistview.comment" />
+                <TableColumn fx:id="tcComment" prefWidth="500.0" text="%st.exerciselistview.comment" />
             </columns>
             <placeholder>
                 <Label text="%st.exerciselistview.empty"/>
             </placeholder>
         </TableView>
     </children>
-    <padding>
-        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-    </padding>
 </VBox>

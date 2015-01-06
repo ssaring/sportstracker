@@ -14,6 +14,7 @@ import de.saring.sportstracker.gui.dialogs.OverviewDialogController;
 import de.saring.sportstracker.gui.dialogs.PreferencesDialogController;
 import de.saring.sportstracker.gui.dialogs.SportTypeListDialogController;
 import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
+import de.saring.sportstracker.gui.views.listview.ExerciseListViewController;
 import de.saring.util.gui.javafx.FxmlLoader;
 import de.saring.util.unitcalc.FormatUtils;
 import javafx.beans.property.BooleanProperty;
@@ -54,6 +55,9 @@ public class STControllerImpl implements STController {
 
     private final STContext context;
     private final STDocument document;
+
+    @Inject
+    private ExerciseListViewController exerciseListViewController;
 
     @Inject
     private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
@@ -132,6 +136,8 @@ public class STControllerImpl implements STController {
 
         setupBindings();
         updateView();
+
+        spViews.getChildren().add(exerciseListViewController.loadAndSetupViewContent());
 
         // register listener for window close event
         primaryStage.setOnCloseRequest(event -> {
