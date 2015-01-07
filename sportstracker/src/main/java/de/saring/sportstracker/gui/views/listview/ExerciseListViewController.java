@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -22,6 +24,7 @@ import de.saring.sportstracker.gui.views.AbstractEntryViewController;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObject;
 import de.saring.util.data.Nameable;
+import de.saring.util.gui.javafx.ColorConverter;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 import de.saring.util.gui.javafx.NameableCellFactory;
@@ -81,6 +84,9 @@ public class ExerciseListViewController extends AbstractEntryViewController {
         final List<Exercise> filteredExercises = getDocument().getFilterableExerciseList().stream() //
                 .collect(Collectors.toList());
         tvExercises.getItems().setAll(filteredExercises);
+
+        // TODO set visibility of columns as configured in preferences
+
         // re-sorting must be forced after updating table content
         tvExercises.sort();
     }
@@ -133,16 +139,16 @@ public class ExerciseListViewController extends AbstractEntryViewController {
         tcComment.setCellValueFactory(cellData -> new SimpleStringProperty( //
                 StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 
-        // TODO use sport type colors
+        // TODO use sport type colors for all columns
         // TODO test metric system ...
 
-        // -> setup factories for displaying call values in cells
+        // setup factories for displaying call values in cells
         final FormatUtils formatUtils = getContext().getFormatUtils();
-        final NameableCellFactory<Exercise> nameableCellFactory = new NameableCellFactory<>();
+        final ColoredNameableCellFactory coloredNameableCellFactory = new ColoredNameableCellFactory();
 
-        tcDate.setCellFactory(new LocalDateCellFactory<>());
-        tcSportType.setCellFactory(nameableCellFactory);
-        tcSportSubtype.setCellFactory(nameableCellFactory);
+        tcDate.setCellFactory(new ColoredLocalDateCellFactory());
+        tcSportType.setCellFactory(coloredNameableCellFactory);
+        tcSportSubtype.setCellFactory(coloredNameableCellFactory);
         tcDuration.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : formatUtils.seconds2TimeString(value.intValue())));
         tcDistance.setCellFactory(new FormattedNumberCellFactory<>(value -> //
@@ -155,6 +161,61 @@ public class ExerciseListViewController extends AbstractEntryViewController {
                 value == null ? null : formatUtils.heightToString(value.intValue())));
         tcEnergy.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : formatUtils.caloriesToString(value.intValue())));
-        tcEquipment.setCellFactory(nameableCellFactory);
+        tcEquipment.setCellFactory(coloredNameableCellFactory);
+    }
+
+    /**
+     * Helper methods for setting the foreground text color of the specified table cell to the
+     * color of the exercise sport type of the appropriate table row
+     *
+     * @param tableCell the table cell
+     */
+    private static void setTableCellTextColorOfSportType(final TableCell<Exercise, ?> tableCell) {
+        final TableRow<Exercise> tableRow = tableCell.getTableRow();
+        final Exercise exercise = tableRow == null ? null : tableRow.getItem();
+        if (exercise != null) {
+            // TODO use FX colors in SportType to prevent conversion overhead
+            tableCell.setTextFill(ColorConverter.toFxColor(exercise.getSportType().getColor()));
+        }
+    }
+
+    /**
+     * Extension of the NameableCellFactory, which creates table cells with the text color
+     * of the exercise sport type displayed in the current table row.
+     */
+    private static class ColoredNameableCellFactory extends NameableCellFactory<Exercise> {
+
+        @Override
+        public TableCell<Exercise, Nameable> call(final TableColumn<Exercise, Nameable> column) {
+            return new TableCell<Exercise, Nameable>() {
+
+                @Override
+                protected void updateItem(final Nameable value, final boolean empty) {
+                    super.updateItem(value, empty);
+                    setText(getCellText(value, empty));
+                    setTableCellTextColorOfSportType(this);
+                }
+            };
+        }
+    }
+
+    /**
+     * Extension of the NameableCellFactory, which creates table cells with the text color
+     * of the exercise sport type displayed in the current table row.
+     */
+    private static class ColoredLocalDateCellFactory extends LocalDateCellFactory<Exercise> {
+
+        @Override
+        public TableCell<Exercise, LocalDate> call(final TableColumn<Exercise, LocalDate> column) {
+            return new TableCell<Exercise, LocalDate>() {
+
+                @Override
+                protected void updateItem(final LocalDate value, final boolean empty) {
+                    super.updateItem(value, empty);
+                    setText(getCellText(value, empty));
+                    setTableCellTextColorOfSportType(this);
+                }
+            };
+        }
     }
 }

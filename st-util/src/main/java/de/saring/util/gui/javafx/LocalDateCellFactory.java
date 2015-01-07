@@ -26,14 +26,19 @@ public class LocalDateCellFactory<T> implements Callback<TableColumn<T, LocalDat
             @Override
             protected void updateItem(final LocalDate value, final boolean empty) {
                 super.updateItem(value, empty);
-
-                if (empty || value == null) {
-                    setText(null);
-                } else {
-                    final String strDate = value.format(dateTimeFormatter);
-                    setText(strDate);
-                }
+                setText(getCellText(value, empty));
             }
         };
+    }
+
+    /**
+     * Returns the text to be displayed in the table cell.
+     *
+     * @param value value of cell
+     * @param empty flag for an empty cell
+     * @return text
+     */
+    protected String getCellText(final LocalDate value, final boolean empty) {
+        return empty || value == null ? null : value.format(dateTimeFormatter);
     }
 }
