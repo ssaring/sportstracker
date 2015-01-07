@@ -6,12 +6,13 @@ import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.SportTypeList;
+import de.saring.util.gui.javafx.ColorConverter;
+import javafx.scene.paint.Color;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -80,7 +81,7 @@ public class XMLSportTypeList {
             int iRed = eColor.getAttribute("red").getIntValue();
             int iGreen = eColor.getAttribute("green").getIntValue();
             int iBlue = eColor.getAttribute("blue").getIntValue();
-            sportType.setColor(new Color(iRed, iGreen, iBlue));
+            sportType.setColor(Color.rgb(iRed, iGreen, iBlue));
         } catch (DataConversionException dce) {
             throw new IllegalArgumentException("Failed to parse the color of sport type with ID '" + sportType.getId() +
                     "', exception message: " + dce.getMessage());
@@ -159,9 +160,10 @@ public class XMLSportTypeList {
             XMLUtils.addElement(eSportType, "icon", sportType.getIcon());
 
             Element eColor = new Element("color");
-            eColor.setAttribute("red", String.valueOf(sportType.getColor().getRed()));
-            eColor.setAttribute("green", String.valueOf(sportType.getColor().getGreen()));
-            eColor.setAttribute("blue", String.valueOf(sportType.getColor().getBlue()));
+            java.awt.Color awtColor = ColorConverter.toAwtColor(sportType.getColor());
+            eColor.setAttribute("red", String.valueOf(awtColor.getRed()));
+            eColor.setAttribute("green", String.valueOf(awtColor.getGreen()));
+            eColor.setAttribute("blue", String.valueOf(awtColor.getBlue()));
             eSportType.addContent(eColor);
 
             // append an "sport-subtype" element for each sport subtype

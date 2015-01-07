@@ -2,6 +2,7 @@ package de.saring.sportstracker.storage;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.*;
+import de.saring.util.gui.javafx.ColorConverter;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,9 +67,10 @@ public class XMLStorageTest {
         assertEquals(type1.getName(), "Cycling");
         assertTrue(type1.isRecordDistance());
         assertEquals(type1.getIcon(), "cycling.png");
-        assertEquals(type1.getColor().getRed(), 30);
-        assertEquals(type1.getColor().getGreen(), 50);
-        assertEquals(type1.getColor().getBlue(), 180);
+        java.awt.Color type1AwtColor = ColorConverter.toAwtColor(type1.getColor());
+        assertEquals(type1AwtColor.getRed(), 30);
+        assertEquals(type1AwtColor.getGreen(), 50);
+        assertEquals(type1AwtColor.getBlue(), 180);
         assertEquals(type1.getSportSubTypeList().size(), 4);
         assertEquals(type1.getEquipmentList().size(), 2);
 
@@ -100,9 +102,10 @@ public class XMLStorageTest {
         assertEquals(type2.getName(), "Running");
         assertFalse(type2.isRecordDistance());
         assertEquals(type2.getIcon(), "running.png");
-        assertEquals(type2.getColor().getRed(), 210);
-        assertEquals(type2.getColor().getGreen(), 60);
-        assertEquals(type2.getColor().getBlue(), 0);
+        java.awt.Color type2AwtColor = ColorConverter.toAwtColor(type2.getColor());
+        assertEquals(type2AwtColor.getRed(), 210);
+        assertEquals(type2AwtColor.getGreen(), 60);
+        assertEquals(type2AwtColor.getBlue(), 0);
         assertEquals(type2.getSportSubTypeList().size(), 2);
         assertEquals(type2.getEquipmentList().size(), 0);
 

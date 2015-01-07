@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.dialogs;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
+import javafx.scene.paint.Color;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +24,7 @@ public class SportTypeViewModelTest {
         sportType = new SportType(123);
         sportType.setName("Foo Bar");
         sportType.setRecordDistance(false);
-        sportType.setColor(new java.awt.Color(200, 150, 100));
+        sportType.setColor(Color.color(0.8d, 0.7d, 0.6d));
         sportType.setIcon("fooBar.png");
 
         sportType.getSportSubTypeList().set(new SportSubType(200));
@@ -65,7 +66,7 @@ public class SportTypeViewModelTest {
 
         viewModel.name.set("  Bar Foo  ");
         viewModel.recordDistance.set(true);
-        viewModel.color.set(new javafx.scene.paint.Color(1.0d, 0.5d, 0d, 1d));
+        viewModel.color.set(Color.color(1.0d, 0.5d, 0d));
 
         viewModel.sportSubtypes.removeByID(200);
         viewModel.equipments.set(new Equipment(302));
@@ -73,7 +74,7 @@ public class SportTypeViewModelTest {
         SportType modifiedSportType = viewModel.getSportType();
         assertEquals("Bar Foo", modifiedSportType.getName());
         assertTrue(modifiedSportType.isRecordDistance());
-        assertEquals(new java.awt.Color(255, 128, 0), modifiedSportType.getColor());
+        assertEquals(Color.color(1.0d, 0.5d, 0d), modifiedSportType.getColor());
 
         assertEquals(1, modifiedSportType.getSportSubTypeList().size());
         assertEquals(201, modifiedSportType.getSportSubTypeList().getAt(0).getId());

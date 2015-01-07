@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import de.saring.util.gui.javafx.ColorConverter;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -266,7 +267,7 @@ public class OverviewDialogController extends AbstractDialogController {
             // create a separate graph for each sport type
             for (SportType sportType : document.getSportTypeList()) {
                 addExerciseTimeSeries(dataset, timeType, year, vType, sportType);
-                lGraphColors.add(sportType.getColor());
+                lGraphColors.add(ColorConverter.toAwtColor(sportType.getColor()));
             }
             plot.setDataset(1, dataset);
 
@@ -379,7 +380,7 @@ public class OverviewDialogController extends AbstractDialogController {
             // create a separate graph for each sport type
             for (SportType sportType : document.getSportTypeList()) {
                 addExerciseTimeSeries(dataset, timeType, year, vType, sportType);
-                graphColors.add(sportType.getColor());
+                graphColors.add(ColorConverter.toAwtColor(sportType.getColor()));
             }
         }
     }

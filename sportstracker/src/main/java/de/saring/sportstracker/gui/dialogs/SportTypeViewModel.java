@@ -13,7 +13,6 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObjectList;
-import de.saring.util.gui.javafx.ColorConverter;
 
 /**
  * This ViewModel class provides JavaFX properties of all SportType attributes to be edited in the SportType dialog.
@@ -43,8 +42,7 @@ public class SportTypeViewModel {
         this.name = new SimpleStringProperty(sportType.getName());
         this.recordDistance = new SimpleBooleanProperty(sportType.isRecordDistance());
         this.icon = new SimpleStringProperty(sportType.getIcon());
-        this.color = new SimpleObjectProperty<>(sportType.getColor() == null ?
-                Color.BLACK : ColorConverter.toFxColor(sportType.getColor()));
+        this.color = new SimpleObjectProperty<>(sportType.getColor() == null ? Color.BLACK : sportType.getColor());
 
         this.sportSubtypes = sportType.getSportSubTypeList();
         this.equipments = sportType.getEquipmentList();
@@ -60,7 +58,7 @@ public class SportTypeViewModel {
         sportType.setName(name.getValue().trim());
         sportType.setRecordDistance(recordDistance.getValue());
         sportType.setIcon(StringUtils.getTrimmedTextOrNull(icon.getValue()));
-        sportType.setColor(ColorConverter.toAwtColor(color.getValue()));
+        sportType.setColor(color.getValue());
 
         sportSubtypes.forEach(sportSubType -> sportType.getSportSubTypeList().set(sportSubType));
         equipments.forEach(equipment -> sportType.getEquipmentList().set(equipment));

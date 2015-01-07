@@ -24,7 +24,6 @@ import de.saring.sportstracker.gui.views.AbstractEntryViewController;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObject;
 import de.saring.util.data.Nameable;
-import de.saring.util.gui.javafx.ColorConverter;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 import de.saring.util.gui.javafx.NameableCellFactory;
@@ -174,8 +173,7 @@ public class ExerciseListViewController extends AbstractEntryViewController {
         final TableRow<Exercise> tableRow = tableCell.getTableRow();
         final Exercise exercise = tableRow == null ? null : tableRow.getItem();
         if (exercise != null) {
-            // TODO use FX colors in SportType to prevent conversion overhead
-            tableCell.setTextFill(ColorConverter.toFxColor(exercise.getSportType().getColor()));
+            tableCell.setTextFill(exercise.getSportType().getColor());
         }
     }
 

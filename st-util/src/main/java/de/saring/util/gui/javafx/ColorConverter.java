@@ -1,5 +1,7 @@
 package de.saring.util.gui.javafx;
 
+import javafx.scene.paint.Color;
+
 /**
  * This utility class contains methods for converting Color objects between JavaFX and Swing/AWT.
  *
@@ -27,7 +29,6 @@ public final class ColorConverter {
      * @return the JavaFX Color object
      */
     public static javafx.scene.paint.Color toFxColor(final java.awt.Color awtColor) {
-        return new javafx.scene.paint.Color(awtColor.getRed() / 255f, awtColor.getGreen() / 255f,
-                awtColor.getBlue() / 255f, 1);
+        return Color.rgb(awtColor.getRed(), awtColor.getGreen(),awtColor.getBlue(), 1);
     }
 }

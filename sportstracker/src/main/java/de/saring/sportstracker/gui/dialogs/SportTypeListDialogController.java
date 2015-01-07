@@ -24,7 +24,6 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.gui.javafx.ColorConverter;
 import de.saring.util.gui.javafx.NameableListCell;
 
 /**
@@ -173,7 +172,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
             super.updateItem(item, empty);
 
             if (item != null) {
-                setTextFill(ColorConverter.toFxColor(item.getColor()));
+                setTextFill(item.getColor());
             }
         }
 
@@ -183,7 +182,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
 
             // use white text color for selected sport types, updateItem() is not called on selection changes
             if (getItem() != null) {
-                setTextFill(selected ? Color.WHITE : ColorConverter.toFxColor(getItem().getColor()));
+                setTextFill(selected ? Color.WHITE : getItem().getColor());
             }
         }
     }

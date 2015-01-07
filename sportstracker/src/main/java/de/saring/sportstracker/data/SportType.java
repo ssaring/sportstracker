@@ -4,7 +4,7 @@ import de.saring.util.data.IdObject;
 import de.saring.util.data.IdObjectList;
 import de.saring.util.data.Nameable;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
 
 /**
  * This class contains all informations of a single sport type (e.g. cycling).
