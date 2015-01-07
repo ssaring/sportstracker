@@ -2,8 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- OverviewDiagram:
-  - Bug: unit system is missing on vertical axis label
 - SportsTracker main window:
   - FXML:
     - menu + toolbar: completed (tested on Windows and Mac)

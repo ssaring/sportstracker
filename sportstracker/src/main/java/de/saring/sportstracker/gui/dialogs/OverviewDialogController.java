@@ -173,6 +173,7 @@ public class OverviewDialogController extends AbstractDialogController {
         // get selected time range and value type and its name to display
         TimeRangeType timeType = cbTimeRange.getValue();
         ValueType vType = cbDisplay.getValue();
+        String valueTypeNameWithUnits = vType.getNameWithUnitSystem(context.getFormatUtils());
         int year = cbYear.getValue();
 
         // create a table of all time series (graphs) and the appropriate colors
@@ -191,9 +192,10 @@ public class OverviewDialogController extends AbstractDialogController {
         }
 
         // create chart
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(null, // Title
+        JFreeChart chart = ChartFactory.createTimeSeriesChart( //
+                null, // Title
                 null, // Y-axis label
-                vType.toString(), // X-axis label
+                valueTypeNameWithUnits, // X-axis label
                 dataset, // primary dataset
                 true, // display legend
                 true, // display tooltips
@@ -940,10 +942,10 @@ public class OverviewDialogController extends AbstractDialogController {
          * In total 13 months: current month and last 12 before (good
          * for compare current month and the one from year before).
          */
-        LAST_12_MONTHS("st.dlg.overview.time_range.last_12_months.text"), MONTHS_OF_YEAR(
-                "st.dlg.overview.time_range.months_of_year.text"), WEEKS_OF_YEAR(
-                "st.dlg.overview.time_range.weeks_of_year.text"), LAST_10_YEARS(
-                "st.dlg.overview.time_range.ten_years.text");
+        LAST_12_MONTHS("st.dlg.overview.time_range.last_12_months.text"), //
+        MONTHS_OF_YEAR("st.dlg.overview.time_range.months_of_year.text"), //
+        WEEKS_OF_YEAR("st.dlg.overview.time_range.weeks_of_year.text"), //
+        LAST_10_YEARS("st.dlg.overview.time_range.ten_years.text");
 
         private static AppResources appResources;
 
@@ -964,11 +966,15 @@ public class OverviewDialogController extends AbstractDialogController {
      * This enum also provides the localized displayed enum names.
      */
     private enum ValueType {
-        DISTANCE("st.dlg.overview.display.distance_sum.text"), DURATION("st.dlg.overview.display.duration_sum.text"), ASCENT(
-                "st.dlg.overview.display.ascent_sum.text"), CALORIES("st.dlg.overview.display.calorie_sum.text"), EXERCISES(
-                "st.dlg.overview.display.exercise_count.text"), AVG_SPEED("st.dlg.overview.display.avg_speed.text"), SPORTSUBTYPE(
-                "st.dlg.overview.display.sportsubtype_distance.text"), EQUIPMENT(
-                "st.dlg.overview.display.equipment_distance.text"), WEIGHT("st.dlg.overview.display.weight.text");
+        DISTANCE("st.dlg.overview.display.distance_sum.text"), //
+        DURATION("st.dlg.overview.display.duration_sum.text"), //
+        ASCENT("st.dlg.overview.display.ascent_sum.text"), //
+        CALORIES("st.dlg.overview.display.calorie_sum.text"), //
+        EXERCISES("st.dlg.overview.display.exercise_count.text"), //
+        AVG_SPEED("st.dlg.overview.display.avg_speed.text"), //
+        SPORTSUBTYPE("st.dlg.overview.display.sportsubtype_distance.text"), //
+        EQUIPMENT("st.dlg.overview.display.equipment_distance.text"), //
+        WEIGHT("st.dlg.overview.display.weight.text");
 
         private static AppResources appResources;
 
@@ -982,6 +988,42 @@ public class OverviewDialogController extends AbstractDialogController {
         public String toString() {
             return appResources.getString(resourceKey);
         }
+
+        /**
+         * Returns the name of the value type including the current unit system, e.g. for displaying as axis name.
+         *
+         * @return name and unit system
+         */
+        private String getNameWithUnitSystem(final FormatUtils formatUtils) {
+            switch (this) {
+                case DISTANCE:
+                    return appResources.getString("st.dlg.overview.value_type.distance_sum",
+                            formatUtils.getDistanceUnitName());
+                case DURATION:
+                    return appResources.getString("st.dlg.overview.value_type.duration_sum");
+                case ASCENT:
+                    return appResources.getString("st.dlg.overview.value_type.ascent_sum",
+                            formatUtils.getAltitudeUnitName());
+                case CALORIES:
+                    return appResources.getString("st.dlg.overview.value_type.calories_sum");
+                case EXERCISES:
+                    return appResources.getString("st.dlg.overview.value_type.exercise_count");
+                case AVG_SPEED:
+                    return appResources.getString("st.dlg.overview.value_type.avg_speed",
+                            formatUtils.getSpeedUnitName());
+                case SPORTSUBTYPE:
+                    return appResources.getString("st.dlg.overview.value_type.sportsubtype_distance",
+                            formatUtils.getDistanceUnitName());
+                case EQUIPMENT:
+                    return appResources.getString("st.dlg.overview.value_type.equipment_distance",
+                            formatUtils.getDistanceUnitName());
+                case WEIGHT:
+                    return appResources.getString("st.dlg.overview.value_type.weight", formatUtils.getWeightUnitName());
+                default:
+                    throw new IllegalArgumentException("Invalid value type!");
+            }
+        }
+
     }
 
     /**
@@ -989,9 +1031,9 @@ public class OverviewDialogController extends AbstractDialogController {
      * This enum also provides the localized displayed enum names.
      */
     private enum OverviewType {
-        EACH_SPLITTED("st.dlg.overview.sport_type.each_splitted.text"), EACH_STACKED(
-                "st.dlg.overview.sport_type.each_stacked.text"), ALL_SUMMARY(
-                "st.dlg.overview.sport_type.all_summary.text");
+        EACH_SPLITTED("st.dlg.overview.sport_type.each_splitted.text"), //
+        EACH_STACKED("st.dlg.overview.sport_type.each_stacked.text"), //
+        ALL_SUMMARY("st.dlg.overview.sport_type.all_summary.text"); //
 
         private static AppResources appResources;
 

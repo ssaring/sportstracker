@@ -3,19 +3,19 @@ package de.saring.sportstracker.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.saring.sportstracker.core.STException;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.saring.exerciseviewer.gui.EVContext;
+import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.util.unitcalc.FormatUtils;
-import javafx.stage.WindowEvent;
 
 /**
  * This is the main class of SportsTracker which starts the entire application.
