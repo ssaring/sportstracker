@@ -14,7 +14,8 @@
     -fx-border-color: #c0c0c0;
 }
 
-/* table column header must not use bold font */
+/* table column header must use left alignment and not use bold font */
 .table-view .column-header .label {
+    -fx-alignment: center-left;
     -fx-font-weight: normal;
 }
