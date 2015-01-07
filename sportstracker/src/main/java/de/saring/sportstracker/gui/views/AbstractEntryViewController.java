@@ -9,11 +9,13 @@ import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.FxmlLoader;
 
 /**
- * Abstract Controller (MVC) base class of for all SportsTracker content views.
+ * Abstract Controller (MVC) base class of for all SportsTracker content Views.
  *
  * @author Stefan Saring
  */
-public abstract class AbstractViewController {
+public abstract class AbstractEntryViewController implements EntryViewController {
+
+    private static final int[] EMPTY_ID_ARRAY = new int[0];
 
     private final STContext context;
     private final STDocument document;
@@ -24,7 +26,7 @@ public abstract class AbstractViewController {
      * @param context the SportsTracker UI context
      * @param document the SportsTracker document / model
      */
-    public AbstractViewController(final STContext context, final STDocument document) {
+    public AbstractEntryViewController(final STContext context, final STDocument document) {
         this.context = context;
         this.document = document;
     }
@@ -77,5 +79,35 @@ public abstract class AbstractViewController {
      */
     protected STDocument getDocument() {
         return document;
+    }
+
+    @Override
+    public int getSelectedExerciseCount() {
+        return 0;
+    }
+
+    @Override
+    public int[] getSelectedExerciseIDs() {
+        return EMPTY_ID_ARRAY;
+    }
+
+    @Override
+    public int getSelectedNoteCount() {
+        return 0;
+    }
+
+    @Override
+    public int[] getSelectedNoteIDs() {
+        return EMPTY_ID_ARRAY;
+    }
+
+    @Override
+    public int getSelectedWeightCount() {
+        return 0;
+    }
+
+    @Override
+    public int[] getSelectedWeightIDs() {
+        return EMPTY_ID_ARRAY;
     }
 }

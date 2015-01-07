@@ -36,4 +36,23 @@ public final class StringUtils {
     public static String getTextOrEmptyString(String text) {
         return text == null ? "" : text;
     }
+
+    /**
+     * Returns the trimmed first line of the specified text or the complete text when there is no line break.
+     *
+     * @param text the text to fit
+     * @return the first line of text or null when text was null
+     */
+    public static String getFirstLineOfText(final String text) {
+        if (text == null) {
+            return null;
+        } else {
+            int indexNewLine = text.indexOf('\n');
+            if (indexNewLine == -1) {
+                return text.trim();
+            } else {
+                return text.substring(0, indexNewLine).trim();
+            }
+        }
+    }
 }

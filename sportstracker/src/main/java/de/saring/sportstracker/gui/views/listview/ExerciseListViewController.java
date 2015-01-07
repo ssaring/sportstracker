@@ -1,7 +1,13 @@
 package de.saring.sportstracker.gui.views.listview;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import de.saring.util.StringUtils;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -10,10 +16,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.sportstracker.gui.views.AbstractViewController;
+import de.saring.sportstracker.gui.views.AbstractEntryViewController;
+import de.saring.util.data.IdObject;
+import de.saring.util.data.Nameable;
+import de.saring.util.gui.javafx.FormattedNumberCellFactory;
+import de.saring.util.gui.javafx.LocalDateCellFactory;
+import de.saring.util.gui.javafx.NameableCellFactory;
+import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * Controller class of the Exercise List View, which displays all the user exercises
@@ -22,13 +35,35 @@ import de.saring.sportstracker.gui.views.AbstractViewController;
  * @author Stefan Saring
  */
 @Singleton
-public class ExerciseListViewController extends AbstractViewController {
+public class ExerciseListViewController extends AbstractEntryViewController {
 
     @FXML
     private TableView<Exercise> tvExercises;
 
     @FXML
-    private TableColumn<Exercise, LocalDateTime> tcDate;
+    private TableColumn<Exercise, LocalDate> tcDate;
+    @FXML
+    private TableColumn<Exercise, Nameable> tcSportType;
+    @FXML
+    private TableColumn<Exercise, Nameable> tcSportSubtype;
+    @FXML
+    private TableColumn<Exercise, Number> tcDuration;
+    @FXML
+    private TableColumn<Exercise, Exercise.IntensityType> tcIntensity;
+    @FXML
+    private TableColumn<Exercise, Number> tcDistance;
+    @FXML
+    private TableColumn<Exercise, Number> tcAvgSpeed;
+    @FXML
+    private TableColumn<Exercise, Number> tcAvgHeartrate;
+    @FXML
+    private TableColumn<Exercise, Number> tcAscent;
+    @FXML
+    private TableColumn<Exercise, Number> tcEnergy;
+    @FXML
+    private TableColumn<Exercise, Nameable> tcEquipment;
+    @FXML
+    private TableColumn<Exercise, String> tcComment;
 
     /**
      * Standard c'tor for dependency injection.
@@ -42,28 +77,82 @@ public class ExerciseListViewController extends AbstractViewController {
     }
 
     @Override
+    public void updateView() {
+        // TODO is there a better way to transfer or bind the filtered exercises to the table model?
+        final List<Exercise> filteredExercises = getDocument().getFilterableExerciseList().stream() //
+                .collect(Collectors.toList());
+        tvExercises.setItems(FXCollections.observableArrayList(filteredExercises));
+    }
+
+    @Override
+    public void selectEntry(final IdObject entry) {
+        tvExercises.getSelectionModel().select((Exercise) entry);
+    }
+
+    @Override
+    public void removeSelection() {
+        tvExercises.getSelectionModel().clearSelection();
+    }
+
+    @Override
+    public void print() throws STException {
+        // TODO
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected String getFxmlFilename() {
         return "/fxml/views/ExerciseListView.fxml";
     }
 
     @Override
     protected void setupView() {
+        setupTableColumns();
 
-        // setup table columns
-        tcDate.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-        // TODO
+        // TODO default sort is the date column in descending order
+        // tvExercises.getSortOrder().addAll(tcDate);
+    }
 
-        // TODO setup custom number cell factories for all table columns
-        // final RecordingMode recordingMode = getDocument().getExercise().getRecordingMode();
+    private void setupTableColumns() {
 
-        // tcTime.setCellFactory(new FormattedNumberCellFactory<>(value -> getContext().getFormatUtils()
-        // .seconds2TimeString(value.intValue() / 1000)));
+        // setup factories for providing cell values
+        tcDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
+                cellData.getValue().getDateTime().toLocalDate()));
+        tcSportType.setCellValueFactory(new PropertyValueFactory<>("sportType"));
+        tcSportSubtype.setCellValueFactory(new PropertyValueFactory<>("sportSubType"));
+        tcDuration.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        tcIntensity.setCellValueFactory(new PropertyValueFactory<>("intensity"));
+        tcDistance.setCellValueFactory(new PropertyValueFactory<>("distance"));
+        tcAvgSpeed.setCellValueFactory(new PropertyValueFactory<>("avgSpeed"));
+        tcAvgHeartrate.setCellValueFactory(new PropertyValueFactory<>("avgHeartRate"));
+        tcAscent.setCellValueFactory(new PropertyValueFactory<>("ascent"));
+        tcEnergy.setCellValueFactory(new PropertyValueFactory<>("calories"));
+        tcEquipment.setCellValueFactory(new PropertyValueFactory<>("equipment"));
+        tcComment.setCellValueFactory(cellData -> new SimpleStringProperty( //
+                StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 
-        // TODO set table data
-        // final ExerciseSample[] samples = getDocument().getExercise().getSampleList();
-        // tvSamples.setItems(FXCollections.observableArrayList(samples == null ? new ExerciseSample[0] : samples));
+        // TODO use sport type colors
+        // TODO test metric system ...
 
-        // default sort is the time column
-        // tvSamples.getSortOrder().add(tcTime);
+        // -> setup factories for displaying call values in cells
+        final FormatUtils formatUtils = getContext().getFormatUtils();
+        final NameableCellFactory<Exercise> nameableCellFactory = new NameableCellFactory<>();
+
+        tcDate.setCellFactory(new LocalDateCellFactory<>());
+        tcSportType.setCellFactory(nameableCellFactory);
+        tcSportSubtype.setCellFactory(nameableCellFactory);
+        tcDuration.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+                value == null ? null : formatUtils.seconds2TimeString(value.intValue())));
+        tcDistance.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+                value == null ? null : formatUtils.distanceToString(value.doubleValue(), 3)));
+        tcAvgSpeed.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+                value == null ? null : formatUtils.speedToString(value.floatValue(), 2)));
+        tcAvgHeartrate.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+                value == null ? null : formatUtils.heartRateToString(value.intValue())));
+        tcAscent.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+                value == null ? null : formatUtils.heightToString(value.intValue())));
+        tcEnergy.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+                value == null ? null : formatUtils.caloriesToString(value.intValue())));
+        tcEquipment.setCellFactory(nameableCellFactory);
     }
 }

@@ -135,9 +135,10 @@ public class STControllerImpl implements STController {
                 new Image("icons/st-logo-24.png"));
 
         setupBindings();
-        updateView();
 
         spViews.getChildren().add(exerciseListViewController.loadAndSetupViewContent());
+
+        updateView();
 
         // register listener for window close event
         primaryStage.setOnCloseRequest(event -> {
@@ -318,6 +319,8 @@ public class STControllerImpl implements STController {
         // TODO update list of exercises to be displayed and update current view
         // displayedExercises = document.getFilterableExerciseList();
         // currentView.updateView();
+        exerciseListViewController.updateView();
+
         updateActionStatus();
     }
 
