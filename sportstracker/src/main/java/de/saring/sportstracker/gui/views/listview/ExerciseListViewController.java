@@ -28,6 +28,7 @@ import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 import de.saring.util.gui.javafx.NameableCellFactory;
 import de.saring.util.unitcalc.FormatUtils;
+import javafx.util.Callback;
 
 /**
  * Controller class of the Exercise List View, which displays all the user exercises
@@ -148,17 +149,17 @@ public class ExerciseListViewController extends AbstractEntryViewController {
         tcDate.setCellFactory(new ColoredLocalDateCellFactory());
         tcSportType.setCellFactory(coloredNameableCellFactory);
         tcSportSubtype.setCellFactory(coloredNameableCellFactory);
-        tcDuration.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+        tcDuration.setCellFactory(new ColoredNumberCellFactory(value -> //
                 value == null ? null : formatUtils.seconds2TimeString(value.intValue())));
-        tcDistance.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+        tcDistance.setCellFactory(new ColoredNumberCellFactory(value -> //
                 value == null ? null : formatUtils.distanceToString(value.doubleValue(), 3)));
-        tcAvgSpeed.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+        tcAvgSpeed.setCellFactory(new ColoredNumberCellFactory(value -> //
                 value == null ? null : formatUtils.speedToString(value.floatValue(), 2)));
-        tcAvgHeartrate.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+        tcAvgHeartrate.setCellFactory(new ColoredNumberCellFactory(value -> //
                 value == null ? null : formatUtils.heartRateToString(value.intValue())));
-        tcAscent.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+        tcAscent.setCellFactory(new ColoredNumberCellFactory(value -> //
                 value == null ? null : formatUtils.heightToString(value.intValue())));
-        tcEnergy.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+        tcEnergy.setCellFactory(new ColoredNumberCellFactory(value -> //
                 value == null ? null : formatUtils.caloriesToString(value.intValue())));
         tcEquipment.setCellFactory(coloredNameableCellFactory);
     }
@@ -209,6 +210,33 @@ public class ExerciseListViewController extends AbstractEntryViewController {
 
                 @Override
                 protected void updateItem(final LocalDate value, final boolean empty) {
+                    super.updateItem(value, empty);
+                    setText(getCellText(value, empty));
+                    setTableCellTextColorOfSportType(this);
+                }
+            };
+        }
+    }
+
+    /**
+     * Extension of the FormattedNumberCellFactory, which creates table cells with the text color
+     * of the exercise sport type displayed in the current table row.
+     */
+    private static class ColoredNumberCellFactory extends FormattedNumberCellFactory<Exercise> {
+
+        /**
+         * @see de.saring.util.gui.javafx.FormattedNumberCellFactory#FormattedNumberCellFactory(javafx.util.Callback)
+         */
+        public ColoredNumberCellFactory(final Callback<Number, String> numberFormatter) {
+            super(numberFormatter);
+        }
+
+        @Override
+        public TableCell<Exercise, Number> call(final TableColumn<Exercise, Number> column) {
+            return new TableCell<Exercise, Number>() {
+
+                @Override
+                protected void updateItem(final Number value, final boolean empty) {
                     super.updateItem(value, empty);
                     setText(getCellText(value, empty));
                     setTableCellTextColorOfSportType(this);

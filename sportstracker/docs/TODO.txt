@@ -17,6 +17,7 @@ JavaFX Migration:
     - add support for persistent options
   - Exercise List View:
     - FXML: Done
+    - CSS: TODO don't use bold table column headers (left aligned?)
     - Controller: TODO
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties

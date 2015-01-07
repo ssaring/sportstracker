@@ -33,13 +33,19 @@ public class FormattedNumberCellFactory<T> implements Callback<TableColumn<T, Nu
             @Override
             protected void updateItem(final Number value, final boolean empty) {
                 super.updateItem(value, empty);
-
-                if (empty || value == null) {
-                    setText(null);
-                } else {
-                    setText(numberFormatter.call(value));
-                }
+                setText(getCellText(value, empty));
             }
         };
+    }
+
+    /**
+     * Returns the text to be displayed in the table cell.
+     *
+     * @param value value of cell
+     * @param empty flag for an empty cell
+     * @return text
+     */
+    protected String getCellText(final Number value, final boolean empty) {
+        return empty || value == null ? null : numberFormatter.call(value);
     }
 }
