@@ -142,7 +142,7 @@ public class ExerciseListViewController extends AbstractEntryViewController {
         tcAscent.setCellValueFactory(new PropertyValueFactory<>("ascent"));
         tcEnergy.setCellValueFactory(new PropertyValueFactory<>("calories"));
         tcEquipment.setCellValueFactory(new PropertyValueFactory<>("equipment"));
-        tcComment.setCellValueFactory(cellData -> new SimpleObjectProperty( //
+        tcComment.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
                 StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 
         // setup factories for displaying colored cell values in cells
