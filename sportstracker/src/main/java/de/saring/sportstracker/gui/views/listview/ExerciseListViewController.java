@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.saring.sportstracker.core.STOptions;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
@@ -18,6 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import de.saring.sportstracker.core.STException;
+import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
@@ -28,7 +28,6 @@ import de.saring.util.data.Nameable;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 import de.saring.util.gui.javafx.NameableCellFactory;
-import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * Controller class of the Exercise List View, which displays all the user exercises
@@ -146,29 +145,28 @@ public class ExerciseListViewController extends AbstractEntryViewController {
         tcComment.setCellValueFactory(cellData -> new SimpleObjectProperty( //
                 StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 
-        // TODO test metric system ...
-
-        // setup factories for displaying call values in cells
-        final FormatUtils formatUtils = getContext().getFormatUtils();
+        // setup factories for displaying colored cell values in cells
         final ColoredNameableCellFactory coloredNameableCellFactory = new ColoredNameableCellFactory();
         final ColoredStringCellFactory coloredStringCellFactory = new ColoredStringCellFactory();
+
+        // TODO selected cells / rows need to use white text color (see TaskListFX)
 
         tcDate.setCellFactory(new ColoredLocalDateCellFactory());
         tcSportType.setCellFactory(coloredNameableCellFactory);
         tcSportSubtype.setCellFactory(coloredNameableCellFactory);
         tcDuration.setCellFactory(new ColoredNumberCellFactory(value -> //
-                value == null ? null : formatUtils.seconds2TimeString(value.intValue())));
+                value == null ? null : getContext().getFormatUtils().seconds2TimeString(value.intValue())));
         tcIntensity.setCellFactory(coloredStringCellFactory);
         tcDistance.setCellFactory(new ColoredNumberCellFactory(value -> //
-                value == null ? null : formatUtils.distanceToString(value.doubleValue(), 3)));
+                value == null ? null : getContext().getFormatUtils().distanceToString(value.doubleValue(), 3)));
         tcAvgSpeed.setCellFactory(new ColoredNumberCellFactory(value -> //
-                value == null ? null : formatUtils.speedToString(value.floatValue(), 2)));
+                value == null ? null : getContext().getFormatUtils().speedToString(value.floatValue(), 2)));
         tcAvgHeartrate.setCellFactory(new ColoredNumberCellFactory(value -> //
-                value == null ? null : formatUtils.heartRateToString(value.intValue())));
+                value == null ? null : getContext().getFormatUtils().heartRateToString(value.intValue())));
         tcAscent.setCellFactory(new ColoredNumberCellFactory(value -> //
-                value == null ? null : formatUtils.heightToString(value.intValue())));
+                value == null ? null : getContext().getFormatUtils().heightToString(value.intValue())));
         tcEnergy.setCellFactory(new ColoredNumberCellFactory(value -> //
-                value == null ? null : formatUtils.caloriesToString(value.intValue())));
+                value == null ? null : getContext().getFormatUtils().caloriesToString(value.intValue())));
         tcEquipment.setCellFactory(coloredNameableCellFactory);
         tcComment.setCellFactory(coloredStringCellFactory);
     }
