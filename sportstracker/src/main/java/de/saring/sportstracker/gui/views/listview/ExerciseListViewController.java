@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.saring.sportstracker.core.STOptions;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
@@ -79,12 +80,19 @@ public class ExerciseListViewController extends AbstractEntryViewController {
 
     @Override
     public void updateView() {
+
         // TODO is there a better way to transfer or bind the filtered exercises to the table model?
         final List<Exercise> filteredExercises = getDocument().getFilterableExerciseList().stream() //
                 .collect(Collectors.toList());
         tvExercises.getItems().setAll(filteredExercises);
 
-        // TODO set visibility of columns as configured in preferences
+        // set visibility of optional columns as configured in preferences
+        final STOptions options = getDocument().getOptions();
+        tcAvgHeartrate.setVisible(options.isListViewShowAvgHeartrate());
+        tcAscent.setVisible(options.isListViewShowAscent());
+        tcEnergy.setVisible(options.isListViewShowEnergy());
+        tcEquipment.setVisible(options.isListViewShowEquipment());
+        tcComment.setVisible(options.isListViewShowComment());
 
         // re-sorting must be forced after updating table content
         tvExercises.sort();
