@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -28,7 +28,6 @@ import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 import de.saring.util.gui.javafx.NameableCellFactory;
 import de.saring.util.unitcalc.FormatUtils;
-import javafx.util.Callback;
 
 /**
  * Controller class of the Exercise List View, which displays all the user exercises
@@ -51,7 +50,7 @@ public class ExerciseListViewController extends AbstractEntryViewController {
     @FXML
     private TableColumn<Exercise, Number> tcDuration;
     @FXML
-    private TableColumn<Exercise, Exercise.IntensityType> tcIntensity;
+    private TableColumn<Exercise, Object> tcIntensity;
     @FXML
     private TableColumn<Exercise, Number> tcDistance;
     @FXML
@@ -65,7 +64,7 @@ public class ExerciseListViewController extends AbstractEntryViewController {
     @FXML
     private TableColumn<Exercise, Nameable> tcEquipment;
     @FXML
-    private TableColumn<Exercise, String> tcComment;
+    private TableColumn<Exercise, Object> tcComment;
 
     /**
      * Standard c'tor for dependency injection.
@@ -136,21 +135,22 @@ public class ExerciseListViewController extends AbstractEntryViewController {
         tcAscent.setCellValueFactory(new PropertyValueFactory<>("ascent"));
         tcEnergy.setCellValueFactory(new PropertyValueFactory<>("calories"));
         tcEquipment.setCellValueFactory(new PropertyValueFactory<>("equipment"));
-        tcComment.setCellValueFactory(cellData -> new SimpleStringProperty( //
+        tcComment.setCellValueFactory(cellData -> new SimpleObjectProperty( //
                 StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 
-        // TODO use sport type colors for all columns
         // TODO test metric system ...
 
         // setup factories for displaying call values in cells
         final FormatUtils formatUtils = getContext().getFormatUtils();
         final ColoredNameableCellFactory coloredNameableCellFactory = new ColoredNameableCellFactory();
+        final ColoredStringCellFactory coloredStringCellFactory = new ColoredStringCellFactory();
 
         tcDate.setCellFactory(new ColoredLocalDateCellFactory());
         tcSportType.setCellFactory(coloredNameableCellFactory);
         tcSportSubtype.setCellFactory(coloredNameableCellFactory);
         tcDuration.setCellFactory(new ColoredNumberCellFactory(value -> //
                 value == null ? null : formatUtils.seconds2TimeString(value.intValue())));
+        tcIntensity.setCellFactory(coloredStringCellFactory);
         tcDistance.setCellFactory(new ColoredNumberCellFactory(value -> //
                 value == null ? null : formatUtils.distanceToString(value.doubleValue(), 3)));
         tcAvgSpeed.setCellFactory(new ColoredNumberCellFactory(value -> //
@@ -162,6 +162,7 @@ public class ExerciseListViewController extends AbstractEntryViewController {
         tcEnergy.setCellFactory(new ColoredNumberCellFactory(value -> //
                 value == null ? null : formatUtils.caloriesToString(value.intValue())));
         tcEquipment.setCellFactory(coloredNameableCellFactory);
+        tcComment.setCellFactory(coloredStringCellFactory);
     }
 
     /**
@@ -180,7 +181,7 @@ public class ExerciseListViewController extends AbstractEntryViewController {
 
     /**
      * Extension of the NameableCellFactory, which creates table cells with the text color
-     * of the exercise sport type displayed in the current table row.
+     * of the sport type displayed in the current table row.
      */
     private static class ColoredNameableCellFactory extends NameableCellFactory<Exercise> {
 
@@ -200,7 +201,7 @@ public class ExerciseListViewController extends AbstractEntryViewController {
 
     /**
      * Extension of the NameableCellFactory, which creates table cells with the text color
-     * of the exercise sport type displayed in the current table row.
+     * of the sport type displayed in the current table row.
      */
     private static class ColoredLocalDateCellFactory extends LocalDateCellFactory<Exercise> {
 
@@ -220,7 +221,7 @@ public class ExerciseListViewController extends AbstractEntryViewController {
 
     /**
      * Extension of the FormattedNumberCellFactory, which creates table cells with the text color
-     * of the exercise sport type displayed in the current table row.
+     * of the sport type displayed in the current table row.
      */
     private static class ColoredNumberCellFactory extends FormattedNumberCellFactory<Exercise> {
 
@@ -239,6 +240,28 @@ public class ExerciseListViewController extends AbstractEntryViewController {
                 protected void updateItem(final Number value, final boolean empty) {
                     super.updateItem(value, empty);
                     setText(getCellText(value, empty));
+                    setTableCellTextColorOfSportType(this);
+                }
+            };
+        }
+    }
+
+    /**
+     * Custom factory for creating table cells with string values of any object. It uses {@link Object#toString()} for
+     * getting the string value of the object.
+     * The table cell uses the text color of the sport type displayed in the current table row.
+     */
+    private static class ColoredStringCellFactory implements //
+            Callback<TableColumn<Exercise, Object>, TableCell<Exercise, Object>> {
+
+        @Override
+        public TableCell<Exercise, Object> call(final TableColumn<Exercise, Object> column) {
+            return new TableCell<Exercise, Object>() {
+
+                @Override
+                protected void updateItem(final Object value, final boolean empty) {
+                    super.updateItem(value, empty);
+                    setText(empty || value == null ? null : value.toString());
                     setTableCellTextColorOfSportType(this);
                 }
             };
