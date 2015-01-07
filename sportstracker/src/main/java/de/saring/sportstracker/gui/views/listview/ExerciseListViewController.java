@@ -4,10 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.saring.util.StringUtils;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,6 +19,7 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.sportstracker.gui.views.AbstractEntryViewController;
+import de.saring.util.StringUtils;
 import de.saring.util.data.IdObject;
 import de.saring.util.data.Nameable;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
@@ -81,7 +80,9 @@ public class ExerciseListViewController extends AbstractEntryViewController {
         // TODO is there a better way to transfer or bind the filtered exercises to the table model?
         final List<Exercise> filteredExercises = getDocument().getFilterableExerciseList().stream() //
                 .collect(Collectors.toList());
-        tvExercises.setItems(FXCollections.observableArrayList(filteredExercises));
+        tvExercises.getItems().setAll(filteredExercises);
+        // re-sorting must be forced after updating table content
+        tvExercises.sort();
     }
 
     @Override
@@ -109,8 +110,9 @@ public class ExerciseListViewController extends AbstractEntryViewController {
     protected void setupView() {
         setupTableColumns();
 
-        // TODO default sort is the date column in descending order
-        // tvExercises.getSortOrder().addAll(tcDate);
+        // default sort order is by date descending
+        tcDate.setSortType(TableColumn.SortType.DESCENDING);
+        tvExercises.getSortOrder().addAll(tcDate);
     }
 
     private void setupTableColumns() {
