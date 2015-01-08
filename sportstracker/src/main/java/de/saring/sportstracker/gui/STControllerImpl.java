@@ -10,7 +10,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.saring.util.StringUtils;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -45,6 +44,7 @@ import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
 import de.saring.sportstracker.gui.statusbar.StatusBarController;
 import de.saring.sportstracker.gui.views.EntryViewController;
 import de.saring.sportstracker.gui.views.listview.ExerciseListViewController;
+import de.saring.util.StringUtils;
 import de.saring.util.gui.javafx.FxmlLoader;
 import de.saring.util.unitcalc.FormatUtils;
 
@@ -246,6 +246,7 @@ public class STControllerImpl implements STController {
         if (selectedFile != null) {
 
             // start ExerciseViewer
+            LOGGER.info("Opening HRM file '" + selectedFile + "' in ExerciseViewer...");
             prExerciseViewer.get().showExercise(selectedFile.getAbsolutePath(), document.getOptions(),
                     context.getPrimaryStage(), false);
         }
@@ -299,7 +300,13 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onViewHrmFile(ActionEvent event) {
-        // TODO
+        // get selected exercise and start ExerciseViewer for it's HRM file
+        // (special checks not needed here, done by action status property)
+        final int exerciseID = currentViewController.getSelectedExerciseIDs()[0];
+        final String hrmFile = document.getExerciseList().getByID(exerciseID).getHrmFile();
+
+        LOGGER.info("Opening HRM file '" + hrmFile + "' in ExerciseViewer...");
+        prExerciseViewer.get().showExercise(hrmFile, document.getOptions(), context.getPrimaryStage(), false);
     }
 
     @Override
