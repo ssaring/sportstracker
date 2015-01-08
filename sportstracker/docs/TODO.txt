@@ -11,6 +11,8 @@ JavaFX Migration:
     - add special support for Mac menu items (Preferences, About, ...)
   - STApplication: Done
   - STController: see TODO
+    - Update the current view after modification of the lists in STDocument
+      (otherwise e.g. added exercises are not shown in the exercise list view)
   - STDocument: see TODO
     - add support for persistent options
   - Exercise List View:

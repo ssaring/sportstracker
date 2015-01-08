@@ -3,6 +3,9 @@ package de.saring.sportstracker.gui;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
@@ -10,6 +13,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.sportstracker.gui.dialogs.ExerciseDialogController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -81,6 +85,8 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<EVMain> prExerciseViewer;
     @Inject
+    private Provider<ExerciseDialogController> prExerciseDialogController;
+    @Inject
     private Provider<SportTypeListDialogController> prSportTypeListDialogController;
     @Inject
     private Provider<StatisticDialogController> prStatisticDialogController;
@@ -93,8 +99,6 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<AboutDialogController> prAboutDialogController;
 
-    // @Inject
-    // private Provider<ExerciseDialogController> prExerciseDialogController;
     // @Inject
     // private Provider<NoteDialogController> prNoteDialogController;
     // @Inject
@@ -176,6 +180,9 @@ public class STControllerImpl implements STController {
 
     /** Property for the disabled status of the 'Disable Exercise Filter' action. */
     private final BooleanProperty actionFilterDisableDisabled = new SimpleBooleanProperty(true);
+
+    /** The date to be set initially when the next entry will be added. */
+    private LocalDate dateForNewEntries;
 
     /**
      * Standard c'tor.
@@ -270,7 +277,13 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onAddExercise(ActionEvent event) {
-        // TODO
+        if (!checkForExistingSportTypes()) {
+            return;
+        }
+
+        // start exercise dialog for a new created exercise
+        final Exercise newExercise = createNewExercise(dateForNewEntries);
+        prExerciseDialogController.get().show(context.getPrimaryStage(), newExercise, false);
     }
 
     @Override
@@ -281,6 +294,11 @@ public class STControllerImpl implements STController {
     @Override
     public void onAddWeight(ActionEvent event) {
         // TODO
+    }
+
+    @Override
+    public void setDateForNewEntries(final LocalDate date) {
+        this.dateForNewEntries = date;
     }
 
     @Override
@@ -582,6 +600,33 @@ public class STControllerImpl implements STController {
         currentViewController.removeSelection();
         updateView();
         spViews.getChildren().setAll(currentViewController.getRootNode());
+    }
+
+    /**
+     * Creates a new Exercise. The exercise date will be the specified date at
+     * 12:00:00 or if no date is specified the current day at 12:00.
+     *
+     * @param date the date to be set in the exercise (can be null for the current date)
+     * @return the created Exercise
+     */
+    private Exercise createNewExercise(final LocalDate date) {
+        final Exercise exercise = new Exercise(document.getExerciseList().getNewID());
+        exercise.setDateTime(getNoonDateTimeForDate(date));
+        exercise.setIntensity(Exercise.IntensityType.NORMAL);
+        return exercise;
+    }
+
+    /**
+     * Returns a Date LocalDateTime for the specified date, the time is set to 12:00:00.
+     * When no date is specified then the current date will be used.
+     *
+     * @param date contains the date to be used (optional)
+     * @return the created LocalDateTime
+     */
+    // TODO move to class Date310Utils
+    private LocalDateTime getNoonDateTimeForDate(final LocalDate date) {
+        final LocalDate tempDate = date == null ? LocalDate.now() : date;
+        return LocalDateTime.of(tempDate, LocalTime.of(12, 0));
     }
 
     /**

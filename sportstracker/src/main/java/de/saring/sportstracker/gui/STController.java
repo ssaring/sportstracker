@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 /**
  * This interface provides all controller (MVC) functionality of the SportsTracker main application window.
@@ -57,6 +58,14 @@ public interface STController {
      * Event handler for action "Add new Weight".
      */
     void onAddWeight(ActionEvent event);
+
+    /**
+     * Sets the date to be used when new entries (e.g. exercises) will be created.
+     * When set to null then the current date will be used instead.
+     *
+     * @param date the date to be used (the time will be set to 12:00)
+     */
+    void setDateForNewEntries(LocalDate date);
 
     /**
      * Event handler for action "Edit selected Entry".
