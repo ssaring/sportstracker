@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.util.StringUtils;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -103,6 +104,14 @@ public class STControllerImpl implements STController {
     @FXML
     private MenuItem miSave;
     @FXML
+    private MenuItem miEditEntry;
+    @FXML
+    private MenuItem miCopyEntry;
+    @FXML
+    private MenuItem miDeleteEntry;
+    @FXML
+    private MenuItem miViewHrm;
+    @FXML
     private MenuItem miCalendarView;
     @FXML
     private MenuItem miExerciseListView;
@@ -116,6 +125,14 @@ public class STControllerImpl implements STController {
     // list of all toolbar buttons
     @FXML
     private Button btSave;
+    @FXML
+    private Button btEditEntry;
+    @FXML
+    private Button btCopyEntry;
+    @FXML
+    private Button btDeleteEntry;
+    @FXML
+    private Button btViewHrm;
     @FXML
     private Button btCalendarView;
     @FXML
@@ -135,14 +152,28 @@ public class STControllerImpl implements STController {
 
     /** Property for the disabled status of the 'Save' action. */
     private final BooleanProperty actionSaveDisabled = new SimpleBooleanProperty(true);
+
+    /** Property for the disabled status of the 'Edit / Copy Entry' action. */
+    private final BooleanProperty actionEditEntryDisabled = new SimpleBooleanProperty(true);
+
+    /** Property for the disabled status of the 'Delete Entry' action. */
+    private final BooleanProperty actionDeleteEntryDisabled = new SimpleBooleanProperty(true);
+
+    /** Property for the disabled status of the 'View HRM File' action. */
+    private final BooleanProperty actionViewHrmDisabled = new SimpleBooleanProperty(true);
+
     /** Property for the disabled status of the 'Calendar View' action. */
     private final BooleanProperty actionCalendarViewDisabled = new SimpleBooleanProperty(true);
+
     /** Property for the disabled status of the 'Exercise List View' action. */
     private final BooleanProperty actionExerciseListViewDisabled = new SimpleBooleanProperty(true);
+
     /** Property for the disabled status of the 'Note List View' action. */
     private final BooleanProperty actionNoteListViewDisabled = new SimpleBooleanProperty(true);
+
     /** Property for the disabled status of the 'Weight List View' action. */
     private final BooleanProperty actionWeightListViewDisabled = new SimpleBooleanProperty(true);
+
     /** Property for the disabled status of the 'Disable Exercise Filter' action. */
     private final BooleanProperty actionFilterDisableDisabled = new SimpleBooleanProperty(true);
 
@@ -385,17 +416,7 @@ public class STControllerImpl implements STController {
 
     @Override
     public void updateActionsAndStatusBar() {
-
-        actionSaveDisabled.set(!document.isDirtyData());
-        actionFilterDisableDisabled.set(!document.isFilterEnabled());
-
-        // update status of view actions depending on the current view type
-        final EntryViewController.ViewType currentViewType = currentViewController.getViewType();
-        actionCalendarViewDisabled.set(currentViewType == EntryViewController.ViewType.CALENDAR);
-        actionExerciseListViewDisabled.set(currentViewType == EntryViewController.ViewType.EXERCISE_LIST);
-        actionNoteListViewDisabled.set(currentViewType == EntryViewController.ViewType.NOTE_LIST);
-        actionWeightListViewDisabled.set(currentViewType == EntryViewController.ViewType.WEIGHT_LIST);
-
+        updateActionStatus();
         statusBarController.updateStatusBar(currentViewController.getSelectedExerciseIDs());
     }
 
@@ -409,6 +430,16 @@ public class STControllerImpl implements STController {
         miSave.disableProperty().bind(actionSaveDisabled);
         btSave.disableProperty().bind(actionSaveDisabled);
 
+        miEditEntry.disableProperty().bind(actionEditEntryDisabled);
+        btEditEntry.disableProperty().bind(actionEditEntryDisabled);
+        miCopyEntry.disableProperty().bind(actionEditEntryDisabled);
+        btCopyEntry.disableProperty().bind(actionEditEntryDisabled);
+        miDeleteEntry.disableProperty().bind(actionDeleteEntryDisabled);
+        btDeleteEntry.disableProperty().bind(actionDeleteEntryDisabled);
+
+        miViewHrm.disableProperty().bind(actionViewHrmDisabled);
+        btViewHrm.disableProperty().bind(actionViewHrmDisabled);
+
         miCalendarView.disableProperty().bind(actionCalendarViewDisabled);
         btCalendarView.disableProperty().bind(actionCalendarViewDisabled);
         miExerciseListView.disableProperty().bind(actionExerciseListViewDisabled);
@@ -420,6 +451,39 @@ public class STControllerImpl implements STController {
 
         miFilterDisable.disableProperty().bind(actionFilterDisableDisabled);
         btFilterDisable.disableProperty().bind(actionFilterDisableDisabled);
+    }
+
+    private void updateActionStatus() {
+        actionSaveDisabled.set(!document.isDirtyData());
+
+        // update status of entry actions depending on current entry selection
+        final int selExerciseCount = currentViewController.getSelectedExerciseCount();
+        final int selNoteCount = currentViewController.getSelectedNoteCount();
+        final int selWeightCount = currentViewController.getSelectedWeightCount();
+
+        final boolean fEditEnabled = selExerciseCount == 1 || selNoteCount == 1 || selWeightCount == 1;
+        actionEditEntryDisabled.set(!fEditEnabled);
+
+        final boolean fDeleteEnabled = selExerciseCount > 0 || selNoteCount > 0 || selWeightCount > 0;
+        actionDeleteEntryDisabled.set(!fDeleteEnabled);
+
+        // action 'View HRM File' is only enabled when the selected exercise contains a HRM file
+        boolean fHRMEnabled = false;
+        if (selExerciseCount == 1) {
+            final int selExerciseID = currentViewController.getSelectedExerciseIDs()[0];
+            final Exercise selExercise = document.getExerciseList().getByID(selExerciseID);
+            fHRMEnabled = StringUtils.getTrimmedTextOrNull(selExercise.getHrmFile()) != null;
+        }
+        actionViewHrmDisabled.set(!fHRMEnabled);
+
+        actionFilterDisableDisabled.set(!document.isFilterEnabled());
+
+        // update status of view actions depending on the current view type
+        final EntryViewController.ViewType currentViewType = currentViewController.getViewType();
+        actionCalendarViewDisabled.set(currentViewType == EntryViewController.ViewType.CALENDAR);
+        actionExerciseListViewDisabled.set(currentViewType == EntryViewController.ViewType.EXERCISE_LIST);
+        actionNoteListViewDisabled.set(currentViewType == EntryViewController.ViewType.NOTE_LIST);
+        actionWeightListViewDisabled.set(currentViewType == EntryViewController.ViewType.WEIGHT_LIST);
     }
 
     /**

@@ -44,11 +44,11 @@
                                 <MenuItem mnemonicParsing="true" onAction="#onAddExercise" styleClass="menuBarItem" text="%st.view.exercise_add.Action.text" />
                                 <MenuItem mnemonicParsing="true" onAction="#onAddNote" styleClass="menuBarItem" text="%st.view.note_add.Action.text" />
                                 <MenuItem mnemonicParsing="true" onAction="#onAddWeight" styleClass="menuBarItem" text="%st.view.weight_add.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onEditEntry" styleClass="menuBarItem" text="%st.view.entry_edit.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onCopyEntry" styleClass="menuBarItem" text="%st.view.entry_copy.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onDeleteEntry" styleClass="menuBarItem" text="%st.view.entry_delete.Action.text" />
+                                <MenuItem fx:id="miEditEntry" mnemonicParsing="true" onAction="#onEditEntry" styleClass="menuBarItem" text="%st.view.entry_edit.Action.text" />
+                                <MenuItem fx:id="miCopyEntry" mnemonicParsing="true" onAction="#onCopyEntry" styleClass="menuBarItem" text="%st.view.entry_copy.Action.text" />
+                                <MenuItem fx:id="miDeleteEntry" mnemonicParsing="true" onAction="#onDeleteEntry" styleClass="menuBarItem" text="%st.view.entry_delete.Action.text" />
                                 <SeparatorMenuItem />
-                                <MenuItem mnemonicParsing="true" onAction="#onViewHrmFile" styleClass="menuBarItem" text="%st.view.view_hrm.Action.text" />
+                                <MenuItem fx:id="miViewHrm" mnemonicParsing="true" onAction="#onViewHrmFile" styleClass="menuBarItem" text="%st.view.view_hrm.Action.text" />
                                 <SeparatorMenuItem />
                                 <MenuItem mnemonicParsing="true" onAction="#onPreferences" styleClass="menuBarItem" text="%st.view.preferences.Action.text" />
                             </items>
