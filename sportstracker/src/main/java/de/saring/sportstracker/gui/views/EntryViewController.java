@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.views;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.util.data.IdObject;
+import javafx.scene.Parent;
 
 /**
  * Interface for all content view controllers for displaying SportsTracker entries
@@ -17,6 +18,19 @@ public interface EntryViewController {
     enum ViewType {
         CALENDAR, EXERCISE_LIST, NOTE_LIST, WEIGHT_LIST
     }
+
+    /**
+     * Loads the view content from FXML and set up all the controls. The root node of the loaded
+     * view can be accessed via {@link #getRootNode()} afterwards.
+     */
+    void loadAndSetupViewContent();
+
+    /**
+     * Returns the root node of the view content. It needs to be loaded with {@link #loadAndSetupViewContent()} before.
+     *
+     * @return root of the view
+     */
+    Parent getRootNode();
 
     /**
      * Updates the view after data was modified.

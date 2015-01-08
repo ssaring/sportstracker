@@ -20,6 +20,8 @@ public abstract class AbstractEntryViewController implements EntryViewController
     private final STContext context;
     private final STDocument document;
 
+    private Parent rootNode;
+
     /**
      * Standard c'tor for dependency injection.
      *
@@ -31,24 +33,23 @@ public abstract class AbstractEntryViewController implements EntryViewController
         this.document = document;
     }
 
-    /**
-     * Loads the view content from FXML and set up all the controls.
-     *
-     * @return the loaded and initialized panel content
-     */
-    public Parent loadAndSetupViewContent() {
+    @Override
+    public void loadAndSetupViewContent() {
         final String fxmlFilename = getFxmlFilename();
-        Parent root;
 
         try {
-            root = FxmlLoader.load(this.getClass().getResource(fxmlFilename), //
+            rootNode = FxmlLoader.load(this.getClass().getResource(fxmlFilename), //
                     context.getResources().getResourceBundle(), this);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load the FXML resource '" + fxmlFilename + "'!", e);
         }
 
         setupView();
-        return root;
+    }
+
+    @Override
+    public Parent getRootNode() {
+        return rootNode;
     }
 
     /**

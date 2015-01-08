@@ -1,22 +1,15 @@
 package de.saring.sportstracker.gui;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import de.saring.exerciseviewer.gui.EVMain;
-import de.saring.sportstracker.core.STOptions;
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.SportTypeList;
-import de.saring.sportstracker.gui.dialogs.AboutDialogController;
-import de.saring.sportstracker.gui.dialogs.HRMFileOpenDialog;
-import de.saring.sportstracker.gui.dialogs.OverviewDialogController;
-import de.saring.sportstracker.gui.dialogs.PreferencesDialogController;
-import de.saring.sportstracker.gui.dialogs.SportTypeListDialogController;
-import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
-import de.saring.sportstracker.gui.views.listview.ExerciseListViewController;
-import de.saring.util.gui.javafx.FxmlLoader;
-import de.saring.util.unitcalc.FormatUtils;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -33,15 +26,24 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+
+import de.saring.exerciseviewer.gui.EVMain;
+import de.saring.sportstracker.core.STOptions;
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.SportTypeList;
+import de.saring.sportstracker.gui.dialogs.AboutDialogController;
+import de.saring.sportstracker.gui.dialogs.HRMFileOpenDialog;
+import de.saring.sportstracker.gui.dialogs.OverviewDialogController;
+import de.saring.sportstracker.gui.dialogs.PreferencesDialogController;
+import de.saring.sportstracker.gui.dialogs.SportTypeListDialogController;
+import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
+import de.saring.sportstracker.gui.views.EntryViewController;
+import de.saring.sportstracker.gui.views.listview.ExerciseListViewController;
+import de.saring.util.gui.javafx.FxmlLoader;
+import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * This class provides all controller (MVC)functionality of the SportsTracker main application window.
@@ -56,8 +58,17 @@ public class STControllerImpl implements STController {
     private final STContext context;
     private final STDocument document;
 
+    // @Inject
+    // TODO private CalendarViewController calendarViewController;
     @Inject
     private ExerciseListViewController exerciseListViewController;
+    // @Inject
+    // TODO private NoteListViewController noteListViewController;
+    // @Inject
+    // TODO private WeightListViewController weightListViewController;
+
+    /** The controller of the currently displayed view. */
+    private EntryViewController currentViewController;
 
     @Inject
     private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
@@ -83,11 +94,29 @@ public class STControllerImpl implements STController {
     // @Inject
     // private Provider<FilterDialogController> prFilterDialogController;
 
+    // list of all menu items
     @FXML
     private MenuItem miSave;
+    @FXML
+    private MenuItem miCalendarView;
+    @FXML
+    private MenuItem miExerciseListView;
+    @FXML
+    private MenuItem miNoteListView;
+    @FXML
+    private MenuItem miWeightListView;
 
+    // list of all toolbar buttons
     @FXML
     private Button btSave;
+    @FXML
+    private Button btCalendarView;
+    @FXML
+    private Button btExerciseListView;
+    @FXML
+    private Button btNoteListView;
+    @FXML
+    private Button btWeightListView;
 
     @FXML
     private StackPane spViews;
@@ -95,9 +124,16 @@ public class STControllerImpl implements STController {
     @FXML
     private Label laStatusBar;
 
-    /** Property for the disabled status of the Save action. */
+    /** Property for the disabled status of the 'Save' action. */
     private final BooleanProperty actionSaveDisabled = new SimpleBooleanProperty(true);
-
+    /** Property for the disabled status of the 'Calendar View' action. */
+    private final BooleanProperty actionCalendarViewDisabled = new SimpleBooleanProperty(true);
+    /** Property for the disabled status of the 'Exercise List View' action. */
+    private final BooleanProperty actionExerciseListViewDisabled = new SimpleBooleanProperty(true);
+    /** Property for the disabled status of the 'Note List View' action. */
+    private final BooleanProperty actionNoteListViewDisabled = new SimpleBooleanProperty(true);
+    /** Property for the disabled status of the 'Weight List View' action. */
+    private final BooleanProperty actionWeightListViewDisabled = new SimpleBooleanProperty(true);
 
     /**
      * Standard c'tor.
@@ -120,9 +156,8 @@ public class STControllerImpl implements STController {
 
         primaryStage.setScene(new Scene(root));
 
-        primaryStage.setTitle(MessageFormat.format(
-                "{0} {1}", //
-                context.getResources().getString("application.title"),
+        primaryStage.setTitle(MessageFormat.format("{0} {1}", //
+                context.getResources().getString("application.title"), //
                 context.getResources().getString("application.version")));
 
         primaryStage.getIcons().addAll( //
@@ -134,11 +169,17 @@ public class STControllerImpl implements STController {
                 new Image("icons/st-logo-32.png"), //
                 new Image("icons/st-logo-24.png"));
 
-        setupBindings();
+        setupActionBindings();
 
-        spViews.getChildren().add(exerciseListViewController.loadAndSetupViewContent());
+        // setup all views
+        exerciseListViewController.loadAndSetupViewContent();
 
-        updateView();
+        // set initial view
+        if (document.getOptions().getInitialView() == STOptions.View.Calendar) {
+            switchToView(EntryViewController.ViewType.CALENDAR);
+        } else {
+            switchToView(EntryViewController.ViewType.EXERCISE_LIST);
+        }
 
         // register listener for window close event
         primaryStage.setOnCloseRequest(event -> {
@@ -156,8 +197,8 @@ public class STControllerImpl implements STController {
     @Override
     public void onOpenHrmFile(ActionEvent event) {
         // show file open dialog for HRM file selection
-        final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(
-                context.getPrimaryStage(), document.getOptions(), null);
+        final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(context.getPrimaryStage(),
+                document.getOptions(), null);
         if (selectedFile != null) {
 
             // start ExerciseViewer
@@ -226,22 +267,22 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onCalendarView(ActionEvent event) {
-        // TODO
+        switchToView(EntryViewController.ViewType.CALENDAR);
     }
 
     @Override
     public void onExerciseListView(ActionEvent event) {
-        // TODO
+        switchToView(EntryViewController.ViewType.EXERCISE_LIST);
     }
 
     @Override
     public void onNoteListView(ActionEvent event) {
-        // TODO
+        switchToView(EntryViewController.ViewType.NOTE_LIST);
     }
 
     @Override
     public void onWeightListView(ActionEvent event) {
-        // TODO
+        switchToView(EntryViewController.ViewType.WEIGHT_LIST);
     }
 
     @Override
@@ -258,7 +299,7 @@ public class STControllerImpl implements STController {
     public void onSportTypeEditor(ActionEvent event) {
         prSportTypeListDialogController.get().show(context.getPrimaryStage());
 
-        // sport type and subtype objects may have been changed  => these will be new objects
+        // sport type and subtype objects may have been changed => these will be new objects
         // => update all exercises and the current filter when the dialog closes, they need
         // to reference to these new objects
         final SportTypeList stList = document.getSportTypeList();
@@ -325,13 +366,23 @@ public class STControllerImpl implements STController {
     }
 
     /**
-     * Setup of bindings for the menu items and toolbar buttons.
+     * Setup of bindings for the menu items and toolbar buttons. There is an action*Disabled property
+     * for each action which is bound to the disabled property of the appropriate controls. So the
+     * status of all similar action controls can be controlled by one action*Disabled property.
      */
-    private void setupBindings() {
+    private void setupActionBindings() {
 
-        // save actions are only enabled when there are unsaved changes
         miSave.disableProperty().bind(actionSaveDisabled);
         btSave.disableProperty().bind(actionSaveDisabled);
+
+        miCalendarView.disableProperty().bind(actionCalendarViewDisabled);
+        btCalendarView.disableProperty().bind(actionCalendarViewDisabled);
+        miExerciseListView.disableProperty().bind(actionExerciseListViewDisabled);
+        btExerciseListView.disableProperty().bind(actionExerciseListViewDisabled);
+        miNoteListView.disableProperty().bind(actionNoteListViewDisabled);
+        btNoteListView.disableProperty().bind(actionNoteListViewDisabled);
+        miWeightListView.disableProperty().bind(actionWeightListViewDisabled);
+        btWeightListView.disableProperty().bind(actionWeightListViewDisabled);
     }
 
     /**
@@ -400,6 +451,47 @@ public class STControllerImpl implements STController {
     }
 
     /**
+     * Switches the view to the specified exercise view type.
+     *
+     * @param viewType the exercise view type to display
+     */
+    private void switchToView(final EntryViewController.ViewType viewType) {
+
+        // determine controller of specified view
+        switch (viewType) {
+            case CALENDAR:
+                // TODO currentView = calendarViewController;
+                currentViewController = exerciseListViewController;
+                break;
+            case EXERCISE_LIST:
+                currentViewController = exerciseListViewController;
+                break;
+            case NOTE_LIST:
+                // TODO currentViewController = noteListViewController;
+                currentViewController = exerciseListViewController;
+                break;
+            case WEIGHT_LIST:
+                // TODO currentViewController = weightListViewController;
+                currentViewController = exerciseListViewController;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid ViewType " + viewType + "!");
+        }
+
+        // update status of view and entry actions
+        actionCalendarViewDisabled.set(viewType == EntryViewController.ViewType.CALENDAR);
+        actionExerciseListViewDisabled.set(viewType == EntryViewController.ViewType.EXERCISE_LIST);
+        actionNoteListViewDisabled.set(viewType == EntryViewController.ViewType.NOTE_LIST);
+        actionWeightListViewDisabled.set(viewType == EntryViewController.ViewType.WEIGHT_LIST);
+        // TODO updateEntryActions();
+
+        // update and display the new view
+        currentViewController.removeSelection();
+        currentViewController.updateView();
+        spViews.getChildren().setAll(currentViewController.getRootNode());
+    }
+
+    /**
      * This class executes the loading action inside a background task without blocking the UI thread.
      * It also checks the existence of all attached exercise files.
      */
@@ -440,8 +532,8 @@ public class STControllerImpl implements STController {
         private void displayCorruptExercises() {
             if (corruptExercises != null && !corruptExercises.isEmpty()) {
 
-                StringBuilder sb = new StringBuilder();
-                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+                final StringBuilder sb = new StringBuilder();
+                final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
 
                 for (int i = 0; i < corruptExercises.size(); i++) {
                     if (i > 15) {
