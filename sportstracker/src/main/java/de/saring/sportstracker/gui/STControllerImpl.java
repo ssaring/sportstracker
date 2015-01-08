@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.sportstracker.gui.dialogs.FilterDialogController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -83,6 +84,8 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<PreferencesDialogController> prPreferencesDialogController;
     @Inject
+    private Provider<FilterDialogController> prFilterDialogController;
+    @Inject
     private Provider<AboutDialogController> prAboutDialogController;
 
     // @Inject
@@ -91,8 +94,6 @@ public class STControllerImpl implements STController {
     // private Provider<NoteDialogController> prNoteDialogController;
     // @Inject
     // private Provider<WeightDialogController> prWeightDialogController;
-    // @Inject
-    // private Provider<FilterDialogController> prFilterDialogController;
 
     // list of all menu items
     @FXML
@@ -105,6 +106,8 @@ public class STControllerImpl implements STController {
     private MenuItem miNoteListView;
     @FXML
     private MenuItem miWeightListView;
+    @FXML
+    private MenuItem miFilterDisable;
 
     // list of all toolbar buttons
     @FXML
@@ -117,6 +120,8 @@ public class STControllerImpl implements STController {
     private Button btNoteListView;
     @FXML
     private Button btWeightListView;
+    @FXML
+    private Button btFilterDisable;
 
     @FXML
     private StackPane spViews;
@@ -134,6 +139,8 @@ public class STControllerImpl implements STController {
     private final BooleanProperty actionNoteListViewDisabled = new SimpleBooleanProperty(true);
     /** Property for the disabled status of the 'Weight List View' action. */
     private final BooleanProperty actionWeightListViewDisabled = new SimpleBooleanProperty(true);
+    /** Property for the disabled status of the 'Disable Exercise Filter' action. */
+    private final BooleanProperty actionFilterDisableDisabled = new SimpleBooleanProperty(true);
 
     /**
      * Standard c'tor.
@@ -287,12 +294,21 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onFilterExercises(ActionEvent event) {
-        // TODO
+        final FilterDialogController controller = prFilterDialogController.get();
+        controller.show(context.getPrimaryStage(), document.getCurrentFilter());
+
+        // set and enable filter when available after dialog has been closed
+        controller.getSelectedFilter().ifPresent(selectedFilter -> {
+            document.setCurrentFilter(selectedFilter);
+            document.setFilterEnabled(true);
+            updateView();
+        });
     }
 
     @Override
     public void onFilterDisable(ActionEvent event) {
-        // TODO
+        document.setFilterEnabled(false);
+        updateView();
     }
 
     @Override
@@ -359,8 +375,7 @@ public class STControllerImpl implements STController {
 
         // TODO update list of exercises to be displayed and update current view
         // displayedExercises = document.getFilterableExerciseList();
-        // currentView.updateView();
-        exerciseListViewController.updateView();
+        currentViewController.updateView();
 
         updateActionStatus();
     }
@@ -383,14 +398,24 @@ public class STControllerImpl implements STController {
         btNoteListView.disableProperty().bind(actionNoteListViewDisabled);
         miWeightListView.disableProperty().bind(actionWeightListViewDisabled);
         btWeightListView.disableProperty().bind(actionWeightListViewDisabled);
+
+        miFilterDisable.disableProperty().bind(actionFilterDisableDisabled);
+        btFilterDisable.disableProperty().bind(actionFilterDisableDisabled);
     }
 
     /**
      * Updates the action status properties. The actions are enabled or disabled depending on
-     * the current entry selection and document state.
+     * the current entry selection, document state and displayed view.
      */
     private void updateActionStatus() {
         actionSaveDisabled.set(!document.isDirtyData());
+        actionFilterDisableDisabled.set(!document.isFilterEnabled());
+
+        // TODO update status of view actions depending on the current view controller
+        // actionCalendarViewDisabled.set(currentViewController == calendarViewController);
+        actionExerciseListViewDisabled.set(currentViewController == exerciseListViewController);
+        // actionNoteListViewDisabled.set(currentViewController == noteListViewController);
+        // actionWeightListViewDisabled.set(currentViewController == weightListViewController);
     }
 
     /**
@@ -478,16 +503,9 @@ public class STControllerImpl implements STController {
                 throw new IllegalArgumentException("Invalid ViewType " + viewType + "!");
         }
 
-        // update status of view and entry actions
-        actionCalendarViewDisabled.set(viewType == EntryViewController.ViewType.CALENDAR);
-        actionExerciseListViewDisabled.set(viewType == EntryViewController.ViewType.EXERCISE_LIST);
-        actionNoteListViewDisabled.set(viewType == EntryViewController.ViewType.NOTE_LIST);
-        actionWeightListViewDisabled.set(viewType == EntryViewController.ViewType.WEIGHT_LIST);
-        // TODO updateEntryActions();
-
         // update and display the new view
         currentViewController.removeSelection();
-        currentViewController.updateView();
+        updateView();
         spViews.getChildren().setAll(currentViewController.getRootNode());
     }
 
