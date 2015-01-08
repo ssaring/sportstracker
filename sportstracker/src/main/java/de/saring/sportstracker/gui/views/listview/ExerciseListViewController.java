@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -145,6 +146,9 @@ public class ExerciseListViewController extends AbstractEntryViewController {
     @Override
     protected void setupView() {
         setupTableColumns();
+
+        // user can select multiple exercises
+        tvExercises.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         // default sort order is by date descending
         tcDate.setSortType(TableColumn.SortType.DESCENDING);
