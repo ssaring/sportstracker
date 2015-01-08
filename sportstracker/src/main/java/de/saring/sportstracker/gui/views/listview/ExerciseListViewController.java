@@ -125,8 +125,9 @@ public class ExerciseListViewController extends AbstractEntryViewController {
     @Override
     public void selectEntry(final IdObject entry) {
         if (entry instanceof Exercise) {
-            // TODO make sure the selected entry is visible!
-            tvExercises.getSelectionModel().select((Exercise) entry);
+            final Exercise exercise = (Exercise) entry;
+            tvExercises.getSelectionModel().select(exercise);
+            tvExercises.scrollTo(exercise);
         }
     }
 

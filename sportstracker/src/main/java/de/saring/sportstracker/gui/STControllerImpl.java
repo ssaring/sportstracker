@@ -430,7 +430,6 @@ public class STControllerImpl implements STController {
 
     @Override
     public void updateView() {
-        System.out.println("updateView");
         // update format utils in context (setting may have changed)
         final STOptions options = document.getOptions();
         context.setFormatUtils(new FormatUtils(options.getUnitSystem(), options.getSpeedView()));
