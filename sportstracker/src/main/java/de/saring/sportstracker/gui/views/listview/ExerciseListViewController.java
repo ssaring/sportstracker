@@ -89,7 +89,6 @@ public class ExerciseListViewController extends AbstractEntryViewController {
     @Override
     public void updateView() {
 
-        // TODO is there a better way to transfer or bind the filtered exercises to the table model?
         final List<Exercise> filteredExercises = getDocument().getFilterableExerciseList().stream() //
                 .collect(Collectors.toList());
         tvExercises.getItems().setAll(filteredExercises);
