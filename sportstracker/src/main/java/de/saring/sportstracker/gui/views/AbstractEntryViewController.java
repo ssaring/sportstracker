@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.scene.Parent;
 
 import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.FxmlLoader;
 
@@ -19,6 +20,7 @@ public abstract class AbstractEntryViewController implements EntryViewController
 
     private final STContext context;
     private final STDocument document;
+    private final STController controller;
 
     private Parent rootNode;
 
@@ -27,10 +29,12 @@ public abstract class AbstractEntryViewController implements EntryViewController
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker document / model
+     * @param controller the SportsTracker UI controller
      */
-    public AbstractEntryViewController(final STContext context, final STDocument document) {
+    public AbstractEntryViewController(final STContext context, final STDocument document, final STController controller) {
         this.context = context;
         this.document = document;
+        this.controller = controller;
     }
 
     @Override
@@ -80,6 +84,15 @@ public abstract class AbstractEntryViewController implements EntryViewController
      */
     protected STDocument getDocument() {
         return document;
+    }
+
+    /**
+     * Returns the SportsTracker UI controller.
+     *
+     * @return STController
+     */
+    protected STController getController() {
+        return controller;
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
@@ -21,6 +22,7 @@ import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.sportstracker.gui.views.AbstractEntryViewController;
 import de.saring.util.StringUtils;
@@ -72,10 +74,11 @@ public class ExerciseListViewController extends AbstractEntryViewController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker document / model
+     * @param controller the SportsTracker UI controller
      */
     @Inject
-    public ExerciseListViewController(final STContext context, final STDocument document) {
-        super(context, document);
+    public ExerciseListViewController(final STContext context, final STDocument document, final STController controller) {
+        super(context, document, controller);
     }
 
     @Override
@@ -149,6 +152,10 @@ public class ExerciseListViewController extends AbstractEntryViewController {
 
         // user can select multiple exercises
         tvExercises.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        // update controller-actions and the status bar on selection changes
+        tvExercises.getSelectionModel().getSelectedIndices().addListener( //
+                (ListChangeListener<Integer>) change -> getController().updateActionsAndStatusBar());
 
         // default sort order is by date descending
         tcDate.setSortType(TableColumn.SortType.DESCENDING);

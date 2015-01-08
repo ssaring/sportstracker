@@ -10,7 +10,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.saring.sportstracker.gui.dialogs.FilterDialogController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -36,11 +35,13 @@ import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.gui.dialogs.AboutDialogController;
+import de.saring.sportstracker.gui.dialogs.FilterDialogController;
 import de.saring.sportstracker.gui.dialogs.HRMFileOpenDialog;
 import de.saring.sportstracker.gui.dialogs.OverviewDialogController;
 import de.saring.sportstracker.gui.dialogs.PreferencesDialogController;
 import de.saring.sportstracker.gui.dialogs.SportTypeListDialogController;
 import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
+import de.saring.sportstracker.gui.statusbar.StatusBarController;
 import de.saring.sportstracker.gui.views.EntryViewController;
 import de.saring.sportstracker.gui.views.listview.ExerciseListViewController;
 import de.saring.util.gui.javafx.FxmlLoader;
@@ -70,6 +71,9 @@ public class STControllerImpl implements STController {
 
     /** The controller of the currently displayed view. */
     private EntryViewController currentViewController;
+
+    @Inject
+    private StatusBarController statusBarController;
 
     @Inject
     private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
@@ -180,6 +184,8 @@ public class STControllerImpl implements STController {
 
         // setup all views
         exerciseListViewController.loadAndSetupViewContent();
+
+        statusBarController.setStatusBar(laStatusBar);
 
         // set initial view
         if (document.getOptions().getInitialView() == STOptions.View.Calendar) {
@@ -374,7 +380,23 @@ public class STControllerImpl implements STController {
         context.setFormatUtils(new FormatUtils(options.getUnitSystem(), options.getSpeedView()));
 
         currentViewController.updateView();
-        updateActionStatus();
+        updateActionsAndStatusBar();
+    }
+
+    @Override
+    public void updateActionsAndStatusBar() {
+
+        actionSaveDisabled.set(!document.isDirtyData());
+        actionFilterDisableDisabled.set(!document.isFilterEnabled());
+
+        // update status of view actions depending on the current view type
+        final EntryViewController.ViewType currentViewType = currentViewController.getViewType();
+        actionCalendarViewDisabled.set(currentViewType == EntryViewController.ViewType.CALENDAR);
+        actionExerciseListViewDisabled.set(currentViewType == EntryViewController.ViewType.EXERCISE_LIST);
+        actionNoteListViewDisabled.set(currentViewType == EntryViewController.ViewType.NOTE_LIST);
+        actionWeightListViewDisabled.set(currentViewType == EntryViewController.ViewType.WEIGHT_LIST);
+
+        statusBarController.updateStatusBar(currentViewController.getSelectedExerciseIDs());
     }
 
     /**
@@ -398,22 +420,6 @@ public class STControllerImpl implements STController {
 
         miFilterDisable.disableProperty().bind(actionFilterDisableDisabled);
         btFilterDisable.disableProperty().bind(actionFilterDisableDisabled);
-    }
-
-    /**
-     * Updates the action status properties. The actions are enabled or disabled depending on
-     * the current entry selection, document state and displayed view.
-     */
-    private void updateActionStatus() {
-        actionSaveDisabled.set(!document.isDirtyData());
-        actionFilterDisableDisabled.set(!document.isFilterEnabled());
-
-        // update status of view actions depending on the current view type
-        final EntryViewController.ViewType currentViewType = currentViewController.getViewType();
-        actionCalendarViewDisabled.set(currentViewType == EntryViewController.ViewType.CALENDAR);
-        actionExerciseListViewDisabled.set(currentViewType == EntryViewController.ViewType.EXERCISE_LIST);
-        actionNoteListViewDisabled.set(currentViewType == EntryViewController.ViewType.NOTE_LIST);
-        actionWeightListViewDisabled.set(currentViewType == EntryViewController.ViewType.WEIGHT_LIST);
     }
 
     /**
@@ -594,7 +600,7 @@ public class STControllerImpl implements STController {
         protected void succeeded() {
             super.succeeded();
             context.blockMainWindow(false);
-            updateActionStatus();
+            updateActionsAndStatusBar();
 
             if (exitOnSuccess) {
                 exitApplication();

@@ -153,4 +153,12 @@ public interface STController {
      * Updates the complete view to show the current application data.
      */
     void updateView();
+
+    /**
+     * Updates the action status properties and the status bar content according to the
+     * current entry selection in the current view. The actions are enabled or disabled
+     * depending on the current entry selection, document state and displayed view.
+     * The status bar displays a summary of the currently selected entries.
+     */
+    void updateActionsAndStatusBar();
 }
