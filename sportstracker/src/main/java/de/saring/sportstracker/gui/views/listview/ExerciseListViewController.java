@@ -78,6 +78,11 @@ public class ExerciseListViewController extends AbstractEntryViewController {
     }
 
     @Override
+    public ViewType getViewType() {
+        return ViewType.EXERCISE_LIST;
+    }
+
+    @Override
     public void updateView() {
 
         // TODO is there a better way to transfer or bind the filtered exercises to the table model?

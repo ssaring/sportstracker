@@ -20,6 +20,13 @@ public interface EntryViewController {
     }
 
     /**
+     * Returns the type of this view.
+     *
+     * @return ViewType
+     */
+    ViewType getViewType();
+
+    /**
      * Loads the view content from FXML and set up all the controls. The root node of the loaded
      * view can be accessed via {@link #getRootNode()} afterwards.
      */

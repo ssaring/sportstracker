@@ -373,10 +373,7 @@ public class STControllerImpl implements STController {
         final STOptions options = document.getOptions();
         context.setFormatUtils(new FormatUtils(options.getUnitSystem(), options.getSpeedView()));
 
-        // TODO update list of exercises to be displayed and update current view
-        // displayedExercises = document.getFilterableExerciseList();
         currentViewController.updateView();
-
         updateActionStatus();
     }
 
@@ -411,11 +408,12 @@ public class STControllerImpl implements STController {
         actionSaveDisabled.set(!document.isDirtyData());
         actionFilterDisableDisabled.set(!document.isFilterEnabled());
 
-        // TODO update status of view actions depending on the current view controller
-        // actionCalendarViewDisabled.set(currentViewController == calendarViewController);
-        actionExerciseListViewDisabled.set(currentViewController == exerciseListViewController);
-        // actionNoteListViewDisabled.set(currentViewController == noteListViewController);
-        // actionWeightListViewDisabled.set(currentViewController == weightListViewController);
+        // update status of view actions depending on the current view type
+        final EntryViewController.ViewType currentViewType = currentViewController.getViewType();
+        actionCalendarViewDisabled.set(currentViewType == EntryViewController.ViewType.CALENDAR);
+        actionExerciseListViewDisabled.set(currentViewType == EntryViewController.ViewType.EXERCISE_LIST);
+        actionNoteListViewDisabled.set(currentViewType == EntryViewController.ViewType.NOTE_LIST);
+        actionWeightListViewDisabled.set(currentViewType == EntryViewController.ViewType.WEIGHT_LIST);
     }
 
     /**
