@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
@@ -14,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.saring.sportstracker.gui.dialogs.ExerciseDialogController;
+import de.saring.util.Date310Utils;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -611,22 +610,9 @@ public class STControllerImpl implements STController {
      */
     private Exercise createNewExercise(final LocalDate date) {
         final Exercise exercise = new Exercise(document.getExerciseList().getNewID());
-        exercise.setDateTime(getNoonDateTimeForDate(date));
+        exercise.setDateTime(Date310Utils.getNoonDateTimeForDate(date));
         exercise.setIntensity(Exercise.IntensityType.NORMAL);
         return exercise;
-    }
-
-    /**
-     * Returns a Date LocalDateTime for the specified date, the time is set to 12:00:00.
-     * When no date is specified then the current date will be used.
-     *
-     * @param date contains the date to be used (optional)
-     * @return the created LocalDateTime
-     */
-    // TODO move to class Date310Utils
-    private LocalDateTime getNoonDateTimeForDate(final LocalDate date) {
-        final LocalDate tempDate = date == null ? LocalDate.now() : date;
-        return LocalDateTime.of(tempDate, LocalTime.of(12, 0));
     }
 
     /**

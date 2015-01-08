@@ -97,6 +97,21 @@ public class Date310UtilsTest {
                 Date310Utils.getMilliseconds(LocalDateTime.of(2014, 2, 14, 15, 20, 30)));
     }
 
+    /**
+     * Tests the method getNoonDateTimeForDate().
+     */
+    @Test
+    public void testGetNoonDateTimeForDate() {
+
+        // assert noon time for the specified date
+        final LocalDate testDate = LocalDate.of(2015, 1, 5);
+        assertEquals(LocalDateTime.of(2015, 1, 5, 12, 0, 0), //
+                Date310Utils.getNoonDateTimeForDate(testDate));
+
+        // assert noon time for today when no date specified
+        assertEquals(LocalDate.now().atTime(12, 0, 0), //
+                Date310Utils.getNoonDateTimeForDate(null));
+    }
 
     private Date createDate(int year, int month, int day, int hour, int minute, int second) {
         final Calendar calendar = Calendar.getInstance();

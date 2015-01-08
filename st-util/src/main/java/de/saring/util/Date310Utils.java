@@ -3,6 +3,7 @@ package de.saring.util;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.WeekFields;
 import java.util.Date;
@@ -80,5 +81,17 @@ public final class Date310Utils {
      */
     public static long getMilliseconds(final LocalDateTime dateTime) {
         return localDateTimeToDate(dateTime).getTime();
+    }
+
+    /**
+     * Returns a LocalDateTime instance for the specified date with time set to 12:00:00.
+     * When no date is specified then the current date will be used.
+     *
+     * @param date contains the date to be used (optional)
+     * @return the created LocalDateTime
+     */
+    public static LocalDateTime getNoonDateTimeForDate(final LocalDate date) {
+        final LocalDate tempDate = date == null ? LocalDate.now() : date;
+        return LocalDateTime.of(tempDate, LocalTime.of(12, 0));
     }
 }
