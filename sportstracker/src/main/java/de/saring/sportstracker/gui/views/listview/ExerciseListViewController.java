@@ -98,8 +98,27 @@ public class ExerciseListViewController extends AbstractEntryViewController {
     }
 
     @Override
+    public int getSelectedExerciseCount() {
+        return tvExercises.getSelectionModel().getSelectedItems().size();
+    }
+
+    @Override
+    public int[] getSelectedExerciseIDs() {
+        final List<Exercise> selectedExercises = tvExercises.getSelectionModel().getSelectedItems();
+        final int[] selectedExerciseIds = new int[selectedExercises.size()];
+
+        for (int i = 0; i < selectedExerciseIds.length; i++) {
+            selectedExerciseIds[i] = selectedExercises.get(i).getId();
+        }
+        return selectedExerciseIds;
+    }
+
+    @Override
     public void selectEntry(final IdObject entry) {
-        tvExercises.getSelectionModel().select((Exercise) entry);
+        if (entry instanceof Exercise) {
+            // TODO make sure the selected entry is visible!
+            tvExercises.getSelectionModel().select((Exercise) entry);
+        }
     }
 
     @Override
