@@ -430,6 +430,7 @@ public class STControllerImpl implements STController {
 
     @Override
     public void updateView() {
+        System.out.println("updateView");
         // update format utils in context (setting may have changed)
         final STOptions options = document.getOptions();
         context.setFormatUtils(new FormatUtils(options.getUnitSystem(), options.getSpeedView()));
@@ -568,6 +569,19 @@ public class STControllerImpl implements STController {
     }
 
     /**
+     * Registers a listener which updates the view after each data change and selects the changed
+     * object in the current view, if specified.
+     */
+    private void registerListenerForDataChanges() {
+        document.registerListChangeListener(changedObject -> {
+            updateView();
+            if (changedObject != null) {
+                currentViewController.selectEntry(changedObject);
+            }
+        });
+    }
+
+    /**
      * Switches the view to the specified exercise view type.
      *
      * @param viewType the exercise view type to display
@@ -636,9 +650,7 @@ public class STControllerImpl implements STController {
             super.succeeded();
             context.blockMainWindow(false);
 
-            updateView();
-            // TODO view.registerViewForDataChanges();
-
+            updateFinally();
             displayCorruptExercises();
             askForDefiningSportTypes();
         }
@@ -649,8 +661,15 @@ public class STControllerImpl implements STController {
             context.blockMainWindow(false);
 
             LOGGER.log(Level.SEVERE, "Failed to load application data!", getException());
+            updateFinally();
             context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
                     "common.error", "st.main.error.load_data");
+        }
+
+        private void updateFinally() {
+            updateView();
+            // listener must be registered after loading data, because new lists are created
+            registerListenerForDataChanges();
         }
 
         private void displayCorruptExercises() {
