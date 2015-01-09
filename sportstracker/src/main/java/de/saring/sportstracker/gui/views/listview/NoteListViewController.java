@@ -54,6 +54,11 @@ public class NoteListViewController extends AbstractListViewController<Note> {
     }
 
     @Override
+    public int getSelectedNoteCount() {
+        return getSelectedEntryCount();
+    }
+
+    @Override
     public int[] getSelectedNoteIDs() {
         return getSelectedEntryIDs();
     }

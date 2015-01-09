@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -24,9 +22,7 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.sportstracker.gui.views.AbstractEntryViewController;
 import de.saring.util.StringUtils;
-import de.saring.util.data.IdObject;
 import de.saring.util.data.Nameable;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
@@ -39,7 +35,7 @@ import de.saring.util.gui.javafx.NameableCellFactory;
  * @author Stefan Saring
  */
 @Singleton
-public class ExerciseListViewController extends AbstractEntryViewController {
+public class ExerciseListViewController extends AbstractListViewController<Exercise> {
 
     @FXML
     private TableView<Exercise> tvExercises;
@@ -89,10 +85,6 @@ public class ExerciseListViewController extends AbstractEntryViewController {
     @Override
     public void updateView() {
 
-        final List<Exercise> filteredExercises = getDocument().getFilterableExerciseList().stream() //
-                .collect(Collectors.toList());
-        tvExercises.getItems().setAll(filteredExercises);
-
         // set visibility of optional columns as configured in preferences
         final STOptions options = getDocument().getOptions();
         tcAvgHeartrate.setVisible(options.isListViewShowAvgHeartrate());
@@ -101,38 +93,17 @@ public class ExerciseListViewController extends AbstractEntryViewController {
         tcEquipment.setVisible(options.isListViewShowEquipment());
         tcComment.setVisible(options.isListViewShowComment());
 
-        // re-sorting must be forced after updating table content
-        tvExercises.sort();
+        super.updateView();
     }
 
     @Override
     public int getSelectedExerciseCount() {
-        return tvExercises.getSelectionModel().getSelectedItems().size();
+        return getSelectedEntryCount();
     }
 
     @Override
     public int[] getSelectedExerciseIDs() {
-        final List<Exercise> selectedExercises = tvExercises.getSelectionModel().getSelectedItems();
-        final int[] selectedExerciseIds = new int[selectedExercises.size()];
-
-        for (int i = 0; i < selectedExerciseIds.length; i++) {
-            selectedExerciseIds[i] = selectedExercises.get(i).getId();
-        }
-        return selectedExerciseIds;
-    }
-
-    @Override
-    public void selectEntry(final IdObject entry) {
-        if (entry instanceof Exercise) {
-            final Exercise exercise = (Exercise) entry;
-            tvExercises.getSelectionModel().select(exercise);
-            tvExercises.scrollTo(exercise);
-        }
-    }
-
-    @Override
-    public void removeSelection() {
-        tvExercises.getSelectionModel().clearSelection();
+        return getSelectedEntryIDs();
     }
 
     @Override
@@ -147,22 +118,12 @@ public class ExerciseListViewController extends AbstractEntryViewController {
     }
 
     @Override
-    protected void setupView() {
-        setupTableColumns();
-
-        // user can select multiple exercises
-        tvExercises.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-        // update controller-actions and the status bar on selection changes
-        tvExercises.getSelectionModel().getSelectedIndices().addListener( //
-                (ListChangeListener<Integer>) change -> getController().updateActionsAndStatusBar());
-
-        // default sort order is by date descending
-        tcDate.setSortType(TableColumn.SortType.DESCENDING);
-        tvExercises.getSortOrder().addAll(tcDate);
+    protected TableView<Exercise> getTableView() {
+        return tvExercises;
     }
 
-    private void setupTableColumns() {
+    @Override
+    protected void setupTableColumns() {
 
         // setup factories for providing cell values
         tcDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
@@ -204,6 +165,18 @@ public class ExerciseListViewController extends AbstractEntryViewController {
                 value == null ? null : getContext().getFormatUtils().caloriesToString(value.intValue())));
         tcEquipment.setCellFactory(coloredNameableCellFactory);
         tcComment.setCellFactory(coloredStringCellFactory);
+    }
+
+    @Override
+    protected void setupDefaultSorting() {
+        // default sort order is by date descending
+        tcDate.setSortType(TableColumn.SortType.DESCENDING);
+        tvExercises.getSortOrder().addAll(tcDate);
+    }
+
+    @Override
+    protected List<Exercise> getTableEntries() {
+        return getDocument().getFilterableExerciseList().stream().collect(Collectors.toList());
     }
 
     /**

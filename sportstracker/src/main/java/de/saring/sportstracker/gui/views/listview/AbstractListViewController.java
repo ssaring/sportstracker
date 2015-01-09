@@ -6,8 +6,6 @@ import javafx.collections.ListChangeListener;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 
-import javax.inject.Inject;
-
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
@@ -29,7 +27,6 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
      * @param document the SportsTracker document / model
      * @param controller the SportsTracker UI controller
      */
-    @Inject
     public AbstractListViewController(final STContext context, final STDocument document, final STController controller) {
         super(context, document, controller);
     }
@@ -77,12 +74,12 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
     }
 
     /**
-     * Sets up all the columns of the table.
+     * Sets up all the columns of the table. This method is called only once on list view creation.
      */
     protected abstract void setupTableColumns();
 
     /**
-     * Sets up the default sorting of the table.
+     * Sets up the default sorting of the table. This method is called only once on list view creation.
      */
     protected abstract void setupDefaultSorting();
 
@@ -93,6 +90,15 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
      * @return list of entries
      */
     protected abstract List<T> getTableEntries();
+
+    /**
+     * Returns the number of selected table entries.
+     *
+     * @return number of selected entries
+     */
+    protected int getSelectedEntryCount() {
+        return getTableView().getSelectionModel().getSelectedItems().size();
+    }
 
     /**
      * Returns the list of all selected entry IDs.
