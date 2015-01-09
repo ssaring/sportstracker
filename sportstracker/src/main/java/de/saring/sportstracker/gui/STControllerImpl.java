@@ -11,7 +11,9 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.gui.dialogs.ExerciseDialogController;
+import de.saring.sportstracker.gui.dialogs.NoteDialogController;
 import de.saring.sportstracker.gui.views.listview.NoteListViewController;
 import de.saring.util.Date310Utils;
 import de.saring.util.data.IdDateObject;
@@ -89,6 +91,8 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<ExerciseDialogController> prExerciseDialogController;
     @Inject
+    private Provider<NoteDialogController> prNoteDialogController;
+    @Inject
     private Provider<SportTypeListDialogController> prSportTypeListDialogController;
     @Inject
     private Provider<StatisticDialogController> prStatisticDialogController;
@@ -101,8 +105,6 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<AboutDialogController> prAboutDialogController;
 
-    // @Inject
-    // private Provider<NoteDialogController> prNoteDialogController;
     // @Inject
     // private Provider<WeightDialogController> prWeightDialogController;
 
@@ -291,7 +293,11 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onAddNote(ActionEvent event) {
-        // TODO
+        // start Note dialog for a new created Note
+        final Note newNote = new Note(document.getNoteList().getNewID());
+        newNote.setDateTime(Date310Utils.getNoonDateTimeForDate(dateForNewEntries));
+
+        prNoteDialogController.get().show(context.getPrimaryStage(), newNote);
     }
 
     @Override
