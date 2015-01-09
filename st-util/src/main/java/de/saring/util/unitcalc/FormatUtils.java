@@ -500,24 +500,4 @@ public class FormatUtils {
     public String weightToString(float weight, int maxFractionDigits) {
         return weightToStringWithoutUnitName(weight, maxFractionDigits) + " " + getWeightUnitName();
     }
-
-    /**
-     * Returns the first line of the specified text (from start to first line
-     * break).
-     *
-     * @param text the text for getting the first line
-     * @return the first line of the text or null when the text was null
-     */
-    public String firstLineOfText(String text) {
-        if (text == null) {
-            return null;
-        }
-
-        int firstNewLineIndex = text.indexOf('\n');
-        if (firstNewLineIndex >= 0) {
-            return text.substring(0, firstNewLineIndex);
-        } else {
-            return text;
-        }
-    }
 }

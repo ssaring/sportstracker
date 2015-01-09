@@ -326,17 +326,4 @@ public class FormatUtilsTest {
         assertEquals("100.24", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).weightToStringWithoutUnitName(100.2373f, 2));
         assertEquals("220.46", new FormatUtils(FormatUtils.UnitSystem.English, FormatUtils.SpeedView.DistancePerHour).weightToStringWithoutUnitName(100, 2));
     }
-
-    /**
-     * Tests of method firstLineOfText().
-     */
-    @Test
-    public void testFirstLineOfText() {
-        FormatUtils fu = new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour);
-        assertNull(fu.firstLineOfText(null));
-        assertEquals("", fu.firstLineOfText(""));
-        assertEquals("abc", fu.firstLineOfText("abc\ndef\nghi"));
-        assertEquals("abc", fu.firstLineOfText("abc\n"));
-        assertEquals("abc", fu.firstLineOfText("abc"));
-    }
 }
