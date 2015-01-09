@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.saring.util.data.IdObject;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
@@ -104,6 +105,13 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     @Override
     public int[] getSelectedExerciseIDs() {
         return getSelectedEntryIDs();
+    }
+
+    @Override
+    public void selectEntry(final IdObject entry) {
+        if (entry != null && entry instanceof Exercise) {
+            selectAndScrollToEntry((Exercise) entry);
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.saring.util.data.IdObject;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -61,6 +62,13 @@ public class NoteListViewController extends AbstractListViewController<Note> {
     @Override
     public int[] getSelectedNoteIDs() {
         return getSelectedEntryIDs();
+    }
+
+    @Override
+    public void selectEntry(final IdObject entry) {
+        if (entry != null && entry instanceof Note) {
+            selectAndScrollToEntry((Note) entry);
+        }
     }
 
     @Override

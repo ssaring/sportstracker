@@ -40,15 +40,6 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
     }
 
     @Override
-    public void selectEntry(final IdObject entry) {
-        // TODO ensure that entry is of type T?
-        if (entry != null) {
-            getTableView().getSelectionModel().select((T) entry);
-            getTableView().scrollTo((T) entry);
-        }
-    }
-
-    @Override
     public void removeSelection() {
         getTableView().getSelectionModel().clearSelection();
     }
@@ -113,5 +104,15 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
             selectedEntryIds[i] = selectedEntries.get(i).getId();
         }
         return selectedEntryIds;
+    }
+
+    /**
+     * Selects the specified entry and ensures its visibility.
+     *
+     * @param entry entry, must not be null
+     */
+    protected void selectAndScrollToEntry(final T entry) {
+        getTableView().getSelectionModel().select(entry);
+        getTableView().scrollTo(entry);
     }
 }
