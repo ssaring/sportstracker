@@ -2,11 +2,11 @@ package de.saring.sportstracker.gui.views.listview;
 
 import java.util.List;
 
-import de.saring.sportstracker.core.STException;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 
+import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
@@ -69,6 +69,13 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
         // update controller-actions and the status bar on selection changes
         getTableView().getSelectionModel().getSelectedIndices().addListener( //
                 (ListChangeListener<Integer>) change -> getController().updateActionsAndStatusBar());
+
+        // add listener for double clicks for editing the selected entry
+        getTableView().setOnMouseClicked(event -> {
+            if (event.getClickCount() > 1 && getSelectedEntryCount() == 1) {
+                getController().onEditEntry(null);
+            }
+        });
     }
 
     /**
