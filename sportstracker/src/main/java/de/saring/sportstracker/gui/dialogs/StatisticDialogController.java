@@ -78,7 +78,7 @@ public class StatisticDialogController extends AbstractDialogController {
         // start with current filter criteria stored in document => user can change it
         statisticFilter = document.getCurrentFilter();
 
-        showInfoDialog("/fxml/StatisticDialog.fxml", parent,
+        showInfoDialog("/fxml/dialogs/StatisticDialog.fxml", parent,
                 context.getResources().getString("st.dlg.statistic.title"));
     }
 

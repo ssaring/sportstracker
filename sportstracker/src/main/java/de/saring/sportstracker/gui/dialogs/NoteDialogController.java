@@ -68,7 +68,7 @@ public class NoteDialogController extends AbstractDialogController {
         final String dlgTitleKey = note.getText() == null ? "st.dlg.note.title.add" : "st.dlg.note.title";
         final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
-        showEditDialog("/fxml/NoteDialog.fxml", parent, dlgTitle);
+        showEditDialog("/fxml/dialogs/NoteDialog.fxml", parent, dlgTitle);
     }
 
     @Override

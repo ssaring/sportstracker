@@ -123,7 +123,7 @@ public class OverviewDialogController extends AbstractDialogController {
             dlgTitle += " " + context.getResources().getString("st.dlg.overview.title.filter");
         }
 
-        showInfoDialog("/fxml/OverviewDialog.fxml", parent, dlgTitle);
+        showInfoDialog("/fxml/dialogs/OverviewDialog.fxml", parent, dlgTitle);
     }
 
     @Override

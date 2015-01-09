@@ -76,7 +76,7 @@ public class WeightDialogController extends AbstractDialogController {
         final String dlgTitleKey = newWeight ? "st.dlg.weight.title.add" : "st.dlg.weight.title";
         final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
-        showEditDialog("/fxml/WeightDialog.fxml", parent, dlgTitle);
+        showEditDialog("/fxml/dialogs/WeightDialog.fxml", parent, dlgTitle);
     }
 
     @Override

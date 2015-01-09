@@ -37,7 +37,7 @@ public class AboutDialogController extends AbstractDialogController {
      * @param parent parent window of the dialog
      */
     public void show(final Window parent) {
-        showInfoDialog("/fxml/AboutDialog.fxml", parent, context.getResources().getString("st.dlg.about.title"));
+        showInfoDialog("/fxml/dialogs/AboutDialog.fxml", parent, context.getResources().getString("st.dlg.about.title"));
     }
 
     @Override

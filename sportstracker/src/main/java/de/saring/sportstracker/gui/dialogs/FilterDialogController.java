@@ -108,7 +108,7 @@ public class FilterDialogController extends AbstractDialogController {
         this.filterViewModel = new FilterViewModel(filter);
         this.selectedFilter = Optional.empty();
 
-        showEditDialog("/fxml/FilterDialog.fxml", parent, context.getResources().getString("st.dlg.filter.title"));
+        showEditDialog("/fxml/dialogs/FilterDialog.fxml", parent, context.getResources().getString("st.dlg.filter.title"));
     }
 
     /**

@@ -98,7 +98,7 @@ public class SportTypeDialogController extends AbstractDialogController {
                 "st.dlg.sporttype.title.add" : "st.dlg.sporttype.title";
         final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
-        showEditDialog("/fxml/SportTypeDialog.fxml", parent, dlgTitle);
+        showEditDialog("/fxml/dialogs/SportTypeDialog.fxml", parent, dlgTitle);
     }
 
     @Override

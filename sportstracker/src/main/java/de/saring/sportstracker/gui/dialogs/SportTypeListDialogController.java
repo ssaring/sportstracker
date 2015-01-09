@@ -65,7 +65,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
      * @param parent parent window of the dialog
      */
     public void show(final Window parent) {
-        showInfoDialog("/fxml/SportTypeListDialog.fxml", parent,
+        showInfoDialog("/fxml/dialogs/SportTypeListDialog.fxml", parent,
                 context.getResources().getString("st.dlg.sporttype_list.title"));
     }
 

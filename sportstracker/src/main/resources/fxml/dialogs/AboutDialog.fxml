@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="16.0" stylesheets="@SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogs.AboutDialogController">
+<VBox spacing="16.0" stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogs.AboutDialogController">
    <children>
       <HBox spacing="16.0">
          <children>
@@ -14,7 +14,7 @@
                <children>
                   <ImageView pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/st-logo-64.png" />
+                        <Image url="@../../icons/st-logo-64.png" />
                      </image>
                   </ImageView>
                </children>

@@ -90,7 +90,7 @@ public class StatisticResultDialogController extends AbstractDialogController {
     public void show(final Window parent, final StatisticCalculator statisticResult) {
         this.statisticResult = statisticResult;
 
-        showInfoDialog("/fxml/StatisticResultDialog.fxml", parent,
+        showInfoDialog("/fxml/dialogs/StatisticResultDialog.fxml", parent,
                 context.getResources().getString("st.dlg.statistic_results.title"));
     }
 

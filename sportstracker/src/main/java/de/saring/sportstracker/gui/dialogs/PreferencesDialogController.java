@@ -99,7 +99,7 @@ public class PreferencesDialogController extends AbstractDialogController {
     public void show(final Window parent) {
         this.preferencesViewModel = new PreferencesViewModel(document.getOptions());
 
-        showEditDialog("/fxml/PreferencesDialog.fxml", parent,
+        showEditDialog("/fxml/dialogs/PreferencesDialog.fxml", parent,
                 context.getResources().getString("st.dlg.options.title"));
     }
 

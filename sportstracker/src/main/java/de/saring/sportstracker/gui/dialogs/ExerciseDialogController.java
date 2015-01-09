@@ -187,7 +187,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         final String dlgTitleKey = newExercise ? "st.dlg.exercise.title.add" : "st.dlg.exercise.title";
         final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
-        showEditDialog("/fxml/ExerciseDialog.fxml", parent, dlgTitle);
+        showEditDialog("/fxml/dialogs/ExerciseDialog.fxml", parent, dlgTitle);
     }
 
     @Override

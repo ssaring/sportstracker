@@ -25,7 +25,8 @@ JavaFX Migration:
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties
   - EVContext refactoring:
     - showMessageDialog() must return null, use new showConfirmationDialog() for all confirmation dialogs
-- Move all dialog FXML files to directory 'dialogs' (as it is done for views)
+  - improve description text in About dialog
+- All dialogs are using fullscreen on opening for a very short time => a bug?
 - CSS stylesheets:
   - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
   - compile CSS classes to BSS files - does it improve performance?
