@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 
 import de.saring.sportstracker.gui.dialogs.ExerciseDialogController;
 import de.saring.util.Date310Utils;
+import de.saring.util.data.IdDateObject;
+import de.saring.util.data.IdDateObjectList;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -312,7 +314,34 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onDeleteEntry(ActionEvent event) {
-        // TODO
+        int[] selectedEntryIDs = null;
+        IdDateObjectList<? extends IdDateObject> entryList = null;
+
+        // get selected entry IDs and the type of their list
+        if (currentViewController.getSelectedExerciseCount() > 0) {
+            selectedEntryIDs = currentViewController.getSelectedExerciseIDs();
+            entryList = document.getExerciseList();
+        } else if (currentViewController.getSelectedNoteCount() > 0) {
+            selectedEntryIDs = currentViewController.getSelectedNoteIDs();
+            entryList = document.getNoteList();
+        } else if (currentViewController.getSelectedWeightCount() > 0) {
+            selectedEntryIDs = currentViewController.getSelectedWeightIDs();
+            entryList = document.getWeightList();
+        }
+
+        if (selectedEntryIDs != null && selectedEntryIDs.length > 0) {
+
+            // show confirmation dialog first
+            final Optional<ButtonType> result = context.showConfirmationDialog(context.getPrimaryStage(), //
+                    "st.view.confirm.delete.title", "st.view.confirm.delete.text");
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                // finally remove the entries
+                for (int id : selectedEntryIDs) {
+                    entryList.removeByID(id);
+                }
+            }
+        }
     }
 
     @Override
