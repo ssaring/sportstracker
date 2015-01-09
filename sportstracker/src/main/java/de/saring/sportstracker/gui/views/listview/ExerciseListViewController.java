@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
@@ -23,10 +26,8 @@ import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObject;
-import de.saring.util.data.Nameable;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
-import de.saring.util.gui.javafx.NameableCellFactory;
 
 /**
  * Controller class of the Exercise List View, which displays all the user exercises
@@ -43,9 +44,9 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     @FXML
     private TableColumn<Exercise, LocalDateTime> tcDate;
     @FXML
-    private TableColumn<Exercise, Nameable> tcSportType;
+    private TableColumn<Exercise, Object> tcSportType;
     @FXML
-    private TableColumn<Exercise, Nameable> tcSportSubtype;
+    private TableColumn<Exercise, Object> tcSportSubtype;
     @FXML
     private TableColumn<Exercise, Number> tcDuration;
     @FXML
@@ -61,7 +62,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     @FXML
     private TableColumn<Exercise, Number> tcEnergy;
     @FXML
-    private TableColumn<Exercise, Nameable> tcEquipment;
+    private TableColumn<Exercise, Object> tcEquipment;
     @FXML
     private TableColumn<Exercise, Object> tcComment;
 
@@ -128,8 +129,14 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
 
         // setup factories for providing cell values
         tcDate.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-        tcSportType.setCellValueFactory(new PropertyValueFactory<>("sportType"));
-        tcSportSubtype.setCellValueFactory(new PropertyValueFactory<>("sportSubType"));
+        tcSportType.setCellValueFactory(cellData -> {
+            final SportType sportType = cellData.getValue().getSportType();
+            return new SimpleObjectProperty<>(sportType == null ? null : sportType.getName());
+        });
+        tcSportSubtype.setCellValueFactory(cellData -> {
+            final SportSubType sportSubType = cellData.getValue().getSportSubType();
+            return new SimpleObjectProperty<>(sportSubType == null ? null : sportSubType.getName());
+        });
         tcDuration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         tcIntensity.setCellValueFactory(new PropertyValueFactory<>("intensity"));
         tcDistance.setCellValueFactory(new PropertyValueFactory<>("distance"));
@@ -137,19 +144,23 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         tcAvgHeartrate.setCellValueFactory(new PropertyValueFactory<>("avgHeartRate"));
         tcAscent.setCellValueFactory(new PropertyValueFactory<>("ascent"));
         tcEnergy.setCellValueFactory(new PropertyValueFactory<>("calories"));
-        tcEquipment.setCellValueFactory(new PropertyValueFactory<>("equipment"));
+        tcEquipment.setCellValueFactory(cellData -> {
+            final Equipment equipment = cellData.getValue().getEquipment();
+            return new SimpleObjectProperty<>(equipment == null ? null : equipment.getName());
+        });
+        tcEquipment.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
+                cellData.getValue().getEquipment() == null ? null : cellData.getValue().getEquipment().getName()));
         tcComment.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
                 StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 
-        // setup factories for displaying colored cell values in cells
-        final ColoredNameableCellFactory coloredNameableCellFactory = new ColoredNameableCellFactory();
-        final ColoredStringCellFactory coloredStringCellFactory = new ColoredStringCellFactory();
-
         // TODO selected cells / rows need to use white text color (see TaskListFX)
 
+        // setup factories for displaying colored cell values in cells
+        final ColoredStringCellFactory coloredStringCellFactory = new ColoredStringCellFactory();
+
         tcDate.setCellFactory(new ColoredLocalDateCellFactory());
-        tcSportType.setCellFactory(coloredNameableCellFactory);
-        tcSportSubtype.setCellFactory(coloredNameableCellFactory);
+        tcSportType.setCellFactory(coloredStringCellFactory);
+        tcSportSubtype.setCellFactory(coloredStringCellFactory);
         tcDuration.setCellFactory(new ColoredNumberCellFactory(value -> //
                 value == null ? null : getContext().getFormatUtils().seconds2TimeString(value.intValue())));
         tcIntensity.setCellFactory(coloredStringCellFactory);
@@ -163,7 +174,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
                 value == null ? null : getContext().getFormatUtils().heightToString(value.intValue())));
         tcEnergy.setCellFactory(new ColoredNumberCellFactory(value -> //
                 value == null ? null : getContext().getFormatUtils().caloriesToString(value.intValue())));
-        tcEquipment.setCellFactory(coloredNameableCellFactory);
+        tcEquipment.setCellFactory(coloredStringCellFactory);
         tcComment.setCellFactory(coloredStringCellFactory);
     }
 
@@ -190,26 +201,6 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         final Exercise exercise = tableRow == null ? null : tableRow.getItem();
         if (exercise != null) {
             tableCell.setTextFill(exercise.getSportType().getColor());
-        }
-    }
-
-    /**
-     * Extension of the NameableCellFactory, which creates table cells with the text color
-     * of the sport type displayed in the current table row.
-     */
-    private static class ColoredNameableCellFactory extends NameableCellFactory<Exercise> {
-
-        @Override
-        public TableCell<Exercise, Nameable> call(final TableColumn<Exercise, Nameable> column) {
-            return new TableCell<Exercise, Nameable>() {
-
-                @Override
-                protected void updateItem(final Nameable value, final boolean empty) {
-                    super.updateItem(value, empty);
-                    setText(getCellText(value, empty));
-                    setTableCellTextColorOfSportType(this);
-                }
-            };
         }
     }
 
@@ -275,7 +266,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
                 @Override
                 protected void updateItem(final Object value, final boolean empty) {
                     super.updateItem(value, empty);
-                    setText(empty || value == null ? null : value.toString());
+                    setText(empty || value == null ? null : String.valueOf(value));
                     setTableCellTextColorOfSportType(this);
                 }
             };

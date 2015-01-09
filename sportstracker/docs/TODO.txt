@@ -16,9 +16,9 @@ JavaFX Migration:
   - Exercise List View:
     - FXML: Done
     - Controller: see TODO
-      - sorting by column "Sport Type" takes very long, other columns are OK
   - Note and Weight List View: Done
   - All Views:
+   - bug: prevent action 'Edit entry' when double clicking in table header or empty table space
    - add context menus
    - add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
