@@ -11,13 +11,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.saring.sportstracker.data.Note;
-import de.saring.sportstracker.gui.dialogs.ExerciseDialogController;
-import de.saring.sportstracker.gui.dialogs.NoteDialogController;
-import de.saring.sportstracker.gui.views.listview.NoteListViewController;
-import de.saring.util.Date310Utils;
-import de.saring.util.data.IdDateObject;
-import de.saring.util.data.IdDateObjectList;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -41,10 +34,13 @@ import javax.inject.Singleton;
 import de.saring.exerciseviewer.gui.EVMain;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.gui.dialogs.AboutDialogController;
+import de.saring.sportstracker.gui.dialogs.ExerciseDialogController;
 import de.saring.sportstracker.gui.dialogs.FilterDialogController;
 import de.saring.sportstracker.gui.dialogs.HRMFileOpenDialog;
+import de.saring.sportstracker.gui.dialogs.NoteDialogController;
 import de.saring.sportstracker.gui.dialogs.OverviewDialogController;
 import de.saring.sportstracker.gui.dialogs.PreferencesDialogController;
 import de.saring.sportstracker.gui.dialogs.SportTypeListDialogController;
@@ -52,7 +48,12 @@ import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
 import de.saring.sportstracker.gui.statusbar.StatusBarController;
 import de.saring.sportstracker.gui.views.EntryViewController;
 import de.saring.sportstracker.gui.views.listview.ExerciseListViewController;
+import de.saring.sportstracker.gui.views.listview.NoteListViewController;
+import de.saring.sportstracker.gui.views.listview.WeightListViewController;
+import de.saring.util.Date310Utils;
 import de.saring.util.StringUtils;
+import de.saring.util.data.IdDateObject;
+import de.saring.util.data.IdDateObjectList;
 import de.saring.util.gui.javafx.FxmlLoader;
 import de.saring.util.unitcalc.FormatUtils;
 
@@ -75,8 +76,8 @@ public class STControllerImpl implements STController {
     private ExerciseListViewController exerciseListViewController;
     @Inject
     private NoteListViewController noteListViewController;
-    // @Inject
-    // TODO private WeightListViewController weightListViewController;
+    @Inject
+    private WeightListViewController weightListViewController;
 
     /** The controller of the currently displayed view. */
     private EntryViewController currentViewController;
@@ -227,6 +228,7 @@ public class STControllerImpl implements STController {
         // setup all views
         exerciseListViewController.loadAndSetupViewContent();
         noteListViewController.loadAndSetupViewContent();
+        weightListViewController.loadAndSetupViewContent();
 
         statusBarController.setStatusBar(laStatusBar);
 
@@ -637,8 +639,7 @@ public class STControllerImpl implements STController {
                 currentViewController = noteListViewController;
                 break;
             case WEIGHT_LIST:
-                // TODO currentViewController = weightListViewController;
-                currentViewController = exerciseListViewController;
+                currentViewController = weightListViewController;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid ViewType " + viewType + "!");

@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.views.listview;
 
 import java.util.List;
 
+import de.saring.sportstracker.core.STException;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
@@ -42,6 +43,12 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
     @Override
     public void removeSelection() {
         getTableView().getSelectionModel().clearSelection();
+    }
+
+    @Override
+    public void print() throws STException {
+        // TODO
+        throw new UnsupportedOperationException();
     }
 
     /**

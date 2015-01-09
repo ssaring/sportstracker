@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.saring.util.data.IdObject;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
@@ -17,13 +16,13 @@ import javafx.util.Callback;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
+import de.saring.util.data.IdObject;
 import de.saring.util.data.Nameable;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
@@ -112,12 +111,6 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         if (entry != null && entry instanceof Exercise) {
             selectAndScrollToEntry((Exercise) entry);
         }
-    }
-
-    @Override
-    public void print() throws STException {
-        // TODO
-        throw new UnsupportedOperationException();
     }
 
     @Override

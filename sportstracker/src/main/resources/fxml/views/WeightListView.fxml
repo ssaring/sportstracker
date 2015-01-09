@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.views.listview.WeightListViewController">
+    <children>
+        <TableView fx:id="tvWeights" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="tcDate" prefWidth="90.0" text="%st.weightlistview.date" />
+                <TableColumn fx:id="tcWeight" prefWidth="90.0" text="%st.weightlistview.weight" />
+                <TableColumn fx:id="tcComment" prefWidth="510.0" text="%st.weightlistview.comment" />
+            </columns>
+            <placeholder>
+                <Label text="%st.weightlistview.empty" />
+            </placeholder>
+        </TableView>
+    </children>
+</VBox>
