@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -19,9 +17,7 @@ import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.sportstracker.gui.views.AbstractEntryViewController;
 import de.saring.util.StringUtils;
-import de.saring.util.data.IdObject;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 
 /**
@@ -30,7 +26,7 @@ import de.saring.util.gui.javafx.LocalDateCellFactory;
  * @author Stefan Saring
  */
 @Singleton
-public class NoteListViewController extends AbstractEntryViewController {
+public class NoteListViewController extends AbstractListViewController<Note> {
 
     @FXML
     private TableView<Note> tvNotes;
@@ -58,50 +54,11 @@ public class NoteListViewController extends AbstractEntryViewController {
     }
 
     @Override
-    public void updateView() {
-
-        final List<Note> noteList = getDocument().getNoteList().stream().collect(Collectors.toList());
-        tvNotes.getItems().setAll(noteList);
-
-        // re-sorting must be forced after updating table content
-        tvNotes.sort();
-    }
-
-    @Override
-    public int getSelectedNoteCount() {
-        return tvNotes.getSelectionModel().getSelectedItems().size();
-    }
-
-    @Override
     public int[] getSelectedNoteIDs() {
-        // TODO move to base class?
-        final List<Note> selectedNotes = tvNotes.getSelectionModel().getSelectedItems();
-        final int[] selectedNoteIds = new int[selectedNotes.size()];
-
-        for (int i = 0; i < selectedNoteIds.length; i++) {
-            selectedNoteIds[i] = selectedNotes.get(i).getId();
-        }
-        return selectedNoteIds;
+        return getSelectedEntryIDs();
     }
 
     @Override
-    public void selectEntry(final IdObject entry) {
-        // TODO move to base class?
-        if (entry instanceof Note) {
-            final Note note = (Note) entry;
-            tvNotes.getSelectionModel().select(note);
-            tvNotes.scrollTo(note);
-        }
-    }
-
-    @Override
-    // TODO move to base class?
-    public void removeSelection() {
-        tvNotes.getSelectionModel().clearSelection();
-    }
-
-    @Override
-    // TODO move to base class?
     public void print() throws STException {
         // TODO
         throw new UnsupportedOperationException();
@@ -113,23 +70,12 @@ public class NoteListViewController extends AbstractEntryViewController {
     }
 
     @Override
-    protected void setupView() {
-        // TODO move to base class?
-        setupTableColumns();
-
-        // user can select multiple notes
-        tvNotes.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-        // update controller-actions and the status bar on selection changes
-        tvNotes.getSelectionModel().getSelectedIndices().addListener( //
-                (ListChangeListener<Integer>) change -> getController().updateActionsAndStatusBar());
-
-        // default sort order is by date descending
-        tcDate.setSortType(TableColumn.SortType.DESCENDING);
-        tvNotes.getSortOrder().addAll(tcDate);
+    protected TableView<Note> getTableView() {
+        return tvNotes;
     }
 
-    private void setupTableColumns() {
+    @Override
+    protected void setupTableColumns() {
 
         // setup factories for providing cell values
         tcDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
@@ -140,5 +86,17 @@ public class NoteListViewController extends AbstractEntryViewController {
         // setup factories for displaying cells
         tcDate.setCellFactory(new LocalDateCellFactory<>());
         // tcText uses the default factory
+    }
+
+    @Override
+    protected void setupDefaultSorting() {
+        // default sort order is by date descending
+        tcDate.setSortType(TableColumn.SortType.DESCENDING);
+        tvNotes.getSortOrder().addAll(tcDate);
+    }
+
+    @Override
+    protected List<Note> getTableEntries() {
+        return getDocument().getNoteList().stream().collect(Collectors.toList());
     }
 }
