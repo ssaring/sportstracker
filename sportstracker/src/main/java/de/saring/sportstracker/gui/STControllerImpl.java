@@ -326,12 +326,26 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onEditEntry(ActionEvent event) {
-        // TODO
+        // start edit action depending on entry type
+        if (currentViewController.getSelectedExerciseCount() == 1) {
+            editExercise(currentViewController.getSelectedExerciseIDs()[0]);
+        } else if (currentViewController.getSelectedNoteCount() == 1) {
+            editNote(currentViewController.getSelectedNoteIDs()[0]);
+        } else if (currentViewController.getSelectedWeightCount() == 1) {
+            editWeight(currentViewController.getSelectedWeightIDs()[0]);
+        }
     }
 
     @Override
     public void onCopyEntry(ActionEvent event) {
-        // TODO
+        // start copy action depending on entry type
+        if (currentViewController.getSelectedExerciseCount() == 1) {
+            copyExercise(currentViewController.getSelectedExerciseIDs()[0]);
+        } else if (currentViewController.getSelectedNoteCount() == 1) {
+            copyNote(currentViewController.getSelectedNoteIDs()[0]);
+        } else if (currentViewController.getSelectedWeightCount() == 1) {
+            copyWeight(currentViewController.getSelectedWeightIDs()[0]);
+        }
     }
 
     @Override
@@ -675,6 +689,82 @@ public class STControllerImpl implements STController {
         exercise.setDateTime(Date310Utils.getNoonDateTimeForDate(date));
         exercise.setIntensity(Exercise.IntensityType.NORMAL);
         return exercise;
+    }
+
+    /**
+     * Starts Edit dialog for the specified exercise ID.
+     *
+     * @param exerciseID ID of the exercise entry
+     */
+    private void editExercise(int exerciseID) {
+        final Exercise selExercise = document.getExerciseList().getByID(exerciseID);
+        prExerciseDialogController.get().show(context.getPrimaryStage(), selExercise, false);
+    }
+
+    /**
+     * Starts Edit dialog for the specified note ID.
+     *
+     * @param noteID ID of the note entry
+     */
+    private void editNote(int noteID) {
+        final Note selectedNote = document.getNoteList().getByID(noteID);
+        prNoteDialogController.get().show(context.getPrimaryStage(), selectedNote);
+    }
+
+    /**
+     * Starts Edit dialog for the specified weight ID.
+     *
+     * @param weightID ID of the weight entry
+     */
+    private void editWeight(int weightID) {
+        final Weight selectedWeight = document.getWeightList().getByID(weightID);
+        prWeightDialogController.get().show(context.getPrimaryStage(), selectedWeight);
+    }
+
+    /**
+     * Creates a copy of the specified Exercise and displays it in the Exercise dialog.
+     *
+     * @param exerciseID ID of the exercise entry to copy
+     */
+    private void copyExercise(final int exerciseID) {
+        final Exercise selectedExercise = document.getExerciseList().getByID(exerciseID);
+
+        final Exercise copiedExercise = selectedExercise.clone(document.getExerciseList().getNewID());
+        copiedExercise.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
+        copiedExercise.setHrmFile(null);
+
+        // start exercise dialog for the copied exercise
+        prExerciseDialogController.get().show(context.getPrimaryStage(), copiedExercise, false);
+    }
+
+    /**
+     * Creates a copy of the specified Note and displays it in the Note dialog.
+     *
+     * @param noteID ID of the note entry to copy
+     */
+    private void copyNote(final int noteID) {
+        final Note selectedNote = document.getNoteList().getByID(noteID);
+
+        final Note copiedNote = selectedNote.clone(document.getNoteList().getNewID());
+        copiedNote.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
+
+        // start note dialog for the copied note
+        prNoteDialogController.get().show(context.getPrimaryStage(), copiedNote);
+    }
+
+    /**
+     * Creates a copy of the specified Weight and displays it in the Weight dialog.
+     *
+     * @param weightID ID of the weight entry to copy
+     */
+    private void copyWeight(final int weightID) {
+        final Weight selectedWeight = document.getWeightList().getByID(weightID);
+
+        final Weight copiedWeight = selectedWeight.clone(document.getWeightList().getNewID());
+        copiedWeight.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
+
+        // start weight dialog for the copied weight
+        prWeightDialogController.get().show(context.getPrimaryStage(), copiedWeight);
     }
 
     /**
