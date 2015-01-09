@@ -63,7 +63,7 @@ public class OptionalPanelController extends AbstractPanelController {
 
     @Override
     protected String getFxmlFilename() {
-        return "/fxml/OptionalPanel.fxml";
+        return "/fxml/panels/OptionalPanel.fxml";
     }
 
     @Override

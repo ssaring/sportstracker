@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.StackPane?>
-<StackPane fx:id="spTrack" minHeight="100.0" minWidth="150.0" stylesheets="@ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.TrackPanelController">
+<StackPane fx:id="spTrack" minHeight="100.0" minWidth="150.0" stylesheets="@../ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.TrackPanelController">
     <children>
         <Label text="%pv.track.no_track_data.text">
             <padding>

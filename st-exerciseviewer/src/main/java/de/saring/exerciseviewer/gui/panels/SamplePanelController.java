@@ -55,7 +55,7 @@ public class SamplePanelController extends AbstractPanelController {
 
     @Override
     protected String getFxmlFilename() {
-        return "/fxml/SamplePanel.fxml";
+        return "/fxml/panels/SamplePanel.fxml";
     }
 
     @Override

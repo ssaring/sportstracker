@@ -85,7 +85,7 @@ public class MainPanelController extends AbstractPanelController {
 
     @Override
     protected String getFxmlFilename() {
-        return "/fxml/MainPanel.fxml";
+        return "/fxml/panels/MainPanel.fxml";
     }
 
     @Override

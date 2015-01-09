@@ -68,7 +68,7 @@ public class LapPanelController extends AbstractPanelController {
 
     @Override
     protected String getFxmlFilename() {
-        return "/fxml/LapPanel.fxml";
+        return "/fxml/panels/LapPanel.fxml";
     }
 
     @Override

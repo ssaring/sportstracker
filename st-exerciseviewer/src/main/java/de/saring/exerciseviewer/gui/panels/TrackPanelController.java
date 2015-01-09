@@ -78,7 +78,7 @@ public class TrackPanelController extends AbstractPanelController {
 
     @Override
     protected String getFxmlFilename() {
-        return "/fxml/TrackPanel.fxml";
+        return "/fxml/panels/TrackPanel.fxml";
     }
 
     @Override

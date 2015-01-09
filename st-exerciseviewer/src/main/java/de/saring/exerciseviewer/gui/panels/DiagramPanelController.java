@@ -97,7 +97,7 @@ public class DiagramPanelController extends AbstractPanelController {
 
     @Override
     protected String getFxmlFilename() {
-        return "/fxml/DiagramPanel.fxml";
+        return "/fxml/panels/DiagramPanel.fxml";
     }
 
     /**

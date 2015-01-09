@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="16.0" stylesheets="@ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.DiagramPanelController">
+<VBox spacing="16.0" stylesheets="@../ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.DiagramPanelController">
     <children>
         <StackPane fx:id="spDiagram" prefHeight="320.0" prefWidth="700.0" VBox.vgrow="ALWAYS" />
         <VBox spacing="12.0">
