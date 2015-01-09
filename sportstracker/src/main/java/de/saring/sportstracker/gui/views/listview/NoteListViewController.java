@@ -1,14 +1,14 @@
 package de.saring.sportstracker.gui.views.listview;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -33,7 +33,7 @@ public class NoteListViewController extends AbstractListViewController<Note> {
     private TableView<Note> tvNotes;
 
     @FXML
-    private TableColumn<Note, LocalDate> tcDate;
+    private TableColumn<Note, LocalDateTime> tcDate;
     @FXML
     private TableColumn<Note, String> tcText;
 
@@ -85,8 +85,7 @@ public class NoteListViewController extends AbstractListViewController<Note> {
     protected void setupTableColumns() {
 
         // setup factories for providing cell values
-        tcDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
-                cellData.getValue().getDateTime().toLocalDate()));
+        tcDate.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         tcText.setCellValueFactory(cellData -> new SimpleStringProperty( //
                 StringUtils.getFirstLineOfText(cellData.getValue().getText())));
 

@@ -19,8 +19,7 @@ JavaFX Migration:
       - sorting by column "Sport Type" takes very long, other columns are OK
   - Note and Weight List View: Done
   - All Views:
-   - add edit action on double clicks
-   - type of date TableColumns must be LocalDateTime, otherwise the sorting does work by date only
+   - add context menus
    - add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties

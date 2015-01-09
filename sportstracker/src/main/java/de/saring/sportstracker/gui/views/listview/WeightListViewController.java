@@ -1,10 +1,9 @@
 package de.saring.sportstracker.gui.views.listview;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -36,7 +35,7 @@ public class WeightListViewController extends AbstractListViewController<Weight>
     private TableView<Weight> tvWeights;
 
     @FXML
-    private TableColumn<Weight, LocalDate> tcDate;
+    private TableColumn<Weight, LocalDateTime> tcDate;
     @FXML
     private TableColumn<Weight, Number> tcWeight;
     @FXML
@@ -90,8 +89,7 @@ public class WeightListViewController extends AbstractListViewController<Weight>
     protected void setupTableColumns() {
 
         // setup factories for providing cell values
-        tcDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
-                cellData.getValue().getDateTime().toLocalDate()));
+        tcDate.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         tcWeight.setCellValueFactory(new PropertyValueFactory<>("value"));
         tcComment.setCellValueFactory(cellData -> new SimpleStringProperty( //
                 StringUtils.getFirstLineOfText(cellData.getValue().getComment())));

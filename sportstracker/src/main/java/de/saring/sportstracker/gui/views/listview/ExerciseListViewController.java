@@ -1,6 +1,6 @@
 package de.saring.sportstracker.gui.views.listview;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +41,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     private TableView<Exercise> tvExercises;
 
     @FXML
-    private TableColumn<Exercise, LocalDate> tcDate;
+    private TableColumn<Exercise, LocalDateTime> tcDate;
     @FXML
     private TableColumn<Exercise, Nameable> tcSportType;
     @FXML
@@ -127,8 +127,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     protected void setupTableColumns() {
 
         // setup factories for providing cell values
-        tcDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
-                cellData.getValue().getDateTime().toLocalDate()));
+        tcDate.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         tcSportType.setCellValueFactory(new PropertyValueFactory<>("sportType"));
         tcSportSubtype.setCellValueFactory(new PropertyValueFactory<>("sportSubType"));
         tcDuration.setCellValueFactory(new PropertyValueFactory<>("duration"));
@@ -215,17 +214,17 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     }
 
     /**
-     * Extension of the NameableCellFactory, which creates table cells with the text color
+     * Extension of the LocalDateCellFactory, which creates table cells with the text color
      * of the sport type displayed in the current table row.
      */
     private static class ColoredLocalDateCellFactory extends LocalDateCellFactory<Exercise> {
 
         @Override
-        public TableCell<Exercise, LocalDate> call(final TableColumn<Exercise, LocalDate> column) {
-            return new TableCell<Exercise, LocalDate>() {
+        public TableCell<Exercise, LocalDateTime> call(final TableColumn<Exercise, LocalDateTime> column) {
+            return new TableCell<Exercise, LocalDateTime>() {
 
                 @Override
-                protected void updateItem(final LocalDate value, final boolean empty) {
+                protected void updateItem(final LocalDateTime value, final boolean empty) {
                     super.updateItem(value, empty);
                     setText(getCellText(value, empty));
                     setTableCellTextColorOfSportType(this);
