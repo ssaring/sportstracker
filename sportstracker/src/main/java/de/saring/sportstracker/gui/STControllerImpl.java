@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.saring.sportstracker.gui.dialogs.ExerciseDialogController;
+import de.saring.sportstracker.gui.views.listview.NoteListViewController;
 import de.saring.util.Date310Utils;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
@@ -70,8 +71,8 @@ public class STControllerImpl implements STController {
     // TODO private CalendarViewController calendarViewController;
     @Inject
     private ExerciseListViewController exerciseListViewController;
-    // @Inject
-    // TODO private NoteListViewController noteListViewController;
+    @Inject
+    private NoteListViewController noteListViewController;
     // @Inject
     // TODO private WeightListViewController weightListViewController;
 
@@ -223,6 +224,7 @@ public class STControllerImpl implements STController {
 
         // setup all views
         exerciseListViewController.loadAndSetupViewContent();
+        noteListViewController.loadAndSetupViewContent();
 
         statusBarController.setStatusBar(laStatusBar);
 
@@ -626,8 +628,7 @@ public class STControllerImpl implements STController {
                 currentViewController = exerciseListViewController;
                 break;
             case NOTE_LIST:
-                // TODO currentViewController = noteListViewController;
-                currentViewController = exerciseListViewController;
+                currentViewController = noteListViewController;
                 break;
             case WEIGHT_LIST:
                 // TODO currentViewController = weightListViewController;

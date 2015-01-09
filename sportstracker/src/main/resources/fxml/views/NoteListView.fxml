@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.views.listview.NoteListViewController">
+    <children>
+        <TableView fx:id="tvNotes" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="tcDate" prefWidth="90.0" text="%st.notelistview.date" />
+                <TableColumn fx:id="tcText" prefWidth="600.0" text="%st.notelistview.text" />
+            </columns>
+            <placeholder>
+                <Label text="%st.notelistview.empty" />
+            </placeholder>
+        </TableView>
+    </children>
+</VBox>
