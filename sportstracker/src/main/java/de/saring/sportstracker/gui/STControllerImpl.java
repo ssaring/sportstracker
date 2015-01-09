@@ -36,6 +36,7 @@ import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.SportTypeList;
+import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.dialogs.AboutDialogController;
 import de.saring.sportstracker.gui.dialogs.ExerciseDialogController;
 import de.saring.sportstracker.gui.dialogs.FilterDialogController;
@@ -45,6 +46,7 @@ import de.saring.sportstracker.gui.dialogs.OverviewDialogController;
 import de.saring.sportstracker.gui.dialogs.PreferencesDialogController;
 import de.saring.sportstracker.gui.dialogs.SportTypeListDialogController;
 import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
+import de.saring.sportstracker.gui.dialogs.WeightDialogController;
 import de.saring.sportstracker.gui.statusbar.StatusBarController;
 import de.saring.sportstracker.gui.views.EntryViewController;
 import de.saring.sportstracker.gui.views.listview.ExerciseListViewController;
@@ -94,6 +96,8 @@ public class STControllerImpl implements STController {
     @Inject
     private Provider<NoteDialogController> prNoteDialogController;
     @Inject
+    private Provider<WeightDialogController> prWeightDialogController;
+    @Inject
     private Provider<SportTypeListDialogController> prSportTypeListDialogController;
     @Inject
     private Provider<StatisticDialogController> prStatisticDialogController;
@@ -105,9 +109,6 @@ public class STControllerImpl implements STController {
     private Provider<FilterDialogController> prFilterDialogController;
     @Inject
     private Provider<AboutDialogController> prAboutDialogController;
-
-    // @Inject
-    // private Provider<WeightDialogController> prWeightDialogController;
 
     // list of all menu items
     @FXML
@@ -304,7 +305,18 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onAddWeight(ActionEvent event) {
-        // TODO
+        // start Weight dialog for a new created Weight
+        final Weight newWeight = new Weight(document.getWeightList().getNewID());
+        newWeight.setDateTime(Date310Utils.getNoonDateTimeForDate(dateForNewEntries));
+
+        // initialize with the weight value of previous entry (if there is some)
+        int weightCount = document.getWeightList().size();
+        if (weightCount > 0) {
+            Weight lastWeight = document.getWeightList().getAt(weightCount - 1);
+            newWeight.setValue(lastWeight.getValue());
+        }
+
+        prWeightDialogController.get().show(context.getPrimaryStage(), newWeight);
     }
 
     @Override
