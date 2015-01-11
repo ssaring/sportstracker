@@ -19,6 +19,7 @@ JavaFX Migration:
   - Note and Weight List View: Done
   - All Views:
    - bug: prevent action 'Edit entry' when double clicking in table header or empty table space
+     -> set mouse listener on table cells (also needed for context menus), not on table view
    - add context menus
    - add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
