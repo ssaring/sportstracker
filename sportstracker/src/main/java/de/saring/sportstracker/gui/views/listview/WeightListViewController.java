@@ -94,11 +94,10 @@ public class WeightListViewController extends AbstractListViewController<Weight>
         tcComment.setCellValueFactory(cellData -> new SimpleStringProperty( //
                 StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 
-        // setup factories for displaying cells
+        // setup custom factories for displaying cells
         tcDate.setCellFactory(new LocalDateCellFactory<>());
         tcWeight.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().weightToString(value.floatValue(), 2)));
-        // tcComment uses the default factory
     }
 
     @Override

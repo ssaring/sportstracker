@@ -2,6 +2,7 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- ColorConverter: add unit tests for toRgbCode(), rename class?
 - SportsTracker main window:
   - FXML:
     - menu + toolbar: completed (tested on Windows and Mac)

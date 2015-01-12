@@ -89,9 +89,8 @@ public class NoteListViewController extends AbstractListViewController<Note> {
         tcText.setCellValueFactory(cellData -> new SimpleStringProperty( //
                 StringUtils.getFirstLineOfText(cellData.getValue().getText())));
 
-        // setup factories for displaying cells
+        // setup custom factories for displaying cells
         tcDate.setCellFactory(new LocalDateCellFactory<>());
-        // tcText uses the default factory
     }
 
     @Override

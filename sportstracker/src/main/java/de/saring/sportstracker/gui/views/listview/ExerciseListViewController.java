@@ -6,12 +6,10 @@ import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -26,6 +24,7 @@ import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObject;
+import de.saring.util.gui.javafx.ColorConverter;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 
@@ -139,29 +138,20 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         tcComment.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
                 StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 
-        // TODO selected cells / rows need to use white text color (see TaskListFX)
-
-        // setup factories for displaying colored cell values in cells
-        final ColoredStringCellFactory coloredStringCellFactory = new ColoredStringCellFactory();
-
-        tcDate.setCellFactory(new ColoredLocalDateCellFactory());
-        tcSportType.setCellFactory(coloredStringCellFactory);
-        tcSportSubtype.setCellFactory(coloredStringCellFactory);
-        tcDuration.setCellFactory(new ColoredNumberCellFactory(value -> //
+        // setup custom factories for displaying cells
+        tcDate.setCellFactory(new LocalDateCellFactory());
+        tcDuration.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().seconds2TimeString(value.intValue())));
-        tcIntensity.setCellFactory(coloredStringCellFactory);
-        tcDistance.setCellFactory(new ColoredNumberCellFactory(value -> //
+        tcDistance.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().distanceToString(value.doubleValue(), 3)));
-        tcAvgSpeed.setCellFactory(new ColoredNumberCellFactory(value -> //
+        tcAvgSpeed.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().speedToString(value.floatValue(), 2)));
-        tcAvgHeartrate.setCellFactory(new ColoredNumberCellFactory(value -> //
+        tcAvgHeartrate.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().heartRateToString(value.intValue())));
-        tcAscent.setCellFactory(new ColoredNumberCellFactory(value -> //
+        tcAscent.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().heightToString(value.intValue())));
-        tcEnergy.setCellFactory(new ColoredNumberCellFactory(value -> //
+        tcEnergy.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().caloriesToString(value.intValue())));
-        tcEquipment.setCellFactory(coloredStringCellFactory);
-        tcComment.setCellFactory(coloredStringCellFactory);
 
         // set initial visibility of optional columns as configured in preferences
         final STOptions options = getDocument().getOptions();
@@ -184,86 +174,15 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         return getDocument().getFilterableExerciseList().stream().collect(Collectors.toList());
     }
 
-    /**
-     * Helper methods for setting the foreground text color of the specified table cell to the
-     * color of the exercise sport type of the appropriate table row
-     *
-     * @param tableCell the table cell
-     */
-    private static void setTableCellTextColorOfSportType(final TableCell<Exercise, ?> tableCell) {
-        final TableRow<Exercise> tableRow = tableCell.getTableRow();
-        final Exercise exercise = tableRow == null ? null : tableRow.getItem();
+    @Override
+    protected void tableRowSelectionUpdated(final TableRow<Exercise> tableRow, final boolean selected) {
+
+        // use text color of sport type for the table row (or white when the row is selected)
+        // => tableRow.setTextFill() does not work here, color must be set by a CSS style
+        final Exercise exercise = tableRow.getItem();
         if (exercise != null) {
-            tableCell.setTextFill(exercise.getSportType().getColor());
-        }
-    }
-
-    /**
-     * Extension of the LocalDateCellFactory, which creates table cells with the text color
-     * of the sport type displayed in the current table row.
-     */
-    private static class ColoredLocalDateCellFactory extends LocalDateCellFactory<Exercise> {
-
-        @Override
-        public TableCell<Exercise, LocalDateTime> call(final TableColumn<Exercise, LocalDateTime> column) {
-            return new TableCell<Exercise, LocalDateTime>() {
-
-                @Override
-                protected void updateItem(final LocalDateTime value, final boolean empty) {
-                    super.updateItem(value, empty);
-                    setText(getCellText(value, empty));
-                    setTableCellTextColorOfSportType(this);
-                }
-            };
-        }
-    }
-
-    /**
-     * Extension of the FormattedNumberCellFactory, which creates table cells with the text color
-     * of the sport type displayed in the current table row.
-     */
-    private static class ColoredNumberCellFactory extends FormattedNumberCellFactory<Exercise> {
-
-        /**
-         * @see de.saring.util.gui.javafx.FormattedNumberCellFactory#FormattedNumberCellFactory(javafx.util.Callback)
-         */
-        public ColoredNumberCellFactory(final Callback<Number, String> numberFormatter) {
-            super(numberFormatter);
-        }
-
-        @Override
-        public TableCell<Exercise, Number> call(final TableColumn<Exercise, Number> column) {
-            return new TableCell<Exercise, Number>() {
-
-                @Override
-                protected void updateItem(final Number value, final boolean empty) {
-                    super.updateItem(value, empty);
-                    setText(getCellText(value, empty));
-                    setTableCellTextColorOfSportType(this);
-                }
-            };
-        }
-    }
-
-    /**
-     * Custom factory for creating table cells with string values of any object. It uses {@link Object#toString()} for
-     * getting the string value of the object.
-     * The table cell uses the text color of the sport type displayed in the current table row.
-     */
-    private static class ColoredStringCellFactory implements //
-            Callback<TableColumn<Exercise, Object>, TableCell<Exercise, Object>> {
-
-        @Override
-        public TableCell<Exercise, Object> call(final TableColumn<Exercise, Object> column) {
-            return new TableCell<Exercise, Object>() {
-
-                @Override
-                protected void updateItem(final Object value, final boolean empty) {
-                    super.updateItem(value, empty);
-                    setText(empty || value == null ? null : String.valueOf(value));
-                    setTableCellTextColorOfSportType(this);
-                }
-            };
+            final String color = selected ? "white" : ColorConverter.toRGBCode(exercise.getSportType().getColor());
+            tableRow.setStyle("-fx-text-background-color: " + color + ";");
         }
     }
 }
