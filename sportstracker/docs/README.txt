@@ -1,7 +1,7 @@
 About SportsTracker
 -------------------
 
-SportsTracker is an application for people who want to record their
+SportsTracker is an application for people who want to track their
 sporting activities. It is not bound to a specific kind of sport, the user
 can create categories for all sport types such as cycling, running, 
 swimming or tennis.
