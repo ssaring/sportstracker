@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.saring.util.gui.javafx.ColorUtils;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -25,6 +24,7 @@ import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObject;
+import de.saring.util.gui.javafx.ColorUtils;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 
@@ -175,13 +175,14 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     }
 
     @Override
-    protected void tableRowSelectionUpdated(final TableRow<Exercise> tableRow, final boolean selected) {
+    protected void updateTableRowColor(final TableRow<Exercise> tableRow) {
 
-        // use text color of sport type for the table row (or white when the row is selected)
+        // use text color of sport type for the table row (or white when the row is selected and the table is focused)
         // => tableRow.setTextFill() does not work here, color must be set by a CSS style
         final Exercise exercise = tableRow.getItem();
         if (exercise != null) {
-            final String color = selected ? "white" : ColorUtils.toRGBCode(exercise.getSportType().getColor());
+            final boolean useDefaultColor = tableRow.isSelected() && tvExercises.isFocused();
+            final String color = useDefaultColor ? "white" : ColorUtils.toRGBCode(exercise.getSportType().getColor());
             tableRow.setStyle("-fx-text-background-color: " + color + ";");
         }
     }

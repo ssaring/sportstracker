@@ -137,27 +137,25 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
     }
 
     /**
-     * Called whenever the selection of a table row has been updated or when the value item of the
-     * row has been changed. This callback can be used to customize the appearance of the table row
-     * (e.g. colors). The default implementation does nothing.
+     * Called whenever the selection or the item value of a TableRow or when the focus of the
+     * TableView has been changed. This callback can be used to set custom table row colors.
+     * The default implementation does nothing.
      *
      * @param tableRow table row
-     * @param selected selection status
      */
-    protected void tableRowSelectionUpdated(final TableRow<T> tableRow, final boolean selected) {
+    protected void updateTableRowColor(final TableRow<T> tableRow) {
     }
 
     private void setupTableRowFactory(final ContextMenu contextMenu) {
         getTableView().setRowFactory(tableView -> {
+            final TableRow<T> tableRow = new TableRow<>();
 
-            // use custom table row for adding special behavior for row selection updates
-            final TableRow<T> tableRow = new TableRow<T>() {
-                @Override
-                public void updateSelected(boolean selected) {
-                    super.updateSelected(selected);
-                    tableRowSelectionUpdated(this, selected);
-                }
-            };
+            // update table row color when the item value, the selection or the focus has been changed
+            tableRow.itemProperty().addListener((observable, oldValue, newValue) -> updateTableRowColor(tableRow));
+            tableRow.selectedProperty().addListener( //
+                    (observable, oldValue, newValue) -> updateTableRowColor(tableRow));
+            getTableView().focusedProperty().addListener( //
+                    (observable, oldValue, newValue) -> updateTableRowColor(tableRow));
 
             // bind context menu to row, but only when the row is not empty
             tableRow.contextMenuProperty().bind( //
