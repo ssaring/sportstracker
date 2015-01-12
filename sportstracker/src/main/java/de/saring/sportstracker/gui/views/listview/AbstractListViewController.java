@@ -2,8 +2,13 @@ package de.saring.sportstracker.gui.views.listview;
 
 import java.util.List;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
 import de.saring.sportstracker.core.STException;
@@ -63,19 +68,20 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
         setupTableColumns();
         setupDefaultSorting();
 
+        // The context menu is defined in FXML for the table view, but it needs to be shown for the
+        // table rows. Otherwise it's displayed for empty rows or the table header. It can't be defined
+        // for the table rows in FXML, so move it from the table view to the table rows here.
+        final ContextMenu contextMenu = getTableView().getContextMenu();
+        getTableView().setContextMenu(null);
+
+        setupTableRowFactory(contextMenu);
+
         // user can select multiple entries
         getTableView().getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         // update controller-actions and the status bar on selection changes
         getTableView().getSelectionModel().getSelectedIndices().addListener( //
                 (ListChangeListener<Integer>) change -> getController().updateActionsAndStatusBar());
-
-        // add listener for double clicks for editing the selected entry
-        getTableView().setOnMouseClicked(event -> {
-            if (event.getClickCount() > 1 && getSelectedEntryCount() == 1) {
-                getController().onEditEntry(null);
-            }
-        });
     }
 
     /**
@@ -128,5 +134,66 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
     protected void selectAndScrollToEntry(final T entry) {
         getTableView().getSelectionModel().select(entry);
         getTableView().scrollTo(entry);
+    }
+
+    private void setupTableRowFactory(final ContextMenu contextMenu) {
+        getTableView().setRowFactory(tableView -> {
+            final TableRow<T> tableRow = new TableRow<>();
+
+            // bind context menu to row, but only when the row is not empty
+                tableRow.contextMenuProperty().bind( //
+                        Bindings.when(tableRow.emptyProperty()) //
+                                .then((ContextMenu) null) //
+                                .otherwise(contextMenu));
+
+                // add listener for double clicks for editing the selected entry (ignore in empty rows)
+                tableRow.setOnMouseClicked(event -> {
+                    if (event.getClickCount() > 1 && getSelectedEntryCount() == 1 && !tableRow.isEmpty()) {
+                        getController().onEditEntry(null);
+                    }
+                });
+
+                return tableRow;
+            });
+    }
+
+    /**
+     * Event handler for the context menu item 'Add Exercise', it delegates the event to the STController.
+     *
+     * @param event ActionEvent
+     */
+    @FXML
+    private void onAddExercise(final ActionEvent event) {
+        getController().onAddExercise(event);
+    }
+
+    /**
+     * Event handler for the context menu item 'Edit Entry', it delegates the event to the STController.
+     *
+     * @param event ActionEvent
+     */
+    @FXML
+    private void onEditEntry(final ActionEvent event) {
+        getController().onEditEntry(event);
+    }
+
+    /**
+     * Event handler for the context menu item 'Copy Entry', it delegates the event to the STController.
+     *
+     * @param event ActionEvent
+     */
+    @FXML
+    private void onCopyEntry(final ActionEvent event) {
+        getController().onCopyEntry(event);
+    }
+
+    /**
+     * Event handler for the context menu item 'Delete Entry', it delegates the event to the STController.
+     *
+     * @param event ActionEvent
+     */
+    @FXML
+    private void onDeleteEntry(final ActionEvent event) {
+        getController().onDeleteEntry(event);
     }
 }

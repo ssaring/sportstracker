@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.saring.sportstracker.data.Equipment;
-import de.saring.sportstracker.data.SportSubType;
-import de.saring.sportstracker.data.SportType;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
@@ -20,7 +17,10 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import de.saring.sportstracker.core.STOptions;
+import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;

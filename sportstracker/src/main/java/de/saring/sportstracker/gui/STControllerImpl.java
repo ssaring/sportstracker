@@ -254,7 +254,7 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onOpenHrmFile(ActionEvent event) {
+    public void onOpenHrmFile(final ActionEvent event) {
         // show file open dialog for HRM file selection
         final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(context.getPrimaryStage(),
                 document.getOptions(), null);
@@ -268,23 +268,23 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onSave(ActionEvent event) {
+    public void onSave(final ActionEvent event) {
         context.blockMainWindow(true);
         new Thread(new SaveTask(false)).start();
     }
 
     @Override
-    public void onPrint(ActionEvent event) {
+    public void onPrint(final ActionEvent event) {
         // TODO
     }
 
     @Override
-    public void onQuit(ActionEvent event) {
+    public void onQuit(final ActionEvent event) {
         saveChangesAndExitApplication();
     }
 
     @Override
-    public void onAddExercise(ActionEvent event) {
+    public void onAddExercise(final ActionEvent event) {
         if (!checkForExistingSportTypes()) {
             return;
         }
@@ -295,7 +295,7 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onAddNote(ActionEvent event) {
+    public void onAddNote(final ActionEvent event) {
         // start Note dialog for a new created Note
         final Note newNote = new Note(document.getNoteList().getNewID());
         newNote.setDateTime(Date310Utils.getNoonDateTimeForDate(dateForNewEntries));
@@ -304,7 +304,7 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onAddWeight(ActionEvent event) {
+    public void onAddWeight(final ActionEvent event) {
         // start Weight dialog for a new created Weight
         final Weight newWeight = new Weight(document.getWeightList().getNewID());
         newWeight.setDateTime(Date310Utils.getNoonDateTimeForDate(dateForNewEntries));
@@ -325,7 +325,7 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onEditEntry(ActionEvent event) {
+    public void onEditEntry(final ActionEvent event) {
         // start edit action depending on entry type
         if (currentViewController.getSelectedExerciseCount() == 1) {
             editExercise(currentViewController.getSelectedExerciseIDs()[0]);
@@ -337,7 +337,7 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onCopyEntry(ActionEvent event) {
+    public void onCopyEntry(final ActionEvent event) {
         // start copy action depending on entry type
         if (currentViewController.getSelectedExerciseCount() == 1) {
             copyExercise(currentViewController.getSelectedExerciseIDs()[0]);
@@ -349,7 +349,7 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onDeleteEntry(ActionEvent event) {
+    public void onDeleteEntry(final ActionEvent event) {
         int[] selectedEntryIDs = null;
         IdDateObjectList<? extends IdDateObject> entryList = null;
 
@@ -381,7 +381,7 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onViewHrmFile(ActionEvent event) {
+    public void onViewHrmFile(final ActionEvent event) {
         // get selected exercise and start ExerciseViewer for it's HRM file
         // (special checks not needed here, done by action status property)
         final int exerciseID = currentViewController.getSelectedExerciseIDs()[0];
@@ -392,34 +392,34 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onPreferences(ActionEvent event) {
+    public void onPreferences(final ActionEvent event) {
         prPreferencesDialogController.get().show(context.getPrimaryStage());
         // update view after dialog was closed, preferences (e.g. unit system) might be changed
         updateView();
     }
 
     @Override
-    public void onCalendarView(ActionEvent event) {
+    public void onCalendarView(final ActionEvent event) {
         switchToView(EntryViewController.ViewType.CALENDAR);
     }
 
     @Override
-    public void onExerciseListView(ActionEvent event) {
+    public void onExerciseListView(final ActionEvent event) {
         switchToView(EntryViewController.ViewType.EXERCISE_LIST);
     }
 
     @Override
-    public void onNoteListView(ActionEvent event) {
+    public void onNoteListView(final ActionEvent event) {
         switchToView(EntryViewController.ViewType.NOTE_LIST);
     }
 
     @Override
-    public void onWeightListView(ActionEvent event) {
+    public void onWeightListView(final ActionEvent event) {
         switchToView(EntryViewController.ViewType.WEIGHT_LIST);
     }
 
     @Override
-    public void onFilterExercises(ActionEvent event) {
+    public void onFilterExercises(final ActionEvent event) {
         final FilterDialogController controller = prFilterDialogController.get();
         controller.show(context.getPrimaryStage(), document.getCurrentFilter());
 
@@ -432,13 +432,13 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onFilterDisable(ActionEvent event) {
+    public void onFilterDisable(final ActionEvent event) {
         document.setFilterEnabled(false);
         updateView();
     }
 
     @Override
-    public void onSportTypeEditor(ActionEvent event) {
+    public void onSportTypeEditor(final ActionEvent event) {
         prSportTypeListDialogController.get().show(context.getPrimaryStage());
 
         // sport type and subtype objects may have been changed => these will be new objects
@@ -451,7 +451,7 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onStatistics(ActionEvent event) {
+    public void onStatistics(final ActionEvent event) {
         if (!checkForExistingExercises()) {
             return;
         }
@@ -460,7 +460,7 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onOverviewDiagram(ActionEvent event) {
+    public void onOverviewDiagram(final ActionEvent event) {
         if (!checkForExistingExercises()) {
             return;
         }
@@ -469,7 +469,7 @@ public class STControllerImpl implements STController {
     }
 
     @Override
-    public void onAbout(ActionEvent event) {
+    public void onAbout(final ActionEvent event) {
         prAboutDialogController.get().show(context.getPrimaryStage());
     }
 
