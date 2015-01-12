@@ -19,6 +19,16 @@
             <placeholder>
                 <Label text="%st.weightlistview.empty" />
             </placeholder>
+            <contextMenu>
+                <ContextMenu>
+                    <items>
+                        <MenuItem  onAction="#onAddWeight" text="%st.view.weight_add.Action.text" />
+                        <MenuItem  onAction="#onEditEntry" text="%st.view.entry_edit.Action.text" />
+                        <MenuItem  onAction="#onCopyEntry" text="%st.view.entry_copy.Action.text" />
+                        <MenuItem  onAction="#onDeleteEntry" text="%st.view.entry_delete.Action.text" />
+                    </items>
+                </ContextMenu>
+            </contextMenu>
         </TableView>
     </children>
 </VBox>

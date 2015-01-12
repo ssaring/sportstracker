@@ -141,20 +141,20 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
             final TableRow<T> tableRow = new TableRow<>();
 
             // bind context menu to row, but only when the row is not empty
-                tableRow.contextMenuProperty().bind( //
-                        Bindings.when(tableRow.emptyProperty()) //
-                                .then((ContextMenu) null) //
-                                .otherwise(contextMenu));
+            tableRow.contextMenuProperty().bind( //
+                    Bindings.when(tableRow.emptyProperty()) //
+                            .then((ContextMenu) null) //
+                            .otherwise(contextMenu));
 
-                // add listener for double clicks for editing the selected entry (ignore in empty rows)
-                tableRow.setOnMouseClicked(event -> {
-                    if (event.getClickCount() > 1 && getSelectedEntryCount() == 1 && !tableRow.isEmpty()) {
-                        getController().onEditEntry(null);
-                    }
-                });
-
-                return tableRow;
+            // add listener for double clicks for editing the selected entry (ignore in empty rows)
+            tableRow.setOnMouseClicked(event -> {
+                if (event.getClickCount() > 1 && getSelectedEntryCount() == 1 && !tableRow.isEmpty()) {
+                    getController().onEditEntry(null);
+                }
             });
+
+            return tableRow;
+        });
     }
 
     /**
@@ -165,6 +165,26 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
     @FXML
     private void onAddExercise(final ActionEvent event) {
         getController().onAddExercise(event);
+    }
+
+    /**
+     * Event handler for the context menu item 'Add Note', it delegates the event to the STController.
+     *
+     * @param event ActionEvent
+     */
+    @FXML
+    private void onAddNote(final ActionEvent event) {
+        getController().onAddNote(event);
+    }
+
+    /**
+     * Event handler for the context menu item 'Add Weight', it delegates the event to the STController.
+     *
+     * @param event ActionEvent
+     */
+    @FXML
+    private void onAddWeight(final ActionEvent event) {
+        getController().onAddWeight(event);
     }
 
     /**
