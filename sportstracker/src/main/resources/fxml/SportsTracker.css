@@ -43,6 +43,8 @@
     -fx-background-color: transparent, rgba(0,0,0,.2), rgba(0,0,0,.2), transparent;
 }
 
+/* Definition of all toolbar button icons. */
+
 #btOpenHrmFile {
     -fx-graphic: url("../icons/24/gtk-open.png");
 }
@@ -117,4 +119,30 @@
 
 #btOverviewDiagram {
     -fx-graphic: url("../icons/24/st-diagram.png");
+}
+
+/* Definition of all (context) menu item icons. */
+
+#miAddExercise .label {
+    -fx-graphic: url("../icons/16/st-exercise-add.png");
+}
+
+#miAddNote .label {
+    -fx-graphic: url("../icons/16/st-note-add.png");
+}
+
+#miAddWeight .label {
+    -fx-graphic: url("../icons/16/st-weight-add.png");
+}
+
+#miEditEntry .label {
+    -fx-graphic: url("../icons/16/gtk-edit.png");
+}
+
+#miCopyEntry .label {
+    -fx-graphic: url("../icons/16/gtk-copy.png");
+}
+
+#miDeleteEntry .label {
+    -fx-graphic: url("../icons/16/gtk-remove.png");
 }

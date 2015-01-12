@@ -18,9 +18,7 @@ JavaFX Migration:
     - Controller: see TODO
     - use table Menu (+) for hidden columns?
   - Note and Weight List View: Done
-  - All Views:
-   - add icons in context menus
-   - add printing
+  - All Views: add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties
   - EVContext refactoring:
