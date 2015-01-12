@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.saring.util.gui.javafx.ColorUtils;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -24,7 +25,6 @@ import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObject;
-import de.saring.util.gui.javafx.ColorConverter;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 
@@ -181,7 +181,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         // => tableRow.setTextFill() does not work here, color must be set by a CSS style
         final Exercise exercise = tableRow.getItem();
         if (exercise != null) {
-            final String color = selected ? "white" : ColorConverter.toRGBCode(exercise.getSportType().getColor());
+            final String color = selected ? "white" : ColorUtils.toRGBCode(exercise.getSportType().getColor());
             tableRow.setStyle("-fx-text-background-color: " + color + ";");
         }
     }

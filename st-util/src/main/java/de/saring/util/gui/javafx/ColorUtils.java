@@ -3,13 +3,13 @@ package de.saring.util.gui.javafx;
 import javafx.scene.paint.Color;
 
 /**
- * This utility class contains methods for converting Color objects between JavaFX and Swing/AWT.
+ * This utility class contains conversion and helper methods for JavaFX Color objects.
  *
  * @author Stefan Saring
  */
-public final class ColorConverter {
+public final class ColorUtils {
 
-    private ColorConverter() {
+    private ColorUtils() {
     }
 
     /**
@@ -29,7 +29,7 @@ public final class ColorConverter {
      * @return the JavaFX Color object
      */
     public static Color toFxColor(final java.awt.Color awtColor) {
-        return Color.rgb(awtColor.getRed(), awtColor.getGreen(),awtColor.getBlue(), 1);
+        return Color.rgb(awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue(), 1);
     }
 
     /**
@@ -38,9 +38,9 @@ public final class ColorConverter {
      * @param color color
      * @return hexadecimal RGB notation
      */
-    public static String toRGBCode(final Color color ) {
-        return String.format( "#%02X%02X%02X", //
-                (int) (color.getRed()* 255), //
+    public static String toRGBCode(final Color color) {
+        return String.format("#%02X%02X%02X", //
+                (int) (color.getRed() * 255), //
                 (int) (color.getGreen() * 255), //
                 (int) (color.getBlue() * 255));
     }

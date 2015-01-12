@@ -6,7 +6,7 @@ import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.SportTypeList;
-import de.saring.util.gui.javafx.ColorConverter;
+import de.saring.util.gui.javafx.ColorUtils;
 import javafx.scene.paint.Color;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -160,7 +160,7 @@ public class XMLSportTypeList {
             XMLUtils.addElement(eSportType, "icon", sportType.getIcon());
 
             Element eColor = new Element("color");
-            java.awt.Color awtColor = ColorConverter.toAwtColor(sportType.getColor());
+            java.awt.Color awtColor = ColorUtils.toAwtColor(sportType.getColor());
             eColor.setAttribute("red", String.valueOf(awtColor.getRed()));
             eColor.setAttribute("green", String.valueOf(awtColor.getGreen()));
             eColor.setAttribute("blue", String.valueOf(awtColor.getBlue()));
