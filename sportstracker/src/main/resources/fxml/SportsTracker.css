@@ -24,14 +24,19 @@
 /*   Menu and ToolBar styles               */
 /*******************************************/
 
-/* MenuItems in the menu bar have a too small left padding => increase it (others are default from class menu-item) */
+/* Menu items in the menu bar: increase left padding (others are default from class menu-item) */
 .menuBarItem {
     -fx-padding: 0.333333em 0.41777em 0.333333em 1em;  /* 4 5 4 12 */
 }
 
+/* Context menu items: use bigger gap between graphic and text (default = 4) */
+.contextMenuItem > .label {
+    -fx-graphic-text-gap: 0.666667em;  /* 8 */
+}
+
 /* Toolbar button style: transparent borderless buttons with a small padding */
 .toolbarButton {
-    -fx-padding: 0.25em 0.333333em;  /* 4 5 */
+    -fx-padding: 0.25em 0.333333em;  /* 3 4 */
     -fx-background-color: transparent, transparent, transparent, transparent;
 }
 
@@ -123,26 +128,26 @@
 
 /* Definition of all (context) menu item icons. */
 
-#miAddExercise .label {
+#miCtxAddExercise > .label {
     -fx-graphic: url("../icons/16/st-exercise-add.png");
 }
 
-#miAddNote .label {
+#miCtxAddNote .label {
     -fx-graphic: url("../icons/16/st-note-add.png");
 }
 
-#miAddWeight .label {
+#miCtxAddWeight .label {
     -fx-graphic: url("../icons/16/st-weight-add.png");
 }
 
-#miEditEntry .label {
+#miCtxEditEntry .label {
     -fx-graphic: url("../icons/16/gtk-edit.png");
 }
 
-#miCopyEntry .label {
+#miCtxCopyEntry .label {
     -fx-graphic: url("../icons/16/gtk-copy.png");
 }
 
-#miDeleteEntry .label {
+#miCtxDeleteEntry .label {
     -fx-graphic: url("../icons/16/gtk-remove.png");
 }

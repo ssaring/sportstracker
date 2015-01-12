@@ -22,10 +22,10 @@
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem fx:id="miAddWeight" onAction="#onAddWeight" text="%st.view.weight_add.Action.text" />
-                        <MenuItem fx:id="miEditEntry" onAction="#onEditEntry" text="%st.view.entry_edit.Action.text" />
-                        <MenuItem fx:id="miCopyEntry" onAction="#onCopyEntry" text="%st.view.entry_copy.Action.text" />
-                        <MenuItem fx:id="miDeleteEntry" onAction="#onDeleteEntry" text="%st.view.entry_delete.Action.text" />
+                        <MenuItem fx:id="miCtxAddWeight" onAction="#onAddWeight" styleClass="contextMenuItem" text="%st.view.weight_add.Action.text" />
+                        <MenuItem fx:id="miCtxEditEntry" onAction="#onEditEntry" styleClass="contextMenuItem" text="%st.view.entry_edit.Action.text" />
+                        <MenuItem fx:id="miCtxCopyEntry" onAction="#onCopyEntry" styleClass="contextMenuItem" text="%st.view.entry_copy.Action.text" />
+                        <MenuItem fx:id="miCtxDeleteEntry" onAction="#onDeleteEntry" styleClass="contextMenuItem" text="%st.view.entry_delete.Action.text" />
                     </items>
                 </ContextMenu>
             </contextMenu>
