@@ -5,7 +5,7 @@ JavaFX Migration:
 - SportsTracker main window:
   - FXML:
     - menu + toolbar: completed (tested on Windows and Mac)
-      - TODO display icons in menu items (as in ST 6.0)?
+      - TODO display icons in menu items (as in ST 6.0, see icon usage in list context menus)?
     - status bar: completed
     - view area: missing
     - add special support for Mac menu items (Preferences, About, ...)
@@ -24,7 +24,7 @@ JavaFX Migration:
   - EVContext refactoring:
     - showMessageDialog() must return null, use new showConfirmationDialog() for all confirmation dialogs
   - improve description text in About dialog
-- All dialogs are using fullscreen on opening for a very short time => a bug?
+- All dialogs are using fullscreen on opening for a very short time (at least on Windows) => a bug?
 - CSS stylesheets:
   - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
   - compile CSS classes to BSS files - does it improve performance?
