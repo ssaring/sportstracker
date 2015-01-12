@@ -15,7 +15,6 @@ JavaFX Migration:
   - Exercise List View:
     - FXML: Done
     - Controller: see TODO
-    - use table Menu (+) for hidden columns?
   - Note and Weight List View: Done
   - All Views: add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)

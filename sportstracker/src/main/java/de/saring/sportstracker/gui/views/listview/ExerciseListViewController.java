@@ -84,20 +84,6 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     }
 
     @Override
-    public void updateView() {
-
-        // set visibility of optional columns as configured in preferences
-        final STOptions options = getDocument().getOptions();
-        tcAvgHeartrate.setVisible(options.isListViewShowAvgHeartrate());
-        tcAscent.setVisible(options.isListViewShowAscent());
-        tcEnergy.setVisible(options.isListViewShowEnergy());
-        tcEquipment.setVisible(options.isListViewShowEquipment());
-        tcComment.setVisible(options.isListViewShowComment());
-
-        super.updateView();
-    }
-
-    @Override
     public int getSelectedExerciseCount() {
         return getSelectedEntryCount();
     }
@@ -176,6 +162,14 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
                 value == null ? null : getContext().getFormatUtils().caloriesToString(value.intValue())));
         tcEquipment.setCellFactory(coloredStringCellFactory);
         tcComment.setCellFactory(coloredStringCellFactory);
+
+        // set initial visibility of optional columns as configured in preferences
+        final STOptions options = getDocument().getOptions();
+        tcAvgHeartrate.setVisible(options.isListViewShowAvgHeartrate());
+        tcAscent.setVisible(options.isListViewShowAscent());
+        tcEnergy.setVisible(options.isListViewShowEnergy());
+        tcEquipment.setVisible(options.isListViewShowEquipment());
+        tcComment.setVisible(options.isListViewShowComment());
     }
 
     @Override

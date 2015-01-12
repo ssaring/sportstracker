@@ -17,16 +17,15 @@ v7.0.0:
   - bugfix (reported by Doug Harple): adding an exercise via drag & drop of a
     HRM exercise file is now also possible when there are no exercises yet
     (a sport type must exist at least)
-  - update to JFreeChart 1.0.19 (and JCommon 1.0.23) which provides JavaFX support
+  - update to JFreeChart 1.0.19 (and JCommon 1.0.23) which provides JavaFX
+    support
   - full rewrite of the user interface by using JavaFX instead Swing
     (user interfaces are now declared in FXML using SceneBuilder)
-    - migrated UI components:
-      - About dialog
-      - Note dialog
-      - Weight dialog
-      - Exercise dialog
-      - HRM File Open dialog
-      - Overview dialog
+  - Exercise List View:
+    - new table menu in header (+) for simple enabling / disabling table
+      columns
+    - list of optional columns (as configured in Preferences) is now used at
+      application startup only (renamed to 'initial optional fields')
  Translations:
   - added korean translation provided by Tae Young Ko <oscetic@gmail.com>
 

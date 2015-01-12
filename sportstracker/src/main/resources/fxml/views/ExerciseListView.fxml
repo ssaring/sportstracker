@@ -10,7 +10,7 @@
 
 <VBox stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.views.listview.ExerciseListViewController">
     <children>
-        <TableView fx:id="tvExercises" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tvExercises" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="tcDate" prefWidth="90.0" text="%st.exerciselistview.date" />
                 <TableColumn fx:id="tcSportType" prefWidth="100.0" text="%st.exerciselistview.type" />

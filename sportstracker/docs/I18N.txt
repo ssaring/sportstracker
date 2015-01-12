@@ -100,6 +100,8 @@ SportsTracker 7.0.0:
 
 - st.dlg.statistic_results.close.Action.text (removed)
 
+- st.dlg.options.initial_optional_fields.text (new)
+- st.dlg.options.list_optional_fields.text (removed)
 - st.dlg.options.lookandfeel.text (removed)
 - st.dlg.options.ok.Action.text (removed)
 - st.dlg.options.cancel.Action.text (removed)
