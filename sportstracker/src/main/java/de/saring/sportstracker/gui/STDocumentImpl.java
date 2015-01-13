@@ -195,7 +195,7 @@ public class STDocumentImpl implements STDocument {
         final String optionsPath = dataDirectory + File.separator + FILENAME_OPTIONS;
         if (Files.exists(Paths.get(optionsPath))) {
 
-            LOGGER.log(Level.WARNING, "Loading application options...");
+            LOGGER.info("Loading application options...");
             try {
                 options = (STOptions) XmlBeanStorage.loadBean(optionsPath);
             } catch (Exception e) {
@@ -213,7 +213,7 @@ public class STDocumentImpl implements STDocument {
 
     @Override
     public void storeOptions() {
-        LOGGER.log(Level.WARNING, "Storing application options...");
+        LOGGER.info("Storing application options...");
         final String optionsPath = dataDirectory + File.separator + FILENAME_OPTIONS;
 
         try {
