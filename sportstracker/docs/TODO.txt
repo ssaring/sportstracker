@@ -2,9 +2,8 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- Test storing of application options on Mac OS X when using shortcut CMD + Q
 - SportsTracker main window:
-  - Test storing of application options on Mac OS X when using shortcut CMD + Q
-  - Add unit tests for XmlBeanStorage and STDocument options persistence?
   - FXML: Done (tested on Windows and Mac)
   - add special support for Mac menu items (Preferences, About, ...)
   - STApplication: Done
