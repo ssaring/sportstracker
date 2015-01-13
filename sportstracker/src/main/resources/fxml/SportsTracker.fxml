@@ -185,7 +185,7 @@
         </VBox>
     </top>
     <center>
-        <StackPane fx:id="spViews" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+        <StackPane fx:id="spViews" prefHeight="480.0" prefWidth="760.0" BorderPane.alignment="CENTER" />
     </center>
    <bottom>
       <Label fx:id="laStatusBar" text="Dummy message" BorderPane.alignment="CENTER_LEFT">
