@@ -55,8 +55,8 @@ public class STContextImpl implements STContext {
     }
 
     @Override
-    public Optional<ButtonType> showMessageDialog(final Window parent, final Alert.AlertType alertType,
-            final String titleKey, final String messageKey, final Object... arguments) {
+    public void showMessageDialog(final Window parent, final Alert.AlertType alertType, final String titleKey,
+            final String messageKey, final Object... arguments) {
 
         final String message = fxResources.getString(messageKey, arguments);
         final Alert alert = new Alert(alertType, message);
@@ -67,7 +67,7 @@ public class STContextImpl implements STContext {
         alert.setResizable(true);
         // workaround for disabling bigger font size of custom dialog content
         alert.getDialogPane().setStyle("-fx-font-size: 1em;");
-        return alert.showAndWait();
+        alert.showAndWait();
     }
 
     @Override

@@ -129,8 +129,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
     private void onDeleteSportType(final ActionEvent event) {
 
         // display confirmation dialog
-        final Optional<ButtonType> resultDeleteSportType = context.showMessageDialog(
-                getWindow(liSportTypes), Alert.AlertType.CONFIRMATION,
+        final Optional<ButtonType> resultDeleteSportType = context.showConfirmationDialog(getWindow(liSportTypes),
                 "st.dlg.sporttype_list.confirm.delete.title", "st.dlg.sporttype_list.confirm.delete.text");
         if (!resultDeleteSportType.isPresent() || resultDeleteSportType.get() != ButtonType.OK) {
             return;
@@ -146,8 +145,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
         if (!lRefExercises.isEmpty()) {
 
             // show confirmation dialog for deleting exercises
-            final Optional<ButtonType> resultDeleteExercises = context.showMessageDialog(
-                    getWindow(liSportTypes), Alert.AlertType.CONFIRMATION,
+            final Optional<ButtonType> resultDeleteExercises = context.showConfirmationDialog(getWindow(liSportTypes),
                     "st.dlg.sporttype_list.confirm.delete.title", "st.dlg.sporttype_list.confirm.delete_existing.text");
             if (!resultDeleteExercises.isPresent() || resultDeleteExercises.get() != ButtonType.OK) {
                 return;

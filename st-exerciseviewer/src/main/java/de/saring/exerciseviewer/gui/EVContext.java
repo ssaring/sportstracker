@@ -33,9 +33,8 @@ public interface EVContext {
      * @param titleKey the resource key for the dialog title text
      * @param messageKey the resource key for the message text
      * @param arguments list of objects which needs to be inserted in the message text (optional)
-     * @return an Optional that contains the result (selected button type) of the displayed dialog.
      */
-    Optional<ButtonType> showMessageDialog(Window parent, Alert.AlertType alertType, String titleKey,
+    void showMessageDialog(Window parent, Alert.AlertType alertType, String titleKey,
                                            String messageKey, Object... arguments);
 
     /**
