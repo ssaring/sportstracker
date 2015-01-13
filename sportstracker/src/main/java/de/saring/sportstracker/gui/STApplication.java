@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.util.gui.javafx.WindowBoundsPersistence;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -64,6 +65,7 @@ public class STApplication extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
+        WindowBoundsPersistence.addWindowBoundsPersistence(primaryStage, "SportsTracker");
 
         // initialize and start the main application window
         controller.initApplicationWindow();

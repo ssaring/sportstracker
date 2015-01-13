@@ -3,6 +3,7 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - Test storing of application options on Mac OS X when using shortcut CMD + Q
+- Test WindowBoundsPersistence on Mac OS X
 - SportsTracker main window:
   - FXML: Done (tested on Windows and Mac)
   - add special support for Mac menu items (Preferences, About, ...)
@@ -20,7 +21,6 @@ JavaFX Migration:
 - CSS stylesheets:
   - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
   - compile CSS classes to BSS files - does it improve performance?
-- SportsTracker and ExerciseViewer: store and restore window sizes, not for dialogs (positions too?)
 - JFreeChart usage (in Overview Dialog): migration completed and tested, except:
   - the JavaFX version of JFreeChart logs CSS warnings at initial chart display, but works properly
     (problem does not exist in ExerciseViewer)
@@ -32,6 +32,8 @@ JavaFX Migration:
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
 - ExerciseViewer: Done & tested
   - Bug: EV window is always placed in screen center, not placed at center of parent window
+  - window resizing is very slow
+    - when fixed: persist window bounds by using WindowBoundsPersistence, at least for the window size
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
