@@ -2,8 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- Test storing of application options on Mac OS X when using shortcut CMD + Q
-- Test WindowBoundsPersistence on Mac OS X
 - EV Bug: Sample and Lap Panels don't resize vertically when window size changes
 - SportsTracker main window:
   - FXML: Done (tested on Windows and Mac)
@@ -33,8 +31,10 @@ JavaFX Migration:
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
 - ExerciseViewer: Done & tested
   - Bug: EV window is always placed in screen center, not placed at center of parent window
-  - window resizing is very slow
-    - when fixed: persist window bounds by using WindowBoundsPersistence, at least for the window size
+  - When fixed: persist window bounds by using WindowBoundsPersistence, at least for the window size
+    -> change EVController behavior which sets the initial window size as minimum size,
+       otherwise it's not possible to reduce the window size on next display
+  - window resizing is very slow -> JFreeChart or Map Viewer problem?
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)

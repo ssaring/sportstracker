@@ -77,6 +77,7 @@ public class STApplication extends Application {
     @Override
     public void stop() throws Exception {
         document.storeOptions();
+        LOGGER.info("Exiting application...");
         super.stop();
     }
 

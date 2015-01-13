@@ -222,18 +222,5 @@ public class STOptions implements EVOptions, Serializable {
     public void setPreviousExerciseDirectory(String previousExerciseDirectory) {
         this.previousExerciseDirectory = previousExerciseDirectory;
     }
-
-    @Deprecated
-    public String getLookAndFeelClassName() {
-        // this dummy method was not deleted for compatibility reasons when loading options from file
-        return null;
-    }
-
-    @Deprecated
-    public void setLookAndFeelClassName(String lookAndFeelClassName) {
-        // this dummy method was not deleted for compatibility reasons when loading options from file
-    }
-
-
 }
 
