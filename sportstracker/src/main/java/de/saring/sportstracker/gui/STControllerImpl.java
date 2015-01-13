@@ -629,7 +629,6 @@ public class STControllerImpl implements STController {
      */
     private void exitApplication() {
         context.getPrimaryStage().close();
-        System.exit(0);
     }
 
     /**

@@ -72,6 +72,12 @@ public class STApplication extends Application {
         primaryStage.show();
     }
 
+    @Override
+    public void stop() throws Exception {
+        document.storeOptions();
+        super.stop();
+    }
+
     /**
      * Returns the primary Stage of the JavaFX application.
      *
