@@ -11,7 +11,7 @@
 <VBox spacing="12.0" stylesheets="@../ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.LapPanelController">
     <children>
       <Label styleClass="label-header" text="%pv.laps.recorded_laps.text" />
-        <TableView fx:id="tvLaps" prefWidth="400.0">
+        <TableView fx:id="tvLaps" prefWidth="400.0" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="tcLap" prefWidth="60.0" text="%pv.laps.lap" />
                 <TableColumn fx:id="tcLapTime" prefWidth="90.0" text="%pv.laps.lap_time" />

@@ -2,7 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- EV Bug: Sample and Lap Panels don't resize vertically when window size changes
 - SportsTracker main window:
   - FXML: Done (tested on Windows and Mac)
   - add special support for Mac menu items (Preferences, About, ...)

@@ -11,7 +11,7 @@
 <VBox spacing="12.0" stylesheets="@../ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.SamplePanelController">
     <children>
       <Label styleClass="label-header" text="%pv.samples.recorded_samples.text" />
-        <TableView fx:id="tvSamples">
+        <TableView fx:id="tvSamples" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="tcTime" prefWidth="90.0" text="%pv.samples.time" />
                 <TableColumn fx:id="tcHeartrate" prefWidth="90.0" text="%pv.samples.heartrate" />
