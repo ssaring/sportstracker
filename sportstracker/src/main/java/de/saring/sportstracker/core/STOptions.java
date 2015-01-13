@@ -7,15 +7,11 @@ import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 import java.io.Serializable;
 
 /**
- * This class contains all options of the SportsTracker application.
- * It also implements the ExerciseViewer options interface.
- * These options will be persisted by using LocalStorage (which uses the
- * Java Beans Persistence classes XMLEncoder and XMLDecoder), so only
- * the attributes will be stored when their values are not the default
- * values.
+ * This class contains all options of the SportsTracker application, it also implements the
+ * ExerciseViewer options interface. These options will be persisted by using XmlBeanStorage
+ * (which uses the Java Beans Persistence classes XMLEncoder and XMLDecoder).
  *
  * @author Stefan Saring
- * @version 1.0
  */
 public class STOptions implements EVOptions, Serializable {
 
@@ -100,6 +96,24 @@ public class STOptions implements EVOptions, Serializable {
      */
     private String previousExerciseDirectory;
 
+    /**
+     * Creates an instance of STOptions filled with default values.
+     */
+    public STOptions() {
+        this.initialView = View.Calendar;
+        this.unitSystem = UnitSystem.Metric;
+        this.speedView = SpeedView.DistancePerHour;
+        this.defaultAutoCalcuation = AutoCalculation.Duration;
+        this.saveOnExit = false;
+        this.displaySecondDiagram = false;
+        this.weekStartSunday = false;
+        this.listViewShowAvgHeartrate = true;
+        this.listViewShowAscent = true;
+        this.listViewShowEnergy = false;
+        this.listViewShowEquipment = false;
+        this.listViewShowComment = false;
+        this.previousExerciseDirectory = null;
+    }
 
     public View getInitialView() {
         return initialView;
@@ -220,28 +234,6 @@ public class STOptions implements EVOptions, Serializable {
         // this dummy method was not deleted for compatibility reasons when loading options from file
     }
 
-    /**
-     * Creates an instance of STOptions filled with default values.
-     *
-     * @return the instance of STOptions
-     */
-    public static STOptions createDefaultInstance() {
 
-        STOptions options = new STOptions();
-        options.initialView = View.Calendar;
-        options.unitSystem = UnitSystem.Metric;
-        options.speedView = SpeedView.DistancePerHour;
-        options.defaultAutoCalcuation = AutoCalculation.Duration;
-        options.saveOnExit = false;
-        options.displaySecondDiagram = false;
-        options.weekStartSunday = false;
-        options.listViewShowAvgHeartrate = true;
-        options.listViewShowAscent = true;
-        options.listViewShowEnergy = false;
-        options.listViewShowEquipment = false;
-        options.listViewShowComment = false;
-        options.previousExerciseDirectory = null;
-        return options;
-    }
 }
 

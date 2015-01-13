@@ -6,9 +6,8 @@ JavaFX Migration:
   - FXML: Done (tested on Windows and Mac)
   - add special support for Mac menu items (Preferences, About, ...)
   - STApplication: Done
+  - STDocument: Done
   - STController: see TODO
-  - STDocument: see TODO
-    - add support for persistent options
   - Exercise, Note and Weight List View: Done
   - Calendar View: TODO
   - All Views: add printing

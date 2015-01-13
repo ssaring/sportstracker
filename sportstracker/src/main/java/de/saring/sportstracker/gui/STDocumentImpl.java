@@ -1,6 +1,8 @@
 package de.saring.sportstracker.gui;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +21,7 @@ import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.sportstracker.storage.IStorage;
+import de.saring.util.XmlBeanStorage;
 import de.saring.util.data.IdDateObjectList;
 import de.saring.util.data.IdObject;
 import de.saring.util.data.IdObjectListChangeListener;
@@ -189,29 +192,35 @@ public class STDocumentImpl implements STDocument {
 
     @Override
     public void loadOptions() {
-        try {
-            // TODO options = (STOptions) context.getSAFContext().getLocalStorage().load(FILENAME_OPTIONS);
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Failed to load application options from '" + FILENAME_OPTIONS
-                    + "', using default values ...", e);
+        final String optionsPath = dataDirectory + File.separator + FILENAME_OPTIONS;
+        if (Files.exists(Paths.get(optionsPath))) {
+
+            LOGGER.log(Level.WARNING, "Loading application options...");
+            try {
+                options = (STOptions) XmlBeanStorage.loadBean(optionsPath);
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "Failed to load application options from '" + optionsPath
+                        + "', using default values ...", e);
+            }
         }
 
         // use default options at first start or on load errors
         if (options == null) {
-            options = STOptions.createDefaultInstance();
+            LOGGER.log(Level.WARNING, "Using default application options...");
+            options = new STOptions();
         }
     }
 
     @Override
     public void storeOptions() {
-        /*
-         * TODO
-         * try {
-         * context.getSAFContext().getLocalStorage().save(options, FILENAME_OPTIONS);
-         * } catch (IOException ioe) {
-         * LOGGER.log(Level.SEVERE, "Failed to write application options to '" + FILENAME_OPTIONS + "' ...", ioe);
-         * }
-         */
+        LOGGER.log(Level.WARNING, "Storing application options...");
+        final String optionsPath = dataDirectory + File.separator + FILENAME_OPTIONS;
+
+        try {
+            XmlBeanStorage.saveBean(options, optionsPath);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Failed to store application options to '" + optionsPath + "' ...", e);
+        }
     }
 
     @Override
