@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import de.saring.util.gui.javafx.WindowBoundsPersistence;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -86,6 +87,7 @@ public class EVMain {
         stage.initOwner(parent);
         stage.initModality(modal ? Modality.APPLICATION_MODAL : Modality.NONE);
         stage.setTitle(DIALOG_NAME + " - " + document.getExerciseFilename());
+        WindowBoundsPersistence.addWindowBoundsPersistence(stage, "ExerciseViewer");
 
         // init controller and show dialog
         controller.show(stage);

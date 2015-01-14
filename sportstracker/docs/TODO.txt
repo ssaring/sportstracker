@@ -30,10 +30,8 @@ JavaFX Migration:
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
 - ExerciseViewer: Done & tested
   - Bug: EV window is always placed in screen center, not placed at center of parent window
-  - When fixed: persist window bounds by using WindowBoundsPersistence, at least for the window size
-    -> change EVController behavior which sets the initial window size as minimum size,
-       otherwise it's not possible to reduce the window size on next display
-  - window resizing is very slow -> JFreeChart or Map Viewer problem?
+    (initially, when no previous window bounds were persisted)
+  - Problem: window resizing is very slow -> JFreeChart is the cause
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)

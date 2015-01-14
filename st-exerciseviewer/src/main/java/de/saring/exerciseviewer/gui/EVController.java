@@ -95,13 +95,6 @@ public class EVController {
         final Scene scene = new Scene(root);
         setCloseOnEscape(scene);
         stage.setScene(scene);
-
-        // set minimum ExerciseViewer window size to the computed preferred size
-        stage.setOnShown(event -> {
-            stage.setMinWidth(stage.getWidth());
-            stage.setMinHeight(stage.getHeight());
-        });
-
         stage.show();
     }
 
@@ -111,7 +104,7 @@ public class EVController {
         tabOptional.setContent(optionalPanelController.loadAndSetupPanelContent());
         tabLaps.setContent(lapPanelController.loadAndSetupPanelContent());
         tabSamples.setContent(samplePanelController.loadAndSetupPanelContent());
-        tabDiagram.setContent(diagramPanelController.loadAndSetupPanelContent());
+        // tabDiagram.setContent(diagramPanelController.loadAndSetupPanelContent());
         tabTrack.setContent(trackPanelController.loadAndSetupPanelContent());
 
         // display exercise track not before the user wants to see it (prevent long startup delays)
