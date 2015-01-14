@@ -1,8 +1,14 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
+import java.time.LocalDate;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.util.StringConverter;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,7 +30,19 @@ import de.saring.util.data.IdObject;
 public class CalendarViewController extends AbstractEntryViewController {
 
     @FXML
+    private Label laCurrentMonth;
+
+    @FXML
+    private Label laCurrentYear;
+
+    @FXML
     private StackPane spCalendar;
+
+    /** The current displayed month. */
+    private IntegerProperty currentMonth = new SimpleIntegerProperty();
+
+    /** The current displayed year. */
+    private IntegerProperty currentYear = new SimpleIntegerProperty();
 
     /**
      * Standard c'tor for dependency injection.
@@ -70,7 +88,26 @@ public class CalendarViewController extends AbstractEntryViewController {
 
     @Override
     protected void setupView() {
+
+        // TODO is there a more elegant converter way?
+        laCurrentMonth.textProperty().bindBidirectional(currentMonth, new StringConverter<Number>() {
+            @Override
+            public String toString(Number number) {
+                return getContext().getResources().getString("st.calview.months." + number.intValue());
+            }
+
+            @Override
+            public Number fromString(String string) {
+                throw new IllegalArgumentException();
+            }
+        });
+
+        laCurrentYear.textProperty().bind(currentYear.asString());
+
         // TODO
+
+        // display the current day at startup
+        onToday(null);
     }
 
     /**
@@ -78,7 +115,13 @@ public class CalendarViewController extends AbstractEntryViewController {
      */
     @FXML
     private void onPreviousMonth(final ActionEvent event) {
-        // TODO
+        if (currentMonth.get() > 1) {
+            currentMonth.set(currentMonth.get() - 1);
+        } else {
+            currentMonth.set(12);
+            currentYear.set(currentYear.get() - 1);
+        }
+        updateView();
     }
 
     /**
@@ -86,7 +129,13 @@ public class CalendarViewController extends AbstractEntryViewController {
      */
     @FXML
     private void onNextMonth(final ActionEvent event) {
-        // TODO
+        if (currentMonth.get() < 12) {
+            currentMonth.set(currentMonth.get() + 1);
+        } else {
+            currentMonth.set(1);
+            currentYear.set(currentYear.get() + 1);
+        }
+        updateView();
     }
 
     /**
@@ -94,7 +143,8 @@ public class CalendarViewController extends AbstractEntryViewController {
      */
     @FXML
     private void onPreviousYear(final ActionEvent event) {
-        // TODO
+        currentYear.set(currentYear.get() - 1);
+        updateView();
     }
 
     /**
@@ -102,7 +152,8 @@ public class CalendarViewController extends AbstractEntryViewController {
      */
     @FXML
     private void onNextYear(final ActionEvent event) {
-        // TODO
+        currentYear.set(currentYear.get() + 1);
+        updateView();
     }
 
     /**
@@ -110,6 +161,11 @@ public class CalendarViewController extends AbstractEntryViewController {
      */
     @FXML
     private void onToday(final ActionEvent event) {
-        // TODO
+        final LocalDate today = LocalDate.now();
+        currentMonth.set(today.getMonthValue());
+        currentYear.set(today.getYear());
+        updateView();
     }
+
+    // TODO add date navigation by using the mouse wheel on the calendar
 }
