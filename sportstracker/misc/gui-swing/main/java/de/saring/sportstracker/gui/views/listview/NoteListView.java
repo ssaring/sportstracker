@@ -1,4 +1,4 @@
-package de.saring.sportstracker.gui.views.listview;
+package de.saring.sportstracker.gui.views.listviews;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Note;

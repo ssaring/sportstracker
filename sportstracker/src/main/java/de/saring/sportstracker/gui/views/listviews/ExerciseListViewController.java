@@ -1,4 +1,4 @@
-package de.saring.sportstracker.gui.views.listview;
+package de.saring.sportstracker.gui.views.listviews;
 
 import java.time.LocalDateTime;
 import java.util.List;

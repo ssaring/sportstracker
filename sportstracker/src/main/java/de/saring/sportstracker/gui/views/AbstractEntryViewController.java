@@ -56,6 +56,36 @@ public abstract class AbstractEntryViewController implements EntryViewController
         return rootNode;
     }
 
+    @Override
+    public int getSelectedExerciseCount() {
+        return 0;
+    }
+
+    @Override
+    public int[] getSelectedExerciseIDs() {
+        return EMPTY_ID_ARRAY;
+    }
+
+    @Override
+    public int getSelectedNoteCount() {
+        return 0;
+    }
+
+    @Override
+    public int[] getSelectedNoteIDs() {
+        return EMPTY_ID_ARRAY;
+    }
+
+    @Override
+    public int getSelectedWeightCount() {
+        return 0;
+    }
+
+    @Override
+    public int[] getSelectedWeightIDs() {
+        return EMPTY_ID_ARRAY;
+    }
+
     /**
      * Returns the name of the FXML file which contains the UI definition of the view.
      *
@@ -93,35 +123,5 @@ public abstract class AbstractEntryViewController implements EntryViewController
      */
     protected STController getController() {
         return controller;
-    }
-
-    @Override
-    public int getSelectedExerciseCount() {
-        return 0;
-    }
-
-    @Override
-    public int[] getSelectedExerciseIDs() {
-        return EMPTY_ID_ARRAY;
-    }
-
-    @Override
-    public int getSelectedNoteCount() {
-        return 0;
-    }
-
-    @Override
-    public int[] getSelectedNoteIDs() {
-        return EMPTY_ID_ARRAY;
-    }
-
-    @Override
-    public int getSelectedWeightCount() {
-        return 0;
-    }
-
-    @Override
-    public int[] getSelectedWeightIDs() {
-        return EMPTY_ID_ARRAY;
     }
 }

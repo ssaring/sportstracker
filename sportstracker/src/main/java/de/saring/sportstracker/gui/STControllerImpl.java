@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.sportstracker.gui.views.calendarview.CalendarViewController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -49,9 +50,9 @@ import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
 import de.saring.sportstracker.gui.dialogs.WeightDialogController;
 import de.saring.sportstracker.gui.statusbar.StatusBarController;
 import de.saring.sportstracker.gui.views.EntryViewController;
-import de.saring.sportstracker.gui.views.listview.ExerciseListViewController;
-import de.saring.sportstracker.gui.views.listview.NoteListViewController;
-import de.saring.sportstracker.gui.views.listview.WeightListViewController;
+import de.saring.sportstracker.gui.views.listviews.ExerciseListViewController;
+import de.saring.sportstracker.gui.views.listviews.NoteListViewController;
+import de.saring.sportstracker.gui.views.listviews.WeightListViewController;
 import de.saring.util.Date310Utils;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdDateObject;
@@ -72,8 +73,8 @@ public class STControllerImpl implements STController {
     private final STContext context;
     private final STDocument document;
 
-    // @Inject
-    // TODO private CalendarViewController calendarViewController;
+    @Inject
+    private CalendarViewController calendarViewController;
     @Inject
     private ExerciseListViewController exerciseListViewController;
     @Inject
@@ -227,6 +228,7 @@ public class STControllerImpl implements STController {
         setupActionBindings();
 
         // setup all views
+        calendarViewController.loadAndSetupViewContent();
         exerciseListViewController.loadAndSetupViewContent();
         noteListViewController.loadAndSetupViewContent();
         weightListViewController.loadAndSetupViewContent();
@@ -654,8 +656,7 @@ public class STControllerImpl implements STController {
         // determine controller of specified view
         switch (viewType) {
             case CALENDAR:
-                // TODO currentView = calendarViewController;
-                currentViewController = exerciseListViewController;
+                currentViewController = calendarViewController;
                 break;
             case EXERCISE_LIST:
                 currentViewController = exerciseListViewController;
