@@ -8,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.util.StringConverter;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -38,17 +37,21 @@ public class CalendarViewController extends AbstractEntryViewController {
     @FXML
     private StackPane spCalendar;
 
-    /** The current displayed month. */
+    /**
+     * The current displayed month.
+     */
     private IntegerProperty currentMonth = new SimpleIntegerProperty();
 
-    /** The current displayed year. */
+    /**
+     * The current displayed year.
+     */
     private IntegerProperty currentYear = new SimpleIntegerProperty();
 
     /**
      * Standard c'tor for dependency injection.
      *
-     * @param context the SportsTracker UI context
-     * @param document the SportsTracker document / model
+     * @param context    the SportsTracker UI context
+     * @param document   the SportsTracker document / model
      * @param controller the SportsTracker UI controller
      */
     @Inject
@@ -89,22 +92,10 @@ public class CalendarViewController extends AbstractEntryViewController {
     @Override
     protected void setupView() {
 
-        // TODO is there a more elegant converter way?
-        laCurrentMonth.textProperty().bindBidirectional(currentMonth, new StringConverter<Number>() {
-            @Override
-            public String toString(Number number) {
-                return getContext().getResources().getString("st.calview.months." + number.intValue());
-            }
-
-            @Override
-            public Number fromString(String string) {
-                throw new IllegalArgumentException();
-            }
-        });
-
+        // bind month and year labels to current values
+        currentMonth.addListener((observable, oldValue, newValue) -> laCurrentMonth.setText( //
+                getContext().getResources().getString("st.calview.months." + newValue.intValue())));
         laCurrentYear.textProperty().bind(currentYear.asString());
-
-        // TODO
 
         // display the current day at startup
         onToday(null);
