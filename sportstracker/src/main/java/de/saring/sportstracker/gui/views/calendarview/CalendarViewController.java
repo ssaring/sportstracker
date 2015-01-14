@@ -1,28 +1,18 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import de.saring.sportstracker.core.STException;
-import de.saring.sportstracker.gui.views.AbstractEntryViewController;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import de.saring.sportstracker.data.Note;
+import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.sportstracker.gui.views.listviews.AbstractListViewController;
-import de.saring.util.StringUtils;
+import de.saring.sportstracker.gui.views.AbstractEntryViewController;
 import de.saring.util.data.IdObject;
-import de.saring.util.gui.javafx.LocalDateCellFactory;
 
 /**
  * Controller class of the Calendar View, which displays all (or a filtered list) exercises, notes and
@@ -33,8 +23,8 @@ import de.saring.util.gui.javafx.LocalDateCellFactory;
 @Singleton
 public class CalendarViewController extends AbstractEntryViewController {
 
-    // @FXML
-    // private TableView<Note> tvNotes;
+    @FXML
+    private StackPane spCalendar;
 
     /**
      * Standard c'tor for dependency injection.
@@ -80,6 +70,46 @@ public class CalendarViewController extends AbstractEntryViewController {
 
     @Override
     protected void setupView() {
+        // TODO
+    }
+
+    /**
+     * Action handler for showing the previous month in the calendar.
+     */
+    @FXML
+    private void onPreviousMonth(final ActionEvent event) {
+        // TODO
+    }
+
+    /**
+     * Action handler for showing the next month in the calendar.
+     */
+    @FXML
+    private void onNextMonth(final ActionEvent event) {
+        // TODO
+    }
+
+    /**
+     * Action handler for showing the previous year in the calendar.
+     */
+    @FXML
+    private void onPreviousYear(final ActionEvent event) {
+        // TODO
+    }
+
+    /**
+     * Action handler for showing the next year in the calendar.
+     */
+    @FXML
+    private void onNextYear(final ActionEvent event) {
+        // TODO
+    }
+
+    /**
+     * Action handler for showing the current day in the calendar.
+     */
+    @FXML
+    private void onToday(final ActionEvent event) {
         // TODO
     }
 }

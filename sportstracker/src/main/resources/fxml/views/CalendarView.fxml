@@ -8,7 +8,44 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.views.calendarview.CalendarViewController">
+<VBox spacing="8.0" stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.views.calendarview.CalendarViewController">
     <children>
+        <HBox alignment="CENTER_LEFT">
+            <children>
+                <Button fx:id="btPreviousMonth" mnemonicParsing="false" onAction="#onPreviousMonth" styleClass="toolbarButton">
+                    <tooltip>
+                        <Tooltip text="%st.calview.previousMonth.Action.shortDescription" />
+                    </tooltip>
+                </Button>
+                <Label alignment="CENTER" minWidth="100.0" text="%st.calview.months.1" />
+                <Button fx:id="btNextMonth" mnemonicParsing="false" onAction="#onNextMonth" styleClass="toolbarButton">
+                    <tooltip>
+                        <Tooltip text="%st.calview.nextMonth.Action.shortDescription" />
+                    </tooltip>
+                </Button>
+                <Pane minWidth="80.0" />
+                <Button fx:id="btPreviousYear" mnemonicParsing="false" onAction="#onPreviousYear" styleClass="toolbarButton">
+                    <tooltip>
+                        <Tooltip text="%st.calview.previousYear.Action.shortDescription" />
+                    </tooltip>
+                </Button>
+                <Label alignment="CENTER" minWidth="80.0" text="2015" />
+                <Button fx:id="btNextYear" mnemonicParsing="false" onAction="#onNextYear" styleClass="toolbarButton">
+                    <tooltip>
+                        <Tooltip text="%st.calview.nextYear.Action.shortDescription" />
+                    </tooltip>
+                </Button>
+                <Pane minWidth="80.0" HBox.hgrow="ALWAYS" />
+                <Button fx:id="btToday" mnemonicParsing="false" onAction="#onToday" styleClass="toolbarButton">
+                    <tooltip>
+                        <Tooltip text="%st.calview.today.Action.shortDescription" />
+                    </tooltip>
+                </Button>
+            </children>
+        </HBox>
+        <StackPane fx:id="spCalendar" prefHeight="200.0" VBox.vgrow="ALWAYS" />
     </children>
+    <padding>
+        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+    </padding>
 </VBox>

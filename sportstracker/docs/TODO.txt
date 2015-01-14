@@ -10,6 +10,9 @@ JavaFX Migration:
   - STController: see TODO
   - Exercise, Note and Weight List View: Done
   - Calendar View: TODO
+    - FXML: Done
+    - Controller: see TODO
+    - add Drag&Drop support for exercise files
   - All Views: add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties

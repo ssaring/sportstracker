@@ -485,7 +485,6 @@ public class ExerciseDialogController extends AbstractDialogController {
         }
     }
 
-
     /**
      * Action handler for copying the comment from the previous similar exercise.
      */
