@@ -56,19 +56,9 @@ JavaFX Migration:
 
 JavaFX Migration status - completed:
 - All SportsTracker dialogs
-  - About Dialog
-  - Note Dialog
-  - Weight Dialog
-  - Exercise Dialog
-  - HRM File Open Dialog
-  - Overview Dialog
-  - Sport Type List Dialog
-  - Sport Type Dialog
-  - Filter Dialog
-  - Statistic Dialog
-  - Statistic Result Dialog
-  - Preferences Dialog
 - Exercise Viewer sub-application
+- SportsTracker application:
+  - Exercise, Note and Weight List View
 - Use of openjfx-dialog backport library from JavaFX 8u40
 
 Java 8 migration status:
