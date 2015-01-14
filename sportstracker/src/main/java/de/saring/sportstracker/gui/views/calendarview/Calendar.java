@@ -5,65 +5,89 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
- * TODO
- *
- * Custom control which displays a calendar month view. It's based on a GridPane, the
- * grid cells contain either header information or the days of the displayed month
- * (or days from previous and next month).<br/>
- * The grid always contains 8 columns and 7 rows. The first row displays the names of
- * the week days, the next 6 rows contain each one week (6 weeks to make sure that always
- * the complete month is displayed.)<br/>
- * The first 7 columns contain the week days (Sunday - Saturday or Monday - Sunday),
- * the last column contains the weekly summary.
+ * <p>Custom control which displays a calendar for one month. It contains cells for all
+ * the days of the month, each cell contains the SportsTracker entries for that day.</p>
+ * <p>The layout uses a VBox which contains two GridPanes, one for the header cells
+ * (weekday names), the other for the day cells (for all days of the displayed month
+ * and parts of the previous and next month).</p>
+ * <p>Both GridPanes contains 8 columns of same width, 7 for all days of a week
+ * (Sunday - Saturday or Monday - Sunday) and one for the weekly summary.</p>
+ * <p>The GridPane for the header cells contains only one row with a fixed height. The
+ * GridPane for the day cells contains always 6 rows, each for one week (6 weeks to
+ * make sure that always the complete month can be displayed.) The GridPane for the day
+ * cells uses all the available vertical space.</p>
  *
  * @author Stefan Saring
  */
-public class Calendar extends GridPane {
+public class Calendar extends VBox {
 
-    private static final int COLUMN_COUNT = 8;
-    private static final int ROW_COUNT = 7;
+    private static final int GRIDS_COLUMN_COUNT = 8;
+    private static final int GRID_DAYS_ROW_COUNT = 6;
 
-    // private GridPane gridHeaderCells;
-    // private GridPane gridDayCells;
+    private GridPane gridHeaderCells;
+    private GridPane gridDayCells;
 
     /**
-     * TODO
+     * Standard c'tor.
      */
     public Calendar() {
+        setupLayout();
+    }
 
+    private void setupLayout() {
+
+        // create GridPanes for header and day cells and add it to the VBox
+        gridHeaderCells = new GridPane();
+        gridDayCells = new GridPane();
+
+        // TODO for test purposes only
         this.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
-        setGridLinesVisible(true);
+        gridHeaderCells.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
+        gridDayCells.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+        gridHeaderCells.setGridLinesVisible(true);
+        gridDayCells.setGridLinesVisible(true);
 
-        for (int column = 0; column < COLUMN_COUNT; column++) {
+        VBox.setVgrow(gridHeaderCells, Priority.NEVER);
+        VBox.setVgrow(gridDayCells, Priority.ALWAYS);
+        this.getChildren().addAll(gridHeaderCells, gridDayCells);
+
+        // define column constraints for both GridPanes, all 8 columns must have the same width
+        for (int column = 0; column < GRIDS_COLUMN_COUNT; column++) {
             final ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPercentWidth(100 / (double) COLUMN_COUNT);
-            this.getColumnConstraints().add(columnConstraints);
+            columnConstraints.setPercentWidth(100 / (double) GRIDS_COLUMN_COUNT);
+            gridHeaderCells.getColumnConstraints().add(columnConstraints);
+            gridDayCells.getColumnConstraints().add(columnConstraints);
         }
 
+        // define row constraint for header GridPane (one row with a fixed height)
         final RowConstraints headerRowConstraints = new RowConstraints();
-        getRowConstraints().add(headerRowConstraints);
+        gridHeaderCells.getRowConstraints().add(headerRowConstraints);
 
-        for (int row = 1; row < ROW_COUNT; row++) {
+        // define row constraints for days GridPane (6 rows with same height which are using all the available space)
+        for (int row = 0; row < GRID_DAYS_ROW_COUNT; row++) {
             final RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setPercentHeight((100 / (double) (ROW_COUNT)));
-            getRowConstraints().add(rowConstraints);
+            rowConstraints.setPercentHeight((100 / (double) (GRID_DAYS_ROW_COUNT)));
+            gridDayCells.getRowConstraints().add(rowConstraints);
         }
 
-
-        // add header row for week day names and summary
-        for (int column = 0; column < COLUMN_COUNT - 1; column++) {
-            add(new Label("Day " + (column + 1)), column, 0);
+        // TODO use a custom control for the header cells
+        // add cells for week day names and summary to the header GridPane
+        for (int column = 0; column < GRIDS_COLUMN_COUNT - 1; column++) {
+            gridHeaderCells.add(new Label("Day " + (column + 1)), column, 0);
         }
-        add(new Label("Summary"), COLUMN_COUNT - 1, 0);
+        gridHeaderCells.add(new Label("Summary"), GRIDS_COLUMN_COUNT - 1, 0);
 
-        // add cells for the days
-        for (int row = 1; row < ROW_COUNT; row++) {
-            for (int column = 0; column < COLUMN_COUNT - 1; column++) {
-                add(new Label(String.valueOf((7 * (row - 1)) + (column + 1))), column, row);
+        // TODO use a custom control for the day cells
+        // add cells for all displayed days to the days GridPane
+        for (int row = 0; row < GRID_DAYS_ROW_COUNT; row++) {
+            for (int column = 0; column < GRIDS_COLUMN_COUNT - 1; column++) {
+                gridDayCells.add(new Label(String.valueOf((7 * row) + (column + 1))), column, row);
             }
         }
     }
