@@ -12,6 +12,9 @@ JavaFX Migration:
   - Calendar View: TODO
     - FXML: Done
     - Controller: see TODO
+    - Calendar Control:
+      - define a custom control based on a 8x7 GridPane layout
+        (see http://www.myexpospace.com/JavaOne2012/SessionFiles/CON4726_PDF_4726_0001.pdf, Option 2)
     - add Drag&Drop support for exercise files
   - All Views: add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
@@ -56,6 +59,7 @@ JavaFX Migration:
   - User can't close Dialogs with ESC when the DatePicker has the focus
   -> is planned to be fixed in JavaFX 8u40
 - inspect memory usage of SportsTracker after migration (also with multiple opened ExerciseViewers)
+  - are there problems with registered listeners which reference old models and controls?
 
 JavaFX Migration status - completed:
 - All SportsTracker dialogs

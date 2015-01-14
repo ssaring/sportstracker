@@ -37,6 +37,9 @@ public class CalendarViewController extends AbstractEntryViewController {
     @FXML
     private StackPane spCalendar;
 
+    @Inject
+    private Calendar calendar;
+
     /**
      * The current displayed month.
      */
@@ -96,6 +99,9 @@ public class CalendarViewController extends AbstractEntryViewController {
         currentMonth.addListener((observable, oldValue, newValue) -> laCurrentMonth.setText( //
                 getContext().getResources().getString("st.calview.months." + newValue.intValue())));
         laCurrentYear.textProperty().bind(currentYear.asString());
+
+        // setup calendar control
+        spCalendar.getChildren().addAll(calendar);
 
         // display the current day at startup
         onToday(null);
