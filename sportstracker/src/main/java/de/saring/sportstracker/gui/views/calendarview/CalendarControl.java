@@ -1,6 +1,7 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
 import de.saring.util.AppResources;
+import de.saring.util.data.IdDateObject;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.ColumnConstraints;
@@ -14,6 +15,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.List;
 
 /**
  * <p>Custom control which displays a calendar for one month. It contains cells for all
@@ -47,6 +49,9 @@ public class CalendarControl extends VBox {
     private int displayedYear;
     private boolean weekStartsSunday;
 
+    private CalendarEntryProvider calendarEntryProvider;
+
+
     /**
      * Standard c'tor.
      *
@@ -62,6 +67,15 @@ public class CalendarControl extends VBox {
 
         setupLayout();
         updateContent();
+    }
+
+    /**
+     * TODO
+     *
+     * @param calendarEntryProvider
+     */
+    public void setCalendarEntryProvider(final CalendarEntryProvider calendarEntryProvider) {
+        this.calendarEntryProvider = calendarEntryProvider;
     }
 
     /**
@@ -159,6 +173,11 @@ public class CalendarControl extends VBox {
             final boolean dateOfDisplayedMonth = currentCellDate.getMonthValue() == displayedMonth;
             dayCells[i].setDate(currentCellDate, dateOfDisplayedMonth);
             currentCellDate = currentCellDate.plus(1, ChronoUnit.DAYS);
+
+            if (calendarEntryProvider != null) {
+                final List<CalendarEntry> entries = calendarEntryProvider.getCalendarEntriesForDate(currentCellDate);
+                // TODO dayCells[i].setEntries(entries);
+            }
         }
     }
 

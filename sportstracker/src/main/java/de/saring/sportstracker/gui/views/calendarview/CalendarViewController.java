@@ -5,10 +5,8 @@ import java.time.LocalDate;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 import javax.inject.Inject;
@@ -54,8 +52,8 @@ public class CalendarViewController extends AbstractEntryViewController {
     /**
      * Standard c'tor for dependency injection.
      *
-     * @param context    the SportsTracker UI context
-     * @param document   the SportsTracker document / model
+     * @param context the SportsTracker UI context
+     * @param document the SportsTracker document / model
      * @param controller the SportsTracker UI controller
      */
     @Inject
@@ -109,6 +107,7 @@ public class CalendarViewController extends AbstractEntryViewController {
 
     private void setupCalendarControl() {
         calendarControl = new CalendarControl(getContext().getResources());
+        calendarControl.setCalendarEntryProvider(new CalendarEntryProviderImpl(getContext(), getDocument()));
         spCalendar.getChildren().addAll(calendarControl);
 
         // scroll the displayed month when the user uses the mouse wheel on the calendar
@@ -177,6 +176,4 @@ public class CalendarViewController extends AbstractEntryViewController {
         currentYear.set(today.getYear());
         updateView();
     }
-
-    // TODO add date navigation by using the mouse wheel on the calendar
 }
