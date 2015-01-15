@@ -13,8 +13,6 @@ JavaFX Migration:
     - FXML: Done
     - Controller: see TODO
     - Calendar Control: see TODO in package calendarview
-      - Bug: limit the height of the day cells, currently the layout grows when there are
-        too much entries for default cell heigt
       - move custom component to st-util (create a calendar package there) ?
       - see also http://www.myexpospace.com/JavaOne2012/SessionFiles/CON4726_PDF_4726_0001.pdf, Option 2
     - add Drag&Drop support for exercise files

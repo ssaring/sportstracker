@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.views.calendarview;
 
 import de.saring.util.AppResources;
 import de.saring.util.data.IdDateObject;
+import javafx.geometry.VPos;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.ColumnConstraints;
@@ -120,7 +121,10 @@ public class CalendarControl extends VBox {
         // define row constraints for days GridPane (6 rows with same height which are using all the available space)
         for (int row = 0; row < GRID_DAYS_ROW_COUNT; row++) {
             final RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.setValignment(VPos.TOP);
             rowConstraints.setPercentHeight((100 / (double) (GRID_DAYS_ROW_COUNT)));
+            // probably a JavaFX bug: min height must be 0, otherwise the row takes at least the computed height
+            rowConstraints.setMinHeight(0);
             gridDayCells.getRowConstraints().add(rowConstraints);
         }
 
