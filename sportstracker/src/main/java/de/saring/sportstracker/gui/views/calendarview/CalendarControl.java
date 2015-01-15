@@ -25,7 +25,7 @@ import javafx.scene.paint.Color;
  *
  * @author Stefan Saring
  */
-public class Calendar extends VBox {
+public class CalendarControl extends VBox {
 
     private static final int GRIDS_COLUMN_COUNT = 8;
     private static final int GRID_DAYS_ROW_COUNT = 6;
@@ -36,7 +36,7 @@ public class Calendar extends VBox {
     /**
      * Standard c'tor.
      */
-    public Calendar() {
+    public CalendarControl() {
         setupLayout();
     }
 

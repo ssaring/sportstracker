@@ -38,7 +38,7 @@ public class CalendarViewController extends AbstractEntryViewController {
     private StackPane spCalendar;
 
     @Inject
-    private Calendar calendar;
+    private CalendarControl calendarControl;
 
     /**
      * The current displayed month.
@@ -101,7 +101,7 @@ public class CalendarViewController extends AbstractEntryViewController {
         laCurrentYear.textProperty().bind(currentYear.asString());
 
         // setup calendar control
-        spCalendar.getChildren().addAll(calendar);
+        spCalendar.getChildren().addAll(calendarControl);
 
         // display the current day at startup
         onToday(null);
