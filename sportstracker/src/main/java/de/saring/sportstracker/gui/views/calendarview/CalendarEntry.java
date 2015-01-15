@@ -13,10 +13,18 @@ public class CalendarEntry {
     private String toolTipText;
     private Color color;
 
+    /**
+     *
+     * @param entry
+     * @param text
+     * @param toolTipText
+     * @param color (optional)
+     */
     public CalendarEntry(final IdDateObject entry, final String text, final String toolTipText, final Color color) {
         this.entry = entry;
         this.text = text;
         this.toolTipText = toolTipText;
+        this.color = color;
     }
 
     public IdDateObject getEntry() {

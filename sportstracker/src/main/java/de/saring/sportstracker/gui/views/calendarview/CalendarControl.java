@@ -176,7 +176,7 @@ public class CalendarControl extends VBox {
 
             if (calendarEntryProvider != null) {
                 final List<CalendarEntry> entries = calendarEntryProvider.getCalendarEntriesForDate(currentCellDate);
-                // TODO dayCells[i].setEntries(entries);
+                dayCells[i].setEntries(entries);
             }
         }
     }

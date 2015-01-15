@@ -1,17 +1,20 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.AppResources;
-import de.saring.util.unitcalc.FormatUtils;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.Note;
+import de.saring.sportstracker.data.Weight;
+import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.AppResources;
+import de.saring.util.StringUtils;
+import de.saring.util.unitcalc.FormatUtils;
+
 /**
- * Provides the exercise, note and weight entries to be shown in the calendar.
+ * Provides the note, weight and exercise entries to be shown in the calendar.
  *
  * @author Stefan Saring
  */
@@ -32,7 +35,7 @@ public class CalendarEntryProviderImpl implements CalendarEntryProvider {
     }
 
     /**
-     * Provides the exercise, note and weight entries to be shown in the calendar for the specified date.
+     * Provides the note, weight and exercise entries to be shown in the calendar for the specified date.
      *
      * @param date date
      * @return list of calendar entries
@@ -40,12 +43,47 @@ public class CalendarEntryProviderImpl implements CalendarEntryProvider {
     @Override
     public List<CalendarEntry> getCalendarEntriesForDate(final LocalDate date) {
 
-        final List<Exercise> exercises = document.getFilterableExerciseList().getEntriesInDateRange(date, date);
-        return exercises.stream() //
-                .map(exercise -> createCalendarEntryForExercise(exercise)) //
+        final List<Note> notes = document.getNoteList().getEntriesInDateRange(date, date);
+        final List<CalendarEntry> calendarEntries = notes.stream() //
+                .map(note -> createCalendarEntryForNote(note)) //
                 .collect(Collectors.toList());
 
-        // TODO provide notes and weights
+        final List<Weight> weights = document.getWeightList().getEntriesInDateRange(date, date);
+        calendarEntries.addAll(weights.stream() //
+                .map(weight -> createCalendarEntryForWeight(weight)) //
+                .collect(Collectors.toList()));
+
+        final List<Exercise> exercises = document.getFilterableExerciseList().getEntriesInDateRange(date, date);
+        calendarEntries.addAll(exercises.stream() //
+                .map(exercise -> createCalendarEntryForExercise(exercise)) //
+                .collect(Collectors.toList()));
+
+        return calendarEntries;
+    }
+
+    private CalendarEntry createCalendarEntryForNote(final Note note) {
+        final StringBuilder sbText = new StringBuilder();
+        sbText.append(context.getResources().getString("st.calview.note_short")) //
+                .append(" ") //
+                .append(StringUtils.getFirstLineOfText(note.getText()));
+
+        return new CalendarEntry(note, sbText.toString(), note.getText(), null);
+    }
+
+    private CalendarEntry createCalendarEntryForWeight(final Weight weight) {
+        final String strWeightValue = context.getFormatUtils().weightToString(weight.getValue(), 2);
+
+        final StringBuilder sbText = new StringBuilder();
+        sbText.append(context.getResources().getString("st.calview.weight_short")) //
+                .append(" ") //
+                .append(strWeightValue);
+
+        final StringBuilder sbToolTip = new StringBuilder();
+        sbToolTip.append(context.getResources().getString("st.calview.weight_tooltip.weight")) //
+                .append(" ") //
+                .append(strWeightValue);
+
+        return new CalendarEntry(weight, sbText.toString(), sbToolTip.toString(), null);
     }
 
     private CalendarEntry createCalendarEntryForExercise(final Exercise exercise) {

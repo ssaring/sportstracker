@@ -2,10 +2,13 @@ package de.saring.sportstracker.gui.views.calendarview;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
@@ -52,6 +55,25 @@ class CalendarDayCell extends VBox {
         updateDayLabel();
     }
 
+    /**
+     * Displays the specified calendar entries inside this day cell. All previous entries
+     * will be removed before.
+     *
+     * @param entries list of calendar entries (must not be null)
+     */
+    public void setEntries(final List<CalendarEntry> entries) {
+
+        if (getChildren().size() > 1) {
+            getChildren().remove(1, getChildren().size());
+        }
+
+        // TODO calendar entries are displayed for day - 1!!!
+
+        getChildren().addAll(entries.stream() //
+                .map(entry -> new CalendarEntryLabel(entry)) //
+                .collect(Collectors.toList()));
+    }
+
     private void updateDayLabel() {
         laDay.setText(String.valueOf(date.getDayOfMonth()));
 
@@ -70,5 +92,25 @@ class CalendarDayCell extends VBox {
 
         laDay.setTextFill(color);
         laDay.setStyle(style);
+    }
+
+    /**
+     * TODO
+     */
+    private static class CalendarEntryLabel extends Label {
+
+        private CalendarEntry entry;
+
+        public CalendarEntryLabel(final CalendarEntry entry) {
+            this.setText(entry.getText());
+
+            if (entry.getToolTipText() != null) {
+                this.setTooltip(new Tooltip(entry.getToolTipText()));
+            }
+
+            if (entry.getColor() != null) {
+                this.setTextFill(entry.getColor());
+            }
+        }
     }
 }
