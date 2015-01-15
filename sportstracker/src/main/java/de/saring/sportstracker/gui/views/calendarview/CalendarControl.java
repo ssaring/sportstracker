@@ -1,6 +1,6 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
-import javafx.scene.control.Label;
+import de.saring.util.AppResources;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.ColumnConstraints;
@@ -9,6 +9,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 
 /**
  * <p>Custom control which displays a calendar for one month. It contains cells for all
@@ -30,14 +35,47 @@ public class CalendarControl extends VBox {
     private static final int GRIDS_COLUMN_COUNT = 8;
     private static final int GRID_DAYS_ROW_COUNT = 6;
 
+    private AppResources resources;
+
     private GridPane gridHeaderCells;
     private GridPane gridDayCells;
 
+    private CalendarHeaderCell[] headerCells = new CalendarHeaderCell[GRIDS_COLUMN_COUNT];
+    private CalendarDayCell[] dayCells = new CalendarDayCell[7 * GRID_DAYS_ROW_COUNT];
+
+    private int displayedMonth;
+    private int displayedYear;
+    private boolean weekStartsSunday;
+
     /**
      * Standard c'tor.
+     *
+     * @param resources the application text resources
      */
-    public CalendarControl() {
+    public CalendarControl(AppResources resources) {
+        this.resources = resources;
+
+        final LocalDate today = LocalDate.now();
+        displayedMonth = today.getMonthValue();
+        displayedYear = today.getYear();
+        weekStartsSunday = false;
+
         setupLayout();
+        updateContent();
+    }
+
+    /**
+     * TODO
+     *
+     * @param year
+     * @param month
+     * @param weekStartsSunday
+     */
+    public void updateCalendar(final int year, final int month, final boolean weekStartsSunday) {
+        this.displayedYear = year;
+        this.displayedMonth = month;
+        this.weekStartsSunday = weekStartsSunday;
+        updateContent();
     }
 
     private void setupLayout() {
@@ -48,10 +86,6 @@ public class CalendarControl extends VBox {
 
         // TODO for test purposes only
         this.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
-        gridHeaderCells.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
-        gridDayCells.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
-        gridHeaderCells.setGridLinesVisible(true);
-        gridDayCells.setGridLinesVisible(true);
 
         VBox.setVgrow(gridHeaderCells, Priority.NEVER);
         VBox.setVgrow(gridDayCells, Priority.ALWAYS);
@@ -76,19 +110,67 @@ public class CalendarControl extends VBox {
             gridDayCells.getRowConstraints().add(rowConstraints);
         }
 
-        // TODO use a custom control for the header cells
-        // add cells for week day names and summary to the header GridPane
-        for (int column = 0; column < GRIDS_COLUMN_COUNT - 1; column++) {
-            gridHeaderCells.add(new Label("Day " + (column + 1)), column, 0);
+        // create header cells and add them to the header GridPane
+        for (int i = 0; i< headerCells.length; i++) {
+            headerCells[i] = new CalendarHeaderCell();
+            gridHeaderCells.add(headerCells[i], i, 0);
         }
-        gridHeaderCells.add(new Label("Summary"), GRIDS_COLUMN_COUNT - 1, 0);
 
-        // TODO use a custom control for the day cells
-        // add cells for all displayed days to the days GridPane
+        // create day cells and add them to the days GridPane
         for (int row = 0; row < GRID_DAYS_ROW_COUNT; row++) {
-            for (int column = 0; column < GRIDS_COLUMN_COUNT - 1; column++) {
-                gridDayCells.add(new Label(String.valueOf((7 * row) + (column + 1))), column, row);
+            for (int column = 0; column < 7; column++) {
+                final CalendarDayCell dayCell = new CalendarDayCell();
+                dayCells[(row * 7) + column] = dayCell;
+                gridDayCells.add(dayCell, column, row);
             }
         }
+
+        // TODO add weekly summary cells
+    }
+
+    private void updateContent() {
+        updateHeaderCells();
+        updateDayCells();
+        // TODO updateSummaryCells();
+    }
+
+    /**
+     * Updates the content of the header cell depending on the current week start day.
+     */
+    private void updateHeaderCells() {
+        final int indexSunday = weekStartsSunday ? 0 : 6;
+        final String[] weekdays = weekStartsSunday ? //
+                new String[] {"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"} : //
+                new String[] {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+
+        for (int i = 0; i < weekdays.length; i++) {
+            headerCells[i].setText(resources.getString("st.valview.weekdays." + weekdays[i]), indexSunday == i);
+        }
+        headerCells[7].setText(resources.getString("st.valview.week_sum"), false);
+    }
+
+    /**
+     * Updates the content of all day cells for the current month and year.
+     */
+    private void updateDayCells() {
+        LocalDate currentCellDate = getFirstDisplayedDay();
+
+        for (int i = 0; i < dayCells.length; i++) {
+            final boolean dateOfDisplayedMonth = currentCellDate.getMonthValue() == displayedMonth;
+            dayCells[i].setDate(currentCellDate, dateOfDisplayedMonth);
+            currentCellDate = currentCellDate.plus(1, ChronoUnit.DAYS);
+        }
+    }
+
+    /**
+     * Calculates the first displayed day in the calendar, depending whether week start is sunday or
+     * monday. This is mostly a day of the previous month.
+     *
+     * @return first displayed day in the calendar
+     */
+    private LocalDate getFirstDisplayedDay() {
+        final LocalDate firstDayOfMonth = LocalDate.of(displayedYear, displayedMonth, 1);
+        return firstDayOfMonth.with(TemporalAdjusters.previousOrSame( //
+                weekStartsSunday ? DayOfWeek.SUNDAY : DayOfWeek.MONDAY));
     }
 }

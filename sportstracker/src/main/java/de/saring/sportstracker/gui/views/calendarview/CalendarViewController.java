@@ -37,7 +37,6 @@ public class CalendarViewController extends AbstractEntryViewController {
     @FXML
     private StackPane spCalendar;
 
-    @Inject
     private CalendarControl calendarControl;
 
     /**
@@ -69,7 +68,8 @@ public class CalendarViewController extends AbstractEntryViewController {
 
     @Override
     public void updateView() {
-        // TODO
+        calendarControl.updateCalendar(currentYear.get(), currentMonth.get(), //
+                getDocument().getOptions().isWeekStartSunday());
     }
 
     @Override
@@ -94,6 +94,7 @@ public class CalendarViewController extends AbstractEntryViewController {
 
     @Override
     protected void setupView() {
+        calendarControl = new CalendarControl(getContext().getResources());
 
         // bind month and year labels to current values
         currentMonth.addListener((observable, oldValue, newValue) -> laCurrentMonth.setText( //
