@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 import javax.inject.Inject;
@@ -94,18 +96,29 @@ public class CalendarViewController extends AbstractEntryViewController {
 
     @Override
     protected void setupView() {
-        calendarControl = new CalendarControl(getContext().getResources());
+        setupCalendarControl();
 
         // bind month and year labels to current values
         currentMonth.addListener((observable, oldValue, newValue) -> laCurrentMonth.setText( //
                 getContext().getResources().getString("st.calview.months." + newValue.intValue())));
         laCurrentYear.textProperty().bind(currentYear.asString());
 
-        // setup calendar control
-        spCalendar.getChildren().addAll(calendarControl);
-
         // display the current day at startup
         onToday(null);
+    }
+
+    private void setupCalendarControl() {
+        calendarControl = new CalendarControl(getContext().getResources());
+        spCalendar.getChildren().addAll(calendarControl);
+
+        // scroll the displayed month when the user uses the mouse wheel on the calendar
+        calendarControl.setOnScroll(event -> {
+            if (event.getDeltaY() > 0) {
+                onPreviousMonth(null);
+            } else if (event.getDeltaY() < 0) {
+                onNextMonth(null);
+            }
+        });
     }
 
     /**
