@@ -34,7 +34,7 @@ class CalendarDayCell extends VBox {
         setSpacing(4);
         // TODO use css
         setStyle("-fx-border-color: black; -fx-border-insets: -1");
-        setBackground(new Background(new BackgroundFill(Color.color(0.9, 0.9, 0.9), null, null)));
+        setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
 
         laDay = new Label();
         laDay.setAlignment(Pos.CENTER_RIGHT);
@@ -66,8 +66,6 @@ class CalendarDayCell extends VBox {
         if (getChildren().size() > 1) {
             getChildren().remove(1, getChildren().size());
         }
-
-        // TODO calendar entries are displayed for day - 1!!!
 
         getChildren().addAll(entries.stream() //
                 .map(entry -> new CalendarEntryLabel(entry)) //

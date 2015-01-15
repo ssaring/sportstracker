@@ -13,7 +13,6 @@ JavaFX Migration:
     - FXML: Done
     - Controller: see TODO
     - Calendar Control: see TODO in package calendarview
-      - Bug: the calendar entries are shown for one day before
       - Bug: limit the height of the day cells, currently the layout grows when there are
         too much entries for default cell heigt
       - move custom component to st-util (create a calendar package there) ?

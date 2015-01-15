@@ -172,12 +172,13 @@ public class CalendarControl extends VBox {
         for (int i = 0; i < dayCells.length; i++) {
             final boolean dateOfDisplayedMonth = currentCellDate.getMonthValue() == displayedMonth;
             dayCells[i].setDate(currentCellDate, dateOfDisplayedMonth);
-            currentCellDate = currentCellDate.plus(1, ChronoUnit.DAYS);
 
             if (calendarEntryProvider != null) {
                 final List<CalendarEntry> entries = calendarEntryProvider.getCalendarEntriesForDate(currentCellDate);
                 dayCells[i].setEntries(entries);
             }
+
+            currentCellDate = currentCellDate.plus(1, ChronoUnit.DAYS);
         }
     }
 
