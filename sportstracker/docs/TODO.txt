@@ -12,9 +12,8 @@ JavaFX Migration:
   - Calendar View: TODO
     - FXML: Done
     - Controller: see TODO
-    - Calendar Control:
-      - define a custom control based on a 8x7 GridPane layout
-        (see http://www.myexpospace.com/JavaOne2012/SessionFiles/CON4726_PDF_4726_0001.pdf, Option 2)
+    - Calendar Control: see TODO in package calendarview
+      - see also http://www.myexpospace.com/JavaOne2012/SessionFiles/CON4726_PDF_4726_0001.pdf, Option 2
     - add Drag&Drop support for exercise files
   - All Views: add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
