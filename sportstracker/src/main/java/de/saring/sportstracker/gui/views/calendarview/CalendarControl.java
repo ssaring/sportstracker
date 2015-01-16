@@ -127,6 +127,15 @@ public class CalendarControl extends VBox {
         return selectedEntry;
     }
 
+     /**
+     * Sets the listener for handling actions on the calendar entries (double click).
+     *
+     * @param calendarEntryActionListener listener implementation
+     */
+    public void setCalendarEntryActionListener(final CalendarEntryActionListener calendarEntryActionListener) {
+        Stream.of(dayCells).forEach(dayCell -> dayCell.setCalendarEntryActionListener(calendarEntryActionListener));
+    }
+
     private void setupLayout() {
 
         // create GridPanes for header and day cells and add it to the VBox

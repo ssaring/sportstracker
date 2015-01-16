@@ -165,6 +165,9 @@ public class CalendarViewController extends AbstractEntryViewController {
                 onNextMonth(null);
             }
         });
+
+        // execute action 'Edit Entry' when the user double clicks a calendar entry
+        calendarControl.setCalendarEntryActionListener(calendarEntry -> getController().onEditEntry(null));
     }
 
     /**

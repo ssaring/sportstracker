@@ -5,9 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import de.saring.util.data.IdObject;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
@@ -19,6 +17,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
+import de.saring.util.data.IdObject;
 
 /**
  * TODO
@@ -35,6 +35,7 @@ class CalendarDayCell extends VBox {
     private List<CalendarEntryLabel> calendarEntryLabels = new ArrayList<>();
 
     private CalendarEntrySelectionListener calendarEntrySelectionListener;
+    private CalendarEntryActionListener calendarEntryActionListener;
 
     /**
      * Standard c'tor.
@@ -78,7 +79,8 @@ class CalendarDayCell extends VBox {
         }
 
         calendarEntryLabels = entries.stream() //
-                .map(entry -> new CalendarEntryLabel(entry, calendarEntrySelectionListener)) //
+                .map(entry -> //
+                        new CalendarEntryLabel(entry, calendarEntrySelectionListener, calendarEntryActionListener)) //
                 .collect(Collectors.toList());
 
         getChildren().addAll(calendarEntryLabels);
@@ -88,10 +90,20 @@ class CalendarDayCell extends VBox {
      * Sets the listener for the selection status of calendar entries. The new listener is not
      * set for already displayed calendar entries.
      *
-     * @param selectionListener
+     * @param selectionListener listener implementation
      */
     public void setCalendarEntrySelectionListener(final CalendarEntrySelectionListener selectionListener) {
         this.calendarEntrySelectionListener = selectionListener;
+    }
+
+    /**
+     * Sets the listener for handling actions on the calendar entries (double click). The new
+     * listener is not set for already displayed calendar entries.
+     *
+     * @param calendarEntryActionListener listener implementation
+     */
+    public void setCalendarEntryActionListener(final CalendarEntryActionListener calendarEntryActionListener) {
+        this.calendarEntryActionListener = calendarEntryActionListener;
     }
 
     /**
@@ -170,7 +182,8 @@ class CalendarDayCell extends VBox {
 
         private BooleanProperty selected = new SimpleBooleanProperty(false);
 
-        public CalendarEntryLabel(final CalendarEntry entry, final CalendarEntrySelectionListener selectionListener) {
+        public CalendarEntryLabel(final CalendarEntry entry, final CalendarEntrySelectionListener selectionListener,
+                                  final CalendarEntryActionListener actionListener) {
             this.entry = entry;
 
             setMaxWidth(Double.MAX_VALUE);
@@ -189,15 +202,32 @@ class CalendarDayCell extends VBox {
             selected.addListener((observable, oldValue, newValue) -> //
                     setStyle("-fx-background-color: " + (newValue ? "lightskyblue;" : "transparent")));
 
-            // update selection status when the user clicks on the entry label
-            addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-                selected.set(!selected.get());
+            setupListeners(selectionListener, actionListener);
+        }
 
-                // notify selection listener if registered
+        private void setupListeners(final CalendarEntrySelectionListener selectionListener,
+                                    final CalendarEntryActionListener actionListener) {
+
+            // update selection status when the user clicks on the entry label and
+            // notify selection listener, if registered
+            addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+                if (!selected.get()) {
+                    selected.set(true);
+                }
+
                 if (selectionListener != null) {
                     selectionListener.calendarEntrySelectionChanged(entry, selected.get());
                 }
             });
+
+            // register action listener for double clicks on the entry
+            if (actionListener != null) {
+                addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    if (event.getClickCount() > 1) {
+                        actionListener.onCalendarEntryAction(entry);
+                    }
+                });
+            }
         }
     }
 }
