@@ -219,17 +219,18 @@ class CalendarDayCell extends VBox {
         private void setupListeners(final CalendarEntrySelectionListener selectionListener,
                                     final CalendarActionListener actionListener) {
 
-            // update selection status when the user clicks on the entry label and
-            // notify selection listener, if registered
+            // notify selection listener on changes (if registered)
+            if (selectionListener != null) {
+                selected.addListener((observable, oldValue, newValue) -> //
+                selectionListener.calendarEntrySelectionChanged(entry, newValue));
+            }
+
+            // update selection status when the user clicks on the entry label
             addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
                 event.consume();
 
                 if (!selected.get()) {
                     selected.set(true);
-                }
-
-                if (selectionListener != null) {
-                    selectionListener.calendarEntrySelectionChanged(entry, selected.get());
                 }
             });
 
