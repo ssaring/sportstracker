@@ -1,11 +1,13 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
 /**
- * This interfaces is for handling actions on calendar entries.
+ * This interfaces is for handling actions on the calendar control.
  *
  * @author Stefan Saring
  */
-public interface CalendarEntryActionListener {
+public interface CalendarActionListener {
+
+    // TODO add action for double clicks on the calendar day => add new exercises
 
     /**
      * Called when the user has double clicked on a calendar entry.

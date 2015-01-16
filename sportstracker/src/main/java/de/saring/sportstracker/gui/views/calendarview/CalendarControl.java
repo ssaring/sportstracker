@@ -130,12 +130,12 @@ public class CalendarControl extends VBox {
     }
 
      /**
-     * Sets the listener for handling actions on the calendar entries (double click).
+     * Sets the listener for handling actions on the calendar.
      *
-     * @param calendarEntryActionListener listener implementation
+     * @param calendarActionListener listener implementation
      */
-    public void setCalendarEntryActionListener(final CalendarEntryActionListener calendarEntryActionListener) {
-        Stream.of(dayCells).forEach(dayCell -> dayCell.setCalendarEntryActionListener(calendarEntryActionListener));
+    public void setCalendarActionListener(final CalendarActionListener calendarActionListener) {
+        Stream.of(dayCells).forEach(dayCell -> dayCell.setCalendarActionListener(calendarActionListener));
     }
 
     private void setupLayout() {

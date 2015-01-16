@@ -35,7 +35,7 @@ class CalendarDayCell extends VBox {
     private List<CalendarEntryLabel> calendarEntryLabels = new ArrayList<>();
 
     private CalendarEntrySelectionListener calendarEntrySelectionListener;
-    private CalendarEntryActionListener calendarEntryActionListener;
+    private CalendarActionListener calendarActionListener;
 
     /**
      * Standard c'tor.
@@ -80,7 +80,7 @@ class CalendarDayCell extends VBox {
 
         calendarEntryLabels = entries.stream() //
                 .map(entry -> //
-                        new CalendarEntryLabel(entry, calendarEntrySelectionListener, calendarEntryActionListener)) //
+                        new CalendarEntryLabel(entry, calendarEntrySelectionListener, calendarActionListener)) //
                 .collect(Collectors.toList());
 
         getChildren().addAll(calendarEntryLabels);
@@ -100,10 +100,10 @@ class CalendarDayCell extends VBox {
      * Sets the listener for handling actions on the calendar entries (double click). The new
      * listener is not set for already displayed calendar entries.
      *
-     * @param calendarEntryActionListener listener implementation
+     * @param calendarActionListener listener implementation
      */
-    public void setCalendarEntryActionListener(final CalendarEntryActionListener calendarEntryActionListener) {
-        this.calendarEntryActionListener = calendarEntryActionListener;
+    public void setCalendarActionListener(final CalendarActionListener calendarActionListener) {
+        this.calendarActionListener = calendarActionListener;
     }
 
     /**
@@ -183,7 +183,7 @@ class CalendarDayCell extends VBox {
         private BooleanProperty selected = new SimpleBooleanProperty(false);
 
         public CalendarEntryLabel(final CalendarEntry entry, final CalendarEntrySelectionListener selectionListener,
-                                  final CalendarEntryActionListener actionListener) {
+                                  final CalendarActionListener actionListener) {
             this.entry = entry;
 
             setMaxWidth(Double.MAX_VALUE);
@@ -206,7 +206,7 @@ class CalendarDayCell extends VBox {
         }
 
         private void setupListeners(final CalendarEntrySelectionListener selectionListener,
-                                    final CalendarEntryActionListener actionListener) {
+                                    final CalendarActionListener actionListener) {
 
             // update selection status when the user clicks on the entry label and
             // notify selection listener, if registered
