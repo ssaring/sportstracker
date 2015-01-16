@@ -145,6 +145,22 @@ class CalendarDayCell extends VBox {
 
     /**
      * TODO
+     *
+     * @author Stefan Saring
+     */
+    interface CalendarEntrySelectionListener {
+
+        /**
+         * TODO
+         *
+         * @param calendarEntry
+         * @param selected
+         */
+        void calendarEntrySelectionChanged(CalendarEntry calendarEntry, boolean selected);
+    }
+
+    /**
+     * TODO
      */
     private static class CalendarEntryLabel extends Label {
 

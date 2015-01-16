@@ -2,6 +2,9 @@ package de.saring.sportstracker.gui.views.calendarview;
 
 import java.time.LocalDate;
 
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.Note;
+import de.saring.sportstracker.data.Weight;
 import de.saring.util.data.IdDateObject;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -74,6 +77,36 @@ public class CalendarViewController extends AbstractEntryViewController {
     }
 
     @Override
+    public int getSelectedExerciseCount() {
+        return getSelectedExerciseIDs().length;
+    }
+
+    @Override
+    public int[] getSelectedExerciseIDs() {
+        return getSelectedEntryIdsOfClass(Exercise.class);
+    }
+
+    @Override
+    public int getSelectedNoteCount() {
+        return getSelectedNoteIDs().length;
+    }
+
+    @Override
+    public int[] getSelectedNoteIDs() {
+        return getSelectedEntryIdsOfClass(Note.class);
+    }
+
+    @Override
+    public int getSelectedWeightCount() {
+        return getSelectedWeightIDs().length;
+    }
+
+    @Override
+    public int[] getSelectedWeightIDs() {
+        return getSelectedEntryIdsOfClass(Weight.class);
+    }
+
+    @Override
     public void selectEntry(final IdObject entry) {
         if (entry instanceof IdDateObject) {
             IdDateObject dateEntry = (IdDateObject) entry;
@@ -119,6 +152,10 @@ public class CalendarViewController extends AbstractEntryViewController {
         calendarControl = new CalendarControl(getContext().getResources());
         calendarControl.setCalendarEntryProvider(new CalendarEntryProviderImpl(getContext(), getDocument()));
         spCalendar.getChildren().addAll(calendarControl);
+
+        // update controller-actions and the status bar on selection changes
+        calendarControl.selectedEntryProperty().addListener((observable, oldValue, newValue) -> //
+                getController().updateActionsAndStatusBar());
 
         // scroll the displayed month when the user uses the mouse wheel on the calendar
         calendarControl.setOnScroll(event -> {
@@ -186,4 +223,21 @@ public class CalendarViewController extends AbstractEntryViewController {
         displayedYear.set(today.getYear());
         updateView();
     }
+
+    /**
+     * Returns an array with the ID's of the currently selected calendar entries of the
+     * specified type (maximum count in the calendar view is 1).
+     *
+     * @return array of the selected CalendarEntry ID's (can be empty but not null)
+     */
+    private int[] getSelectedEntryIdsOfClass(final Class<? extends IdDateObject> clazz) {
+        final IdObject selectedEntry = calendarControl.selectedEntryProperty().get();
+
+        if ((selectedEntry == null) || (selectedEntry.getClass() != clazz)) {
+            return new int[0];
+        } else {
+            return new int[]{ selectedEntry.getId() };
+        }
+    }
+
 }
