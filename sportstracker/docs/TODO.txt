@@ -16,6 +16,7 @@ JavaFX Migration:
       - Day Cell: define a bottom padding of 1px, there must be some space when there is too much content for the height
       - move custom component to st-util (create a calendar package there) ?
       - see also http://www.myexpospace.com/JavaOne2012/SessionFiles/CON4726_PDF_4726_0001.pdf, Option 2
+      - Add new Exercises on double clicks in day cells
     - add Drag&Drop support for exercise files
   - All Views: add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)

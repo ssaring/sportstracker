@@ -17,7 +17,7 @@
                         <Tooltip text="%st.calview.previousMonth.Action.shortDescription" />
                     </tooltip>
                 </Button>
-                <Label fx:id="laCurrentMonth" alignment="CENTER" minWidth="100.0" text="%st.calview.months.1" />
+                <Label fx:id="laDisplayedMonth" alignment="CENTER" minWidth="100.0" text="%st.calview.months.1" />
                 <Button fx:id="btNextMonth" mnemonicParsing="false" onAction="#onNextMonth" styleClass="toolbarButton">
                     <tooltip>
                         <Tooltip text="%st.calview.nextMonth.Action.shortDescription" />
@@ -29,7 +29,7 @@
                         <Tooltip text="%st.calview.previousYear.Action.shortDescription" />
                     </tooltip>
                 </Button>
-                <Label fx:id="laCurrentYear" alignment="CENTER" minWidth="80.0" text="2015" />
+                <Label fx:id="laDisplayedYear" alignment="CENTER" minWidth="80.0" text="2015" />
                 <Button fx:id="btNextYear" mnemonicParsing="false" onAction="#onNextYear" styleClass="toolbarButton">
                     <tooltip>
                         <Tooltip text="%st.calview.nextYear.Action.shortDescription" />

@@ -2,9 +2,12 @@ package de.saring.sportstracker.gui.views.calendarview;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import de.saring.util.data.IdObject;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
@@ -28,6 +31,10 @@ class CalendarDayCell extends VBox {
 
     private LocalDate date;
     private boolean displayedMonth;
+
+    private List<CalendarEntryLabel> calendarEntryLabels = new ArrayList<>();
+
+    private CalendarEntrySelectionListener calendarEntrySelectionListener;
 
     /**
      * Standard c'tor.
@@ -70,9 +77,50 @@ class CalendarDayCell extends VBox {
             getChildren().remove(1, getChildren().size());
         }
 
-        getChildren().addAll(entries.stream() //
-                .map(entry -> new CalendarEntryLabel(entry)) //
-                .collect(Collectors.toList()));
+        calendarEntryLabels = entries.stream() //
+                .map(entry -> new CalendarEntryLabel(entry, calendarEntrySelectionListener)) //
+                .collect(Collectors.toList());
+
+        getChildren().addAll(calendarEntryLabels);
+    }
+
+    /**
+     * Sets the listener for the selection status of calendar entries. The new listener is not
+     * set for already displayed calendar entries.
+     *
+     * @param selectionListener
+     */
+    public void setCalendarEntrySelectionListener(final CalendarEntrySelectionListener selectionListener) {
+        this.calendarEntrySelectionListener = selectionListener;
+    }
+
+    /**
+     * Removes all calendar entry selections of this day cell, except the specified calendar entry.
+     *
+     * @param calendarEntryExcept entry for which the selection must not be removed (can be null)
+     */
+    public void removeSelectionExcept(final CalendarEntry calendarEntryExcept) {
+        calendarEntryLabels.stream() //
+                .filter(calendarEntryLabel -> calendarEntryLabel.selected.get() && //
+                        !calendarEntryLabel.entry.getEntry().equals(calendarEntryExcept.getEntry())) //
+                .forEach(calendarEntryLabel -> calendarEntryLabel.selected.set(false));
+    }
+
+    /**
+     * Selects the specified entry, if it is displayed in this day cell.
+     *
+     * @param entry entry to select
+     * @return true when the entry was selected
+     */
+    public boolean selectEntry(final IdObject entry) {
+
+        for (CalendarEntryLabel calendarEntryLabel : calendarEntryLabels) {
+            if (calendarEntryLabel.entry.getEntry().equals(entry)) {
+                calendarEntryLabel.selected.set(true);
+                return true;
+            }
+        }
+        return false;
     }
 
     private void updateDayLabel() {
@@ -104,7 +152,9 @@ class CalendarDayCell extends VBox {
 
         private BooleanProperty selected = new SimpleBooleanProperty(false);
 
-        public CalendarEntryLabel(final CalendarEntry entry) {
+        public CalendarEntryLabel(final CalendarEntry entry, final CalendarEntrySelectionListener selectionListener) {
+            this.entry = entry;
+
             setMaxWidth(Double.MAX_VALUE);
             this.setText(entry.getText());
 
@@ -124,6 +174,11 @@ class CalendarDayCell extends VBox {
             // update selection status when the user clicks on the entry label
             addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
                 selected.set(!selected.get());
+
+                // notify selection listener if registered
+                if (selectionListener != null) {
+                    selectionListener.calendarEntrySelectionChanged(entry, selected.get());
+                }
             });
         }
     }

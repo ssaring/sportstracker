@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.views.calendarview;
 
 import de.saring.util.AppResources;
 import de.saring.util.data.IdDateObject;
+import de.saring.util.data.IdObject;
 import javafx.geometry.VPos;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * <p>Custom control which displays a calendar for one month. It contains cells for all
@@ -52,6 +54,7 @@ public class CalendarControl extends VBox {
 
     private CalendarEntryProvider calendarEntryProvider;
 
+    private CalendarEntrySelectionListener externalCalendarEntrySelectionListener;
 
     /**
      * Standard c'tor.
@@ -67,6 +70,7 @@ public class CalendarControl extends VBox {
         weekStartsSunday = false;
 
         setupLayout();
+        setupSelectionListener();
         updateContent();
     }
 
@@ -82,6 +86,15 @@ public class CalendarControl extends VBox {
     /**
      * TODO
      *
+     * @param entrySelectionListener
+     */
+    public void setCalendarEntrySelectionListener(final CalendarEntrySelectionListener entrySelectionListener) {
+        this.externalCalendarEntrySelectionListener = entrySelectionListener;
+    }
+
+    /**
+     * TODO
+     *
      * @param year
      * @param month
      * @param weekStartsSunday
@@ -91,6 +104,26 @@ public class CalendarControl extends VBox {
         this.displayedMonth = month;
         this.weekStartsSunday = weekStartsSunday;
         updateContent();
+    }
+
+    /**
+     * Selects the specified entry, if it is currently displayed in the calendar.
+     *
+     * @param entry entry to select
+     */
+    public void selectEntry(final IdObject entry) {
+        for (CalendarDayCell dayCell : dayCells) {
+            if (dayCell.selectEntry(entry)) {
+                break;
+            }
+        }
+    }
+
+    /**
+     * Removes the entry selection, if there is one.
+     */
+    public void removeSelection() {
+        Stream.of(dayCells).forEach(dayCell -> dayCell.removeSelectionExcept(null));
     }
 
     private void setupLayout() {
@@ -144,6 +177,24 @@ public class CalendarControl extends VBox {
         }
 
         // TODO add weekly summary cells
+    }
+
+    private void setupSelectionListener() {
+
+        // setup an internal entry selection listener on all CalendarDayCells:
+        // -> it removes any other existing entry selections first and then notifies the
+        // external entry selection listener
+        final CalendarEntrySelectionListener listener = (calendarEntry, selected) -> {
+            if (selected) {
+                Stream.of(dayCells).forEach(dayCell -> dayCell.removeSelectionExcept(calendarEntry));
+            }
+
+            if (externalCalendarEntrySelectionListener != null) {
+                externalCalendarEntrySelectionListener.calendarEntrySelectionChanged(calendarEntry, selected);
+            }
+        };
+
+        Stream.of(dayCells).forEach(dayCell -> dayCell.setCalendarEntrySelectionListener(listener));
     }
 
     private void updateContent() {

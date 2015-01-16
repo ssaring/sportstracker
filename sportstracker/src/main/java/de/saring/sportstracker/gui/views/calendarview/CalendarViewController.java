@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.views.calendarview;
 
 import java.time.LocalDate;
 
+import de.saring.util.data.IdDateObject;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
@@ -29,10 +30,10 @@ import de.saring.util.data.IdObject;
 public class CalendarViewController extends AbstractEntryViewController {
 
     @FXML
-    private Label laCurrentMonth;
+    private Label laDisplayedMonth;
 
     @FXML
-    private Label laCurrentYear;
+    private Label laDisplayedYear;
 
     @FXML
     private StackPane spCalendar;
@@ -42,12 +43,12 @@ public class CalendarViewController extends AbstractEntryViewController {
     /**
      * The current displayed month.
      */
-    private IntegerProperty currentMonth = new SimpleIntegerProperty();
+    private IntegerProperty displayedMonth = new SimpleIntegerProperty();
 
     /**
      * The current displayed year.
      */
-    private IntegerProperty currentYear = new SimpleIntegerProperty();
+    private IntegerProperty displayedYear = new SimpleIntegerProperty();
 
     /**
      * Standard c'tor for dependency injection.
@@ -68,18 +69,27 @@ public class CalendarViewController extends AbstractEntryViewController {
 
     @Override
     public void updateView() {
-        calendarControl.updateCalendar(currentYear.get(), currentMonth.get(), //
+        calendarControl.updateCalendar(displayedYear.get(), displayedMonth.get(), //
                 getDocument().getOptions().isWeekStartSunday());
     }
 
     @Override
     public void selectEntry(final IdObject entry) {
-        // TODO
+        if (entry instanceof IdDateObject) {
+            IdDateObject dateEntry = (IdDateObject) entry;
+
+            // set calendar to month/year of the entry
+            displayedYear.set(dateEntry.getDateTime().getYear());
+            displayedMonth.set(dateEntry.getDateTime().getMonthValue());
+            updateView();
+
+            calendarControl.selectEntry(dateEntry);
+        }
     }
 
     @Override
     public void removeSelection() {
-        // TODO
+        calendarControl.removeSelection();
     }
 
     @Override
@@ -97,9 +107,9 @@ public class CalendarViewController extends AbstractEntryViewController {
         setupCalendarControl();
 
         // bind month and year labels to current values
-        currentMonth.addListener((observable, oldValue, newValue) -> laCurrentMonth.setText( //
+        displayedMonth.addListener((observable, oldValue, newValue) -> laDisplayedMonth.setText( //
                 getContext().getResources().getString("st.calview.months." + newValue.intValue())));
-        laCurrentYear.textProperty().bind(currentYear.asString());
+        laDisplayedYear.textProperty().bind(displayedYear.asString());
 
         // display the current day at startup
         onToday(null);
@@ -125,11 +135,11 @@ public class CalendarViewController extends AbstractEntryViewController {
      */
     @FXML
     private void onPreviousMonth(final ActionEvent event) {
-        if (currentMonth.get() > 1) {
-            currentMonth.set(currentMonth.get() - 1);
+        if (displayedMonth.get() > 1) {
+            displayedMonth.set(displayedMonth.get() - 1);
         } else {
-            currentMonth.set(12);
-            currentYear.set(currentYear.get() - 1);
+            displayedMonth.set(12);
+            displayedYear.set(displayedYear.get() - 1);
         }
         updateView();
     }
@@ -139,11 +149,11 @@ public class CalendarViewController extends AbstractEntryViewController {
      */
     @FXML
     private void onNextMonth(final ActionEvent event) {
-        if (currentMonth.get() < 12) {
-            currentMonth.set(currentMonth.get() + 1);
+        if (displayedMonth.get() < 12) {
+            displayedMonth.set(displayedMonth.get() + 1);
         } else {
-            currentMonth.set(1);
-            currentYear.set(currentYear.get() + 1);
+            displayedMonth.set(1);
+            displayedYear.set(displayedYear.get() + 1);
         }
         updateView();
     }
@@ -153,7 +163,7 @@ public class CalendarViewController extends AbstractEntryViewController {
      */
     @FXML
     private void onPreviousYear(final ActionEvent event) {
-        currentYear.set(currentYear.get() - 1);
+        displayedYear.set(displayedYear.get() - 1);
         updateView();
     }
 
@@ -162,7 +172,7 @@ public class CalendarViewController extends AbstractEntryViewController {
      */
     @FXML
     private void onNextYear(final ActionEvent event) {
-        currentYear.set(currentYear.get() + 1);
+        displayedYear.set(displayedYear.get() + 1);
         updateView();
     }
 
@@ -172,8 +182,8 @@ public class CalendarViewController extends AbstractEntryViewController {
     @FXML
     private void onToday(final ActionEvent event) {
         final LocalDate today = LocalDate.now();
-        currentMonth.set(today.getMonthValue());
-        currentYear.set(today.getYear());
+        displayedMonth.set(today.getMonthValue());
+        displayedYear.set(today.getYear());
         updateView();
     }
 }
