@@ -100,9 +100,11 @@ class CalendarDayCell extends VBox {
      * @param calendarEntryExcept entry for which the selection must not be removed (can be null)
      */
     public void removeSelectionExcept(final CalendarEntry calendarEntryExcept) {
+        final IdObject entryExcept = calendarEntryExcept == null ? null : calendarEntryExcept.getEntry();
+
         calendarEntryLabels.stream() //
-                .filter(calendarEntryLabel -> calendarEntryLabel.selected.get() && //
-                        !calendarEntryLabel.entry.getEntry().equals(calendarEntryExcept.getEntry())) //
+                .filter(entryLabel -> entryLabel.selected.get() && //
+                        (entryExcept == null || !entryExcept.equals(entryLabel.entry.getEntry()))) //
                 .forEach(calendarEntryLabel -> calendarEntryLabel.selected.set(false));
     }
 
