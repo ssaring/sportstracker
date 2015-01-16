@@ -166,8 +166,23 @@ public class CalendarViewController extends AbstractEntryViewController {
             }
         });
 
-        // execute action 'Edit Entry' when the user double clicks a calendar entry
-        calendarControl.setCalendarActionListener(calendarEntry -> getController().onEditEntry(null));
+        // setup calendar action handlers
+        calendarControl.setCalendarActionListener(new CalendarActionListener() {
+
+            @Override
+            public void onCalendarDayAction(final LocalDate date) {
+                // execute action 'Add Exercise' for this date when the user double clicks a calendar day cell
+                getController().setDateForNewEntries(date);
+                getController().onAddExercise(null);
+                getController().setDateForNewEntries(null);
+            }
+
+            @Override
+            public void onCalendarEntryAction(final CalendarEntry calendarEntry) {
+                // execute action 'Edit Entry' when the user double clicks a calendar entry
+                getController().onEditEntry(null);
+            }
+        });
     }
 
     /**

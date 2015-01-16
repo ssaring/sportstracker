@@ -104,6 +104,17 @@ class CalendarDayCell extends VBox {
      */
     public void setCalendarActionListener(final CalendarActionListener calendarActionListener) {
         this.calendarActionListener = calendarActionListener;
+
+        // setup action listener for double clicks on the day cell (not on entries)
+        if (calendarActionListener == null) {
+            setOnMouseClicked(null);
+        } else {
+            setOnMouseClicked(event -> {
+                if (event.getClickCount() > 1) {
+                    calendarActionListener.onCalendarDayAction(date);
+                }
+            });
+        }
     }
 
     /**

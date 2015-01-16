@@ -13,8 +13,11 @@ JavaFX Migration:
     - FXML: Done
     - Controller: see TODO
     - Calendar Control: see TODO in package calendarview
+      - bug: when closing an Edit Dialog the entry is selected, but the toolbar and statusbar are not updated
       - missing features:
         - add new exercise for selected date when double clicking on empty day cell space
+        - implement summary column
+        - add context menu
         - add Drag&Drop support for exercise files
       - Day Cell: define a bottom padding of 1px, there must be some space when there is too much content for the height
       - move custom component to st-util (create a calendar package there) ?

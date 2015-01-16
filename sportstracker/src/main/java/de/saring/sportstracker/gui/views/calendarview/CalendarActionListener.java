@@ -1,5 +1,7 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
+import java.time.LocalDate;
+
 /**
  * This interfaces is for handling actions on the calendar control.
  *
@@ -7,7 +9,12 @@ package de.saring.sportstracker.gui.views.calendarview;
  */
 public interface CalendarActionListener {
 
-    // TODO add action for double clicks on the calendar day => add new exercises
+    /**
+     * Called when the user has double clicked on a calendar day cell, not on an entry.
+     *
+     * @param date the date of the clicked calendar day cell
+     */
+    void onCalendarDayAction(LocalDate date);
 
     /**
      * Called when the user has double clicked on a calendar entry.
