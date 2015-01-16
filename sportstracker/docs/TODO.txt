@@ -14,12 +14,12 @@ JavaFX Migration:
     - Controller: see TODO
     - Calendar Control: see TODO in package calendarview
       - missing features:
-        - remove current selection when clicking on day cells, but not on entries
         - add new exercise for selected date when double clicking on empty day cell space
         - add Drag&Drop support for exercise files
       - Day Cell: define a bottom padding of 1px, there must be some space when there is too much content for the height
       - move custom component to st-util (create a calendar package there) ?
       - see also http://www.myexpospace.com/JavaOne2012/SessionFiles/CON4726_PDF_4726_0001.pdf, Option 2
+      - layout problems with very small height when there are entries => day cells will overlap the control bottom
   - All Views: add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties

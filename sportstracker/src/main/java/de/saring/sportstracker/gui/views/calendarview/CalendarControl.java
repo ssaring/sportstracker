@@ -4,7 +4,9 @@ import de.saring.util.AppResources;
 import de.saring.util.data.IdObject;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.EventHandler;
 import javafx.geometry.VPos;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.ColumnConstraints;
@@ -71,7 +73,7 @@ public class CalendarControl extends VBox {
         weekStartsSunday = false;
 
         setupLayout();
-        setupSelectionListener();
+        setupListeners();
         updateContent();
     }
 
@@ -189,7 +191,7 @@ public class CalendarControl extends VBox {
         // TODO add weekly summary cells
     }
 
-    private void setupSelectionListener() {
+    private void setupListeners() {
 
         // setup an entry selection listener on all CalendarDayCells:
         // it removes any previous entry selections and stores the selected entry
@@ -201,7 +203,13 @@ public class CalendarControl extends VBox {
             selectedEntry.set(selected ? calendarEntry.getEntry() : null);
         };
 
-        Stream.of(dayCells).forEach(dayCell -> dayCell.setCalendarEntrySelectionListener(listener));
+        // setup handler for removing the current selection when the user clicks in empty day cell area
+        final EventHandler<MouseEvent> dayCellPressedHandler = event -> removeSelection();
+
+        Stream.of(dayCells).forEach(dayCell -> {
+            dayCell.setCalendarEntrySelectionListener(listener);
+            dayCell.addEventHandler(MouseEvent.MOUSE_PRESSED, dayCellPressedHandler);
+        });
     }
 
     private void updateContent() {

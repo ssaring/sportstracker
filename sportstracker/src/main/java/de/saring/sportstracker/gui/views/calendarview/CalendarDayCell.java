@@ -211,6 +211,8 @@ class CalendarDayCell extends VBox {
             // update selection status when the user clicks on the entry label and
             // notify selection listener, if registered
             addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+                event.consume();
+
                 if (!selected.get()) {
                     selected.set(true);
                 }
@@ -223,6 +225,8 @@ class CalendarDayCell extends VBox {
             // register action listener for double clicks on the entry
             if (actionListener != null) {
                 addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    event.consume();
+
                     if (event.getClickCount() > 1) {
                         actionListener.onCalendarEntryAction(entry);
                     }
