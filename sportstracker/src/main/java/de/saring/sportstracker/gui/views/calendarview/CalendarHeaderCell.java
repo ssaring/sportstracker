@@ -3,8 +3,6 @@ package de.saring.sportstracker.gui.views.calendarview;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 
 /**
@@ -23,8 +21,7 @@ class CalendarHeaderCell extends Label {
         setPadding(new Insets(4));
 
         // TODO use css
-        setStyle("-fx-border-color: black; -fx-border-insets: -1");
-        setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
+        setStyle("-fx-border-color: black; -fx-border-insets: -1; -fx-background-color: cornflowerblue;");
     }
 
     /**
@@ -36,6 +33,7 @@ class CalendarHeaderCell extends Label {
     public void setText(final String text, final boolean isSunday) {
         setText(text);
         // TODO use css
-        setTextFill(isSunday ? Color.RED : Color.BLACK);
+        setTextFill(isSunday ? Color.RED : Color.WHITE);
+
     }
 }

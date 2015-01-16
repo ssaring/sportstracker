@@ -119,7 +119,7 @@ class CalendarDayCell extends VBox {
             // bind the background color to the selection status
             // TODO use CSS
             selected.addListener((observable, oldValue, newValue) -> //
-                    setStyle("-fx-background-color: " + (newValue ? "lightblue;" : "transparent")));
+                    setStyle("-fx-background-color: " + (newValue ? "lightskyblue;" : "transparent")));
 
             // update selection status when the user clicks on the entry label
             addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
