@@ -5,10 +5,13 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
@@ -99,7 +102,10 @@ class CalendarDayCell extends VBox {
 
         private CalendarEntry entry;
 
+        private BooleanProperty selected = new SimpleBooleanProperty(false);
+
         public CalendarEntryLabel(final CalendarEntry entry) {
+            setMaxWidth(Double.MAX_VALUE);
             this.setText(entry.getText());
 
             if (entry.getToolTipText() != null) {
@@ -109,6 +115,16 @@ class CalendarDayCell extends VBox {
             if (entry.getColor() != null) {
                 this.setTextFill(entry.getColor());
             }
+
+            // bind the background color to the selection status
+            // TODO use CSS
+            selected.addListener((observable, oldValue, newValue) -> //
+                    setStyle("-fx-background-color: " + (newValue ? "lightblue;" : "transparent")));
+
+            // update selection status when the user clicks on the entry label
+            addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+                selected.set(!selected.get());
+            });
         }
     }
 }
