@@ -1,6 +1,7 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
 import de.saring.util.AppResources;
+import de.saring.util.Date310Utils;
 import de.saring.util.data.IdObject;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -50,6 +51,7 @@ public class CalendarControl extends VBox {
 
     private CalendarHeaderCell[] headerCells = new CalendarHeaderCell[GRIDS_COLUMN_COUNT];
     private CalendarDayCell[] dayCells = new CalendarDayCell[7 * GRID_DAYS_ROW_COUNT];
+    private CalendarSummaryCell[] summaryCells = new CalendarSummaryCell[GRID_DAYS_ROW_COUNT];
 
     private int displayedMonth;
     private int displayedYear;
@@ -188,7 +190,22 @@ public class CalendarControl extends VBox {
             }
         }
 
-        // TODO add weekly summary cells
+        // create day cells and add them to the days GridPane
+        for (int row = 0; row < GRID_DAYS_ROW_COUNT; row++) {
+            for (int column = 0; column < 7; column++) {
+                final CalendarDayCell dayCell = new CalendarDayCell();
+                dayCells[(row * 7) + column] = dayCell;
+                gridDayCells.add(dayCell, column, row);
+            }
+        }
+
+        // create weekly summary cells and add them to the days GridPane
+        for (int row = 0; row < summaryCells.length; row++) {
+            final CalendarSummaryCell summaryCell = new CalendarSummaryCell();
+            summaryCell.setWeek(row + 1);
+            summaryCells[row] = summaryCell;
+            gridDayCells.add(summaryCell, GRIDS_COLUMN_COUNT - 1, row);
+        }
     }
 
     private void setupListeners() {
@@ -217,7 +234,7 @@ public class CalendarControl extends VBox {
 
         updateHeaderCells();
         updateDayCells();
-        // TODO updateSummaryCells();
+        updateSummaryCells();
     }
 
     /**
@@ -236,7 +253,7 @@ public class CalendarControl extends VBox {
     }
 
     /**
-     * Updates the content of all day cells for the current month and year.
+     * Updates the content of all day cells for the displayed month and year.
      */
     private void updateDayCells() {
         LocalDate currentCellDate = getFirstDisplayedDay();
@@ -252,6 +269,26 @@ public class CalendarControl extends VBox {
 
             currentCellDate = currentCellDate.plus(1, ChronoUnit.DAYS);
         }
+    }
+
+    /**
+     * Updates the content of all summary cells for the displayed weeks.
+     */
+    private void updateSummaryCells() {
+
+        // process all summary cells for the displayed weeks
+        for (int row = 0; row < summaryCells.length; row++) {
+
+            // get week number for a date in the middle of the week (otherwise problems with JSR 310
+            // DateTime API, it sometimes returns week ranges 53, 0, 1 or 53, 2, 3)
+            final LocalDate weekMiddleDate = dayCells[row * 7 + 3].getDate();
+            final int weekNr = Date310Utils.getWeekNumber(weekMiddleDate, weekStartsSunday);
+
+            summaryCells[row].setWeek(weekNr);
+        }
+
+
+        // TODO
     }
 
     /**

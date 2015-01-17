@@ -56,6 +56,15 @@ class CalendarDayCell extends VBox {
     /**
      * TODO
      *
+     * @return
+     */
+    public LocalDate getDate() {
+        return date;
+    }
+
+    /**
+     * TODO
+     *
      * @param date
      * @param displayedMonth
      */
