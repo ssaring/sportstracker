@@ -3,7 +3,6 @@ package de.saring.sportstracker.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.saring.util.gui.javafx.WindowBoundsPersistence;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -16,6 +15,7 @@ import com.google.inject.Injector;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STOptions;
+import de.saring.util.gui.javafx.WindowBoundsPersistence;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**
@@ -115,6 +115,11 @@ public class STApplication extends Application {
      * @param args command line parameters
      */
     public static void main(final String args[]) {
+
+        // set format for java.util.logging, a log statement must be printed to a single line
+        System.setProperty("java.util.logging.SimpleFormatter.format",
+                "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$s %2$s %5$s %6$s%n");
+
         launch(args);
     }
 }
