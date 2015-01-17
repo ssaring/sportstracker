@@ -201,7 +201,6 @@ public class CalendarControl extends VBox {
         // create weekly summary cells and add them to the days GridPane
         for (int row = 0; row < summaryCells.length; row++) {
             final CalendarSummaryCell summaryCell = new CalendarSummaryCell();
-            summaryCell.setWeek(row + 1);
             summaryCells[row] = summaryCell;
             gridDayCells.add(summaryCell, GRIDS_COLUMN_COUNT - 1, row);
         }
@@ -286,7 +285,7 @@ public class CalendarControl extends VBox {
             // DateTime API, it sometimes returns week ranges 53, 0, 1 or 53, 2, 3)
             final LocalDate dateWeekMiddle = dateWeekStart.plusDays(3);
             final int weekNr = Date310Utils.getWeekNumber(dateWeekMiddle, weekStartsSunday);
-            summaryCells[row].setWeek(weekNr);
+            summaryCells[row].setNumber(weekNr);
 
             // get and update summary entries for date range
             if (calendarEntryProvider != null) {

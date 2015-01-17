@@ -8,14 +8,9 @@ import java.util.stream.Collectors;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import de.saring.util.data.IdObject;
@@ -25,9 +20,7 @@ import de.saring.util.data.IdObject;
  *
  * @author Stefan Saring
  */
-class CalendarDayCell extends VBox {
-
-    private Label laDay;
+class CalendarDayCell extends AbstractCalendarCell {
 
     private LocalDate date;
     private boolean displayedMonth;
@@ -41,16 +34,7 @@ class CalendarDayCell extends VBox {
      * Standard c'tor.
      */
     public CalendarDayCell() {
-        setPadding(new Insets(4));
-        setSpacing(4);
-        // TODO use css
-        setStyle("-fx-border-color: black; -fx-border-insets: -1");
-        setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-
-        laDay = new Label();
-        laDay.setAlignment(Pos.CENTER_RIGHT);
-        laDay.setMaxWidth(Double.MAX_VALUE);
-        getChildren().add(laDay);
+        super(Color.WHITE);
     }
 
     /**
@@ -76,23 +60,17 @@ class CalendarDayCell extends VBox {
     }
 
     /**
-     * Displays the specified calendar entries inside this day cell. All previous entries
-     * will be removed before.
+     * Displays the specified calendar entries inside this day cell.
      *
      * @param entries list of calendar entries (must not be null)
      */
     public void setEntries(final List<CalendarEntry> entries) {
 
-        if (getChildren().size() > 1) {
-            getChildren().remove(1, getChildren().size());
-        }
-
         calendarEntryLabels = entries.stream() //
-                .map(entry -> //
-                        new CalendarEntryLabel(entry, calendarEntrySelectionListener, calendarActionListener)) //
+                .map(entry -> new CalendarEntryLabel(entry, calendarEntrySelectionListener, calendarActionListener)) //
                 .collect(Collectors.toList());
 
-        getChildren().addAll(calendarEntryLabels);
+        updateEntryLabels(calendarEntryLabels);
     }
 
     /**
@@ -158,7 +136,7 @@ class CalendarDayCell extends VBox {
     }
 
     private void updateDayLabel() {
-        laDay.setText(String.valueOf(date.getDayOfMonth()));
+        setNumber(date.getDayOfMonth());
 
         // TODO use CSS
         final boolean today = LocalDate.now().equals(date);
@@ -173,8 +151,8 @@ class CalendarDayCell extends VBox {
             style = "-fx-font-weight: normal;";
         }
 
-        laDay.setTextFill(color);
-        laDay.setStyle(style);
+        getNumberLabel().setTextFill(color);
+        getNumberLabel().setStyle(style);
     }
 
     /**
@@ -203,7 +181,7 @@ class CalendarDayCell extends VBox {
         private BooleanProperty selected = new SimpleBooleanProperty(false);
 
         public CalendarEntryLabel(final CalendarEntry entry, final CalendarEntrySelectionListener selectionListener,
-                                  final CalendarActionListener actionListener) {
+                final CalendarActionListener actionListener) {
             this.entry = entry;
 
             setMaxWidth(Double.MAX_VALUE);
@@ -220,13 +198,13 @@ class CalendarDayCell extends VBox {
             // bind the background color to the selection status
             // TODO use CSS
             selected.addListener((observable, oldValue, newValue) -> //
-                    setStyle("-fx-background-color: " + (newValue ? "lightskyblue;" : "transparent")));
+            setStyle("-fx-background-color: " + (newValue ? "lightskyblue;" : "transparent")));
 
             setupListeners(selectionListener, actionListener);
         }
 
         private void setupListeners(final CalendarEntrySelectionListener selectionListener,
-                                    final CalendarActionListener actionListener) {
+                final CalendarActionListener actionListener) {
 
             // notify selection listener on changes (if registered)
             if (selectionListener != null) {
