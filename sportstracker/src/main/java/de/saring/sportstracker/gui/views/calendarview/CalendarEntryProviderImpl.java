@@ -1,6 +1,7 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,32 @@ public class CalendarEntryProviderImpl implements CalendarEntryProvider {
                 .collect(Collectors.toList()));
 
         return calendarEntries;
+    }
+
+    @Override
+    public List<String> getSummaryForDateRange(final LocalDate dateStart, final LocalDate dateEnd) {
+        final List<String> summaryLines = new ArrayList<>();
+
+        // calculate summary distance and duration for all exercises in range
+        final List<Exercise> exersisesInRange = document.getFilterableExerciseList().getEntriesInDateRange( //
+                dateStart, dateEnd);
+
+        if (exersisesInRange.size() > 0) {
+            float summaryDistance = 0;
+            int summaryDuration = 0;
+
+            for (Exercise exercise : exersisesInRange) {
+                summaryDistance += exercise.getDistance();
+                summaryDuration += exercise.getDuration();
+            }
+
+            // add formatted distance and duration strings
+            final FormatUtils formatUtils = context.getFormatUtils();
+            summaryLines.add(formatUtils.distanceToString(summaryDistance, 2));
+            summaryLines.add(formatUtils.seconds2TimeString(summaryDuration));
+        }
+
+        return summaryLines;
     }
 
     private CalendarEntry createCalendarEntryForNote(final Note note) {

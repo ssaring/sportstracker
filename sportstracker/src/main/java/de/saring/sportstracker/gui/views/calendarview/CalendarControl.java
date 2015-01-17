@@ -1,8 +1,12 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
-import de.saring.util.AppResources;
-import de.saring.util.Date310Utils;
-import de.saring.util.data.IdObject;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
+import java.util.List;
+import java.util.stream.Stream;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
@@ -17,25 +21,20 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
-import java.util.List;
-import java.util.stream.Stream;
+import de.saring.util.AppResources;
+import de.saring.util.Date310Utils;
+import de.saring.util.data.IdObject;
 
 /**
- * <p>Custom control which displays a calendar for one month. It contains cells for all
- * the days of the month, each cell contains the SportsTracker entries for that day.</p>
- * <p>The layout uses a VBox which contains two GridPanes, one for the header cells
- * (weekday names), the other for the day cells (for all days of the displayed month
- * and parts of the previous and next month).</p>
- * <p>Both GridPanes contains 8 columns of same width, 7 for all days of a week
- * (Sunday - Saturday or Monday - Sunday) and one for the weekly summary.</p>
- * <p>The GridPane for the header cells contains only one row with a fixed height. The
- * GridPane for the day cells contains always 6 rows, each for one week (6 weeks to
- * make sure that always the complete month can be displayed.) The GridPane for the day
- * cells uses all the available vertical space.</p>
+ * Custom control which displays a calendar for one month. It contains cells for all the days of the month,
+ * each cell contains the SportsTracker entries for that day.<br/>
+ * The layout uses a VBox which contains two GridPanes, one for the header cells (weekday names), the other
+ * for the day cells (for all days of the displayed month and parts of the previous and next month).<br/>
+ * Both GridPanes contains 8 columns of same width, 7 for all days of a week (Sunday - Saturday or
+ * Monday - Sunday) and one for the weekly summary.<br/>
+ * The GridPane for the header cells contains only one row with a fixed height. The GridPane for the day
+ * cells contains always 6 rows, each for one week (6 weeks to make sure that always the complete month can
+ * be displayed.) The GridPane for the day cells uses all the available vertical space.
  *
  * @author Stefan Saring
  */
@@ -131,7 +130,7 @@ public class CalendarControl extends VBox {
         return selectedEntry;
     }
 
-     /**
+    /**
      * Sets the listener for handling actions on the calendar.
      *
      * @param calendarActionListener listener implementation
@@ -176,7 +175,7 @@ public class CalendarControl extends VBox {
         }
 
         // create header cells and add them to the header GridPane
-        for (int i = 0; i< headerCells.length; i++) {
+        for (int i = 0; i < headerCells.length; i++) {
             headerCells[i] = new CalendarHeaderCell();
             gridHeaderCells.add(headerCells[i], i, 0);
         }
@@ -243,8 +242,9 @@ public class CalendarControl extends VBox {
     private void updateHeaderCells() {
         final int indexSunday = weekStartsSunday ? 0 : 6;
         final String[] weekdays = weekStartsSunday ? //
-                new String[] {"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"} : //
-                new String[] {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+        new String[] { "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" }
+                : //
+                new String[] { "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
 
         for (int i = 0; i < weekdays.length; i++) {
             headerCells[i].setText(resources.getString("st.valview.weekdays." + weekdays[i]), indexSunday == i);
@@ -276,19 +276,25 @@ public class CalendarControl extends VBox {
      */
     private void updateSummaryCells() {
 
-        // process all summary cells for the displayed weeks
         for (int row = 0; row < summaryCells.length; row++) {
 
+            final LocalDate dateWeekStart = dayCells[row * 7].getDate();
+            final LocalDate dateWeekEnd = dayCells[row * 7 + 6].getDate();
+
+            // TODO test with dateWeekStart with weekStartsSunday true/false
             // get week number for a date in the middle of the week (otherwise problems with JSR 310
             // DateTime API, it sometimes returns week ranges 53, 0, 1 or 53, 2, 3)
-            final LocalDate weekMiddleDate = dayCells[row * 7 + 3].getDate();
-            final int weekNr = Date310Utils.getWeekNumber(weekMiddleDate, weekStartsSunday);
-
+            final LocalDate dateWeekMiddle = dateWeekStart.plusDays(3);
+            final int weekNr = Date310Utils.getWeekNumber(dateWeekMiddle, weekStartsSunday);
             summaryCells[row].setWeek(weekNr);
+
+            // get and update summary entries for date range
+            if (calendarEntryProvider != null) {
+                final List<String> summaryLines = calendarEntryProvider.getSummaryForDateRange( //
+                        dateWeekStart, dateWeekEnd);
+                summaryCells[row].setEntries(summaryLines);
+            }
         }
-
-
-        // TODO
     }
 
     /**
