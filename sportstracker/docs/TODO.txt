@@ -14,7 +14,6 @@ JavaFX Migration:
     - Controller: see TODO
     - Calendar Control: see TODO in package calendarview
       - add Drag&Drop support for exercise files
-      - move custom component to st-util? (create a calendar package there)
       - improve layout and define styles in CSS
       - Day Cell: define a bottom padding of 1px, there must be some space when there is too much content for the height
       - see also http://www.myexpospace.com/JavaOne2012/SessionFiles/CON4726_PDF_4726_0001.pdf, Option 2

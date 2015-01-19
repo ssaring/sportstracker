@@ -20,7 +20,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
-import de.saring.util.AppResources;
 import de.saring.util.Date310Utils;
 import de.saring.util.data.IdObject;
 
@@ -42,7 +41,7 @@ public class CalendarControl extends VBox {
     private static final int GRIDS_COLUMN_COUNT = 8;
     private static final int GRID_DAYS_ROW_COUNT = 6;
 
-    private AppResources resources;
+    private static final String[] DEFAULT_COLUMN_NAMES = {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su", "Sum"};
 
     private GridPane gridHeaderCells;
     private GridPane gridDayCells;
@@ -55,6 +54,8 @@ public class CalendarControl extends VBox {
     private int displayedYear;
     private boolean weekStartsSunday;
 
+    private String[] columnNames;
+
     private CalendarEntryProvider calendarEntryProvider;
 
     private ObjectProperty<IdObject> selectedEntry = new SimpleObjectProperty<>();
@@ -64,12 +65,8 @@ public class CalendarControl extends VBox {
 
     /**
      * Standard c'tor.
-     *
-     * @param resources the application text resources
      */
-    public CalendarControl(AppResources resources) {
-        this.resources = resources;
-
+    public CalendarControl() {
         final LocalDate today = LocalDate.now();
         displayedMonth = today.getMonthValue();
         displayedYear = today.getYear();
@@ -78,6 +75,19 @@ public class CalendarControl extends VBox {
         setupLayout();
         setupListeners();
         updateContent();
+    }
+
+    /**
+     * Sets the names to be displayed in the calendar header cells. This method can be used to
+     * specify localized names, otherwise the calendar displays the default english names.
+     *
+     * @param columnNames header names for the 8 columns (monday - sunday + summary)
+     */
+    public void setColumnNames(final String[] columnNames) {
+        if (columnNames != null && columnNames.length != GRIDS_COLUMN_COUNT) {
+            throw new IllegalArgumentException("Array must contain names for 8 columns!");
+        }
+        this.columnNames = columnNames;
     }
 
     /**
@@ -274,15 +284,19 @@ public class CalendarControl extends VBox {
      */
     private void updateHeaderCells() {
         final int indexSunday = weekStartsSunday ? 0 : 6;
-        final String[] weekdays = weekStartsSunday ? //
-                new String[]{"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"}
-                : //
-                new String[]{"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+        final String[] columnHeaderNames = columnNames == null ? DEFAULT_COLUMN_NAMES : columnNames;
 
-        for (int i = 0; i < weekdays.length; i++) {
-            headerCells[i].setText(resources.getString("st.valview.weekdays." + weekdays[i]), indexSunday == i);
+        if (weekStartsSunday) {
+            headerCells[0].setText(columnHeaderNames[6], true);
+            for (int i = 1; i < 7; i++) {
+                headerCells[i].setText(columnHeaderNames[i - 1], false);
+            }
+            headerCells[7].setText(columnHeaderNames[7], false);
+        } else {
+            for (int i = 0; i < columnHeaderNames.length; i++) {
+                headerCells[i].setText(columnHeaderNames[i], indexSunday == i);
+            }
         }
-        headerCells[7].setText(resources.getString("st.valview.week_sum"), false);
     }
 
     /**

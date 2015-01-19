@@ -1,7 +1,6 @@
 package de.saring.util.gui.javafx.control.calendar;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

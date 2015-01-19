@@ -25,6 +25,7 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.sportstracker.gui.views.AbstractEntryViewController;
+import de.saring.util.AppResources;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdObject;
 import de.saring.util.gui.javafx.control.calendar.CalendarActionListener;
@@ -158,9 +159,20 @@ public class CalendarViewController extends AbstractEntryViewController {
     }
 
     private void setupCalendarControl() {
-        calendarControl = new CalendarControl(getContext().getResources());
+        calendarControl = new CalendarControl();
         calendarControl.setCalendarEntryProvider(new CalendarEntryProviderImpl(getContext(), getDocument()));
         spCalendar.getChildren().addAll(calendarControl);
+
+        // set localized column header names
+        final AppResources resources = getContext().getResources();
+        calendarControl.setColumnNames(new String[] { resources.getString("st.valview.weekdays.monday"), //
+                resources.getString("st.valview.weekdays.tuesday"), //
+                resources.getString("st.valview.weekdays.wednesday"), //
+                resources.getString("st.valview.weekdays.thursday"), //
+                resources.getString("st.valview.weekdays.friday"), //
+                resources.getString("st.valview.weekdays.saturday"), //
+                resources.getString("st.valview.weekdays.sunday"), //
+                resources.getString("st.valview.week_sum") });
 
         // update controller-actions and the status bar on selection changes
         calendarControl.selectedEntryProperty().addListener((observable, oldValue, newValue) -> //
