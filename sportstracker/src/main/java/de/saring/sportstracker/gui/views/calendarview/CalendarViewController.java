@@ -2,25 +2,31 @@ package de.saring.sportstracker.gui.views.calendarview;
 
 import java.time.LocalDate;
 
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.Note;
-import de.saring.sportstracker.data.Weight;
-import de.saring.util.data.IdDateObject;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import de.saring.sportstracker.core.STException;
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.Note;
+import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.sportstracker.gui.views.AbstractEntryViewController;
+import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdObject;
 
 /**
@@ -138,6 +144,7 @@ public class CalendarViewController extends AbstractEntryViewController {
     @Override
     protected void setupView() {
         setupCalendarControl();
+        setupCalendarContextMenu();
 
         // bind month and year labels to current values
         displayedMonth.addListener((observable, oldValue, newValue) -> laDisplayedMonth.setText( //
@@ -183,6 +190,64 @@ public class CalendarViewController extends AbstractEntryViewController {
                 getController().onEditEntry(null);
             }
         });
+    }
+
+    private void setupCalendarContextMenu() {
+
+        // unfortunately the ContextMenu can't be defined in FXML for the calendar StackPane
+        final ContextMenu calendarContextMenu = new ContextMenu();
+        final BooleanBinding bindingNoEntrySelected = Bindings.isNull(calendarControl.selectedEntryProperty());
+
+        final MenuItem miCtxAddExercise = createContextMenuItem( //
+                "miCtxAddExercise", "st.view.exercise_add.Action.text", //
+                event -> getController().onAddExercise(event));
+
+        final MenuItem miCtxAddNote = createContextMenuItem( //
+                "miCtxAddNote", "st.view.note_add.Action.text", //
+                event -> getController().onAddNote(event));
+
+        final MenuItem miCtxAddWeight = createContextMenuItem( //
+                "miCtxAddWeight", "st.view.weight_add.Action.text", //
+                event -> getController().onAddWeight(event));
+
+        final MenuItem miCtxEditEntry = createContextMenuItem( //
+                "miCtxEditEntry", "st.view.entry_edit.Action.text", //
+                event -> getController().onEditEntry(event));
+        miCtxEditEntry.disableProperty().bind(bindingNoEntrySelected);
+
+        final MenuItem miCtxCopyEntry = createContextMenuItem( //
+                "miCtxCopyEntry", "st.view.entry_copy.Action.text", //
+                event -> getController().onCopyEntry(event));
+        miCtxCopyEntry.disableProperty().bind(bindingNoEntrySelected);
+
+        final MenuItem miCtxDeleteEntry = createContextMenuItem( //
+                "miCtxDeleteEntry", "st.view.entry_delete.Action.text", //
+                event -> getController().onDeleteEntry(event));
+        miCtxDeleteEntry.disableProperty().bind(bindingNoEntrySelected);
+
+        calendarContextMenu.getItems().addAll(miCtxAddExercise, miCtxAddNote, miCtxAddWeight, //
+                miCtxEditEntry, miCtxCopyEntry, miCtxDeleteEntry);
+
+        // display context menu when requested (Pane class has no convenience method setContextMenu())
+        calendarControl.setOnContextMenuRequested(event -> {
+            calendarContextMenu.show(calendarControl, event.getScreenX(), event.getScreenY());
+            event.consume();
+        });
+
+        // close context menu whenever the user clicks somewhere else on the calendar
+        calendarControl.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            if (calendarContextMenu.isShowing()) {
+                calendarContextMenu.hide();
+            }
+        });
+    }
+
+    private MenuItem createContextMenuItem(final String id, final String resourceKey, //
+            final EventHandler<ActionEvent> handler) {
+        final MenuItem menuItem = new MenuItem(getContext().getResources().getString(resourceKey));
+        menuItem.setId(id);
+        menuItem.setOnAction(handler);
+        return menuItem;
     }
 
     /**
@@ -254,7 +319,7 @@ public class CalendarViewController extends AbstractEntryViewController {
         if ((selectedEntry == null) || (selectedEntry.getClass() != clazz)) {
             return new int[0];
         } else {
-            return new int[]{ selectedEntry.getId() };
+            return new int[] { selectedEntry.getId() };
         }
     }
 

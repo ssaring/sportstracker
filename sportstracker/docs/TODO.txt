@@ -14,8 +14,7 @@ JavaFX Migration:
     - Controller: see TODO
     - Calendar Control: see TODO in package calendarview
       - missing features:
-        - implement summary column
-        - add context menu
+        - context menu: when adding new entries they must be pre-filled with the current date
         - add Drag&Drop support for exercise files
       - move custom component to st-util (create a calendar package there) ?
       - improve layout and define styles in CSS
