@@ -10,16 +10,15 @@ import java.util.stream.Stream;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import de.saring.util.AppResources;
 import de.saring.util.Date310Utils;
@@ -60,6 +59,9 @@ public class CalendarControl extends VBox {
 
     private ObjectProperty<IdObject> selectedEntry = new SimpleObjectProperty<>();
 
+    private ContextMenu contextMenu;
+    private LocalDate dateOfContextMenu;
+
     /**
      * Standard c'tor.
      *
@@ -90,8 +92,8 @@ public class CalendarControl extends VBox {
     /**
      * Updates the calendar to show the specified month. An existing entry selection will be removed.
      *
-     * @param year year of month to show
-     * @param month month to show
+     * @param year             year of month to show
+     * @param month            month to show
      * @param weekStartsSunday flag whether the week starts on sunday or monday
      */
     public void updateCalendar(final int year, final int month, final boolean weekStartsSunday) {
@@ -139,14 +141,30 @@ public class CalendarControl extends VBox {
         Stream.of(dayCells).forEach(dayCell -> dayCell.setCalendarActionListener(calendarActionListener));
     }
 
+    /**
+     * Sets the context menu to be displayed for this calendar control.
+     *
+     * @param contextMenu context menu to show (or null for removing)
+     */
+    public void setContextMenu(final ContextMenu contextMenu) {
+        this.contextMenu = contextMenu;
+    }
+
+    /**
+     * Returns the date of the cell on which the current context menu has been displayed or null,
+     * when it was not displayed on a day cell.
+     *
+     * @return date or null
+     */
+    public LocalDate getDateOfContextMenu() {
+        return dateOfContextMenu;
+    }
+
     private void setupLayout() {
 
         // create GridPanes for header and day cells and add it to the VBox
         gridHeaderCells = new GridPane();
         gridDayCells = new GridPane();
-
-        // TODO for test purposes only
-        this.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 
         VBox.setVgrow(gridHeaderCells, Priority.NEVER);
         VBox.setVgrow(gridDayCells, Priority.ALWAYS);
@@ -225,6 +243,22 @@ public class CalendarControl extends VBox {
             dayCell.setCalendarEntrySelectionListener(listener);
             dayCell.addEventHandler(MouseEvent.MOUSE_PRESSED, dayCellPressedHandler);
         });
+
+        // display context menu when requested (Pane classes have no convenience method setContextMenu())
+        setOnContextMenuRequested(event -> {
+            if (contextMenu != null) {
+                dateOfContextMenu = getDateAtScreenPosition(event.getScreenX(), event.getScreenY());
+                contextMenu.show(this, event.getScreenX(), event.getScreenY());
+                event.consume();
+            }
+        });
+
+        // close context menu whenever the user clicks somewhere else on the calendar
+        addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            if (contextMenu != null && contextMenu.isShowing()) {
+                contextMenu.hide();
+            }
+        });
     }
 
     private void updateContent() {
@@ -241,9 +275,9 @@ public class CalendarControl extends VBox {
     private void updateHeaderCells() {
         final int indexSunday = weekStartsSunday ? 0 : 6;
         final String[] weekdays = weekStartsSunday ? //
-        new String[] { "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" }
+                new String[]{"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"}
                 : //
-                new String[] { "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
+                new String[]{"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
 
         for (int i = 0; i < weekdays.length; i++) {
             headerCells[i].setText(resources.getString("st.valview.weekdays." + weekdays[i]), indexSunday == i);
@@ -306,5 +340,22 @@ public class CalendarControl extends VBox {
         final LocalDate firstDayOfMonth = LocalDate.of(displayedYear, displayedMonth, 1);
         return firstDayOfMonth.with(TemporalAdjusters.previousOrSame( //
                 weekStartsSunday ? DayOfWeek.SUNDAY : DayOfWeek.MONDAY));
+    }
+
+    /**
+     * Returns the date of the calendar day cell at the specified screen position.
+     *
+     * @param screenX X position in screen
+     * @param screenY Y position in screen
+     * @return the date or null when there is no day cell at this position
+     */
+    private LocalDate getDateAtScreenPosition(final double screenX, final double screenY) {
+        for (CalendarDayCell dayCell : dayCells) {
+            final Point2D localPosition = dayCell.screenToLocal(screenX, screenY);
+            if (dayCell.getBoundsInLocal().contains(localPosition)) {
+                return dayCell.getDate();
+            }
+        }
+        return null;
     }
 }

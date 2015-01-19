@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 import javax.inject.Inject;
@@ -179,9 +178,7 @@ public class CalendarViewController extends AbstractEntryViewController {
             @Override
             public void onCalendarDayAction(final LocalDate date) {
                 // execute action 'Add Exercise' for this date when the user double clicks a calendar day cell
-                getController().setDateForNewEntries(date);
-                getController().onAddExercise(null);
-                getController().setDateForNewEntries(null);
+                addExerciseForDate(date);
             }
 
             @Override
@@ -192,23 +189,24 @@ public class CalendarViewController extends AbstractEntryViewController {
         });
     }
 
+    /**
+     * Sets up the context menu for the calendar control. Unfortunately it can't be defined in
+     * FXML, the Pane classes does not support context menus directly.
+     */
     private void setupCalendarContextMenu() {
-
-        // unfortunately the ContextMenu can't be defined in FXML for the calendar StackPane
-        final ContextMenu calendarContextMenu = new ContextMenu();
         final BooleanBinding bindingNoEntrySelected = Bindings.isNull(calendarControl.selectedEntryProperty());
 
         final MenuItem miCtxAddExercise = createContextMenuItem( //
                 "miCtxAddExercise", "st.view.exercise_add.Action.text", //
-                event -> getController().onAddExercise(event));
+                event -> addExerciseForDate(calendarControl.getDateOfContextMenu()));
 
         final MenuItem miCtxAddNote = createContextMenuItem( //
                 "miCtxAddNote", "st.view.note_add.Action.text", //
-                event -> getController().onAddNote(event));
+                event -> addNoteForDate(calendarControl.getDateOfContextMenu()));
 
         final MenuItem miCtxAddWeight = createContextMenuItem( //
                 "miCtxAddWeight", "st.view.weight_add.Action.text", //
-                event -> getController().onAddWeight(event));
+                event -> addWeightForDate(calendarControl.getDateOfContextMenu()));
 
         final MenuItem miCtxEditEntry = createContextMenuItem( //
                 "miCtxEditEntry", "st.view.entry_edit.Action.text", //
@@ -225,21 +223,8 @@ public class CalendarViewController extends AbstractEntryViewController {
                 event -> getController().onDeleteEntry(event));
         miCtxDeleteEntry.disableProperty().bind(bindingNoEntrySelected);
 
-        calendarContextMenu.getItems().addAll(miCtxAddExercise, miCtxAddNote, miCtxAddWeight, //
-                miCtxEditEntry, miCtxCopyEntry, miCtxDeleteEntry);
-
-        // display context menu when requested (Pane class has no convenience method setContextMenu())
-        calendarControl.setOnContextMenuRequested(event -> {
-            calendarContextMenu.show(calendarControl, event.getScreenX(), event.getScreenY());
-            event.consume();
-        });
-
-        // close context menu whenever the user clicks somewhere else on the calendar
-        calendarControl.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            if (calendarContextMenu.isShowing()) {
-                calendarContextMenu.hide();
-            }
-        });
+        calendarControl.setContextMenu(new ContextMenu( //
+                miCtxAddExercise, miCtxAddNote, miCtxAddWeight, miCtxEditEntry, miCtxCopyEntry, miCtxDeleteEntry));
     }
 
     private MenuItem createContextMenuItem(final String id, final String resourceKey, //
@@ -323,4 +308,21 @@ public class CalendarViewController extends AbstractEntryViewController {
         }
     }
 
+    private void addExerciseForDate(final LocalDate date) {
+        getController().setDateForNewEntries(date);
+        getController().onAddExercise(null);
+        getController().setDateForNewEntries(null);
+    }
+
+    private void addNoteForDate(final LocalDate date) {
+        getController().setDateForNewEntries(date);
+        getController().onAddNote(null);
+        getController().setDateForNewEntries(null);
+    }
+
+    private void addWeightForDate(final LocalDate date) {
+        getController().setDateForNewEntries(date);
+        getController().onAddWeight(null);
+        getController().setDateForNewEntries(null);
+    }
 }
