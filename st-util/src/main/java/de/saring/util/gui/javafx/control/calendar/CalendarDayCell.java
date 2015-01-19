@@ -16,7 +16,8 @@ import javafx.scene.paint.Color;
 import de.saring.util.data.IdObject;
 
 /**
- * TODO
+ * Calendar cell implementation which shows a single day cell. It displays the day number
+ * and the entries of the day below.
  *
  * @author Stefan Saring
  */
@@ -38,19 +39,19 @@ class CalendarDayCell extends AbstractCalendarCell {
     }
 
     /**
-     * TODO
+     * Returns the date of this day cell.
      *
-     * @return
+     * @return date
      */
     public LocalDate getDate() {
         return date;
     }
 
     /**
-     * TODO
+     * Sets the date of this day cell
      *
-     * @param date
-     * @param displayedMonth
+     * @param date new date
+     * @param displayedMonth flag whether this date is inside the currently displayed month
      */
     public void setDate(final LocalDate date, final boolean displayedMonth) {
         this.date = date;
@@ -156,23 +157,23 @@ class CalendarDayCell extends AbstractCalendarCell {
     }
 
     /**
-     * TODO
-     *
-     * @author Stefan Saring
+     * Listener interface for notification when the calendar entry selection changes.
      */
     interface CalendarEntrySelectionListener {
 
         /**
-         * TODO
+         * This method is called whenever the selection of a calendar entry changes (when
+         * selected or deselected).
          *
-         * @param calendarEntry
-         * @param selected
+         * @param calendarEntry entry of selection change
+         * @param selected true when the entry gets selected
          */
         void calendarEntrySelectionChanged(CalendarEntry calendarEntry, boolean selected);
     }
 
     /**
-     * TODO
+     * Custom label extension which displays a single entry inside a CalendarDayCell.
+     * Calendar entries are selectable, the status is provided by the property {@code selected}.
      */
     private static class CalendarEntryLabel extends Label {
 

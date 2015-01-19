@@ -12,7 +12,7 @@ JavaFX Migration:
   - Calendar View: TODO
     - FXML: Done
     - Controller: see TODO
-    - Calendar Control: see TODO in package calendarview
+    - Calendar Control: see TODO in package calendarview and st-util package calendar
       - add Drag&Drop support for exercise files
       - improve layout and define styles in CSS
       - Day Cell: define a bottom padding of 1px, there must be some space when there is too much content for the height

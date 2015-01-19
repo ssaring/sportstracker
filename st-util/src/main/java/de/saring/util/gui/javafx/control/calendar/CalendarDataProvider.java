@@ -4,10 +4,18 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * TODO, rename to CalendarDataProvider?
+ * Interface which defines the provider of the data to be shown in the calendar.
+ *
+ * @author Stefan Saring
  */
-public interface CalendarEntryProvider {
+public interface CalendarDataProvider {
 
+    /**
+     * Returns the calendar entries to be shown for the specified date.
+     *
+     * @param date date
+     * @return list of CalendarEntry objects (not null, can be empty)
+     */
     List<CalendarEntry> getCalendarEntriesForDate(LocalDate date);
 
     /**

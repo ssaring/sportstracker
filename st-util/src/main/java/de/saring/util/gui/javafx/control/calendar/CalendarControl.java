@@ -56,7 +56,7 @@ public class CalendarControl extends VBox {
 
     private String[] columnNames;
 
-    private CalendarEntryProvider calendarEntryProvider;
+    private CalendarDataProvider calendarDataProvider;
 
     private ObjectProperty<IdObject> selectedEntry = new SimpleObjectProperty<>();
 
@@ -91,12 +91,12 @@ public class CalendarControl extends VBox {
     }
 
     /**
-     * TODO
+     * Sets the provider which provides the entries to be shown in the calendar.
      *
-     * @param calendarEntryProvider
+     * @param calendarDataProvider calendar entry provider
      */
-    public void setCalendarEntryProvider(final CalendarEntryProvider calendarEntryProvider) {
-        this.calendarEntryProvider = calendarEntryProvider;
+    public void setCalendarDataProvider(final CalendarDataProvider calendarDataProvider) {
+        this.calendarDataProvider = calendarDataProvider;
     }
 
     /**
@@ -309,8 +309,8 @@ public class CalendarControl extends VBox {
             final boolean dateOfDisplayedMonth = currentCellDate.getMonthValue() == displayedMonth;
             dayCells[i].setDate(currentCellDate, dateOfDisplayedMonth);
 
-            if (calendarEntryProvider != null) {
-                final List<CalendarEntry> entries = calendarEntryProvider.getCalendarEntriesForDate(currentCellDate);
+            if (calendarDataProvider != null) {
+                final List<CalendarEntry> entries = calendarDataProvider.getCalendarEntriesForDate(currentCellDate);
                 dayCells[i].setEntries(entries);
             }
 
@@ -336,8 +336,8 @@ public class CalendarControl extends VBox {
             summaryCells[row].setNumber(weekNr);
 
             // get and update summary entries for date range
-            if (calendarEntryProvider != null) {
-                final List<String> summaryLines = calendarEntryProvider.getSummaryForDateRange( //
+            if (calendarDataProvider != null) {
+                final List<String> summaryLines = calendarDataProvider.getSummaryForDateRange( //
                         dateWeekStart, dateWeekEnd);
                 summaryCells[row].setEntries(summaryLines);
             }

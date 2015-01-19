@@ -11,7 +11,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
- * TODO
+ * Abstract base class for all calendar content cell implementations. Each cell is a VBox
+ * which contains the number label (of day or week) in the upper left corner and the cell
+ * entries as labels below.
  *
  * @author Stefan Saring
  */

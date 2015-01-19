@@ -6,14 +6,14 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
 /**
- * TODO
+ * Custom label extension which displays the column header name.
  *
  * @author Stefan Saring
  */
 class CalendarHeaderCell extends Label {
 
     /**
-     * Standard c'tor.
+     * C'tor.
      */
     public CalendarHeaderCell() {
         setAlignment(Pos.CENTER);
@@ -25,10 +25,10 @@ class CalendarHeaderCell extends Label {
     }
 
     /**
-     * TODO
+     * Sets the text to be shown in the header cell. The column for sunday will use a special color.
      *
-     * @param text
-     * @param isSunday
+     * @param text text
+     * @param isSunday true when this column is for sunday
      */
     public void setText(final String text, final boolean isSunday) {
         setText(text);

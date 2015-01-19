@@ -160,7 +160,7 @@ public class CalendarViewController extends AbstractEntryViewController {
 
     private void setupCalendarControl() {
         calendarControl = new CalendarControl();
-        calendarControl.setCalendarEntryProvider(new CalendarEntryProviderImpl(getContext(), getDocument()));
+        calendarControl.setCalendarDataProvider(new CalendarDataProviderImpl(getContext(), getDocument()));
         spCalendar.getChildren().addAll(calendarControl);
 
         // set localized column header names

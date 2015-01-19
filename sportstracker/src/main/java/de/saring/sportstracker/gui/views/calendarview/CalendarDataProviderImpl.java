@@ -13,7 +13,7 @@ import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.AppResources;
 import de.saring.util.StringUtils;
 import de.saring.util.gui.javafx.control.calendar.CalendarEntry;
-import de.saring.util.gui.javafx.control.calendar.CalendarEntryProvider;
+import de.saring.util.gui.javafx.control.calendar.CalendarDataProvider;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**
@@ -21,7 +21,7 @@ import de.saring.util.unitcalc.FormatUtils;
  *
  * @author Stefan Saring
  */
-public class CalendarEntryProviderImpl implements CalendarEntryProvider {
+public class CalendarDataProviderImpl implements CalendarDataProvider {
 
     private final STContext context;
     private final STDocument document;
@@ -32,7 +32,7 @@ public class CalendarEntryProviderImpl implements CalendarEntryProvider {
      * @param context the SportsTracker UI context
      * @param document the SportsTracker document / model
      */
-    public CalendarEntryProviderImpl(final STContext context, final STDocument document) {
+    public CalendarDataProviderImpl(final STContext context, final STDocument document) {
         this.context = context;
         this.document = document;
     }
