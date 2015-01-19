@@ -12,6 +12,8 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.AppResources;
 import de.saring.util.StringUtils;
+import de.saring.util.gui.javafx.control.calendar.CalendarEntry;
+import de.saring.util.gui.javafx.control.calendar.CalendarEntryProvider;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**

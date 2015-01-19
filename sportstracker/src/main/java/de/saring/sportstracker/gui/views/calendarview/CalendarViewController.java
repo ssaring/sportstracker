@@ -27,6 +27,9 @@ import de.saring.sportstracker.gui.STDocument;
 import de.saring.sportstracker.gui.views.AbstractEntryViewController;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdObject;
+import de.saring.util.gui.javafx.control.calendar.CalendarActionListener;
+import de.saring.util.gui.javafx.control.calendar.CalendarControl;
+import de.saring.util.gui.javafx.control.calendar.CalendarEntry;
 
 /**
  * Controller class of the Calendar View, which displays all (or a filtered list) exercises, notes and

@@ -1,4 +1,4 @@
-package de.saring.sportstracker.gui.views.calendarview;
+package de.saring.util.gui.javafx.control.calendar;
 
 import de.saring.util.data.IdDateObject;
 import javafx.scene.paint.Color;
