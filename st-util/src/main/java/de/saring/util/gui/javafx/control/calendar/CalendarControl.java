@@ -41,10 +41,9 @@ public class CalendarControl extends Control {
 
     private ObjectProperty<IdObject> selectedEntry = new SimpleObjectProperty<>();
 
+    // TODO
     private LocalDate dateOfContextMenu;
 
-    // TODO remove, just a workaround
-    private CalendarControlSkin calendarControlSkin;
 
     /**
      * Standard c'tor.
@@ -104,6 +103,7 @@ public class CalendarControl extends Control {
      * @param weekStartsSunday flag whether the week starts on sunday or monday
      */
     public void updateCalendar(final int year, final int month, final boolean weekStartsSunday) {
+        selectedEntry.set(null);
         displayedMonth.set(new CalendarMonth(year, month, weekStartsSunday));
     }
 
@@ -183,7 +183,9 @@ public class CalendarControl extends Control {
         return getClass().getResource("CalendarControl.css").toExternalForm();
     }
 
-    // TODO
+    /**
+     * TODO
+     */
     static class CalendarMonth {
 
         private int year;
