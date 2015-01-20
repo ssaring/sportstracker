@@ -1,0 +1,311 @@
+package de.saring.util.gui.javafx.control.calendar;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Stream;
+
+import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.SkinBase;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
+
+import de.saring.util.Date310Utils;
+import de.saring.util.data.IdObject;
+
+/**
+ * Custom control which displays a calendar for one month. It contains cells for all the days of the month,
+ * each cell contains the SportsTracker entries for that day.<br/>
+ * The layout uses a VBox which contains two GridPanes, one for the header cells (weekday names), the other
+ * for the day cells (for all days of the displayed month and parts of the previous and next month).<br/>
+ * Both GridPanes contains 8 columns of same width, 7 for all days of a week (Sunday - Saturday or
+ * Monday - Sunday) and one for the weekly summary.<br/>
+ * The GridPane for the header cells contains only one row with a fixed height. The GridPane for the day
+ * cells contains always 6 rows, each for one week (6 weeks to make sure that always the complete month can
+ * be displayed.) The GridPane for the day cells uses all the available vertical space.
+ *
+ * @author Stefan Saring
+ */
+// TODO
+public class CalendarControlSkin extends SkinBase<CalendarControl> {
+
+    private VBox controlRoot;
+
+    private GridPane gridHeaderCells;
+    private GridPane gridDayCells;
+
+    private CalendarHeaderCell[] headerCells = new CalendarHeaderCell[CalendarControl.GRIDS_COLUMN_COUNT];
+    private CalendarDayCell[] dayCells = new CalendarDayCell[7 * CalendarControl.GRID_DAYS_ROW_COUNT];
+    private CalendarSummaryCell[] summaryCells = new CalendarSummaryCell[CalendarControl.GRID_DAYS_ROW_COUNT];
+
+    private ContextMenu contextMenu;
+    private LocalDate dateOfContextMenu;
+
+    /**
+     * Standard c'tor.
+     *
+     * @param calendarControl CalendarControl instance
+     */
+    public CalendarControlSkin(final CalendarControl calendarControl) {
+        super(calendarControl);
+
+        setupLayout();
+        setupListeners();
+        updateContent();
+    }
+
+    /**
+     * Updates the content of the calendar component (all header, day and summary cells).
+     */
+    public void updateContent() {
+        updateHeaderCells();
+        updateDayCells();
+        updateSummaryCells();
+    }
+
+    /**
+     * Selects the specified entry, if it is currently displayed in the calendar.
+     *
+     * @param entry entry to select
+     */
+    public void selectEntry(final IdObject entry) {
+        for (CalendarDayCell dayCell : dayCells) {
+            if (dayCell.selectEntry(entry)) {
+                break;
+            }
+        }
+    }
+
+    /**
+     * Removes the entry selection, if there is one.
+     */
+    public void removeSelection() {
+        Stream.of(dayCells).forEach(dayCell -> dayCell.removeSelectionExcept(null));
+    }
+
+    /**
+     * Sets the listener for handling actions on the calendar.
+     *
+     * @param calendarActionListener listener implementation
+     */
+    // TODO not used anymore, update listenner in cay cells when the listener property in CalendarControl changes
+    public void setCalendarActionListener(final CalendarActionListener calendarActionListener) {
+        Stream.of(dayCells).forEach(dayCell -> dayCell.setCalendarActionListener(calendarActionListener));
+    }
+
+    /**
+     * Sets the context menu to be displayed for this calendar control.
+     *
+     * @param contextMenu context menu to show (or null for removing)
+     */
+    public void setContextMenu(final ContextMenu contextMenu) {
+        this.contextMenu = contextMenu;
+    }
+
+    /**
+     * Returns the date of the cell on which the current context menu has been displayed or null,
+     * when it was not displayed on a day cell.
+     *
+     * @return date or null
+     */
+    public LocalDate getDateOfContextMenu() {
+        return dateOfContextMenu;
+    }
+
+    private void setupLayout() {
+
+        // create GridPanes for header and day cells
+        gridHeaderCells = new GridPane();
+        gridDayCells = new GridPane();
+
+        // define column constraints for both GridPanes, all 8 columns must have the same width
+        for (int column = 0; column < CalendarControl.GRIDS_COLUMN_COUNT; column++) {
+            final ColumnConstraints columnConstraints = new ColumnConstraints();
+            columnConstraints.setPercentWidth(100 / (double) CalendarControl.GRIDS_COLUMN_COUNT);
+            gridHeaderCells.getColumnConstraints().add(columnConstraints);
+            gridDayCells.getColumnConstraints().add(columnConstraints);
+        }
+
+        // define row constraint for header GridPane (one row with a fixed height)
+        final RowConstraints headerRowConstraints = new RowConstraints();
+        gridHeaderCells.getRowConstraints().add(headerRowConstraints);
+
+        // define row constraints for days GridPane (6 rows with same height which are using all the available space)
+        for (int row = 0; row < CalendarControl.GRID_DAYS_ROW_COUNT; row++) {
+            final RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.setValignment(VPos.TOP);
+            rowConstraints.setPercentHeight((100 / (double) (CalendarControl.GRID_DAYS_ROW_COUNT)));
+            // probably a JavaFX bug: min height must be 0, otherwise the row takes at least the computed height
+            rowConstraints.setMinHeight(0);
+            gridDayCells.getRowConstraints().add(rowConstraints);
+        }
+
+        // create header cells and add them to the header GridPane
+        for (int i = 0; i < headerCells.length; i++) {
+            headerCells[i] = new CalendarHeaderCell();
+            gridHeaderCells.add(headerCells[i], i, 0);
+        }
+
+        // create day cells and add them to the days GridPane
+        for (int row = 0; row < CalendarControl.GRID_DAYS_ROW_COUNT; row++) {
+            for (int column = 0; column < 7; column++) {
+                final CalendarDayCell dayCell = new CalendarDayCell();
+                dayCells[(row * 7) + column] = dayCell;
+                gridDayCells.add(dayCell, column, row);
+            }
+        }
+
+        // create day cells and add them to the days GridPane
+        for (int row = 0; row < CalendarControl.GRID_DAYS_ROW_COUNT; row++) {
+            for (int column = 0; column < 7; column++) {
+                final CalendarDayCell dayCell = new CalendarDayCell();
+                dayCells[(row * 7) + column] = dayCell;
+                gridDayCells.add(dayCell, column, row);
+            }
+        }
+
+        // create weekly summary cells and add them to the days GridPane
+        for (int row = 0; row < summaryCells.length; row++) {
+            final CalendarSummaryCell summaryCell = new CalendarSummaryCell();
+            summaryCells[row] = summaryCell;
+            gridDayCells.add(summaryCell, CalendarControl.GRIDS_COLUMN_COUNT - 1, row);
+        }
+
+        // create the VBox root pane and insert the header an cell grid panes
+        controlRoot = new VBox();
+        getChildren().add(controlRoot);
+
+        VBox.setVgrow(gridHeaderCells, Priority.NEVER);
+        VBox.setVgrow(gridDayCells, Priority.ALWAYS);
+        controlRoot.getChildren().addAll(gridHeaderCells, gridDayCells);
+    }
+
+    private void setupListeners() {
+
+        // update the calendar content whenever the displayed month changes
+        getSkinnable().displayedMonthProperty().addListener((observable, oldValue, newValue) -> updateContent());
+
+        // setup an entry selection listener on all CalendarDayCells:
+        // it removes any previous entry selections and stores the selected entry
+        final CalendarDayCell.CalendarEntrySelectionListener listener = (calendarEntry, selected) -> {
+            if (selected) {
+                Stream.of(dayCells).forEach(dayCell -> dayCell.removeSelectionExcept(calendarEntry));
+            }
+
+            getSkinnable().selectedEntryProperty().set(selected ? calendarEntry.getEntry() : null);
+        };
+
+        // setup handler for removing the current selection when the user clicks in empty day cell area
+        final EventHandler<MouseEvent> dayCellPressedHandler = event -> removeSelection();
+
+        Stream.of(dayCells).forEach(dayCell -> {
+            dayCell.setCalendarEntrySelectionListener(listener);
+            dayCell.addEventHandler(MouseEvent.MOUSE_PRESSED, dayCellPressedHandler);
+        });
+
+        // TODO use setContextMenu from Control
+        // display context menu when requested (Pane classes have no convenience method setContextMenu())
+        controlRoot.setOnContextMenuRequested(event -> {
+            if (contextMenu != null) {
+                dateOfContextMenu = getDateAtScreenPosition(event.getScreenX(), event.getScreenY());
+                contextMenu.show(controlRoot, event.getScreenX(), event.getScreenY());
+                event.consume();
+            }
+        });
+
+        // close context menu whenever the user clicks somewhere else on the calendar
+        controlRoot.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            if (contextMenu != null && contextMenu.isShowing()) {
+                contextMenu.hide();
+            }
+        });
+    }
+
+    /**
+     * Updates the content of the header cell depending on the current week start day.
+     */
+    private void updateHeaderCells() {
+        final boolean weekStartsSunday = getSkinnable().displayedMonthProperty().get().isWeekStartsSunday();
+        final int indexSunday = weekStartsSunday ? 0 : 6;
+        final String[] columnNames = getSkinnable().getColumnNames();
+
+        if (weekStartsSunday) {
+            headerCells[0].setText(columnNames[6], true);
+            for (int i = 1; i < 7; i++) {
+                headerCells[i].setText(columnNames[i - 1], false);
+            }
+            headerCells[7].setText(columnNames[7], false);
+        } else {
+            for (int i = 0; i < columnNames.length; i++) {
+                headerCells[i].setText(columnNames[i], indexSunday == i);
+            }
+        }
+    }
+
+    /**
+     * Updates the content of all day cells for the displayed month and year.
+     */
+    private void updateDayCells() {
+        LocalDate currentCellDate = getSkinnable().getFirstDisplayedDay();
+        final int displayedMonth = getSkinnable().displayedMonthProperty().get().getMonth();
+
+        for (int i = 0; i < dayCells.length; i++) {
+            final boolean dateOfDisplayedMonth = currentCellDate.getMonthValue() == displayedMonth;
+            dayCells[i].setDate(currentCellDate, dateOfDisplayedMonth);
+
+            final CalendarDataProvider dataProvider = getSkinnable().getCalendarDataProvider();
+            if (dataProvider != null) {
+                final List<CalendarEntry> entries = dataProvider.getCalendarEntriesForDate(currentCellDate);
+                dayCells[i].setEntries(entries);
+            }
+
+            currentCellDate = currentCellDate.plus(1, ChronoUnit.DAYS);
+        }
+    }
+
+    /**
+     * Updates the content of all summary cells for the displayed weeks.
+     */
+    private void updateSummaryCells() {
+
+        for (int row = 0; row < summaryCells.length; row++) {
+            final LocalDate dateWeekStart = dayCells[row * 7].getDate();
+            final LocalDate dateWeekEnd = dayCells[row * 7 + 6].getDate();
+
+            final int weekNr = Date310Utils.getWeekNumber(dateWeekStart, //
+                    getSkinnable().displayedMonthProperty().get().isWeekStartsSunday());
+            summaryCells[row].setNumber(weekNr);
+
+            // get and update summary entries for date range
+            final CalendarDataProvider dataProvider = getSkinnable().getCalendarDataProvider();
+            if (dataProvider != null) {
+                final List<String> summaryLines = dataProvider.getSummaryForDateRange(dateWeekStart, dateWeekEnd);
+                summaryCells[row].setEntries(summaryLines);
+            }
+        }
+    }
+
+    /**
+     * Returns the date of the calendar day cell at the specified screen position.
+     *
+     * @param screenX X position in screen
+     * @param screenY Y position in screen
+     * @return the date or null when there is no day cell at this position
+     */
+    private LocalDate getDateAtScreenPosition(final double screenX, final double screenY) {
+        for (CalendarDayCell dayCell : dayCells) {
+            final Point2D localPosition = dayCell.screenToLocal(screenX, screenY);
+            if (dayCell.getBoundsInLocal().contains(localPosition)) {
+                return dayCell.getDate();
+            }
+        }
+        return null;
+    }
+}

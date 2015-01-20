@@ -1,0 +1,9 @@
+/********************************************
+ *                                          *
+ *   CSS definitions of CalendarControl     *
+ *                                          *
+ ********************************************/
+
+.calendar-control {
+    -fx-skin: "de.saring.util.gui.javafx.control.calendar.CalendarControlSkin";
+}

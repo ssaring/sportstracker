@@ -190,7 +190,7 @@ public class CalendarViewController extends AbstractEntryViewController {
     }
 
     private void setCalendarActionListener() {
-        calendarControl.setCalendarActionListener(new CalendarActionListener() {
+        calendarControl.calendarActionListenerProperty().set(new CalendarActionListener() {
 
             @Override
             public void onCalendarDayAction(final LocalDate date) {
