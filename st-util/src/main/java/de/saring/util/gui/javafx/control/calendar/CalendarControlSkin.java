@@ -91,16 +91,6 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
     }
 
     /**
-     * Sets the listener for handling actions on the calendar.
-     *
-     * @param calendarActionListener listener implementation
-     */
-    // TODO not used anymore, update listenner in cay cells when the listener property in CalendarControl changes
-    public void setCalendarActionListener(final CalendarActionListener calendarActionListener) {
-        Stream.of(dayCells).forEach(dayCell -> dayCell.setCalendarActionListener(calendarActionListener));
-    }
-
-    /**
      * Sets the context menu to be displayed for this calendar control.
      *
      * @param contextMenu context menu to show (or null for removing)
@@ -192,6 +182,11 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
         // update the calendar content whenever the displayed month changes
         getSkinnable().displayedMonthProperty().addListener((observable, oldValue, newValue) -> updateContent());
 
+        // set the calendar action listener in all day cells and update them whenever the specified listener changes
+        setCalendarActionListenerInDayCells(getSkinnable().calendarActionListenerProperty().get());
+        getSkinnable().calendarActionListenerProperty().addListener((observable, oldValue, newValue) -> //
+            setCalendarActionListenerInDayCells(newValue));
+
         // setup an entry selection listener on all CalendarDayCells:
         // it removes any previous entry selections and stores the selected entry
         final CalendarDayCell.CalendarEntrySelectionListener listener = (calendarEntry, selected) -> {
@@ -226,6 +221,10 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
                 contextMenu.hide();
             }
         });
+    }
+
+    private void setCalendarActionListenerInDayCells(final CalendarActionListener calendarActionListener) {
+        Stream.of(dayCells).forEach(dayCell -> dayCell.setCalendarActionListener(calendarActionListener));
     }
 
     /**
