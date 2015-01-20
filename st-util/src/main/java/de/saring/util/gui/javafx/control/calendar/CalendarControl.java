@@ -41,8 +41,7 @@ public class CalendarControl extends Control {
 
     private ObjectProperty<IdObject> selectedEntry = new SimpleObjectProperty<>();
 
-    // TODO
-    private LocalDate dateOfContextMenu;
+    private ObjectProperty<LocalDate> dateOfContextMenu = new SimpleObjectProperty<>();
 
 
     /**
@@ -155,13 +154,12 @@ public class CalendarControl extends Control {
     }
 
     /**
-     * Returns the date of the cell on which the current context menu has been displayed or null,
-     * when it was not displayed on a day cell.
+     * Returns the property for the date of the cell on which the current context menu has been displayed.
+     * The property value is null, when the context menu was not displayed on a day cell.
      *
-     * @return date or null
+     * @return date property
      */
-    // TODO test
-    public LocalDate getDateOfContextMenu() {
+    public ObjectProperty<LocalDate> dateOfContextMenuProperty() {
         return dateOfContextMenu;
     }
 
@@ -184,7 +182,9 @@ public class CalendarControl extends Control {
     }
 
     /**
-     * TODO
+     * Value class for storing the year, month and week start to be shown in the calendar control.
+     * They are bundled in this container, so it's possible to change them and update the calendar
+     * in one run.
      */
     static class CalendarMonth {
 
@@ -192,20 +192,36 @@ public class CalendarControl extends Control {
         private int month;
         private boolean weekStartsSunday;
 
+        /**
+         * C'tor.
+         *
+         * @param year year
+         * @param month month
+         * @param weekStartsSunday week start flag
+         */
         public CalendarMonth(final int year, final int month, final boolean weekStartsSunday) {
             this.year = year;
             this.month = month;
             this.weekStartsSunday = weekStartsSunday;
         }
 
+        /**
+         * @return year to display
+         */
         public int getYear() {
             return year;
         }
 
+        /**
+         * @return month to display
+         */
         public int getMonth() {
             return month;
         }
 
+        /**
+         * @return week start to use for display (sunday = true, monday = false)
+         */
         public boolean isWeekStartsSunday() {
             return weekStartsSunday;
         }

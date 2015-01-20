@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.SkinBase;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
@@ -44,9 +43,6 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
     private CalendarHeaderCell[] headerCells = new CalendarHeaderCell[CalendarControl.GRIDS_COLUMN_COUNT];
     private CalendarDayCell[] dayCells = new CalendarDayCell[7 * CalendarControl.GRID_DAYS_ROW_COUNT];
     private CalendarSummaryCell[] summaryCells = new CalendarSummaryCell[CalendarControl.GRID_DAYS_ROW_COUNT];
-
-    private ContextMenu contextMenu;
-    private LocalDate dateOfContextMenu;
 
     /**
      * Standard c'tor.
@@ -88,25 +84,6 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
      */
     public void removeSelection() {
         Stream.of(dayCells).forEach(dayCell -> dayCell.removeSelectionExcept(null));
-    }
-
-    /**
-     * Sets the context menu to be displayed for this calendar control.
-     *
-     * @param contextMenu context menu to show (or null for removing)
-     */
-    public void setContextMenu(final ContextMenu contextMenu) {
-        this.contextMenu = contextMenu;
-    }
-
-    /**
-     * Returns the date of the cell on which the current context menu has been displayed or null,
-     * when it was not displayed on a day cell.
-     *
-     * @return date or null
-     */
-    public LocalDate getDateOfContextMenu() {
-        return dateOfContextMenu;
     }
 
     private void setupLayout() {
@@ -185,7 +162,7 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
         // set the calendar action listener in all day cells and update them whenever the specified listener changes
         setCalendarActionListenerInDayCells(getSkinnable().calendarActionListenerProperty().get());
         getSkinnable().calendarActionListenerProperty().addListener((observable, oldValue, newValue) -> //
-            setCalendarActionListenerInDayCells(newValue));
+                setCalendarActionListenerInDayCells(newValue));
 
         // setup an entry selection listener on all CalendarDayCells:
         // it removes any previous entry selections and stores the selected entry
@@ -205,21 +182,11 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
             dayCell.addEventHandler(MouseEvent.MOUSE_PRESSED, dayCellPressedHandler);
         });
 
-        // TODO use setContextMenu from Control
-        // display context menu when requested (Pane classes have no convenience method setContextMenu())
-        controlRoot.setOnContextMenuRequested(event -> {
-            if (contextMenu != null) {
-                dateOfContextMenu = getDateAtScreenPosition(event.getScreenX(), event.getScreenY());
-                contextMenu.show(controlRoot, event.getScreenX(), event.getScreenY());
-                event.consume();
-            }
-        });
-
-        // close context menu whenever the user clicks somewhere else on the calendar
-        controlRoot.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            if (contextMenu != null && contextMenu.isShowing()) {
-                contextMenu.hide();
-            }
+        // store the date of the day cell on which the calendar context menu has been displayed
+        getSkinnable().setOnContextMenuRequested(event -> {
+            final LocalDate dateOfContextMenu = getDateAtScreenPosition(event.getScreenX(), event.getScreenY());
+            getSkinnable().dateOfContextMenuProperty().set(dateOfContextMenu);
+            event.consume();
         });
     }
 

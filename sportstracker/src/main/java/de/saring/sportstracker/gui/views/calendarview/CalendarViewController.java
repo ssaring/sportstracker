@@ -230,15 +230,15 @@ public class CalendarViewController extends AbstractEntryViewController {
 
         final MenuItem miCtxAddExercise = createContextMenuItem( //
                 "miCtxAddExercise", "st.view.exercise_add.Action.text", //
-                event -> addExerciseForDate(calendarControl.getDateOfContextMenu()));
+                event -> addExerciseForDate(calendarControl.dateOfContextMenuProperty().get()));
 
         final MenuItem miCtxAddNote = createContextMenuItem( //
                 "miCtxAddNote", "st.view.note_add.Action.text", //
-                event -> addNoteForDate(calendarControl.getDateOfContextMenu()));
+                event -> addNoteForDate(calendarControl.dateOfContextMenuProperty().get()));
 
         final MenuItem miCtxAddWeight = createContextMenuItem( //
                 "miCtxAddWeight", "st.view.weight_add.Action.text", //
-                event -> addWeightForDate(calendarControl.getDateOfContextMenu()));
+                event -> addWeightForDate(calendarControl.dateOfContextMenuProperty().get()));
 
         final MenuItem miCtxEditEntry = createContextMenuItem( //
                 "miCtxEditEntry", "st.view.entry_edit.Action.text", //
