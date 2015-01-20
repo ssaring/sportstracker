@@ -845,7 +845,7 @@ public class OverviewDialogController extends AbstractDialogController {
         // set the first weekday (values 1 - 7, value 1 is Sunday or Monday)
         date = date.with(weekField.dayOfWeek(), 1);
         // set the specified week number
-        return date.with(weekField.weekOfYear(), weekNr);
+        return date.with(weekField.weekOfWeekBasedYear(), weekNr);
     }
 
     private WeekFields getWeekFieldsForWeekStart() {

@@ -66,9 +66,11 @@ public class Date310UtilsTest {
     public void testGetWeekNumberWithStartMonday() {
         assertEquals(52, Date310Utils.getWeekNumber(LocalDate.of(2013, 12, 29), false));
         assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2014, 1, 1), false));
+        assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2014, 1, 1), false));
         assertEquals(2, Date310Utils.getWeekNumber(LocalDate.of(2014, 1, 6), false));
 
         assertEquals(53, Date310Utils.getWeekNumber(LocalDate.of(2015, 12, 28), false));
+        assertEquals(53, Date310Utils.getWeekNumber(LocalDate.of(2016, 1, 3), false));
         assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2016, 1, 4), false));
         assertEquals(2, Date310Utils.getWeekNumber(LocalDate.of(2016, 1, 11), false));
     }
@@ -78,14 +80,19 @@ public class Date310UtilsTest {
      */
     @Test
     public void testGetWeekNumberWithStartSunday() {
+        assertEquals(53, Date310Utils.getWeekNumber(LocalDate.of(2011, 12, 31), true));
+        assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2012, 01, 01), true));
+
         assertEquals(52, Date310Utils.getWeekNumber(LocalDate.of(2013, 12, 28), true));
         assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2014, 1, 1), true));
         assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2014, 1, 4), true));
         assertEquals(2, Date310Utils.getWeekNumber(LocalDate.of(2014, 1, 5), true));
 
-        assertEquals(53, Date310Utils.getWeekNumber(LocalDate.of(2014, 12, 28), true));
+        assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2014, 12, 28), true));
         assertEquals(1, Date310Utils.getWeekNumber(LocalDate.of(2015, 1, 2), true));
-        assertEquals(2, Date310Utils.getWeekNumber(LocalDate.of(2015, 1, 6), true));
+        assertEquals(2, Date310Utils.getWeekNumber(LocalDate.of(2015, 1, 4), true));
+        assertEquals(2, Date310Utils.getWeekNumber(LocalDate.of(2015, 1, 10), true));
+        assertEquals(3, Date310Utils.getWeekNumber(LocalDate.of(2015, 1, 11), true));
     }
 
     /**

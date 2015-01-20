@@ -70,7 +70,7 @@ public final class Date310Utils {
      */
     public static int getWeekNumber(final LocalDate date, final boolean weekStartsSunday) {
         final WeekFields weekField = weekStartsSunday ? WeekFields.SUNDAY_START : WeekFields.ISO;
-        return date.get(weekField.weekOfYear());
+        return date.get(weekField.weekOfWeekBasedYear());
     }
 
     /**

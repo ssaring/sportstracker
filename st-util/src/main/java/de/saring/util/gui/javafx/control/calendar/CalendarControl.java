@@ -324,15 +324,10 @@ public class CalendarControl extends VBox {
     private void updateSummaryCells() {
 
         for (int row = 0; row < summaryCells.length; row++) {
-
             final LocalDate dateWeekStart = dayCells[row * 7].getDate();
             final LocalDate dateWeekEnd = dayCells[row * 7 + 6].getDate();
 
-            // TODO test with dateWeekStart with weekStartsSunday true/false
-            // get week number for a date in the middle of the week (otherwise problems with JSR 310
-            // DateTime API, it sometimes returns week ranges 53, 0, 1 or 53, 2, 3)
-            final LocalDate dateWeekMiddle = dateWeekStart.plusDays(3);
-            final int weekNr = Date310Utils.getWeekNumber(dateWeekMiddle, weekStartsSunday);
+            final int weekNr = Date310Utils.getWeekNumber(dateWeekStart, weekStartsSunday);
             summaryCells[row].setNumber(weekNr);
 
             // get and update summary entries for date range
