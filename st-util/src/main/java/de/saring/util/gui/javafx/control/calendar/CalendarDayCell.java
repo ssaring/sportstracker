@@ -137,10 +137,10 @@ class CalendarDayCell extends AbstractCalendarCell {
             }
         });
 
-        // all day cells support drag&drap of ONE file in mode 'copy'
+        // all day cells support drag&drap of ONE FILE in mode 'copy' ()
         setOnDragOver(event -> {
             final Dragboard dragboard = event.getDragboard();
-            if (dragboard.hasFiles() && dragboard.getFiles().size() == 1) {
+            if (dragboard.hasFiles() && dragboard.getFiles().size() == 1 && dragboard.getFiles().get(0).isFile()) {
                 event.acceptTransferModes(TransferMode.COPY);
             } else {
                 event.consume();
