@@ -201,6 +201,12 @@ public class CalendarViewController extends AbstractEntryViewController {
                 // execute action 'Edit Entry' when the user double clicks a calendar entry
                 getController().onEditEntry(null);
             }
+
+            @Override
+            public void onDraggedFileDroppedOnCalendarDay(final String filePath) {
+                // TODO
+                System.out.println("onDraggedFileDroppedOnCalendarDay: " + filePath);
+            }
         });
     }
 

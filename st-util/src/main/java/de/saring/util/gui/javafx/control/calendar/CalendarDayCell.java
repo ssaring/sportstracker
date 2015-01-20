@@ -10,7 +10,9 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 
 import de.saring.util.data.IdObject;
@@ -36,6 +38,7 @@ class CalendarDayCell extends AbstractCalendarCell {
      */
     public CalendarDayCell() {
         super(Color.WHITE);
+        setupListeners();
     }
 
     /**
@@ -85,24 +88,12 @@ class CalendarDayCell extends AbstractCalendarCell {
     }
 
     /**
-     * Sets the listener for handling actions on the calendar entries (double click). The new
-     * listener is not set for already displayed calendar entries.
+     * Sets the listener for handling actions on the calendar entries.
      *
      * @param calendarActionListener listener implementation
      */
     public void setCalendarActionListener(final CalendarActionListener calendarActionListener) {
         this.calendarActionListener = calendarActionListener;
-
-        // setup action listener for double clicks on the day cell (not on entries)
-        if (calendarActionListener == null) {
-            setOnMouseClicked(null);
-        } else {
-            setOnMouseClicked(event -> {
-                if (event.getClickCount() > 1) {
-                    calendarActionListener.onCalendarDayAction(date);
-                }
-            });
-        }
     }
 
     /**
@@ -134,6 +125,40 @@ class CalendarDayCell extends AbstractCalendarCell {
             }
         }
         return false;
+    }
+
+    private void setupListeners() {
+
+        // setup action listener for double clicks on the day cell (not on entries)
+        setOnMouseClicked(event -> {
+            if (calendarActionListener != null && event.getClickCount() > 1) {
+                calendarActionListener.onCalendarDayAction(date);
+            }
+        });
+
+        // all day cells support drag&drap of ONE file in mode 'copy'
+        setOnDragOver(event -> {
+            final Dragboard dragboard = event.getDragboard();
+            if (dragboard.hasFiles() && dragboard.getFiles().size() == 1) {
+                event.acceptTransferModes(TransferMode.COPY);
+            } else {
+                event.consume();
+            }
+        });
+
+        // notify action listener when a file has been dropped on the day cell
+        setOnDragDropped(event -> {
+            final Dragboard dragboard = event.getDragboard();
+            boolean success = false;
+
+            if (dragboard.hasFiles() && calendarActionListener != null) {
+                success = true;
+                final String filePath = dragboard.getFiles().get(0).getAbsolutePath();
+                calendarActionListener.onDraggedFileDroppedOnCalendarDay(filePath);
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
     }
 
     private void updateDayLabel() {

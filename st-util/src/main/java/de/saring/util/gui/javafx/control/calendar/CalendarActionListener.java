@@ -22,4 +22,11 @@ public interface CalendarActionListener {
      * @param calendarEntry the clicked calendar entry
      */
     void onCalendarEntryAction(CalendarEntry calendarEntry);
+
+    /**
+     * Called when a single file has been dragged and dropped on a calendar day cell.
+     *
+     * @param filePath absolute path of the dropped file
+     */
+    void onDraggedFileDroppedOnCalendarDay(String filePath);
 }
