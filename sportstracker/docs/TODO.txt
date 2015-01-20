@@ -1,8 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Test Drag&Drop of HRM files on Mac OS X and Linux (works on Windows)
-
 JavaFX Migration:
 - SportsTracker main window:
   - FXML: Done (tested on Windows and Mac)
@@ -43,6 +41,7 @@ JavaFX Migration:
   - Bug: EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)
   - Problem: window resizing is very slow -> JFreeChart is the cause
+- Test application on Linux (including Drag&Drop)
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
