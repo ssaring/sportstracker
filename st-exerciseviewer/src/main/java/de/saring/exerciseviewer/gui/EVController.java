@@ -104,7 +104,7 @@ public class EVController {
         tabOptional.setContent(optionalPanelController.loadAndSetupPanelContent());
         tabLaps.setContent(lapPanelController.loadAndSetupPanelContent());
         tabSamples.setContent(samplePanelController.loadAndSetupPanelContent());
-        // tabDiagram.setContent(diagramPanelController.loadAndSetupPanelContent());
+        tabDiagram.setContent(diagramPanelController.loadAndSetupPanelContent());
         tabTrack.setContent(trackPanelController.loadAndSetupPanelContent());
 
         // display exercise track not before the user wants to see it (prevent long startup delays)

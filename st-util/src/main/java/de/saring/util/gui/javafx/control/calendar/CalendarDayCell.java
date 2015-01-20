@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.Dragboard;
@@ -53,7 +54,7 @@ class CalendarDayCell extends AbstractCalendarCell {
     /**
      * Sets the date of this day cell
      *
-     * @param date new date
+     * @param date           new date
      * @param displayedMonth flag whether this date is inside the currently displayed month
      */
     public void setDate(final LocalDate date, final boolean displayedMonth) {
@@ -146,7 +147,7 @@ class CalendarDayCell extends AbstractCalendarCell {
             }
         });
 
-        // notify action listener when a file has been dropped on the day cell
+        // notify action listener when a file has been dropped on the day cell or on a calendar entry
         setOnDragDropped(event -> {
             final Dragboard dragboard = event.getDragboard();
             boolean success = false;
@@ -154,7 +155,13 @@ class CalendarDayCell extends AbstractCalendarCell {
             if (dragboard.hasFiles() && calendarActionListener != null) {
                 success = true;
                 final String filePath = dragboard.getFiles().get(0).getAbsolutePath();
-                calendarActionListener.onDraggedFileDroppedOnCalendarDay(filePath);
+
+                final CalendarEntry droppedOnEntry = getEntryAtScreenPosition(event.getScreenX(), event.getScreenY());
+                if (droppedOnEntry == null) {
+                    calendarActionListener.onDraggedFileDroppedOnCalendarDay(filePath);
+                } else {
+                    calendarActionListener.onDraggedFileDroppedOnCalendarEntry(droppedOnEntry.getEntry(), filePath);
+                }
             }
             event.setDropCompleted(success);
             event.consume();
@@ -182,6 +189,23 @@ class CalendarDayCell extends AbstractCalendarCell {
     }
 
     /**
+     * Returns the CalendarEntry at the specified screen position or null when there is no entry.
+     *
+     * @param screenX X position on screen
+     * @param screenY Y position on screen
+     * @return CalendarEntry or null
+     */
+    private CalendarEntry getEntryAtScreenPosition(final double screenX, final double screenY) {
+        for (CalendarEntryLabel calendarEntryLabel : calendarEntryLabels) {
+            final Point2D localPosition = calendarEntryLabel.screenToLocal(screenX, screenY);
+            if (calendarEntryLabel.getBoundsInLocal().contains(localPosition)) {
+                return calendarEntryLabel.entry;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Listener interface for notification when the calendar entry selection changes.
      */
     interface CalendarEntrySelectionListener {
@@ -191,7 +215,7 @@ class CalendarDayCell extends AbstractCalendarCell {
          * selected or deselected).
          *
          * @param calendarEntry entry of selection change
-         * @param selected true when the entry gets selected
+         * @param selected      true when the entry gets selected
          */
         void calendarEntrySelectionChanged(CalendarEntry calendarEntry, boolean selected);
     }
@@ -207,7 +231,7 @@ class CalendarDayCell extends AbstractCalendarCell {
         private BooleanProperty selected = new SimpleBooleanProperty(false);
 
         public CalendarEntryLabel(final CalendarEntry entry, final CalendarEntrySelectionListener selectionListener,
-                final CalendarActionListener actionListener) {
+                                  final CalendarActionListener actionListener) {
             this.entry = entry;
 
             setMaxWidth(Double.MAX_VALUE);
@@ -224,18 +248,18 @@ class CalendarDayCell extends AbstractCalendarCell {
             // bind the background color to the selection status
             // TODO use CSS
             selected.addListener((observable, oldValue, newValue) -> //
-            setStyle("-fx-background-color: " + (newValue ? "lightskyblue;" : "transparent")));
+                    setStyle("-fx-background-color: " + (newValue ? "lightskyblue;" : "transparent")));
 
             setupListeners(selectionListener, actionListener);
         }
 
         private void setupListeners(final CalendarEntrySelectionListener selectionListener,
-                final CalendarActionListener actionListener) {
+                                    final CalendarActionListener actionListener) {
 
             // notify selection listener on changes (if registered)
             if (selectionListener != null) {
                 selected.addListener((observable, oldValue, newValue) -> //
-                selectionListener.calendarEntrySelectionChanged(entry, newValue));
+                        selectionListener.calendarEntrySelectionChanged(entry, newValue));
             }
 
             // update selection status when the user clicks on the entry label

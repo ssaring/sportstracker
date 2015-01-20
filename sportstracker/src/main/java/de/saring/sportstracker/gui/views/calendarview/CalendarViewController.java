@@ -147,6 +147,7 @@ public class CalendarViewController extends AbstractEntryViewController {
     @Override
     protected void setupView() {
         setupCalendarControl();
+        setCalendarActionListener();
         setupCalendarContextMenu();
 
         // bind month and year labels to current values
@@ -186,8 +187,9 @@ public class CalendarViewController extends AbstractEntryViewController {
                 onNextMonth(null);
             }
         });
+    }
 
-        // setup calendar action handlers
+    private void setCalendarActionListener() {
         calendarControl.setCalendarActionListener(new CalendarActionListener() {
 
             @Override
@@ -204,8 +206,17 @@ public class CalendarViewController extends AbstractEntryViewController {
 
             @Override
             public void onDraggedFileDroppedOnCalendarDay(final String filePath) {
-                // TODO
-                System.out.println("onDraggedFileDroppedOnCalendarDay: " + filePath);
+                getController().onAddExerciseForDroppedHrmFile(filePath);
+            }
+
+            @Override
+            public void onDraggedFileDroppedOnCalendarEntry(final IdDateObject entry, final String filePath) {
+                if (entry instanceof Exercise) {
+                    getController().onAssignDroppedHrmFileToExercise(filePath, (Exercise) entry);
+                } else {
+                    // the target entry was not an exercise -> add a new exercise for the dropped entry
+                    getController().onAddExerciseForDroppedHrmFile(filePath);
+                }
             }
         });
     }

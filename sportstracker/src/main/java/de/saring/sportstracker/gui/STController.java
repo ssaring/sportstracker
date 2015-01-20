@@ -1,5 +1,6 @@
 package de.saring.sportstracker.gui;
 
+import de.saring.sportstracker.data.Exercise;
 import javafx.event.ActionEvent;
 import javafx.stage.WindowEvent;
 
@@ -141,6 +142,26 @@ public interface STController {
      * Event handler for action "About SportsTracker".
      */
     void onAbout(ActionEvent event);
+
+    /**
+     * Starts the action for adding a new exercise for the specified HRM file (called when
+     * a HRM file has been dropped on a day cell in the calendar view). The new exercise
+     * will contain the data imported from the specified HRM file.
+     *
+     * @param hrmFilePath the absolute path of the HRM file
+     */
+    void onAddExerciseForDroppedHrmFile(String hrmFilePath);
+
+    /**
+     * Assigns the specified HRM filename to the specified exercise (called when a HRM
+     * file has been dropped on an exercise entry in the calendar view). If the exercise
+     * is null, then a new exercise will be created and displayed in the
+     * Exercise dialog (the HRM data will be imported).
+     *
+     * @param hrmFilePath the absolute path of the HRM file
+     * @param exercise the exercise on which the file has been dropped
+     */
+    void onAssignDroppedHrmFileToExercise(String hrmFilePath, Exercise exercise);
 
     /**
      * Checks for existing sport types. A message dialog will be displayed when

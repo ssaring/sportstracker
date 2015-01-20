@@ -476,6 +476,27 @@ public class STControllerImpl implements STController {
     }
 
     @Override
+    public void onAddExerciseForDroppedHrmFile(final String hrmFilePath) {
+        if (checkForExistingSportTypes()) {
+
+            // create a new exercise and assign the HRM file
+            Exercise newExercise = createNewExercise(null);
+            newExercise.setHrmFile(hrmFilePath);
+
+            // start Exercise dialog for it and import the HRM data
+            prExerciseDialogController.get().show(context.getPrimaryStage(), newExercise, true);
+        }
+    }
+
+    @Override
+    public void onAssignDroppedHrmFileToExercise(final String hrmFilePath, final Exercise exercise) {
+        exercise.setHrmFile(hrmFilePath);
+        document.getExerciseList().set(exercise);
+        context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
+                "common.info", "st.calview.draganddrop.assigned");
+    }
+
+    @Override
     public boolean checkForExistingSportTypes() {
         if (document.getSportTypeList().size() == 0) {
             context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
