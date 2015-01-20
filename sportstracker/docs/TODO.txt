@@ -1,9 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Bug: when removing all SportTypes and so all Exercises and exiting the application with Save=No
--> all exercises and sport types are deleted on next startup!
-
 Test Drag&Drop of HRM files on Mac OS X and Linux (works on Windows)
 
 JavaFX Migration:

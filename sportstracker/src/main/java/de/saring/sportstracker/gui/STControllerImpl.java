@@ -636,6 +636,7 @@ public class STControllerImpl implements STController {
                 } else if (oResult.get() == ButtonType.NO) {
                     // exit without saving unsaved changes
                     exitApplication();
+                    return;
                 }
             }
 
