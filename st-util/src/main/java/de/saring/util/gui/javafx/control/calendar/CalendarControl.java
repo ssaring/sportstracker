@@ -31,7 +31,7 @@ public class CalendarControl extends Control {
 
     private static final String[] DEFAULT_COLUMN_NAMES = { "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su", "Sum" };
 
-    private ObjectProperty<CalendarMonth> displayedMonth = new SimpleObjectProperty<>();
+    private ObjectProperty<CalendarDate> displayedDate = new SimpleObjectProperty<>();
 
     private String[] columnNames;
 
@@ -51,7 +51,7 @@ public class CalendarControl extends Control {
         getStyleClass().add("calendar-control");
 
         final LocalDate today = LocalDate.now();
-        displayedMonth.set(new CalendarMonth(today.getYear(), today.getMonthValue(), false));
+        displayedDate.set(new CalendarDate(today.getYear(), today.getMonthValue(), false));
     }
 
     /**
@@ -103,7 +103,7 @@ public class CalendarControl extends Control {
      */
     public void updateCalendar(final int year, final int month, final boolean weekStartsSunday) {
         selectedEntry.set(null);
-        displayedMonth.set(new CalendarMonth(year, month, weekStartsSunday));
+        displayedDate.set(new CalendarDate(year, month, weekStartsSunday));
     }
 
     /**
@@ -111,8 +111,8 @@ public class CalendarControl extends Control {
      *
      * @return CalendarMonth property
      */
-    public ObjectProperty<CalendarMonth> displayedMonthProperty() {
-        return displayedMonth;
+    public ObjectProperty<CalendarDate> displayedDateProperty() {
+        return displayedDate;
     }
 
     /**
@@ -171,9 +171,9 @@ public class CalendarControl extends Control {
      */
     public LocalDate getFirstDisplayedDay() {
         final LocalDate firstDayOfMonth = LocalDate.of( //
-                displayedMonth.get().getYear(), displayedMonth.get().getMonth(), 1);
+                displayedDate.get().getYear(), displayedDate.get().getMonth(), 1);
         return firstDayOfMonth.with(TemporalAdjusters.previousOrSame( //
-                displayedMonth.get().isWeekStartsSunday() ? DayOfWeek.SUNDAY : DayOfWeek.MONDAY));
+                displayedDate.get().isWeekStartsSunday() ? DayOfWeek.SUNDAY : DayOfWeek.MONDAY));
     }
 
     @Override
@@ -186,7 +186,7 @@ public class CalendarControl extends Control {
      * They are bundled in this container, so it's possible to change them and update the calendar
      * in one run.
      */
-    static class CalendarMonth {
+    static class CalendarDate {
 
         private int year;
         private int month;
@@ -199,7 +199,7 @@ public class CalendarControl extends Control {
          * @param month month
          * @param weekStartsSunday week start flag
          */
-        public CalendarMonth(final int year, final int month, final boolean weekStartsSunday) {
+        public CalendarDate(final int year, final int month, final boolean weekStartsSunday) {
             this.year = year;
             this.month = month;
             this.weekStartsSunday = weekStartsSunday;

@@ -157,7 +157,7 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
     private void setupListeners() {
 
         // update the calendar content whenever the displayed month changes
-        getSkinnable().displayedMonthProperty().addListener((observable, oldValue, newValue) -> updateContent());
+        getSkinnable().displayedDateProperty().addListener((observable, oldValue, newValue) -> updateContent());
 
         // set the calendar action listener in all day cells and update them whenever the specified listener changes
         setCalendarActionListenerInDayCells(getSkinnable().calendarActionListenerProperty().get());
@@ -198,7 +198,7 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
      * Updates the content of the header cell depending on the current week start day.
      */
     private void updateHeaderCells() {
-        final boolean weekStartsSunday = getSkinnable().displayedMonthProperty().get().isWeekStartsSunday();
+        final boolean weekStartsSunday = getSkinnable().displayedDateProperty().get().isWeekStartsSunday();
         final int indexSunday = weekStartsSunday ? 0 : 6;
         final String[] columnNames = getSkinnable().getColumnNames();
 
@@ -220,7 +220,7 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
      */
     private void updateDayCells() {
         LocalDate currentCellDate = getSkinnable().getFirstDisplayedDay();
-        final int displayedMonth = getSkinnable().displayedMonthProperty().get().getMonth();
+        final int displayedMonth = getSkinnable().displayedDateProperty().get().getMonth();
 
         for (int i = 0; i < dayCells.length; i++) {
             final boolean dateOfDisplayedMonth = currentCellDate.getMonthValue() == displayedMonth;
@@ -246,7 +246,7 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
             final LocalDate dateWeekEnd = dayCells[row * 7 + 6].getDate();
 
             final int weekNr = Date310Utils.getWeekNumber(dateWeekStart, //
-                    getSkinnable().displayedMonthProperty().get().isWeekStartsSunday());
+                    getSkinnable().displayedDateProperty().get().isWeekStartsSunday());
             summaryCells[row].setNumber(weekNr);
 
             // get and update summary entries for date range
