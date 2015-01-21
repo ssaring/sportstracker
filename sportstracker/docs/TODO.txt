@@ -13,8 +13,6 @@ JavaFX Migration:
     - FXML: Done
     - Controller: see TODO
     - Calendar Control: see TODO in package calendarview and st-util package calendar
-      - context menu bug: when menu is displayed and the user right clicks on another entry,
-        then the new entry will not be selected (the action is started for the old selection)
       - improve layout and define styles in CSS
       - Day Cell: define a bottom padding of 1px, there must be some space when there is too much content for the height
       - see also http://www.myexpospace.com/JavaOne2012/SessionFiles/CON4726_PDF_4726_0001.pdf, Option 2

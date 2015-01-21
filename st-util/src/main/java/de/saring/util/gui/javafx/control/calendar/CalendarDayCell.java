@@ -54,7 +54,7 @@ class CalendarDayCell extends AbstractCalendarCell {
     /**
      * Sets the date of this day cell
      *
-     * @param date           new date
+     * @param date new date
      * @param displayedMonth flag whether this date is inside the currently displayed month
      */
     public void setDate(final LocalDate date, final boolean displayedMonth) {
@@ -128,6 +128,23 @@ class CalendarDayCell extends AbstractCalendarCell {
         return false;
     }
 
+    /**
+     * Returns the CalendarEntry at the specified screen position or null when there is no entry.
+     *
+     * @param screenX X position on screen
+     * @param screenY Y position on screen
+     * @return CalendarEntry or null
+     */
+    public CalendarEntry getEntryAtScreenPosition(final double screenX, final double screenY) {
+        for (CalendarEntryLabel calendarEntryLabel : calendarEntryLabels) {
+            final Point2D localPosition = calendarEntryLabel.screenToLocal(screenX, screenY);
+            if (calendarEntryLabel.getBoundsInLocal().contains(localPosition)) {
+                return calendarEntryLabel.entry;
+            }
+        }
+        return null;
+    }
+
     private void setupListeners() {
 
         // setup action listener for double clicks on the day cell (not on entries)
@@ -189,23 +206,6 @@ class CalendarDayCell extends AbstractCalendarCell {
     }
 
     /**
-     * Returns the CalendarEntry at the specified screen position or null when there is no entry.
-     *
-     * @param screenX X position on screen
-     * @param screenY Y position on screen
-     * @return CalendarEntry or null
-     */
-    private CalendarEntry getEntryAtScreenPosition(final double screenX, final double screenY) {
-        for (CalendarEntryLabel calendarEntryLabel : calendarEntryLabels) {
-            final Point2D localPosition = calendarEntryLabel.screenToLocal(screenX, screenY);
-            if (calendarEntryLabel.getBoundsInLocal().contains(localPosition)) {
-                return calendarEntryLabel.entry;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Listener interface for notification when the calendar entry selection changes.
      */
     interface CalendarEntrySelectionListener {
@@ -215,7 +215,7 @@ class CalendarDayCell extends AbstractCalendarCell {
          * selected or deselected).
          *
          * @param calendarEntry entry of selection change
-         * @param selected      true when the entry gets selected
+         * @param selected true when the entry gets selected
          */
         void calendarEntrySelectionChanged(CalendarEntry calendarEntry, boolean selected);
     }
@@ -231,7 +231,7 @@ class CalendarDayCell extends AbstractCalendarCell {
         private BooleanProperty selected = new SimpleBooleanProperty(false);
 
         public CalendarEntryLabel(final CalendarEntry entry, final CalendarEntrySelectionListener selectionListener,
-                                  final CalendarActionListener actionListener) {
+                final CalendarActionListener actionListener) {
             this.entry = entry;
 
             setMaxWidth(Double.MAX_VALUE);
@@ -248,18 +248,18 @@ class CalendarDayCell extends AbstractCalendarCell {
             // bind the background color to the selection status
             // TODO use CSS
             selected.addListener((observable, oldValue, newValue) -> //
-                    setStyle("-fx-background-color: " + (newValue ? "lightskyblue;" : "transparent")));
+            setStyle("-fx-background-color: " + (newValue ? "lightskyblue;" : "transparent")));
 
             setupListeners(selectionListener, actionListener);
         }
 
         private void setupListeners(final CalendarEntrySelectionListener selectionListener,
-                                    final CalendarActionListener actionListener) {
+                final CalendarActionListener actionListener) {
 
             // notify selection listener on changes (if registered)
             if (selectionListener != null) {
                 selected.addListener((observable, oldValue, newValue) -> //
-                        selectionListener.calendarEntrySelectionChanged(entry, newValue));
+                selectionListener.calendarEntrySelectionChanged(entry, newValue));
             }
 
             // update selection status when the user clicks on the entry label

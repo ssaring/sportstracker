@@ -169,10 +169,13 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> implements Ca
             dayCell.addEventHandler(MouseEvent.MOUSE_PRESSED, dayCellPressedHandler);
         });
 
-        // store the date of the day cell on which the calendar context menu has been displayed
+        // when the calendar context menu has been requested:
+        // - store the date of the day cell on which the menu has been displayed
+        // - select the calendar entry at mouse position (not done automatically when the menu is already shown)
         getSkinnable().setOnContextMenuRequested(event -> {
             final LocalDate dateOfContextMenu = getDateAtScreenPosition(event.getScreenX(), event.getScreenY());
             getSkinnable().dateOfContextMenuProperty().set(dateOfContextMenu);
+            selectCalendarEntryAtScreenPosition(event.getScreenX(), event.getScreenY());
             event.consume();
         });
     }
@@ -269,5 +272,17 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> implements Ca
             }
         }
         return null;
+    }
+
+    private void selectCalendarEntryAtScreenPosition(final double screenX, final double screenY) {
+        removeSelection();
+
+        for (CalendarDayCell dayCell : dayCells) {
+            final CalendarEntry entryAtScreenPosition = dayCell.getEntryAtScreenPosition(screenX, screenY);
+            if (entryAtScreenPosition != null) {
+                selectEntry(entryAtScreenPosition.getEntry());
+                break;
+            }
+        }
     }
 }
