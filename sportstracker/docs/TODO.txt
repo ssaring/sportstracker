@@ -2,6 +2,7 @@ SportsTracker-TODO
 ==================
 
 Test Calendar Control style on Windows (font size, also in tooltips)
+Use bold font for displayed month and year?
 
 JavaFX Migration:
 - SportsTracker main window:
