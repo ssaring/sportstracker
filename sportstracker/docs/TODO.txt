@@ -1,6 +1,8 @@
 SportsTracker-TODO
 ==================
 
+- test clipping workaround for GridPane day cells on Mac OS X
+
 JavaFX Migration:
 - SportsTracker main window:
   - FXML: Done (tested on Windows and Mac)
@@ -15,7 +17,6 @@ JavaFX Migration:
     - Calendar Control:
       - improve styling (colors, padding, font sizes, gradients?) via CSS
       - Day Cell: define a bottom padding of 1px, there must be some space when there is too much content for the height
-      - see also http://www.myexpospace.com/JavaOne2012/SessionFiles/CON4726_PDF_4726_0001.pdf, Option 2
       - layout problems with very small height when there are entries => day cells will overlap the control bottom
   - All Views: add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)

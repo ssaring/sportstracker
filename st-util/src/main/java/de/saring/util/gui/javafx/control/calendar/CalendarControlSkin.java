@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Stream;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
@@ -15,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 
 import de.saring.util.Date310Utils;
 import de.saring.util.data.IdObject;
@@ -96,8 +98,8 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> implements Ca
             final RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.setValignment(VPos.TOP);
             rowConstraints.setPercentHeight((100 / (double) (CalendarControl.GRID_DAYS_ROW_COUNT)));
-            // probably a JavaFX bug: min height must be 0, otherwise the row takes at least the computed height
-            rowConstraints.setMinHeight(0);
+            // probably a JavaFX bug: min height must be set, otherwise the row takes at least the computed height
+            rowConstraints.setMinHeight(45);
             gridDayCells.getRowConstraints().add(rowConstraints);
         }
 
@@ -139,6 +141,13 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> implements Ca
         VBox.setVgrow(gridHeaderCells, Priority.NEVER);
         VBox.setVgrow(gridDayCells, Priority.ALWAYS);
         controlRoot.getChildren().addAll(gridHeaderCells, gridDayCells);
+
+        // Workaround: set clipping rectangle around the day cell GridPane to avoid overlapping
+        // of day cells (when a VBox of a day cell contains more entries than its height)
+        final Rectangle gridDaysClip = new Rectangle(-1, -1, 1, 1);
+        gridDaysClip.widthProperty().bind(Bindings.add(gridDayCells.widthProperty(), 2.1));
+        gridDaysClip.heightProperty().bind(Bindings.add(gridDayCells.heightProperty(), 2.1));
+        gridDayCells.setClip(gridDaysClip);
     }
 
     private void setupListeners() {
