@@ -124,7 +124,7 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
         if (exercise.getSportType().isRecordDistance()) {
             sbText.append(formatUtils.distanceToString(exercise.getDistance(), 2)).append(", ");
         }
-        sbText.append(formatUtils.seconds2TimeString(exercise.getDuration()));
+        sbText.append(formatUtils.minutes2TimeString(exercise.getDuration() / 60));
 
         final StringBuilder sbToolTip = new StringBuilder();
         sbToolTip.append(resources.getString("st.calview.exe_tooltip.sport_type")) //
