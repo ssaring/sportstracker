@@ -5,7 +5,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
@@ -142,12 +141,12 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> implements Ca
         VBox.setVgrow(gridDayCells, Priority.ALWAYS);
         controlRoot.getChildren().addAll(gridHeaderCells, gridDayCells);
 
-        // Workaround: set clipping rectangle around the day cell GridPane to avoid overlapping
+        // Workaround: set clipping rectangle around the root pane to avoid overlapping
         // of day cells (when a VBox of a day cell contains more entries than its height)
-        final Rectangle gridDaysClip = new Rectangle(-1, -1, 1, 1);
-        gridDaysClip.widthProperty().bind(Bindings.add(gridDayCells.widthProperty(), 2.1));
-        gridDaysClip.heightProperty().bind(Bindings.add(gridDayCells.heightProperty(), 2.1));
-        gridDayCells.setClip(gridDaysClip);
+        final Rectangle rootClip = new Rectangle();
+        rootClip.widthProperty().bind(controlRoot.widthProperty());
+        rootClip.heightProperty().bind(controlRoot.heightProperty());
+        controlRoot.setClip(rootClip);
     }
 
     private void setupListeners() {

@@ -6,12 +6,16 @@
 
 .calendar-control {
     -fx-skin: "de.saring.util.gui.javafx.control.calendar.CalendarControlSkin";
+
+    /* draw a right and bottom border line around the complete calendar */
+    -fx-cell-border-color: #606060;
+    -fx-border-color: transparent -fx-cell-border-color -fx-cell-border-color transparent;
 }
 
 /* Base class of all calendar cells. */
 .calendar-control-cell {
-    -fx-border-color: #606060;
-    -fx-border-insets: -1;
+    /* draw a top and left border line around each calendar cell */
+    -fx-border-color: -fx-cell-border-color transparent transparent -fx-cell-border-color;
 }
 
 /* Style of the upper left number of calendar cells. */
