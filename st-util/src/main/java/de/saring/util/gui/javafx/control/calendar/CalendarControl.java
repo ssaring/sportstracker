@@ -24,9 +24,9 @@ public class CalendarControl extends Control {
 
     private static final String[] DEFAULT_COLUMN_NAMES = { "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su", "Sum" };
 
-    private ObjectProperty<CalendarDate> displayedDate = new SimpleObjectProperty<>();
-
     private String[] columnNames;
+
+    private ObjectProperty<CalendarDate> displayedDate = new SimpleObjectProperty<>();
 
     private CalendarDataProvider calendarDataProvider;
 
@@ -36,6 +36,7 @@ public class CalendarControl extends Control {
 
     private ObjectProperty<LocalDate> dateOfContextMenu = new SimpleObjectProperty<>();
 
+    private CalendarSelector calendarSelector;
 
     /**
      * Standard c'tor.
@@ -70,6 +71,15 @@ public class CalendarControl extends Control {
     }
 
     /**
+     * Returns the currently displayed year, month and week start data.
+     *
+     * @return CalendarMonth property
+     */
+    public ObjectProperty<CalendarDate> displayedDateProperty() {
+        return displayedDate;
+    }
+
+    /**
      * Returns the provider which provides the entries to be shown in the calendar.
      *
      * @return CalendarDataProvider
@@ -100,36 +110,27 @@ public class CalendarControl extends Control {
     }
 
     /**
-     * Returns the currently displayed year, month and week start data.
-     *
-     * @return CalendarMonth property
-     */
-    public ObjectProperty<CalendarDate> displayedDateProperty() {
-        return displayedDate;
-    }
-
-    /**
      * Selects the specified entry, if it is currently displayed in the calendar.
      *
      * @param entry entry to select
      */
     public void selectEntry(final IdObject entry) {
-        // TODO refactor
-        ((CalendarControlSkin)getSkin()).selectEntry(entry);
+        if (calendarSelector != null) {
+            calendarSelector.selectEntry(entry);
+        }
     }
 
     /**
      * Removes the entry selection, if there is one.
      */
     public void removeSelection() {
-        // TODO refactor
-        if (getSkin() != null) {
-            ((CalendarControlSkin) getSkin()).removeSelection();
+        if (calendarSelector != null) {
+            calendarSelector.removeSelection();
         }
     }
 
     /**
-     * Returns the property which provides the selected entry or null when no entry is selected
+     * Returns the property which provides the selected entry or null when no entry is selected.
      *
      * @return property of the selected entry
      */
@@ -172,6 +173,15 @@ public class CalendarControl extends Control {
     @Override
     protected String getUserAgentStylesheet() {
         return getClass().getResource("CalendarControl.css").toExternalForm();
+    }
+
+    /**
+     * Sets the selector implementation for delegating entry selection commands.
+     *
+     * @param calendarSelector selector implementation
+     */
+    public void setCalendarSelector(final CalendarSelector calendarSelector) {
+        this.calendarSelector = calendarSelector;
     }
 
     /**
@@ -218,5 +228,23 @@ public class CalendarControl extends Control {
         public boolean isWeekStartsSunday() {
             return weekStartsSunday;
         }
+    }
+
+    /**
+     * Interface for delegating selection commands to the Skin implementation.
+     */
+    interface CalendarSelector {
+
+        /**
+         * Selects the specified entry, if it is currently displayed in the calendar.
+         *
+         * @param entry entry to select
+         */
+        void selectEntry(IdObject entry);
+
+        /**
+         * Removes the entry selection, if there is one.
+         */
+        public void removeSelection();
     }
 }

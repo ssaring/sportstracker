@@ -34,7 +34,7 @@ import de.saring.util.data.IdObject;
  *
  * @author Stefan Saring
  */
-public class CalendarControlSkin extends SkinBase<CalendarControl> {
+public class CalendarControlSkin extends SkinBase<CalendarControl> implements CalendarControl.CalendarSelector {
 
     private VBox controlRoot;
 
@@ -52,26 +52,14 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
      */
     public CalendarControlSkin(final CalendarControl calendarControl) {
         super(calendarControl);
+        calendarControl.setCalendarSelector(this);
 
         setupLayout();
         setupListeners();
         updateContent();
     }
 
-    /**
-     * Updates the content of the calendar component (all header, day and summary cells).
-     */
-    public void updateContent() {
-        updateHeaderCells();
-        updateDayCells();
-        updateSummaryCells();
-    }
-
-    /**
-     * Selects the specified entry, if it is currently displayed in the calendar.
-     *
-     * @param entry entry to select
-     */
+    @Override
     public void selectEntry(final IdObject entry) {
         for (CalendarDayCell dayCell : dayCells) {
             if (dayCell.selectEntry(entry)) {
@@ -80,9 +68,7 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
         }
     }
 
-    /**
-     * Removes the entry selection, if there is one.
-     */
+    @Override
     public void removeSelection() {
         Stream.of(dayCells).forEach(dayCell -> dayCell.removeSelectionExcept(null));
     }
@@ -157,7 +143,7 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
 
     private void setupListeners() {
 
-        // update the calendar content whenever the displayed month changes
+        // update the calendar content whenever the displayed date property in the control changes
         getSkinnable().displayedDateProperty().addListener((observable, oldValue, newValue) -> updateContent());
 
         // set the calendar action listener in all day cells and update them whenever the specified listener changes
@@ -166,7 +152,7 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
                 setCalendarActionListenerInDayCells(newValue));
 
         // setup an entry selection listener on all CalendarDayCells:
-        // it removes any previous entry selections and stores the selected entry
+        // it removes any previous entry selections and updates the selected entry property in the control
         final CalendarDayCell.CalendarEntrySelectionListener listener = (calendarEntry, selected) -> {
             if (selected) {
                 Stream.of(dayCells).forEach(dayCell -> dayCell.removeSelectionExcept(calendarEntry));
@@ -193,6 +179,15 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> {
 
     private void setCalendarActionListenerInDayCells(final CalendarActionListener calendarActionListener) {
         Stream.of(dayCells).forEach(dayCell -> dayCell.setCalendarActionListener(calendarActionListener));
+    }
+
+    /**
+     * Updates the content of the calendar component (all header, day and summary cells).
+     */
+    private void updateContent() {
+        updateHeaderCells();
+        updateDayCells();
+        updateSummaryCells();
     }
 
     /**
