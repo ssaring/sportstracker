@@ -8,11 +8,13 @@
     -fx-skin: "de.saring.util.gui.javafx.control.calendar.CalendarControlSkin";
 }
 
+/* Base class of all calendar cells. */
 .calendar-control-cell {
     -fx-border-color: #606060;
     -fx-border-insets: -1;
 }
 
+/* Style of the upper left number of calendar cells. */
 .calendar-control-cell > .number {
     -fx-text-fill-default: black;
     -fx-text-fill-sunday: red;
@@ -37,6 +39,7 @@
     -fx-text-fill: derive(-fx-text-fill-sunday, 90%);
 }
 
+/* Style of calendar header cells. */
 .calendar-control-header-cell {
     -fx-background-color: cornflowerblue;
     -fx-text-fill: white;
@@ -46,14 +49,17 @@
     -fx-text-fill: red;
 }
 
+/* Style of calendar day cells. */
 .calendar-control-day-cell {
     -fx-background-color: white;
 }
 
+/* Style of calendar summary cells. */
 .calendar-control-summary-cell {
     -fx-background-color: lightpink;
 }
 
+/* Style of entries in calendar day cells (entries are selectable). */
 .calendar-control-entry:selected {
-    -fx-background-color: lightskyblue;;
+    -fx-background-color: lightskyblue;
 }
