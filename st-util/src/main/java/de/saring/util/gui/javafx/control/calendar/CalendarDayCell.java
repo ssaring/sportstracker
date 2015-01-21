@@ -8,13 +8,13 @@ import java.util.stream.Collectors;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.css.PseudoClass;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.paint.Color;
 
 import de.saring.util.data.IdObject;
 
@@ -25,6 +25,10 @@ import de.saring.util.data.IdObject;
  * @author Stefan Saring
  */
 class CalendarDayCell extends AbstractCalendarCell {
+
+    private static final PseudoClass PSEUDO_CLASS_SUNDAY = PseudoClass.getPseudoClass("sunday");
+    private static final PseudoClass PSEUDO_CLASS_TODAY = PseudoClass.getPseudoClass("today");
+    private static final PseudoClass PSEUDO_CLASS_OUTSIDE_MONTH = PseudoClass.getPseudoClass("outside-month");
 
     private LocalDate date;
     private boolean displayedMonth;
@@ -38,8 +42,8 @@ class CalendarDayCell extends AbstractCalendarCell {
      * Standard c'tor.
      */
     public CalendarDayCell() {
-        super(Color.WHITE);
         setupListeners();
+        getStyleClass().add("calendar-control-day-cell");
     }
 
     /**
@@ -188,21 +192,12 @@ class CalendarDayCell extends AbstractCalendarCell {
     private void updateDayLabel() {
         setNumber(date.getDayOfMonth());
 
-        // TODO use CSS
+        final boolean sunday = date.getDayOfWeek() == DayOfWeek.SUNDAY;
         final boolean today = LocalDate.now().equals(date);
-        Color color = Color.DARKBLUE;
-        String style = "-fx-font-weight: bold;";
 
-        if (!today) {
-            color = displayedMonth ? Color.BLACK : Color.GRAY;
-            if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                color = displayedMonth ? Color.RED : Color.SALMON;
-            }
-            style = "-fx-font-weight: normal;";
-        }
-
-        getNumberLabel().setTextFill(color);
-        getNumberLabel().setStyle(style);
+        getNumberLabel().pseudoClassStateChanged(PSEUDO_CLASS_SUNDAY, sunday);
+        getNumberLabel().pseudoClassStateChanged(PSEUDO_CLASS_TODAY, today);
+        getNumberLabel().pseudoClassStateChanged(PSEUDO_CLASS_OUTSIDE_MONTH, !displayedMonth);
     }
 
     /**
@@ -226,6 +221,8 @@ class CalendarDayCell extends AbstractCalendarCell {
      */
     private static class CalendarEntryLabel extends Label {
 
+        private static final PseudoClass PSEUDO_CLASS_SELECTED = PseudoClass.getPseudoClass("selected");
+
         private CalendarEntry entry;
 
         private BooleanProperty selected = new SimpleBooleanProperty(false);
@@ -246,9 +243,9 @@ class CalendarDayCell extends AbstractCalendarCell {
             }
 
             // bind the background color to the selection status
-            // TODO use CSS
-            selected.addListener((observable, oldValue, newValue) -> //
-            setStyle("-fx-background-color: " + (newValue ? "lightskyblue;" : "transparent")));
+            getStyleClass().add("calendar-control-entry");
+            selected.addListener((observable, oldValue, newValue) -> pseudoClassStateChanged( //
+                    PSEUDO_CLASS_SELECTED, newValue));
 
             setupListeners(selectionListener, actionListener);
         }

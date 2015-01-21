@@ -1,9 +1,9 @@
 package de.saring.util.gui.javafx.control.calendar;
 
+import javafx.css.PseudoClass;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
 
 /**
  * Custom label extension which displays the column header name.
@@ -11,6 +11,8 @@ import javafx.scene.paint.Color;
  * @author Stefan Saring
  */
 class CalendarHeaderCell extends Label {
+
+    private static final PseudoClass PSEUDO_CLASS_SUNDAY = PseudoClass.getPseudoClass("sunday");
 
     /**
      * C'tor.
@@ -20,8 +22,7 @@ class CalendarHeaderCell extends Label {
         setMaxWidth(Double.MAX_VALUE);
         setPadding(new Insets(4));
 
-        // TODO use css
-        setStyle("-fx-border-color: black; -fx-border-insets: -1; -fx-background-color: cornflowerblue;");
+        getStyleClass().addAll("calendar-control-cell", "calendar-control-header-cell");
     }
 
     /**
@@ -32,8 +33,6 @@ class CalendarHeaderCell extends Label {
      */
     public void setText(final String text, final boolean isSunday) {
         setText(text);
-        // TODO use css
-        setTextFill(isSunday ? Color.RED : Color.WHITE);
-
+        pseudoClassStateChanged(PSEUDO_CLASS_SUNDAY, isSunday);
     }
 }

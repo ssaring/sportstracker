@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
 
 /**
  * Calendar cell implementation which shows the summary cell of a week. It displays the
@@ -18,8 +17,7 @@ class CalendarSummaryCell extends AbstractCalendarCell {
      * Standard c'tor.
      */
     public CalendarSummaryCell() {
-        // TODO use CSS
-        super(Color.LIGHTPINK);
+        getStyleClass().add("calendar-control-summary-cell");
     }
 
     /**

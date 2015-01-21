@@ -7,3 +7,53 @@
 .calendar-control {
     -fx-skin: "de.saring.util.gui.javafx.control.calendar.CalendarControlSkin";
 }
+
+.calendar-control-cell {
+    -fx-border-color: #606060;
+    -fx-border-insets: -1;
+}
+
+.calendar-control-cell > .number {
+    -fx-text-fill-default: black;
+    -fx-text-fill-sunday: red;
+    -fx-text-fill-today: darkblue;
+    -fx-text-fill: -fx-text-fill-default;
+}
+
+.calendar-control-cell > .number:today {
+    -fx-text-fill: -fx-text-fill-today;
+    -fx-font-weight: bold;
+}
+
+.calendar-control-cell > .number:sunday {
+    -fx-text-fill: -fx-text-fill-sunday;
+}
+
+.calendar-control-cell > .number:outside-month {
+    -fx-text-fill: derive(-fx-text-fill-default, 90%);
+}
+
+.calendar-control-cell > .number:sunday:outside-month {
+    -fx-text-fill: derive(-fx-text-fill-sunday, 90%);
+}
+
+.calendar-control-header-cell {
+    -fx-background-color: cornflowerblue;
+    -fx-text-fill: white;
+}
+
+.calendar-control-header-cell:sunday {
+    -fx-text-fill: red;
+}
+
+.calendar-control-day-cell {
+    -fx-background-color: white;
+}
+
+.calendar-control-summary-cell {
+    -fx-background-color: lightpink;
+}
+
+.calendar-control-entry:selected {
+    -fx-background-color: lightskyblue;;
+}

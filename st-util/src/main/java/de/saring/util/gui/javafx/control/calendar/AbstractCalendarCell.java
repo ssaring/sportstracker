@@ -5,10 +5,7 @@ import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 /**
  * Abstract base class for all calendar content cell implementations. Each cell is a VBox
@@ -23,21 +20,18 @@ abstract class AbstractCalendarCell extends VBox {
 
     /**
      * Standard c'tor.
-     *
-     * @param backgroundColor background color of the cell
      */
-    public AbstractCalendarCell(final Color backgroundColor) {
+    public AbstractCalendarCell() {
         setPadding(new Insets(4));
         setSpacing(4);
-
-        // TODO use css
-        setStyle("-fx-border-color: black; -fx-border-insets: -1");
-        setBackground(new Background(new BackgroundFill(backgroundColor, null, null)));
 
         laNumber = new Label();
         laNumber.setAlignment(Pos.CENTER_RIGHT);
         laNumber.setMaxWidth(Double.MAX_VALUE);
         getChildren().add(laNumber);
+
+        getStyleClass().add("calendar-control-cell");
+        getNumberLabel().getStyleClass().add("number");
     }
 
     /**
