@@ -206,18 +206,17 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> implements Ca
      */
     private void updateHeaderCells() {
         final boolean weekStartsSunday = getSkinnable().displayedDateProperty().get().isWeekStartsSunday();
-        final int indexSunday = weekStartsSunday ? 0 : 6;
         final String[] columnNames = getSkinnable().getColumnNames();
 
         if (weekStartsSunday) {
-            headerCells[0].setText(columnNames[6], true);
+            headerCells[0].setText(columnNames[6], false);
             for (int i = 1; i < 7; i++) {
                 headerCells[i].setText(columnNames[i - 1], false);
             }
-            headerCells[7].setText(columnNames[7], false);
+            headerCells[7].setText(columnNames[7], true);
         } else {
             for (int i = 0; i < columnNames.length; i++) {
-                headerCells[i].setText(columnNames[i], indexSunday == i);
+                headerCells[i].setText(columnNames[i], i == columnNames.length - 1);
             }
         }
     }

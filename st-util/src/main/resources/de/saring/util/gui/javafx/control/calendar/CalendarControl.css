@@ -10,6 +10,9 @@
     /* draw a right and bottom border line around the complete calendar */
     -fx-cell-border-color: #606060;
     -fx-border-color: transparent -fx-cell-border-color -fx-cell-border-color transparent;
+
+    /* use font size 11pt everywhere in the calendar (default is 12pt or 1em) */
+    -fx-font-size: 0.916667em;
 }
 
 /* Base class of all calendar cells. */
@@ -47,10 +50,11 @@
 .calendar-control-header-cell {
     -fx-background-color: cornflowerblue;
     -fx-text-fill: white;
+    -fx-font-weight: bold;
 }
 
-.calendar-control-header-cell:sunday {
-    -fx-text-fill: red;
+.calendar-control-header-cell:summary {
+    -fx-background-color: coral;
 }
 
 /* Style of calendar day cells. */
@@ -60,10 +64,17 @@
 
 /* Style of calendar summary cells. */
 .calendar-control-summary-cell {
-    -fx-background-color: lightpink;
+    -fx-background-color: peachpuff; /* or antiquewhite */
 }
 
 /* Style of entries in calendar day cells (entries are selectable). */
 .calendar-control-entry:selected {
     -fx-background-color: lightskyblue;
+    -fx-background-insets: -1 -5 -1 -4; /* fill the padding space when selected */
 }
+
+.calendar-control-entry > .tooltip {
+    /* increase the downsized tooltip font size */
+    -fx-font-size: 0.9em;
+}
+

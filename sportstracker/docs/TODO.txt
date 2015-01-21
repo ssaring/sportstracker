@@ -1,6 +1,8 @@
 SportsTracker-TODO
 ==================
 
+Test Calendar Control style on Windows (font size, also in tooltips)
+
 JavaFX Migration:
 - SportsTracker main window:
   - FXML: Done (tested on Windows and Mac)
@@ -9,12 +11,7 @@ JavaFX Migration:
   - STDocument: Done
   - STController: see TODO
   - Exercise, Note and Weight List View: Done
-  - Calendar View: TODO
-    - FXML: Done
-    - Controller: see TODO
-    - Calendar Control:
-      - improve styling (colors, padding, font sizes, gradients?) via CSS
-      - Day Cell: define a bottom padding of 1px, there must be some space when there is too much content for the height
+  - Calendar View: Done
   - All Views: add printing
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties
