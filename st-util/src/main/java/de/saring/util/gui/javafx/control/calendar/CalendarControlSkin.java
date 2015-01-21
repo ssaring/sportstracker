@@ -20,19 +20,20 @@ import de.saring.util.Date310Utils;
 import de.saring.util.data.IdObject;
 
 /**
- * Custom control which displays a calendar for one month. It contains cells for all the days of the month,
- * each cell contains the SportsTracker entries for that day.<br/>
- * The layout uses a VBox which contains two GridPanes, one for the header cells (weekday names), the other
- * for the day cells (for all days of the displayed month and parts of the previous and next month).<br/>
- * Both GridPanes contains 8 columns of same width, 7 for all days of a week (Sunday - Saturday or
- * Monday - Sunday) and one for the weekly summary.<br/>
- * The GridPane for the header cells contains only one row with a fixed height. The GridPane for the day
- * cells contains always 6 rows, each for one week (6 weeks to make sure that always the complete month can
- * be displayed.) The GridPane for the day cells uses all the available vertical space.
+ * Skin implementation of the {@link de.saring.util.gui.javafx.control.calendar.CalendarControl} custom control which
+ * displays a calendar and entries for one month. The skin class contains the view-part of the controller, the control
+ * class contains the controller (interface for the control client).<br/>
+ * The view contains cells for all the days of the month, each cell contains the calendar entries for that day.<br/>
+ * The layout uses a VBox which contains two GridPanes, one for the header cells (weekday names), the other for the
+ * day cells (for all days of the displayed month and parts of the previous and next month).<br/>
+ * Both GridPanes contains 8 columns of same width, 7 for all days of a week (Sunday - Saturday or Monday - Sunday) and
+ * one for the weekly summary.<br/>
+ * The GridPane for the header cells contains only one row with a fixed height. The GridPane for the day cells contains
+ * always 6 rows, each for one week (6 weeks to make sure that always the complete month can be displayed.) The
+ * GridPane for the day cells uses all the available vertical space.
  *
  * @author Stefan Saring
  */
-// TODO
 public class CalendarControlSkin extends SkinBase<CalendarControl> {
 
     private VBox controlRoot;
