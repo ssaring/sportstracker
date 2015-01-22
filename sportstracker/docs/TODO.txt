@@ -11,6 +11,12 @@ JavaFX Migration:
   - Exercise, Note and Weight List View: Done
   - Calendar View: Done
   - All Views: add printing
+    - Done in all ViewControllers
+    - see TODOs in AbstractEntryViewController
+    - Problem: tables can't be printed completely, the JavaFX API support only the printing
+      of one single node at one single page
+      -> Workaround: scale the current displayed table view to one page and print this view
+    - remove I18N properties for list printing? (st.???view.print.???)
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties
   - use new icon set (also high-res/retina capable)?

@@ -2,7 +2,6 @@ package de.saring.sportstracker.gui.views.listviews;
 
 import java.util.List;
 
-import de.saring.sportstracker.core.STExceptionID;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -12,7 +11,6 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
-import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
@@ -49,12 +47,6 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
     @Override
     public void removeSelection() {
         getTableView().getSelectionModel().clearSelection();
-    }
-
-    @Override
-    public void print() throws STException {
-        // TODO
-        throw new STException(STExceptionID.GUI_PRINT_VIEW_FAILED, "TODO!");
     }
 
     /**
@@ -152,27 +144,27 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
             final TableRow<T> tableRow = new TableRow<>();
 
             // update table row color when the item value, the selection or the focus has been changed
-            tableRow.itemProperty().addListener((observable, oldValue, newValue) -> updateTableRowColor(tableRow));
-            tableRow.selectedProperty().addListener( //
-                    (observable, oldValue, newValue) -> updateTableRowColor(tableRow));
-            getTableView().focusedProperty().addListener( //
-                    (observable, oldValue, newValue) -> updateTableRowColor(tableRow));
+                tableRow.itemProperty().addListener((observable, oldValue, newValue) -> updateTableRowColor(tableRow));
+                tableRow.selectedProperty().addListener( //
+                        (observable, oldValue, newValue) -> updateTableRowColor(tableRow));
+                getTableView().focusedProperty().addListener( //
+                        (observable, oldValue, newValue) -> updateTableRowColor(tableRow));
 
-            // bind context menu to row, but only when the row is not empty
-            tableRow.contextMenuProperty().bind( //
-                    Bindings.when(tableRow.emptyProperty()) //
-                            .then((ContextMenu) null) //
-                            .otherwise(contextMenu));
+                // bind context menu to row, but only when the row is not empty
+                tableRow.contextMenuProperty().bind( //
+                        Bindings.when(tableRow.emptyProperty()) //
+                                .then((ContextMenu) null) //
+                                .otherwise(contextMenu));
 
-            // add listener for double clicks for editing the selected entry (ignore in empty rows)
-            tableRow.setOnMouseClicked(event -> {
-                if (event.getClickCount() > 1 && getSelectedEntryCount() == 1 && !tableRow.isEmpty()) {
-                    getController().onEditEntry(null);
-                }
+                // add listener for double clicks for editing the selected entry (ignore in empty rows)
+                tableRow.setOnMouseClicked(event -> {
+                    if (event.getClickCount() > 1 && getSelectedEntryCount() == 1 && !tableRow.isEmpty()) {
+                        getController().onEditEntry(null);
+                    }
+                });
+
+                return tableRow;
             });
-
-            return tableRow;
-        });
     }
 
     /**

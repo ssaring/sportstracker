@@ -281,10 +281,12 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onPrint(final ActionEvent event) {
+        LOGGER.info("Printing current view...");
+
         try {
             currentViewController.print();
         } catch (STException se) {
-            LOGGER.log(Level.WARNING, "Failed to print current view!", se);
+            LOGGER.log(Level.WARNING, "Failed to print the current view!", se);
             context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
                     "common.error", "st.main.error.print_view");
         }

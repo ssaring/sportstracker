@@ -2,7 +2,6 @@ package de.saring.sportstracker.gui.views.calendarview;
 
 import java.time.LocalDate;
 
-import de.saring.sportstracker.core.STExceptionID;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.IntegerProperty;
@@ -18,7 +17,6 @@ import javafx.scene.layout.StackPane;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.Weight;
@@ -133,12 +131,6 @@ public class CalendarViewController extends AbstractEntryViewController {
     @Override
     public void removeSelection() {
         calendarControl.removeSelection();
-    }
-
-    @Override
-    public void print() throws STException {
-        // TODO
-        throw new STException(STExceptionID.GUI_PRINT_VIEW_FAILED, "TODO!");
     }
 
     @Override

@@ -2,8 +2,15 @@ package de.saring.sportstracker.gui.views;
 
 import java.io.IOException;
 
+import javafx.print.PageLayout;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.transform.Scale;
 
+import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
@@ -86,6 +93,35 @@ public abstract class AbstractEntryViewController implements EntryViewController
         return EMPTY_ID_ARRAY;
     }
 
+    @Override
+    public void print() throws STException {
+        // TODO execution on a separate thread?
+
+        // TODO move to view base class
+        final PrinterJob printerJob = PrinterJob.createPrinterJob();
+        if (printerJob == null) {
+            // TODO message that no printers are available
+            return;
+        }
+
+        final boolean printConfirmed = printerJob.showPrintDialog(getContext().getPrimaryStage());
+        // TODO remember the printer configuration (printer, page layout) for next printing? Store JobSettings?
+
+        if (printConfirmed) {
+            if (printView(printerJob, rootNode)) {
+                if (!printerJob.endJob()) {
+                    System.err.println("Failed to end print job!");
+                }
+            } else {
+                System.err.println("Failed to print view!");
+            }
+        }
+
+        // TODO
+        // throw new STException(STExceptionID.GUI_PRINT_VIEW_FAILED, "TODO!");
+
+    }
+
     /**
      * Returns the name of the FXML file which contains the UI definition of the view.
      *
@@ -123,5 +159,34 @@ public abstract class AbstractEntryViewController implements EntryViewController
      */
     protected STController getController() {
         return controller;
+    }
+
+    /**
+     * Prints the specified view node completely to one single page.
+     *
+     * @param printerJob printer job which defines the printer, page layout, ...
+     * @param view view node to print
+     * @return true when the view was printed successfully
+     */
+    private boolean printView(final PrinterJob printerJob, final Node view) {
+
+        // the view needs to be scaled to fit the selected page layout of the PrinterJob
+        // => the passed view node can't be scaled, this would scale the displayed UI
+        // => solution: create a snapshot image for printing and scale this image
+        final WritableImage snapshot = view.snapshot(null, null);
+        final ImageView ivSnapshot = new ImageView(snapshot);
+
+        // compute the needed scaling (aspect ratio must be kept)
+        final PageLayout pageLayout = printerJob.getJobSettings().getPageLayout();
+        final double scaleX = pageLayout.getPrintableWidth() / ivSnapshot.getImage().getWidth();
+        final double scaleY = pageLayout.getPrintableHeight() / ivSnapshot.getImage().getHeight();
+        final double scale = Math.min(scaleX, scaleY);
+
+        // scale the calendar image only when it's too big for the selected page
+        if (scale < 1.0) {
+            ivSnapshot.getTransforms().add(new Scale(scale, scale));
+        }
+
+        return printerJob.printPage(ivSnapshot);
     }
 }
