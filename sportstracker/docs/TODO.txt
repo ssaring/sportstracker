@@ -1,7 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Use bold font for displayed month and year?
 Provide initial set of sport types on first start or when list is empty.
 
 JavaFX Migration:
@@ -35,7 +34,7 @@ JavaFX Migration:
   - Bug: EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)
   - Problem: window resizing is very slow -> JFreeChart is the cause
-- Test application on Linux (including Drag&Drop)
+- Test application on Linux (look&feel, Drag&Drop)
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
@@ -46,6 +45,7 @@ JavaFX Migration:
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38946
     - Alert dialogs does not show the complete message when longer than 2 lines
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38998
+  - remove openjfx-dialog dependency when Java 8u40 has been released
 - Exercise/Note/Weight tables: use PropertyExtractor concept for displaying data changes,
   see http://www.jensd.de/wordpress/?p=1650
 - Use Maven JavaFX Plugin 8.1, see details in
@@ -62,9 +62,7 @@ JavaFX Migration:
 JavaFX Migration status - completed:
 - All SportsTracker dialogs
 - Exercise Viewer sub-application
-- SportsTracker application:
-  - Exercise, Note and Weight List View
-- Use of openjfx-dialog backport library from JavaFX 8u40
+- SportsTracker application (except printing)
 
 Java 8 migration status:
 - full use of Lambdas and the new Java Date API (JSR 310) in all modules
