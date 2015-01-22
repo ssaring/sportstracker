@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.views.calendarview.CalendarViewController;
@@ -280,7 +281,13 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onPrint(final ActionEvent event) {
-        // TODO
+        try {
+            currentViewController.print();
+        } catch (STException se) {
+            LOGGER.log(Level.WARNING, "Failed to print current view!", se);
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
+                    "common.error", "st.main.error.print_view");
+        }
     }
 
     @Override

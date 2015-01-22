@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.views.listviews;
 
 import java.util.List;
 
+import de.saring.sportstracker.core.STExceptionID;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -53,7 +54,7 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
     @Override
     public void print() throws STException {
         // TODO
-        throw new UnsupportedOperationException();
+        throw new STException(STExceptionID.GUI_PRINT_VIEW_FAILED, "TODO!");
     }
 
     /**

@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.views.calendarview;
 
 import java.time.LocalDate;
 
+import de.saring.sportstracker.core.STExceptionID;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.IntegerProperty;
@@ -137,6 +138,7 @@ public class CalendarViewController extends AbstractEntryViewController {
     @Override
     public void print() throws STException {
         // TODO
+        throw new STException(STExceptionID.GUI_PRINT_VIEW_FAILED, "TODO!");
     }
 
     @Override

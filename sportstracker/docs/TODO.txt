@@ -7,8 +7,7 @@ JavaFX Migration:
   - add special support for Mac menu items (Preferences, About, ...)
   - STApplication: Done
   - STDocument: Done
-  - STController: see TODO
-    - refactoring: extract the Tasks to separate classes?
+  - STController: Done (TODO: refactoring: extract the Tasks to separate classes?)
   - Exercise, Note and Weight List View: Done
   - Calendar View: Done
   - All Views: add printing

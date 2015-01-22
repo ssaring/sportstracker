@@ -54,6 +54,7 @@ SportsTracker 7.0.0:
 - st.main.error.missing_exercise_files (edited)
 - st.main.confirm.define_first_sporttype (removed)
 - st.main.info.initial_sporttypes_added (new)
+- st.main.error.print_view (edited)
 
 - st.exerciselistview.empty (new)
 - st.notelistview.empty (new)
