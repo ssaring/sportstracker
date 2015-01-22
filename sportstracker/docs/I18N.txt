@@ -55,6 +55,7 @@ SportsTracker 7.0.0:
 - st.main.confirm.define_first_sporttype (removed)
 - st.main.info.initial_sporttypes_added (new)
 - st.main.error.print_view (edited)
+- st.main.error.print_view.no_printer (new)
 
 - st.exerciselistview.empty (new)
 - st.notelistview.empty (new)

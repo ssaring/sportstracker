@@ -38,7 +38,7 @@ JavaFX Migration:
   - Bug: EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)
   - Problem: window resizing is very slow -> JFreeChart is the cause
-- Test application on Linux (look&feel, Drag&Drop)
+- Test application on Linux (Look&Feel, Drag&Drop, Printing (paper orientation))
 - Usage of openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)

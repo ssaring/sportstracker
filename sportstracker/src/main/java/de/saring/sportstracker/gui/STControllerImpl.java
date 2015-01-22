@@ -286,7 +286,7 @@ public class STControllerImpl implements STController {
         try {
             currentViewController.print();
         } catch (STException se) {
-            LOGGER.log(Level.WARNING, "Failed to print the current view!", se);
+            LOGGER.log(Level.SEVERE, "Failed to print the current view!", se);
             context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
                     "common.error", "st.main.error.print_view");
         }

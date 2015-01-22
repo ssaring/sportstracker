@@ -6,11 +6,13 @@ import javafx.print.PageLayout;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.transform.Scale;
 
 import de.saring.sportstracker.core.STException;
+import de.saring.sportstracker.core.STExceptionID;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
@@ -97,29 +99,27 @@ public abstract class AbstractEntryViewController implements EntryViewController
     public void print() throws STException {
         // TODO execution on a separate thread?
 
-        // TODO move to view base class
         final PrinterJob printerJob = PrinterJob.createPrinterJob();
         if (printerJob == null) {
-            // TODO message that no printers are available
+            // no printer available
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
+                    "common.error", "st.main.error.print_view.no_printer");
             return;
         }
 
+        // display print dialog for confirmation and configuration by the user
         final boolean printConfirmed = printerJob.showPrintDialog(getContext().getPrimaryStage());
         // TODO remember the printer configuration (printer, page layout) for next printing? Store JobSettings?
 
         if (printConfirmed) {
             if (printView(printerJob, rootNode)) {
                 if (!printerJob.endJob()) {
-                    System.err.println("Failed to end print job!");
+                    throw new STException(STExceptionID.GUI_PRINT_VIEW_FAILED, "Failed to end the print job!");
                 }
             } else {
-                System.err.println("Failed to print view!");
+                throw new STException(STExceptionID.GUI_PRINT_VIEW_FAILED, "Failed to execute the view print!");
             }
         }
-
-        // TODO
-        // throw new STException(STExceptionID.GUI_PRINT_VIEW_FAILED, "TODO!");
-
     }
 
     /**
