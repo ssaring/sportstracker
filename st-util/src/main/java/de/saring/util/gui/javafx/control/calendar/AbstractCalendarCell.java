@@ -22,8 +22,8 @@ abstract class AbstractCalendarCell extends VBox {
      * Standard c'tor.
      */
     public AbstractCalendarCell() {
-        setPadding(new Insets(4));
-        setSpacing(4);
+        setPadding(new Insets(2, 4, 2, 4));
+        setSpacing(3);
 
         laNumber = new Label();
         laNumber.setAlignment(Pos.CENTER_RIGHT);

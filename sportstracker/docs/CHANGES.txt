@@ -26,6 +26,7 @@ v7.0.0:
       columns
     - list of optional columns (as configured in Preferences) is now used at
       application startup only (renamed to 'initial optional fields')
+  - Calendar View: redesigned look
   - Calendar View and Overview Diagram: bugfix for weeknumber calculation
 
  Translations:

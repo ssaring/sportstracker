@@ -1,8 +1,8 @@
 SportsTracker-TODO
 ==================
 
-Test Calendar Control style on Windows (font size, also in tooltips)
 Use bold font for displayed month and year?
+Provide initial set of sport types on first start or when list is empty.
 
 JavaFX Migration:
 - SportsTracker main window:

@@ -8,7 +8,7 @@
     -fx-skin: "de.saring.util.gui.javafx.control.calendar.CalendarControlSkin";
 
     /* draw a right and bottom border line around the complete calendar */
-    -fx-cell-border-color: #606060;
+    -fx-cell-border-color: #707070;
     -fx-border-color: transparent -fx-cell-border-color -fx-cell-border-color transparent;
 
     /* use font size 11pt everywhere in the calendar (default is 12pt or 1em) */
