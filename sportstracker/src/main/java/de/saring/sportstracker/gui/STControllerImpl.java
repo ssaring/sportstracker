@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.views.calendarview.CalendarViewController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -26,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javax.inject.Inject;
@@ -599,18 +602,43 @@ public class STControllerImpl implements STController {
     }
 
     /**
-     * Checks for existing sport types. When there are no sport types yet, then the user will be
-     * asked if he wants to define a sport type. If yes, then the sport type editor will be opened.
+     * Checks for existing sport types. When the list is empty, create a list of initial sport types
+     * and display an information message (easier so new application users).
      */
-    private void askForDefiningSportTypes() {
+    private void addInitialSportTypesIfMissing() {
         if (document.getSportTypeList().size() == 0) {
-            final Optional<ButtonType> oResult = context.showConfirmationDialog(context.getPrimaryStage(),
-                    "common.info", "st.main.confirm.define_first_sporttype", ButtonType.YES, ButtonType.NO);
 
-            if (oResult.isPresent() && oResult.get() == ButtonType.YES) {
-                onSportTypeEditor(null);
-            }
+            addInitialSportType("st.initial_sporttypes.cycling", Color.DARKBLUE, //
+                    "st.initial_sporttypes.cycling.mtb_tour", "st.initial_sporttypes.cycling.mtb_race", //
+                    "st.initial_sporttypes.cycling.road_tour", "st.initial_sporttypes.cycling.road_race");
+
+            addInitialSportType("st.initial_sporttypes.running", Color.FIREBRICK, //
+                    "st.initial_sporttypes.running.street_run", "st.initial_sporttypes.running.street_race", //
+                    "st.initial_sporttypes.running.trail_run", "st.initial_sporttypes.running.trail_race");
+
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
+                    "common.info", "st.main.info.initial_sporttypes_added");
         }
+    }
+
+    /**
+     * Creates the specified sport type and stores it in the document list.
+     *
+     * @param nameKey key of the sport type name
+     * @param color sport type color
+     * @param subtypeNameKeys list of keys for the sport subtype names
+     */
+    private void addInitialSportType(final String nameKey, final Color color, final String... subtypeNameKeys) {
+        final SportType sportType = new SportType(document.getSportTypeList().getNewID());
+        sportType.setName(context.getResources().getString(nameKey));
+        sportType.setColor(color);
+
+        for (String subtypeNameKey : subtypeNameKeys) {
+            final SportSubType sportSubtype = new SportSubType(sportType.getSportSubTypeList().getNewID());
+            sportSubtype.setName(context.getResources().getString(subtypeNameKey));
+            sportType.getSportSubTypeList().set(sportSubtype);
+        }
+        document.getSportTypeList().set(sportType);
     }
 
     /**
@@ -812,7 +840,7 @@ public class STControllerImpl implements STController {
 
             updateFinally();
             displayCorruptExercises();
-            askForDefiningSportTypes();
+            addInitialSportTypesIfMissing();
         }
 
         @Override

@@ -1,8 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Provide initial set of sport types on first start or when list is empty.
-
 JavaFX Migration:
 - SportsTracker main window:
   - FXML: Done (tested on Windows and Mac)
@@ -10,6 +8,7 @@ JavaFX Migration:
   - STApplication: Done
   - STDocument: Done
   - STController: see TODO
+    - refactoring: extract the Tasks to separate classes?
   - Exercise, Note and Weight List View: Done
   - Calendar View: Done
   - All Views: add printing

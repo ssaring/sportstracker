@@ -1,10 +1,9 @@
 About SportsTracker
 -------------------
 
-SportsTracker is an application for people who want to track their
-sporting activities. It is not bound to a specific kind of sport, the user
-can create categories for all sport types such as cycling, running, 
-swimming or tennis.
+SportsTracker is an application for people who want to track their sporting
+activities. It is not bound to a specific kind of sport, the user can create
+categories for all sport types such as cycling, running, swimming or tennis.
 
 The main advantage is a good overview of your exercises and you can easily
 create diagrams and statistics for specific time ranges and sport types. In 
@@ -144,12 +143,15 @@ Usage
 
 This is a short introduction for the usage of the application:
 
-Before you can add exercises you need to create a list of your sport types
-in the editor dialog. Examples for sport types are "cycling", "running" or
-"swimming". For sport types which are not endurance related (e.g. "tennis")
-you need to specify that distance will not be recorded for such exercises.
-The distance record mode can only be changed for new sport types or when no
-exercises for this sport type exist.
+Before you can add exercises you need to define a list of your sport types in
+the Sport Type Editor dialog. An initial set will be added at application
+start when there are no sport types defined yet. You should adjust this list
+to meet your sporting requirements. Examples for sport types are "cycling",
+"running" or "swimming".
+For sport types which are not endurance related (e.g. "tennis") you need to
+specify that distance will not be recorded for such exercises. The distance
+record mode can only be changed for new sport types or when no exercises for
+this sport type exist.
 By assigning a custom color for each sport type the list of exercises looks
 much more clear.
 For each sport type you need to create at least one subtype. Subtype examples

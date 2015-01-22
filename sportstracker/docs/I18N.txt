@@ -52,11 +52,23 @@ SportsTracker 7.0.0:
 
 - st.main.error.create_dir (edited)
 - st.main.error.missing_exercise_files (edited)
-- st.main.confirm.define_first_sporttype (edited)
+- st.main.confirm.define_first_sporttype (removed)
+- st.main.info.initial_sporttypes_added (new)
 
 - st.exerciselistview.empty (new)
 - st.notelistview.empty (new)
 - st.weightlistview.empty (new)
+
+- st.initial_sporttypes.cycling (new)
+- st.initial_sporttypes.cycling.mtb_tour (new)
+- st.initial_sporttypes.cycling.mtb_race (new)
+- st.initial_sporttypes.cycling.road_tour (new)
+- st.initial_sporttypes.cycling.road_race (new)
+- st.initial_sporttypes.running (new)
+- st.initial_sporttypes.running.street_run (new)
+- st.initial_sporttypes.running.street_race (new)
+- st.initial_sporttypes.running.trail_run (new)
+- st.initial_sporttypes.running.trail_race (new)
 
 - st.dlg.about.translators.text (edited)
 - st.dlg.about.close.Action.text (removed)
