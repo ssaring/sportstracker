@@ -1,8 +1,8 @@
 package de.saring.sportstracker.gui.views;
 
-import de.saring.sportstracker.core.STException;
-import de.saring.util.data.IdObject;
 import javafx.scene.Parent;
+
+import de.saring.util.data.IdObject;
 
 /**
  * Interface for all content view controllers for displaying SportsTracker entries
@@ -103,8 +103,6 @@ public interface EntryViewController {
 
     /**
      * Prints the entries displayed in this view.
-     *
-     * @throws de.saring.sportstracker.core.STException on printing problems
      */
-    void print() throws STException;
+    void print();
 }

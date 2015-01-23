@@ -1,5 +1,9 @@
+
 package de.saring.sportstracker.gui.views;
 
+import java.util.logging.Logger;
+
+import javafx.concurrent.Task;
 import javafx.print.PageLayout;
 import javafx.print.Printer;
 import javafx.print.PrinterJob;
@@ -12,8 +16,6 @@ import javafx.scene.transform.Scale;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import de.saring.sportstracker.core.STException;
-import de.saring.sportstracker.core.STExceptionID;
 import de.saring.sportstracker.gui.STContext;
 
 /**
@@ -24,6 +26,8 @@ import de.saring.sportstracker.gui.STContext;
  */
 @Singleton
 public class ViewPrinter {
+
+    private static final Logger LOGGER = Logger.getLogger(ViewPrinter.class.getName());
 
     private final STContext context;
 
@@ -41,45 +45,78 @@ public class ViewPrinter {
     }
 
     /**
-     * Prints the specified view.
+     * Prints the specified view. The print action is executed asynchronously, so it does not block
+     * the application UI thread. However, the application window will be blocked during printing
+     * to avoid user actions (e.g. restart the print action).
      * 
      * @param rootNode root node of the view to print
-     * @throws STException on printing problems
      */
-    public void printView(final Node rootNode) throws STException {
-        // TODO execution on a separate thread?
+    public void printView(final Node rootNode) {
+        LOGGER.info("Printing current view...");
 
-        final PrinterJob printerJob = PrinterJob.createPrinterJob();
-        if (printerJob == null) {
-            // no printer available
-            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
-                    "common.error", "st.main.error.print_view.no_printer");
-            return;
+        context.blockMainWindow(true);
+        new Thread(new CreatePrinterJobTask(rootNode)).start();
+    }
+
+    /**
+     * Executes the print action on the JavaFX UI thread after the PrinterJob has been created.
+     *
+     * @param rootNode root node of view to print
+     * @param printerJob created printer job, can be null
+     */
+    private void printViewInJob(final Node rootNode, final PrinterJob printerJob) {
+        boolean success = false;
+
+        try {
+            // PrinterJob is null when no printer is available (most systems provide default printers)
+            if (printerJob == null) {
+                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
+                        "common.error", "st.main.error.print_view.no_printer");
+                return;
+            }
+
+            // use printer and page layout from previous printing, if available
+            restorePrinterConfiguration(printerJob);
+
+            // display print dialog for confirmation and configuration by the user
+            final boolean printConfirmed = printerJob.showPrintDialog(context.getPrimaryStage());
+            storePrinterConfiguration(printerJob);
+
+            if (printConfirmed) {
+                // the printing itself is quite fast, no need to execute it asynchronously
+                if (printViewPage(printerJob, rootNode)) {
+                    if (printerJob.endJob()) {
+                        success = true;
+                    } else {
+                        LOGGER.severe("Failed to end the print job!");
+                    }
+                } else {
+                    LOGGER.severe("Failed to execute the view print!");
+                }
+            } else {
+                success = true;
+            }
+        } finally {
+            context.blockMainWindow(false);
+            if (!success) {
+                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
+                        "common.error", "st.main.error.print_view");
+            }
         }
+    }
 
-        // select printer and page layout from previous printing, if available
+    private void restorePrinterConfiguration(final PrinterJob printerJob) {
         if (previousPrinter != null) {
             printerJob.setPrinter(previousPrinter);
             if (previousPageLayout != null) {
                 printerJob.getJobSettings().setPageLayout(previousPageLayout);
             }
         }
+    }
 
-        // display print dialog for confirmation and configuration by the user
-        final boolean printConfirmed = printerJob.showPrintDialog(context.getPrimaryStage());
-
+    private void storePrinterConfiguration(final PrinterJob printerJob) {
         previousPageLayout = printerJob.getJobSettings().getPageLayout();
         previousPrinter = printerJob.getPrinter();
-
-        if (printConfirmed) {
-            if (printViewPage(printerJob, rootNode)) {
-                if (!printerJob.endJob()) {
-                    throw new STException(STExceptionID.GUI_PRINT_VIEW_FAILED, "Failed to end the print job!");
-                }
-            } else {
-                throw new STException(STExceptionID.GUI_PRINT_VIEW_FAILED, "Failed to execute the view print!");
-            }
-        }
     }
 
     /**
@@ -109,5 +146,36 @@ public class ViewPrinter {
         }
 
         return printerJob.printPage(ivSnapshot);
+    }
+
+    /**
+     * This class creates a PrinterJob as a asynchronous Task to avoid blocking of the application UI.
+     * The lookup of available printers can take some time, depending on the OS, network and printers
+     * (mostly on the first run).
+     */
+    private class CreatePrinterJobTask extends Task<PrinterJob> {
+        private final Node view;
+
+        public CreatePrinterJobTask(final Node view) {
+            this.view = view;
+        }
+
+        @Override
+        protected PrinterJob call() throws Exception {
+            LOGGER.info("Creating printer job...");
+            return PrinterJob.createPrinterJob();
+        }
+
+        @Override
+        protected void succeeded() {
+            super.succeeded();
+            printViewInJob(view, getValue());
+        }
+
+        @Override
+        protected void failed() {
+            super.failed();
+            context.blockMainWindow(false);
+        }
     }
 }

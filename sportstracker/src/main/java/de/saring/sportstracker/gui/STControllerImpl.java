@@ -11,10 +11,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.saring.sportstracker.core.STException;
-import de.saring.sportstracker.data.SportSubType;
-import de.saring.sportstracker.data.SportType;
-import de.saring.sportstracker.gui.views.calendarview.CalendarViewController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -40,6 +36,8 @@ import de.saring.exerciseviewer.gui.EVMain;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.dialogs.AboutDialogController;
@@ -54,6 +52,7 @@ import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
 import de.saring.sportstracker.gui.dialogs.WeightDialogController;
 import de.saring.sportstracker.gui.statusbar.StatusBarController;
 import de.saring.sportstracker.gui.views.EntryViewController;
+import de.saring.sportstracker.gui.views.calendarview.CalendarViewController;
 import de.saring.sportstracker.gui.views.listviews.ExerciseListViewController;
 import de.saring.sportstracker.gui.views.listviews.NoteListViewController;
 import de.saring.sportstracker.gui.views.listviews.WeightListViewController;
@@ -281,15 +280,7 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onPrint(final ActionEvent event) {
-        LOGGER.info("Printing current view...");
-
-        try {
-            currentViewController.print();
-        } catch (STException se) {
-            LOGGER.log(Level.SEVERE, "Failed to print the current view!", se);
-            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
-                    "common.error", "st.main.error.print_view");
-        }
+        currentViewController.print();
     }
 
     @Override

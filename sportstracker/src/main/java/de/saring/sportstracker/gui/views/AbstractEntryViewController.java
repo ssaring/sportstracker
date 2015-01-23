@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 
 import javax.inject.Inject;
 
-import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
@@ -93,7 +92,7 @@ public abstract class AbstractEntryViewController implements EntryViewController
     }
 
     @Override
-    public void print() throws STException {
+    public void print() {
         viewPrinter.printView(rootNode);
     }
 

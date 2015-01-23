@@ -50,11 +50,6 @@ public enum STExceptionID {
     DOCUMENT_CREATE_APP_DIRECTORY,
 
     /**
-     * failed to print the current view
-     */
-    GUI_PRINT_VIEW_FAILED,
-
-    /**
      * failed to parse the distance entry in the exercise dialog
      */
     GUI_EXERCISEDIALOG_INVALID_DISTANCE,
