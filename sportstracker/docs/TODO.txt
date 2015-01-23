@@ -2,21 +2,9 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- Profiling:
-  - SportsTracker startup time: almost identical for Swing- and JavaFX versions (on Windows) => no improvement needed
-  - ExerciseViewer startup time: JavaFX version takes 2.5 secs initially (file Garmin/2014/2014-12-31-09-24-38.fit),
-    Swing version starts almost instantly
-    - Initial EV startup times of the JavaFX version:
-      -   30 msec for Guice DI => OK
-      -  450 msec for loading and parsing the HRM File => OK
-      -   50 msec for loading EV main FXML file => OK
-      -  600 msec for loading Panel FXML files => can this be improved? (load in one run)
-      - 1350 msec for displaying the window via Stage#show() => improve!
-        -> 750 msec only for the JFreeChart panel, not the case when a diagram was shown before (e.g. Overview Dialog)
-  - inspect memory usage of SportsTracker after migration (also with multiple opened ExerciseViewers)
-    - are there problems with registered listeners which reference old models and controls?
 - SportsTracker main window:
   - add special support for Mac menu items (Preferences, About, ...)
+  - see Profiling results, improve EV startup time and memory usage
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties
   - use new icon set (also high-res/retina capable)?
@@ -68,6 +56,47 @@ JavaFX Migration:
 JavaFX Migration status:
 - SportsTracker: completed
 - Exercise Viewer: completed (map viewer is still Swing based)
+
+Profiling after JavaFX-Migration:
+- SportsTracker startup time: 
+  - almost identical for Swing- and JavaFX versions (on Windows) => no improvement needed
+- ExerciseViewer startup time: 
+  - JavaFX version takes 2.5 secs initially (file Garmin/2014/2014-12-31-09-24-38.fit),
+    Swing version starts almost instantly => improvement needed
+  - Initial EV startup times of the JavaFX version:
+    -   30 msec for Guice DI => OK
+    -  450 msec for loading and parsing the HRM File => OK
+    -   50 msec for loading EV main FXML file => OK
+    -  600 msec for loading Panel FXML files => can this be improved? (load in one run)
+    - 1350 msec for displaying the window via Stage#show() => improve!
+      -> 750 msec only for the JFreeChart panel, not the case when a diagram was shown before (e.g. Overview Dialog)
+- Memory usage results (on Windows 8.1 64 bit, JDK 8u31):
+  (used with all my training data until 2014/12, HRM file Garmin/2014/2014-12-31-09-24-38.fit)
+  - ST start without actions: 
+    - ST-JavaFX: 132 MB, ST 6.0: 137 MB => OK
+  - ST start and clicking on Calendar-, Exercise-, Note-, Weight-, Calendar-View:
+    - ST-JavaFX: 140 MB, ST 6.0: 142 MB => OK, almost same
+  - ST start and 1x open/close of Overview Dialog:
+    - ST-JavaFX: 175 MB, ST 6.0: 153 MB => not OK, 22 MB more for JavaFX
+  - ST start and 5x open/close of Overview Dialog:
+    - ST-JavaFX: 190 MB, ST 6.0: 190 MB => OK, same (due to garbage collection?)
+  - ST start and 1x open/close of Dialogs Exercise, Note, Weight, Sport Type Editor, Sport Type,
+    Statistic, Filter (all time), Statistic Results, Overview and Preferences:
+    - ST-JavaFX: 203 MB, ST 6.0: 203 MB => OK, same
+  - ST start and 5x open/close of Dialogs Exercise, Note, Weight, Sport Type Editor, Sport Type,
+    Statistic, Filter (all time), Statistic Results, Overview and Preferences:
+    - ST-JavaFX: 251 MB, ST 6.0: 258 MB => OK, almost same
+  - ST start and scroll Calendar View to 01/2005 (monthly) and then back to 01/2015:
+    - ST-JavaFX: 186 MB, ST 6.0: 162 MB => not OK, 24 MB more for JavaFX      
+  - ST start and scroll Exercise List View 2x to bottom and back to top:
+    - ST-JavaFX: 220 MB, ST 6.0: 206 MB => OK, almost same (JavaFX tables are more complex)
+  - ST start and 1 start of EV:
+    - ST-JavaFX: 236 MB, ST 6.0: 198 MB => not OK, 38 MB more for JavaFX
+  - ST start and 5 starts and closes of EV:
+    - ST-JavaFX: 333 MB, ST 6.0: 212 MB => not OK, 121 MB more for JavaFX
+  - ST start and 1 start and close of EV after showing all EV panels:
+    - ST-JavaFX: 223 MB, ST 6.0: 218 MB => OK, only 5 MB more for JavaFX
+  => are there problems with registered listeners which reference old models and controls?
 
 Java 8 migration status:
 - full use of Lambdas and the new Java Date API (JSR 310) in all modules
