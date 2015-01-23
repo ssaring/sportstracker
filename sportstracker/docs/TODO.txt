@@ -2,21 +2,12 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- Profiling:
+  - inspect memory usage of SportsTracker after migration (also with multiple opened ExerciseViewers)
+    - are there problems with registered listeners which reference old models and controls?
+  - inspect startup time of SportsTracker and ExerciseViewer
 - SportsTracker main window:
-  - FXML: Done (tested on Windows and Mac)
   - add special support for Mac menu items (Preferences, About, ...)
-  - STApplication: Done
-  - STDocument: Done
-  - STController: Done (TODO: refactoring: extract the Tasks to separate classes?)
-  - Exercise, Note and Weight List View: Done
-  - Calendar View: Done
-  - All Views: add printing
-    - Done in all ViewControllers
-    - see TODOs in AbstractEntryViewController
-    - Problem: tables can't be printed completely, the JavaFX API support only the printing
-      of one single node at one single page
-      -> Workaround: scale the current displayed table view to one page and print this view
-    - remove I18N properties for list printing? (st.???view.print.???)
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties
   - use new icon set (also high-res/retina capable)?
@@ -50,23 +41,24 @@ JavaFX Migration:
     - Alert dialogs does not show the complete message when longer than 2 lines
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38998
   - remove openjfx-dialog dependency when Java 8u40 has been released
-- Exercise/Note/Weight tables: use PropertyExtractor concept for displaying data changes,
-  see http://www.jensd.de/wordpress/?p=1650
 - Use Maven JavaFX Plugin 8.1, see details in
   http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
 - Exercise Viewer: use a JavaFX based map viewer, currently it's the Swing based JXMapKit
 - Use Dialogs, Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
   => will be introduced in Java 8u40 (Dec. 2014)
-- JavaFX Bug RT-38644: https://javafx-jira.kenai.com/browse/RT-38644 (created)
+- JavaFX Bug RT-38644: https://javafx-jira.kenai.com/browse/RT-38644 (created, planned to be fixed in JavaFX 9)
   - User can't close Dialogs with ESC when the DatePicker has the focus
-  -> is planned to be fixed in JavaFX 8u40
-- inspect memory usage of SportsTracker after migration (also with multiple opened ExerciseViewers)
-  - are there problems with registered listeners which reference old models and controls?
+- Print Views: Done for all views
+  - Problem in List Views: tables can't be printed completely, the JavaFX API support only the printing
+    of one single node at one single page
+  - Used workaround: create a snapshot image of the current displayed table view, scale to fit on paper
+    and print the image instead the view (prints only the visible rows)
+  - Update ViewPrinter when JavaFX API supports the printing of the complete tables
+    (the I18N properties for list printing on multiple pages are present, see st.???view.print.???)
 
-JavaFX Migration status - completed:
-- All SportsTracker dialogs
-- Exercise Viewer sub-application
-- SportsTracker application (except printing)
+JavaFX Migration status:
+- SportsTracker: completed
+- Exercise Viewer: completed (map viewer is still Swing based)
 
 Java 8 migration status:
 - full use of Lambdas and the new Java Date API (JSR 310) in all modules
