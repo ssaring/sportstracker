@@ -57,9 +57,9 @@ JavaFX Migration status:
 - SportsTracker: completed
 - Exercise Viewer: completed (map viewer is still Swing based)
 
-Profiling after JavaFX-Migration:
+Performance tests after JavaFX-Migration:
 - SportsTracker startup time: 
-  - almost identical for Swing- and JavaFX versions (on Windows) => no improvement needed
+  - almost identical for Swing- and JavaFX versions (on Windows and Mac OS X) => no improvement needed
 - ExerciseViewer startup time: 
   - JavaFX version takes 2.5 secs initially (file Garmin/2014/2014-12-31-09-24-38.fit),
     Swing version starts almost instantly => improvement needed
@@ -70,7 +70,7 @@ Profiling after JavaFX-Migration:
     -  600 msec for loading Panel FXML files => can this be improved? (load in one run)
     - 1350 msec for displaying the window via Stage#show() => improve!
       -> 750 msec only for the JFreeChart panel, not the case when a diagram was shown before (e.g. Overview Dialog)
-- Memory usage results (on Windows 8.1 64 bit, JDK 8u31):
+- Memory usage results (on Windows 8.1 64 bit, JDK 8u31, similar on Mac OS X):
   (used with all my training data until 2014/12, HRM file Garmin/2014/2014-12-31-09-24-38.fit)
   - ST start without actions: 
     - ST-JavaFX: 132 MB, ST 6.0: 137 MB => OK
