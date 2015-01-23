@@ -45,12 +45,12 @@ Eclipse configuration (version 4.4):
     - Indentation size: 4
 
     
-IntelliJ IDEA configuration (version 13.1):
+IntelliJ IDEA configuration (version 14.x):
 -------------------------------------------
 
 - File -> Settings:
   - Plugins: 
-    - install plugin "Eclipse Code Formatter" (version 4.9.0) and restart IDEA
+    - install plugin "Eclipse Code Formatter" (version 14.7) and restart IDEA
   - Eclipse Code Formatter:
     - (x) Use the Eclipse code formatter
     - Eclipse Java Formatter config file: 
