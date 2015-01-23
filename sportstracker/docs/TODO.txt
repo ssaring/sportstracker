@@ -3,9 +3,18 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - Profiling:
+  - SportsTracker startup time: almost identical for Swing- and JavaFX versions (on Windows) => no improvement needed
+  - ExerciseViewer startup time: JavaFX version takes 2.5 secs initially (file Garmin/2014/2014-12-31-09-24-38.fit),
+    Swing version starts almost instantly
+    - Initial EV startup times of the JavaFX version:
+      -   30 msec for Guice DI => OK
+      -  450 msec for loading and parsing the HRM File => OK
+      -   50 msec for loading EV main FXML file => OK
+      -  600 msec for loading Panel FXML files => can this be improved? (load in one run)
+      - 1350 msec for displaying the window via Stage#show() => improve!
+        -> 750 msec only for the JFreeChart panel, not the case when a diagram was shown before (e.g. Overview Dialog)
   - inspect memory usage of SportsTracker after migration (also with multiple opened ExerciseViewers)
     - are there problems with registered listeners which reference old models and controls?
-  - inspect startup time of SportsTracker and ExerciseViewer
 - SportsTracker main window:
   - add special support for Mac menu items (Preferences, About, ...)
   - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
