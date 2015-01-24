@@ -1,14 +1,14 @@
 I18N in SportsTracker
 ---------------------
 
-The internationalization is done by using the ResourceMap class from the Swing
-Application Framework (JSR-296) and the appropriate *.properties files.
+The internationalization is done by using the Java ResourceBundle class and the
+appropriate *.properties files.
 
 All the text resources for the default language (english) are located in the 
 properties-file "SportsTracker.properties" in the directory 
-"src/de/saring/sportstracker/gui/resources". Each additional translation must
-be contained in an own file "SportsTracker_**.properties" (** must be the 
-language code) in the same directory.
+"sportstracker/src/main/resources/i18n". Each additional translation must be
+contained in an own file "SportsTracker_**.properties" (** must be the language
+code) in the same directory.
 Example: the file SportsTracker_de.properties contains the german translation.
 
 The following steps needs to be done for creating new translations:
@@ -38,7 +38,7 @@ positions and sizes in the directory $HOME/.sportstracker/ (e.g.
 
 
 Stefan Saring
-2014/08/16
+2015/01/24
 
 
 History of resource changes for each release

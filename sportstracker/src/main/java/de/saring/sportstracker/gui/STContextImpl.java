@@ -51,7 +51,7 @@ public class STContextImpl implements STContext {
         this.application = application;
 
         // initialize the I18N helper classes
-        this.fxResources = new AppResources("de.saring.sportstracker.gui.resources.SportsTracker");
+        this.fxResources = new AppResources("i18n.SportsTracker");
     }
 
     @Override
