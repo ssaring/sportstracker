@@ -8,10 +8,12 @@ JavaFX Migration:
   - remove old Swing based UI classes (misc/gui-swing) and STMain.properties
   - use new icon set (also high-res/retina capable)?
     (e.g. http://fortawesome.github.io/Font-Awesome/ or https://bitbucket.org/Jerady/fontawesomefx)
+- Build: create native JavaFX packages for Mac OS X, Windows (and Linux?), use Maven JavaFX Plugin 8.1?
+  -> see details in http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
 - All dialogs are using fullscreen on opening for a very short time (at least on Windows) => a bug?
 - CSS stylesheets:
   - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
-  - compile CSS classes to BSS files - does it improve performance?
+  - compile CSS classes to BSS files - does it improve the performance?
 - JFreeChart usage (in Overview Dialog): migration completed and tested, except:
   - the JavaFX version of JFreeChart logs CSS warnings at initial chart display, but works properly
     (problem does not exist in ExerciseViewer)
@@ -37,8 +39,6 @@ JavaFX Migration:
     - Alert dialogs does not show the complete message when longer than 2 lines
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38998
   - remove openjfx-dialog dependency when Java 8u40 has been released
-- Use Maven JavaFX Plugin 8.1, see details in
-  http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
 - Exercise Viewer: use a JavaFX based map viewer, currently it's the Swing based JXMapKit
 - Use Dialogs, Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
   => will be introduced in Java 8u40 (Dec. 2014)

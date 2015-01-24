@@ -19,8 +19,13 @@ v7.0.0:
     (a sport type must exist at least)
   - update to JFreeChart 1.0.19 (and JCommon 1.0.23) which provides JavaFX
     support
-  - full rewrite of the user interface by using JavaFX instead Swing
-    (user interfaces are now declared in FXML using SceneBuilder)
+  - full rewrite of the SportsTracker and ExerciseViewer user interface by
+    using JavaFX instead Swing  (user interfaces are now declared in FXML
+    using SceneBuilder)
+  - all SportsTracker dialogs: added instant input validation
+    - all required inputs are marked with a red upper left corner
+    - the OK button is active only when all required user inputs are available
+      and all inputs are valid
   - Exercise List View:
     - new table menu in header (+) for simple enabling / disabling table
       columns
