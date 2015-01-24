@@ -61,6 +61,7 @@ import de.saring.util.StringUtils;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
 import de.saring.util.gui.javafx.FxmlLoader;
+import de.saring.util.gui.mac.MacUtils;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**
@@ -117,6 +118,8 @@ public class STControllerImpl implements STController {
     // list of all menu items
     @FXML
     private MenuItem miSave;
+    @FXML
+    private MenuItem miQuit;
     @FXML
     private MenuItem miEditEntry;
     @FXML
@@ -229,6 +232,7 @@ public class STControllerImpl implements STController {
                 new Image("icons/st-logo-24.png"));
 
         setupActionBindings();
+        setupMacSpecificUI();
 
         // setup all views
         calendarViewController.loadAndSetupViewContent();
@@ -566,6 +570,15 @@ public class STControllerImpl implements STController {
 
         miFilterDisable.disableProperty().bind(actionFilterDisableDisabled);
         btFilterDisable.disableProperty().bind(actionFilterDisableDisabled);
+    }
+
+    private void setupMacSpecificUI() {
+        if (MacUtils.isMacOSX()) {
+            // remove File->Quit command from file menu (already displayed in the application menu)›
+            miQuit.setVisible(false);
+            // About and Preferences commands can't be move to the application menu in JavaFX
+            // applications (works in Swing by using a hack with the proprietary Mac API)
+        }
     }
 
     private void updateActionStatus() {
