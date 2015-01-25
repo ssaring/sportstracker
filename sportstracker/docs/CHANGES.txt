@@ -38,6 +38,8 @@ v7.0.0:
 
  Translations:
   - added korean translation provided by Tae Young Ko <oscetic@gmail.com>
+  - updated french translation pvovided by Nicolas Ollivier
+    <nicollivier@gmail.com>
 
 v6.0.0:
  SportsTracker changes:
