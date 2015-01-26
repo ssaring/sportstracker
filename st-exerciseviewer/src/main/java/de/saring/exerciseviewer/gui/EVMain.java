@@ -64,10 +64,10 @@ public class EVMain {
      *
      * @param exerciseFilename exercise file to display
      * @param options the options to be used in ExerciseViewer
-     * @param parent parent window of this dialog
+     * @param parent parent stage/window of this dialog
      * @param modal pass true when the dialog must be modal
      */
-    public void showExercise(final String exerciseFilename, final EVOptions options, final Window parent,
+    public void showExercise(final String exerciseFilename, final EVOptions options, final Stage parent,
             final boolean modal) {
 
         // init document and load exercise file
@@ -87,6 +87,7 @@ public class EVMain {
         stage.initOwner(parent);
         stage.initModality(modal ? Modality.APPLICATION_MODAL : Modality.NONE);
         stage.setTitle(DIALOG_NAME + " - " + document.getExerciseFilename());
+        stage.getIcons().setAll(parent.getIcons());
         WindowBoundsPersistence.addWindowBoundsPersistence(stage, "ExerciseViewer");
 
         // init controller and show dialog
