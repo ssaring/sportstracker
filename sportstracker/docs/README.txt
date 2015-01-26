@@ -349,14 +349,14 @@ IDE. This configuration and the documentation can be found in the directory
 
 The SportsTracker project uses the following libraries:
 
-  - Groovy 2.3.3 (http://groovy.codehaus.org)
+  - Groovy 2.4.0 (http://groovy.codehaus.org)
       License: Apache License v2.0
   - Guice 3.0 (http://code.google.com/p/google-guice/)
       Includes: javax.inject-1.jar
       License: Apache License v2.0
   - JFreeChart 1.0.19 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
-  - JDOM 2.0.2 (http://www.jdom.org)
+  - JDOM 2.0.5 (http://www.jdom.org)
       License: Apache-style open source license
   - SwingX 1.6.5-1 (https://swingx.dev.java.net/)
       License: Lesser General Public License (LGPL)
