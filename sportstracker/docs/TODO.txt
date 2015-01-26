@@ -9,25 +9,23 @@ JavaFX Migration:
     (e.g. http://fortawesome.github.io/Font-Awesome/ or https://bitbucket.org/Jerady/fontawesomefx)
 - Build: create native JavaFX packages for Mac OS X, Windows (and Linux?), use Maven JavaFX Plugin 8.1?
   -> see details in http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
-- All dialogs are using fullscreen on opening for a very short time (at least on Windows) => a bug?
 - CSS stylesheets:
   - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
   - compile CSS classes to BSS files - does it improve the performance?
+- ExerciseViewer: Done & tested
+  - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
+    (initially, when no previous window bounds were persisted)
+- Test application on Linux (Look&Feel, Drag&Drop, Printing (paper orientation))
 - JFreeChart usage (in Overview Dialog): migration completed and tested, except:
   - the JavaFX version of JFreeChart logs CSS warnings at initial chart display, but works properly
     (problem does not exist in ExerciseViewer)
-    => probably a JavaFX bug which will be fixed in 8u40 ( https://javafx-jira.kenai.com/browse/RT-38640 )
+    => caused by a JavaFX bug, it has been fixed in 8u40 (tested, see https://javafx-jira.kenai.com/browse/RT-38640 )
   - artifact is not available in the Maven Central repo, using custom build from saring.de repository meanwhile
     -> I've posted a request to the JFree forum: http://www.jfree.org/forum/viewtopic.php?f=3&t=117112
   - installation of custom build in local repository:
     mvn install:install-file -Dfile=jfreechart-1.0.19.jar -DgroupId=org.jfree
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
-- ExerciseViewer: Done & tested
-  - Bug: EV window is always placed in screen center, not placed at center of parent window
-    (initially, when no previous window bounds were persisted)
-  - Problem: window resizing is very slow -> JFreeChart is the cause
-- Test application on Linux (Look&Feel, Drag&Drop, Printing (paper orientation))
-- Usage of openjfx-dialog status:
+- openjfx-dialog status:
   - Works ok, but some minor problems:
     - dialog pane font size is too large (at least on Mac OS X)
       - Workaround: dlg.getDialogPane().setStyle("-fx-font-size: 1em;");
@@ -35,16 +33,19 @@ JavaFX Migration:
         -> remove in AbstractDialogController and STContextImpl when bugfix is available
     - Alert dialogs must not have fullscreen and minimize window buttons
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38946
+        => fixed in JavaFX 8u40 (tested on Windows)
     - Alert dialogs does not show the complete message when longer than 2 lines
-      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38998
+      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38998 => fixed in JavaFX 8u40
     - Dialog windows don't display the parent icon or no icons (on Windows)
-      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-39878
+      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-39878 => fixed in JavaFX 8u40
+    - All dialogs are using fullscreen on opening for a very short time (at least on Windows)
+      => fixed in JavaFX 8u40
   - remove openjfx-dialog dependency when Java 8u40 has been released
 - Exercise Viewer: use a JavaFX based map viewer, currently it's the Swing based JXMapKit
 - Use Dialogs, Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
   => will be introduced in Java 8u40 (Dec. 2014)
 - JavaFX Bug RT-38644: https://javafx-jira.kenai.com/browse/RT-38644 (created, planned to be fixed in JavaFX 9)
-  - User can't close Dialogs with ESC when the DatePicker has the focus
+  - User can't close Dialogs with ESC when the DatePicker has the focus fixed in JavaFX 8u40 (at least on Windows)
 - Print Views: Done for all views
   - Problem in List Views: tables can't be printed completely, the JavaFX API support only the printing
     of one single node at one single page
@@ -61,7 +62,7 @@ Performance tests after JavaFX-Migration:
 - SportsTracker startup time: 
   - almost identical for Swing- and JavaFX versions (on Windows and Mac OS X) => no improvement needed
 - ExerciseViewer startup time: 
-  - JavaFX version takes 2.5 secs initially (file Garmin/2014/2014-12-31-09-24-38.fit),
+  - JavaFX version takes 2.6 secs initially (file Garmin/2014/2014-12-31-09-24-38.fit),
     Swing version starts almost instantly => improvement needed
   - Initial EV startup times of the JavaFX version:
     -   30 msec for Guice DI => OK
@@ -70,6 +71,7 @@ Performance tests after JavaFX-Migration:
     -  600 msec for loading Panel FXML files => can this be improved? (load in one run)
     - 1350 msec for displaying the window via Stage#show() => improve!
       -> 750 msec only for the JFreeChart panel, not the case when a diagram was shown before (e.g. Overview Dialog)
+        -> with JavaFX 8u40 only 300 msec for the JFreeChart panel, has been improved
 - Memory usage results (on Windows 8.1 64 bit, JDK 8u31, similar on Mac OS X):
   (used with all my training data until 2014/12, HRM file Garmin/2014/2014-12-31-09-24-38.fit)
   - ST start without actions: 

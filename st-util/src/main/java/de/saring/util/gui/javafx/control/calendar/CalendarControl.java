@@ -171,7 +171,7 @@ public class CalendarControl extends Control {
     }
 
     @Override
-    protected String getUserAgentStylesheet() {
+    public String getUserAgentStylesheet() {
         return getClass().getResource("CalendarControl.css").toExternalForm();
     }
 
