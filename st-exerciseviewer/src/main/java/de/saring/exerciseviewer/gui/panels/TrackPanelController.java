@@ -14,16 +14,18 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import de.saring.exerciseviewer.gui.EVDocument;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
+import javafx.scene.layout.StackPane;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.swing.UIManager;
 
-import javafx.scene.layout.StackPane;
 import org.jdesktop.swingx.JXMapKit;
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
@@ -34,6 +36,7 @@ import de.saring.exerciseviewer.data.ExerciseSample;
 import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.Position;
 import de.saring.exerciseviewer.gui.EVContext;
+import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**
@@ -47,6 +50,8 @@ import de.saring.util.unitcalc.FormatUtils;
  */
 @Singleton
 public class TrackPanelController extends AbstractPanelController {
+
+    private static final Logger LOGGER = Logger.getLogger(TrackPanelController.class.getName());
 
     private static final Color COLOR_START = new Color(180, 255, 180);
     private static final Color COLOR_END = new Color(255, 180, 180);
@@ -64,6 +69,16 @@ public class TrackPanelController extends AbstractPanelController {
 
     /** Flag whether the exercise track has already been shown. */
     private boolean showTrackExecuted = false;
+
+    /** Initialize system look&feel for Swing once (can be done here, it's the only one Swing component). */
+    static {
+        final String lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
+        try {
+            UIManager.setLookAndFeel(lookAndFeelClassName);
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Failed to set look&feel to " + lookAndFeelClassName + "!", e);
+        }
+    }
 
     /**
      * Standard c'tor for dependency injection.
