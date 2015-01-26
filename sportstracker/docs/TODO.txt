@@ -4,7 +4,6 @@ SportsTracker-TODO
 JavaFX Migration:
 - SportsTracker main window:
   - see Profiling results, improve EV startup time and memory usage
-  - all Dialogs and Messages don't display the SportsTracker icon in the window title bar (on Windows)
   - remove old Swing based UI classes and resources (misc/gui-swing)
   - use new icon set (also high-res/retina capable)?
     (e.g. http://fortawesome.github.io/Font-Awesome/ or https://bitbucket.org/Jerady/fontawesomefx)
@@ -38,6 +37,8 @@ JavaFX Migration:
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38946
     - Alert dialogs does not show the complete message when longer than 2 lines
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38998
+    - Dialog windows don't display the parent icon or no icons (on Windows)
+      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-39878
   - remove openjfx-dialog dependency when Java 8u40 has been released
 - Exercise Viewer: use a JavaFX based map viewer, currently it's the Swing based JXMapKit
 - Use Dialogs, Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
