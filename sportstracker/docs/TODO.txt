@@ -1,6 +1,8 @@
 SportsTracker-TODO
 ==================
 
+Printing bug: when there is no printer installed, then 2 error message boxes are shown.
+
 JavaFX Migration:
 - SportsTracker main window:
   - see Profiling results, improve EV startup time and memory usage
@@ -9,13 +11,16 @@ JavaFX Migration:
     (e.g. http://fortawesome.github.io/Font-Awesome/ or https://bitbucket.org/Jerady/fontawesomefx)
 - Build: create native JavaFX packages for Mac OS X, Windows (and Linux?), use Maven JavaFX Plugin 8.1?
   -> see details in http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
+- Linux test (Ubuntu 14.04, Java 8u25, VirtualBox):
+  - SportsTracker runs fine (Look&Feel, printing, HRM file Drag&Drop)
+  - Overview Diagram prints a lot of warnings (JFreeChart graphic problem caused by VirtualBox?)
+  - ExerciseViewer can't start (looks like a deadlock)
 - CSS stylesheets:
   - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
   - compile CSS classes to BSS files - does it improve the performance?
 - ExerciseViewer: Done & tested
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)
-- Test application on Linux (Look&Feel, Drag&Drop, Printing (paper orientation))
 - JFreeChart usage (in Overview Dialog): migration completed and tested, except:
   - the JavaFX version of JFreeChart logs CSS warnings at initial chart display, but works properly
     (problem does not exist in ExerciseViewer)
