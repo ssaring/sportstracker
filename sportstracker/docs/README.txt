@@ -110,8 +110,8 @@ If you want to download exercise files from your heartrate monitor you also
 need one of the download tools listed above.
 
 The application was tested on GNU/Linux (e.g. Ubuntu 12.04), Windows (XP,
-Vista, 7) and Mac OS X (10.7 - 10.9), although it should work on all systems
-with the required Java Runtime Environment.
+Vista, 7, 8.1) and Mac OS X (10.7 - 10.9), although it should work on all
+systems with the required Java Runtime Environment.
 
 
 Installation and Start
@@ -305,7 +305,7 @@ For compilation of the SportsTracker sources you need:
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
-  - IntelliJ IDEA 13 Community Edition (http://www.jetbrains.com/idea/)
+  - IntelliJ IDEA 14 Community Edition (http://www.jetbrains.com/idea/)
     => preferred IDE, project files are in VCS
   - NetBeans IDE 8.0 (from http://www.netbeans.org)
     (Maven support is included, Groovy plugin needs to be installed)
@@ -453,4 +453,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2015/01/04
+2015/01/26

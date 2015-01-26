@@ -169,9 +169,6 @@ General TODOs:
 
 Calendar view/widget:
 - horizontal or vertical animation for scrolling through the months
-  => create bitmaps of old and new month view and move those (much faster)
-  => alternative: fade out and in via alpha channel
-- draw small shadows?
 
 Training route/lap support:
 - requested by Bernd Mirbach and other users, see mail from Bernd:
