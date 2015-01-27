@@ -61,7 +61,7 @@ import de.saring.util.StringUtils;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
 import de.saring.util.gui.javafx.FxmlLoader;
-import de.saring.util.gui.mac.MacUtils;
+import de.saring.util.gui.mac.PlatformUtils;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**
@@ -573,7 +573,7 @@ public class STControllerImpl implements STController {
     }
 
     private void setupMacSpecificUI() {
-        if (MacUtils.isMacOSX()) {
+        if (PlatformUtils.isMacOSX()) {
             // remove File->Quit command from file menu (already displayed in the application menu)›
             miQuit.setVisible(false);
             // About and Preferences commands can't be move to the application menu in JavaFX

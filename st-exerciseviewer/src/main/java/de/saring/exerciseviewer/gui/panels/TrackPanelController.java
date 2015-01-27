@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.util.gui.mac.PlatformUtils;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -70,13 +71,18 @@ public class TrackPanelController extends AbstractPanelController {
     /** Flag whether the exercise track has already been shown. */
     private boolean showTrackExecuted = false;
 
-    /** Initialize system look&feel for Swing once (can be done here, it's the only one Swing component). */
+    /**
+     * Initialize system look&feel for Swing once (can be done here, it's the only one Swing component).
+     * Can't be used on Linux, due to an internal bug it freezes the complete application.
+     */
     static {
-        final String lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
-        try {
-            UIManager.setLookAndFeel(lookAndFeelClassName);
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Failed to set look&feel to " + lookAndFeelClassName + "!", e);
+        if (!PlatformUtils.isLinux()) {
+            final String lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
+            try {
+                UIManager.setLookAndFeel(lookAndFeelClassName);
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "Failed to set look&feel to " + lookAndFeelClassName + "!", e);
+            }
         }
     }
 

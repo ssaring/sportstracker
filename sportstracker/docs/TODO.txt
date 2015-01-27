@@ -9,10 +9,6 @@ JavaFX Migration:
     (e.g. http://fortawesome.github.io/Font-Awesome/ or https://bitbucket.org/Jerady/fontawesomefx)
 - Build: create native JavaFX packages for Mac OS X, Windows (and Linux?), use Maven JavaFX Plugin 8.1?
   -> see details in http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
-- Linux test (Ubuntu 14.04, Java 8u25, VirtualBox):
-  - SportsTracker runs fine (Look&Feel, printing, HRM file Drag&Drop)
-  - Overview Diagram prints a lot of warnings (JFreeChart graphic problem caused by VirtualBox?)
-  - ExerciseViewer can't start (looks like a deadlock)
 - CSS stylesheets:
   - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
   - compile CSS classes to BSS files - does it improve the performance?
@@ -56,6 +52,13 @@ JavaFX Migration:
     and print the image instead the view (prints only the visible rows)
   - Update ViewPrinter when JavaFX API supports the printing of the complete tables
     (the I18N properties for list printing on multiple pages are present, see st.???view.print.???)
+- Linux test (Ubuntu 14.04 x64, Java 8u31, VirtualBox):
+  - SportsTracker and ExerciseViewer are running fine (Look&Feel, printing, HRM file Drag&Drop)
+  - drawing problems in all JFreeChart diagrams, prints a lot of warnings
+    => JavaFX bug, fixed in JavaFX 8u40 (tested)
+  - ExerciseViewer Track Panel (no need to fix, Swing based viewer will be replaced):
+    - System look&feel for Swing map viewer produces a deadlock (using default l&f instead)
+    - No tooltips are displayed in the track viewer => bug in Swing<->JavaFX integration
 
 JavaFX Migration status:
 - SportsTracker: completed
