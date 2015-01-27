@@ -1,4 +1,3 @@
-
 package de.saring.sportstracker.gui.views;
 
 import java.util.logging.Logger;
@@ -69,38 +68,36 @@ public class ViewPrinter {
 
         try {
             // PrinterJob is null when no printer is available (most systems provide default printers)
-            if (printerJob == null) {
-                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
-                        "common.error", "st.main.error.print_view.no_printer");
-                return;
-            }
+            if (printerJob != null) {
 
-            // use printer and page layout from previous printing, if available
-            restorePrinterConfiguration(printerJob);
+                // use printer and page layout from previous printing, if available
+                restorePrinterConfiguration(printerJob);
 
-            // display print dialog for confirmation and configuration by the user
-            final boolean printConfirmed = printerJob.showPrintDialog(context.getPrimaryStage());
-            storePrinterConfiguration(printerJob);
+                // display print dialog for confirmation and configuration by the user
+                final boolean printConfirmed = printerJob.showPrintDialog(context.getPrimaryStage());
+                storePrinterConfiguration(printerJob);
 
-            if (printConfirmed) {
-                // the printing itself is quite fast, no need to execute it asynchronously
-                if (printViewPage(printerJob, rootNode)) {
-                    if (printerJob.endJob()) {
-                        success = true;
+                if (printConfirmed) {
+                    // the printing itself is quite fast, no need to execute it asynchronously
+                    if (printViewPage(printerJob, rootNode)) {
+                        if (printerJob.endJob()) {
+                            success = true;
+                        } else {
+                            LOGGER.severe("Failed to end the print job!");
+                        }
                     } else {
-                        LOGGER.severe("Failed to end the print job!");
+                        LOGGER.severe("Failed to execute the view print!");
                     }
                 } else {
-                    LOGGER.severe("Failed to execute the view print!");
+                    success = true;
                 }
-            } else {
-                success = true;
             }
         } finally {
             context.blockMainWindow(false);
             if (!success) {
-                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
-                        "common.error", "st.main.error.print_view");
+                final String errorKey = printerJob == null ? "st.main.error.print_view.no_printer" //
+                        : "st.main.error.print_view";
+                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, "common.error", errorKey);
             }
         }
     }

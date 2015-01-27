@@ -1,8 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Printing bug: when there is no printer installed, then 2 error message boxes are shown.
-
 JavaFX Migration:
 - SportsTracker main window:
   - see Profiling results, improve EV startup time and memory usage
