@@ -120,6 +120,16 @@ public class STApplication extends Application {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$s %2$s %5$s %6$s%n");
 
+        // TODO remove when using a JavaFX map viewer
+        // initialize system look&feel for the Swing components (JXMapViewer viewer in ExerciseViewer)
+        // (needs to be done at startup, otherwise deadlock at ExerciseViewer start in Linux)
+        final String lookAndFeelClassName = javax.swing.UIManager.getSystemLookAndFeelClassName();
+        try {
+            javax.swing.UIManager.setLookAndFeel(lookAndFeelClassName);
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Failed to set look&feel to " + lookAndFeelClassName + "!", e);
+        }
+
         launch(args);
     }
 }

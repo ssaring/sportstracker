@@ -54,11 +54,7 @@ JavaFX Migration:
     (the I18N properties for list printing on multiple pages are present, see st.???view.print.???)
 - Linux test (Ubuntu 14.04 x64, Java 8u31, VirtualBox):
   - SportsTracker and ExerciseViewer are running fine (Look&Feel, printing, HRM file Drag&Drop)
-  - drawing problems in all JFreeChart diagrams, prints a lot of warnings
-    => JavaFX bug, fixed in JavaFX 8u40 (tested)
-  - ExerciseViewer Track Panel (no need to fix, Swing based viewer will be replaced):
-    - System look&feel for Swing map viewer produces a deadlock (using default l&f instead)
-    - No tooltips are displayed in the track viewer => bug in Swing<->JavaFX integration
+  - drawing problems in all JFreeChart diagrams => JavaFX bug, fixed in JavaFX 8u40 (tested)
 
 JavaFX Migration status:
 - SportsTracker: completed
