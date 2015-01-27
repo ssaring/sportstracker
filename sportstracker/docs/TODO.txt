@@ -55,6 +55,8 @@ JavaFX Migration:
 - Linux test (Ubuntu 14.04 x64, Java 8u31, VirtualBox):
   - SportsTracker and ExerciseViewer are running fine (Look&Feel, printing, HRM file Drag&Drop)
   - drawing problems in all JFreeChart diagrams => JavaFX bug, fixed in JavaFX 8u40 (tested)
+  - Application icon can't be set in code, must be defined in the .desktop launcher file
+    (see example in misc/linux-launcher/SportsTracker.desktop)
 
 JavaFX Migration status:
 - SportsTracker: completed

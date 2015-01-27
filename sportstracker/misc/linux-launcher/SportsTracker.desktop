@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=SportsTracker
+Exec=/opt/java/jre1.8.0_40_b22/bin/java -jar /home/foobar/SportsTracker-7.0/sportstracker-7.0.0.jar
+Terminal=false
+StartupNotify=true
+Categories=Sports;Utility
+Icon=/home/foobar/SportsTracker-7.0/st-logo-128.png
