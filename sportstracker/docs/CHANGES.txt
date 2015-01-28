@@ -35,6 +35,7 @@ v7.0.0:
   - Calendar View and Overview Diagram: bugfix for weeknumber calculation
   - initial set of sport types is added when there are no sport types defined,
     it makes the setup easier for new application users
+  - support for Suunto Ambit watches (tested with Ambit2, downloaded GPX files)
 
  Translations:
   - added korean translation provided by Tae Young Ko <oscetic@gmail.com>
