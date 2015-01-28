@@ -38,6 +38,10 @@
                             <appName>${application.name}</appName>                            
                             <mainClass>${application.mainClass}</mainClass>
                             <nativeReleaseVersion>${project.version}</nativeReleaseVersion>
+                            <bundleArguments>
+                                <!-- Defines the application category for Linux desktop menus -->
+                                <applicationCategory>Sports;Utility</applicationCategory>
+                            </bundleArguments>
                         </configuration>
                         <executions>
                             <execution>
