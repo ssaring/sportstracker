@@ -14,6 +14,20 @@
         <version>1.0.0</version>
     </parent>
 
+    <dependencies>
+        <!-- Additional dependencies -->
+        <dependency>
+            <groupId>de.saring</groupId>
+            <artifactId>st-exerciseviewer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.2</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <!-- Configuration for Jar file creation with Main-Class and Classpath in MANIFEST (executed by "mvn package") -->
@@ -34,18 +48,4 @@
         </plugins>
     </build>
 
-    <dependencies>
-        <!-- Additional dependencies -->
-        <dependency>
-            <groupId>de.saring</groupId>
-            <artifactId>st-exerciseviewer</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-cli</groupId>
-            <artifactId>commons-cli</artifactId>
-            <version>1.2</version>
-        </dependency>
-    </dependencies>
-    
 </project>

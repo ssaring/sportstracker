@@ -13,6 +13,25 @@
         <version>1.0.0</version>
     </parent>
 
+    <dependencies>
+        <!-- Additional dependencies -->
+        <dependency>
+            <groupId>de.saring</groupId>
+            <artifactId>st-util</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdesktop.swingx</groupId>
+            <artifactId>jxmapviewer2</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.garmin.fit</groupId>
+            <artifactId>fit</artifactId>
+            <version>4.20</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <!-- Compiler plugin configuration: use groovy-eclipse-compiler for
@@ -36,29 +55,10 @@
                         <groupId>org.codehaus.groovy</groupId>
                         <artifactId>groovy-eclipse-batch</artifactId>
                         <version>2.3.7-01</version>
-                    </dependency>                    
+                    </dependency>
                 </dependencies>
             </plugin>
         </plugins>
     </build>
 
-    <dependencies>
-        <!-- Additional dependencies -->
-        <dependency>
-            <groupId>de.saring</groupId>
-            <artifactId>st-util</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jdesktop.swingx</groupId>
-            <artifactId>jxmapviewer2</artifactId>
-            <version>1.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.garmin.fit</groupId>
-            <artifactId>fit</artifactId>
-            <version>4.20</version>
-        </dependency>
-    </dependencies>
-    
 </project>
