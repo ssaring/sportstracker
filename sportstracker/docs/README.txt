@@ -6,7 +6,7 @@ activities. It is not bound to a specific kind of sport, the user can create
 categories for all sport types such as cycling, running, swimming or tennis.
 
 The main advantage is a good overview of your exercises and you can easily
-create diagrams and statistics for specific time ranges and sport types. In 
+create diagrams and statistics for specific date ranges and sport types. In 
 the calendar you can also track your body weight or create note entries, e.g. 
 the training plan or upcoming sport events.
 

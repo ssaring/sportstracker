@@ -20,8 +20,11 @@ v7.0.0:
   - update to JFreeChart 1.0.19 (and JCommon 1.0.23) which provides JavaFX
     support
   - full rewrite of the SportsTracker and ExerciseViewer user interface by
-    using JavaFX instead Swing  (user interfaces are now declared in FXML
-    using SceneBuilder)
+    using JavaFX instead Swing
+    - user interfaces are now declared in FXML using SceneBuilder
+    - JavaFX provides improved look & feel (not native, same on all platforms)
+    - no more UI problems on Linux (Swing system look & feel was horrible)
+    - use of native file chooser dialogs on all platforms
   - all SportsTracker dialogs: added instant input validation
     - all required inputs are marked with a red upper left corner
     - the OK button is active only when all required user inputs are available
