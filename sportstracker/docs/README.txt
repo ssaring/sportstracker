@@ -329,7 +329,9 @@ multi project), so it's not possible to create circular module dependencies.
     (was named PolarViewer before, but support now many other devices too)
   - st-util: 
     Component with common util classes for calculation, UI and more
-  
+  - st-packager:
+    Module for creating native application packages for distribution
+
 In NetBeans you can open the project by "Open project", you need to select the
 project root directory and import all required projects.
 In Eclipse you can open the project by "Import -> Existing Maven Projects",

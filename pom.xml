@@ -9,7 +9,14 @@
     <name>st-parent</name>
     <version>1.0.0</version>
 
+    <organization>
+        <name>Saring</name>
+        <url>http://www.saring.de</url>
+    </organization>
+
     <properties>
+        <application.name>SportsTracker</application.name>
+        <application.mainClass>de.saring.sportstracker.gui.STApplication</application.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <groovy.version>2.4.0</groovy.version>
     </properties>
@@ -18,6 +25,7 @@
         <module>st-util</module>
         <module>st-exerciseviewer</module>
         <module>sportstracker</module>
+        <module>st-packager</module>
     </modules>
 
     <repositories>
