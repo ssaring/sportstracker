@@ -39,8 +39,11 @@
                             <mainClass>${application.mainClass}</mainClass>
                             <nativeReleaseVersion>${project.version}</nativeReleaseVersion>
                             <bundleArguments>
+                                <description>Application for tracking your sporting activities.</description>
                                 <!-- Defines the application category for Linux desktop menus -->
                                 <applicationCategory>Sports;Utility</applicationCategory>
+                                <!-- License definition needed for Linux/Debian packages -->
+                                <licenseType>GNU General Public License (GPL), Version 2.0</licenseType>
                             </bundleArguments>
                         </configuration>
                         <executions>
