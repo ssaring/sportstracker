@@ -38,7 +38,6 @@ JavaFX Migration:
     - All dialogs are using fullscreen on opening for a very short time (at least on Windows)
       => fixed in JavaFX 8u40
   - remove openjfx-dialog dependency when Java 8u40 has been released
-- Exercise Viewer: use a JavaFX based map viewer, currently it's the Swing based JXMapKit
 - Use Dialogs, Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
   => will be introduced in Java 8u40 (Dec. 2014)
 - JavaFX Bug RT-38644: https://javafx-jira.kenai.com/browse/RT-38644 (created, planned to be fixed in JavaFX 9)
@@ -55,6 +54,9 @@ JavaFX Migration:
   - drawing problems in all JFreeChart diagrams => JavaFX bug, fixed in JavaFX 8u40 (tested)
   - Application icon can't be set in code, must be defined in the .desktop launcher file
     (see example in misc/linux-launcher/SportsTracker.desktop)
+- Exercise Viewer: use a JavaFX-based map viewer, currently it's the Swing-based JXMapViewer
+  - tested various JavaFX based components, none of them is stable and provides all features
+  - the integration of the Swing-based viewer works fine, there's no need to replace it instantly
 
 JavaFX Migration status:
 - SportsTracker: completed
