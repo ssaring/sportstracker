@@ -40,7 +40,7 @@ v7.0.0:
     it makes the setup easier for new application users
   - support for Suunto Ambit watches (tested with Ambit2, downloaded GPX files)
   - Native SportsTracker packages and installers are created during build
-    - implemented in module st-packager
+    - implemented in module st-packager (see PACKAGER.txt)
     - created packages include the Java Runtime Environment (JRE)
       -> easier setup, users must not install Java anymore
     - created installers (depending on the build system):

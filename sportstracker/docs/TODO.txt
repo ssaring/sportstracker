@@ -1,42 +1,12 @@
 SportsTracker-TODO
 ==================
 
-Document native packaging:
-- Windows:
-  - Created packages in st-packager/target/jfx-native:
-    - SportsTracker application, SportsTracker-7.0.0.exe (Inno Setup, optional)
-  - Application uses proper name, version and icon
-  - Create a native installer by using Inno Setup (tested version 5.5.5)
-    - Download and install Inno Setup from http://www.jrsoftware.org/isinfo.php
-    - Add Inno Setup installation path to variable PATH
-    - Created Installer does not ask for SportsTracker installation directory,
-      it installs always to C:\Users\USERNAME\AppData\Local\SportsTracker
-    - Installer creates an entry in Start menu (proper name and icon)
-    - Created installer EXE is about 18 MB smaller than the zipped application package
-- Mac OS X:
-  - Created packages in st-packager/target/jfx-native:
-    - SportsTracker.app, SportsTracker-7.0.0.dmg, SportsTracker-7.0.0.pkg
-  - Application uses proper name, version and icon
-- Debian / Ubuntu Linux:
-  - Requires the package 'fakeroot' for creating the DEB package
-  - Created packages in st-packager/target/jfx-native:
-    - SportsTracker application, sportstracker-7.0.0.deb
-  - Installation: sudo dpkg -i sportstracker-7.0.0.deb
-  - Uninstallation: sudo dpkg -P sportstracker
-  - Installs application and embedded JRE to /opt/SportsTracker
-  - Creates a desktop menu entry for SportsTracker (incl. name, version, icon, categories)
-- Open issues:
-  - License file inclusion is currently not possible, enable in pom.xml when fixed.
-    See https://github.com/zonski/javafx-maven-plugin/issues/55
-
 JavaFX Migration:
 - SportsTracker main window:
   - see Profiling results, improve EV startup time and memory usage
   - remove old Swing based UI classes and resources (misc/gui-swing)
   - use new icon set (also high-res/retina capable)?
     (e.g. http://fortawesome.github.io/Font-Awesome/ or https://bitbucket.org/Jerady/fontawesomefx)
-- Build: create native JavaFX packages for Mac OS X, Windows (and Linux?), use Maven JavaFX Plugin 8.1?
-  -> see details in http://speling.shemnon.com//blog/2014/09/12/maven-javafx-plugin-8-dot-1-released/
 - CSS stylesheets:
   - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
   - compile CSS classes to BSS files - does it improve the performance?

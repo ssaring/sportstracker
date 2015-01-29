@@ -103,32 +103,35 @@ Requirements
 SportsTracker is an application for the Java platform written in Java and
 Groovy. It was developed and tested with the Oracle JVM, other JVM
 implementations will probably work too.
-For running SportsTracker you just need the Java SE Runtime Environment
-(JRE) 8u20 or greater, the Oracle JRE can be downloaded from:
-http://www.java.com
+
+The SportsTracker installer packages contain an embedded Java SE Runtime
+Environment (JRE).
+Users of binary packages need to install the JRE, the Oracle JRE can be
+downloaded from: http://www.java.com
 
 If you want to download exercise files from your heartrate monitor you also 
 need one of the download tools listed above.
 
-The application was tested on GNU/Linux (e.g. Ubuntu 12.04), Windows (XP,
-Vista, 7, 8.1) and Mac OS X (10.7 - 10.9), although it should work on all
-systems with the required Java Runtime Environment.
+The application was tested on GNU/Linux (e.g. Ubuntu 14.04), Windows (7,
+8.1) and Mac OS X (10.9 - 10.10), although it should work on all systems with
+the required Java Runtime Environment.
 
 
 Installation and Start
 ----------------------
 
-For installation you need to download the ZIP archive with the application
-binaries from the SourceForge project page. Then extract this archive to a
-directory of your choice.
+For Windows, Mac and some Linux systems there are native installer packages
+available from the SourceForge project page. They include an embedded Java
+Runtime Environment (JRE), so the user does not need to install Java before.
+The installers will create a menu entry for easy SportsTracker startup.
+
+If you are not using an installer, you need to download the ZIP archive with
+the application binaries. Then extract this archive to a directory of your
+choice.
 On Windows systems you can start the application just by starting the file 
 'sportstracker-x.y.z.jar'.
 On Unix-like systems you need to start it by using the command 
 'java -jar sportstracker-x.y.z.jar' from the application directory.
-
-Mac OS X users will probably prefer the installation of the SportsTracker
-OS X application bundle, the appropriate download is available too. This
-bundle does not contain Java, the JDK or JRE must be installed before.
 
 The default directory for the application data is '$HOME/.sportstracker',
 e.g. '/home/foo/.sportstracker' for the Linux user foo. You can also specify
@@ -300,7 +303,7 @@ Developer Requirements
 ----------------------
 
 For compilation of the SportsTracker sources you need:
-  - Java SE Development Kit (JDK) 8u20 or greater
+  - Java SE Development Kit (JDK) 8u31 or greater
     (from http://www.oracle.com/technetwork/java/)
   - Maven 3.0.3 or greater
     (from http://maven.apache.org)
@@ -456,4 +459,4 @@ created based on icons from those projects (e.g. the application icon).
 
 
 Stefan Saring
-2015/01/28
+2015/01/29

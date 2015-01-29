@@ -1,0 +1,80 @@
+SportsTracker Packaging
+=======================
+
+The project module 'st-packager' contains all the scripts and resources for
+automated creation of native application packages and native installers during
+the Maven build process.
+It uses the JavaFX tool 'javapackager' (part of JDK 8) and the Maven plugin
+'javafx-maven-plugin' (URL: https://github.com/zonski/javafx-maven-plugin).
+
+The application packages always contain the required Java Runtime Environment
+(JRE), so the user does not need to install Java manually before. This also
+ensures that the application always uses the proper JRE version.
+
+The native packages are not created by default, the Maven build must be started
+with the profile 'native-packager'. This profile creates native application
+packages and installers for the system on which the build is executed. The
+created packages are located in the directory 'st-packager/target/jfx-native'.
+Currently it's not possible to create cross-platform builds.
+
+Execution: mvn clean install -Pnative-packager
+
+Open issues:
+- License file currently can't be included, enable in pom.xml when fixed.
+  See https://github.com/zonski/javafx-maven-plugin/issues/55
+
+
+Windows notes
+-------------
+
+Created packages:
+- SportsTracker application
+- SportsTracker-x.y.z.exe (Inno Setup, optional)
+
+- Application packages are using proper name, version and icon.
+- Packages should be created on a 32 bit system, so they run on 32 and 64 bit.
+
+Native installer by using Inno Setup (tested with version 5.5.5):
+- Setup before build:
+  - Download and install Inno Setup from http://www.jrsoftware.org/isinfo.php
+  - Add Inno Setup installation path to variable PATH
+- Created Installer does not ask for SportsTracker installation directory, it
+  installs always to 'C:\Users\USERNAME\AppData\Local\SportsTracker'.
+- The Installer creates an entry in Start menu (proper name and icon).
+- The Installer EXE is about 18 MB smaller than the zipped application package.
+
+
+Mac OS X notes
+--------------
+
+Created packages:
+- SportsTracker.app
+- SportsTracker-x.y.z.dmg
+- SportsTracker-x.y.z.pkg
+
+- Application packages are using proper name, version and icon.
+- The app icon must be in .icns format, conversion was done by using the web
+  service http://iconverticons.com
+- Mac application packages can also be created with the tool 'appbundler', but
+  it is deprecated and replaced by the 'javapackager'.
+  (URL: http://java.net/projects/appbundler)
+
+
+Linux notes
+-----------
+
+Created packages:
+- SportsTracker application
+- sportstracker-x.y.z.deb (on Ubuntu / Debian systems)
+- sportstracker-x.y.z.rpm (on RPM based systems, not tested!)
+
+- Application packages are using proper name, version and maintainer info.
+- Installed package creates a desktop menu entry for SportsTracker which uses
+  proper name, version, icon and application categories.
+- Package installation target is '/opt/SportsTracker' (incl. the embedded JRE).
+
+Ubuntu / Debian packages:
+- DEB package creation requires the package 'fakeroot', can be installed from
+  the distribution repository.
+- Installation command: sudo dpkg -i sportstracker-7.0.0.deb
+- Uninstall command: sudo dpkg -P sportstracker
