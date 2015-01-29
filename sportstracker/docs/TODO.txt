@@ -2,6 +2,17 @@ SportsTracker-TODO
 ==================
 
 Document native packaging:
+- Windows:
+  - Created packages in st-packager/target/jfx-native:
+    - SportsTracker application, SportsTracker-7.0.0.exe (Inno Setup, optional)
+  - Application uses proper name, version and icon
+  - Create a native installer by using Inno Setup (tested version 5.5.5)
+    - Download and install Inno Setup from http://www.jrsoftware.org/isinfo.php
+    - Add Inno Setup installation path to variable PATH
+    - Created Installer does not ask for SportsTracker installation directory,
+      it installs always to C:\Users\USERNAME\AppData\Local\SportsTracker
+    - Installer creates an entry in Start menu (proper name and icon)
+    - Created installer EXE is about 18 MB smaller than the zipped application package
 - Mac OS X:
   - Created packages in st-packager/target/jfx-native:
     - SportsTracker.app, SportsTracker-7.0.0.dmg, SportsTracker-7.0.0.pkg
