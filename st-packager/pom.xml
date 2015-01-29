@@ -22,7 +22,7 @@
 
     <profiles>
         <profile>
-            <!-- Profile for creating the native application package by using the avafx-maven-plugin -->
+            <!-- Optional profile for creating the native application package by using the javafx-maven-plugin -->
             <id>native-packager</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
