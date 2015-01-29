@@ -39,6 +39,14 @@ v7.0.0:
   - initial set of sport types is added when there are no sport types defined,
     it makes the setup easier for new application users
   - support for Suunto Ambit watches (tested with Ambit2, downloaded GPX files)
+  - Native SportsTracker packages and installers are created during build
+    - implemented in module st-packager
+    - created packages include the Java Runtime Environment (JRE)
+      -> easier setup, users must not install Java anymore
+    - created installers (depending on the build system):
+      - Windows: application package and Inno Setup installer
+      - Mac OS X: application package, DMG and PKG installers
+      - Linux: application package, DEB package (RPM too, not tested)
 
  Translations:
   - added korean translation provided by Tae Young Ko <oscetic@gmail.com>
