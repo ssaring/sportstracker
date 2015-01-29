@@ -7,12 +7,16 @@ Document native packaging:
     - SportsTracker.app, SportsTracker-7.0.0.dmg, SportsTracker-7.0.0.pkg
   - Application uses proper name, version and icon
 - Debian / Ubuntu Linux:
+  - Requires the package 'fakeroot' for creating the DEB package
   - Created packages in st-packager/target/jfx-native:
     - SportsTracker application, sportstracker-7.0.0.deb
   - Installation: sudo dpkg -i sportstracker-7.0.0.deb
   - Uninstallation: sudo dpkg -P sportstracker
   - Installs application and embedded JRE to /opt/SportsTracker
   - Creates a desktop menu entry for SportsTracker (incl. name, version, icon, categories)
+- Open issues:
+  - License file inclusion is currently not possible, enable in pom.xml when fixed.
+    See https://github.com/zonski/javafx-maven-plugin/issues/55
 
 JavaFX Migration:
 - SportsTracker main window:

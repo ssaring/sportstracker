@@ -39,7 +39,7 @@
                             <mainClass>${application.mainClass}</mainClass>
                             <nativeReleaseVersion>${project.version}</nativeReleaseVersion>
                             <bundleArguments>
-                                <copyright>(C) {0,date,YYYY} Stefan Saring</copyright>
+                                <copyright>(C) 2015 Stefan Saring</copyright>
                                 <description>Application for tracking your sporting activities.</description>
                                 <!-- Defines the application category for Linux desktop menus -->
                                 <applicationCategory>Sports;Utility</applicationCategory>
@@ -47,7 +47,7 @@
                                 <email>projects@saring.de</email>
                                 <!-- License definition (needed for Linux/Debian packages) -->
                                 <licenseType>GNU General Public License (GPL), Version 2.0</licenseType>
-                                <!-- TODO License file inclusion is currently not possible, enabled when fixed.
+                                <!-- TODO License file inclusion is currently not possible, enable when fixed.
                                      See https://github.com/zonski/javafx-maven-plugin/issues/55
                                 <licenseFile>LICENSE.txt</licenseFile> -->
                             </bundleArguments>
