@@ -44,6 +44,9 @@
                                 <applicationCategory>Sports;Utility</applicationCategory>
                                 <!-- License definition needed for Linux/Debian packages -->
                                 <licenseType>GNU General Public License (GPL), Version 2.0</licenseType>
+                                <licenseFile>LICENSE.txt</licenseFile>
+                                <!-- Maintainer email adress needed for Linux/Debian packages -->
+                                <email>projects@saring.de</email>
                             </bundleArguments>
                         </configuration>
                         <executions>
