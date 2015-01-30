@@ -40,7 +40,8 @@ Eclipse configuration (version 4.4):
            (x) Format edited lines
         (x) Organize imports
   - XML -> XML Files -> Editor:
-    - Line Width: 120
+    - Line Width: 240
+    - ( ) Split multiple attributes each on a new line
     - (x) Indent using spaces
     - Indentation size: 4
 
@@ -50,7 +51,7 @@ IntelliJ IDEA configuration (version 14.x):
 
 - File -> Settings:
   - Plugins: 
-    - install plugin "Eclipse Code Formatter" (version 14.7) and restart IDEA
+    - install plugin "Eclipse Code Formatter" (version 14.x) and restart IDEA
   - Eclipse Code Formatter:
     - (x) Use the Eclipse code formatter
     - Eclipse Java Formatter config file: 
@@ -61,8 +62,20 @@ IntelliJ IDEA configuration (version 14.x):
     - Import order:
        - (x) From file: 
          - select file ST-Imports.importorder
-- Formatter must be used manually on the edited files (Code -> Reformat Code)
-  with the selected options:
+  - Editor -> Code Style -> XML:
+    - Select Scheme 'Default' and apply these changes:
+      - Tabs and Indents:
+        - ( ) Use tab character
+        - Tab Size: 4
+        - Indent: 4
+      - Other:
+        - Wrap attributes: Do not wrap
+        - (x) Align attributes
+        
+- Formatter must be used manually on the edited Java and FXML files 
+ (Code -> Reformat Code) with the selected options:
   (x) File '...'
   (x) Organize imports
   (x) Only VCS changed text
+- For FXML files make sure that there are no unused and wildcard imports
+  (performance brake)

@@ -353,6 +353,14 @@ project. That's why all developers need to use the same configuration for their
 IDE. This configuration and the documentation can be found in the directory
 'sportstracker/misc/ide-configuration'.
 
+All user interfaces are defined in FXML by using the JavaFX Scene Builder 2.0.
+Unfortunately Scene Builder creates a lot of unused import statements in the
+FXML files, which are a performance brake when loading the FXML files at
+runtime.
+So the edited FXML files always needs to be corrected manually after editing in
+Scene Builder. A FXML file must not contain unused and wildcard (*) imports!
+IntelliJ IDEA and Eclipse with the e(fx)clipse plugin can support here.
+
 The SportsTracker project uses the following libraries:
 
   - Groovy 2.4.0 (http://groovy.codehaus.org)
