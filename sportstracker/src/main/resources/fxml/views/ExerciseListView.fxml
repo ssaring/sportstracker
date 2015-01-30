@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
 
 <VBox stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.views.listviews.ExerciseListViewController">
     <children>
         <TableView fx:id="tvExercises" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="tcDate" prefWidth="90.0" text="%st.exerciselistview.date" />
-                <TableColumn fx:id="tcSportType" prefWidth="100.0" text="%st.exerciselistview.type" />
-                <TableColumn fx:id="tcSportSubtype" prefWidth="100.0" text="%st.exerciselistview.subtype" />
-                <TableColumn fx:id="tcDuration" prefWidth="80.0" text="%st.exerciselistview.duration" />
-                <TableColumn fx:id="tcIntensity" prefWidth="90.0" text="%st.exerciselistview.intensity" />
-                <TableColumn fx:id="tcDistance" prefWidth="90.0" text="%st.exerciselistview.distance" />
-                <TableColumn fx:id="tcAvgSpeed" prefWidth="90.0" text="%st.exerciselistview.avg_speed" />
-                <TableColumn fx:id="tcAvgHeartrate" prefWidth="90.0" text="%st.exerciselistview.avg_heartrate" />
-                <TableColumn fx:id="tcAscent" prefWidth="90.0" text="%st.exerciselistview.ascent" />
-                <TableColumn fx:id="tcEnergy" prefWidth="90.0" text="%st.exerciselistview.energy" />
-                <TableColumn fx:id="tcEquipment" prefWidth="90.0" text="%st.exerciselistview.equipment" />
-                <TableColumn fx:id="tcComment" prefWidth="500.0" text="%st.exerciselistview.comment" />
+                <TableColumn fx:id="tcDate" prefWidth="90.0" text="%st.exerciselistview.date"/>
+                <TableColumn fx:id="tcSportType" prefWidth="100.0" text="%st.exerciselistview.type"/>
+                <TableColumn fx:id="tcSportSubtype" prefWidth="100.0" text="%st.exerciselistview.subtype"/>
+                <TableColumn fx:id="tcDuration" prefWidth="80.0" text="%st.exerciselistview.duration"/>
+                <TableColumn fx:id="tcIntensity" prefWidth="90.0" text="%st.exerciselistview.intensity"/>
+                <TableColumn fx:id="tcDistance" prefWidth="90.0" text="%st.exerciselistview.distance"/>
+                <TableColumn fx:id="tcAvgSpeed" prefWidth="90.0" text="%st.exerciselistview.avg_speed"/>
+                <TableColumn fx:id="tcAvgHeartrate" prefWidth="90.0" text="%st.exerciselistview.avg_heartrate"/>
+                <TableColumn fx:id="tcAscent" prefWidth="90.0" text="%st.exerciselistview.ascent"/>
+                <TableColumn fx:id="tcEnergy" prefWidth="90.0" text="%st.exerciselistview.energy"/>
+                <TableColumn fx:id="tcEquipment" prefWidth="90.0" text="%st.exerciselistview.equipment"/>
+                <TableColumn fx:id="tcComment" prefWidth="500.0" text="%st.exerciselistview.comment"/>
             </columns>
             <placeholder>
-                <Label text="%st.exerciselistview.empty" />
+                <Label text="%st.exerciselistview.empty"/>
             </placeholder>
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem fx:id="miCtxAddExercise" onAction="#onAddExercise" styleClass="contextMenuItem" text="%st.view.exercise_add.Action.text" />
-                        <MenuItem fx:id="miCtxEditEntry" onAction="#onEditEntry" styleClass="contextMenuItem" text="%st.view.entry_edit.Action.text" />
-                        <MenuItem fx:id="miCtxCopyEntry" onAction="#onCopyEntry" styleClass="contextMenuItem" text="%st.view.entry_copy.Action.text" />
-                        <MenuItem fx:id="miCtxDeleteEntry" onAction="#onDeleteEntry" styleClass="contextMenuItem" text="%st.view.entry_delete.Action.text" />
+                        <MenuItem fx:id="miCtxAddExercise" onAction="#onAddExercise" styleClass="contextMenuItem" text="%st.view.exercise_add.Action.text"/>
+                        <MenuItem fx:id="miCtxEditEntry" onAction="#onEditEntry" styleClass="contextMenuItem" text="%st.view.entry_edit.Action.text"/>
+                        <MenuItem fx:id="miCtxCopyEntry" onAction="#onCopyEntry" styleClass="contextMenuItem" text="%st.view.entry_copy.Action.text"/>
+                        <MenuItem fx:id="miCtxDeleteEntry" onAction="#onDeleteEntry" styleClass="contextMenuItem" text="%st.view.entry_delete.Action.text"/>
                     </items>
                 </ContextMenu>
             </contextMenu>

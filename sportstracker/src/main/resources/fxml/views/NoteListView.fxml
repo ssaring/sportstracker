@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
 
 <VBox stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.views.listviews.NoteListViewController">
     <children>
         <TableView fx:id="tvNotes" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="tcDate" prefWidth="90.0" text="%st.notelistview.date" />
-                <TableColumn fx:id="tcText" prefWidth="600.0" text="%st.notelistview.text" />
+                <TableColumn fx:id="tcDate" prefWidth="90.0" text="%st.notelistview.date"/>
+                <TableColumn fx:id="tcText" prefWidth="600.0" text="%st.notelistview.text"/>
             </columns>
             <placeholder>
-                <Label text="%st.notelistview.empty" />
+                <Label text="%st.notelistview.empty"/>
             </placeholder>
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem fx:id="miCtxAddNote" onAction="#onAddNote" styleClass="contextMenuItem" text="%st.view.note_add.Action.text" />
-                        <MenuItem fx:id="miCtxEditEntry" onAction="#onEditEntry" styleClass="contextMenuItem" text="%st.view.entry_edit.Action.text" />
-                        <MenuItem fx:id="miCtxCopyEntry" onAction="#onCopyEntry" styleClass="contextMenuItem" text="%st.view.entry_copy.Action.text" />
-                        <MenuItem fx:id="miCtxDeleteEntry" onAction="#onDeleteEntry" styleClass="contextMenuItem" text="%st.view.entry_delete.Action.text" />
+                        <MenuItem fx:id="miCtxAddNote" onAction="#onAddNote" styleClass="contextMenuItem" text="%st.view.note_add.Action.text"/>
+                        <MenuItem fx:id="miCtxEditEntry" onAction="#onEditEntry" styleClass="contextMenuItem" text="%st.view.entry_edit.Action.text"/>
+                        <MenuItem fx:id="miCtxCopyEntry" onAction="#onCopyEntry" styleClass="contextMenuItem" text="%st.view.entry_copy.Action.text"/>
+                        <MenuItem fx:id="miCtxDeleteEntry" onAction="#onDeleteEntry" styleClass="contextMenuItem" text="%st.view.entry_delete.Action.text"/>
                     </items>
                 </ContextMenu>
             </contextMenu>

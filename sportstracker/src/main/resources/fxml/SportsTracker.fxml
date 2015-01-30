@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.input.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane fx:id="rootPane" stylesheets="@SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.STControllerImpl">
     <top>
@@ -17,63 +25,63 @@
                             <items>
                                 <MenuItem mnemonicParsing="true" onAction="#onOpenHrmFile" styleClass="menuBarItem" text="%st.view.open_exerciseviewer.Action.text">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                        <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN"/>
                                     </accelerator>
                                 </MenuItem>
                                 <MenuItem fx:id="miSave" mnemonicParsing="true" onAction="#onSave" styleClass="menuBarItem" text="%st.view.save.Action.text">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                        <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN"/>
                                     </accelerator>
                                 </MenuItem>
-                                <SeparatorMenuItem />
+                                <SeparatorMenuItem/>
                                 <MenuItem fx:id="miPrint" mnemonicParsing="true" onAction="#onPrint" styleClass="menuBarItem" text="%st.view.print.Action.text">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="P" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                        <KeyCodeCombination alt="UP" code="P" control="UP" meta="UP" shift="UP" shortcut="DOWN"/>
                                     </accelerator>
                                 </MenuItem>
-                                <SeparatorMenuItem />
+                                <SeparatorMenuItem/>
                                 <MenuItem fx:id="miQuit" mnemonicParsing="true" onAction="#onQuit" styleClass="menuBarItem" text="%st.view.quit.Action.text">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="Q" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                        <KeyCodeCombination alt="UP" code="Q" control="UP" meta="UP" shift="UP" shortcut="DOWN"/>
                                     </accelerator>
                                 </MenuItem>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="true" text="%st.view.edit.text">
                             <items>
-                                <MenuItem mnemonicParsing="true" onAction="#onAddExercise" styleClass="menuBarItem" text="%st.view.exercise_add.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onAddNote" styleClass="menuBarItem" text="%st.view.note_add.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onAddWeight" styleClass="menuBarItem" text="%st.view.weight_add.Action.text" />
-                                <MenuItem fx:id="miEditEntry" mnemonicParsing="true" onAction="#onEditEntry" styleClass="menuBarItem" text="%st.view.entry_edit.Action.text" />
-                                <MenuItem fx:id="miCopyEntry" mnemonicParsing="true" onAction="#onCopyEntry" styleClass="menuBarItem" text="%st.view.entry_copy.Action.text" />
-                                <MenuItem fx:id="miDeleteEntry" mnemonicParsing="true" onAction="#onDeleteEntry" styleClass="menuBarItem" text="%st.view.entry_delete.Action.text" />
-                                <SeparatorMenuItem />
-                                <MenuItem fx:id="miViewHrm" mnemonicParsing="true" onAction="#onViewHrmFile" styleClass="menuBarItem" text="%st.view.view_hrm.Action.text" />
-                                <SeparatorMenuItem />
-                                <MenuItem mnemonicParsing="true" onAction="#onPreferences" styleClass="menuBarItem" text="%st.view.preferences.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onAddExercise" styleClass="menuBarItem" text="%st.view.exercise_add.Action.text"/>
+                                <MenuItem mnemonicParsing="true" onAction="#onAddNote" styleClass="menuBarItem" text="%st.view.note_add.Action.text"/>
+                                <MenuItem mnemonicParsing="true" onAction="#onAddWeight" styleClass="menuBarItem" text="%st.view.weight_add.Action.text"/>
+                                <MenuItem fx:id="miEditEntry" mnemonicParsing="true" onAction="#onEditEntry" styleClass="menuBarItem" text="%st.view.entry_edit.Action.text"/>
+                                <MenuItem fx:id="miCopyEntry" mnemonicParsing="true" onAction="#onCopyEntry" styleClass="menuBarItem" text="%st.view.entry_copy.Action.text"/>
+                                <MenuItem fx:id="miDeleteEntry" mnemonicParsing="true" onAction="#onDeleteEntry" styleClass="menuBarItem" text="%st.view.entry_delete.Action.text"/>
+                                <SeparatorMenuItem/>
+                                <MenuItem fx:id="miViewHrm" mnemonicParsing="true" onAction="#onViewHrmFile" styleClass="menuBarItem" text="%st.view.view_hrm.Action.text"/>
+                                <SeparatorMenuItem/>
+                                <MenuItem mnemonicParsing="true" onAction="#onPreferences" styleClass="menuBarItem" text="%st.view.preferences.Action.text"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="true" text="%st.view.view.text">
                             <items>
-                                <MenuItem fx:id="miCalendarView" mnemonicParsing="true" onAction="#onCalendarView" styleClass="menuBarItem" text="%st.view.calendar_view.Action.text" />
-                                <MenuItem fx:id="miExerciseListView" mnemonicParsing="true" onAction="#onExerciseListView" styleClass="menuBarItem" text="%st.view.exercise_list_view.Action.text" />
-                                <MenuItem fx:id="miNoteListView" mnemonicParsing="true" onAction="#onNoteListView" styleClass="menuBarItem" text="%st.view.note_list_view.Action.text" />
-                                <MenuItem fx:id="miWeightListView" mnemonicParsing="true" onAction="#onWeightListView" styleClass="menuBarItem" text="%st.view.weight_list_view.Action.text" />
-                                <SeparatorMenuItem />
-                                <MenuItem mnemonicParsing="true" onAction="#onFilterExercises" styleClass="menuBarItem" text="%st.view.filter_exercises.Action.text" />
-                                <MenuItem fx:id="miFilterDisable" mnemonicParsing="true" onAction="#onFilterDisable" styleClass="menuBarItem" text="%st.view.filter_disable.Action.text" />
+                                <MenuItem fx:id="miCalendarView" mnemonicParsing="true" onAction="#onCalendarView" styleClass="menuBarItem" text="%st.view.calendar_view.Action.text"/>
+                                <MenuItem fx:id="miExerciseListView" mnemonicParsing="true" onAction="#onExerciseListView" styleClass="menuBarItem" text="%st.view.exercise_list_view.Action.text"/>
+                                <MenuItem fx:id="miNoteListView" mnemonicParsing="true" onAction="#onNoteListView" styleClass="menuBarItem" text="%st.view.note_list_view.Action.text"/>
+                                <MenuItem fx:id="miWeightListView" mnemonicParsing="true" onAction="#onWeightListView" styleClass="menuBarItem" text="%st.view.weight_list_view.Action.text"/>
+                                <SeparatorMenuItem/>
+                                <MenuItem mnemonicParsing="true" onAction="#onFilterExercises" styleClass="menuBarItem" text="%st.view.filter_exercises.Action.text"/>
+                                <MenuItem fx:id="miFilterDisable" mnemonicParsing="true" onAction="#onFilterDisable" styleClass="menuBarItem" text="%st.view.filter_disable.Action.text"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="true" text="%st.view.tools.text">
                             <items>
-                                <MenuItem mnemonicParsing="true" onAction="#onSportTypeEditor" styleClass="menuBarItem" text="%st.view.sporttype_editor.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onStatistics" styleClass="menuBarItem" text="%st.view.statistics.Action.text" />
-                                <MenuItem mnemonicParsing="true" onAction="#onOverviewDiagram" styleClass="menuBarItem" text="%st.view.overview_diagram.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onSportTypeEditor" styleClass="menuBarItem" text="%st.view.sporttype_editor.Action.text"/>
+                                <MenuItem mnemonicParsing="true" onAction="#onStatistics" styleClass="menuBarItem" text="%st.view.statistics.Action.text"/>
+                                <MenuItem mnemonicParsing="true" onAction="#onOverviewDiagram" styleClass="menuBarItem" text="%st.view.overview_diagram.Action.text"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="true" text="%st.view.help.text">
                             <items>
-                                <MenuItem mnemonicParsing="true" onAction="#onAbout" styleClass="menuBarItem" text="%st.view.about.Action.text" />
+                                <MenuItem mnemonicParsing="true" onAction="#onAbout" styleClass="menuBarItem" text="%st.view.about.Action.text"/>
                             </items>
                         </Menu>
                     </menus>
@@ -82,101 +90,101 @@
                     <items>
                         <Button fx:id="btOpenHrmFile" mnemonicParsing="false" onAction="#onOpenHrmFile" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.open_exerciseviewer.Action.shortDescription" />
+                                <Tooltip text="%st.view.open_exerciseviewer.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btSave" mnemonicParsing="false" onAction="#onSave" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.save.Action.shortDescription" />
+                                <Tooltip text="%st.view.save.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btPrint" mnemonicParsing="false" onAction="#onPrint" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.print.Action.shortDescription" />
+                                <Tooltip text="%st.view.print.Action.shortDescription"/>
                             </tooltip>
                         </Button>
-                        <Separator />
+                        <Separator/>
                         <Button fx:id="btCalendarView" mnemonicParsing="false" onAction="#onCalendarView" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.calendar_view.Action.shortDescription" />
+                                <Tooltip text="%st.view.calendar_view.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btExerciseListView" mnemonicParsing="false" onAction="#onExerciseListView" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.exercise_list_view.Action.shortDescription" />
+                                <Tooltip text="%st.view.exercise_list_view.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btNoteListView" mnemonicParsing="false" onAction="#onNoteListView" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.note_list_view.Action.shortDescription" />
+                                <Tooltip text="%st.view.note_list_view.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btWeightListView" mnemonicParsing="false" onAction="#onWeightListView" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.weight_list_view.Action.shortDescription" />
+                                <Tooltip text="%st.view.weight_list_view.Action.shortDescription"/>
                             </tooltip>
                         </Button>
-                        <Separator />
+                        <Separator/>
                         <Button fx:id="btFilterExercises" mnemonicParsing="false" onAction="#onFilterExercises" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.filter_exercises.Action.shortDescription" />
+                                <Tooltip text="%st.view.filter_exercises.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btFilterDisable" mnemonicParsing="false" onAction="#onFilterDisable" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.filter_disable.Action.shortDescription" />
+                                <Tooltip text="%st.view.filter_disable.Action.shortDescription"/>
                             </tooltip>
                         </Button>
-                        <Separator />
+                        <Separator/>
                         <Button fx:id="btAddExercise" mnemonicParsing="false" onAction="#onAddExercise" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.exercise_add.Action.shortDescription" />
+                                <Tooltip text="%st.view.exercise_add.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btAddNote" mnemonicParsing="false" onAction="#onAddNote" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.note_add.Action.shortDescription" />
+                                <Tooltip text="%st.view.note_add.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btAddWeight" mnemonicParsing="false" onAction="#onAddWeight" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.weight_add.Action.shortDescription" />
+                                <Tooltip text="%st.view.weight_add.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btEditEntry" mnemonicParsing="false" onAction="#onEditEntry" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.entry_edit.Action.shortDescription" />
+                                <Tooltip text="%st.view.entry_edit.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btCopyEntry" mnemonicParsing="false" onAction="#onCopyEntry" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.entry_copy.Action.shortDescription" />
+                                <Tooltip text="%st.view.entry_copy.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btDeleteEntry" mnemonicParsing="false" onAction="#onDeleteEntry" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.entry_delete.Action.shortDescription" />
+                                <Tooltip text="%st.view.entry_delete.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btViewHrm" mnemonicParsing="false" onAction="#onViewHrmFile" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.view_hrm.Action.shortDescription" />
+                                <Tooltip text="%st.view.view_hrm.Action.shortDescription"/>
                             </tooltip>
                         </Button>
-                        <Separator />
+                        <Separator/>
                         <Button fx:id="btSportTypeEditor" mnemonicParsing="false" onAction="#onSportTypeEditor" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.sporttype_editor.Action.shortDescription" />
+                                <Tooltip text="%st.view.sporttype_editor.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btStatistics" mnemonicParsing="false" onAction="#onStatistics" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.statistics.Action.shortDescription" />
+                                <Tooltip text="%st.view.statistics.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btOverviewDiagram" mnemonicParsing="false" onAction="#onOverviewDiagram" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.overview_diagram.Action.shortDescription" />
+                                <Tooltip text="%st.view.overview_diagram.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                     </items>
@@ -185,13 +193,13 @@
         </VBox>
     </top>
     <center>
-        <StackPane fx:id="spViews" prefHeight="520.0" prefWidth="780.0" BorderPane.alignment="CENTER" />
+        <StackPane fx:id="spViews" prefHeight="520.0" prefWidth="780.0" BorderPane.alignment="CENTER"/>
     </center>
-   <bottom>
-      <Label fx:id="laStatusBar" text="Dummy message" BorderPane.alignment="CENTER_LEFT">
-         <padding>
-            <Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
-         </padding>
-      </Label>
-   </bottom>
+    <bottom>
+        <Label fx:id="laStatusBar" text="Dummy message" BorderPane.alignment="CENTER_LEFT">
+            <padding>
+                <Insets bottom="4.0" left="8.0" right="8.0" top="4.0"/>
+            </padding>
+        </Label>
+    </bottom>
 </BorderPane>
