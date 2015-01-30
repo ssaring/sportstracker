@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <VBox spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogs.WeightDialogController">
-   <children>
-       <GridPane hgap="8.0" vgap="16.0">
-           <columnConstraints>
-               <ColumnConstraints hgrow="NEVER" />
-               <ColumnConstraints hgrow="NEVER" />
-               <ColumnConstraints hgrow="NEVER" />
-               <ColumnConstraints hgrow="NEVER" />
-               <ColumnConstraints hgrow="NEVER" />
-               <ColumnConstraints hgrow="NEVER" />
-           </columnConstraints>
-           <rowConstraints>
-               <RowConstraints vgrow="NEVER" />
-               <RowConstraints vgrow="NEVER" />
-           </rowConstraints>
-           <children>
-               <Label text="%st.dlg.weight.date.text" />
-               <DatePicker fx:id="dpDate" maxWidth="140.0" GridPane.columnIndex="1" HBox.hgrow="NEVER" />
-               <Label text="%st.dlg.weight.time.text" GridPane.columnIndex="2" HBox.hgrow="NEVER">
-                   <padding>
-                       <Insets left="16.0" />
-                   </padding>
-               </Label>
-               <TextField fx:id="tfHour" prefColumnCount="2" GridPane.columnIndex="3" HBox.hgrow="NEVER" />
-               <Label text=":" GridPane.columnIndex="4" HBox.hgrow="NEVER" />
-               <TextField fx:id="tfMinute" prefColumnCount="2" GridPane.columnIndex="5" HBox.hgrow="NEVER" />
-               <Label text="%st.dlg.weight.weight.text" GridPane.rowIndex="1" HBox.hgrow="NEVER" />
-               <TextField fx:id="tfValue" prefColumnCount="5" GridPane.columnIndex="1" GridPane.rowIndex="1" HBox.hgrow="NEVER" />
-               <Label fx:id="laWeightUnit" text="unit" GridPane.columnIndex="2" GridPane.rowIndex="1" HBox.hgrow="NEVER" />
-           </children>
-       </GridPane>
-      <VBox spacing="8.0" VBox.vgrow="ALWAYS">
-         <children>
-            <Label text="%st.dlg.weight.comment.text" />
-            <TextArea fx:id="taComment" prefColumnCount="38" prefRowCount="5" wrapText="true" VBox.vgrow="ALWAYS" />
-         </children>
-      </VBox>
-   </children>
+    <children>
+        <GridPane hgap="8.0" vgap="16.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER"/>
+                <ColumnConstraints hgrow="NEVER"/>
+                <ColumnConstraints hgrow="NEVER"/>
+                <ColumnConstraints hgrow="NEVER"/>
+                <ColumnConstraints hgrow="NEVER"/>
+                <ColumnConstraints hgrow="NEVER"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="NEVER"/>
+                <RowConstraints vgrow="NEVER"/>
+            </rowConstraints>
+            <children>
+                <Label text="%st.dlg.weight.date.text"/>
+                <DatePicker fx:id="dpDate" maxWidth="140.0" GridPane.columnIndex="1" HBox.hgrow="NEVER"/>
+                <Label text="%st.dlg.weight.time.text" GridPane.columnIndex="2" HBox.hgrow="NEVER">
+                    <padding>
+                        <Insets left="16.0"/>
+                    </padding>
+                </Label>
+                <TextField fx:id="tfHour" prefColumnCount="2" GridPane.columnIndex="3" HBox.hgrow="NEVER"/>
+                <Label text=":" GridPane.columnIndex="4" HBox.hgrow="NEVER"/>
+                <TextField fx:id="tfMinute" prefColumnCount="2" GridPane.columnIndex="5" HBox.hgrow="NEVER"/>
+                <Label text="%st.dlg.weight.weight.text" GridPane.rowIndex="1" HBox.hgrow="NEVER"/>
+                <TextField fx:id="tfValue" prefColumnCount="5" GridPane.columnIndex="1" GridPane.rowIndex="1" HBox.hgrow="NEVER"/>
+                <Label fx:id="laWeightUnit" text="unit" GridPane.columnIndex="2" GridPane.rowIndex="1" HBox.hgrow="NEVER"/>
+            </children>
+        </GridPane>
+        <VBox spacing="8.0" VBox.vgrow="ALWAYS">
+            <children>
+                <Label text="%st.dlg.weight.comment.text"/>
+                <TextArea fx:id="taComment" prefColumnCount="38" prefRowCount="5" wrapText="true" VBox.vgrow="ALWAYS"/>
+            </children>
+        </VBox>
+    </children>
 </VBox>

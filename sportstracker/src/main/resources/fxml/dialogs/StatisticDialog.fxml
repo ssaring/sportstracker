@@ -1,54 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.embed.swing.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <VBox spacing="16.0" stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogs.StatisticDialogController">
-   <children>
-      <HBox alignment="CENTER_LEFT">
-         <children>
-            <Label maxWidth="1.7976931348623157E308" styleClass="label-header" text="%st.dlg.statistic.current_filter.text" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#onChange" text="%st.dlg.statistic.change_filter.Action.text" />
-         </children>
-         <padding>
-            <Insets right="2.0" />
-         </padding>
-      </HBox>
-      <GridPane hgap="16.0" vgap="12.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="300.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="%st.dlg.statistic.timespan.text" />
-            <Label fx:id="laTimespanValue" text="01.01.2014 - 31.12.2014" GridPane.columnIndex="1" />
-            <Label text="%st.dlg.statistic.sport_type.text" GridPane.rowIndex="1" />
-            <Label fx:id="laSportTypeValue" text="%st.dlg.statistic.all.text" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="%st.dlg.statistic.sport_subtype.text" GridPane.rowIndex="2" />
-            <Label fx:id="laSportSubtypeValue" text="%st.dlg.statistic.all.text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="%st.dlg.statistic.intensity.text" GridPane.rowIndex="3" />
-            <Label fx:id="laIntensityValue" text="%st.dlg.statistic.all.text" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="%st.dlg.statistic.equipment.text" GridPane.rowIndex="4" />
-            <Label fx:id="laEquipmentValue" text="%st.dlg.statistic.all.text" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="%st.dlg.statistic.comment.text" GridPane.rowIndex="5" />
-            <Label fx:id="laCommentValue" text="%st.dlg.statistic.no_comment.text" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-         </children>
-         <VBox.margin>
-            <Insets left="24.0" />
-         </VBox.margin>
-      </GridPane>
-   </children>
+    <children>
+        <HBox alignment="CENTER_LEFT">
+            <children>
+                <Label maxWidth="1.7976931348623157E308" styleClass="label-header" text="%st.dlg.statistic.current_filter.text" HBox.hgrow="ALWAYS"/>
+                <Button mnemonicParsing="false" onAction="#onChange" text="%st.dlg.statistic.change_filter.Action.text"/>
+            </children>
+            <padding>
+                <Insets right="2.0"/>
+            </padding>
+        </HBox>
+        <GridPane hgap="16.0" vgap="12.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="300.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES"/>
+                <RowConstraints vgrow="SOMETIMES"/>
+                <RowConstraints vgrow="SOMETIMES"/>
+                <RowConstraints vgrow="SOMETIMES"/>
+                <RowConstraints vgrow="SOMETIMES"/>
+                <RowConstraints vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Label text="%st.dlg.statistic.timespan.text"/>
+                <Label fx:id="laTimespanValue" text="01.01.2014 - 31.12.2014" GridPane.columnIndex="1"/>
+                <Label text="%st.dlg.statistic.sport_type.text" GridPane.rowIndex="1"/>
+                <Label fx:id="laSportTypeValue" text="%st.dlg.statistic.all.text" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="%st.dlg.statistic.sport_subtype.text" GridPane.rowIndex="2"/>
+                <Label fx:id="laSportSubtypeValue" text="%st.dlg.statistic.all.text" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="%st.dlg.statistic.intensity.text" GridPane.rowIndex="3"/>
+                <Label fx:id="laIntensityValue" text="%st.dlg.statistic.all.text" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Label text="%st.dlg.statistic.equipment.text" GridPane.rowIndex="4"/>
+                <Label fx:id="laEquipmentValue" text="%st.dlg.statistic.all.text" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Label text="%st.dlg.statistic.comment.text" GridPane.rowIndex="5"/>
+                <Label fx:id="laCommentValue" text="%st.dlg.statistic.no_comment.text" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            </children>
+            <VBox.margin>
+                <Insets left="24.0"/>
+            </VBox.margin>
+        </GridPane>
+    </children>
 </VBox>
