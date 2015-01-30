@@ -3,7 +3,6 @@ package de.saring.sportstracker.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.saring.util.gui.mac.PlatformUtils;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -17,6 +16,7 @@ import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.util.gui.javafx.WindowBoundsPersistence;
+import de.saring.util.gui.mac.PlatformUtils;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**
@@ -122,10 +122,10 @@ public class STApplication extends Application {
                 "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$s %2$s %5$s %6$s%n");
 
         // TODO remove when using a JavaFX map viewer
-        if (PlatformUtils.isLinux()) {
+        if (!PlatformUtils.isMacOSX()) {
             // initialize system look&feel for the Swing components (JXMapViewer viewer in ExerciseViewer)
             // => needs to be done at startup, otherwise deadlock at ExerciseViewer start in Linux
-            // => only needed for Linux, system look&feel is default on other platforms
+            // => not needed on Mac OS X, system look&feel is default there (enabling causes problems)
             final String lookAndFeelClassName = javax.swing.UIManager.getSystemLookAndFeelClassName();
             try {
                 javax.swing.UIManager.setLookAndFeel(lookAndFeelClassName);
