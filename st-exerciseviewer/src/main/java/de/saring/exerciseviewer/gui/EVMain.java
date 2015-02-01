@@ -3,18 +3,20 @@ package de.saring.exerciseviewer.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import de.saring.util.gui.javafx.WindowBoundsPersistence;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 import javax.inject.Inject;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 import de.saring.exerciseviewer.core.EVOptions;
+import de.saring.util.SystemUtils;
+import de.saring.util.gui.javafx.WindowBoundsPersistence;
 
 /**
  * This is the main class of the ExerciseViewer "sub-application" (is a child-dialog of the parent frame).
@@ -77,8 +79,8 @@ public class EVMain {
             document.openExerciseFile(exerciseFilename);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to open exercise file " + exerciseFilename + "!", e);
-            context.showMessageDialog(parent, Alert.AlertType.ERROR, "common.error",
-                    "pv.error.read_exercise_console", exerciseFilename);
+            context.showMessageDialog(parent, Alert.AlertType.ERROR, //
+                    "common.error", "pv.error.read_exercise_console", exerciseFilename);
             return;
         }
 
@@ -92,5 +94,8 @@ public class EVMain {
 
         // init controller and show dialog
         controller.show(stage);
+
+        // trigger a garbage collection when EV has been closed to avoid allocation of additional heap space
+        stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, event -> SystemUtils.triggerGC(0));
     }
 }

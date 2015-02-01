@@ -17,6 +17,7 @@ import javafx.stage.Window;
 import org.controlsfx.validation.ValidationSupport;
 
 import de.saring.sportstracker.gui.STContext;
+import de.saring.util.SystemUtils;
 import de.saring.util.gui.javafx.FxmlLoader;
 
 /**
@@ -57,6 +58,7 @@ public abstract class AbstractDialogController {
         dlg.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         addCustomButtons(dlg.getDialogPane());
         dlg.showAndWait();
+        triggerGC();
     }
 
     /**
@@ -96,6 +98,7 @@ public abstract class AbstractDialogController {
 
         // show dialog
         dlg.showAndWait();
+        triggerGC();
     }
 
     /**
@@ -171,5 +174,13 @@ public abstract class AbstractDialogController {
         } catch (IOException e) {
             throw new RuntimeException("Failed to load the dialog FXML resource '" + fxmlFilename + "'!", e);
         }
+    }
+
+    /**
+     * Triggers a delayed, asynchronous garbage collection after the dialog has been closed
+     * to avoid allocation of additional heap space.
+     */
+    private void triggerGC() {
+        SystemUtils.triggerGC();
     }
 }

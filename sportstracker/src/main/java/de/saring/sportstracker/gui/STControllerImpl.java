@@ -58,6 +58,7 @@ import de.saring.sportstracker.gui.views.listviews.NoteListViewController;
 import de.saring.sportstracker.gui.views.listviews.WeightListViewController;
 import de.saring.util.Date310Utils;
 import de.saring.util.StringUtils;
+import de.saring.util.SystemUtils;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdDateObjectList;
 import de.saring.util.gui.javafx.FxmlLoader;
@@ -738,6 +739,9 @@ public class STControllerImpl implements STController {
         currentViewController.removeSelection();
         updateView();
         spViews.getChildren().setAll(currentViewController.getRootNode());
+
+        // trigger a garbage collection after view change to avoid allocation of additional heap space
+        SystemUtils.triggerGC();
     }
 
     /**
