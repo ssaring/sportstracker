@@ -38,6 +38,9 @@
                             <appName>${application.name}</appName>                            
                             <mainClass>${application.mainClass}</mainClass>
                             <nativeReleaseVersion>${project.version}</nativeReleaseVersion>
+                            <jvmArgs>
+                                <jvmArg>-Xmx256m</jvmArg>
+                            </jvmArgs>
                             <bundleArguments>
                                 <copyright>(C) 2015 Stefan Saring</copyright>
                                 <description>Application for tracking your sporting activities.</description>

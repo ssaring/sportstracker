@@ -27,7 +27,8 @@ public final class SystemUtils {
     /**
      * Triggers an asynchronous garbage collection after waiting the specified sleep time.
      * This method returns immediately, the garbage collection is executed in a new thread.
-     * A short pause before GC makes sense, when e.g. UI needs to be updated first.
+     * A short pause before GC execution makes sense, when e.g. a dialog has been closed
+     * and the UI needs to be updated asynchronously before.
      *
      * @param waitBefore sleep time before GC in msec (0 for no sleep)
      */
