@@ -58,7 +58,6 @@ public class TrackPanelController extends AbstractPanelController {
 
     private JXMapKit mapKit;
 
-    // TODO
     private MouseMotionAdapter mouseMotionListener;
 
     /** Flag whether the exercise track has already been shown. */
@@ -77,17 +76,24 @@ public class TrackPanelController extends AbstractPanelController {
     /**
      * Cleanup of the JXMapViewer component. Needs to be called when the dialog is closed,
      * otherwise there will be memory leaks. Normally there is nothing to do, but here
-     * are problems probably caused by the Swing in JavaFX integration.
+     * are problems which are probably caused by the Swing -> JavaFX integration.
      */
     public void cleanupPanel() {
-        snMapViewer.setContent(null);
         spTrack.getChildren().clear();
-
-        // this is needed otherwise the GC can't remove this Panel and all EV components!
-        mapKit.getMainMap().removeMouseMotionListener(mouseMotionListener);
-
-        mapKit = null;
+        snMapViewer.setContent(null);
         snMapViewer = null;
+
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            // remove relations to this controller, otherwise the GC can't remove this Panel and all EV components
+            mapKit.getMainMap().removeMouseMotionListener(mouseMotionListener);
+            mapKit.getMainMap().setOverlayPainter(null);
+            mapKit.getMainMap().setToolTipText(null);
+
+            // dispose both TileFactory instances, otherwise the GC can't remove all the MapViewer objects
+            mapKit.getMainMap().getTileFactory().dispose();
+            mapKit.getMiniMap().getTileFactory().dispose();
+            mapKit = null;
+        });
     }
 
     @Override

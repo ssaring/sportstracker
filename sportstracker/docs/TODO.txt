@@ -3,7 +3,7 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - SportsTracker main window:
-  - see Profiling results, improve EV startup time and memory usage
+  - see Profiling results, improve EV startup time
   - remove old Swing based UI classes and resources (misc/gui-swing)
   - use new icon set (also high-res/retina capable)?
     (e.g. http://fortawesome.github.io/Font-Awesome/ or https://bitbucket.org/Jerady/fontawesomefx)

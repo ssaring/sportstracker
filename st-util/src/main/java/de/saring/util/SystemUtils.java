@@ -45,7 +45,7 @@ public final class SystemUtils {
 
             final long start = System.currentTimeMillis();
             System.gc();
-            LOGGER.info("Garbage collection completed in " + (System.currentTimeMillis() - start) + " msec");
+            LOGGER.fine("Garbage collection completed in " + (System.currentTimeMillis() - start) + " msec");
         }).start();
     }
 }
