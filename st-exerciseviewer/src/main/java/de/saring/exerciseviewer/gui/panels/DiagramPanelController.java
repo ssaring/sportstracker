@@ -45,16 +45,12 @@ import de.saring.util.AppResources;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 /**
  * Controller (MVC) class of the "Samples" panel, which displays the exercise graphically
  * (heartrate, altitude, speed and cadence).
  *
  * @author Stefan Saring
  */
-@Singleton
 public class DiagramPanelController extends AbstractPanelController {
 
     // The colors of the chart.
@@ -87,7 +83,6 @@ public class DiagramPanelController extends AbstractPanelController {
      * @param context the ExerciseViewer UI context
      * @param document the ExerciseViewer document / model
      */
-    @Inject
     public DiagramPanelController(final EVContext context, final EVDocument document) {
         super(context, document);
 

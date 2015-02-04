@@ -15,18 +15,13 @@ import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.unitcalc.FormatUtils;
 import javafx.util.StringConverter;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 /**
  * Controller (MVC) class of the "Main" panel, which displays all the main exercise data.
  *
  * @author Stefan Saring
  */
-@Singleton
 public class MainPanelController extends AbstractPanelController {
 
-    @Inject
     private DiagramPanelController diagramPanelController;
 
     @FXML
@@ -78,9 +73,12 @@ public class MainPanelController extends AbstractPanelController {
      * @param context the ExerciseViewer UI context
      * @param document the ExerciseViewer document / model
      */
-    @Inject
     public MainPanelController(final EVContext context, final EVDocument document) {
         super(context, document);
+    }
+
+    public void setDiagramPanelController(final DiagramPanelController diagramPanelController) {
+        this.diagramPanelController = diagramPanelController;
     }
 
     @Override

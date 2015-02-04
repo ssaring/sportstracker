@@ -6,15 +6,12 @@ import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.parser.ExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 
-import javax.inject.Singleton;
-
 /**
  * This class contains all model / document (MVC) related data and functionality of the
  * ExerciseViewer application.
  *
  * @author Stefan Saring
  */
-@Singleton
 public class EVDocument {
 
     /** The current exercise to be displayed. */

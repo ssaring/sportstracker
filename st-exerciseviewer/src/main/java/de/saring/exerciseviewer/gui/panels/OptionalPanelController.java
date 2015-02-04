@@ -8,16 +8,12 @@ import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.unitcalc.FormatUtils;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 /**
  * Controller (MVC) class of the "Optional" panel, which displays all the optional exercise data,
  * such as speed, altitude ...
  *
  * @author Stefan Saring
  */
-@Singleton
 public class OptionalPanelController extends AbstractPanelController {
 
     @FXML
@@ -56,7 +52,6 @@ public class OptionalPanelController extends AbstractPanelController {
      * @param context the ExerciseViewer UI context
      * @param document the ExerciseViewer document / model
      */
-    @Inject
     public OptionalPanelController(final EVContext context, final EVDocument document) {
         super(context, document);
     }

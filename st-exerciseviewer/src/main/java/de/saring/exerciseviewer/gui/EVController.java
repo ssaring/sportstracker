@@ -10,6 +10,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import de.saring.exerciseviewer.gui.panels.DiagramPanelController;
 import de.saring.exerciseviewer.gui.panels.LapPanelController;
@@ -19,33 +20,23 @@ import de.saring.exerciseviewer.gui.panels.SamplePanelController;
 import de.saring.exerciseviewer.gui.panels.TrackPanelController;
 import de.saring.util.gui.javafx.FxmlLoader;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 /**
  * Main Controller (MVC) class of the ExerciseViewer dialog window.
  *
  * @author Stefan Saring
  */
-@Singleton
 public class EVController {
 
     private static final String FXML_FILE = "/fxml/ExerciseViewer.fxml";
 
     private final EVContext context;
 
-    @Inject
-    private MainPanelController mainPanelController;
-    @Inject
-    private OptionalPanelController optionalPanelController;
-    @Inject
-    private LapPanelController lapPanelController;
-    @Inject
-    private SamplePanelController samplePanelController;
-    @Inject
-    private DiagramPanelController diagramPanelController;
-    @Inject
-    private TrackPanelController trackPanelController;
+    private final MainPanelController mainPanelController;
+    private final OptionalPanelController optionalPanelController;
+    private final LapPanelController lapPanelController;
+    private final SamplePanelController samplePanelController;
+    private final DiagramPanelController diagramPanelController;
+    private final TrackPanelController trackPanelController;
 
     private Stage stage;
 
@@ -66,10 +57,20 @@ public class EVController {
      * Standard c'tor for dependency injection.
      *
      * @param context the ExerciseViewer UI context
+     * @param document the ExerciseViewer document / model
      */
-    @Inject
-    public EVController(final EVContext context) {
+    public EVController(final EVContext context, final EVDocument document) {
         this.context = context;
+
+        // manual dependency injection, Guice can't be used here (see comments in EVMain)
+        mainPanelController = new MainPanelController(context, document);
+        optionalPanelController = new OptionalPanelController(context, document);
+        lapPanelController = new LapPanelController(context, document);
+        samplePanelController = new SamplePanelController(context, document);
+        diagramPanelController = new DiagramPanelController(context, document);
+        trackPanelController = new TrackPanelController(context, document);
+
+        mainPanelController.setDiagramPanelController(diagramPanelController);
     }
 
     /**
@@ -90,6 +91,9 @@ public class EVController {
         }
 
         setupPanels();
+
+        // register cleanup of JXMapViewer in TrackPanel on dialog close, otherwise there are memory leaks
+        stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> trackPanelController.cleanupPanel());
 
         // create scene and show dialog
         final Scene scene = new Scene(root);

@@ -10,10 +10,6 @@ import javafx.stage.WindowEvent;
 
 import javax.inject.Inject;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
 import de.saring.exerciseviewer.core.EVOptions;
 import de.saring.util.SystemUtils;
 import de.saring.util.gui.javafx.WindowBoundsPersistence;
@@ -43,22 +39,13 @@ public class EVMain {
     @Inject
     public EVMain(final EVContext context) {
 
-        // The ExerciseViewer sub-application can be started multiple times in parallel, each with its
-        // own document and controller objects which must be separated for all ExerciseViewer instances.
-        // => Guice does not provide such a "Window" scope, so each ExerciseViewer uses its own Injector
-        // => so each ExerciseViewer has it's own injected @Singleton components
-        final Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            public void configure() {
-                // use context provided by the SportsTracker application
-                bind(EVContext.class).toInstance(context);
-            }
-        });
-
-        // get the ExerciseViewer components via dependency injection
-        this.document = injector.getInstance(EVDocument.class);
-        this.controller = injector.getInstance(EVController.class);
-        this.context = injector.getInstance(EVContext.class);
+        // create ExerciseViewer components by using manual dependency injection
+        // => Guice can't be used here, it does not provide a scope for dialogs
+        // => Guice-Workaround would be the use of a new Injector per EV window,
+        // but this costs performance and can cause memory leaks
+        this.context = context;
+        this.document = new EVDocument();
+        this.controller = new EVController(context, document);
     }
 
     /**
@@ -96,6 +83,6 @@ public class EVMain {
         controller.show(stage);
 
         // trigger a garbage collection when EV has been closed to avoid allocation of additional heap space
-        stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, event -> SystemUtils.triggerGC(0));
+        stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, event -> SystemUtils.triggerGC());
     }
 }

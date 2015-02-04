@@ -372,7 +372,7 @@ The SportsTracker project uses the following libraries:
       License: Lesser General Public License (LGPL)
   - JDOM 2.0.5 (http://www.jdom.org)
       License: Apache-style open source license
-  - JXMapViewer2 1.3.1 instead of SwingX-WS
+  - JXMapViewer2 2.0 (based on of SwingX-WS)
       URL: https://github.com/msteiger/jxmapviewer2
       Includes: commons-logging-1.1.1
       License: Lesser General Public License (LGPL)

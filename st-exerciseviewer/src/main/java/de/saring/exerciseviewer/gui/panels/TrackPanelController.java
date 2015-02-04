@@ -14,20 +14,16 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.layout.StackPane;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import org.jdesktop.swingx.JXMapKit;
-import org.jdesktop.swingx.JXMapViewer;
-import org.jdesktop.swingx.mapviewer.GeoPosition;
-import org.jdesktop.swingx.painter.Painter;
+import org.jxmapviewer.JXMapKit;
+import org.jxmapviewer.JXMapViewer;
+import org.jxmapviewer.painter.Painter;
+import org.jxmapviewer.viewer.GeoPosition;
 
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.ExerciseSample;
@@ -46,10 +42,7 @@ import de.saring.util.unitcalc.FormatUtils;
  *
  * @author Stefan Saring
  */
-@Singleton
 public class TrackPanelController extends AbstractPanelController {
-
-    private static final Logger LOGGER = Logger.getLogger(TrackPanelController.class.getName());
 
     private static final Color COLOR_START = new Color(180, 255, 180);
     private static final Color COLOR_END = new Color(255, 180, 180);
@@ -65,6 +58,9 @@ public class TrackPanelController extends AbstractPanelController {
 
     private JXMapKit mapKit;
 
+    // TODO
+    private MouseMotionAdapter mouseMotionListener;
+
     /** Flag whether the exercise track has already been shown. */
     private boolean showTrackExecuted = false;
 
@@ -74,9 +70,24 @@ public class TrackPanelController extends AbstractPanelController {
      * @param context the ExerciseViewer UI context
      * @param document the ExerciseViewer document / model
      */
-    @Inject
     public TrackPanelController(final EVContext context, final EVDocument document) {
         super(context, document);
+    }
+
+    /**
+     * Cleanup of the JXMapViewer component. Needs to be called when the dialog is closed,
+     * otherwise there will be memory leaks. Normally there is nothing to do, but here
+     * are problems probably caused by the Swing in JavaFX integration.
+     */
+    public void cleanupPanel() {
+        snMapViewer.setContent(null);
+        spTrack.getChildren().clear();
+
+        // this is needed otherwise the GC can't remove this Panel and all EV components!
+        mapKit.getMainMap().removeMouseMotionListener(mouseMotionListener);
+
+        mapKit = null;
+        snMapViewer = null;
     }
 
     @Override
@@ -105,12 +116,13 @@ public class TrackPanelController extends AbstractPanelController {
         mapKit.setBorder(new javax.swing.border.EmptyBorder(8, 8, 8, 8));
 
         // add MouseMotionListener to the map for nearby sample lookup and tooltip creation
-        mapKit.getMainMap().addMouseMotionListener(new MouseMotionAdapter() {
+        mouseMotionListener = new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 lookupNearbySampleAndCreateToolTip(e);
             }
-        });
+        };
+        mapKit.getMainMap().addMouseMotionListener(mouseMotionListener);
 
         snMapViewer.setContent(mapKit);
     }

@@ -7,7 +7,7 @@ v7.0.0:
   - update of Groovy to 2.4.0
   - update of JDOM to version 2.0.5
   - update of SwingX to 1.6.5-1
-  - replaced SwingX-WS 1.0 library by JXMapViewer2 1.3.1 library
+  - replaced SwingX-WS 1.0 library by JXMapViewer2 2.0 library
     - SwingX-WS is not under development anymore
     - JXMapViewer2 is an active, compatible fork with bug fixes, hosted at:
       https://github.com/msteiger/jxmapviewer2
@@ -47,6 +47,11 @@ v7.0.0:
       - Windows: application package and Inno Setup installer
       - Mac OS X: application package, DMG and PKG installers
       - Linux: application package, DEB package (RPM too, not tested)
+  - reduced memory usage:
+    - asynchronous garbage collection is triggered after each closed dialog or
+      changed view (otherwise the JVM prefers to allocate additional heap
+      memory)
+    - maximum heap size of created native packages is limited to 256 MB
 
  Translations:
   - added korean translation provided by Tae Young Ko <oscetic@gmail.com>
