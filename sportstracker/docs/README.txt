@@ -93,8 +93,7 @@ parsing compared to other S7XX models (this is not necessary for parsing
 HRM files of S725).
 
 Users of the website PolarPersonalTrainer.com can open their exported exercise
-files (.ped extension) in ExerciseViewer. It's also possible to import all
-exported exercises with the included PolarPersonalTrainer-Importer utility.
+files (.ped extension) in ExerciseViewer.
 
 
 Requirements

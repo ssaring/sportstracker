@@ -1,6 +1,8 @@
 SportsTracker-TODO
 ==================
 
+- Bringt -Xms64m was oder ist nach dem Start alles wie mit ohne? Auf -Xmx auf 192 senken?
+
 JavaFX Migration:
 - SportsTracker main window:
   - see Profiling results, improve EV startup time

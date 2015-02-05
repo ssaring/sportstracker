@@ -52,6 +52,8 @@ v7.0.0:
       changed view (otherwise the JVM prefers to allocate additional heap
       memory)
     - maximum heap size of created native packages is limited to 256 MB
+  - removed external tool polarpersonaltrainer-importer (in directory 'misc'),
+    not in use anymore (import of Polar .ped files is still supported)
 
  Translations:
   - added korean translation provided by Tae Young Ko <oscetic@gmail.com>
