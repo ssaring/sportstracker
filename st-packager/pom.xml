@@ -39,7 +39,8 @@
                             <mainClass>${application.mainClass}</mainClass>
                             <nativeReleaseVersion>${project.version}</nativeReleaseVersion>
                             <jvmArgs>
-                                <jvmArg>-Xmx256m</jvmArg>
+                                <jvmArg>-Xms64m</jvmArg>
+                                <jvmArg>-Xmx192m</jvmArg>
                             </jvmArgs>
                             <bundleArguments>
                                 <copyright>(C) 2015 Stefan Saring</copyright>
