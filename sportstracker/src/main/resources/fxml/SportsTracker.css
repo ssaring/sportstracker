@@ -36,7 +36,7 @@
 
 /* Toolbar button style: transparent borderless buttons with a small padding */
 .toolbarButton {
-    -fx-padding: 0.25em 0.333333em;  /* 3 4 */
+    -fx-padding: 0.25em 0.41777em;  /* 3 5 */
     -fx-background-color: transparent, transparent, transparent, transparent;
 }
 
@@ -51,79 +51,79 @@
 /* Definition of all toolbar button icons. */
 
 #btOpenHrmFile {
-    -fx-graphic: url("../icons/24/gtk-open.png");
+    -fx-graphic: url("../icons/20/0049-folder-open.png");
 }
 
 #btSave {
-    -fx-graphic: url("../icons/24/gtk-save.png");
+    -fx-graphic: url("../icons/20/0198-download2.png");
 }
 
 #btPrint {
-    -fx-graphic: url("../icons/24/gtk-print.png");
+    -fx-graphic: url("../icons/20/0085-printer.png");
 }
 
 #btCalendarView {
-    -fx-graphic: url("../icons/24/st-calendar.png");
+    -fx-graphic: url("../icons/20/0084-calendar.png");
 }
 
 #btExerciseListView {
-    -fx-graphic: url("../icons/24/st-exercise.png");
+    -fx-graphic: url("../icons/20/0083-stopwatch.png");
 }
 
 #btNoteListView {
-    -fx-graphic: url("../icons/24/st-note.png");
+    -fx-graphic: url("../icons/20/0039-file-text2.png");
 }
 
 #btWeightListView {
-    -fx-graphic: url("../icons/24/st-weight.png");
+    -fx-graphic: url("../icons/20/0168-meter2.png");
 }
 
 #btFilterExercises {
-    -fx-graphic: url("../icons/24/gtk-zoom-fit.png");
+    -fx-graphic: url("../icons/20/0135-search.png");
 }
 
 #btFilterDisable {
-    -fx-graphic: url("../icons/24/gtk-zoom-out.png");
+    -fx-graphic: url("../icons/20/0137-zoom-out.png");
 }
 
 #btAddExercise {
-    -fx-graphic: url("../icons/24/st-exercise-add.png");
+    -fx-graphic: url("../icons/20/st01-exercise-add.png");
 }
 
 #btAddNote {
-    -fx-graphic: url("../icons/24/st-note-add.png");
+    -fx-graphic: url("../icons/20/st02-note-add.png");
 }
 
 #btAddWeight {
-    -fx-graphic: url("../icons/24/st-weight-add.png");
+    -fx-graphic: url("../icons/20/st03-weight-add.png");
 }
 
 #btEditEntry {
-    -fx-graphic: url("../icons/24/gtk-edit.png");
+    -fx-graphic: url("../icons/20/0006-pencil.png");
 }
 
 #btCopyEntry {
-    -fx-graphic: url("../icons/24/gtk-copy.png");
+    -fx-graphic: url("../icons/20/st04-copy.png");
 }
 
 #btDeleteEntry {
-    -fx-graphic: url("../icons/24/gtk-remove.png");
+    -fx-graphic: url("../icons/20/0268-minus.png");
 }
 
 #btViewHrm {
-    -fx-graphic: url("../icons/24/st-hrm.png");
+    -fx-graphic: url("../icons/20/st05-heart.png");
 }
 
 #btSportTypeEditor {
-    -fx-graphic: url("../icons/24/gtk-properties.png");
+    -fx-graphic: url("../icons/20/0149-cog.png");
 }
 
 #btStatistics {
-    -fx-graphic: url("../icons/24/st-statistics.png");
+    -fx-graphic: url("../icons/20/0065-calculator.png");
 }
 
 #btOverviewDiagram {
-    -fx-graphic: url("../icons/24/st-diagram.png");
+    -fx-graphic: url("../icons/20/0156-stats-dots.png");
 }
 
 /* Definition of all (context) menu item icons. */
@@ -157,21 +157,21 @@
 /*******************************************/
 
 #btPreviousMonth {
-    -fx-graphic: url("../icons/24/gtk-go-previous.png");
+    -fx-graphic: url("../icons/20/0321-arrow-left2.png");
 }
 
 #btNextMonth {
-    -fx-graphic: url("../icons/24/gtk-go-next.png");
+    -fx-graphic: url("../icons/20/0317-arrow-right2.png");
 }
 
 #btPreviousYear {
-    -fx-graphic: url("../icons/24/gtk-go-previous.png");
+    -fx-graphic: url("../icons/20/0321-arrow-left2.png");
 }
 
 #btNextYear {
-    -fx-graphic: url("../icons/24/gtk-go-next.png");
+    -fx-graphic: url("../icons/20/0317-arrow-right2.png");
 }
 
 #btToday {
-    -fx-graphic: url("../icons/24/gtk-home.png");
+    -fx-graphic: url("../icons/20/0001-home.png");
 }

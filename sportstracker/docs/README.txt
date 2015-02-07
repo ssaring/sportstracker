@@ -460,10 +460,12 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
-All the application icons are taken from the open source projects GTK+ 
-(http://www.gtk.org) and Tango (http://tango.freedesktop.org) or they are
-created based on icons from those projects (e.g. the application icon).
+The SportsTracker icon is based on icons from the open source projects GTK+
+(http://www.gtk.org) and Tango (http://tango.freedesktop.org).
+All the toolbar and menu icons are taken from the Free Version of the IcoMoon
+project (https://icomoon.io, GPL licensed). Some icons are new creations
+based on the IcoMoon icons.
 
 
 Stefan Saring
-2015/01/29
+2015/02/07
