@@ -38,6 +38,9 @@ v7.0.0:
   - Calendar View and Overview Diagram: bugfix for weeknumber calculation
   - initial set of sport types is added when there are no sport types defined,
     it makes the setup easier for new application users
+  - new icon set for SportsTracker toolbar and context menus, taken from the
+    Free Version of the IcoMoon project (https://icomoon.io, GPL licensed) or
+    new creations based on the IcoMoon icons
   - support for Suunto Ambit watches (tested with Ambit2, downloaded GPX files)
   - Native SportsTracker packages and installers are created during build
     - implemented in module st-packager (see PACKAGER.txt)

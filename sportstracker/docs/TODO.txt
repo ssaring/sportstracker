@@ -1,11 +1,6 @@
 SportsTracker-TODO
 ==================
 
-- complete Icon Set update, add to CHANGES
-  - improve arrow icons
-  - add context menu icons
-  - remove old icons
-
 JavaFX Migration:
 - SportsTracker main window:
   - see Profiling results, improve EV startup time
