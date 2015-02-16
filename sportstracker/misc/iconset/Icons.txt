@@ -1,0 +1,40 @@
+SportsTracker Icon
+------------------
+
+The SportsTracker application icon is based on icons from the open source
+projects GTK+ (http://www.gtk.org) and Tango (http://tango.freedesktop.org).
+
+
+Toolbar and Menu Icons
+----------------------
+
+All the toolbar and menu icons are taken from the Free Version of the IcoMoon
+project (https://icomoon.io, GPL licensed). Some icons are new creations
+based on the IcoMoon icons.
+
+Every icon is monochrome and is using dark gray as the main color, so the user
+is not distracted and can focus on the application content. Unfortunately the
+icons of the IcoMoon project are black, so they must be converted manually to
+dark gray.
+This can be done by using tools like Gimp or Paint.net, the opacity of the
+icons needs to be set to 70% (can be edited in the layer properties).
+
+The size of all toolbar and menu icons is 16x16 px. The IcoMoon project also
+provides 32x32 px icons, so it's possible to support high resolution (aka
+"retina") displays in future.
+
+The IcoMoon collections does not provide all icons, e.g. for viewing HRM files
+or adding new Exercise entries. These icons have been created by combining and
+editing existing IcoMoon icons.
+The tool Inkscape has been used for editing the SVG versions of the IcoMoon
+icons (vector based and resolution independent). All the SVG icons are stored
+in the directory 'svg' for further editing or conversion. Custom SportsTracker
+icons are using the filename prefix 'st'.
+
+The format conversion of the SVG icons to PNG files has been done with Gimp.
+Gimp asks for the the pixel resolution when opening an SVG (16x16). After
+setting the layer opacity to 70% the file can be exported to PNG.
+
+
+Stefan Saring
+2015/02/16
