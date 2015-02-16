@@ -34,9 +34,11 @@
     -fx-graphic-text-gap: 0.666667em;  /* 8 */
 }
 
-/* Toolbar button style: transparent borderless buttons with a small padding */
+/* Toolbar button style: transparent borderless buttons with a small padding and a larger
+   background which changes its color on hovering or clicking */
 .toolbarButton {
     -fx-padding: 0.416667em 0.5em;  /* 5 6 */
+    -fx-background-insets: -1px;
     -fx-background-color: transparent, transparent, transparent, transparent;
 }
 
