@@ -74,26 +74,28 @@ public class TrackPanelController extends AbstractPanelController {
     }
 
     /**
-     * Cleanup of the JXMapViewer component. Needs to be called when the dialog is closed,
-     * otherwise there will be memory leaks. Normally there is nothing to do, but here
-     * are problems which are probably caused by the Swing -> JavaFX integration.
+     * Cleanup of the JXMapViewer component, if it is displayed. Needs to be called when the
+     * dialog is closed, otherwise there will be memory leaks. Normally there is nothing to do,
+     * but here are problems which are probably caused by the Swing -> JavaFX integration.
      */
     public void cleanupPanel() {
-        spTrack.getChildren().clear();
-        snMapViewer.setContent(null);
-        snMapViewer = null;
+        if (mapKit != null) {
+            spTrack.getChildren().clear();
+            snMapViewer.setContent(null);
+            snMapViewer = null;
 
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            // remove relations to this controller, otherwise the GC can't remove this Panel and all EV components
-            mapKit.getMainMap().removeMouseMotionListener(mouseMotionListener);
-            mapKit.getMainMap().setOverlayPainter(null);
-            mapKit.getMainMap().setToolTipText(null);
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                // remove relations to this controller, otherwise the GC can't remove this Panel and all EV components
+                mapKit.getMainMap().removeMouseMotionListener(mouseMotionListener);
+                mapKit.getMainMap().setOverlayPainter(null);
+                mapKit.getMainMap().setToolTipText(null);
 
-            // dispose both TileFactory instances, otherwise the GC can't remove all the MapViewer objects
-            mapKit.getMainMap().getTileFactory().dispose();
-            mapKit.getMiniMap().getTileFactory().dispose();
-            mapKit = null;
-        });
+                // dispose both TileFactory instances, otherwise the GC can't remove all the MapViewer objects
+                mapKit.getMainMap().getTileFactory().dispose();
+                mapKit.getMiniMap().getTileFactory().dispose();
+                mapKit = null;
+            });
+        }
     }
 
     @Override
