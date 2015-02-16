@@ -51,105 +51,105 @@
 /* Definition of all toolbar button icons. */
 
 #btOpenHrmFile {
-    -fx-graphic: url("../icons/20/0049-folder-open.png");
+    -fx-graphic: url("../icons/16/0049-folder-open.png");
 }
 
 #btSave {
-    -fx-graphic: url("../icons/20/0198-download2.png");
+    -fx-graphic: url("../icons/16/0198-download2.png");
 }
 
 #btPrint {
-    -fx-graphic: url("../icons/20/0085-printer.png");
+    -fx-graphic: url("../icons/16/0085-printer.png");
 }
 
 #btCalendarView {
-    -fx-graphic: url("../icons/20/0084-calendar.png");
+    -fx-graphic: url("../icons/16/0084-calendar.png");
 }
 
 #btExerciseListView {
-    -fx-graphic: url("../icons/20/0083-stopwatch.png");
+    -fx-graphic: url("../icons/16/0083-stopwatch.png");
 }
 
 #btNoteListView {
-    -fx-graphic: url("../icons/20/0039-file-text2.png");
+    -fx-graphic: url("../icons/16/0039-file-text2.png");
 }
 
 #btWeightListView {
-    -fx-graphic: url("../icons/20/0168-meter2.png");
+    -fx-graphic: url("../icons/16/0168-meter2.png");
 }
 
 #btFilterExercises {
-    -fx-graphic: url("../icons/20/0135-search.png");
+    -fx-graphic: url("../icons/16/0135-search.png");
 }
 
 #btFilterDisable {
-    -fx-graphic: url("../icons/20/0137-zoom-out.png");
+    -fx-graphic: url("../icons/16/0137-zoom-out.png");
 }
 
 #btAddExercise {
-    -fx-graphic: url("../icons/20/st01-exercise-add.png");
+    -fx-graphic: url("../icons/16/st01-exercise-add.png");
 }
 
 #btAddNote {
-    -fx-graphic: url("../icons/20/st02-note-add.png");
+    -fx-graphic: url("../icons/16/st02-note-add.png");
 }
 
 #btAddWeight {
-    -fx-graphic: url("../icons/20/st03-weight-add.png");
+    -fx-graphic: url("../icons/16/st03-weight-add.png");
 }
 
 #btEditEntry {
-    -fx-graphic: url("../icons/20/0006-pencil.png");
+    -fx-graphic: url("../icons/16/0006-pencil.png");
 }
 
 #btCopyEntry {
-    -fx-graphic: url("../icons/20/st04-copy.png");
+    -fx-graphic: url("../icons/16/st04-copy.png");
 }
 
 #btDeleteEntry {
-    -fx-graphic: url("../icons/20/0268-minus.png");
+    -fx-graphic: url("../icons/16/0268-minus.png");
 }
 
 #btViewHrm {
-    -fx-graphic: url("../icons/20/st05-heart.png");
+    -fx-graphic: url("../icons/16/st05-heart.png");
 }
 
 #btSportTypeEditor {
-    -fx-graphic: url("../icons/20/0149-cog.png");
+    -fx-graphic: url("../icons/16/0149-cog.png");
 }
 
 #btStatistics {
-    -fx-graphic: url("../icons/20/0065-calculator.png");
+    -fx-graphic: url("../icons/16/0065-calculator.png");
 }
 
 #btOverviewDiagram {
-    -fx-graphic: url("../icons/20/0156-stats-dots.png");
+    -fx-graphic: url("../icons/16/0156-stats-dots.png");
 }
 
 /* Definition of all (context) menu item icons. */
 
 #miCtxAddExercise > .label {
-    -fx-graphic: url("../icons/16/st-exercise-add.png");
+    -fx-graphic: url("../icons/16-old/st-exercise-add.png");
 }
 
 #miCtxAddNote .label {
-    -fx-graphic: url("../icons/16/st-note-add.png");
+    -fx-graphic: url("../icons/16-old/st-note-add.png");
 }
 
 #miCtxAddWeight .label {
-    -fx-graphic: url("../icons/16/st-weight-add.png");
+    -fx-graphic: url("../icons/16-old/st-weight-add.png");
 }
 
 #miCtxEditEntry .label {
-    -fx-graphic: url("../icons/16/gtk-edit.png");
+    -fx-graphic: url("../icons/16-old/gtk-edit.png");
 }
 
 #miCtxCopyEntry .label {
-    -fx-graphic: url("../icons/16/gtk-copy.png");
+    -fx-graphic: url("../icons/16-old/gtk-copy.png");
 }
 
 #miCtxDeleteEntry .label {
-    -fx-graphic: url("../icons/16/gtk-remove.png");
+    -fx-graphic: url("../icons/16-old/gtk-remove.png");
 }
 
 /*******************************************/
@@ -157,21 +157,21 @@
 /*******************************************/
 
 #btPreviousMonth {
-    -fx-graphic: url("../icons/20/0321-arrow-left2.png");
+    -fx-graphic: url("../icons/16/0321-arrow-left2.png");
 }
 
 #btNextMonth {
-    -fx-graphic: url("../icons/20/0317-arrow-right2.png");
+    -fx-graphic: url("../icons/16/0317-arrow-right2.png");
 }
 
 #btPreviousYear {
-    -fx-graphic: url("../icons/20/0321-arrow-left2.png");
+    -fx-graphic: url("../icons/16/0321-arrow-left2.png");
 }
 
 #btNextYear {
-    -fx-graphic: url("../icons/20/0317-arrow-right2.png");
+    -fx-graphic: url("../icons/16/0317-arrow-right2.png");
 }
 
 #btToday {
-    -fx-graphic: url("../icons/20/0001-home.png");
+    -fx-graphic: url("../icons/16/0001-home.png");
 }
