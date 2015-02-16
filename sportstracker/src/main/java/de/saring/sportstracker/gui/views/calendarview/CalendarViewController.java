@@ -258,6 +258,7 @@ public class CalendarViewController extends AbstractEntryViewController {
         final MenuItem menuItem = new MenuItem(getContext().getResources().getString(resourceKey));
         menuItem.setId(id);
         menuItem.setOnAction(handler);
+        menuItem.getStyleClass().add("contextMenuItem");
         return menuItem;
     }
 
