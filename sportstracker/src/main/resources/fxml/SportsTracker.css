@@ -129,27 +129,27 @@
 /* Definition of all (context) menu item icons. */
 
 #miCtxAddExercise > .label {
-    -fx-graphic: url("../icons/16-old/st-exercise-add.png");
+    -fx-graphic: url("../icons/16/st01-exercise-add.png");
 }
 
 #miCtxAddNote .label {
-    -fx-graphic: url("../icons/16-old/st-note-add.png");
+    -fx-graphic: url("../icons/16/st02-note-add.png");
 }
 
 #miCtxAddWeight .label {
-    -fx-graphic: url("../icons/16-old/st-weight-add.png");
+    -fx-graphic: url("../icons/16/st03-weight-add.png");
 }
 
 #miCtxEditEntry .label {
-    -fx-graphic: url("../icons/16-old/gtk-edit.png");
+    -fx-graphic: url("../icons/16/0006-pencil.png");
 }
 
 #miCtxCopyEntry .label {
-    -fx-graphic: url("../icons/16-old/gtk-copy.png");
+    -fx-graphic: url("../icons/16/st04-copy.png");
 }
 
 #miCtxDeleteEntry .label {
-    -fx-graphic: url("../icons/16-old/gtk-remove.png");
+    -fx-graphic: url("../icons/16/0268-minus.png");
 }
 
 /*******************************************/
