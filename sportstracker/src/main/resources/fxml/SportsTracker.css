@@ -36,7 +36,7 @@
 
 /* Toolbar button style: transparent borderless buttons with a small padding */
 .toolbarButton {
-    -fx-padding: 0.25em 0.41777em;  /* 3 5 */
+    -fx-padding: 0.333333em 0.41777em;  /* 4 5 */
     -fx-background-color: transparent, transparent, transparent, transparent;
 }
 
