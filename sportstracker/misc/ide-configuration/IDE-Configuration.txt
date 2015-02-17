@@ -62,6 +62,9 @@ IntelliJ IDEA configuration (version 14.x):
     - Import order:
        - (x) From file: 
          - select file ST-Imports.importorder
+  - Editor -> Code Style -> Java -> Tab 'Imports':
+    - Class count to use import with '*': 999
+    - Names count to use static import with '*': 99
   - Editor -> Code Style -> XML:
     - Select Scheme 'Default' and apply these changes:
       - Tabs and Indents:
