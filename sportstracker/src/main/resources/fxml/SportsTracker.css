@@ -105,7 +105,7 @@
 }
 
 #btCopyEntry {
-    -fx-graphic: url("../icons/16/st04-copy.png");
+    -fx-graphic: url("../icons/16/0045-copy.png");
 }
 
 #btDeleteEntry {
@@ -113,7 +113,7 @@
 }
 
 #btViewHrm {
-    -fx-graphic: url("../icons/16/st05-heart.png");
+    -fx-graphic: url("../icons/16/st04-heart.png");
 }
 
 #btSportTypeEditor {
@@ -147,7 +147,7 @@
 }
 
 #miCtxCopyEntry .label {
-    -fx-graphic: url("../icons/16/st04-copy.png");
+    -fx-graphic: url("../icons/16/0045-copy.png");
 }
 
 #miCtxDeleteEntry .label {
