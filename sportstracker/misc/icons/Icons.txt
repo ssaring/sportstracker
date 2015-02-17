@@ -12,12 +12,12 @@ All the toolbar and menu icons are taken from the Free Version of the IcoMoon
 project (https://icomoon.io, GPL licensed). Some icons are new creations
 based on the IcoMoon icons.
 
-Each icon is monochrome and is using dark gray as the main color, so the user
-is not distracted and can focus on the application content. Unfortunately the
+Each icon is monochrome and is using gray as the main color, so the user is
+not distracted and can focus on the application content. Unfortunately the
 icons of the IcoMoon project are black, so they must be converted manually to
-dark gray.
+gray.
 This can be done by using tools like Gimp or Paint.net, the opacity of the
-icons needs to be set to 70% (can be edited in the layer properties).
+icons needs to be set to 60% (can be edited in the layer properties).
 
 The size of all toolbar and menu icons is 16x16 px. The IcoMoon project also
 provides 32x32 px icons, so it's possible to support high resolution (aka
@@ -33,7 +33,7 @@ icons are using the filename prefix 'st'.
 The conversion to PNG files has also been done with Inkscape. The command
 'Export PNG Image' opens a dialog where the Export Area must be the Page and
 the Image Size needs to be set to 16x16.
-The opacity of the custom icons must also be set to 70% afterwards (see above).
+The opacity of the custom icons must also be set to 60% afterwards (see above).
 
 
 Stefan Saring
