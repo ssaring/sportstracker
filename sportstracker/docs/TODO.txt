@@ -1,9 +1,15 @@
 SportsTracker-TODO
 ==================
 
+Loading of user data from XML:
+- add IdDateObjectList:setAll(List<T> entries), incl. unit tests
+  - currently the removal of old entry, sorting and notification is done for each entry,
+    this must be done once for the full list
+- use setAll() for loading of all XML files
+  - tests have shown 25% better performance (700 instead of 930 msec)
+
 JavaFX Migration:
 - CSS stylesheets:
-  - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
   - compile CSS classes to BSS files - does it improve the performance?
 - ExerciseViewer: Done & tested
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
