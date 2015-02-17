@@ -2,6 +2,7 @@ package de.saring.exerciseviewer.gui;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -28,7 +29,6 @@ import de.saring.util.gui.javafx.FxmlLoader;
 public class EVController {
 
     private static final String FXML_FILE = "/fxml/ExerciseViewer.fxml";
-
     private final EVContext context;
 
     private final MainPanelController mainPanelController;
@@ -103,19 +103,24 @@ public class EVController {
     }
 
     private void setupPanels() {
-
+        // load and setup main panel immediately, this tab must be visible on startup
         tabMain.setContent(mainPanelController.loadAndSetupPanelContent());
-        tabOptional.setContent(optionalPanelController.loadAndSetupPanelContent());
-        tabLaps.setContent(lapPanelController.loadAndSetupPanelContent());
-        tabSamples.setContent(samplePanelController.loadAndSetupPanelContent());
-        tabDiagram.setContent(diagramPanelController.loadAndSetupPanelContent());
-        tabTrack.setContent(trackPanelController.loadAndSetupPanelContent());
 
-        // display exercise track not before the user wants to see it (prevent long startup delays)
-        tabTrack.setOnSelectionChanged(event -> {
-            if (tabTrack.isSelected()) {
-                trackPanelController.showTrack();
-            }
+        // load all other panels asynchronously, this reduces the startup time massively
+        Platform.runLater(() -> {
+            tabOptional.setContent(optionalPanelController.loadAndSetupPanelContent());
+            tabLaps.setContent(lapPanelController.loadAndSetupPanelContent());
+            tabSamples.setContent(samplePanelController.loadAndSetupPanelContent());
+            tabDiagram.setContent(diagramPanelController.loadAndSetupPanelContent());
+            tabTrack.setContent(trackPanelController.loadAndSetupPanelContent());
+
+            // display exercise track not before the user wants to see it
+            // (prevents layout problems and reduces startup time)
+            tabTrack.setOnSelectionChanged(event -> {
+                if (tabTrack.isSelected()) {
+                    trackPanelController.showTrack();
+                }
+            });
         });
     }
 

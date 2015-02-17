@@ -3,7 +3,6 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - SportsTracker main window:
-  - see Profiling results, improve EV startup time
   - remove old Swing based UI classes and resources (misc/gui-swing)
 - CSS stylesheets:
   - can SportsTracker.css and ExerciseViewer.css be merged into one file? (does the relative import in FXML work?)
@@ -64,16 +63,9 @@ Performance tests after JavaFX-Migration:
 - SportsTracker startup time: 
   - almost identical for Swing- and JavaFX versions (on Windows and Mac OS X) => no improvement needed
 - ExerciseViewer startup time: 
-  - JavaFX version takes 2.6 secs initially (file Garmin/2014/2014-12-31-09-24-38.fit),
-    Swing version starts almost instantly => improvement needed
-  - Initial EV startup times of the JavaFX version:
-    -   30 msec for Guice DI => OK
-    -  450 msec for loading and parsing the HRM File => OK
-    -   50 msec for loading EV main FXML file => OK
-    -  600 msec for loading Panel FXML files => can this be improved? (load in one run)
-    - 1350 msec for displaying the window via Stage#show() => improve!
-      -> 750 msec only for the JFreeChart panel, not the case when a diagram was shown before (e.g. Overview Dialog)
-        -> with JavaFX 8u40 only 300 msec for the JFreeChart panel, has been improved
+  - almost identical for Swing- and JavaFX versions (on Windows and Mac OS X) after loading the
+    tabs (except Main) asynchronously after EV has been displayed => no further improvement needed
+    (initial start for file Garmin/2014/2014-12-31-09-24-38.fit takes now 700 instead of 2.400 msec)
 
 Memory usage tests (on Windows 8.1 64 bit, JDK 8u31 64 bit, similar on Mac OS X):
 (used with all my training data until 2014/12, HRM file Garmin/2014/2014-12-31-09-24-38.fit)
