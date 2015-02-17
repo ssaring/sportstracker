@@ -109,7 +109,7 @@
 }
 
 #btDeleteEntry {
-    -fx-graphic: url("../icons/16/0268-minus.png");
+    -fx-graphic: url("../icons/16/0173-bin.png");
 }
 
 #btViewHrm {
@@ -151,7 +151,7 @@
 }
 
 #miCtxDeleteEntry .label {
-    -fx-graphic: url("../icons/16/0268-minus.png");
+    -fx-graphic: url("../icons/16/0173-bin.png");
 }
 
 /*******************************************/
