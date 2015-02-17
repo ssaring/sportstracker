@@ -12,7 +12,7 @@ All the toolbar and menu icons are taken from the Free Version of the IcoMoon
 project (https://icomoon.io, GPL licensed). Some icons are new creations
 based on the IcoMoon icons.
 
-Every icon is monochrome and is using dark gray as the main color, so the user
+Each icon is monochrome and is using dark gray as the main color, so the user
 is not distracted and can focus on the application content. Unfortunately the
 icons of the IcoMoon project are black, so they must be converted manually to
 dark gray.
@@ -30,7 +30,7 @@ The tool Inkscape has been used for editing the SVG versions of the IcoMoon
 icons (vector based and resolution independent). All the SVG icons are stored
 in the directory 'svg' for further editing or conversion. Custom SportsTracker
 icons are using the filename prefix 'st'.
-The conversion to PNG files has also been done with Inkscape  The command
+The conversion to PNG files has also been done with Inkscape. The command
 'Export PNG Image' opens a dialog where the Export Area must be the Page and
 the Image Size needs to be set to 16x16.
 The opacity of the custom icons must also be set to 70% afterwards (see above).
