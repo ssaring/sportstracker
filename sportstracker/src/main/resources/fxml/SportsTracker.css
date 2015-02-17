@@ -159,19 +159,19 @@
 /*******************************************/
 
 #btPreviousMonth {
-    -fx-graphic: url("../icons/16/0321-arrow-left2.png");
+    -fx-graphic: url("../icons/16/st05-previous.png");
 }
 
 #btNextMonth {
-    -fx-graphic: url("../icons/16/0317-arrow-right2.png");
+    -fx-graphic: url("../icons/16/st06-next.png");
 }
 
 #btPreviousYear {
-    -fx-graphic: url("../icons/16/0321-arrow-left2.png");
+    -fx-graphic: url("../icons/16/st05-previous.png");
 }
 
 #btNextYear {
-    -fx-graphic: url("../icons/16/0317-arrow-right2.png");
+    -fx-graphic: url("../icons/16/st06-next.png");
 }
 
 #btToday {

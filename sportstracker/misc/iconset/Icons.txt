@@ -30,11 +30,11 @@ The tool Inkscape has been used for editing the SVG versions of the IcoMoon
 icons (vector based and resolution independent). All the SVG icons are stored
 in the directory 'svg' for further editing or conversion. Custom SportsTracker
 icons are using the filename prefix 'st'.
-
-The format conversion of the SVG icons to PNG files has been done with Gimp.
-Gimp asks for the the pixel resolution when opening an SVG (16x16). After
-setting the layer opacity to 70% the file can be exported to PNG.
+The conversion to PNG files has also been done with Inkscape  The command
+'Export PNG Image' opens a dialog where the Export Area must be the Page and
+the Image Size needs to be set to 16x16.
+The opacity of the custom icons must also be set to 70% afterwards (see above).
 
 
 Stefan Saring
-2015/02/16
+2015/02/17
