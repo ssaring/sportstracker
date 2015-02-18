@@ -2,6 +2,10 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- Calendar Control border problem with JDK 8u40:
+  - sometimes there is a gray space at right border of the calendar, the cells don't use the whole width
+    => could be a rounding problem when deviding the width to columns?
+- ExerciseViewer: add track point navigation (slider control) and track replay feature
 - ExerciseViewer: Done & tested
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)
