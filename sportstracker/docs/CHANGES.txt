@@ -4,7 +4,7 @@ Changelog
 v7.0.0:
  SportsTracker changes:
   - use of no_aop version of Guice 3.0, is smaller and has less dependencies
-  - update of Groovy to 2.4.0
+  - update of Groovy to 2.4.1
   - update of JDOM to version 2.0.5
   - update of SwingX to 1.6.5-1
   - replaced SwingX-WS 1.0 library by JXMapViewer2 2.0 library

@@ -362,7 +362,7 @@ IntelliJ IDEA and Eclipse with the e(fx)clipse plugin can support here.
 
 The SportsTracker project uses the following libraries:
 
-  - Groovy 2.4.0 (http://groovy.codehaus.org)
+  - Groovy 2.4.1 (http://groovy.codehaus.org)
       License: Apache License v2.0
   - Guice 3.0 (http://code.google.com/p/google-guice/)
       Includes: javax.inject-1.jar
@@ -468,4 +468,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2015/02/07
+2015/02/18

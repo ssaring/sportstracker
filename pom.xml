@@ -18,7 +18,7 @@
         <application.name>SportsTracker</application.name>
         <application.mainClass>de.saring.sportstracker.gui.STApplication</application.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <groovy.version>2.4.0</groovy.version>
+        <groovy.version>2.4.1</groovy.version>
     </properties>
     
     <modules>
