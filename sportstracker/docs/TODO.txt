@@ -1,13 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Loading of user data from XML:
-- add IdDateObjectList:setAll(List<T> entries), incl. unit tests
-  - currently the removal of old entry, sorting and notification is done for each entry,
-    this must be done once for the full list
-- use setAll() for loading of all XML files
-  - tests have shown 25% better performance (700 instead of 930 msec)
-
 JavaFX Migration:
 - CSS stylesheets:
   - compile CSS classes to BSS files - does it improve the performance?

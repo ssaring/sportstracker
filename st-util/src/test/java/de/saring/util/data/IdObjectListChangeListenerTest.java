@@ -3,6 +3,8 @@ package de.saring.util.data;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -96,6 +98,21 @@ public class IdObjectListChangeListenerTest {
 
         assertEquals(3, idObjectList.size());
         verifyZeroInteractions(listenerMock);
+    }
+
+    /**
+     * Test: Listener must be called when replacing the list content with method clearAndAddAll().
+     */
+    @Test
+    public void testClearAndAddAll() {
+
+        ArrayList<DummyIdObject> tempEntries = new ArrayList<>();
+        tempEntries.add(new DummyIdObject(5));
+        tempEntries.add(new DummyIdObject(6));
+        idObjectList.clearAndAddAll(tempEntries);
+
+        assertEquals(2, idObjectList.size());
+        verify(listenerMock).listChanged(null);
     }
 
     /**

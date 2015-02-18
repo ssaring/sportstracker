@@ -3,6 +3,8 @@ package de.saring.util.data;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 /**
@@ -101,6 +103,43 @@ public class IdObjectListTest {
     @Test(expected = IllegalArgumentException.class)
     public void setIdZero() {
         list.set(new NameObject(0, "Null"));
+    }
+
+    /**
+     * Test of method clearAndAddAll(). The previous list content must be removed, the
+     * list must contain only the new entries.
+     */
+    @Test
+    public void clearAndAddAll() {
+
+        ArrayList<NameObject> tempEntries = new ArrayList<>();
+        tempEntries.add(new NameObject(5, "five"));
+        tempEntries.add(new NameObject(6, "six"));
+        list.clearAndAddAll(tempEntries);
+
+        assertEquals(2, list.size());
+        assertEquals("five", list.getAt(0).getName());
+        assertEquals("six", list.getAt(1).getName());
+    }
+
+    /**
+     * Test of method clearAndAddAll(). Must fail when null is passed.
+     */
+    @Test(expected = NullPointerException.class)
+    public void clearAndAddAllNull() {
+        list.clearAndAddAll(null);
+    }
+
+    /**
+     * Test of method clearAndAddAll(). Must fail when an entry contain an invalid ID.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void clearAndAddAllInvalidId() {
+
+        ArrayList<NameObject> tempEntries = new ArrayList<>();
+        tempEntries.add(new NameObject(5, "five"));
+        tempEntries.add(new NameObject(-6, "minus six"));
+        list.clearAndAddAll(tempEntries);
     }
 
     /**

@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -71,6 +72,43 @@ public class IdDateObjectListTest {
         assertEquals(list.size(), 3);
         assertEquals("three-new", list.getAt(0).getName());
         checkDateOrder();
+    }
+
+    /**
+     * Test of method clearAndAddAll(). The previous list content must be removed, the
+     * list must contain only the new entries, sorted by date.
+     */
+    @Test
+    public void clearAndAddAll() {
+
+        ArrayList<DateNameObject> tempEntries = new ArrayList<>();
+        tempEntries.add(new DateNameObject(5, LocalDateTime.of(2009, 02, 05, 21, 30, 0), "five"));
+        tempEntries.add(new DateNameObject(6, LocalDateTime.of(2009, 02, 01, 21, 30, 0), "six"));
+        list.clearAndAddAll(tempEntries);
+
+        assertEquals(2, list.size());
+        assertEquals("six", list.getAt(0).getName());
+        assertEquals("five", list.getAt(1).getName());
+    }
+
+    /**
+     * Test of method clearAndAddAll(). Must fail when null is passed.
+     */
+    @Test(expected = NullPointerException.class)
+    public void clearAndAddAllNull() {
+        list.clearAndAddAll(null);
+    }
+
+    /**
+     * Test of method clearAndAddAll(). Must fail when an entry contain an invalid ID.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void clearAndAddAllInvalidId() {
+
+        ArrayList<DateNameObject> tempEntries = new ArrayList<>();
+        list.set(new DateNameObject(5, LocalDateTime.of(2009, 02, 05, 21, 30, 0), "five"));
+        list.set(new DateNameObject(-6, LocalDateTime.of(2009, 02, 01, 21, 30, 0), "minus six"));
+        list.clearAndAddAll(tempEntries);
     }
 
     /**
