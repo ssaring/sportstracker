@@ -132,6 +132,9 @@ public class TrackPanelController extends AbstractPanelController {
         };
         mapKit.getMainMap().addMouseMotionListener(mouseMotionListener);
 
+        // map viewer will be visible after the track has been displayed (otherwise the user
+        // sees the world map for a short time before the track of the exercise)
+        mapKit.setVisible(false);
         snMapViewer.setContent(mapKit);
     }
 
@@ -156,6 +159,7 @@ public class TrackPanelController extends AbstractPanelController {
                         // display track
                         setupTrackPainter(sampleGeoPositions, lapGeoPositions);
                     }
+                    mapKit.setVisible(true);
                 });
             }
         }
@@ -176,9 +180,9 @@ public class TrackPanelController extends AbstractPanelController {
         GeoPosition gpCenter = new GeoPosition(gpRectangle.getCenterX(), gpRectangle.getCenterY());
         mapKit.setCenterPosition(gpCenter);
 
-        // calculate mapKit dimensions based on the SwingNode dimensions (with a little offset)
-        // (there's a bug in JXMapKit.getWidth/getHeight)
-        Bounds mapViewerBounds = snMapViewer.getLayoutBounds();
+        // calculate mapKit dimensions based on the Track StackPane dimensions (with a little offset)
+        // (there's a bug in SwingNode.getLayoutBounds() and so in JXMapKit.getWidth()/getHeight())
+        Bounds mapViewerBounds = spTrack.getLayoutBounds();
         int mapKitWidth = (int) mapViewerBounds.getWidth() - 30;
         int mapKitHeight = (int) mapViewerBounds.getHeight() - 30;
 
