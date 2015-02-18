@@ -79,11 +79,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      * @param t the IdObject to store (must not be null)
      */
     public void set(T t) {
-        Objects.requireNonNull(t, "IdObject must not be null!");
-
-        if (t.getId() <= 0) {
-            throw new IllegalArgumentException("ID must be a positive integer > 0!");
-        }
+        validateEntry(t);
 
         try {
             int index = lIdObjects.indexOf(t);
@@ -97,6 +93,23 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
         } finally {
             notifyAllListChangelisteners(t);
         }
+    }
+
+    /**
+     * Clears this IdObjectList and adds all IdObjects of the passed list.
+     * Finally all registered ChangeListeners will be notified.
+     *
+     * @param entries list of IdObjects to store (must not be null, entries must not be null and all
+     *            entries and must have a valid ID)
+     */
+    public void clearAndAddAll(final List<T> entries) {
+        Objects.requireNonNull(entries, "List of IdObjects must not be null!");
+        entries.forEach(entry -> validateEntry(entry));
+
+        lIdObjects.clear();
+        lIdObjects.addAll(entries);
+
+        notifyAllListChangelisteners(null);
     }
 
     /**
@@ -191,7 +204,7 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      * Notifies all registered listeners that the content of the list has been
      * changed.
      *
-     * @param changedObject the added / changed object (or null when removed)
+     * @param changedObject the added / changed object (or null when removed or all objects changed)
      */
     protected void notifyAllListChangelisteners(IdObject changedObject) {
         listChangelisteners.forEach(listener -> listener.listChanged(changedObject));
@@ -205,5 +218,18 @@ public class IdObjectList<T extends IdObject> implements Iterable<T> {
      */
     protected List<T> getIDObjects() {
         return lIdObjects;
+    }
+
+    /**
+     * Validates the IdDateObject to be stored in this list. RuntimeExceptions will be thrown on errors.
+     *
+     * @param t entry to validate
+     */
+    protected void validateEntry(final T t) {
+        Objects.requireNonNull(t, "IdObject must not be null!");
+
+        if (t.getId() <= 0) {
+            throw new IllegalArgumentException("ID must be a positive integer > 0!");
+        }
     }
 }

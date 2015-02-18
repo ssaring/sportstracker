@@ -55,6 +55,8 @@ v7.0.0:
       changed view (otherwise the JVM prefers to allocate additional heap
       memory)
     - maximum heap size of created native packages is limited to 192 MB
+  - faster loading of user data from XML files (about 25%) by using bulk
+    operations for initial list setup
   - removed external tool polarpersonaltrainer-importer (in directory 'misc'),
     not in use anymore (import of Polar .ped files is still supported)
 

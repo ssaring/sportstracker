@@ -1,14 +1,21 @@
 package de.saring.sportstracker.storage;
 
-import de.saring.sportstracker.core.STException;
-import de.saring.sportstracker.core.STExceptionID;
-import de.saring.sportstracker.data.*;
-import org.jdom2.Document;
-import org.jdom2.Element;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+
+import de.saring.sportstracker.core.STException;
+import de.saring.sportstracker.core.STExceptionID;
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.ExerciseList;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.data.SportTypeList;
 
 /**
  * This class is for reading or writing an ExerciseList object from or to a XML
@@ -38,10 +45,9 @@ public class XMLExerciseList {
 
         try {
             // return an empty list if the file doesn't exists yet
-            ExerciseList exerciseList = new ExerciseList();
             File fSource = new File(source);
             if (!fSource.exists()) {
-                return exerciseList;
+                return new ExerciseList();
             }
 
             // create JDOM Document from XML with XSD validation
@@ -49,10 +55,13 @@ public class XMLExerciseList {
 
             // get root element and read all the contained exercises
             Element eExerciseList = document.getRootElement();
+            ArrayList<Exercise> tempExercises = new ArrayList<>();
 
             eExerciseList.getChildren("exercise").forEach(eExercise ->
-                exerciseList.set(readExercise(eExercise, sportTypeList)));
+                tempExercises.add(readExercise(eExercise, sportTypeList)));
 
+            ExerciseList exerciseList = new ExerciseList();
+            exerciseList.clearAndAddAll(tempExercises);
             return exerciseList;
         } catch (Exception e) {
             throw new STException(STExceptionID.XMLSTORAGE_READ_EXERCISE_LIST,

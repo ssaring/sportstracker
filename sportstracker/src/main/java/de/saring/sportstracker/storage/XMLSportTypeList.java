@@ -1,5 +1,16 @@
 package de.saring.sportstracker.storage;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javafx.scene.paint.Color;
+
+import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
+import org.jdom2.Document;
+import org.jdom2.Element;
+
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
 import de.saring.sportstracker.data.Equipment;
@@ -7,14 +18,6 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.util.gui.javafx.ColorUtils;
-import javafx.scene.paint.Color;
-import org.jdom2.Attribute;
-import org.jdom2.DataConversionException;
-import org.jdom2.Document;
-import org.jdom2.Element;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * This class is for reading and writing a SportTypeList object from or to a
@@ -42,20 +45,22 @@ public class XMLSportTypeList {
 
         try {
             // return an empty list if the file doesn't exists yet
-            SportTypeList sportTypeList = new SportTypeList();
             File fSource = new File(source);
             if (!fSource.exists()) {
-                return sportTypeList;
+                return new SportTypeList();
             }
 
             // create JDOM Document from XML with XSD validation
             Document document = XMLUtils.getJDOMDocument(fSource, XSD_SPORT_TYPES);
+            ArrayList<SportType> tempSportTypes = new ArrayList<>();
 
             // get root element and read all the contained sport types
             Element eSportTypeList = document.getRootElement();
             eSportTypeList.getChildren("sport-type").forEach(eSportType ->
-                sportTypeList.set(readSportType(eSportType)));
+                    tempSportTypes.add(readSportType(eSportType)));
 
+            SportTypeList sportTypeList = new SportTypeList();
+            sportTypeList.clearAndAddAll(tempSportTypes);
             return sportTypeList;
         } catch (Exception e) {
             throw new STException(STExceptionID.XMLSTORAGE_READ_SPORT_TYPE_LIST,

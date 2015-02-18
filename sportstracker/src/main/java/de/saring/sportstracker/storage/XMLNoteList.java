@@ -1,15 +1,17 @@
 package de.saring.sportstracker.storage;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.NoteList;
-import org.jdom2.Document;
-import org.jdom2.Element;
-
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
 
 /**
  * This class is for reading or writing a NoteList object from or to a XML file.
@@ -36,20 +38,22 @@ public class XMLNoteList {
 
         try {
             // return an empty list if the file doesn't exists yet
-            NoteList noteList = new NoteList();
             File fSource = new File(source);
             if (!fSource.exists()) {
-                return noteList;
+                return new NoteList();
             }
 
             // create JDOM Document from XML with XSD validation
             Document document = XMLUtils.getJDOMDocument(fSource, XSD_NOTES);
+            ArrayList<Note> tempNotes = new ArrayList<>();
 
             // get root element and read all the contained notes
             Element eNoteList = document.getRootElement();
             eNoteList.getChildren("note").forEach(eNote ->
-                    noteList.set(readNote(eNote)));
+                    tempNotes.add(readNote(eNote)));
 
+            NoteList noteList = new NoteList();
+            noteList.clearAndAddAll(tempNotes);
             return noteList;
         } catch (Exception e) {
             throw new STException(STExceptionID.XMLSTORAGE_READ_NOTE_LIST,

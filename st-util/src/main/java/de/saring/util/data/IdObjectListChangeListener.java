@@ -13,9 +13,9 @@ public interface IdObjectListChangeListener {
      * modified (new objects were added or old were removed). It will not be
      * called when the objects in the list get modified. The passed
      * changedObject is the added or updated IdObject. It is null when an object
-     * was removed.
+     * was removed or when all objects have been changed.
      *
-     * @param changedObject the added / changed object (or null when removed)
+     * @param changedObject the added / changed object (or null when removed or all objects changed)
      */
     void listChanged(IdObject changedObject);
 }

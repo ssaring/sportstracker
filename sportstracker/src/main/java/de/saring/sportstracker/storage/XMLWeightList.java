@@ -10,6 +10,7 @@ import org.jdom2.Element;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * This class is for reading or writing a WeightList object from or to a XML file.
@@ -36,20 +37,22 @@ public class XMLWeightList {
 
         try {
             // return an empty list if the file doesn't exists yet
-            WeightList weightList = new WeightList();
             File fSource = new File(source);
             if (!fSource.exists()) {
-                return weightList;
+                return new WeightList();
             }
 
             // create JDOM Document from XML with XSD validation
             Document document = XMLUtils.getJDOMDocument(fSource, XSD_WEIGHTS);
+            ArrayList<Weight> tempWeights = new ArrayList<>();
 
             // get root element and read all the contained weights
             Element eWeightList = document.getRootElement();
             eWeightList.getChildren("weight").forEach(eWeight ->
-                weightList.set(readWeight(eWeight)));
+                    tempWeights.add(readWeight(eWeight)));
 
+            WeightList weightList = new WeightList();
+            weightList.clearAndAddAll(tempWeights);
             return weightList;
         } catch (Exception e) {
             throw new STException(STExceptionID.XMLSTORAGE_READ_WEIGHT_LIST,
