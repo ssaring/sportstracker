@@ -83,7 +83,12 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> implements Ca
         // define column constraints for both GridPanes, all 8 columns must have the same width
         for (int column = 0; column < CalendarControl.GRIDS_COLUMN_COUNT; column++) {
             final ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPercentWidth(100 / (double) CalendarControl.GRIDS_COLUMN_COUNT);
+            // Problem: setPercentWidth() would be perfect here, but it does not work since JavaFX 8u40 properly,
+            // there's mostly empty space after the last column (probably an internal rounding problem).
+            // I've filed a bug to the JavaFX issue tracker: https://javafx-jira.kenai.com/browse/RT-40099
+            // Workaround: use a very big preferred weight, then the displayed grid columns have always the same width.
+            // TODO use setPercentWidth(100 / (double) CalendarControl.GRIDS_COLUMN_COUNT); when the bug has been fixed
+            columnConstraints.setPrefWidth(16 * 1024);
             gridHeaderCells.getColumnConstraints().add(columnConstraints);
             gridDayCells.getColumnConstraints().add(columnConstraints);
         }
@@ -96,7 +101,8 @@ public class CalendarControlSkin extends SkinBase<CalendarControl> implements Ca
         for (int row = 0; row < CalendarControl.GRID_DAYS_ROW_COUNT; row++) {
             final RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.setValignment(VPos.TOP);
-            rowConstraints.setPercentHeight((100 / (double) (CalendarControl.GRID_DAYS_ROW_COUNT)));
+            // TODO setPercentHeight() would be perfect here, but can't be used (see above for width).
+            rowConstraints.setPrefHeight(16 * 1024);
             // probably a JavaFX bug: min height must be set, otherwise the row takes at least the computed height
             rowConstraints.setMinHeight(45);
             gridDayCells.getRowConstraints().add(rowConstraints);
