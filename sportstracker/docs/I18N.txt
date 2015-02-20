@@ -75,6 +75,7 @@ SportsTracker 7.0.0:
 - st.dlg.about.translators.text (edited)
 - st.dlg.about.close.Action.text (removed)
 - st.dlg.about.sportstracker.text (removed)
+- st.dlg.about.license.text (new)
 - st.dlg.about.copyright.text (edited)
 
 - st.dlg.note.error.time (new)

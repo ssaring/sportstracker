@@ -23,7 +23,7 @@
                         </ImageView>
                     </children>
                 </VBox>
-                <VBox spacing="12.0">
+                <VBox spacing="8.0">
                     <children>
                         <HBox spacing="6.0">
                             <children>
@@ -32,6 +32,7 @@
                             </children>
                         </HBox>
                         <Label maxWidth="400.0" snapToPixel="false" text="%st.dlg.about.description.text" wrapText="true"/>
+                        <Label text="%st.dlg.about.license.text" />
                         <Label text="%st.dlg.about.copyright.text"/>
                     </children>
                 </VBox>
