@@ -20,6 +20,7 @@ import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -66,6 +67,8 @@ public class TrackPanelController extends AbstractPanelController {
 
     @FXML
     private Slider slPosition;
+
+    private Tooltip slPositionTooltip;
 
     private SwingNode snMapViewer;
 
@@ -147,7 +150,25 @@ public class TrackPanelController extends AbstractPanelController {
         slPosition.valueProperty().addListener((observable, oldValue, newValue) -> {
             // slider value is a double, make sure the int value has changed
             if (oldValue.intValue() != newValue.intValue()) {
-                javax.swing.SwingUtilities.invokeLater(() -> mapKit.repaint());
+
+                // TODO document, extract method?
+                // TODO tooltip text must use different line breaks for JavaFX
+                final String tooltipText = createToolTipText(newValue.intValue());
+                if (slPositionTooltip == null) {
+                    slPositionTooltip = new Tooltip(tooltipText);
+                    slPositionTooltip.setAutoHide(true);
+                } else {
+                    slPositionTooltip.setText(tooltipText);
+                }
+
+                // TODO position is not OK
+                slPositionTooltip.show(slPosition, //
+                        slPosition.getScene().getX() + slPosition.getScene().getWindow().getX(), //
+                        slPosition.getScene().getY() + slPosition.getScene().getWindow().getY());
+
+                javax.swing.SwingUtilities.invokeLater(() -> {
+                    mapKit.repaint();
+                });
             }
         });
     }

@@ -4,6 +4,8 @@ SportsTracker-TODO
 JavaFX Migration:
 - Test menu action for project website on Mac OS X and Linux
 - ExerciseViewer: add track point navigation (slider control) and track replay feature
+  - tooltip for track is shown only when the MapKit has focus, can the focus be set when
+    the mouse enters the MapKit component?
   - use sample index instead of geo position => better for tooltip generation?
   - display tooltip for current position on slider changes?
   - see TODO's in TrackPanelController
