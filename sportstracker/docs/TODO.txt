@@ -6,7 +6,6 @@ JavaFX Migration:
 - ExerciseViewer: add track point navigation (slider control) and track replay feature
   - tooltip for track is shown only when the MapKit has focus, can the focus be set when
     the mouse enters the MapKit component?
-  - use sample index instead of geo position => better for tooltip generation?
   - see TODO's in TrackPanelController
   - test on Linux
   - test proper cleanup, make sure all MapViewer objects are removed by GC (JVisualVM)

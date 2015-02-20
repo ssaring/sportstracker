@@ -145,7 +145,8 @@ public class TrackPanelController extends AbstractPanelController {
     }
 
     private void setupTrackPositionSlider() {
-        slPosition.setMax(0);
+        System.out.println(getDocument().getExercise().getSampleList().length);
+        slPosition.setMax(getDocument().getExercise().getSampleList().length - 1);
 
         slPosition.valueProperty().addListener((observable, oldValue, newValue) -> {
             // slider value is a double, make sure the int value has changed
@@ -213,8 +214,6 @@ public class TrackPanelController extends AbstractPanelController {
                         setupZoomAndCenterPosition(sampleGeoPositions);
                         // display track
                         setupTrackPainter(sampleGeoPositions, lapGeoPositions);
-                        // set max positions in slider, must match available geo positions
-                        slPosition.setMax(sampleGeoPositions.size() - 1);
                     }
                     mapKit.setVisible(true);
                 });
@@ -313,9 +312,12 @@ public class TrackPanelController extends AbstractPanelController {
                 drawWaypoint(g, sampleGeoPositions.get(0), "S", COLOR_START);
                 drawWaypoint(g, sampleGeoPositions.get(sampleGeoPositions.size() - 1), "E", COLOR_END);
 
-                // draw track position waypoint currently selected in the slider
-                final int currentTrackPosition = slPosition.valueProperty().intValue();
-                drawWaypoint(g, sampleGeoPositions.get(currentTrackPosition), null, COLOR_POSITION);
+                // draw waypoint for currently selected track position in the slider
+                final int currentTrackPositionIndex = slPosition.valueProperty().intValue();
+                final GeoPosition currentGeoPosition = getGeoPositionForExerciseSample(currentTrackPositionIndex);
+                if (currentGeoPosition != null) {
+                    drawWaypoint(g, currentGeoPosition, null, COLOR_POSITION);
+                }
 
                 g.dispose();
             }
@@ -419,6 +421,17 @@ public class TrackPanelController extends AbstractPanelController {
 
     private GeoPosition convertPixelPosToGeoPos(Point2D point) {
         return mapKit.getMainMap().getTileFactory().pixelToGeo(point, mapKit.getMainMap().getZoom());
+    }
+
+    private GeoPosition getGeoPositionForExerciseSample(final int sampleIndex) {
+        final EVExercise exercise = getDocument().getExercise();
+        final Position samplePosition = exercise.getSampleList()[sampleIndex].getPosition();
+
+        // some exercise samples don't have position data
+        if (samplePosition != null) {
+            return new GeoPosition(samplePosition.getLatitude(), samplePosition.getLongitude());
+        }
+        return null;
     }
 
     /**
