@@ -162,9 +162,10 @@ public class TrackPanelController extends AbstractPanelController {
                 }
 
                 // TODO position is not OK
+                final javafx.geometry.Point2D p = slPosition.localToScene(0d, 0d);
                 slPositionTooltip.show(slPosition, //
-                        slPosition.getScene().getX() + slPosition.getScene().getWindow().getX(), //
-                        slPosition.getScene().getY() + slPosition.getScene().getWindow().getY());
+                        p.getX() + slPosition.getScene().getX() + slPosition.getScene().getWindow().getX(), //
+                        p.getY() + slPosition.getScene().getY() + slPosition.getScene().getWindow().getY());
 
                 javax.swing.SwingUtilities.invokeLater(() -> {
                     mapKit.repaint();
