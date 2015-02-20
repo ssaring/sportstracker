@@ -59,6 +59,8 @@ v7.0.0:
     operations for initial list setup
   - removed external tool polarpersonaltrainer-importer (in directory 'misc'),
     not in use anymore (import of Polar .ped files is still supported)
+  - About Dialog: added license informations
+  - Help Menu: added menu item for visiting the project website
 
  Translations:
   - added korean translation provided by Tae Young Ko <oscetic@gmail.com>

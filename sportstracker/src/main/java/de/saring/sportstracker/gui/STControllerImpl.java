@@ -75,6 +75,8 @@ public class STControllerImpl implements STController {
 
     private static final Logger LOGGER = Logger.getLogger(STControllerImpl.class.getName());
 
+    private static final String URL_PROJECT_WEBSITE = "http://www.saring.de/sportstracker";
+
     private final STContext context;
     private final STDocument document;
 
@@ -476,6 +478,11 @@ public class STControllerImpl implements STController {
         }
 
         prOverviewDialogController.get().show(context.getPrimaryStage());
+    }
+
+    @Override
+    public void onWebsite(final ActionEvent event) {
+        context.getHostServices().showDocument(URL_PROJECT_WEBSITE);
     }
 
     @Override

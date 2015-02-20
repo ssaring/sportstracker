@@ -1,5 +1,7 @@
 package de.saring.sportstracker.gui;
 
+import javafx.application.HostServices;
+
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.unitcalc.FormatUtils;
 
@@ -19,6 +21,13 @@ public interface STContext extends EVContext {
      * @param formatUtils the FormatUtils instance to set
      */
     void setFormatUtils(FormatUtils formatUtils);
+
+    /**
+     * Gets the HostServices provider for this application.
+     *
+     * @return HostServices
+     */
+    HostServices getHostServices();
 
     /**
      * Blocks or unblocks the main application window, useful when running time consuming operations.

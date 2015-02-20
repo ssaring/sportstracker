@@ -139,6 +139,11 @@ public interface STController {
     void onOverviewDiagram(ActionEvent event);
 
     /**
+     * Event handler for action "Project Website".
+     */
+    void onWebsite(ActionEvent event);
+
+    /**
      * Event handler for action "About SportsTracker".
      */
     void onAbout(ActionEvent event);

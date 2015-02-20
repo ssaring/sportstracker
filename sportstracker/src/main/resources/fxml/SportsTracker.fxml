@@ -81,6 +81,7 @@
                         </Menu>
                         <Menu mnemonicParsing="true" text="%st.view.help.text">
                             <items>
+                                <MenuItem mnemonicParsing="true" onAction="#onWebsite" styleClass="menuBarItem" text="%st.view.website.Action.text"/>
                                 <MenuItem mnemonicParsing="true" onAction="#onAbout" styleClass="menuBarItem" text="%st.view.about.Action.text"/>
                             </items>
                         </Menu>

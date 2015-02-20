@@ -57,6 +57,8 @@ SportsTracker 7.0.0:
 - st.main.error.print_view (edited)
 - st.main.error.print_view.no_printer (new)
 
+- st.view.website.Action.text (new)
+
 - st.exerciselistview.empty (new)
 - st.notelistview.empty (new)
 - st.weightlistview.empty (new)

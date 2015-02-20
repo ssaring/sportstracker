@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui;
 
 import java.util.Optional;
 
+import javafx.application.HostServices;
 import javafx.event.EventDispatcher;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
@@ -124,6 +125,11 @@ public class STContextImpl implements STContext {
     @Override
     public AppResources getResources() {
         return fxResources;
+    }
+
+    @Override
+    public HostServices getHostServices() {
+        return application.getHostServices();
     }
 
     @Override
