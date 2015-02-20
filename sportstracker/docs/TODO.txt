@@ -4,7 +4,7 @@ SportsTracker-TODO
 JavaFX Migration:
 - Test menu action for project website on Mac OS X and Linux
 - ExerciseViewer: add track point navigation (slider control) and track replay feature
-  - test resize, is map size limited before the slider has been added?
+  - use sample index instead of geo position => better for tooltip generation?
   - display tooltip for current position on slider changes?
   - see TODO's in TrackPanelController
   - test on Mac OS X and Linux
