@@ -7,9 +7,8 @@ JavaFX Migration:
   - tooltip for track is shown only when the MapKit has focus, can the focus be set when
     the mouse enters the MapKit component?
   - use sample index instead of geo position => better for tooltip generation?
-  - display tooltip for current position on slider changes?
   - see TODO's in TrackPanelController
-  - test on Mac OS X and Linux
+  - test on Linux
   - test proper cleanup, make sure all MapViewer objects are removed by GC (JVisualVM)
   - JavaFX 8u40 is needed here, otherwise there are sometimes drawing problems (black background)
   - trigger I18N updates (also for License info and new Website menu item)
