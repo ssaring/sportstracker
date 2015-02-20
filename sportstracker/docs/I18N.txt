@@ -123,8 +123,8 @@ SportsTracker 7.0.0:
 - st.dlg.options.ok.Action.text (removed)
 - st.dlg.options.cancel.Action.text (removed)
 
-- pv.info.no_data_available (added)
-
+- pv.info.no_data_available (new)
+- pv.track.position.text (new)
 
 SportsTracker 5.7.0:
 - st.dlg.exercise.error.import_console (new)

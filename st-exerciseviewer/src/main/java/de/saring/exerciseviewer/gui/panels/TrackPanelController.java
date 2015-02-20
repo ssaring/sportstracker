@@ -15,10 +15,13 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.JXMapViewer;
@@ -46,13 +49,23 @@ public class TrackPanelController extends AbstractPanelController {
 
     private static final Color COLOR_START = new Color(180, 255, 180);
     private static final Color COLOR_END = new Color(255, 180, 180);
+    private static final Color COLOR_POSITION = new Color(255, 120, 240);
     private static final Color COLOR_LAP = Color.WHITE;
     private static final Color COLOR_TRACK = Color.RED;
 
     private static final int TRACKPOINT_TOOLTIP_DISTANCE_BUFFER = 4;
 
     @FXML
-    private StackPane spTrack;
+    private StackPane spTrackPanel;
+
+    @FXML
+    private VBox vbTrackViewer;
+
+    @FXML
+    private StackPane spMapViewer;
+
+    @FXML
+    private Slider slPosition;
 
     private SwingNode snMapViewer;
 
@@ -80,7 +93,7 @@ public class TrackPanelController extends AbstractPanelController {
      */
     public void cleanupPanel() {
         if (mapKit != null) {
-            spTrack.getChildren().clear();
+            spMapViewer.getChildren().clear();
             snMapViewer.setContent(null);
             snMapViewer = null;
 
@@ -107,21 +120,41 @@ public class TrackPanelController extends AbstractPanelController {
     protected void setupPanel() {
 
         // if track data is available: setup the map viewer and display it in a SwingNode
-        // (otherwise the StackPane displays the label "No track data available")
         final EVExercise exercise = getDocument().getExercise();
         if (exercise.getRecordingMode().isLocation()) {
-            snMapViewer = new SwingNode();
-            spTrack.getChildren().add(snMapViewer);
+            setupTrackPositionSlider();
 
+            snMapViewer = new SwingNode();
+            spMapViewer.getChildren().add(0, snMapViewer);
             javax.swing.SwingUtilities.invokeLater(this::setupMapViewer);
+
+            // force repaint of Swing-based map viewer on each window size change, otherwise
+            // the map viewer can be invisible or the size does not match its parent
+            final ChangeListener<Number> resizeListener = (observable, oldValue, newValue) -> {
+                javax.swing.SwingUtilities.invokeLater(() -> mapKit.repaint());
+            };
+            spMapViewer.widthProperty().addListener(resizeListener);
+            spMapViewer.heightProperty().addListener(resizeListener);
+        } else {
+            // remove the track viewer VBox, the StackPane now displays the label "No track data available")
+            spTrackPanel.getChildren().remove(vbTrackViewer);
         }
+    }
+
+    private void setupTrackPositionSlider() {
+        slPosition.setMax(0);
+
+        slPosition.valueProperty().addListener((observable, oldValue, newValue) -> {
+            // slider value is a double, make sure the int value has changed
+            if (oldValue.intValue() != newValue.intValue()) {
+                javax.swing.SwingUtilities.invokeLater(() -> mapKit.repaint());
+            }
+        });
     }
 
     private void setupMapViewer() {
         mapKit = new JXMapKit();
         mapKit.setDefaultProvider(JXMapKit.DefaultProviders.OpenStreetMaps);
-        // specify border here instead in FXML to prevent a drawing error in Swing->JavaFX integration
-        mapKit.setBorder(new javax.swing.border.EmptyBorder(8, 8, 8, 8));
 
         // add MouseMotionListener to the map for nearby sample lookup and tooltip creation
         mouseMotionListener = new MouseMotionAdapter() {
@@ -158,6 +191,8 @@ public class TrackPanelController extends AbstractPanelController {
                         setupZoomAndCenterPosition(sampleGeoPositions);
                         // display track
                         setupTrackPainter(sampleGeoPositions, lapGeoPositions);
+                        // set max positions in slider, must match available geo positions
+                        slPosition.setMax(sampleGeoPositions.size() - 1);
                     }
                     mapKit.setVisible(true);
                 });
@@ -182,7 +217,7 @@ public class TrackPanelController extends AbstractPanelController {
 
         // calculate mapKit dimensions based on the Track StackPane dimensions (with a little offset)
         // (there's a bug in SwingNode.getLayoutBounds() and so in JXMapKit.getWidth()/getHeight())
-        Bounds mapViewerBounds = spTrack.getLayoutBounds();
+        Bounds mapViewerBounds = spTrackPanel.getLayoutBounds();
         int mapKitWidth = (int) mapViewerBounds.getWidth() - 30;
         int mapKitHeight = (int) mapViewerBounds.getHeight() - 30;
 
@@ -256,6 +291,10 @@ public class TrackPanelController extends AbstractPanelController {
                 drawWaypoint(g, sampleGeoPositions.get(0), "S", COLOR_START);
                 drawWaypoint(g, sampleGeoPositions.get(sampleGeoPositions.size() - 1), "E", COLOR_END);
 
+                // draw track position waypoint currently selected in the slider
+                final int currentTrackPosition = slPosition.valueProperty().intValue();
+                drawWaypoint(g, sampleGeoPositions.get(currentTrackPosition), null, COLOR_POSITION);
+
                 g.dispose();
             }
         };
@@ -294,7 +333,7 @@ public class TrackPanelController extends AbstractPanelController {
      *
      * @param g the Graphics2D context
      * @param geoPosition position of the waypoint
-     * @param text the description text (right to the circle)
+     * @param text the description text (optional), will be drawn right to the circle
      * @param color the color of the circle
      */
     private void drawWaypoint(Graphics2D g, GeoPosition geoPosition, String text, Color color) {
@@ -313,15 +352,17 @@ public class TrackPanelController extends AbstractPanelController {
         g.draw(new Ellipse2D.Double(pt.getX() - RADIUS, pt.getY() - RADIUS, RADIUS * 2, RADIUS * 2));
 
         // draw the text right from the circle with a gray shadow
-        int textPosX = round(pt.getX() + RADIUS * 2.2);
-        int textPosY = round(pt.getY() + 3);
+        if (text != null) {
+            int textPosX = round(pt.getX() + RADIUS * 2.2);
+            int textPosY = round(pt.getY() + 3);
 
-        g.setFont(new Font("Dialog.bold", Font.BOLD, 12));
+            g.setFont(new Font("Dialog.bold", Font.BOLD, 12));
 
-        g.setColor(Color.DARK_GRAY);
-        g.drawString(text, textPosX + 1, textPosY + 1);
-        g.setColor(color);
-        g.drawString(text, textPosX, textPosY);
+            g.setColor(Color.DARK_GRAY);
+            g.drawString(text, textPosX + 1, textPosY + 1);
+            g.setColor(color);
+            g.drawString(text, textPosX, textPosY);
+        }
     }
 
     private List<GeoPosition> createSampleGeoPositionList(EVExercise exercise) {
