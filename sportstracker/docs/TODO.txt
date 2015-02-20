@@ -2,7 +2,6 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- Native packages must contain the 'docs' directory with README, License, ...
 - ExerciseViewer: add track point navigation (slider control) and track replay feature
 - ExerciseViewer: Done & tested
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
