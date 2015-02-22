@@ -23,7 +23,7 @@
                         </ImageView>
                     </children>
                 </VBox>
-                <VBox spacing="8.0">
+                <VBox spacing="10.0">
                     <children>
                         <HBox spacing="6.0">
                             <children>

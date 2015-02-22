@@ -6,7 +6,13 @@ JavaFX Migration:
 - ExerciseViewer: add track point navigation (slider control) and track replay feature
   - tooltip for track is shown only when the MapKit has focus, can the focus be set when
     the mouse enters the MapKit component?
+    -> or remove the Swing Tooltips completely?
   - see TODO's in TrackPanelController
+    - test: are there still drawing problems when embedding the MapViewer to a Control
+      which is embedded in the stackpane
+    - the tooltips for the mouse hove can then be displayed for the Control (native JavaFX
+      instead of Swing)
+    - show tooltip
   - test on Linux
   - test proper cleanup, make sure all MapViewer objects are removed by GC (JVisualVM)
   - JavaFX 8u40 is needed here, otherwise there are sometimes drawing problems (black background)
