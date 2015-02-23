@@ -15,15 +15,18 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
+import javafx.scene.Scene;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import javafx.stage.Window;
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.painter.Painter;
@@ -50,7 +53,7 @@ public class TrackPanelController extends AbstractPanelController {
 
     private static final Color COLOR_START = new Color(180, 255, 180);
     private static final Color COLOR_END = new Color(255, 180, 180);
-    private static final Color COLOR_POSITION = new Color(240, 120, 255);
+    private static final Color COLOR_POSITION = new Color(215, 110, 240);
     private static final Color COLOR_LAP = Color.WHITE;
     private static final Color COLOR_TRACK = Color.RED;
 
@@ -68,7 +71,7 @@ public class TrackPanelController extends AbstractPanelController {
     @FXML
     private Slider slPosition;
 
-    private Tooltip slPositionTooltip;
+    private Tooltip spMapViewerTooltip;
 
     private SwingNode snMapViewer;
 
@@ -95,6 +98,7 @@ public class TrackPanelController extends AbstractPanelController {
      * but here are problems which are probably caused by the Swing -> JavaFX integration.
      */
     public void cleanupPanel() {
+        // TODO test proper cleanup after map viewer / tooltip changes!
         if (mapKit != null) {
             spMapViewer.getChildren().clear();
             snMapViewer.setContent(null);
@@ -102,15 +106,14 @@ public class TrackPanelController extends AbstractPanelController {
 
             javax.swing.SwingUtilities.invokeLater(() -> {
                 // remove relations to this controller, otherwise the GC can't remove this Panel and all EV components
-                    mapKit.getMainMap().removeMouseMotionListener(mouseMotionListener);
-                    mapKit.getMainMap().setOverlayPainter(null);
-                    mapKit.getMainMap().setToolTipText(null);
+                mapKit.getMainMap().removeMouseMotionListener(mouseMotionListener);
+                mapKit.getMainMap().setOverlayPainter(null);
 
-                    // dispose both TileFactory instances, otherwise the GC can't remove all the MapViewer objects
-                    mapKit.getMainMap().getTileFactory().dispose();
-                    mapKit.getMiniMap().getTileFactory().dispose();
-                    mapKit = null;
-                });
+                // dispose both TileFactory instances, otherwise the GC can't remove all the MapViewer objects
+                mapKit.getMainMap().getTileFactory().dispose();
+                mapKit.getMiniMap().getTileFactory().dispose();
+                mapKit = null;
+            });
         }
     }
 
@@ -125,57 +128,31 @@ public class TrackPanelController extends AbstractPanelController {
         // if track data is available: setup the map viewer and display it in a SwingNode
         final EVExercise exercise = getDocument().getExercise();
         if (exercise.getRecordingMode().isLocation()) {
+            setupMapViewerContainer();
+            setupMapViewerTooltip();
             setupTrackPositionSlider();
+            javax.swing.SwingUtilities.invokeLater(this::setupSwingMapViewer);
 
-            snMapViewer = new SwingNode();
-            spMapViewer.getChildren().add(0, snMapViewer);
-            javax.swing.SwingUtilities.invokeLater(this::setupMapViewer);
-
-            // force repaint of Swing-based map viewer on each window size change, otherwise
-            // the map viewer can be invisible or the size does not match its parent
-            final ChangeListener<Number> resizeListener = (observable, oldValue, newValue) -> {
-                javax.swing.SwingUtilities.invokeLater(() -> mapKit.repaint());
-            };
-            spMapViewer.widthProperty().addListener(resizeListener);
-            spMapViewer.heightProperty().addListener(resizeListener);
         } else {
             // remove the track viewer VBox, the StackPane now displays the label "No track data available")
             spTrackPanel.getChildren().remove(vbTrackViewer);
         }
     }
 
-    private void setupTrackPositionSlider() {
-        System.out.println(getDocument().getExercise().getSampleList().length);
-        slPosition.setMax(getDocument().getExercise().getSampleList().length - 1);
+    private void setupMapViewerContainer() {
+        snMapViewer = new SwingNode();
+        spMapViewer.getChildren().add(0, snMapViewer);
 
-        slPosition.valueProperty().addListener((observable, oldValue, newValue) -> {
-            // slider value is a double, make sure the int value has changed
-                if (oldValue.intValue() != newValue.intValue()) {
-
-                    // TODO document, extract method?
-                    // TODO tooltip text must use different line breaks for JavaFX
-                    final String tooltipText = createToolTipText(newValue.intValue(), false);
-                    if (slPositionTooltip == null) {
-                        slPositionTooltip = new Tooltip(tooltipText);
-                        slPositionTooltip.setAutoHide(true);
-                    } else {
-                        slPositionTooltip.setText(tooltipText);
-                    }
-
-                    // TODO position is not OK
-                    final javafx.geometry.Point2D p = spMapViewer.localToScene(0d, 0d);
-                    slPositionTooltip.show(slPosition, //
-                            p.getX() + spMapViewer.getScene().getX() + slPosition.getScene().getWindow().getX() + 8, //
-                            p.getY() + spMapViewer.getScene().getY() + slPosition.getScene().getWindow().getY() + 8);
-
-                    javax.swing.SwingUtilities.invokeLater(() -> {
-                        mapKit.repaint();
-                    });
-                }
-            });
+        // force repaint of Swing-based map viewer on each window size change, otherwise
+        // the map viewer can be invisible or the size does not match its parent (JavaFX 8u40)
+        final ChangeListener<Number> resizeListener = (observable, oldValue, newValue) -> {
+            javax.swing.SwingUtilities.invokeLater(() -> mapKit.repaint());
+        };
+        spMapViewer.widthProperty().addListener(resizeListener);
+        spMapViewer.heightProperty().addListener(resizeListener);
     }
 
-    private void setupMapViewer() {
+    private void setupSwingMapViewer() {
         mapKit = new JXMapKit();
         mapKit.setDefaultProvider(JXMapKit.DefaultProviders.OpenStreetMaps);
 
@@ -192,6 +169,38 @@ public class TrackPanelController extends AbstractPanelController {
         // sees the world map for a short time before the track of the exercise)
         mapKit.setVisible(false);
         snMapViewer.setContent(mapKit);
+    }
+
+    private void setupMapViewerTooltip() {
+        // create the JavaFX tooltip to be shown on the StackPane containing the Swing-based map viewer
+        // (Swing tooltips have a completely different look & feel)
+        spMapViewerTooltip = new Tooltip();
+        spMapViewerTooltip.setAutoHide(true);
+    }
+
+    private void setupTrackPositionSlider() {
+        slPosition.setMax(getDocument().getExercise().getSampleList().length - 1);
+
+        // on track position slider changes: update position marker in the map viewer and display information tooltip
+        slPosition.valueProperty().addListener((observable, oldValue, newValue) -> {
+            // slider value is a double, make sure the int value has changed
+            if (oldValue.intValue() != newValue.intValue()) {
+
+                final String tooltipText = createToolTipText(newValue.intValue());
+                spMapViewerTooltip.setText(tooltipText);
+
+                // display position tooltip in the upper left corner of the map viewer container
+                final javafx.geometry.Point2D p = spMapViewer.localToScene(8d, 8d);
+                final Scene scene = spMapViewer.getScene();
+                final Window window = scene.getWindow();
+                spMapViewerTooltip.show(spMapViewer, //
+                        p.getX() + scene.getX() + window.getX(),  p.getY() + scene.getY() + window.getY());
+
+                javax.swing.SwingUtilities.invokeLater(() -> {
+                    mapKit.repaint();
+                });
+            }
+        });
     }
 
     /**
@@ -463,10 +472,23 @@ public class TrackPanelController extends AbstractPanelController {
 
         int nearBySampleIndex = getSampleIndexNearbyGeoPos(mouseGeoPos, latitudeBuffer, longitudeBuffer);
         if (nearBySampleIndex >= 0) {
-            toolTipText = createToolTipText(nearBySampleIndex, true);
+            toolTipText = createToolTipText(nearBySampleIndex);
         }
 
-        mapKit.getMainMap().setToolTipText(toolTipText);
+        // TODO display tooltip on mouse position
+        // TODO test and document
+        final String finalTooltipText = toolTipText;
+        Platform.runLater(() -> {
+            if (finalTooltipText == null) {
+                spMapViewerTooltip.hide();
+            } else {
+                spMapViewerTooltip.setText(finalTooltipText);
+                final javafx.geometry.Point2D p = spMapViewer.localToScene(0d, 0d);
+                spMapViewerTooltip.show(spMapViewer, //
+                        p.getX() + spMapViewer.getScene().getX() + slPosition.getScene().getWindow().getX() + 8, //
+                        p.getY() + spMapViewer.getScene().getY() + slPosition.getScene().getWindow().getY() + 8);
+            }
+        });
     }
 
     /**
@@ -498,41 +520,37 @@ public class TrackPanelController extends AbstractPanelController {
      * @param sampleIndex index of the exercise sample
      * @return text
      */
-    private String createToolTipText(int sampleIndex, boolean htmlVersion) {
+    private String createToolTipText(int sampleIndex) {
 
         EVExercise exercise = getDocument().getExercise();
         ExerciseSample sample = exercise.getSampleList()[sampleIndex];
         FormatUtils formatUtils = getContext().getFormatUtils();
 
         StringBuilder sb = new StringBuilder();
-        sb.append(htmlVersion ? "<html>" : "");
-
-        appendToolTipLine(sb, "pv.track.tooltip.trackpoint", String.valueOf(sampleIndex + 1), htmlVersion);
+        appendToolTipLine(sb, "pv.track.tooltip.trackpoint", String.valueOf(sampleIndex + 1));
         appendToolTipLine(sb, "pv.track.tooltip.time",
-                formatUtils.seconds2TimeString((int) (sample.getTimestamp() / 1000)), htmlVersion);
+                formatUtils.seconds2TimeString((int) (sample.getTimestamp() / 1000)));
         appendToolTipLine(sb, "pv.track.tooltip.distance",
-                formatUtils.distanceToString(sample.getDistance() / 1000f, 3), htmlVersion);
+                formatUtils.distanceToString(sample.getDistance() / 1000f, 3));
         if (exercise.getRecordingMode().isAltitude()) {
             appendToolTipLine(sb, "pv.track.tooltip.altitude", //
-                    formatUtils.heightToString(sample.getAltitude()), htmlVersion);
+                    formatUtils.heightToString(sample.getAltitude()));
         }
         appendToolTipLine(sb, "pv.track.tooltip.heartrate", //
-                formatUtils.heartRateToString(sample.getHeartRate()), htmlVersion);
+                formatUtils.heartRateToString(sample.getHeartRate()));
         if (exercise.getRecordingMode().isSpeed()) {
             appendToolTipLine(sb, "pv.track.tooltip.speed", //
-                    formatUtils.speedToString(sample.getSpeed(), 2), htmlVersion);
+                    formatUtils.speedToString(sample.getSpeed(), 2));
         }
         if (exercise.getRecordingMode().isTemperature()) {
             appendToolTipLine(sb, "pv.track.tooltip.temperature", //
-                    formatUtils.temperatureToString(sample.getTemperature()), htmlVersion);
+                    formatUtils.temperatureToString(sample.getTemperature()));
         }
-
-        sb.append(htmlVersion ? "</html>" : "");
         return sb.toString();
     }
 
-    private void appendToolTipLine(StringBuilder sb, String resourceKey, String value, boolean htmlVersion) {
+    private void appendToolTipLine(StringBuilder sb, String resourceKey, String value) {
         sb.append(getContext().getResources().getString(resourceKey));
-        sb.append(": ").append(value).append(htmlVersion ? "<br/>" : "\n");
+        sb.append(": ").append(value).append("\n");
     }
 }
