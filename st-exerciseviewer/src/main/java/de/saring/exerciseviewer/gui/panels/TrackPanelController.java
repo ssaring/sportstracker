@@ -10,7 +10,6 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
@@ -192,7 +192,7 @@ public class TrackPanelController extends AbstractPanelController {
                 spMapViewerTooltip.setText(tooltipText);
 
                 // display position tooltip in the upper left corner of the map viewer container
-                final javafx.geometry.Point2D p = spMapViewer.localToScene(8d, 8d);
+                final Point2D p = spMapViewer.localToScene(8d, 8d);
                 final Scene scene = spMapViewer.getScene();
                 final Window window = scene.getWindow();
                 spMapViewerTooltip.show(spMapViewer, //
@@ -264,8 +264,9 @@ public class TrackPanelController extends AbstractPanelController {
             mapKit.setZoom(currentZoom);
 
             // calculate pixel positions of top left and bottom right in the track rectangle
-            Point2D ptTopLeft = convertGeoPosToPixelPos(new GeoPosition(gpRectangle.getX(), gpRectangle.getY()));
-            Point2D ptBottomRight = convertGeoPosToPixelPos(new GeoPosition(
+            java.awt.geom.Point2D ptTopLeft = convertGeoPosToPixelPos( //
+                    new GeoPosition(gpRectangle.getX(), gpRectangle.getY()));
+            java.awt.geom.Point2D ptBottomRight = convertGeoPosToPixelPos(new GeoPosition(
                     gpRectangle.getX() + gpRectangle.getWidth(), gpRectangle.getY() + gpRectangle.getHeight()));
 
             // calculate current track width and height in pixels (can be negative)
@@ -287,7 +288,7 @@ public class TrackPanelController extends AbstractPanelController {
         Rectangle2D rect = new Rectangle2D.Double(positions.get(0).getLatitude(), positions.get(0).getLongitude(), 0, 0);
 
         for (GeoPosition pos : positions) {
-            rect.add(new Point2D.Double(pos.getLatitude(), pos.getLongitude()));
+            rect.add(new java.awt.geom.Point2D.Double(pos.getLatitude(), pos.getLongitude()));
         }
         return rect;
     }
@@ -350,7 +351,7 @@ public class TrackPanelController extends AbstractPanelController {
         int lastY = -1;
 
         for (GeoPosition geoPosition : geoPositions) {
-            Point2D pt = convertGeoPosToPixelPos(geoPosition);
+            java.awt.geom.Point2D pt = convertGeoPosToPixelPos(geoPosition);
             if (lastX != -1 && lastY != -1) {
                 g.drawLine(lastX, lastY, round(pt.getX()), round(pt.getY()));
             }
@@ -374,7 +375,7 @@ public class TrackPanelController extends AbstractPanelController {
     private void drawWaypoint(Graphics2D g, GeoPosition geoPosition, String text, Color color) {
         final int RADIUS = 5;
 
-        Point2D pt = convertGeoPosToPixelPos(geoPosition);
+        java.awt.geom.Point2D pt = convertGeoPosToPixelPos(geoPosition);
 
         // draw an outer gray circle, so it's better visible on backgrounds with same color
         g.setColor(Color.GRAY);
@@ -426,11 +427,11 @@ public class TrackPanelController extends AbstractPanelController {
         return geoPositions;
     }
 
-    private Point2D convertGeoPosToPixelPos(GeoPosition geoPosition) {
+    private java.awt.geom.Point2D convertGeoPosToPixelPos(GeoPosition geoPosition) {
         return mapKit.getMainMap().getTileFactory().geoToPixel(geoPosition, mapKit.getMainMap().getZoom());
     }
 
-    private GeoPosition convertPixelPosToGeoPos(Point2D point) {
+    private GeoPosition convertPixelPosToGeoPos(java.awt.geom.Point2D point) {
         return mapKit.getMainMap().getTileFactory().pixelToGeo(point, mapKit.getMainMap().getZoom());
     }
 
@@ -477,20 +478,24 @@ public class TrackPanelController extends AbstractPanelController {
             toolTipText = createToolTipText(nearBySampleIndex);
         }
 
-        // TODO display tooltip on mouse position
-        // TODO test and document
+        // hide or display tooltip next to the cursor position (must be executed on the JavaFX UI thread)
         final String finalTooltipText = toolTipText;
         Platform.runLater(() -> {
             if (finalTooltipText == null) {
                 spMapViewerTooltip.hide();
             } else {
+                Point2D tooltipPos = spMapViewer.localToScene(e.getX() + 8d, e.getY() + 8d);
+                tooltipPos = tooltipPos.add(getMapViewerScreenPosition());
                 spMapViewerTooltip.setText(finalTooltipText);
-                final javafx.geometry.Point2D p = spMapViewer.localToScene(0d, 0d);
-                spMapViewerTooltip.show(spMapViewer, //
-                        p.getX() + spMapViewer.getScene().getX() + slPosition.getScene().getWindow().getX() + 8, //
-                        p.getY() + spMapViewer.getScene().getY() + slPosition.getScene().getWindow().getY() + 8);
+                spMapViewerTooltip.show(spMapViewer, tooltipPos.getX(), tooltipPos.getY());
             }
         });
+    }
+
+    private Point2D getMapViewerScreenPosition() {
+        final Scene scene = spMapViewer.getScene();
+        final Window window = scene.getWindow();
+        return new Point2D(scene.getX() + window.getX(), scene.getY() + window.getY());
     }
 
     /**
