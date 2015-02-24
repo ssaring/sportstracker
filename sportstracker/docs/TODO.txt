@@ -2,8 +2,8 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- ExerciseViewer TrackPanel: JavaFX 8u40 is needed, otherwise there are sometimes drawing problems (black background)
 - ExerciseViewer: Done & tested
+  - TrackPanel: JavaFX 8u40 is needed, otherwise there are sometimes drawing problems (black background)
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)
 - JFreeChart usage (in Overview Dialog): migration completed and tested, except:
@@ -65,7 +65,7 @@ Java 8 migration status:
 - IDE support: works fine in IDEA 13.1, NetBeans 8.0 and Eclipse 4.4
 
 Dependency Injection:
-- use Dagger as an alternative to the Guice framework,
+- use Dagger / Dagger 2 as an alternative to the Guice framework,
   URL: http://square.github.io/dagger/
   -> almost same interface (JSR 330), but DI done on compilation without 
      reflection instead at runtime 
@@ -95,10 +95,7 @@ General TODOs:
     - Default equipment (optional)
 - View Track in Google Maps (browser)
   => create local temporary file, see example
-- Map tab in Exercise Viewer:
-  - improve icons for start/end/lap points
-  - slider for progress which shows position and details
-- Overview dialog: new display mode for comparing 2 seasons / years:
+- Overview Dialog: new display mode for comparing 2 seasons / years:
   (https://sourceforge.net/projects/sportstracker/forums/forum/451565/topic/4435642)
   - add a new diagram option in the selection combobox called "Compare two seasons"
   - in this mode the user gets following input fields:
@@ -119,9 +116,6 @@ General TODOs:
 - FilterDialog should also make possible to show e.g. all bicycle
   sport subtypes, except those from "ergometer" (hint from Steffen Rehn)
 
-Calendar view/widget:
-- horizontal or vertical animation for scrolling through the months
-
 Training route/lap support:
 - requested by Bernd Mirbach and other users, see mail from Bernd:
 - we need a dialog for editing possible routes/laps and the appropriate
@@ -137,10 +131,7 @@ ExerciseViewer-TODO
 Diagram panel:
 - there's no space at the left side when the bottom axis displays "by distance"
   (between left axis and graph start)
-
-Track panel:
-- improve rendering for waypoints, use marker pins instead of circles
-  (can the WaypointRenderer from SwingX be reused and enhanced?)
+Tack Panel: improve icons for start/end/lap points
 
 ExerciseParsers:
 - GarminTcxParser:
