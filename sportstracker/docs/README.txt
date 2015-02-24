@@ -5,16 +5,16 @@ SportsTracker is an application for people who want to track their sporting
 activities. It is not bound to a specific kind of sport, the user can create
 categories for all sport types such as cycling, running, swimming or tennis.
 
-The main advantage is a good overview of your exercises and you can easily
-create diagrams and statistics for specific date ranges and sport types. In 
-the calendar you can also track your body weight or create note entries, e.g. 
+The main advantage is a good overview of your exercises, you can easily create
+diagrams and statistics for specific date ranges and sport types. In the
+calendar you can also track your body weight or create note entries, e.g.
 the training plan or upcoming sport events.
 
-All the application data is stored in XML files. So it should be easy to
-access it with other tools or to write importers and exporters for other
+All the application data is stored in XML files. So it is very easy to access
+them with other tools or to write importers and exporters for other
 applications.
 
-If you own a heartrate monitor with a computer interface you can display
+If you are using a heartrate monitor with a computer interface you can display
 the recorded exercise files and evaluate the diagrams with the integrated
 ExerciseViewer application. 
 You can organize them by attaching the recorded files to the exercise 
@@ -60,8 +60,8 @@ It's also possible to view HRM exercise files (downloaded with the Polar
 Software for Windows).
 
 Users of heartrate monitors with an integrated GPS receiver (e.g. the Garmin
-Edge series) can also view the track of the recorded exercise in an inter-
-active map viewer component.
+Edge series) can also view and replay the track of the recorded exercise in the
+interactive map viewer component.
 
 SportsTracker itself is not able to download the exercise files from the 
 heartrate monitor. You need to use one of these tools for it:
@@ -104,8 +104,8 @@ Groovy. It was developed and tested with the Oracle JVM, other JVM
 implementations will probably work too.
 
 The SportsTracker installer packages contain an embedded Java SE Runtime
-Environment (JRE).
-Users of binary packages need to install the JRE, the Oracle JRE can be
+Environment (JRE), a Java installation is not needed.
+Users of binary packages need to install the JRE before, the Oracle JRE can be
 downloaded from: http://www.java.com
 
 If you want to download exercise files from your heartrate monitor you also 
