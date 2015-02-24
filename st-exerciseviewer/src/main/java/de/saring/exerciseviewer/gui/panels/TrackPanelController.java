@@ -146,7 +146,9 @@ public class TrackPanelController extends AbstractPanelController {
         // force repaint of Swing-based map viewer on each window size change, otherwise
         // the map viewer can be invisible or the size does not match its parent (JavaFX 8u40)
         final ChangeListener<Number> resizeListener = (observable, oldValue, newValue) -> {
-            javax.swing.SwingUtilities.invokeLater(() -> mapKit.repaint());
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                mapKit.repaint();
+            });
         };
         spMapViewer.widthProperty().addListener(resizeListener);
         spMapViewer.heightProperty().addListener(resizeListener);
@@ -194,7 +196,7 @@ public class TrackPanelController extends AbstractPanelController {
                 final Scene scene = spMapViewer.getScene();
                 final Window window = scene.getWindow();
                 spMapViewerTooltip.show(spMapViewer, //
-                        p.getX() + scene.getX() + window.getX(),  p.getY() + scene.getY() + window.getY());
+                        p.getX() + scene.getX() + window.getX(), p.getY() + scene.getY() + window.getY());
 
                 javax.swing.SwingUtilities.invokeLater(() -> {
                     mapKit.repaint();
