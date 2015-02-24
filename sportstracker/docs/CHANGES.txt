@@ -61,6 +61,9 @@ v7.0.0:
     not in use anymore (import of Polar .ped files is still supported)
   - About Dialog: added license informations
   - Help Menu: added menu item for visiting the project website
+ ExerciseViewer changes:
+  - Track Panel: added position slider for replaying the track in the map,
+    a tooltip displays all the details of the current track position
 
  Translations:
   - added korean translation provided by Tae Young Ko <oscetic@gmail.com>

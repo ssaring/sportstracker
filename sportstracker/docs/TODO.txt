@@ -2,20 +2,7 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
-- ExerciseViewer: add track point navigation (slider control) and track replay feature
-  - tooltip for track is shown only when the MapKit has focus, can the focus be set when
-    the mouse enters the MapKit component?
-    -> or remove the Swing Tooltips completely?
-  - see TODO's in TrackPanelController
-    - test: are there still drawing problems when embedding the MapViewer to a Control
-      which is embedded in the stackpane
-    - the tooltips for the mouse hove can then be displayed for the Control (native JavaFX
-      instead of Swing)
-    - show tooltip
-  - test proper cleanup, make sure all MapViewer objects are removed by GC (JVisualVM)
-  - JavaFX 8u40 is needed here, otherwise there are sometimes drawing problems (black background)
-  - trigger I18N updates (also for License info and new Website menu item)
-  -> add to documentation, ChangeLog
+- ExerciseViewer TrackPanel: JavaFX 8u40 is needed, otherwise there are sometimes drawing problems (black background)
 - ExerciseViewer: Done & tested
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)

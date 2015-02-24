@@ -25,8 +25,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import javafx.stage.Window;
+
 import org.jxmapviewer.JXMapKit;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.painter.Painter;
@@ -98,9 +98,9 @@ public class TrackPanelController extends AbstractPanelController {
      * but here are problems which are probably caused by the Swing -> JavaFX integration.
      */
     public void cleanupPanel() {
-        // TODO test proper cleanup after map viewer / tooltip changes!
         if (mapKit != null) {
             spMapViewer.getChildren().clear();
+            spMapViewer = null;
             snMapViewer.setContent(null);
             snMapViewer = null;
 
