@@ -183,7 +183,7 @@ public class TrackPanelController extends AbstractPanelController {
     private void setupTrackPositionSlider() {
         slPosition.setMax(getDocument().getExercise().getSampleList().length - 1);
 
-        // on track position slider changes: update position marker in the map viewer and display information tooltip
+        // on track position slider changes: update position marker in the map viewer and display tooltip with details
         slPosition.valueProperty().addListener((observable, oldValue, newValue) -> {
             // slider value is a double, make sure the int value has changed
             if (oldValue.intValue() != newValue.intValue()) {
@@ -192,11 +192,9 @@ public class TrackPanelController extends AbstractPanelController {
                 spMapViewerTooltip.setText(tooltipText);
 
                 // display position tooltip in the upper left corner of the map viewer container
-                final Point2D p = spMapViewer.localToScene(8d, 8d);
-                final Scene scene = spMapViewer.getScene();
-                final Window window = scene.getWindow();
-                spMapViewerTooltip.show(spMapViewer, //
-                        p.getX() + scene.getX() + window.getX(), p.getY() + scene.getY() + window.getY());
+                Point2D tooltipPos = spMapViewer.localToScene(8d, 8d);
+                tooltipPos = tooltipPos.add(getMapViewerScreenPosition());
+                spMapViewerTooltip.show(spMapViewer, tooltipPos.getX(), tooltipPos.getY());
 
                 javax.swing.SwingUtilities.invokeLater(() -> {
                     mapKit.repaint();
