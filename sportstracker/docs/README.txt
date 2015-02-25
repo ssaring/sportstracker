@@ -60,11 +60,12 @@ It's also possible to view HRM exercise files (downloaded with the Polar
 Software for Windows).
 
 Users of heartrate monitors with an integrated GPS receiver (e.g. the Garmin
-Edge series) can also view and replay the track of the recorded exercise in the
-interactive map viewer component.
+Edge series) can also view and replay the track of the recorded exercises in
+the interactive map viewer component.
 
 SportsTracker itself is not able to download the exercise files from the 
-heartrate monitor. You need to use one of these tools for it:
+heartrate monitor. Some monitors (e.g. Garmin) allow the direct download via
+USB. For other monitors you might need one of these tools:
 
   - 's710' for many Polar models (S6XX, S7XX, ...), at least version 0.19
     URL: http://daveb.net/s710
@@ -104,11 +105,11 @@ Groovy. It was developed and tested with the Oracle JVM, other JVM
 implementations will probably work too.
 
 The SportsTracker installer packages contain an embedded Java SE Runtime
-Environment (JRE), a Java installation is not needed.
-Users of binary packages need to install the JRE before, the Oracle JRE can be
-downloaded from: http://www.java.com
+Environment (JRE), a Java installation is not needed. Users of binary packages
+need to install the JRE before, the Oracle JRE can be downloaded from:
+http://www.java.com
 
-If you want to download exercise files from your heartrate monitor you also 
+If you want to download exercise files from your heartrate monitor you might
 need one of the download tools listed above.
 
 The application was tested on GNU/Linux (e.g. Ubuntu 14.04), Windows (7,
@@ -120,7 +121,7 @@ Installation and Start
 ----------------------
 
 For Windows, Mac and some Linux systems there are native installer packages
-available from the SourceForge project page. They include an embedded Java
+available on the SourceForge project page. They include an embedded Java
 Runtime Environment (JRE), so the user does not need to install Java before.
 The installers will create a menu entry for easy SportsTracker startup.
 
