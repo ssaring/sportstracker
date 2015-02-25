@@ -306,7 +306,7 @@ Developer Requirements
 ----------------------
 
 For compilation of the SportsTracker sources you need:
-  - Java SE Development Kit (JDK) 8u31 or greater
+  - Java SE Development Kit (JDK) 8u40 or greater
     (from http://www.oracle.com/technetwork/java/)
   - Maven 3.0.3 or greater
     (from http://maven.apache.org)
