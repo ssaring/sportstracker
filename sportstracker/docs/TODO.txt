@@ -1,14 +1,6 @@
 SportsTracker-TODO
 ==================
 
-For release 7.0.0:
-- create native packages with bundled JRE 8u40_b23 for
-  - Windows 32 bit Installer (Done, test on 32 bit)
-  - Mac OS X .app (ZIP) and .dmg
-  - Linux DEB (Ubuntu)
-- create source and binary packages
-- GIT label, set version to 7.0.1-SNAPSHOT afterwards
-
 JavaFX Migration:
 - ExerciseViewer: Done & tested
   - TrackPanel: JavaFX 8u40 is needed, otherwise there are sometimes drawing problems (black background)
