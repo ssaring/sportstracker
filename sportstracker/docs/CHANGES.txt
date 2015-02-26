@@ -64,7 +64,6 @@ v7.0.0:
  ExerciseViewer changes:
   - Track Panel: added position slider for replaying the track in the map,
     a tooltip displays all the details of the current track position
-
  Translations:
   - added korean translation provided by Tae Young Ko <oscetic@gmail.com>
   - updated french translation pvovided by Nicolas Ollivier
