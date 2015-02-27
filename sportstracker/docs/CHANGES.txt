@@ -1,6 +1,8 @@
 Changelog
 ---------
 
+v7.0.1:
+
 v7.0.0:
  SportsTracker changes:
   - use of no_aop version of Guice 3.0, is smaller and has less dependencies
