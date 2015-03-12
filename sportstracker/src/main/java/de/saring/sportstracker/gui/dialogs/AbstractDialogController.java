@@ -157,10 +157,6 @@ public abstract class AbstractDialogController {
         final Dialog<ButtonType> dlg = new Dialog();
         dlg.initOwner(parent);
 
-        // TODO remove when fixed in OpenJFX-Dialogs
-        // workaround for disabling bigger font size of custom dialog content
-        dlg.getDialogPane().setStyle("-fx-font-size: 1em;");
-
         dlg.setTitle(title);
         dlg.getDialogPane().setContent(root);
         dlg.setResizable(false);

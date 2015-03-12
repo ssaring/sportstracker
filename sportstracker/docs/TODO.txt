@@ -3,13 +3,9 @@ SportsTracker-TODO
 
 JavaFX Migration:
 - ExerciseViewer: Done & tested
-  - TrackPanel: JavaFX 8u40 is needed, otherwise there are sometimes drawing problems (black background)
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)
 - JFreeChart usage (in Overview Dialog): migration completed and tested, except:
-  - the JavaFX version of JFreeChart logs CSS warnings at initial chart display, but works properly
-    (problem does not exist in ExerciseViewer)
-    => caused by a JavaFX bug, it has been fixed in 8u40 (tested, see https://javafx-jira.kenai.com/browse/RT-38640 )
   - artifact is not available in the Maven Central repo, using custom build from saring.de repository meanwhile
     -> I've posted a request to the JFree forum: http://www.jfree.org/forum/viewtopic.php?f=3&t=117112
   - installation of custom build in local repository:
