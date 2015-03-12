@@ -64,8 +64,6 @@ public class STContextImpl implements STContext {
         alert.initOwner(parent);
         alert.setTitle(fxResources.getString(titleKey));
         alert.setHeaderText(null);
-        // TODO remove when fixed in OpenJFX-Dialogs
-        alert.setResizable(true);
         alert.showAndWait();
     }
 
@@ -77,8 +75,6 @@ public class STContextImpl implements STContext {
         alert.initOwner(parent);
         alert.setTitle(fxResources.getString(titleKey));
         alert.setHeaderText(null);
-        // TODO remove when fixed in OpenJFX-Dialogs
-        alert.setResizable(true);
 
         // add custom button types if specified
         if (buttonTypes.length > 0) {
@@ -97,9 +93,6 @@ public class STContextImpl implements STContext {
         inputDlg.setTitle(getResources().getString(titleKey));
         inputDlg.setContentText(getResources().getString(messageKey));
         inputDlg.setHeaderText(null);
-        // TODO remove when fixed in OpenJFX-Dialogs
-        // workaround for disabling bigger font size of custom dialog content
-        inputDlg.getDialogPane().setStyle("-fx-font-size: 1em;");
         return inputDlg.showAndWait();
     }
 

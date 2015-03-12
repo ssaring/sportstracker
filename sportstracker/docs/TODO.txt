@@ -13,15 +13,9 @@ JavaFX Migration:
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
 - openjfx-dialog status:
   - Works ok, but some minor problems:
-    - dialog pane font size is too large (at least on Mac OS X)
-      - Workaround: dlg.getDialogPane().setStyle("-fx-font-size: 1em;");
-      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38818 => fixed in JavaFX 8u40
-        -> remove in AbstractDialogController and STContextImpl when bugfix is available
     - Alert dialogs must not have fullscreen and minimize window buttons
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38946
         => fixed in JavaFX 8u40 (tested on Windows)
-    - Alert dialogs does not show the complete message when longer than 2 lines
-      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38998 => fixed in JavaFX 8u40
     - Dialog windows don't display the parent icon or no icons (on Windows)
       - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-39878 => fixed in JavaFX 8u40
     - All dialogs are using fullscreen on opening for a very short time (at least on Windows)
