@@ -2,6 +2,8 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- remove the openjfx-dialog dependency when Java 8u40 has been released and when Java 8u40 is
+  available on the Travis CI build systems
 - ExerciseViewer: Done & tested
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)
@@ -11,21 +13,8 @@ JavaFX Migration:
   - installation of custom build in local repository:
     mvn install:install-file -Dfile=jfreechart-1.0.19.jar -DgroupId=org.jfree
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
-- openjfx-dialog status:
-  - Works ok, but some minor problems:
-    - Alert dialogs must not have fullscreen and minimize window buttons
-      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-38946
-        => fixed in JavaFX 8u40 (tested on Windows)
-    - Dialog windows don't display the parent icon or no icons (on Windows)
-      - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-39878 => fixed in JavaFX 8u40
-    - All dialogs are using fullscreen on opening for a very short time (at least on Windows)
-      => fixed in JavaFX 8u40
-  - remove openjfx-dialog dependency when Java 8u40 has been released and when Java 8u40 is
-    available on the Travis CI build systems
 - Use Dialogs, Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
   => will be introduced in Java 8u40 (Dec. 2014)
-- JavaFX Bug RT-38644: https://javafx-jira.kenai.com/browse/RT-38644 (created, planned to be fixed in JavaFX 9)
-  - User can't close Dialogs with ESC when the DatePicker has the focus fixed in JavaFX 8u40 (at least on Windows)
 - JavaFX bug in GridPane layout since JavaFX 8u40 in (now using a workaround, see TODOs in CalendarControlSkin)
   - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-40099
 - Print Views: Done for all views
@@ -35,9 +24,8 @@ JavaFX Migration:
     and print the image instead the view (prints only the visible rows)
   - Update ViewPrinter when JavaFX API supports the printing of the complete tables
     (the I18N properties for list printing on multiple pages are present, see st.???view.print.???)
-- Linux test (Ubuntu 14.04 x64, Java 8u31, VirtualBox):
+- Linux test (Ubuntu 14.04 x64, Java 8u40 (needed!), VirtualBox):
   - SportsTracker and ExerciseViewer are running fine (Look&Feel, printing, HRM file Drag&Drop)
-  - drawing problems in all JFreeChart diagrams => JavaFX bug, fixed in JavaFX 8u40 (tested)
   - Application icon can't be set in code, must be defined in the .desktop launcher file
     (see example in misc/linux-launcher/SportsTracker.desktop)
 - Exercise Viewer: use a JavaFX-based map viewer, currently it's the Swing-based JXMapViewer
