@@ -2,6 +2,10 @@ Changelog
 ---------
 
 v7.0.1:
+ SportsTracker changes:
+  - update of the bundled Java runtime to Java SE/FX 8u40, which contains many
+    bugfixes
+  - removed workarounds for Java versions earlier than 8u40
 
 v7.0.0:
  SportsTracker changes:
