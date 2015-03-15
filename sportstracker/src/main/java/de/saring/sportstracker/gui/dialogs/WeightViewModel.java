@@ -5,10 +5,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import javafx.beans.property.FloatProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -30,8 +28,7 @@ public class WeightViewModel {
     private final FormatUtils.UnitSystem unitSystem;
 
     public final ObjectProperty<LocalDate> date;
-    public final IntegerProperty hour;
-    public final IntegerProperty minute;
+    public final ObjectProperty<LocalTime> time;
     public final FloatProperty value;
     public final StringProperty comment;
 
@@ -44,8 +41,7 @@ public class WeightViewModel {
     public WeightViewModel(final Weight weight, final FormatUtils.UnitSystem unitSystem) {
         this.id = weight.getId();
         this.date = new SimpleObjectProperty(weight.getDateTime().toLocalDate());
-        this.hour = new SimpleIntegerProperty(weight.getDateTime().getHour());
-        this.minute = new SimpleIntegerProperty(weight.getDateTime().getMinute());
+        this.time = new SimpleObjectProperty(weight.getDateTime().toLocalTime());
         this.value = new SimpleFloatProperty(weight.getValue());
         this.comment = new SimpleStringProperty(StringUtils.getTextOrEmptyString(weight.getComment()));
 
@@ -63,7 +59,7 @@ public class WeightViewModel {
      */
     public Weight getWeight() {
         final Weight weight = new Weight(id);
-        weight.setDateTime(LocalDateTime.of(date.get(), LocalTime.of(hour.getValue(), minute.getValue())));
+        weight.setDateTime(LocalDateTime.of(date.get(), time.get()));
         weight.setValue(value.get());
         // ignore empty text for optional inputs
         weight.setComment(StringUtils.getTrimmedTextOrNull(comment.getValue()));

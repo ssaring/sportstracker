@@ -1,29 +1,22 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.util.gui.javafx.TimeToStringConverter;
+import java.time.LocalTime;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Window;
-import javafx.util.StringConverter;
-import javafx.util.converter.NumberStringConverter;
 
 import javax.inject.Inject;
 
-import javafx.util.converter.TimeStringConverter;
-import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.ValidationUtils;
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import de.saring.util.gui.javafx.TimeToStringConverter;
 
 /**
  * Controller (MVC) class of the Note dialog for editing / adding Note entries.

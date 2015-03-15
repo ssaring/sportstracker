@@ -1,13 +1,15 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import de.saring.sportstracker.data.Weight;
-import de.saring.util.unitcalc.FormatUtils;
+import static org.junit.Assert.assertEquals;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-
-import static org.junit.Assert.assertEquals;
+import de.saring.sportstracker.data.Weight;
+import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * Unit tests of class ExerciseViewModel.
@@ -44,8 +46,7 @@ public class WeightViewModelTest {
         assertEquals(weight.getComment(), unmodifiedWeight.getComment());
 
         // test after modifications
-        viewModel.hour.set(14);
-        viewModel.minute.set(45);
+        viewModel.time.set(LocalTime.of(14, 45));
         viewModel.value.set(67.5f);
         viewModel.comment.set("  Bar Foo  ");
 

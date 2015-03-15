@@ -19,8 +19,6 @@
                 <ColumnConstraints hgrow="NEVER"/>
                 <ColumnConstraints hgrow="NEVER"/>
                 <ColumnConstraints hgrow="NEVER"/>
-                <ColumnConstraints hgrow="NEVER"/>
-                <ColumnConstraints hgrow="NEVER"/>
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints vgrow="NEVER"/>
@@ -34,9 +32,7 @@
                         <Insets left="16.0"/>
                     </padding>
                 </Label>
-                <TextField fx:id="tfHour" prefColumnCount="2" GridPane.columnIndex="3" HBox.hgrow="NEVER"/>
-                <Label text=":" GridPane.columnIndex="4" HBox.hgrow="NEVER"/>
-                <TextField fx:id="tfMinute" prefColumnCount="2" GridPane.columnIndex="5" HBox.hgrow="NEVER"/>
+                <TextField fx:id="tfTime" prefColumnCount="5" GridPane.columnIndex="3" HBox.hgrow="NEVER"/>
                 <Label text="%st.dlg.weight.weight.text" GridPane.rowIndex="1" HBox.hgrow="NEVER"/>
                 <TextField fx:id="tfValue" prefColumnCount="5" GridPane.columnIndex="1" GridPane.rowIndex="1" HBox.hgrow="NEVER"/>
                 <Label fx:id="laWeightUnit" text="unit" GridPane.columnIndex="2" GridPane.rowIndex="1" HBox.hgrow="NEVER"/>

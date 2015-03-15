@@ -1,6 +1,8 @@
 SportsTracker-TODO
 ==================
 
+- Use Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
+  => will be introduced in Java 8u40 (Dec. 2014)
 - remove error.time text resources, add to I18N
 
 JavaFX Migration:
@@ -15,8 +17,6 @@ JavaFX Migration:
   - installation of custom build in local repository:
     mvn install:install-file -Dfile=jfreechart-1.0.19.jar -DgroupId=org.jfree
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
-- Use Dialogs, Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
-  => will be introduced in Java 8u40 (Dec. 2014)
 - JavaFX bug in GridPane layout since JavaFX 8u40 in (now using a workaround, see TODOs in CalendarControlSkin)
   - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-40099
 - Print Views: Done for all views

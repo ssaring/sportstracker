@@ -1,11 +1,14 @@
 package de.saring.sportstracker.gui.dialogs;
 
+import java.time.LocalTime;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 
@@ -18,6 +21,7 @@ import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.ValidationUtils;
+import de.saring.util.gui.javafx.TimeToStringConverter;
 
 /**
  * Controller (MVC) class of the Wieght dialog for editing / adding Weight entries.
@@ -31,13 +35,8 @@ public class WeightDialogController extends AbstractDialogController {
     @FXML
     private DatePicker dpDate;
 
-    // TODO use formatted TextField, will be introduced in JavaFX 8u40
     @FXML
-    private TextField tfHour;
-
-    // TODO use formatted TextField, will be introduced in JavaFX 8u40
-    @FXML
-    private TextField tfMinute;
+    private TextField tfTime;
 
     @FXML
     private TextField tfValue;
@@ -86,27 +85,25 @@ public class WeightDialogController extends AbstractDialogController {
 
         // setup binding between view model and the UI controls
         dpDate.valueProperty().bindBidirectional(weightViewModel.date);
-        tfHour.textProperty().bindBidirectional(weightViewModel.hour, new NumberStringConverter("00"));
-        tfMinute.textProperty().bindBidirectional(weightViewModel.minute, new NumberStringConverter("00"));
+
+        // use text formatter for time values => makes sure that the value is also valid
+        final TextFormatter<LocalTime> timeTextFormatter = new TextFormatter<>(new TimeToStringConverter());
+        timeTextFormatter.valueProperty().bindBidirectional(weightViewModel.time);
+        tfTime.setTextFormatter(timeTextFormatter);
+
         tfValue.textProperty().bindBidirectional(weightViewModel.value, new NumberStringConverter());
         taComment.textProperty().bindBidirectional(weightViewModel.comment);
 
         // setup validation of the UI controls
         validationSupport.registerValidator(dpDate,
                 Validator.createEmptyValidator(context.getResources().getString("st.dlg.weight.error.date")));
-        validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfHour, context.getResources().getString("st.dlg.weight.error.time"),
-                        !ValidationUtils.isValueIntegerBetween(newValue, 0, 23)));
-        validationSupport.registerValidator(tfMinute, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfMinute, context.getResources().getString("st.dlg.weight.error.time"),
-                        !ValidationUtils.isValueIntegerBetween(newValue, 0, 59)));
-        validationSupport.registerValidator(tfValue, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfValue, context.getResources().getString("st.dlg.weight.error.weight"),
+        validationSupport.registerValidator(tfValue, true, (Control control, String newValue) -> ValidationResult
+                .fromErrorIf(tfValue, context.getResources().getString("st.dlg.weight.error.weight"),
                         !ValidationUtils.isValueDoubleBetween(newValue, 0.1d, 1000)));
     }
 
-        @Override
-        protected boolean validateAndStore() {
+    @Override
+    protected boolean validateAndStore() {
 
         // store the new Weight, no further validation needed
         final Weight newWeight = weightViewModel.getWeight();
