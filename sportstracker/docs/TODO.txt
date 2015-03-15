@@ -29,6 +29,8 @@ JavaFX Migration:
 - Exercise Viewer: use a JavaFX-based map viewer, currently it's the Swing-based JXMapViewer
   - tested various JavaFX based components, none of them is stable and provides all features
   - the integration of the Swing-based viewer works fine, there's no need to replace it instantly
+- Spinner in Overview Dialog: remove mouse wheel workaround when added to JavaFX by default
+  - I've filed a tweak request: https://javafx-jira.kenai.com/browse/RT-40269
 
 JavaFX Migration status:
 - SportsTracker: completed

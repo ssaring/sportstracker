@@ -154,7 +154,9 @@ public class OverviewDialogController extends AbstractDialogController {
         spYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1950, 2070, LocalDate.now().getYear()));
         spYear.visibleProperty().bind(Bindings.notEqual(cbTimeRange.valueProperty(), TimeRangeType.LAST_12_MONTHS));
 
-        // add mouse wheel support for the year spinner
+        // add mouse wheel support for the year spinner (not done by default)
+        // TODO remove when my Tweak Request for JavaFx has been impplemented
+        // https://javafx-jira.kenai.com/browse/RT-40269
         spYear.setOnScroll(event -> {
             if (event.getDeltaY() > 0) {
                 spYear.decrement();
