@@ -14,6 +14,8 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Window;
@@ -76,7 +78,7 @@ public class OverviewDialogController extends AbstractDialogController {
     @FXML
     private ChoiceBox<TimeRangeType> cbTimeRange;
     @FXML
-    private ChoiceBox<Integer> cbYear;
+    private Spinner<Integer> spYear;
     @FXML
     private ChoiceBox<ValueType> cbDisplay;
     @FXML
@@ -148,17 +150,22 @@ public class OverviewDialogController extends AbstractDialogController {
         document.getSportTypeList().forEach(sportType -> cbSportTypeList.getItems().add(sportType));
         cbSportTypeList.getSelectionModel().select(0);
 
-        // init choice box for year selection, must not be visible for time range type "last 12 months"
-        // TODO use spinner control, will be available in JavaFX 9
-        for (int i = 1950; i <= 2070; i++) {
-            cbYear.getItems().addAll(i);
-        }
-        cbYear.getSelectionModel().select(Integer.valueOf(LocalDate.now().getYear()));
-        cbYear.visibleProperty().bind(Bindings.notEqual(cbTimeRange.valueProperty(), TimeRangeType.LAST_12_MONTHS));
+        // init spinner for year selection, must not be visible for time range type "last 12 months"
+        spYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1950, 2070, LocalDate.now().getYear()));
+        spYear.visibleProperty().bind(Bindings.notEqual(cbTimeRange.valueProperty(), TimeRangeType.LAST_12_MONTHS));
+
+        // add mouse wheel support for the year spinner
+        spYear.setOnScroll(event -> {
+            if (event.getDeltaY() > 0) {
+                spYear.decrement();
+            } else if (event.getDeltaY() < 0) {
+                spYear.increment();
+            }
+        });
 
         // set listeners for updating the diagram on selection changes
         cbTimeRange.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
-        cbYear.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
+        spYear.valueProperty().addListener((observable, oldValue, newValue) -> updateDiagram());
         cbDisplay.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
         cbSportTypeMode.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
         cbSportTypeList.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
@@ -174,7 +181,7 @@ public class OverviewDialogController extends AbstractDialogController {
         TimeRangeType timeType = cbTimeRange.getValue();
         ValueType vType = cbDisplay.getValue();
         String valueTypeNameWithUnits = vType.getNameWithUnitSystem(context.getFormatUtils());
-        int year = cbYear.getValue();
+        int year = spYear.getValue();
 
         // create a table of all time series (graphs) and the appropriate colors
         TimeTableXYDataset dataset = new TimeTableXYDataset();
@@ -369,7 +376,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
         // get time range and value type to display
         TimeRangeType timeType = cbTimeRange.getValue();
-        int year = cbYear.getValue();
+        int year = spYear.getValue();
         ValueType vType = cbDisplay.getValue();
         OverviewType overviewType = cbSportTypeMode.getValue();
 
@@ -508,7 +515,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
         // get time range to display
         TimeRangeType timeType = cbTimeRange.getValue();
-        int year = cbYear.getValue();
+        int year = spYear.getValue();
 
         // get selected sport type
         SportType sportType = cbSportTypeList.getValue();
@@ -582,7 +589,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
         // get time range to display
         TimeRangeType timeType = cbTimeRange.getValue();
-        int year = cbYear.getValue();
+        int year = spYear.getValue();
 
         // get selected sport type
         SportType sportType = cbSportTypeList.getValue();
@@ -659,7 +666,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
         // get time range to display
         TimeRangeType timeType = cbTimeRange.getValue();
-        int year = cbYear.getValue();
+        int year = spYear.getValue();
 
         addWeightTimeSeries(dataset, timeType, year);
         graphColors.add(new java.awt.Color(0xff0000));

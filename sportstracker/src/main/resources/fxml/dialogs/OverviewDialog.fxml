@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -19,7 +20,7 @@
                                 <Insets left="24.0"/>
                             </VBox.margin>
                         </ChoiceBox>
-                        <ChoiceBox fx:id="cbYear"/>
+                        <Spinner fx:id="spYear" prefWidth="90.0" />
                     </children>
                     <padding>
                         <Insets left="24.0"/>
