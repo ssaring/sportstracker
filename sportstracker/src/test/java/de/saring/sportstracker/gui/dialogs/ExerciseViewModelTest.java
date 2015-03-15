@@ -4,15 +4,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.util.unitcalc.FormatUtils;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.time.LocalDateTime;
 
 /**
  * Unit tests of class ExerciseViewModel.
@@ -71,8 +73,7 @@ public class ExerciseViewModelTest {
         assertEquals(exercise.getComment(), unmodifiedExercise.getComment());
 
         // test after modifications
-        viewModel.hour.set(14);
-        viewModel.minute.set(45);
+        viewModel.time.set(LocalTime.of(14, 45));
         viewModel.distance.set(150f);
         viewModel.comment.set("  Bar Foo  ");
 

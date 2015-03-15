@@ -24,7 +24,7 @@ import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.TimeToStringConverter;
 
 /**
- * Controller (MVC) class of the Wieght dialog for editing / adding Weight entries.
+ * Controller (MVC) class of the Weight dialog for editing / adding Weight entries.
  *
  * @author Stefan Saring
  */
@@ -97,6 +97,8 @@ public class WeightDialogController extends AbstractDialogController {
         // setup validation of the UI controls
         validationSupport.registerValidator(dpDate,
                 Validator.createEmptyValidator(context.getResources().getString("st.dlg.weight.error.date")));
+        validationSupport.registerValidator(tfTime, //
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.weight.error.time")));
         validationSupport.registerValidator(tfValue, true, (Control control, String newValue) -> ValidationResult
                 .fromErrorIf(tfValue, context.getResources().getString("st.dlg.weight.error.weight"),
                         !ValidationUtils.isValueDoubleBetween(newValue, 0.1d, 1000)));

@@ -80,9 +80,11 @@ public class NoteDialogController extends AbstractDialogController {
         taText.textProperty().bindBidirectional(noteViewModel.text);
 
         // setup validation of the UI controls
-        validationSupport.registerValidator(dpDate,
+        validationSupport.registerValidator(dpDate, //
                 Validator.createEmptyValidator(context.getResources().getString("st.dlg.note.error.date")));
-        validationSupport.registerValidator(taText,
+        validationSupport.registerValidator(tfTime, //
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.note.error.time")));
+        validationSupport.registerValidator(taText, //
                 Validator.createEmptyValidator(context.getResources().getString("st.dlg.note.error.no_text")));
     }
 

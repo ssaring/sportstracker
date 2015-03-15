@@ -38,8 +38,7 @@ public class ExerciseViewModel {
     private final FormatUtils.UnitSystem unitSystem;
 
     public final ObjectProperty<LocalDate> date;
-    public final IntegerProperty hour;
-    public final IntegerProperty minute;
+    public final ObjectProperty<LocalTime> time;
     public final ObjectProperty<SportType> sportType;
     public final ObjectProperty<SportSubType> sportSubType;
     public final ObjectProperty<Exercise.IntensityType> intensity;
@@ -61,14 +60,13 @@ public class ExerciseViewModel {
     /**
      * Creates the ExerciseViewModel with JavaFX properties for the passed Exercise object.
      *
-     * @param exercise   Exercise to be edited
+     * @param exercise Exercise to be edited
      * @param unitSystem the unit system currently used in the UI
      */
     public ExerciseViewModel(final Exercise exercise, final FormatUtils.UnitSystem unitSystem) {
         this.id = exercise.getId();
         this.date = new SimpleObjectProperty(exercise.getDateTime().toLocalDate());
-        this.hour = new SimpleIntegerProperty(exercise.getDateTime().getHour());
-        this.minute = new SimpleIntegerProperty(exercise.getDateTime().getMinute());
+        this.time = new SimpleObjectProperty(exercise.getDateTime().toLocalTime());
         this.sportType = new SimpleObjectProperty(exercise.getSportType());
         this.sportSubType = new SimpleObjectProperty(exercise.getSportSubType());
         this.intensity = new SimpleObjectProperty(exercise.getIntensity());
@@ -101,7 +99,7 @@ public class ExerciseViewModel {
      */
     public Exercise getExercise() {
         final Exercise exercise = new Exercise(id);
-        exercise.setDateTime(LocalDateTime.of(date.get(), LocalTime.of(hour.getValue(), minute.getValue())));
+        exercise.setDateTime(LocalDateTime.of(date.get(), time.get()));
         exercise.setSportType(sportType.getValue());
         exercise.setSportSubType(sportSubType.getValue());
         exercise.setIntensity(intensity.getValue());
@@ -174,11 +172,11 @@ public class ExerciseViewModel {
 
             // force value changes for distance and avg speed, so the validation will be executed
             // depending on the new selected sport type (no other way to fire the event)
-            distance.set(distance.get() + 1);
-            distance.set(distance.get() - 1);
-            avgSpeed.set(avgSpeed.get() + 1);
-            avgSpeed.set(avgSpeed.get() - 1);
-        });
+                distance.set(distance.get() + 1);
+                distance.set(distance.get() - 1);
+                avgSpeed.set(avgSpeed.get() + 1);
+                avgSpeed.set(avgSpeed.get() - 1);
+            });
     }
 
     /**

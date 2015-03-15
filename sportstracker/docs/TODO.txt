@@ -1,9 +1,7 @@
 SportsTracker-TODO
 ==================
 
-- Use Spinner and FormatedTextFields controls in (e.g. in Exercise, Note, Weight dialogs)
-  => will be introduced in Java 8u40 (Dec. 2014)
-- remove error.time text resources, add to I18N
+- Overview Dialog: Use Spinner control => will be introduced in Java 8u40 (Dec. 2014)
 
 JavaFX Migration:
 - remove the openjfx-dialog dependency when Java 8u40 has been released and when Java 8u40 is

@@ -2,10 +2,12 @@ package de.saring.sportstracker.gui.dialogs;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.util.gui.javafx.TimeToStringConverter;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -19,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 
@@ -48,7 +51,7 @@ import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
 
 /**
- * Controller (MVC) class of the Wieght dialog for editing / adding Exercise entries.
+ * Controller (MVC) class of the Exercise dialog for editing / adding Exercise entries.
  *
  * @author Stefan Saring
  */
@@ -67,13 +70,8 @@ public class ExerciseDialogController extends AbstractDialogController {
     @FXML
     private DatePicker dpDate;
 
-    // TODO use formatted TextField, will be introduced in JavaFX 8u40
     @FXML
-    private TextField tfHour;
-
-    // TODO use formatted TextField, will be introduced in JavaFX 8u40
-    @FXML
-    private TextField tfMinute;
+    private TextField tfTime;
 
     @FXML
     private ChoiceBox<SportType> cbSportType;
@@ -246,8 +244,12 @@ public class ExerciseDialogController extends AbstractDialogController {
     private void setupBinding() {
 
         dpDate.valueProperty().bindBidirectional(exerciseViewModel.date);
-        tfHour.textProperty().bindBidirectional(exerciseViewModel.hour, new NumberStringConverter("00"));
-        tfMinute.textProperty().bindBidirectional(exerciseViewModel.minute, new NumberStringConverter("00"));
+
+        // use text formatter for time values => makes sure that the value is also valid
+        final TextFormatter<LocalTime> timeTextFormatter = new TextFormatter<>(new TimeToStringConverter());
+        timeTextFormatter.valueProperty().bindBidirectional(exerciseViewModel.time);
+        tfTime.setTextFormatter(timeTextFormatter);
+
         cbSportType.valueProperty().bindBidirectional(exerciseViewModel.sportType);
         cbSportSubtype.valueProperty().bindBidirectional(exerciseViewModel.sportSubType);
         cbIntensity.valueProperty().bindBidirectional(exerciseViewModel.intensity);
@@ -270,19 +272,15 @@ public class ExerciseDialogController extends AbstractDialogController {
      */
     private void setupValidation() {
 
-        validationSupport.registerValidator(dpDate,
+        validationSupport.registerValidator(dpDate, //
                 Validator.createEmptyValidator(context.getResources().getString("st.dlg.exercise.error.date")));
-        validationSupport.registerValidator(tfHour, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfHour, context.getResources().getString("st.dlg.exercise.error.time"),
-                        !ValidationUtils.isValueIntegerBetween(newValue, 0, 23)));
-        validationSupport.registerValidator(tfMinute, true, (Control control, String newValue) ->
-                ValidationResult.fromErrorIf(tfMinute, context.getResources().getString("st.dlg.exercise.error.time"),
-                        !ValidationUtils.isValueIntegerBetween(newValue, 0, 59)));
-        validationSupport.registerValidator(cbSportType,
+        validationSupport.registerValidator(tfTime, //
+                Validator.createEmptyValidator(context.getResources().getString("st.dlg.exercise.error.time")));
+        validationSupport.registerValidator(cbSportType, //
                 Validator.createEmptyValidator(context.getResources().getString("st.dlg.exercise.error.no_sport_type")));
-        validationSupport.registerValidator(cbSportSubtype,
+        validationSupport.registerValidator(cbSportSubtype, //
                 Validator.createEmptyValidator(context.getResources().getString("st.dlg.exercise.error.no_sport_subtype")));
-        validationSupport.registerValidator(cbIntensity,
+        validationSupport.registerValidator(cbIntensity, //
                 Validator.createEmptyValidator(context.getResources().getString("st.dlg.exercise.error.no_intensity")));
 
         validationSupport.registerValidator(tfDistance, true, (Control control, String newValue) ->
@@ -456,8 +454,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         final LocalDateTime pvExerciseDateTime = pvExercise.getDateTime();
         if (pvExerciseDateTime != null) {
             exerciseViewModel.date.setValue(pvExerciseDateTime.toLocalDate());
-            exerciseViewModel.hour.set(pvExerciseDateTime.getHour());
-            exerciseViewModel.minute.set(pvExerciseDateTime.getMinute());
+            exerciseViewModel.time.set(pvExerciseDateTime.toLocalTime());
         }
 
         exerciseViewModel.avgHeartRate.set(pvExercise.getHeartRateAVG());
