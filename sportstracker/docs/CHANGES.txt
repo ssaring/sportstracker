@@ -11,6 +11,8 @@ v7.0.1:
     (always ensures valid time values and displayed format)
   - Overview Dialog: use of a spinner control for the year selection, incl.
     mouse wheel support
+  - Travis CI: use of latest Oracle Java release (8u40) from 3rd party PPA repo
+    (missing in Ubuntu repository)
 
 v7.0.0:
  SportsTracker changes:
