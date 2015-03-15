@@ -11,6 +11,5 @@ before_install:
   - echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
   - sudo apt-get install oracle-java8-installer
 
-# latest Oracle Java from 3rd party PPA is installed above, so Java dependency not needed here
-# jdk:
-#   - oraclejdk8
+jdk:
+  - oraclejdk8
