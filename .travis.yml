@@ -1,10 +1,16 @@
 language: java
 
-# start X-server for GUI tests (xvfb)
 before_install:
+  # start X-server for GUI tests (xvfb)
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
+  # latest Java release from Oracle is needed => add 3rd party PPA repository
+  - sudo add-apt-repository --yes ppa:webupd8team/java
+  - sudo apt-get update -qq
+  # accept oracle license confirmation dialog without interaction
+  - echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+  - sudo apt-get install oracle-java8-installer
 
-jdk:
-    - oraclejdk8
-
+# latest Oracle Java from 3rd party PPA is installed above, so Java dependency not needed here
+# jdk:
+#   - oraclejdk8

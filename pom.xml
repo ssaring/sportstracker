@@ -125,14 +125,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- TODO remove when the Travis CI build machines have been updated to JavaFX 8u40, otherwise the build will fail!
-             This dependency is used only for compilation, at runtime it uses the classes from JavaFX 8u40. -->
-        <dependency>
-            <groupId>org.controlsfx</groupId>
-            <artifactId>openjfx-dialogs</artifactId>
-            <version>1.0.2</version>
-            <scope>provided</scope>
-        </dependency>
         <!-- Common test dependencies -->
         <dependency>
             <groupId>junit</groupId>
