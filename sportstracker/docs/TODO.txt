@@ -1,6 +1,9 @@
 SportsTracker-TODO
 ==================
 
+- remove error.time text resources, add to I18N
+- add unit tests
+
 JavaFX Migration:
 - remove the openjfx-dialog dependency when Java 8u40 has been released and when Java 8u40 is
   available on the Travis CI build systems

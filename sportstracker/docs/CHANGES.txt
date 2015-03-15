@@ -6,6 +6,9 @@ v7.0.1:
   - update of the bundled Java runtime to Java SE/FX 8u40, which contains many
     bugfixes
   - removed workarounds for Java versions earlier than 8u40
+  - Exercise, Note and Weight dialogs: use of one formatted text input for the
+    entry time instead of separate inputs for hour and minute
+    (always ensures valid time values and displayed format)
 
 v7.0.0:
  SportsTracker changes:

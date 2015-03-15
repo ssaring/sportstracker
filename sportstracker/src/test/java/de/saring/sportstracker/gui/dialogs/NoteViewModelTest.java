@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Unit tests of class NoteViewModel.
@@ -38,8 +39,7 @@ public class NoteViewModelTest {
         assertEquals(note.getText(), unmodifiedNote.getText());
 
         // test after modifications
-        viewModel.hour.set(14);
-        viewModel.minute.set(45);
+        viewModel.time.set(LocalTime.of(14, 45));
         viewModel.text.set("  Bar Foo  ");
 
         Note modifiedNote = viewModel.getNote();

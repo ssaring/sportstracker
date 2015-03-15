@@ -19,9 +19,7 @@
                         <Insets left="16.0"/>
                     </padding>
                 </Label>
-                <TextField fx:id="tfHour" prefColumnCount="2" HBox.hgrow="NEVER"/>
-                <Label text=":" HBox.hgrow="NEVER"/>
-                <TextField fx:id="tfMinute" prefColumnCount="2" HBox.hgrow="NEVER"/>
+                <TextField fx:id="tfTime" prefColumnCount="5" HBox.hgrow="NEVER"/>
             </children>
         </HBox>
         <VBox spacing="8.0" VBox.vgrow="ALWAYS">
