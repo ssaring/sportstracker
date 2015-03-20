@@ -3,6 +3,7 @@ package de.saring.exerciseviewer.gui.panels;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.gui.jfreechart.ChartUtils;
@@ -15,6 +16,7 @@ import javafx.util.StringConverter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.fx.ChartViewer;
@@ -58,6 +60,8 @@ public class DiagramPanelController extends AbstractPanelController {
     private static final java.awt.Color COLOR_AXIS_RIGHT = java.awt.Color.BLUE;
     private static final java.awt.Color COLOR_MARKER_LAP = new java.awt.Color(0f, 0.73f, 0f);
     private static final java.awt.Color COLOR_MARKER_HEARTRATE = new java.awt.Color(0.8f, 0.8f, 0.8f, 0.3f);
+
+    private static final TimeZone TIMEZONE_GMT = TimeZone.getTimeZone("GMT");
 
     private final AxisTypeStringConverter axisTypeStringConverter;
 
@@ -302,6 +306,12 @@ public class DiagramPanelController extends AbstractPanelController {
             setTooltipGenerator(rendererRight, axisTypeBottom, axisTypeRight);
         }
 
+        // use TimeZone GMT on the time axis, because all Date value are GMT based
+        if (fDomainAxisTime) {
+            final DateAxis dateAxis = (DateAxis) plot.getDomainAxis();
+            dateAxis.setTimeZone(TIMEZONE_GMT);
+        }
+
         // highlight current selected (if set) heartrate range when displayed on left axis
         if (highlightHeartrateRange != null && axisTypeLeft == AxisType.HEARTRATE) {
 
@@ -358,13 +368,12 @@ public class DiagramPanelController extends AbstractPanelController {
 
     /**
      * Creates the JFreeChart Second instance for the specified number of seconds.
-     * One hour must be substracted, otherwise the range starts with 01:00.
      *
      * @param seconds the number of seconds
      * @return the created Second instance
      */
     private Second createJFreeChartSecond(final int seconds) {
-        return new Second(new Date((seconds * 1000) - (60 * 60 * 1000)));
+        return new Second(new Date(seconds * 1000L));
     }
 
     /**
@@ -449,8 +458,10 @@ public class DiagramPanelController extends AbstractPanelController {
                 axisTypeStringConverter.toString(valueAxis) + ": {2}";
 
         if (domainAxis == AxisType.TIME) {
-            renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(format, new SimpleDateFormat("HH:mm"),
-                    new DecimalFormat()));
+            final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            // all time values are using timezone GMT, so the formatter needs too
+            timeFormat.setTimeZone(TIMEZONE_GMT);
+            renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(format, timeFormat, new DecimalFormat()));
         } else {
             renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(format, new DecimalFormat(),
                     new DecimalFormat()));

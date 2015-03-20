@@ -13,6 +13,12 @@ v7.0.1:
     mouse wheel support
   - Travis CI: use of latest Oracle Java release (8u40) from 3rd party PPA repo
     (missing in Ubuntu repository)
+ ExerciseViewer changes:
+   - Bugfixes in Diagram Panel (bug #49):
+     - time axis in diagram must always start at 00:00 (the timezone offset
+       needs to be ignored)
+     - display lap markers at proper time positions
+     - display proper formatted time in chart tooltips
 
 v7.0.0:
  SportsTracker changes:
