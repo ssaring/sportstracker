@@ -35,6 +35,7 @@ Translators (alphabetical order):
   Danish:  Jacob Ilsø Christensen <jacobilsoe@gmail.com>
   Dutch:   Eric Spierings <ericspierings@netscape.net>
   French:  Nicolas Ollivier <nicollivier@gmail.com>
+           Olivier M. <eliovir@gmail.com>
   German:  Stefan Saring <projects@saring.de>
   Korean:  Tae Young Ko <oscetic@gmail.com>
   Polish:  Zbigniew Ogledzki <zgibek@gazeta.pl>

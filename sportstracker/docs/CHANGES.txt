@@ -19,6 +19,8 @@ v7.0.1:
        needs to be ignored)
      - display lap markers at proper time positions
      - display proper formatted time in chart tooltips
+ Translations:
+   - updated french translation by Olivier M. <eliovir@gmail.com>
 
 v7.0.0:
  SportsTracker changes:

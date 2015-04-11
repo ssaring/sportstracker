@@ -44,6 +44,9 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 7.0.1:
+- st.dlg.about.translators.text (edited)
+
 SportsTracker 7.0.0:
 - application.title (new, no translations needed)
 - application.version (new, no translations needed)
