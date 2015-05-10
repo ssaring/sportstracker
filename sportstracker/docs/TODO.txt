@@ -2,6 +2,8 @@ SportsTracker-TODO
 ==================
 
 JavaFX Migration:
+- Calendar: current day must be better recognizable, see
+  https://sourceforge.net/p/sportstracker/feature-requests/80/
 - ExerciseViewer: Done & tested
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)
