@@ -14,6 +14,8 @@ v7.0.1:
   - Travis CI: use of latest Oracle Java release (8u45) from 3rd party PPA repo
     (missing in Ubuntu repository)
   - update of ControlFX to 8.40.9
+  - added support of HiDPI / Retina displays for all icons and text
+    (all images and icons are now available as @2x-versions)
  ExerciseViewer changes:
    - Bugfixes in Diagram Panel (bug #49):
      - time axis in diagram must always start at 00:00 (the timezone offset
