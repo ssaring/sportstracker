@@ -19,9 +19,13 @@ gray.
 This can be done by using tools like Gimp or Paint.net, the opacity of the
 icons needs to be set to 60% (can be edited in the layer properties).
 
-The size of all toolbar and menu icons is 16x16 px. The IcoMoon project also
-provides 32x32 px icons, so it's possible to support high resolution (aka
-"retina") displays in future.
+The size of all toolbar and menu icons is 16x16 px.
+
+For supporting HiDPI or Retina displays it's needed to provide all images and
+icons with double resolution (e.g. 32x32 for 16x16). These files needs to be
+located at the same place and must end with '@2x' (e.g. '0001-home@2x.png' for
+'0001-home.png'). JavaFX will load them automatically on systems with HiDPI or
+Retina displays (tested on Mac OS X 10.10).
 
 The IcoMoon collections does not provide all icons, e.g. for viewing HRM files
 or adding new Exercise entries. These icons have been created by combining and
@@ -37,4 +41,4 @@ The opacity of the custom icons must also be set to 60% afterwards (see above).
 
 
 Stefan Saring
-2015/02/17
+2015/06/20
