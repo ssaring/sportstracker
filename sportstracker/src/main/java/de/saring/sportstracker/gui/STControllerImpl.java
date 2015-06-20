@@ -230,9 +230,8 @@ public class STControllerImpl implements STController {
                 new Image("icons/st-logo_256x256.png"), //
                 new Image("icons/st-logo_128x128.png"), //
                 new Image("icons/st-logo_64x64.png"), //
-                new Image("icons/st-logo_48x48.png"), //
                 new Image("icons/st-logo_32x32.png"), //
-                new Image("icons/st-logo_24x24.png"));
+                new Image("icons/st-logo_16x16.png"));
 
         setupActionBindings();
         setupMacSpecificUI();
