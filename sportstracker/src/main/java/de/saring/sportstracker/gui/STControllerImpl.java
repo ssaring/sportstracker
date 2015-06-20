@@ -226,13 +226,13 @@ public class STControllerImpl implements STController {
                 context.getResources().getString("application.version")));
 
         primaryStage.getIcons().addAll( //
-                new Image("icons/st-logo-512.png"), //
-                new Image("icons/st-logo-256.png"), //
-                new Image("icons/st-logo-128.png"), //
-                new Image("icons/st-logo-64.png"), //
-                new Image("icons/st-logo-48.png"), //
-                new Image("icons/st-logo-32.png"), //
-                new Image("icons/st-logo-24.png"));
+                new Image("icons/st-logo_512x512.png"), //
+                new Image("icons/st-logo_256x256.png"), //
+                new Image("icons/st-logo_128x128.png"), //
+                new Image("icons/st-logo_64x64.png"), //
+                new Image("icons/st-logo_48x48.png"), //
+                new Image("icons/st-logo_32x32.png"), //
+                new Image("icons/st-logo_24x24.png"));
 
         setupActionBindings();
         setupMacSpecificUI();
