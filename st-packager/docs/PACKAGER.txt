@@ -21,7 +21,10 @@ Execution: mvn clean install -Pnative-packager
 
 Open issues:
 - License file currently can't be included, enable in pom.xml when fixed.
-  See https://github.com/zonski/javafx-maven-plugin/issues/55
+  See https://github.com/zonski/javafx-maven-plugin/issues/55 or
+  https://github.com/javafx-maven-plugin/javafx-maven-plugin/pull/84
+  -> the issues are solved in latest javafx-maven-plugin release 8.1.3
+  -> there is no documentation how to copy the file, I've requested an example
 - Add all documentation files from sportstracker/docs to the created packages,
   depends also on issue https://github.com/zonski/javafx-maven-plugin/issues/55
   (must be done manually now, if possible)
