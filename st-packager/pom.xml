@@ -79,6 +79,7 @@
                                 <!-- License definition (needed for Linux/Debian packages) -->
                                 <licenseType>GNU General Public License (GPL), Version 2.0</licenseType>
                                 <!-- The license file is available in the copied additional app resources -->
+                                <!-- TODO: must be disabled on Windows, the license file can't be found! -->
                                 <licenseFile>docs/LICENSE.txt</licenseFile>
                             </bundleArguments>
                         </configuration>

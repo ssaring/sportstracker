@@ -2,7 +2,9 @@ SportsTracker Packaging
 =======================
 
 TODO:
-- test included documentation files and display of license on Windows and Linux
+- pom.xml: license file configuration must be disabled on Windows:
+  - "docs/LICENSE.txt" can not be found, although present
+  - when using "docs\LICENSE.txt" the file is found but the packager crashes
 
 The project module 'st-packager' contains all the scripts and resources for
 automated creation of native application packages and native installers during
