@@ -3,6 +3,10 @@ Changelog
 
 v7.1.1:
  SportsTracker changes:
+  - Native SportsTracker packages are now containing all documentation files
+    (README, LICENSE, CHANGES, AUTHORS, ...)
+  - Native SportsTracker packages are displaying the GPLv2 license text before
+    installation (tested on Mac OS X)
 
 v7.1.0:
  SportsTracker changes:

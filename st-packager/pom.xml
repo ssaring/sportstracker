@@ -30,10 +30,36 @@
 
             <build>
                 <plugins>
+                    <!-- Plugin for copying the SportsTracker documentation directory for inclusion to the native package -->
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.7</version>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/additionalAppResources</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/../sportstracker</directory>
+                                            <includes>
+                                                <include>docs/</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Plugin for creating the native packages -->
                     <plugin>
                         <groupId>com.zenjava</groupId>
                         <artifactId>javafx-maven-plugin</artifactId>
-                        <version>8.1.2</version>
+                        <version>8.1.3</version>
                         <configuration>
                             <appName>${application.name}</appName>                            
                             <mainClass>${application.mainClass}</mainClass>
@@ -42,6 +68,7 @@
                                 <jvmArg>-Xms64m</jvmArg>
                                 <jvmArg>-Xmx192m</jvmArg>
                             </jvmArgs>
+                            <additionalAppResources>${project.build.directory}/additionalAppResources</additionalAppResources>
                             <bundleArguments>
                                 <copyright>(C) 2015 Stefan Saring</copyright>
                                 <description>Application for tracking your sporting activities.</description>
@@ -51,9 +78,8 @@
                                 <email>projects@saring.de</email>
                                 <!-- License definition (needed for Linux/Debian packages) -->
                                 <licenseType>GNU General Public License (GPL), Version 2.0</licenseType>
-                                <!-- TODO License file inclusion is currently not possible, enable when fixed.
-                                     See https://github.com/zonski/javafx-maven-plugin/issues/55
-                                <licenseFile>LICENSE.txt</licenseFile> -->
+                                <!-- The license file is available in the copied additional app resources -->
+                                <licenseFile>docs/LICENSE.txt</licenseFile>
                             </bundleArguments>
                         </configuration>
                         <executions>
