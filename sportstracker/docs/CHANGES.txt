@@ -7,6 +7,10 @@ v7.1.1:
     (README, LICENSE, CHANGES, AUTHORS, ...)
   - Native SportsTracker packages are displaying the GPLv2 license text before
     installation (tested on Mac OS X)
+  - update to Guice 4.0 final (provides Java8 runtime compatibility and fixes
+    many issues)
+    - Guice 4.0 includes the new library Guava 16.0.1 (2.2 MByte), this does
+      not increases the start time and memory usage SportsTracker (tested)
 
 v7.1.0:
  SportsTracker changes:
