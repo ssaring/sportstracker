@@ -761,6 +761,18 @@ public class STControllerImpl implements STController {
         final Exercise exercise = new Exercise(document.getExerciseList().getNewID());
         exercise.setDateTime(Date310Utils.getNoonDateTimeForDate(date));
         exercise.setIntensity(Exercise.IntensityType.NORMAL);
+
+        // pre-select sport type and sport subtype when there is only one choice
+        if (document.getSportTypeList().size() == 1) {
+            final SportType sportType = document.getSportTypeList().getAt(0);
+            exercise.setSportType(sportType);
+
+            if (sportType.getSportSubTypeList().size() == 1) {
+                final SportSubType sportSubType = sportType.getSportSubTypeList().getAt(0);
+                exercise.setSportSubType(sportSubType);
+            }
+        }
+
         return exercise;
     }
 

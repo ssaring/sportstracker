@@ -11,6 +11,8 @@ v7.1.1:
     many issues)
     - Guice 4.0 includes the new library Guava 16.0.1 (2.2 MByte), this does
       not increases the start time and memory usage SportsTracker (tested)
+  - Exercise Dialog: preselection of sport type and subtype when adding new
+    exercises, if there is only one choice
 
 v7.1.0:
  SportsTracker changes:
