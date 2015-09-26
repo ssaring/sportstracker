@@ -1,6 +1,11 @@
 SportsTracker-TODO
 ==================
 
+- Database Export (to SQLite?)
+  - users will technical skills have all possibilities for custom queries and
+    statistics
+  - provides new possibilities for data migration
+
 JavaFX Migration:
 - Calendar: current day must be better recognizable, see
   https://sourceforge.net/p/sportstracker/feature-requests/80/
