@@ -14,7 +14,7 @@ v7.1.1:
   - Exercise Dialog: preselection of sport type and subtype when adding new
     exercises, if there is only one choice
  ExerciseViewer changes:
-  - added support for Polar RX3 HRM files (contains limited data only)
+  - added support for Polar RCX3 HRM files (contains limited data only)
 
 v7.1.0:
  SportsTracker changes:

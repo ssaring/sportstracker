@@ -39,7 +39,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - Polar F6           (tested)
   - Polar F11          (tested)
   - Polar CS600        (tested, HRM files only)
-  - Polar RX3          (tested, HRM files only)
+  - Polar RCX3         (tested, HRM files only)
   - CicloSport HAC4    (tested)
   - CicloSport HAC4Pro (tested)
   - CicloSport HAC5    (tested)
