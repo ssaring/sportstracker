@@ -1,6 +1,9 @@
 SportsTracker-TODO
 ==================
 
+Before next release:
+- add info to website: support for Polar RX3 HRM files
+
 - Database Export (to SQLite?)
   - users will technical skills have all possibilities for custom queries and
     statistics

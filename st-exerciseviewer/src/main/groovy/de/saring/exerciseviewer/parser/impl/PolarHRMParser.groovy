@@ -84,6 +84,10 @@ class PolarHRMParser extends AbstractExerciseParser {
         exercise.recordingMode.power = strSMode[3] == '1'
         // TODO: the bikenumber is not decoded yet
 
+        if (exercise.recordingMode.speed) {
+            exercise.speed = new ExerciseSpeed()
+        }
+
         // does the HRM file uses metric or english units ?
         def fMetricUnits = strSMode[7] == '0'
 
@@ -243,8 +247,9 @@ class PolarHRMParser extends AbstractExerciseParser {
 
         // get lines of 'Summary-123' block
         // (mostly 7 lines, 8 lines for Polar CS600, data of last line is unknown)
+        // (HRM export of Polar RCX3 does contain 6 lines only)
         def lSummary123Block = getBlockLines("Summary-123", true)
-        if (lSummary123Block.size() < 7) {
+        if (lSummary123Block.size() < 6) {
             throw new EVException("Failed to read HRM file, can't find block 'Summary-123' or block is not valid ...")
         }
 
@@ -297,7 +302,6 @@ class PolarHRMParser extends AbstractExerciseParser {
         if (lTripBlock.size() == 8) {
             // parse speed informations
             if (exercise.recordingMode.speed) {
-                exercise.speed = new ExerciseSpeed()
                 exercise.speed.distance = lTripBlock[0].toInteger() * 100
                 exercise.speed.speedAVG = lTripBlock[5].toInteger() / 128f
                 // ignore maximum speed data, it is often wrong for many Polar models (will be calculated later) 
