@@ -2,6 +2,7 @@ SportsTracker-TODO
 ==================
 
 Before next release:
+- update to ControlsFX 8.40.10, fixes compatibility issues with Java 8u60+
 - add info to website: support for Polar RCX3 HRM files
 
 - Database Export (to SQLite?)
