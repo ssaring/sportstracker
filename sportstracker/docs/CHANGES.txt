@@ -15,6 +15,9 @@ v7.1.1:
     exercises, if there is only one choice
  ExerciseViewer changes:
   - added support for Polar RCX3 HRM files (contains limited data only)
+ Project changes:
+  - use the Ubuntu Trusty image in Travis CI builds, it contains the latest
+    Java 8 JDK (no workaround installation needed anymore)
 
 v7.1.0:
  SportsTracker changes:
