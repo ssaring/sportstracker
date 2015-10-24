@@ -10,6 +10,8 @@ Before next release:
     statistics
   - provides new possibilities for data migration
 
+- Add search for comments in Note and Weight entries (currently for Exercises only)
+
 JavaFX Migration:
 - Calendar: current day must be better recognizable, see
   https://sourceforge.net/p/sportstracker/feature-requests/80/
