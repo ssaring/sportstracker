@@ -51,7 +51,7 @@ IntelliJ IDEA configuration (version 14.x):
 
 - File -> Settings:
   - Plugins: 
-    - install plugin "Eclipse Code Formatter" (version 14.x) and restart IDEA
+    - install plugin "Eclipse Code Formatter" (version 15.x) and restart IDEA
   - Eclipse Code Formatter:
     - (x) Use the Eclipse code formatter
     - Eclipse Java Formatter config file: 
