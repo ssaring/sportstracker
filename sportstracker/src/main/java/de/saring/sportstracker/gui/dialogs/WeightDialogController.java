@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.dialogs;
 
 import java.time.LocalTime;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
@@ -95,13 +96,17 @@ public class WeightDialogController extends AbstractDialogController {
         taComment.textProperty().bindBidirectional(weightViewModel.comment);
 
         // setup validation of the UI controls
-        validationSupport.registerValidator(dpDate,
-                Validator.createEmptyValidator(context.getResources().getString("st.dlg.weight.error.date")));
-        validationSupport.registerValidator(tfTime, //
-                Validator.createEmptyValidator(context.getResources().getString("st.dlg.weight.error.time")));
-        validationSupport.registerValidator(tfValue, true, (Control control, String newValue) -> ValidationResult
-                .fromErrorIf(tfValue, context.getResources().getString("st.dlg.weight.error.weight"),
-                        !ValidationUtils.isValueDoubleBetween(newValue, 0.1d, 1000)));
+        // => due to a ControlsFX bug the validation setup must be executed after the dialog has been shown
+        // (see https://bitbucket.org/controlsfx/controlsfx/issues/539/multiple-dialog-fields-with-validation )
+        Platform.runLater(() -> {
+            validationSupport.registerValidator(dpDate,
+                    Validator.createEmptyValidator(context.getResources().getString("st.dlg.weight.error.date")));
+            validationSupport.registerValidator(tfTime, //
+                    Validator.createEmptyValidator(context.getResources().getString("st.dlg.weight.error.time")));
+            validationSupport.registerValidator(tfValue, true, (Control control, String newValue) -> ValidationResult
+                    .fromErrorIf(tfValue, context.getResources().getString("st.dlg.weight.error.weight"),
+                            !ValidationUtils.isValueDoubleBetween(newValue, 0.1d, 1000)));
+        });
     }
 
     @Override

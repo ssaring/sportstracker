@@ -2,9 +2,11 @@ SportsTracker-TODO
 ==================
 
 Before next release:
-- BUG with JDK8u66: FilterDialog can't be opened anymore:
+- BUG with JDK8u66: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:
   Caused by: java.lang.IllegalArgumentException:
      DialogPane@4a0efce0[styleClass=root dialog-pane]is already inside a scene-graph and cannot be set as root
+  -> ControlsFX issue, see details here: https://bitbucket.org/controlsfx/controlsfx/issues/539/multiple-dialog-fields-with-validation
+  -> check all other dialogs too
 - add info to website: support for Polar RCX3 HRM files
 
 - Database Export (to SQLite?)
@@ -15,6 +17,12 @@ Before next release:
 - Add search for comments in Note and Weight entries (currently for Exercises only)
 
 JavaFX Migration:
+- DatePicker validation does not work => when removing the date no error will be shown (uses previous date)
+- ControlsFX bug, remove workaround when fixed:
+  - Dialogs can't be displayed when they contain multiple controls with validation support
+    (see https://bitbucket.org/controlsfx/controlsfx/issues/539/multiple-dialog-fields-with-validation )
+  - workaround is to setup the validation after the dialog has been shown (with Platform.invokeLater(...)
+    => remove after the bug has been fixed in Filter-, Note- and Weight Dialog
 - Calendar: current day must be better recognizable, see
   https://sourceforge.net/p/sportstracker/feature-requests/80/
 - ExerciseViewer: Done & tested

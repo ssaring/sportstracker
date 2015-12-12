@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.dialogs;
 
 import java.time.LocalTime;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -80,12 +81,16 @@ public class NoteDialogController extends AbstractDialogController {
         taText.textProperty().bindBidirectional(noteViewModel.text);
 
         // setup validation of the UI controls
-        validationSupport.registerValidator(dpDate, //
-                Validator.createEmptyValidator(context.getResources().getString("st.dlg.note.error.date")));
-        validationSupport.registerValidator(tfTime, //
-                Validator.createEmptyValidator(context.getResources().getString("st.dlg.note.error.time")));
-        validationSupport.registerValidator(taText, //
-                Validator.createEmptyValidator(context.getResources().getString("st.dlg.note.error.no_text")));
+        // => due to a ControlsFX bug the validation setup must be executed after the dialog has been shown
+        // (see https://bitbucket.org/controlsfx/controlsfx/issues/539/multiple-dialog-fields-with-validation )
+        Platform.runLater(() -> {
+            validationSupport.registerValidator(dpDate, //
+                    Validator.createEmptyValidator(context.getResources().getString("st.dlg.note.error.date")));
+            validationSupport.registerValidator(tfTime, //
+                    Validator.createEmptyValidator(context.getResources().getString("st.dlg.note.error.time")));
+            validationSupport.registerValidator(taText, //
+                    Validator.createEmptyValidator(context.getResources().getString("st.dlg.note.error.no_text")));
+        });
     }
 
     @Override

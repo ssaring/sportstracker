@@ -7,17 +7,21 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import de.saring.util.ValidationUtils;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
 import javax.inject.Inject;
 
+import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 
 import de.saring.sportstracker.data.Equipment;
@@ -132,11 +136,14 @@ public class FilterDialogController extends AbstractDialogController {
      * Setup of the validation of the UI controls.
      */
     private void setupValidation() {
-
-        validationSupport.registerValidator(dpStart,
-                Validator.createEmptyValidator(context.getResources().getString("st.dlg.filter.error.date")));
-        validationSupport.registerValidator(dpEnd,
-                Validator.createEmptyValidator(context.getResources().getString("st.dlg.filter.error.date")));
+        // => due to a ControlsFX bug the validation setup must be executed after the dialog has been shown
+        // (see https://bitbucket.org/controlsfx/controlsfx/issues/539/multiple-dialog-fields-with-validation )
+        Platform.runLater(() -> {
+            validationSupport.registerValidator(dpStart,
+                    Validator.createEmptyValidator(context.getResources().getString("st.dlg.filter.error.date")));
+            validationSupport.registerValidator(dpEnd,
+                    Validator.createEmptyValidator(context.getResources().getString("st.dlg.filter.error.date")));
+        });
     }
 
     /**
