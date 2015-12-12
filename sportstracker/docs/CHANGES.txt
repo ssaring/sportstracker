@@ -13,6 +13,7 @@ v7.1.1:
       not increases the start time and memory usage SportsTracker (tested)
   - Exercise Dialog: preselection of sport type and subtype when adding new
     exercises, if there is only one choice
+  - update of ControlFX to 8.40.10 for compatibility to Java 8u60+
  ExerciseViewer changes:
   - added support for Polar RCX3 HRM files (contains limited data only)
  Project changes:

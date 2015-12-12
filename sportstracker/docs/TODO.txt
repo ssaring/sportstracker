@@ -2,7 +2,9 @@ SportsTracker-TODO
 ==================
 
 Before next release:
-- update to ControlsFX 8.40.10, fixes compatibility issues with Java 8u60+
+- BUG with JDK8u66: FilterDialog can't be opened anymore:
+  Caused by: java.lang.IllegalArgumentException:
+     DialogPane@4a0efce0[styleClass=root dialog-pane]is already inside a scene-graph and cannot be set as root
 - add info to website: support for Polar RCX3 HRM files
 
 - Database Export (to SQLite?)
