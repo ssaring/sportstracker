@@ -14,6 +14,11 @@ v7.1.1:
   - Exercise Dialog: preselection of sport type and subtype when adding new
     exercises, if there is only one choice
   - update of ControlFX to 8.40.10 for compatibility to Java 8u60+
+  - updated javafx-maven-plugin to version 8.2.0
+    - simpler inclusion of additional app resources
+    - GPL license is displayed before installation (Mac / Windows)
+    - better UI when opening the DMG package on Mac OS X
+
  ExerciseViewer changes:
   - added support for Polar RCX3 HRM files (contains limited data only)
  Project changes:

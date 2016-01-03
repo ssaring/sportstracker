@@ -1,11 +1,6 @@
 SportsTracker Packaging
 =======================
 
-TODO:
-- pom.xml: license file configuration must be disabled on Windows:
-  - "docs/LICENSE.txt" can not be found, although present
-  - when using "docs\LICENSE.txt" the file is found but the packager crashes
-
 The project module 'st-packager' contains all the scripts and resources for
 automated creation of native application packages and native installers during
 the Maven build process.
@@ -77,5 +72,5 @@ Created packages:
 Ubuntu / Debian packages:
 - DEB package creation requires the package 'fakeroot', can be installed from
   the distribution repository.
-- Installation command: sudo dpkg -i sportstracker-7.0.0.deb
+- Installation command: sudo dpkg -i sportstracker-x.y.z.deb
 - Uninstall command: sudo dpkg -P sportstracker
