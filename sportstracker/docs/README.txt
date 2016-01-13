@@ -369,8 +369,8 @@ The SportsTracker project uses the following libraries:
 
   - Groovy 2.4.1 (http://groovy.codehaus.org)
       License: Apache License v2.0
-  - Guice 4.0 (http://code.google.com/p/google-guice/)
-      Includes: javax.inject-1.jar, Guice 16.0.1
+  - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
+      Includes: javax.inject-1.jar
       License: Apache License v2.0
   - JFreeChart 1.0.19 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
@@ -473,4 +473,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2015/12/12
+2016/01/13

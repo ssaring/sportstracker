@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.sportstracker.gui.dialogs.DialogProvider;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -29,10 +30,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 import javax.inject.Singleton;
 
-import de.saring.exerciseviewer.gui.EVMain;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
@@ -40,16 +39,7 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
-import de.saring.sportstracker.gui.dialogs.AboutDialogController;
-import de.saring.sportstracker.gui.dialogs.ExerciseDialogController;
 import de.saring.sportstracker.gui.dialogs.FilterDialogController;
-import de.saring.sportstracker.gui.dialogs.HRMFileOpenDialog;
-import de.saring.sportstracker.gui.dialogs.NoteDialogController;
-import de.saring.sportstracker.gui.dialogs.OverviewDialogController;
-import de.saring.sportstracker.gui.dialogs.PreferencesDialogController;
-import de.saring.sportstracker.gui.dialogs.SportTypeListDialogController;
-import de.saring.sportstracker.gui.dialogs.StatisticDialogController;
-import de.saring.sportstracker.gui.dialogs.WeightDialogController;
 import de.saring.sportstracker.gui.statusbar.StatusBarController;
 import de.saring.sportstracker.gui.views.EntryViewController;
 import de.saring.sportstracker.gui.views.calendarview.CalendarViewController;
@@ -80,43 +70,15 @@ public class STControllerImpl implements STController {
     private final STContext context;
     private final STDocument document;
 
-    @Inject
     private CalendarViewController calendarViewController;
-    @Inject
     private ExerciseListViewController exerciseListViewController;
-    @Inject
     private NoteListViewController noteListViewController;
-    @Inject
     private WeightListViewController weightListViewController;
+    private StatusBarController statusBarController;
+    private DialogProvider dialogProvider;
 
     /** The controller of the currently displayed view. */
     private EntryViewController currentViewController;
-
-    @Inject
-    private StatusBarController statusBarController;
-
-    @Inject
-    private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
-    @Inject
-    private Provider<EVMain> prExerciseViewer;
-    @Inject
-    private Provider<ExerciseDialogController> prExerciseDialogController;
-    @Inject
-    private Provider<NoteDialogController> prNoteDialogController;
-    @Inject
-    private Provider<WeightDialogController> prWeightDialogController;
-    @Inject
-    private Provider<SportTypeListDialogController> prSportTypeListDialogController;
-    @Inject
-    private Provider<StatisticDialogController> prStatisticDialogController;
-    @Inject
-    private Provider<OverviewDialogController> prOverviewDialogController;
-    @Inject
-    private Provider<PreferencesDialogController> prPreferencesDialogController;
-    @Inject
-    private Provider<FilterDialogController> prFilterDialogController;
-    @Inject
-    private Provider<AboutDialogController> prAboutDialogController;
 
     // list of all menu items
     @FXML
@@ -201,15 +163,33 @@ public class STControllerImpl implements STController {
     private LocalDate dateForNewEntries;
 
     /**
-     * Standard c'tor.
+     * Standard c'tor for DI.
      *
      * @param context the SportsTracker context
      * @param document the document component
+     * @param calendarViewController controller of the calendar view
+     * @param exerciseListViewController controller of the exercise list view
+     * @param noteListViewController controller of the note list view
+     * @param weightListViewController controller of the weight list view
+     * @param statusBarController controller of the status bar
+     * @param dialogProvider provider of all dialogs
      */
     @Inject
-    public STControllerImpl(final STContext context, final STDocument document) {
+    public STControllerImpl(final STContext context, final STDocument document,
+                            final CalendarViewController calendarViewController,
+                            final ExerciseListViewController exerciseListViewController,
+                            final NoteListViewController noteListViewController,
+                            final WeightListViewController weightListViewController,
+                            final StatusBarController statusBarController,
+                            final DialogProvider dialogProvider) {
         this.context = context;
         this.document = document;
+        this.calendarViewController = calendarViewController;
+        this.exerciseListViewController = exerciseListViewController;
+        this.noteListViewController = noteListViewController;
+        this.weightListViewController = weightListViewController;
+        this.statusBarController = statusBarController;
+        this.dialogProvider = dialogProvider;
     }
 
     @Override
@@ -235,6 +215,12 @@ public class STControllerImpl implements STController {
 
         setupActionBindings();
         setupMacSpecificUI();
+
+        // TODO remove this cycling dependency and this workaround
+        calendarViewController.setController(this);
+        exerciseListViewController.setController(this);
+        noteListViewController.setController(this);
+        weightListViewController.setController(this);
 
         // setup all views
         calendarViewController.loadAndSetupViewContent();
@@ -267,13 +253,13 @@ public class STControllerImpl implements STController {
     @Override
     public void onOpenHrmFile(final ActionEvent event) {
         // show file open dialog for HRM file selection
-        final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(context.getPrimaryStage(),
+        final File selectedFile = dialogProvider.prHRMFileOpenDialog.get().selectHRMFile(context.getPrimaryStage(),
                 document.getOptions(), null);
         if (selectedFile != null) {
 
             // start ExerciseViewer
             LOGGER.info("Opening HRM file '" + selectedFile + "' in ExerciseViewer...");
-            prExerciseViewer.get().showExercise(selectedFile.getAbsolutePath(), document.getOptions(),
+            dialogProvider.prExerciseViewer.get().showExercise(selectedFile.getAbsolutePath(), document.getOptions(),
                     context.getPrimaryStage(), false);
         }
     }
@@ -302,7 +288,7 @@ public class STControllerImpl implements STController {
 
         // start exercise dialog for a new created exercise
         final Exercise newExercise = createNewExercise(dateForNewEntries);
-        prExerciseDialogController.get().show(context.getPrimaryStage(), newExercise, false);
+        dialogProvider.prExerciseDialogController.get().show(context.getPrimaryStage(), newExercise, false);
     }
 
     @Override
@@ -311,7 +297,7 @@ public class STControllerImpl implements STController {
         final Note newNote = new Note(document.getNoteList().getNewID());
         newNote.setDateTime(Date310Utils.getNoonDateTimeForDate(dateForNewEntries));
 
-        prNoteDialogController.get().show(context.getPrimaryStage(), newNote);
+        dialogProvider.prNoteDialogController.get().show(context.getPrimaryStage(), newNote);
     }
 
     @Override
@@ -327,7 +313,7 @@ public class STControllerImpl implements STController {
             newWeight.setValue(lastWeight.getValue());
         }
 
-        prWeightDialogController.get().show(context.getPrimaryStage(), newWeight);
+        dialogProvider.prWeightDialogController.get().show(context.getPrimaryStage(), newWeight);
     }
 
     @Override
@@ -399,12 +385,13 @@ public class STControllerImpl implements STController {
         final String hrmFile = document.getExerciseList().getByID(exerciseID).getHrmFile();
 
         LOGGER.info("Opening HRM file '" + hrmFile + "' in ExerciseViewer...");
-        prExerciseViewer.get().showExercise(hrmFile, document.getOptions(), context.getPrimaryStage(), false);
+        dialogProvider.prExerciseViewer.get().showExercise(
+                hrmFile, document.getOptions(), context.getPrimaryStage(), false);
     }
 
     @Override
     public void onPreferences(final ActionEvent event) {
-        prPreferencesDialogController.get().show(context.getPrimaryStage());
+        dialogProvider.prPreferencesDialogController.get().show(context.getPrimaryStage());
         // update view after dialog was closed, preferences (e.g. unit system) might be changed
         updateView();
     }
@@ -431,7 +418,7 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onFilterExercises(final ActionEvent event) {
-        final FilterDialogController controller = prFilterDialogController.get();
+        final FilterDialogController controller = dialogProvider.prFilterDialogController.get();
         controller.show(context.getPrimaryStage(), document.getCurrentFilter());
 
         // set and enable filter when available after dialog has been closed
@@ -450,7 +437,7 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onSportTypeEditor(final ActionEvent event) {
-        prSportTypeListDialogController.get().show(context.getPrimaryStage());
+        dialogProvider.prSportTypeListDialogController.get().show(context.getPrimaryStage());
 
         // sport type and subtype objects may have been changed => these will be new objects
         // => update all exercises and the current filter when the dialog closes, they need
@@ -467,7 +454,7 @@ public class STControllerImpl implements STController {
             return;
         }
 
-        prStatisticDialogController.get().show(context.getPrimaryStage());
+        dialogProvider.prStatisticDialogController.get().show(context.getPrimaryStage());
     }
 
     @Override
@@ -476,7 +463,7 @@ public class STControllerImpl implements STController {
             return;
         }
 
-        prOverviewDialogController.get().show(context.getPrimaryStage());
+        dialogProvider.prOverviewDialogController.get().show(context.getPrimaryStage());
     }
 
     @Override
@@ -486,7 +473,7 @@ public class STControllerImpl implements STController {
 
     @Override
     public void onAbout(final ActionEvent event) {
-        prAboutDialogController.get().show(context.getPrimaryStage());
+        dialogProvider.prAboutDialogController.get().show(context.getPrimaryStage());
     }
 
     @Override
@@ -498,7 +485,7 @@ public class STControllerImpl implements STController {
             newExercise.setHrmFile(hrmFilePath);
 
             // start Exercise dialog for it and import the HRM data
-            prExerciseDialogController.get().show(context.getPrimaryStage(), newExercise, true);
+            dialogProvider.prExerciseDialogController.get().show(context.getPrimaryStage(), newExercise, true);
         }
     }
 
@@ -783,7 +770,7 @@ public class STControllerImpl implements STController {
      */
     private void editExercise(int exerciseID) {
         final Exercise selExercise = document.getExerciseList().getByID(exerciseID);
-        prExerciseDialogController.get().show(context.getPrimaryStage(), selExercise, false);
+        dialogProvider.prExerciseDialogController.get().show(context.getPrimaryStage(), selExercise, false);
     }
 
     /**
@@ -793,7 +780,7 @@ public class STControllerImpl implements STController {
      */
     private void editNote(int noteID) {
         final Note selectedNote = document.getNoteList().getByID(noteID);
-        prNoteDialogController.get().show(context.getPrimaryStage(), selectedNote);
+        dialogProvider.prNoteDialogController.get().show(context.getPrimaryStage(), selectedNote);
     }
 
     /**
@@ -803,7 +790,7 @@ public class STControllerImpl implements STController {
      */
     private void editWeight(int weightID) {
         final Weight selectedWeight = document.getWeightList().getByID(weightID);
-        prWeightDialogController.get().show(context.getPrimaryStage(), selectedWeight);
+        dialogProvider.prWeightDialogController.get().show(context.getPrimaryStage(), selectedWeight);
     }
 
     /**
@@ -819,7 +806,7 @@ public class STControllerImpl implements STController {
         copiedExercise.setHrmFile(null);
 
         // start exercise dialog for the copied exercise
-        prExerciseDialogController.get().show(context.getPrimaryStage(), copiedExercise, false);
+        dialogProvider.prExerciseDialogController.get().show(context.getPrimaryStage(), copiedExercise, false);
     }
 
     /**
@@ -834,7 +821,7 @@ public class STControllerImpl implements STController {
         copiedNote.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
 
         // start note dialog for the copied note
-        prNoteDialogController.get().show(context.getPrimaryStage(), copiedNote);
+        dialogProvider.prNoteDialogController.get().show(context.getPrimaryStage(), copiedNote);
     }
 
     /**
@@ -849,7 +836,7 @@ public class STControllerImpl implements STController {
         copiedWeight.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
 
         // start weight dialog for the copied weight
-        prWeightDialogController.get().show(context.getPrimaryStage(), copiedWeight);
+        dialogProvider.prWeightDialogController.get().show(context.getPrimaryStage(), copiedWeight);
     }
 
     /**

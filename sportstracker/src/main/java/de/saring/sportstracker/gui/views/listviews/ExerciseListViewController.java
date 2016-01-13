@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.saring.sportstracker.gui.views.ViewPrinter;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -20,7 +21,6 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObject;
@@ -70,11 +70,11 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker document / model
-     * @param controller the SportsTracker UI controller
+     * @param viewPrinter the printer of the SportsTracker views
      */
     @Inject
-    public ExerciseListViewController(final STContext context, final STDocument document, final STController controller) {
-        super(context, document, controller);
+    public ExerciseListViewController(final STContext context, final STDocument document, final ViewPrinter viewPrinter) {
+        super(context, document, viewPrinter);
     }
 
     @Override

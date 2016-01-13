@@ -37,24 +37,15 @@
     </repositories>
 
     <dependencies>
-        <!-- Common compile dependencies -->
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>4.0</version>
-            <classifier>no_aop</classifier>
-            <exclusions>
-                <!-- not needed for the no_aop version of Guice -->
-                <exclusion>
-                    <groupId>aopalliance</groupId>
-                    <artifactId>aopalliance</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.lestard</groupId>
+            <artifactId>easy-di</artifactId>
+            <version>0.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.jdom</groupId>

@@ -1,5 +1,6 @@
 package de.saring.sportstracker.gui.views;
 
+import de.saring.sportstracker.gui.STController;
 import javafx.scene.Parent;
 
 import de.saring.util.data.IdObject;
@@ -105,4 +106,12 @@ public interface EntryViewController {
      * Prints the entries displayed in this view.
      */
     void print();
+
+    /**
+     * Sets the SportsTracker UI controller instance for this view.
+     * TODO Just a workaround for a circular dependency => remove it!
+     *
+     * @param controller SportsTracker controller
+     */
+    void setController(STController controller);
 }

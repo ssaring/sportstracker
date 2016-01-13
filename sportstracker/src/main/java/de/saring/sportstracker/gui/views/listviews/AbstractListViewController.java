@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.views.listviews;
 
 import java.util.List;
 
+import de.saring.sportstracker.gui.views.ViewPrinter;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -12,7 +13,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
 import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.sportstracker.gui.views.AbstractEntryViewController;
 import de.saring.util.data.IdObject;
@@ -30,11 +30,12 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker document / model
-     * @param controller the SportsTracker UI controller
+     * @param viewPrinter the printer of the SportsTracker views
      */
-    public AbstractListViewController(final STContext context, final STDocument document, final STController controller) {
-        super(context, document, controller);
+    public AbstractListViewController(final STContext context, final STDocument document, final ViewPrinter viewPrinter) {
+        super(context, document, viewPrinter);
     }
+
 
     @Override
     public void updateView() {

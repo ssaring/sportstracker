@@ -22,10 +22,8 @@ public abstract class AbstractEntryViewController implements EntryViewController
 
     private final STContext context;
     private final STDocument document;
-    private final STController controller;
-
-    @Inject
-    private ViewPrinter viewPrinter;
+    private final ViewPrinter viewPrinter;
+    private STController controller;
 
     private Parent rootNode;
 
@@ -34,12 +32,12 @@ public abstract class AbstractEntryViewController implements EntryViewController
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker document / model
-     * @param controller the SportsTracker UI controller
+     * @param viewPrinter the printer of the SportsTracker views
      */
-    public AbstractEntryViewController(final STContext context, final STDocument document, final STController controller) {
+    public AbstractEntryViewController(final STContext context, final STDocument document, final ViewPrinter viewPrinter) {
         this.context = context;
         this.document = document;
-        this.controller = controller;
+        this.viewPrinter = viewPrinter;
     }
 
     @Override
@@ -94,6 +92,11 @@ public abstract class AbstractEntryViewController implements EntryViewController
     @Override
     public void print() {
         viewPrinter.printView(rootNode);
+    }
+
+    @Override
+    public void setController(STController controller) {
+        this.controller = controller;
     }
 
     /**

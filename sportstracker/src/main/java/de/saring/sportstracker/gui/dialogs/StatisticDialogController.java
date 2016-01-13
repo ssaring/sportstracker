@@ -32,11 +32,7 @@ import de.saring.util.data.IdObjectList;
 public class StatisticDialogController extends AbstractDialogController {
 
     private final STDocument document;
-
-    @Inject
     private Provider<FilterDialogController> prFilterDialogController;
-
-    @Inject
     private Provider<StatisticResultDialogController> prStatisticResultDialogController;
 
     @FXML
@@ -61,11 +57,17 @@ public class StatisticDialogController extends AbstractDialogController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker model/document
+     * @param prFilterDialogController provider of the filter dialog controller
+     * @param prStatisticResultDialogController provider of the statistics result dialog controller
      */
     @Inject
-    public StatisticDialogController(final STContext context, final STDocument document) {
+    public StatisticDialogController(final STContext context, final STDocument document,
+                                     final Provider<FilterDialogController> prFilterDialogController,
+                                     final Provider<StatisticResultDialogController> prStatisticResultDialogController) {
         super(context);
         this.document = document;
+        this.prFilterDialogController = prFilterDialogController;
+        this.prStatisticResultDialogController = prStatisticResultDialogController;
     }
 
     /**

@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.views.calendarview;
 
 import java.time.LocalDate;
 
+import de.saring.sportstracker.gui.views.ViewPrinter;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.IntegerProperty;
@@ -21,7 +22,6 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.sportstracker.gui.views.AbstractEntryViewController;
 import de.saring.util.AppResources;
@@ -66,11 +66,11 @@ public class CalendarViewController extends AbstractEntryViewController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker document / model
-     * @param controller the SportsTracker UI controller
+     * @param viewPrinter the printer of the SportsTracker views
      */
     @Inject
-    public CalendarViewController(final STContext context, final STDocument document, final STController controller) {
-        super(context, document, controller);
+    public CalendarViewController(final STContext context, final STDocument document, final ViewPrinter viewPrinter) {
+        super(context, document, viewPrinter);
     }
 
     @Override
