@@ -1,16 +1,11 @@
 SportsTracker-TODO
 ==================
 
-EasyDI for dependency injection:
-- Performance comparison:
-  - Statup time for DI only with Guice 4.0: 700 - 1000 msec (Mac OS X, AVG: 750 msec)
-  - Statup time for DI only with EasyDI 0.3.0: 210 - 340 msec (Mac OS X, AVG: 220 msec)
-- JAR file size comparison:
-  - Guice 4.0 + Guava 16: 2,7 MByte
-  - EasyDI 0.3.0: 6 KByte
-- test constructor usage, singletons must be created once, dialogs per display
-- check memory usage, compare with Guice
+EasyDI dependency injection:
 - fix cycling dependency problem in STControllerImpl and all View classes (see TODOs)
+
+Garmin Edge 520 / FIT:
+- parse HR monitor name from exercise file and display in the main view
 
 Before next release:
 - BUG with JDK8u66: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:

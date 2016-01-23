@@ -17,6 +17,7 @@ v7.1.1:
   - use of EasyDI 0.3.0 instead of Guice for dependency injection
     - much faster startup time (DI takes about 200 msec instead of 700 msec)
     - much smaller library (6 KByte instead of 2,7 MByte for Guice incl. Guava)
+    - less memory usage after startup (about 10 MByte)
  ExerciseViewer changes:
   - added support for Polar RCX3 HRM files (contains limited data only)
  Project changes:
