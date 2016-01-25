@@ -1,6 +1,5 @@
 package de.saring.sportstracker.gui.views;
 
-import de.saring.sportstracker.gui.STController;
 import javafx.scene.Parent;
 
 import de.saring.util.data.IdObject;
@@ -28,13 +27,16 @@ public interface EntryViewController {
     ViewType getViewType();
 
     /**
-     * Loads the view content from FXML and set up all the controls. The root node of the loaded
-     * view can be accessed via {@link #getRootNode()} afterwards.
+     * Initializes the controller, loads the view content from FXML and set up all the controls. The root node of
+     * the loaded view can be accessed via {@link #getRootNode()} afterwards.
+     *
+     * @param eventHandler event handler for this entry view
      */
-    void loadAndSetupViewContent();
+    void initAndSetupViewContent(EntryViewEventHandler eventHandler);
 
     /**
-     * Returns the root node of the view content. It needs to be loaded with {@link #loadAndSetupViewContent()} before.
+     * Returns the root node of the view content. It needs to be loaded with
+     * {@link #initAndSetupViewContent(EntryViewEventHandler)} before.
      *
      * @return root of the view
      */
@@ -106,12 +108,4 @@ public interface EntryViewController {
      * Prints the entries displayed in this view.
      */
     void print();
-
-    /**
-     * Sets the SportsTracker UI controller instance for this view.
-     * TODO Just a workaround for a circular dependency => remove it!
-     *
-     * @param controller SportsTracker controller
-     */
-    void setController(STController controller);
 }

@@ -4,10 +4,7 @@ import java.io.IOException;
 
 import javafx.scene.Parent;
 
-import javax.inject.Inject;
-
 import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.FxmlLoader;
 
@@ -23,7 +20,7 @@ public abstract class AbstractEntryViewController implements EntryViewController
     private final STContext context;
     private final STDocument document;
     private final ViewPrinter viewPrinter;
-    private STController controller;
+    private EntryViewEventHandler eventHandler;
 
     private Parent rootNode;
 
@@ -41,9 +38,10 @@ public abstract class AbstractEntryViewController implements EntryViewController
     }
 
     @Override
-    public void loadAndSetupViewContent() {
-        final String fxmlFilename = getFxmlFilename();
+    public void initAndSetupViewContent(EntryViewEventHandler eventHandler) {
+        this.eventHandler = eventHandler;
 
+        final String fxmlFilename = getFxmlFilename();
         try {
             rootNode = FxmlLoader.load(this.getClass().getResource(fxmlFilename), //
                     context.getResources().getResourceBundle(), this);
@@ -94,11 +92,14 @@ public abstract class AbstractEntryViewController implements EntryViewController
         viewPrinter.printView(rootNode);
     }
 
-    @Override
-    public void setController(STController controller) {
-        this.controller = controller;
+    /**
+     * Returns the event handler for this entry view.
+     *
+     * @return EntryViewEventHandler
+     */
+    protected EntryViewEventHandler getEventHandler() {
+        return eventHandler;
     }
-
     /**
      * Returns the name of the FXML file which contains the UI definition of the view.
      *
@@ -127,14 +128,5 @@ public abstract class AbstractEntryViewController implements EntryViewController
      */
     protected STDocument getDocument() {
         return document;
-    }
-
-    /**
-     * Returns the SportsTracker UI controller.
-     *
-     * @return STController
-     */
-    protected STController getController() {
-        return controller;
     }
 }

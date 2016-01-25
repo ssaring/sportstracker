@@ -11,7 +11,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.saring.sportstracker.gui.dialogs.DialogProvider;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -39,8 +38,10 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
+import de.saring.sportstracker.gui.dialogs.DialogProvider;
 import de.saring.sportstracker.gui.dialogs.FilterDialogController;
 import de.saring.sportstracker.gui.statusbar.StatusBarController;
+import de.saring.sportstracker.gui.views.EntryViewEventHandler;
 import de.saring.sportstracker.gui.views.EntryViewController;
 import de.saring.sportstracker.gui.views.calendarview.CalendarViewController;
 import de.saring.sportstracker.gui.views.listviews.ExerciseListViewController;
@@ -61,7 +62,7 @@ import de.saring.util.unitcalc.FormatUtils;
  * @author Stefan Saring
  */
 @Singleton
-public class STControllerImpl implements STController {
+public class STControllerImpl implements STController, EntryViewEventHandler {
 
     private static final Logger LOGGER = Logger.getLogger(STControllerImpl.class.getName());
 
@@ -216,17 +217,11 @@ public class STControllerImpl implements STController {
         setupActionBindings();
         setupMacSpecificUI();
 
-        // TODO remove this cycling dependency and this workaround
-        calendarViewController.setController(this);
-        exerciseListViewController.setController(this);
-        noteListViewController.setController(this);
-        weightListViewController.setController(this);
-
         // setup all views
-        calendarViewController.loadAndSetupViewContent();
-        exerciseListViewController.loadAndSetupViewContent();
-        noteListViewController.loadAndSetupViewContent();
-        weightListViewController.loadAndSetupViewContent();
+        calendarViewController.initAndSetupViewContent(this);
+        exerciseListViewController.initAndSetupViewContent(this);
+        noteListViewController.initAndSetupViewContent(this);
+        weightListViewController.initAndSetupViewContent(this);
 
         statusBarController.setStatusBar(laStatusBar);
 

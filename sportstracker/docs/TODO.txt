@@ -1,11 +1,12 @@
 SportsTracker-TODO
 ==================
 
-EasyDI dependency injection:
-- fix cycling dependency problem in STControllerImpl and all View classes (see TODOs)
-
 Garmin Edge 520 / FIT:
-- parse HR monitor name from exercise file and display in the main view
+- update to latest FIT support library
+- parse HR monitor name name from exercise file and display in the main view
+- if possible, parse and display bike name too
+=> FitMessageListener: parse message types BIKE_PROFILE and DEVICE_INFO, they
+   could contain the needed data
 
 Before next release:
 - BUG with JDK8u66: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:

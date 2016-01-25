@@ -75,7 +75,7 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
 
         // update controller-actions and the status bar on selection changes
         getTableView().getSelectionModel().getSelectedIndices().addListener( //
-                (ListChangeListener<Integer>) change -> getController().updateActionsAndStatusBar());
+                (ListChangeListener<Integer>) change -> getEventHandler().updateActionsAndStatusBar());
     }
 
     /**
@@ -160,7 +160,7 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
                 // add listener for double clicks for editing the selected entry (ignore in empty rows)
                 tableRow.setOnMouseClicked(event -> {
                     if (event.getClickCount() > 1 && getSelectedEntryCount() == 1 && !tableRow.isEmpty()) {
-                        getController().onEditEntry(null);
+                        getEventHandler().onEditEntry(null);
                     }
                 });
 
@@ -175,7 +175,7 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
      */
     @FXML
     private void onAddExercise(final ActionEvent event) {
-        getController().onAddExercise(event);
+        getEventHandler().onAddExercise(event);
     }
 
     /**
@@ -185,7 +185,7 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
      */
     @FXML
     private void onAddNote(final ActionEvent event) {
-        getController().onAddNote(event);
+        getEventHandler().onAddNote(event);
     }
 
     /**
@@ -195,7 +195,7 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
      */
     @FXML
     private void onAddWeight(final ActionEvent event) {
-        getController().onAddWeight(event);
+        getEventHandler().onAddWeight(event);
     }
 
     /**
@@ -205,7 +205,7 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
      */
     @FXML
     private void onEditEntry(final ActionEvent event) {
-        getController().onEditEntry(event);
+        getEventHandler().onEditEntry(event);
     }
 
     /**
@@ -215,7 +215,7 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
      */
     @FXML
     private void onCopyEntry(final ActionEvent event) {
-        getController().onCopyEntry(event);
+        getEventHandler().onCopyEntry(event);
     }
 
     /**
@@ -225,6 +225,6 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
      */
     @FXML
     private void onDeleteEntry(final ActionEvent event) {
-        getController().onDeleteEntry(event);
+        getEventHandler().onDeleteEntry(event);
     }
 }
