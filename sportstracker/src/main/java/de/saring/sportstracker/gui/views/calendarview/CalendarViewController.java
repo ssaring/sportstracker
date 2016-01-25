@@ -21,9 +21,9 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.sportstracker.gui.views.AbstractEntryViewController;
+import de.saring.sportstracker.gui.views.ViewPrinter;
 import de.saring.util.AppResources;
 import de.saring.util.data.IdDateObject;
 import de.saring.util.data.IdObject;
@@ -66,11 +66,11 @@ public class CalendarViewController extends AbstractEntryViewController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker document / model
-     * @param controller the SportsTracker UI controller
+     * @param viewPrinter the printer of the SportsTracker views
      */
     @Inject
-    public CalendarViewController(final STContext context, final STDocument document, final STController controller) {
-        super(context, document, controller);
+    public CalendarViewController(final STContext context, final STDocument document, final ViewPrinter viewPrinter) {
+        super(context, document, viewPrinter);
     }
 
     @Override
@@ -171,7 +171,7 @@ public class CalendarViewController extends AbstractEntryViewController {
 
         // update controller-actions and the status bar on selection changes
         calendarControl.selectedEntryProperty().addListener((observable, oldValue, newValue) -> //
-                getController().updateActionsAndStatusBar());
+                getEventHandler().updateActionsAndStatusBar());
 
         // scroll the displayed month when the user uses the mouse wheel on the calendar
         calendarControl.setOnScroll(event -> {
@@ -195,21 +195,21 @@ public class CalendarViewController extends AbstractEntryViewController {
             @Override
             public void onCalendarEntryAction(final CalendarEntry calendarEntry) {
                 // execute action 'Edit Entry' when the user double clicks a calendar entry
-                getController().onEditEntry(null);
+                getEventHandler().onEditEntry(null);
             }
 
             @Override
             public void onDraggedFileDroppedOnCalendarDay(final String filePath) {
-                getController().onAddExerciseForDroppedHrmFile(filePath);
+                getEventHandler().onAddExerciseForDroppedHrmFile(filePath);
             }
 
             @Override
             public void onDraggedFileDroppedOnCalendarEntry(final IdDateObject entry, final String filePath) {
                 if (entry instanceof Exercise) {
-                    getController().onAssignDroppedHrmFileToExercise(filePath, (Exercise) entry);
+                    getEventHandler().onAssignDroppedHrmFileToExercise(filePath, (Exercise) entry);
                 } else {
                     // the target entry was not an exercise -> add a new exercise for the dropped entry
-                    getController().onAddExerciseForDroppedHrmFile(filePath);
+                    getEventHandler().onAddExerciseForDroppedHrmFile(filePath);
                 }
             }
         });
@@ -236,17 +236,17 @@ public class CalendarViewController extends AbstractEntryViewController {
 
         final MenuItem miCtxEditEntry = createContextMenuItem( //
                 "miCtxEditEntry", "st.view.entry_edit.Action.text", //
-                event -> getController().onEditEntry(event));
+                event -> getEventHandler().onEditEntry(event));
         miCtxEditEntry.disableProperty().bind(bindingNoEntrySelected);
 
         final MenuItem miCtxCopyEntry = createContextMenuItem( //
                 "miCtxCopyEntry", "st.view.entry_copy.Action.text", //
-                event -> getController().onCopyEntry(event));
+                event -> getEventHandler().onCopyEntry(event));
         miCtxCopyEntry.disableProperty().bind(bindingNoEntrySelected);
 
         final MenuItem miCtxDeleteEntry = createContextMenuItem( //
                 "miCtxDeleteEntry", "st.view.entry_delete.Action.text", //
-                event -> getController().onDeleteEntry(event));
+                event -> getEventHandler().onDeleteEntry(event));
         miCtxDeleteEntry.disableProperty().bind(bindingNoEntrySelected);
 
         calendarControl.setContextMenu(new ContextMenu( //
@@ -336,20 +336,20 @@ public class CalendarViewController extends AbstractEntryViewController {
     }
 
     private void addExerciseForDate(final LocalDate date) {
-        getController().setDateForNewEntries(date);
-        getController().onAddExercise(null);
-        getController().setDateForNewEntries(null);
+        getEventHandler().setDateForNewEntries(date);
+        getEventHandler().onAddExercise(null);
+        getEventHandler().setDateForNewEntries(null);
     }
 
     private void addNoteForDate(final LocalDate date) {
-        getController().setDateForNewEntries(date);
-        getController().onAddNote(null);
-        getController().setDateForNewEntries(null);
+        getEventHandler().setDateForNewEntries(date);
+        getEventHandler().onAddNote(null);
+        getEventHandler().setDateForNewEntries(null);
     }
 
     private void addWeightForDate(final LocalDate date) {
-        getController().setDateForNewEntries(date);
-        getController().onAddWeight(null);
-        getController().setDateForNewEntries(null);
+        getEventHandler().setDateForNewEntries(date);
+        getEventHandler().onAddWeight(null);
+        getEventHandler().setDateForNewEntries(null);
     }
 }

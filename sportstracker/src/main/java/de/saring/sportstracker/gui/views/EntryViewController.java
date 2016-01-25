@@ -27,13 +27,16 @@ public interface EntryViewController {
     ViewType getViewType();
 
     /**
-     * Loads the view content from FXML and set up all the controls. The root node of the loaded
-     * view can be accessed via {@link #getRootNode()} afterwards.
+     * Initializes the controller, loads the view content from FXML and set up all the controls. The root node of
+     * the loaded view can be accessed via {@link #getRootNode()} afterwards.
+     *
+     * @param eventHandler event handler for this entry view
      */
-    void loadAndSetupViewContent();
+    void initAndSetupViewContent(EntryViewEventHandler eventHandler);
 
     /**
-     * Returns the root node of the view content. It needs to be loaded with {@link #loadAndSetupViewContent()} before.
+     * Returns the root node of the view content. It needs to be loaded with
+     * {@link #initAndSetupViewContent(EntryViewEventHandler)} before.
      *
      * @return root of the view
      */

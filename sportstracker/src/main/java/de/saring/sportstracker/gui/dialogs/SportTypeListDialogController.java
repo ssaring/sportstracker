@@ -34,6 +34,7 @@ import de.saring.util.gui.javafx.NameableListCell;
 public class SportTypeListDialogController extends AbstractDialogController {
 
     private final STDocument document;
+    private Provider<SportTypeDialogController> prSportTypeDialogController;
 
     @FXML
     private ListView<SportType> liSportTypes;
@@ -43,20 +44,19 @@ public class SportTypeListDialogController extends AbstractDialogController {
     @FXML
     private Button btDelete;
 
-    @Inject
-    private Provider<SportTypeDialogController> prSportTypeDialogController;
-
-
     /**
      * Standard c'tor for dependency injection.
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker model/document
+     * @param prSportTypeDialogController provider of the sport type dialog controller
      */
     @Inject
-    public SportTypeListDialogController(final STContext context, final STDocument document) {
+    public SportTypeListDialogController(final STContext context, final STDocument document,
+                                         final Provider<SportTypeDialogController> prSportTypeDialogController) {
         super(context);
         this.document = document;
+        this.prSportTypeDialogController = prSportTypeDialogController;
     }
 
     /**

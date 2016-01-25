@@ -26,13 +26,11 @@ import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 
 import de.saring.exerciseviewer.data.EVExercise;
-import de.saring.exerciseviewer.gui.EVMain;
 import de.saring.exerciseviewer.parser.ExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 import de.saring.sportstracker.data.Equipment;
@@ -60,12 +58,7 @@ public class ExerciseDialogController extends AbstractDialogController {
     private static final Logger LOGGER = Logger.getLogger(ExerciseDialogController.class.getName());
 
     private final STDocument document;
-
-    @Inject
-    private Provider<HRMFileOpenDialog> prHRMFileOpenDialog;
-
-    @Inject
-    private Provider<EVMain> prExerciseViewer;
+    private final DialogProvider dialogProvider;
 
     @FXML
     private DatePicker dpDate;
@@ -154,11 +147,13 @@ public class ExerciseDialogController extends AbstractDialogController {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker model/document
+     * @param dialogProvider provider for the dialogs
      */
     @Inject
-    public ExerciseDialogController(final STContext context, final STDocument document) {
+    public ExerciseDialogController(final STContext context, final STDocument document, final DialogProvider dialogProvider) {
         super(context);
         this.document = document;
+        this.dialogProvider = dialogProvider;
 
         equipmentNone = new Equipment(Integer.MAX_VALUE);
         equipmentNone.setName(context.getResources().getString("st.dlg.exercise.equipment.none.text"));
@@ -407,7 +402,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         final String hrmFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.get());
 
         // show file open dialog and display selected filename
-        final File selectedFile = prHRMFileOpenDialog.get().selectHRMFile(
+        final File selectedFile = dialogProvider.prHRMFileOpenDialog.get().selectHRMFile(
                 getWindow(tfHrmFile), document.getOptions(), hrmFile);
         if (selectedFile != null) {
             exerciseViewModel.hrmFile.set(selectedFile.getAbsolutePath());
@@ -423,7 +418,8 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         final String hrmFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.getValue());
         if (hrmFile != null) {
-            prExerciseViewer.get().showExercise(hrmFile, document.getOptions(), context.getPrimaryStage(), true);
+            dialogProvider.prExerciseViewer.get().showExercise(
+                    hrmFile, document.getOptions(), context.getPrimaryStage(), true);
         }
     }
 

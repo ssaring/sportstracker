@@ -3,14 +3,13 @@ package de.saring.sportstracker.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.sportstracker.storage.IStorage;
+import de.saring.sportstracker.storage.XMLStorage;
+import eu.lestard.easydi.EasyDI;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.sportstracker.core.STException;
@@ -37,30 +36,26 @@ public class STApplication extends Application {
     @Override
     public void init() throws Exception {
 
-        // setup the Guice injector
-        final Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            public void configure() {
-                bind(STApplication.class).toInstance(STApplication.this);
-
-                bind(STContext.class).to(STContextImpl.class);
-                bind(EVContext.class).to(STContextImpl.class);
-                bind(STDocument.class).to(STDocumentImpl.class);
-                bind(STController.class).to(STControllerImpl.class);
-            }
-        });
+        // setup EasyDI for dependency injection
+        final EasyDI easyDI = new EasyDI();
+        easyDI.bindInstance(STApplication.class, this);
+        easyDI.bindInterface(IStorage.class, XMLStorage.class);
+        easyDI.bindInterface(STContext.class, STContextImpl.class);
+        easyDI.bindInterface(EVContext.class, STContextImpl.class);
+        easyDI.bindInterface(STDocument.class, STDocumentImpl.class);
+        easyDI.bindInterface(STController.class, STControllerImpl.class);
 
         // initialize the document
-        document = injector.getInstance(STDocument.class);
+        document = easyDI.getInstance(STDocument.class);
         document.evaluateCommandLineParameters(getParameters().getRaw());
         document.loadOptions();
 
         // initialize the context (set format utils for current configuration)
-        context = injector.getInstance(STContext.class);
+        context = easyDI.getInstance(STContext.class);
         final STOptions options = document.getOptions();
         context.setFormatUtils(new FormatUtils(options.getUnitSystem(), options.getSpeedView()));
 
-        controller = injector.getInstance(STController.class);
+        controller = easyDI.getInstance(STController.class);
     }
 
     @Override

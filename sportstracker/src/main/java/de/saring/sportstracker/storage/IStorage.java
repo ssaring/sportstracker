@@ -1,6 +1,5 @@
 package de.saring.sportstracker.storage;
 
-import com.google.inject.ImplementedBy;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.NoteList;
@@ -14,7 +13,6 @@ import de.saring.sportstracker.data.WeightList;
  * @author Stefan Saring
  * @version 1.0
  */
-@ImplementedBy(XMLStorage.class)
 public interface IStorage {
 
     /**

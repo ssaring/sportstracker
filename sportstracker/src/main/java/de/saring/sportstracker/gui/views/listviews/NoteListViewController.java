@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.saring.sportstracker.gui.views.ViewPrinter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -15,7 +16,6 @@ import javax.inject.Singleton;
 
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STController;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObject;
@@ -42,11 +42,11 @@ public class NoteListViewController extends AbstractListViewController<Note> {
      *
      * @param context the SportsTracker UI context
      * @param document the SportsTracker document / model
-     * @param controller the SportsTracker UI controller
+     * @param viewPrinter the printer of the SportsTracker views
      */
     @Inject
-    public NoteListViewController(final STContext context, final STDocument document, final STController controller) {
-        super(context, document, controller);
+    public NoteListViewController(final STContext context, final STDocument document, final ViewPrinter viewPrinter) {
+        super(context, document, viewPrinter);
     }
 
     @Override
