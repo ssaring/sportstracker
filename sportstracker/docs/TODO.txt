@@ -2,7 +2,6 @@ SportsTracker-TODO
 ==================
 
 Garmin Edge 520 / FIT:
-- update to latest FIT support library
 - parse HR monitor name name from exercise file and display in the main view
 - if possible, parse and display bike name too
 => FitMessageListener: parse message types BIKE_PROFILE and DEVICE_INFO, they
