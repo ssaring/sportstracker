@@ -14,7 +14,9 @@ Before next release:
      DialogPane@4a0efce0[styleClass=root dialog-pane]is already inside a scene-graph and cannot be set as root
   -> ControlsFX issue, see details here: https://bitbucket.org/controlsfx/controlsfx/issues/539/multiple-dialog-fields-with-validation
   -> remove workaround when the bug has been fixed
-- add info to website: support for Polar RCX3 HRM files
+- add info to website:
+  - support for Polar RCX3 HRM files
+  - support for Garmin Fenix (2) FIT files
 
 - Database Export (to SQLite?)
   - users will technical skills have all possibilities for custom queries and

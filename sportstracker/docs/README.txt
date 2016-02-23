@@ -46,6 +46,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - Garmin Edge        (tested with Edge 500 and Edge 705, FIT and TCX files)
   - Garmin Forerunner  (tested with Forerunner 305, 910XT, FIT and TCX files)
   - Garmin Oregon      (tested with Oregon 450, GPX files)
+  - Garmin Fenix       (tested with Fenix 2, FIT files)
   - Timex Ironmen Race Trainer (tested)
   - Timex Ironmen Run Trainer (tested)
   - Timex Ironman Global Trainer  (tested)
@@ -473,4 +474,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2016/01/13
+2016/02/23

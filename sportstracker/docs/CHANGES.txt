@@ -21,6 +21,8 @@ v7.1.1:
   - removed cyclic dependencies on STController in all entry views    
  ExerciseViewer changes:
   - added support for Polar RCX3 HRM files (contains limited data only)
+  - bugfix for parsing FIT files of Garmin Fenix 2 devices (missing max speed)
+    (contribution by Alex Rampp, GitHub pull request #6)
  Project changes:
   - use the Ubuntu Trusty image in Travis CI builds, it contains the latest
     Java 8 JDK (no workaround installation needed anymore)
