@@ -248,9 +248,12 @@ class FitMessageListener implements MesgListener {
         calculateAltitudeSummary();
         calculateTemperatureSummary();
         calculateMissingAverageSpeed();
-        calculateMissingMaxSpeed();
         calculateMissingHeartRateAVG();
         calculateMissingHeartRateMax();
+        
+        // todo methos for summaries above are missing
+        ExerciseSummaryValuesDecorator decorator = new ExerciseSummaryValuesDecorator();
+        decorator.addMissingSummaries(exercise);
         return exercise;
     }
 
