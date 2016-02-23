@@ -89,8 +89,12 @@ class FitMessageListener implements MesgListener {
                 exercise.getSpeed().setSpeedAVG(
                         ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
             }
-            exercise.getSpeed().setSpeedMax(
-                    ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getMaxSpeed()));
+            
+            Float maxSpeed = mesg.getMaxSpeed();
+            if (maxSpeed != null) {
+            	exercise.getSpeed().setSpeedMax(
+            			ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getMaxSpeed()));
+            }
         }
 
         // read optional speed data
