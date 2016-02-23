@@ -7,8 +7,11 @@ import de.saring.util.Date310Utils;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
 
 /**
  * This message listener implementation creates the EVExercise object from
@@ -245,10 +248,11 @@ class FitMessageListener implements MesgListener {
         calculateAltitudeSummary();
         calculateTemperatureSummary();
         calculateMissingAverageSpeed();
+        calculateMissingHeartRateSummary();
         return exercise;
     }
 
-    /**
+	/**
      * Stores the sample data in the exercise. It also fixes the timestamps in all
      * ExerciseSamples, it must be the offset from the start time.
      */
@@ -397,4 +401,27 @@ class FitMessageListener implements MesgListener {
             }
         }
     }
+    
+    private void calculateMissingHeartRateSummary() {
+		short heartRateAVG = exercise.getHeartRateAVG();
+		if (heartRateAVG == 0) {
+			OptionalDouble avgHeartRate = Arrays.asList(exercise.getSampleList()).stream()
+			.mapToDouble(sample -> sample.getHeartRate())
+			.average();
+			if (avgHeartRate.isPresent()) {
+				exercise.setHeartRateAVG((short) avgHeartRate.getAsDouble());
+			}
+		}
+		
+		short heartRateMax= exercise.getHeartRateMax();
+		if (heartRateMax == 0) {
+			OptionalInt maxHeartRate = Arrays.asList(exercise.getSampleList()).stream()
+			.mapToInt(sample -> sample.getHeartRate())
+			.max();
+			if (maxHeartRate.isPresent()) {
+				exercise.setHeartRateMax((short) maxHeartRate.getAsInt());
+			}
+		}
+		
+	}
 }
