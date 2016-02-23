@@ -1,18 +1,39 @@
 package de.saring.exerciseviewer.parser.impl.garminfit;
 
-import com.garmin.fit.*;
-import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.*;
-import de.saring.util.Date310Utils;
-import de.saring.util.unitcalc.CalculationUtils;
-import de.saring.util.unitcalc.ConvertUtils;
-
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
+
+import com.garmin.fit.DateTime;
+import com.garmin.fit.DeviceInfoMesg;
+import com.garmin.fit.GarminProduct;
+import com.garmin.fit.LapMesg;
+import com.garmin.fit.LengthMesg;
+import com.garmin.fit.Mesg;
+import com.garmin.fit.MesgListener;
+import com.garmin.fit.MesgNum;
+import com.garmin.fit.RecordMesg;
+import com.garmin.fit.SessionMesg;
+
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.ExerciseAltitude;
+import de.saring.exerciseviewer.data.ExerciseCadence;
+import de.saring.exerciseviewer.data.ExerciseSample;
+import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.data.ExerciseTemperature;
+import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.data.LapAltitude;
+import de.saring.exerciseviewer.data.LapSpeed;
+import de.saring.exerciseviewer.data.LapTemperature;
+import de.saring.exerciseviewer.data.Position;
+import de.saring.exerciseviewer.data.RecordingMode;
+import de.saring.util.Date310Utils;
+import de.saring.util.unitcalc.CalculationUtils;
+import de.saring.util.unitcalc.ConvertUtils;
 
 /**
  * This message listener implementation creates the EVExercise object from
@@ -267,7 +288,8 @@ class FitMessageListener implements MesgListener {
         calculateAltitudeSummary();
         calculateTemperatureSummary();
         calculateMissingAverageSpeed();
-        calculateMissingHeartRateSummary();
+        calculateMissingHeartRateAVG();
+        calculateMissingHeartRateMax();
         return exercise;
     }
 
@@ -445,26 +467,31 @@ class FitMessageListener implements MesgListener {
         return null;
     }
 
-    private void calculateMissingHeartRateSummary() {
+    private void calculateMissingHeartRateAVG() {
 		short heartRateAVG = exercise.getHeartRateAVG();
-		if (heartRateAVG == 0) {
-			OptionalDouble avgHeartRate = Arrays.asList(exercise.getSampleList()).stream()
-			.mapToDouble(sample -> sample.getHeartRate())
-			.average();
-			if (avgHeartRate.isPresent()) {
-				exercise.setHeartRateAVG((short) avgHeartRate.getAsDouble());
-			}
+		if (heartRateAVG > 0) {
+			return;
+		};
+		OptionalDouble avgHeartRate = Arrays.asList(exercise.getSampleList()).stream()
+		.mapToDouble(sample -> sample.getHeartRate())
+		.average();
+		if (avgHeartRate.isPresent()) {
+			exercise.setHeartRateAVG((short) avgHeartRate.getAsDouble());
 		}
 
-		short heartRateMax= exercise.getHeartRateMax();
-		if (heartRateMax == 0) {
-			OptionalInt maxHeartRate = Arrays.asList(exercise.getSampleList()).stream()
-			.mapToInt(sample -> sample.getHeartRate())
-			.max();
-			if (maxHeartRate.isPresent()) {
-				exercise.setHeartRateMax((short) maxHeartRate.getAsInt());
-			}
-		}
+    }
 
+	private void calculateMissingHeartRateMax() {
+
+		short heartRateMax = exercise.getHeartRateMax();
+		if (heartRateMax > 0) {
+			return;
+		}
+		OptionalInt maxHeartRate = Arrays.asList(exercise.getSampleList()).stream()
+		.mapToInt(sample -> sample.getHeartRate())
+		.max();
+		if (maxHeartRate.isPresent()) {
+			exercise.setHeartRateMax((short) maxHeartRate.getAsInt());
+		}
 	}
 }
