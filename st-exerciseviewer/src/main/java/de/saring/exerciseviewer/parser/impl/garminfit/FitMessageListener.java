@@ -248,7 +248,8 @@ class FitMessageListener implements MesgListener {
         calculateAltitudeSummary();
         calculateTemperatureSummary();
         calculateMissingAverageSpeed();
-        calculateMissingHeartRateSummary();
+        calculateMissingHeartRateAVG();
+        calculateMissingHeartRateMax();
         return exercise;
     }
 
@@ -402,26 +403,30 @@ class FitMessageListener implements MesgListener {
         }
     }
     
-    private void calculateMissingHeartRateSummary() {
+    private void calculateMissingHeartRateAVG() {
 		short heartRateAVG = exercise.getHeartRateAVG();
-		if (heartRateAVG == 0) {
-			OptionalDouble avgHeartRate = Arrays.asList(exercise.getSampleList()).stream()
-			.mapToDouble(sample -> sample.getHeartRate())
-			.average();
-			if (avgHeartRate.isPresent()) {
-				exercise.setHeartRateAVG((short) avgHeartRate.getAsDouble());
-			}
+		if (heartRateAVG > 0) {
+			return;
+		};
+		OptionalDouble avgHeartRate = Arrays.asList(exercise.getSampleList()).stream()
+		.mapToDouble(sample -> sample.getHeartRate())
+		.average();
+		if (avgHeartRate.isPresent()) {
+			exercise.setHeartRateAVG((short) avgHeartRate.getAsDouble());
 		}
+    }
 		
-		short heartRateMax= exercise.getHeartRateMax();
-		if (heartRateMax == 0) {
-			OptionalInt maxHeartRate = Arrays.asList(exercise.getSampleList()).stream()
-			.mapToInt(sample -> sample.getHeartRate())
-			.max();
-			if (maxHeartRate.isPresent()) {
-				exercise.setHeartRateMax((short) maxHeartRate.getAsInt());
-			}
+	private void calculateMissingHeartRateMax() {
+		
+		short heartRateMax = exercise.getHeartRateMax();
+		if (heartRateMax > 0) {
+			return;
 		}
-		
+		OptionalInt maxHeartRate = Arrays.asList(exercise.getSampleList()).stream()
+		.mapToInt(sample -> sample.getHeartRate())
+		.max();
+		if (maxHeartRate.isPresent()) {
+			exercise.setHeartRateMax((short) maxHeartRate.getAsInt());
+		}
 	}
 }
