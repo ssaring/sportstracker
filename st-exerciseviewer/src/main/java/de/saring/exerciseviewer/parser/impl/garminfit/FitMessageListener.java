@@ -248,6 +248,7 @@ class FitMessageListener implements MesgListener {
         calculateAltitudeSummary();
         calculateTemperatureSummary();
         calculateMissingAverageSpeed();
+        calculateMissingMaxSpeed();
         calculateMissingHeartRateAVG();
         calculateMissingHeartRateMax();
         return exercise;
@@ -402,6 +403,21 @@ class FitMessageListener implements MesgListener {
             }
         }
     }
+    
+	private void calculateMissingMaxSpeed() {
+		float maxSpeed = exercise.getSpeed().getSpeedMax();
+		if (maxSpeed > 0.01) {
+			return;
+		}
+
+		OptionalDouble calculatedMaxSpeed = Arrays.asList(exercise.getSampleList()).stream()
+				.mapToDouble(sample -> sample.getSpeed())
+				.max();
+		
+		if (calculatedMaxSpeed.isPresent()) {
+			exercise.getSpeed().setSpeedMax((float) calculatedMaxSpeed.getAsDouble());
+		}
+	}
     
     private void calculateMissingHeartRateAVG() {
 		short heartRateAVG = exercise.getHeartRateAVG();
