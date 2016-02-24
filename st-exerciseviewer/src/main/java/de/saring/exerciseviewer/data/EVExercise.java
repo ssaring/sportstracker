@@ -12,10 +12,15 @@ import java.util.stream.Stream;
  * @version 1.0
  */
 public final class EVExercise {
+
     /**
      * File type of an exercise (see enums).
      */
     private ExerciseFileType fileType;
+    /**
+     * Name of the HRM device (optional).
+     */
+    private String deviceName;
     /**
      * ID of user of exercise (0 - 99).
      */
@@ -120,6 +125,14 @@ public final class EVExercise {
 
     public void setFileType(ExerciseFileType fileType) {
         this.fileType = fileType;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
 
     public byte getUserID() {
@@ -326,6 +339,7 @@ public final class EVExercise {
 
         sBuilder.append(EVExercise.class.getName()).append(":\n");
         sBuilder.append(" [fileType=").append(this.fileType).append("\n");
+        sBuilder.append("  deviceName=").append(this.deviceName).append("]\n");
         sBuilder.append("  userID=").append(this.userID).append("\n");
         sBuilder.append("  dateTime=").append(this.dateTime).append("\n");
         sBuilder.append("  type=").append(this.type).append("\n");

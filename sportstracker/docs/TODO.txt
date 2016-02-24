@@ -2,10 +2,12 @@ SportsTracker-TODO
 ==================
 
 Garmin Edge 520 / FIT:
-- parse HR monitor name name from exercise file and display in the main view
-- if possible, parse and display bike name too
-=> FitMessageListener: parse message types BIKE_PROFILE and DEVICE_INFO, they
-   could contain the needed data
+- HRM device name is being parsed and stored in EVExercise
+- display device name in ExerciseViewer, if available
+- if possible, parse and display bike number and bike name too
+  (in FitMessageListener#readDeviceInfoMessage(), parse message types BIKE_PROFILE and DEVICE_INFO?)
+- parse device name in other exercise file formats too
+- add to Changelog
 
 Before next release:
 - BUG with JDK8u66: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:
