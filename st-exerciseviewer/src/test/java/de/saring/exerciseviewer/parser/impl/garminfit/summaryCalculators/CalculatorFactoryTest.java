@@ -31,6 +31,23 @@ public class CalculatorFactoryTest {
 		assertThat(classUnderTest.createCalculators(exercise), not(hasItem(isA(MaxSpeedCalculator.class))));
 	}
 	
+	@Test
+	public void createCalculators_CreatesMaxHeartRateCalculator_WhenMaxSpeedIs0() {
+		CalculatorFactory classUnderTest = new CalculatorFactory();
+		EVExercise exercise = createExersize();
+
+		assertThat(classUnderTest.createCalculators(exercise), hasItem(isA(MaxHeartRateCalculator.class)));
+	}
+
+	@Test
+	public void createCalculators_DoesNotCreateMaxHeartRateCalculator_WhenMaxSpeedIsGreater0() {
+		CalculatorFactory classUnderTest = new CalculatorFactory();
+		EVExercise exercise = createExersize();
+		exercise.setHeartRateMax((short) 123);
+
+		assertThat(classUnderTest.createCalculators(exercise), not(hasItem(isA(MaxHeartRateCalculatorTest.class))));
+	}
+	
 	private EVExercise createExersize() {
 		EVExercise exercise = new EVExercise();
 		exercise.setSpeed(new ExerciseSpeed());

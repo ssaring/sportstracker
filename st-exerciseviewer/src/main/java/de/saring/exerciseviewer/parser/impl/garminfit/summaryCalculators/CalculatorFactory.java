@@ -17,6 +17,10 @@ public class CalculatorFactory {
 				result.add(new MaxSpeedCalculator(exercise));
 			}
 		}
+		
+		if (exercise.getHeartRateMax() == 0) {
+			result.add(new MaxHeartRateCalculator(exercise));
+		}
 		return result;
 	}
 }
