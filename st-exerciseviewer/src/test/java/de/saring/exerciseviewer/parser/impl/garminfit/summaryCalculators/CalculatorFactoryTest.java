@@ -1,4 +1,4 @@
-package de.saring.exerciseviewer.parser.impl.garminfit;
+package de.saring.exerciseviewer.parser.impl.garminfit.summaryCalculators;
 
 import static org.junit.Assert.*;
 
@@ -9,6 +9,8 @@ import static org.hamcrest.core.IsNot.not;
 
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.parser.impl.garminfit.summaryCalculators.CalculatorFactory;
+import de.saring.exerciseviewer.parser.impl.garminfit.summaryCalculators.MaxSpeedCalculator;
 
 public class CalculatorFactoryTest {
 

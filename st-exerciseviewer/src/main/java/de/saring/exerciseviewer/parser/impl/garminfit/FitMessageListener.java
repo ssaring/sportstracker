@@ -3,6 +3,7 @@ package de.saring.exerciseviewer.parser.impl.garminfit;
 import com.garmin.fit.*;
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.*;
+import de.saring.exerciseviewer.parser.impl.garminfit.summaryCalculators.ExerciseSummaryValuesDecorator;
 import de.saring.util.Date310Utils;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
@@ -407,22 +408,7 @@ class FitMessageListener implements MesgListener {
         }
     }
     
-	private void calculateMissingMaxSpeed() {
-		float maxSpeed = exercise.getSpeed().getSpeedMax();
-		if (maxSpeed > 0.01) {
-			return;
-		}
-
-		OptionalDouble calculatedMaxSpeed = Arrays.asList(exercise.getSampleList()).stream()
-				.mapToDouble(sample -> sample.getSpeed())
-				.max();
-		
-		if (calculatedMaxSpeed.isPresent()) {
-			exercise.getSpeed().setSpeedMax((float) calculatedMaxSpeed.getAsDouble());
-		}
-	}
-    
-    private void calculateMissingHeartRateAVG() {
+	private void calculateMissingHeartRateAVG() {
 		short heartRateAVG = exercise.getHeartRateAVG();
 		if (heartRateAVG > 0) {
 			return;

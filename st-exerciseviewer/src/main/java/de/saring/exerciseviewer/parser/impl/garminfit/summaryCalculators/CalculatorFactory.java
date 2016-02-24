@@ -1,4 +1,4 @@
-package de.saring.exerciseviewer.parser.impl.garminfit;
+package de.saring.exerciseviewer.parser.impl.garminfit.summaryCalculators;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -8,8 +8,8 @@ import de.saring.exerciseviewer.data.ExerciseSpeed;
 
 public class CalculatorFactory {
 
-	public Collection<ExerciseSummaryCalculator> createCalculators(EVExercise exercise) {
-		Collection<ExerciseSummaryCalculator> result = new LinkedList<>();
+	public Collection<ExerciseSummaryAggregator> createCalculators(EVExercise exercise) {
+		Collection<ExerciseSummaryAggregator> result = new LinkedList<>();
 
 		ExerciseSpeed speed = exercise.getSpeed();
 		if (speed != null) {

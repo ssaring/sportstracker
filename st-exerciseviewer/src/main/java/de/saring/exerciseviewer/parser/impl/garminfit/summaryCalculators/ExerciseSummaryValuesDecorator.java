@@ -1,4 +1,4 @@
-package de.saring.exerciseviewer.parser.impl.garminfit;
+package de.saring.exerciseviewer.parser.impl.garminfit.summaryCalculators;
 
 import java.util.Collection;
 
@@ -10,11 +10,11 @@ public class ExerciseSummaryValuesDecorator {
 	CalculatorFactory factory = new CalculatorFactory();
 
 	public void addMissingSummaries(EVExercise exercise) {
-		Collection<ExerciseSummaryCalculator> calculators = factory.createCalculators(exercise);
+		Collection<ExerciseSummaryAggregator> calculators = factory.createCalculators(exercise);
 		
 		for(ExerciseSample sample : exercise.getSampleList()) {
-			calculators.forEach(calc -> calc.visitSample(sample));
+			calculators.forEach(calc -> calc.collect(sample));
 		}
-		calculators.forEach(calc -> calc.finished());
+		calculators.forEach(calc -> calc.aggregateAndUpdateExercise());
 	}
 }

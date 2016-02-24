@@ -1,4 +1,4 @@
-package de.saring.exerciseviewer.parser.impl.garminfit;
+package de.saring.exerciseviewer.parser.impl.garminfit.summaryCalculators;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +12,8 @@ import org.junit.runners.Parameterized;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.ExerciseSample;
 import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.parser.impl.garminfit.summaryCalculators.ExerciseSummaryAggregator;
+import de.saring.exerciseviewer.parser.impl.garminfit.summaryCalculators.MaxSpeedCalculator;
 
 
 @RunWith(Parameterized.class)
@@ -42,12 +44,12 @@ public class MaxSpeedCalculatorTest {
 		EVExercise exercise = new EVExercise();
 		exercise.setSpeed(new ExerciseSpeed());
 		
-		ExerciseSummaryCalculator classUnderTest = new MaxSpeedCalculator(exercise);
+		ExerciseSummaryAggregator classUnderTest = new MaxSpeedCalculator(exercise);
 				
-		classUnderTest.visitSample(createSample(first));
-		classUnderTest.visitSample(createSample(second));
+		classUnderTest.collect(createSample(first));
+		classUnderTest.collect(createSample(second));
 		
-		classUnderTest.finished();
+		classUnderTest.aggregateAndUpdateExercise();
 		
 		assertEquals(expected, exercise.getSpeed().getSpeedMax(), 0.01);
 	}
