@@ -41,7 +41,7 @@ public class MaxHeartRateCalculatorTest {
 	   }
 	
 	@Test
-	public void MaxSpeedCalculator_SetsMaxSpeed() {
+	public void maxHeartRateCalculator_SetsMaxHeartRate() {
 		EVExercise exercise = new EVExercise();
 		
 		ExerciseSummaryAggregator classUnderTest = new MaxHeartRateCalculator(exercise);
