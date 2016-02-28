@@ -1,18 +1,34 @@
 package de.saring.exerciseviewer.parser.impl.garminfit;
 
-import com.garmin.fit.*;
+import java.util.LinkedList;
+import java.util.List;
+
+import com.garmin.fit.DateTime;
+import com.garmin.fit.LapMesg;
+import com.garmin.fit.LengthMesg;
+import com.garmin.fit.Mesg;
+import com.garmin.fit.MesgListener;
+import com.garmin.fit.MesgNum;
+import com.garmin.fit.RecordMesg;
+import com.garmin.fit.SessionMesg;
+
 import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.*;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.ExerciseAltitude;
+import de.saring.exerciseviewer.data.ExerciseCadence;
+import de.saring.exerciseviewer.data.ExerciseSample;
+import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.data.ExerciseTemperature;
+import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.data.LapAltitude;
+import de.saring.exerciseviewer.data.LapSpeed;
+import de.saring.exerciseviewer.data.LapTemperature;
+import de.saring.exerciseviewer.data.Position;
+import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.exerciseviewer.parser.impl.garminfit.summaryCalculators.ExerciseSummaryValuesDecorator;
 import de.saring.util.Date310Utils;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
 
 /**
  * This message listener implementation creates the EVExercise object from
