@@ -249,7 +249,6 @@ class FitMessageListener implements MesgListener {
         calculateAltitudeSummary();
         calculateTemperatureSummary();
         calculateMissingAverageSpeed();
-        calculateMissingHeartRateAVG();
         
         // todo methos for summaries above are missing
         ExerciseSummaryValuesDecorator decorator = new ExerciseSummaryValuesDecorator();
@@ -405,18 +404,5 @@ class FitMessageListener implements MesgListener {
                         lapSpeed.getDistance() / 1000f, Math.round(lap.getTimeSplit() / 10f)));
             }
         }
-    }
-    
-	private void calculateMissingHeartRateAVG() {
-		short heartRateAVG = exercise.getHeartRateAVG();
-		if (heartRateAVG > 0) {
-			return;
-		};
-		OptionalDouble avgHeartRate = Arrays.asList(exercise.getSampleList()).stream()
-		.mapToDouble(sample -> sample.getHeartRate())
-		.average();
-		if (avgHeartRate.isPresent()) {
-			exercise.setHeartRateAVG((short) avgHeartRate.getAsDouble());
-		}
     }
 }

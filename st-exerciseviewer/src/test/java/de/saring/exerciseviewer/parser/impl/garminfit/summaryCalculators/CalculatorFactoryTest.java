@@ -32,7 +32,7 @@ public class CalculatorFactoryTest {
 	}
 	
 	@Test
-	public void createCalculators_CreatesMaxHeartRateCalculator_WhenMaxSpeedIs0() {
+	public void createCalculators_CreatesMaxHeartRateCalculator_WhenMaxHeartRateIs0() {
 		CalculatorFactory classUnderTest = new CalculatorFactory();
 		EVExercise exercise = createExersize();
 
@@ -40,12 +40,29 @@ public class CalculatorFactoryTest {
 	}
 
 	@Test
-	public void createCalculators_DoesNotCreateMaxHeartRateCalculator_WhenMaxSpeedIsGreater0() {
+	public void createCalculators_DoesNotCreateMaxHeartRateCalculator_WhenMaxHeartRateIsGreater0() {
 		CalculatorFactory classUnderTest = new CalculatorFactory();
 		EVExercise exercise = createExersize();
 		exercise.setHeartRateMax((short) 123);
 
 		assertThat(classUnderTest.createCalculators(exercise), not(hasItem(isA(MaxHeartRateCalculatorTest.class))));
+	}
+	
+	@Test
+	public void createCalculators_CreatesAVGHeartRateCalculator_WhenAVGHeartRateIs0() {
+		CalculatorFactory classUnderTest = new CalculatorFactory();
+		EVExercise exercise = createExersize();
+
+		assertThat(classUnderTest.createCalculators(exercise), hasItem(isA(AVGHeartRateCalculator.class)));
+	}
+
+	@Test
+	public void createCalculators_DoesNotCreateAVGHeartRateCalculator_WhenAVGHeartRateIsGreater0() {
+		CalculatorFactory classUnderTest = new CalculatorFactory();
+		EVExercise exercise = createExersize();
+		exercise.setHeartRateAVG((short) 123);
+
+		assertThat(classUnderTest.createCalculators(exercise), not(hasItem(isA(AVGHeartRateCalculator.class))));
 	}
 	
 	private EVExercise createExersize() {

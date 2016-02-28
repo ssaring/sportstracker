@@ -21,6 +21,9 @@ public class CalculatorFactory {
 		if (exercise.getHeartRateMax() == 0) {
 			result.add(new MaxHeartRateCalculator(exercise));
 		}
+		if (exercise.getHeartRateAVG() == 0) {
+			result.add(new AVGHeartRateCalculator(exercise));
+		}
 		return result;
 	}
 }
