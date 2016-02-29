@@ -237,9 +237,11 @@ class FitMessageListener implements MesgListener {
     private void readDeviceInfoMessage(DeviceInfoMesg mesg) {
 
         final Integer garminProductId = mesg.getGarminProduct();
-        if (garminProductId != null && garminProductId.intValue() != 0) {
-            String deviceName = "Garmin " + getGarminProductConstantName(garminProductId);
-            exercise.setDeviceName(deviceName);
+        if (garminProductId != null && garminProductId.intValue() > 100) {
+            String productName = getGarminProductConstantName(garminProductId);
+            if (productName != null) {
+                exercise.setDeviceName("Garmin " + productName);
+            }
         }
     }
 
