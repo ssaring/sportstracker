@@ -24,6 +24,10 @@ v7.1.1:
   - bugfix for parsing FIT files of Garmin Fenix 2 devices (missing max speed)
     (contribution by Alex Rampp, GitHub pull request #6)
   - updated Garmin FIT SDK library to version 16.50
+  - Garmin FIT parser: read device name from exercise file
+    (e.g. "Garmin EDGE 500")
+  - Main Panel: display device name if available
+    (instead of unused exercise type)
  Project changes:
   - use the Ubuntu Trusty image in Travis CI builds, it contains the latest
     Java 8 JDK (no workaround installation needed anymore)
