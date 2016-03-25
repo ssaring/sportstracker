@@ -60,10 +60,9 @@ public class TimexPwxParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.TIMEX_PWX);
-        assertEquals(exercise.getUserID(), (byte) 0);
+        assertEquals("Timex 843", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2010, 6, 18, 20, 12, 0), exercise.getDateTime());
-        assertEquals((byte) 0, exercise.getType());
-        assertEquals("Run", exercise.getTypeLabel());
+        assertEquals("Run", exercise.getType());
         assertEquals(false, exercise.getRecordingMode().isAltitude());
         assertEquals(false, exercise.getRecordingMode().isSpeed());
         assertEquals(false, exercise.getRecordingMode().isCadence());
@@ -207,10 +206,9 @@ public class TimexPwxParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.TIMEX_PWX);
-        assertEquals(exercise.getUserID(), (byte) 0);
+        assertEquals("Timex Global Trainer", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2010, 9, 9, 17, 53, 21), exercise.getDateTime());
-        assertEquals((byte) 0, exercise.getType());
-        assertEquals("Bike", exercise.getTypeLabel());
+        assertEquals("Bike", exercise.getType());
         assertEquals(true, exercise.getRecordingMode().isAltitude());
         assertEquals(true, exercise.getRecordingMode().isSpeed());
         assertEquals(false, exercise.getRecordingMode().isCadence());
@@ -323,10 +321,9 @@ public class TimexPwxParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.TIMEX_PWX);
-        assertEquals(exercise.getUserID(), (byte) 0);
+        assertEquals("Timex Run Trainer", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2013, 1, 1, 8, 22, 52), exercise.getDateTime());
-        assertEquals((byte) 0, exercise.getType());
-        assertEquals("Run", exercise.getTypeLabel());
+        assertEquals("Run", exercise.getType());
         assertEquals(true, exercise.getRecordingMode().isAltitude());
         assertEquals(true, exercise.getRecordingMode().isSpeed());
         assertEquals(false, exercise.getRecordingMode().isCadence());

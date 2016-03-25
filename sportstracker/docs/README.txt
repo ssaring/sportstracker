@@ -389,10 +389,10 @@ The SportsTracker project uses the following libraries:
       License: Common Public License v1.0
   - Mockito 1.9.5 (http://code.google.com/p/mockito/)
       License: MIT License
-  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 4.20
+  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 16.50
       URL: http://www.thisisant.com/pages/products/fit-sdk
       License: FIT Protocol License (open source by Dynastream / Garmin)
-      License URL: http://www.thisisant.com/pages/ant/fit-license
+      License URL: https://www.thisisant.com/resources/fit
   - jfx-testrunner 1.1 (https://github.com/sialcasa/jfx-testrunner)
       License: Apache License v2.0
 

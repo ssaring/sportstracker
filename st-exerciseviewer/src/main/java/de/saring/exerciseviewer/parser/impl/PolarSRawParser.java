@@ -60,6 +60,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
         } else {
             exercise.setFileType(EVExercise.ExerciseFileType.S610RAW);
         }
+        exercise.setDeviceName("Polar S6xx/S7xx Series");
 
         // get bytes in file
         int bytesInFile = (fileContent[1] * 0x100) + fileContent[0];
@@ -67,15 +68,12 @@ public class PolarSRawParser extends AbstractExerciseParser {
             throw new EVException("The exercise file is not valid, the file length is not correct ...");
         }
 
-        // get exercise type
-        exercise.setType((byte) fileContent[2]);
-
-        // get exercise type label
+        // get exercise type (label)
         StringBuilder sbExerciseLabel = new StringBuilder();
         for (int i = 0; i < 7; i++) {
             sbExerciseLabel.append(decodeChar(fileContent[i + 3]));
         }
-        exercise.setTypeLabel(sbExerciseLabel.toString());
+        exercise.setType(sbExerciseLabel.toString());
 
         // get exercise date
         int dateSeconds = decodeBCD(fileContent[10]);
@@ -105,9 +103,6 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
         // get number of laps
         int numberOfLaps = decodeBCD(fileContent[21]);
-
-        // get user ID
-        exercise.setUserID((byte) decodeBCD(fileContent[24]));
 
         // get unit format from bit 1 of byte 25
         // => 0 = metric, 1 = english

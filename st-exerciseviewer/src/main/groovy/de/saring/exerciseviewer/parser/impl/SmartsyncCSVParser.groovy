@@ -63,6 +63,7 @@ class SmartsyncCSVParser extends AbstractExerciseParser {
         // parse basic exercise data
         EVExercise exercise = new EVExercise()
         exercise.fileType = EVExercise.ExerciseFileType.SSCSV // FIXME
+        exercise.deviceName = 'Oregon Scientific Smartsync'
         exercise.recordingMode = new RecordingMode()
         exercise.lapList = []
 

@@ -25,15 +25,15 @@ public class MainPanelController extends AbstractPanelController {
     private DiagramPanelController diagramPanelController;
 
     @FXML
-    private Label laTypeValue;
-    @FXML
-    private Label laUserValue;
-    @FXML
     private Label laDateTimeValue;
     @FXML
     private Label laDurationValue;
     @FXML
     private Label laEnergyValue;
+    @FXML
+    private Label laDeviceValue;
+    @FXML
+    private Label laTypeValue;
 
     @FXML
     private Label laHeartrateAvgValue;
@@ -98,14 +98,6 @@ public class MainPanelController extends AbstractPanelController {
 
         if (exercise.getFileType() != EVExercise.ExerciseFileType.HRM) {
 
-            // fill type and user data
-            if (exercise.getType() > 0) {
-                laTypeValue.setText("" + exercise.getType() + " (" + exercise.getTypeLabel() + ")");
-            }
-            if (exercise.getUserID() > 0) {
-                laUserValue.setText("" + exercise.getUserID());
-            }
-
             // fill energy data
             if (exercise.getEnergy() > 0) {
                 laEnergyValue.setText(formatUtils.caloriesToString(exercise.getEnergy()));
@@ -123,6 +115,14 @@ public class MainPanelController extends AbstractPanelController {
             if (exercise.getFileType() == EVExercise.ExerciseFileType.S710RAW) {
                 laTotalRidingTimeValue.setText(formatUtils.minutes2TimeString(exercise.getSumRideTime()));
             }
+        }
+
+        // fill device and type data
+        if (exercise.getDeviceName() != null && !exercise.getDeviceName().trim().isEmpty()) {
+            laDeviceValue.setText(exercise.getDeviceName());
+        }
+        if (exercise.getType() != null) {
+            laTypeValue.setText(exercise.getType());
         }
 
         // fill time data

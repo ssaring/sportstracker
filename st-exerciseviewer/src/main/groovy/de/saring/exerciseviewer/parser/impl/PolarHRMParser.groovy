@@ -61,6 +61,7 @@ class PolarHRMParser extends AbstractExerciseParser {
         // parse basic exercise data
         EVExercise exercise = new EVExercise()
         exercise.fileType = EVExercise.ExerciseFileType.HRM
+        exercise.deviceName = 'Polar HRM'
 
         //////////////////////////////////////////////////////////////////////
         // parse 'Params' block

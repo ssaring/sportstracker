@@ -44,6 +44,7 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
 
         // check basic exercise data
         assertEquals(EVExercise.ExerciseFileType.GPX, exercise.fileType)
+        assertEquals('Garmin GPX', exercise.deviceName)
         assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)
@@ -103,6 +104,7 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
 
         // check basic exercise data
         assertEquals(EVExercise.ExerciseFileType.GPX, exercise.fileType)
+        assertEquals('Garmin GPX', exercise.deviceName)
         assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)
@@ -170,6 +172,7 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
 
         // check basic exercise data
         assertEquals(EVExercise.ExerciseFileType.GPX, exercise.fileType)
+        assertEquals('Garmin GPX', exercise.deviceName)
         assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)
@@ -235,6 +238,7 @@ class TopoGrafixGpxParserTest extends GroovyTestCase {
 
         // check basic exercise data
         assertEquals(EVExercise.ExerciseFileType.GPX, exercise.fileType)
+        assertEquals('Garmin GPX', exercise.deviceName)
         assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         assertFalse(exercise.recordingMode.altitude)
         assertFalse(exercise.recordingMode.heartRate)
