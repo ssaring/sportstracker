@@ -30,16 +30,16 @@
                                 <ColumnConstraints />
                             </columnConstraints>
                             <children>
-                                <Label text="%pv.main.device.text" />
-                                <Label fx:id="laDeviceValue" text="%common.n_a_" GridPane.columnIndex="1" />
-                                <Label text="%pv.main.type.text" GridPane.rowIndex="1" />
-                                <Label fx:id="laTypeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Label text="%pv.main.date.text" GridPane.rowIndex="2" />
-                                <Label fx:id="laDateTimeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <Label text="%pv.main.duration.text" GridPane.rowIndex="3" />
-                                <Label fx:id="laDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <Label text="%pv.main.energy.text" GridPane.rowIndex="4" />
-                                <Label fx:id="laEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <Label text="%pv.main.date.text" />
+                                <Label fx:id="laDateTimeValue" text="%common.n_a_" GridPane.columnIndex="1" />
+                                <Label text="%pv.main.duration.text" GridPane.rowIndex="1" />
+                                <Label fx:id="laDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label text="%pv.main.energy.text" GridPane.rowIndex="2" />
+                                <Label fx:id="laEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label text="%pv.main.device.text" GridPane.rowIndex="3" />
+                                <Label fx:id="laDeviceValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <Label text="%pv.main.type.text" GridPane.rowIndex="4" />
+                                <Label fx:id="laTypeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             </children>
                             <VBox.margin>
                                 <Insets left="24.0" />

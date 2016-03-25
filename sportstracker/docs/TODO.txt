@@ -1,12 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Garmin Edge 520 / FIT:
-- if possible, parse and display bike number and bike name too
-  (in FitMessageListener#readDeviceInfoMessage(), parse message types BIKE_PROFILE and DEVICE_INFO?)
-- move device name and type to end of main section
-- add to Changelog
-
 Before next release:
 - BUG with JDK8u66: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:
   Caused by: java.lang.IllegalArgumentException:
