@@ -57,8 +57,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S610RAW);
         assertEquals(exercise.getUserID(), (byte) 1);
         assertEquals(LocalDateTime.of(2004, 9, 12, 7, 26, 7), exercise.getDateTime());
-        assertEquals(exercise.getType(), (byte) 2);
-        assertEquals(exercise.getTypeLabel(), "TB2    ");
+        assertEquals(exercise.getType(), "TB2    ");
         assertEquals(exercise.getRecordingMode().isAltitude(), false);
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
@@ -164,8 +163,7 @@ public class PolarSRawParserTest {
         assertEquals(EVExercise.ExerciseFileType.S710RAW, exercise.getFileType());
         assertEquals((byte) 0, exercise.getUserID());
         assertEquals(LocalDateTime.of(2002, 11, 20, 14, 7, 44), exercise.getDateTime());
-        assertEquals((byte) 1, exercise.getType());
-        assertEquals("ExeSet1", exercise.getTypeLabel());
+        assertEquals("ExeSet1", exercise.getType());
         assertEquals((1 * 60 * 60 * 10) + (13 * 60 * 10) + 34 * 10 + 3, exercise.getDuration());
         assertTrue(exercise.getRecordingMode().isAltitude());
         assertTrue(exercise.getRecordingMode().isSpeed());
@@ -298,8 +296,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S710RAW);
         assertEquals(exercise.getUserID(), (byte) 0);
         assertEquals(LocalDateTime.of(2002, 11, 20, 13, 10, 42), exercise.getDateTime());
-        assertEquals(exercise.getType(), (byte) 1);
-        assertEquals(exercise.getTypeLabel(), "ExeSet1");
+        assertEquals(exercise.getType(), "ExeSet1");
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
         assertEquals(exercise.getRecordingMode().isSpeed(), true);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
@@ -432,8 +429,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S710RAW);
         assertEquals(exercise.getUserID(), (byte) 0);
         assertEquals(LocalDateTime.of(2002, 12, 25, 10, 21, 4), exercise.getDateTime());
-        assertEquals(exercise.getType(), (byte) 2);
-        assertEquals(exercise.getTypeLabel(), "ExeSet2");
+        assertEquals(exercise.getType(), "ExeSet2");
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
@@ -537,8 +533,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S710RAW);
         assertEquals(exercise.getUserID(), (byte) 1);
         assertEquals(LocalDateTime.of(2005, 4, 16, 9, 56, 32), exercise.getDateTime());
-        assertEquals(exercise.getType(), (byte) 1);
-        assertEquals(exercise.getTypeLabel(), "ExeSet1");
+        assertEquals(exercise.getType(), "ExeSet1");
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
         assertEquals(exercise.getRecordingMode().isSpeed(), true);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
@@ -659,8 +654,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S710RAW);
         assertEquals(exercise.getUserID(), (byte) 1);
         assertEquals(LocalDateTime.of(2005, 4, 17, 8, 59, 3), exercise.getDateTime());
-        assertEquals(exercise.getType(), (byte) 1);
-        assertEquals(exercise.getTypeLabel(), "ExeSet1");
+        assertEquals(exercise.getType(), "ExeSet1");
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);

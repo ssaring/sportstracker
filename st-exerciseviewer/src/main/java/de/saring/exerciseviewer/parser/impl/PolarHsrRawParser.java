@@ -159,16 +159,16 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         boolean fHeartRateRangeAbsolute = true; //(sdata(1,1) & 0x10) == 0;
 
         // get exercise type
-        exercise.setType((byte) sdata(1, 2));
-        if (exercise.getType() > 0) {
+        byte typeNr = (byte) sdata(1, 2);
+        if (typeNr > 0) {
             // get exercise type label
             StringBuilder sbExerciseLabel = new StringBuilder();
             for (int i = 0; i < 7; i++) {
                 sbExerciseLabel.append(decodeChar(sdata(1, i + 3)));
             }
-            exercise.setTypeLabel(sbExerciseLabel.toString());
+            exercise.setType(sbExerciseLabel.toString());
         } else {
-            exercise.setTypeLabel("BasicUse");
+            exercise.setType("BasicUse");
         }
 
         // get exercise date

@@ -3,7 +3,7 @@ SportsTracker-TODO
 
 Garmin Edge 520 / FIT:
 - HRM device name is being parsed, stored in EVExercise and displayed in the EV main panel
-- remove EVExercise attributes type and typeLabel, never used
+- display EVExercise.type in Main panel
 - if possible, parse and display bike number and bike name too
   (in FitMessageListener#readDeviceInfoMessage(), parse message types BIKE_PROFILE and DEVICE_INFO?)
 - parse device name in other exercise file formats too
@@ -20,7 +20,7 @@ Before next release:
   - support for Garmin Fenix (2) FIT files
 
 - Database Export (to SQLite?)
-  - users will technical skills have all possibilities for custom queries and
+  - users with technical skills have all possibilities for custom queries and
     statistics
   - provides new possibilities for data migration
 

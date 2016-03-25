@@ -67,15 +67,12 @@ public class PolarSRawParser extends AbstractExerciseParser {
             throw new EVException("The exercise file is not valid, the file length is not correct ...");
         }
 
-        // get exercise type
-        exercise.setType((byte) fileContent[2]);
-
-        // get exercise type label
+        // get exercise type (label)
         StringBuilder sbExerciseLabel = new StringBuilder();
         for (int i = 0; i < 7; i++) {
             sbExerciseLabel.append(decodeChar(fileContent[i + 3]));
         }
-        exercise.setTypeLabel(sbExerciseLabel.toString());
+        exercise.setType(sbExerciseLabel.toString());
 
         // get exercise date
         int dateSeconds = decodeBCD(fileContent[10]);

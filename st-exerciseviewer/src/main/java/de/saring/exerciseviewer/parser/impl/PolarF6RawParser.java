@@ -76,7 +76,7 @@ public class PolarF6RawParser extends AbstractExerciseParser {
             i++;
         }
         exerciseName.append(String.valueOf(fileContent[i] - 0x80));
-        exercise.setTypeLabel(exerciseName.toString());
+        exercise.setType(exerciseName.toString());
 
         // read the exercise date
         int dateDay = fileContent[8];

@@ -28,6 +28,8 @@ v7.1.1:
     (e.g. "Garmin EDGE 500")
   - Main Panel: display device name if available
     (instead of unused exercise type)
+  - removed Polar-specific exercise attributes 'type number' from parser and
+    Exercise Viewer (no usage, very cryptic, e.g. "2")
  Project changes:
   - use the Ubuntu Trusty image in Travis CI builds, it contains the latest
     Java 8 JDK (no workaround installation needed anymore)
