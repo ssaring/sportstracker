@@ -111,6 +111,7 @@ class PolarPedParser extends AbstractExerciseParser {
         // parse basic exercise data
         EVExercise exercise = new EVExercise()
         exercise.fileType = EVExercise.ExerciseFileType.PED
+        exercise.deviceName = 'Polar PED'
 
         if (exerciseID >= getExerciseCount()) {
             throw new EVException("There is no exercise '${exerciseID}' in current file")

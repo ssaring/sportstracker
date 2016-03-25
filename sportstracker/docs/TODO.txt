@@ -2,10 +2,8 @@ SportsTracker-TODO
 ==================
 
 Garmin Edge 520 / FIT:
-- HRM device name is being parsed, stored in EVExercise and displayed in the EV main panel
 - if possible, parse and display bike number and bike name too
   (in FitMessageListener#readDeviceInfoMessage(), parse message types BIKE_PROFILE and DEVICE_INFO?)
-- parse device name in other exercise file formats too
 - move device name and type to end of main section
 - add to Changelog
 

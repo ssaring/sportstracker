@@ -55,6 +55,7 @@ class PolarRS200SDParser extends AbstractExerciseParser {
         // parse basic exercise data
         EVExercise exercise = new EVExercise()
         exercise.fileType = EVExercise.ExerciseFileType.RS200SDRAW
+        exercise.deviceName = 'Polar RS200'
         exercise.recordingMode = new RecordingMode()
 
         exercise.dateTime = LocalDateTime.of(
