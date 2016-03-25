@@ -60,6 +60,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
         } else {
             exercise.setFileType(EVExercise.ExerciseFileType.S610RAW);
         }
+        exercise.setDeviceName("Polar S6xx/S7xx Series");
 
         // get bytes in file
         int bytesInFile = (fileContent[1] * 0x100) + fileContent[0];

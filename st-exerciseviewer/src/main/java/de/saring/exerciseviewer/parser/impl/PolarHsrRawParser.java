@@ -75,6 +75,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         // TODO - support S410 and S520
         EVExercise exercise = new EVExercise();
         exercise.setFileType(EVExercise.ExerciseFileType.S510RAW);
+        exercise.setDeviceName("Polar S4xx/S5xx Series");
 
         // get bytes in file
         int bytesInFile = (fileContent[1] * 0x100) + fileContent[0];

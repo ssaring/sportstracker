@@ -55,6 +55,7 @@ public class PolarF6RawParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.F6RAW);
+        assertEquals("Polar F Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2007, 10, 28, 11, 7, 34), exercise.getDateTime());
         assertEquals("0", exercise.getType());
         assertEquals(false, exercise.getRecordingMode().isAltitude());

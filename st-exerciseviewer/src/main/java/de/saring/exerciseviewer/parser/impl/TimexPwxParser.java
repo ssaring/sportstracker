@@ -310,27 +310,30 @@ public class TimexPwxParser extends AbstractExerciseParser {
     private EVExercise parseWorkoutDeviceNode(EVExercise exercise, Node deviceNode) {
         NodeList children = deviceNode.getChildNodes();
         String childName;
+        String make = "";
+        String model = "";
+
         for (int i = 0; i < children.getLength(); i++) {
             childName = children.item(i).getNodeName();
             if (childName.equals("extension")) {
                 // parse extension
                 exercise = parseDeviceExtensionNode(exercise, children.item(i));
             } else if (childName.equals("make")) {
-                // obtain make        
+                make = children.item(i).getTextContent();
             } else if (childName.equals("model")) {
-                // obtain model        
-                String model = children.item(i).getTextContent();
+                model = children.item(i).getTextContent();
                 if (model.equals("Global Trainer") || model.equals("Run Trainer")) {
                     exercise = setGlobalTrainerRecordingMode(exercise);
                     exercise = setGlobalTrainerZones(exercise);
                 }
-
             } else if (childName.equals("stopdetectionsetting")) {
                 // obtain stopdetectionsetting        
             } else if (childName.equals("elevationchangesetting")) {
                 // obtain elevationchangesetting        
             }
         }
+
+        exercise.setDeviceName((make.isEmpty() ? "" : make + " ") + model);
         return exercise;
     }
 

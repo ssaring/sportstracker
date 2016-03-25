@@ -55,6 +55,7 @@ public class PolarSRawParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S610RAW);
+        assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2004, 9, 12, 7, 26, 7), exercise.getDateTime());
         assertEquals(exercise.getType(), "TB2    ");
         assertEquals(exercise.getRecordingMode().isAltitude(), false);
@@ -160,6 +161,7 @@ public class PolarSRawParserTest {
 
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.S710RAW, exercise.getFileType());
+        assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2002, 11, 20, 14, 7, 44), exercise.getDateTime());
         assertEquals("ExeSet1", exercise.getType());
         assertEquals((1 * 60 * 60 * 10) + (13 * 60 * 10) + 34 * 10 + 3, exercise.getDuration());
@@ -292,6 +294,7 @@ public class PolarSRawParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S710RAW);
+        assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2002, 11, 20, 13, 10, 42), exercise.getDateTime());
         assertEquals(exercise.getType(), "ExeSet1");
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
@@ -424,6 +427,7 @@ public class PolarSRawParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S710RAW);
+        assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2002, 12, 25, 10, 21, 4), exercise.getDateTime());
         assertEquals(exercise.getType(), "ExeSet2");
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
@@ -527,6 +531,7 @@ public class PolarSRawParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S710RAW);
+        assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2005, 4, 16, 9, 56, 32), exercise.getDateTime());
         assertEquals(exercise.getType(), "ExeSet1");
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
@@ -647,6 +652,7 @@ public class PolarSRawParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S710RAW);
+        assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2005, 4, 17, 8, 59, 3), exercise.getDateTime());
         assertEquals(exercise.getType(), "ExeSet1");
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
@@ -755,6 +761,7 @@ public class PolarSRawParserTest {
 
         // parse exercise file
         EVExercise exercise = parser.parseExercise("misc/testdata/s625x/20080224T113030-percentual_ranges.srd");
+        assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
 
         // check exercise data (only the relevant heartrate range values)
         assertEquals(exercise.getHeartRateAVG(), (short) 146);

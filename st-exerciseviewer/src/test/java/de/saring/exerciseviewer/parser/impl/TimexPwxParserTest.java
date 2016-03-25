@@ -60,6 +60,7 @@ public class TimexPwxParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.TIMEX_PWX);
+        assertEquals("Timex 843", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2010, 6, 18, 20, 12, 0), exercise.getDateTime());
         assertEquals("Run", exercise.getType());
         assertEquals(false, exercise.getRecordingMode().isAltitude());
@@ -205,6 +206,7 @@ public class TimexPwxParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.TIMEX_PWX);
+        assertEquals("Timex Global Trainer", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2010, 9, 9, 17, 53, 21), exercise.getDateTime());
         assertEquals("Bike", exercise.getType());
         assertEquals(true, exercise.getRecordingMode().isAltitude());
@@ -319,6 +321,7 @@ public class TimexPwxParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.TIMEX_PWX);
+        assertEquals("Timex Run Trainer", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2013, 1, 1, 8, 22, 52), exercise.getDateTime());
         assertEquals("Run", exercise.getType());
         assertEquals(true, exercise.getRecordingMode().isAltitude());
