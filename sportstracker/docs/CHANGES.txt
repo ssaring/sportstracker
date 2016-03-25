@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v7.1.1:
+v7.2.0:
  SportsTracker changes:
   - Native SportsTracker packages are now containing all documentation files
     (README, LICENSE, CHANGES, AUTHORS, ...)
@@ -18,7 +18,9 @@ v7.1.1:
     - much faster startup time (DI takes about 200 msec instead of 700 msec)
     - much smaller library (6 KByte instead of 2,7 MByte for Guice incl. Guava)
     - less memory usage after startup (about 10 MByte)
-  - removed cyclic dependencies on STController in all entry views    
+  - removed cyclic dependencies on STController in all entry views
+  - update of the bundled Java runtime to Java SE/FX 8u77, which contains many
+    bug and security fixes
  ExerciseViewer changes:
   - added support for Polar RCX3 HRM files (contains limited data only)
   - bugfix for parsing FIT files of Garmin Fenix 2 devices (missing max speed)
