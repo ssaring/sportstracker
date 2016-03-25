@@ -45,8 +45,7 @@ History of resource changes for each release
 --------------------------------------------
 
 SportsTracker 7.1.1:
-- pv.main.type.text (removed)
-- pv.main.device.text (new )
+- pv.main.device.text (new)
 
 SportsTracker 7.1.0:
 - st.dlg.about.translators.text (edited)

@@ -27,6 +27,8 @@ public class MainPanelController extends AbstractPanelController {
     @FXML
     private Label laDeviceValue;
     @FXML
+    private Label laTypeValue;
+    @FXML
     private Label laUserValue;
     @FXML
     private Label laDateTimeValue;
@@ -98,9 +100,12 @@ public class MainPanelController extends AbstractPanelController {
 
         if (exercise.getFileType() != EVExercise.ExerciseFileType.HRM) {
 
-            // fill device and user data
+            // fill device, type and user data
             if (exercise.getDeviceName() != null && !exercise.getDeviceName().trim().isEmpty()) {
                 laDeviceValue.setText(exercise.getDeviceName());
+            }
+            if (exercise.getType() != null) {
+                laTypeValue.setText(exercise.getType());
             }
             if (exercise.getUserID() > 0) {
                 laUserValue.setText("" + exercise.getUserID());
