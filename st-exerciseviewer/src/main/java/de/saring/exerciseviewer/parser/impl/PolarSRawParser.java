@@ -103,9 +103,6 @@ public class PolarSRawParser extends AbstractExerciseParser {
         // get number of laps
         int numberOfLaps = decodeBCD(fileContent[21]);
 
-        // get user ID
-        exercise.setUserID((byte) decodeBCD(fileContent[24]));
-
         // get unit format from bit 1 of byte 25
         // => 0 = metric, 1 = english
         boolean fMetricUnits = (fileContent[25] & 0x02) == 0x00;

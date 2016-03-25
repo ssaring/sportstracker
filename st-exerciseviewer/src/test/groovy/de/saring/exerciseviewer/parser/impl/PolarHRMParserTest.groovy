@@ -45,7 +45,6 @@ class PolarHRMParserTest extends GroovyTestCase {
 
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.HRM, exercise.fileType)
-        assertEquals((short) 0, exercise.userID)
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)
         assertFalse(exercise.recordingMode.cadence)
@@ -176,8 +175,6 @@ class PolarHRMParserTest extends GroovyTestCase {
 
         // check exercise data
         assertEquals(exercise.fileType, EVExercise.ExerciseFileType.HRM)
-        assertEquals((short) 0, exercise.userID)
-        // assertEquals (exercise.Type, 1) // (not in HRM file)
         // assertEquals (exercise.TypeLabel, "ExeSet1") // (not in HRM file)
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)
@@ -304,7 +301,6 @@ class PolarHRMParserTest extends GroovyTestCase {
 
         // check exercise data
         assertEquals(exercise.fileType, EVExercise.ExerciseFileType.HRM)
-        assertEquals((short) 0, exercise.userID)
         // assertEquals (exercise.type, 2) // (not in HRM file)
         // assertEquals (exercise.typeLabel, "ExeSet2") // (not in HRM file)
         assertTrue(exercise.recordingMode.altitude)

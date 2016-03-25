@@ -201,9 +201,6 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         int numberOfMeas = decodeBCD(sdata(1, 21));
         int numberOfLaps = decodeBCD(sdata(1, 22));
 
-        // get user ID
-        exercise.setUserID((byte) decodeBCD(sdata(1, 24)));
-
         // get unit format from bit 1 of byte 25
         // => 0 = metric, 1 = english
         boolean fMetricUnits = (sdata(1, 25) & 0x02) == 0x00;

@@ -45,7 +45,6 @@ class SmartsyncCSVParserTest extends GroovyTestCase {
 
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.SSCSV, exercise.fileType)
-        assertEquals(0, exercise.userID)
         assertFalse(exercise.recordingMode.altitude)
         assertFalse(exercise.recordingMode.speed)
         assertFalse(exercise.recordingMode.cadence)

@@ -22,10 +22,6 @@ public final class EVExercise {
      */
     private String deviceName;
     /**
-     * ID of user of exercise (0 - 99).
-     */
-    private byte userID;
-    /**
      * Timestamp of exercise.
      */
     private LocalDateTime dateTime;
@@ -129,14 +125,6 @@ public final class EVExercise {
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
-    }
-
-    public byte getUserID() {
-        return userID;
-    }
-
-    public void setUserID(byte userID) {
-        this.userID = userID;
     }
 
     public LocalDateTime getDateTime() {
@@ -328,7 +316,6 @@ public final class EVExercise {
         sBuilder.append(EVExercise.class.getName()).append(":\n");
         sBuilder.append(" [fileType=").append(this.fileType).append("\n");
         sBuilder.append("  deviceName=").append(this.deviceName).append("]\n");
-        sBuilder.append("  userID=").append(this.userID).append("\n");
         sBuilder.append("  dateTime=").append(this.dateTime).append("\n");
         sBuilder.append("  type=").append(this.type).append("\n");
         sBuilder.append("  duration=").append(this.duration).append("\n");

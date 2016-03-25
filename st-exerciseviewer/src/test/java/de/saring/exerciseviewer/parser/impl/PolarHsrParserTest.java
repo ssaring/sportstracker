@@ -57,7 +57,6 @@ public class PolarHsrParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S510RAW);
-        assertEquals(exercise.getUserID(), (byte) 1);
         assertEquals(LocalDateTime.of(2007, 11, 3, 11, 03, 53), exercise.getDateTime());
         assertEquals(exercise.getType(), "BasicUse");
         assertEquals(exercise.getRecordingMode().isAltitude(), false);
@@ -168,7 +167,6 @@ public class PolarHsrParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S510RAW);
-        assertEquals(exercise.getUserID(), (byte) 1);
         assertEquals(LocalDateTime.of(2007, 8, 20, 21, 10, 11), exercise.getDateTime());
         assertEquals(exercise.getType(), "ExeSet5");
         assertEquals(exercise.getRecordingMode().isAltitude(), false);
