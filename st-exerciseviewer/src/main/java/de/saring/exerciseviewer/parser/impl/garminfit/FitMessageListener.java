@@ -8,6 +8,7 @@ import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
 
 import java.util.Arrays;
+import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.OptionalDouble;
@@ -22,7 +23,7 @@ class FitMessageListener implements MesgListener {
     /**
      * The parsed exercise.
      */
-    private EVExercise exercise = null;
+    private EVExercise exercise = new EVExercise();
     /**
      * List of created laps (collected in a LinkedList and not in EVExercise array, much faster).
      */
@@ -53,6 +54,9 @@ class FitMessageListener implements MesgListener {
             case MesgNum.LENGTH:
                 readLengthMessage(new LengthMesg(mesg));
                 break;
+            case MesgNum.DEVICE_INFO:
+                readDeviceInfoMessage(new DeviceInfoMesg(mesg));
+                break;
         }
     }
 
@@ -64,7 +68,6 @@ class FitMessageListener implements MesgListener {
     private void readSessionMessage(SessionMesg mesg) {
 
         // read time data
-        exercise = new EVExercise();
         exercise.setFileType(EVExercise.ExerciseFileType.GARMIN_FIT);
         exercise.setDateTime(Date310Utils.dateToLocalDateTime(mesg.getStartTime().getDate()));
         exercise.setDuration(Math.round(mesg.getTotalTimerTime() * 10));
@@ -230,6 +233,22 @@ class FitMessageListener implements MesgListener {
     }
 
     /**
+     * Reads HRM device information from the specified DeviceInfoMesg message.
+     *
+     * @param mesg device info message
+     */
+    private void readDeviceInfoMessage(DeviceInfoMesg mesg) {
+
+        final Integer garminProductId = mesg.getGarminProduct();
+        if (garminProductId != null && garminProductId.intValue() > 100) {
+            String productName = getGarminProductConstantName(garminProductId);
+            if (productName != null) {
+                exercise.setDeviceName("Garmin " + productName);
+            }
+        }
+    }
+
+    /**
      * Returns the EVExercise created from the received message. It sets
      * up all lap and sample data and calculates the missing data before.
      *
@@ -238,7 +257,7 @@ class FitMessageListener implements MesgListener {
     public EVExercise getExercise() throws EVException {
 
         // has activity data been found in the FIT file? (FIT files may contain other data too)
-        if (exercise == null) {
+        if (exercise.getDateTime() == null) {
             throw new EVException("The FIT file does not contain any exercise (activity) data...");
         }
 
@@ -445,4 +464,29 @@ class FitMessageListener implements MesgListener {
 			exercise.setHeartRateMax((short) maxHeartRate.getAsInt());
 		}
 	}
+
+	
+    /**
+     * Gets the name of the Garmin product ID constant from class GarminProduct for the specified product ID
+     * (done via Reflection).
+     *
+     * @param constantValue Garmin product ID
+     * @return constant / device name or null if not found
+     */
+    private String getGarminProductConstantName(final Integer constantValue) {
+        final Class<GarminProduct> gcClass = GarminProduct.class;
+        for (java.lang.reflect.Field field : gcClass.getDeclaredFields()) {
+            int modifiers = field.getModifiers();
+            if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers) && Modifier.isFinal(modifiers)) {
+                try {
+                    if (constantValue.equals(field.get(null))) {
+                        return field.getName();
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
 }

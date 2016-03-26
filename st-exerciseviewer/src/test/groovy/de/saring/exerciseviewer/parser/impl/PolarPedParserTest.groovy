@@ -53,6 +53,7 @@ public class PolarPedParserTest extends GroovyTestCase {
         //assertEquals(2, parser.getExerciseCount())
 
         assertEquals(EVExercise.ExerciseFileType.PED, exercise.fileType)
+        assertEquals('Polar PED', exercise.deviceName)
         assertEquals(LocalDateTime.of(2010, 4, 2, 19, 19, 00), exercise.dateTime);
         assertEquals(31560, exercise.duration)
         assertEquals(12800, exercise.speed.distance)

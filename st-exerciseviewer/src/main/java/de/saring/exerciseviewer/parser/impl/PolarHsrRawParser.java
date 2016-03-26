@@ -75,6 +75,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         // TODO - support S410 and S520
         EVExercise exercise = new EVExercise();
         exercise.setFileType(EVExercise.ExerciseFileType.S510RAW);
+        exercise.setDeviceName("Polar S4xx/S5xx Series");
 
         // get bytes in file
         int bytesInFile = (fileContent[1] * 0x100) + fileContent[0];
@@ -159,16 +160,16 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         boolean fHeartRateRangeAbsolute = true; //(sdata(1,1) & 0x10) == 0;
 
         // get exercise type
-        exercise.setType((byte) sdata(1, 2));
-        if (exercise.getType() > 0) {
+        byte typeNr = (byte) sdata(1, 2);
+        if (typeNr > 0) {
             // get exercise type label
             StringBuilder sbExerciseLabel = new StringBuilder();
             for (int i = 0; i < 7; i++) {
                 sbExerciseLabel.append(decodeChar(sdata(1, i + 3)));
             }
-            exercise.setTypeLabel(sbExerciseLabel.toString());
+            exercise.setType(sbExerciseLabel.toString());
         } else {
-            exercise.setTypeLabel("BasicUse");
+            exercise.setType("BasicUse");
         }
 
         // get exercise date
@@ -200,9 +201,6 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         // get number of laps
         int numberOfMeas = decodeBCD(sdata(1, 21));
         int numberOfLaps = decodeBCD(sdata(1, 22));
-
-        // get user ID
-        exercise.setUserID((byte) decodeBCD(sdata(1, 24)));
 
         // get unit format from bit 1 of byte 25
         // => 0 = metric, 1 = english

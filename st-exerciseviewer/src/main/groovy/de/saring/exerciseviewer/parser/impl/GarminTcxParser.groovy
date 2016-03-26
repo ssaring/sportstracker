@@ -194,6 +194,9 @@ class GarminTcxParser extends AbstractExerciseParser {
             }
         }
 
+        // parse device model name, it's always an Garmin
+        exercise.deviceName = "Garmin $activity.Creator.Name"
+
         exercise.lapList = evLaps as Lap[]
         exercise.sampleList = evSamples as ExerciseSample[]
 

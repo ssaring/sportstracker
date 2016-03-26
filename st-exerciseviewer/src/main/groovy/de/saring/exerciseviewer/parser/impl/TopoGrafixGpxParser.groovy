@@ -78,6 +78,7 @@ class TopoGrafixGpxParser extends AbstractExerciseParser {
 
         EVExercise exercise = new EVExercise()
         exercise.fileType = EVExercise.ExerciseFileType.GPX
+        exercise.deviceName = 'Garmin GPX'
         exercise.recordingInterval = EVExercise.DYNAMIC_RECORDING_INTERVAL
         exercise.recordingMode = new RecordingMode()
         exercise.recordingMode.location = true

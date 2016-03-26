@@ -12,26 +12,23 @@ import java.util.stream.Stream;
  * @version 1.0
  */
 public final class EVExercise {
+
     /**
      * File type of an exercise (see enums).
      */
     private ExerciseFileType fileType;
     /**
-     * ID of user of exercise (0 - 99).
+     * Name of the HRM device (optional).
      */
-    private byte userID;
+    private String deviceName;
     /**
      * Timestamp of exercise.
      */
     private LocalDateTime dateTime;
     /**
-     * Exercise type (0 to 5).
+     * Exercise type (label).
      */
-    private byte type;
-    /**
-     * Exercise type label.
-     */
-    private String typeLabel;
+    private String type;
     /**
      * Record mode (what was recorded in exercise).
      */
@@ -122,12 +119,12 @@ public final class EVExercise {
         this.fileType = fileType;
     }
 
-    public byte getUserID() {
-        return userID;
+    public String getDeviceName() {
+        return deviceName;
     }
 
-    public void setUserID(byte userID) {
-        this.userID = userID;
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
     }
 
     public LocalDateTime getDateTime() {
@@ -138,20 +135,12 @@ public final class EVExercise {
         this.dateTime = dateTime;
     }
 
-    public byte getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(byte type) {
+    public void setType(String type) {
         this.type = type;
-    }
-
-    public String getTypeLabel() {
-        return typeLabel;
-    }
-
-    public void setTypeLabel(String typeLabel) {
-        this.typeLabel = typeLabel;
     }
 
     public RecordingMode getRecordingMode() {
@@ -326,10 +315,9 @@ public final class EVExercise {
 
         sBuilder.append(EVExercise.class.getName()).append(":\n");
         sBuilder.append(" [fileType=").append(this.fileType).append("\n");
-        sBuilder.append("  userID=").append(this.userID).append("\n");
+        sBuilder.append("  deviceName=").append(this.deviceName).append("]\n");
         sBuilder.append("  dateTime=").append(this.dateTime).append("\n");
         sBuilder.append("  type=").append(this.type).append("\n");
-        sBuilder.append("  typeLabel=").append(this.typeLabel).append("\n");
         sBuilder.append("  duration=").append(this.duration).append("\n");
         sBuilder.append("  recordingInterval=").append(this.recordingInterval).append("\n");
         sBuilder.append("  heartRateAVG=").append(this.heartRateAVG).append("\n");

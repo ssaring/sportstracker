@@ -46,6 +46,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - Garmin Edge        (tested with Edge 500 and Edge 705, FIT and TCX files)
   - Garmin Forerunner  (tested with Forerunner 305, 910XT, FIT and TCX files)
   - Garmin Oregon      (tested with Oregon 450, GPX files)
+  - Garmin Fenix       (tested with Fenix 2, FIT files)
   - Timex Ironmen Race Trainer (tested)
   - Timex Ironmen Run Trainer (tested)
   - Timex Ironman Global Trainer  (tested)
@@ -388,10 +389,10 @@ The SportsTracker project uses the following libraries:
       License: Common Public License v1.0
   - Mockito 1.9.5 (http://code.google.com/p/mockito/)
       License: MIT License
-  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 4.20
+  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 16.50
       URL: http://www.thisisant.com/pages/products/fit-sdk
       License: FIT Protocol License (open source by Dynastream / Garmin)
-      License URL: http://www.thisisant.com/pages/ant/fit-license
+      License URL: https://www.thisisant.com/resources/fit
   - jfx-testrunner 1.1 (https://github.com/sialcasa/jfx-testrunner)
       License: Apache License v2.0
 
@@ -473,4 +474,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2016/01/13
+2016/02/23

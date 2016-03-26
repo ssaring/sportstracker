@@ -62,6 +62,7 @@ public class PolarF6RawParser extends AbstractExerciseParser {
         // create an PVExercise object from this data and set file type
         EVExercise exercise = new EVExercise();
         exercise.setFileType(EVExercise.ExerciseFileType.F6RAW);
+        exercise.setDeviceName("Polar F Series");
 
         // check wheter the read data fits the expected data length
         if (fileContent.length != F6_EXERCISE_FILE_LENGTH && fileContent.length != F11_EXERCISE_FILE_LENGTH) {
@@ -76,7 +77,7 @@ public class PolarF6RawParser extends AbstractExerciseParser {
             i++;
         }
         exerciseName.append(String.valueOf(fileContent[i] - 0x80));
-        exercise.setTypeLabel(exerciseName.toString());
+        exercise.setType(exerciseName.toString());
 
         // read the exercise date
         int dateDay = fileContent[8];

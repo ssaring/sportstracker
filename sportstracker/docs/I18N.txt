@@ -44,6 +44,10 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 7.1.1:
+- pv.main.device.text (new)
+- pv.main.user.text (removed)
+
 SportsTracker 7.1.0:
 - st.dlg.about.translators.text (edited)
 

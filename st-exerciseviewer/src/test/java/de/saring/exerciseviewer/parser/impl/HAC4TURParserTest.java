@@ -53,6 +53,7 @@ public class HAC4TURParserTest {
         EVExercise exercise = parser.parseExercise("misc/testdata/hac4/pailheres.tur");
 
         assertEquals(EVExercise.ExerciseFileType.HAC4TUR, exercise.getFileType());
+        assertEquals("HACtronic - Tour", exercise.getDeviceName());
         assertEquals((short) 20, exercise.getRecordingInterval());
         // check recording mode
         assertTrue(exercise.getRecordingMode().isSpeed());
@@ -113,6 +114,7 @@ public class HAC4TURParserTest {
         EVExercise exercise = parser.parseExercise("misc/testdata/hac4/hac5.tur");
 
         assertEquals(EVExercise.ExerciseFileType.HAC4TUR, exercise.getFileType());
+        assertEquals("HACtronic - Tour", exercise.getDeviceName());
         assertEquals((short) 5, exercise.getRecordingInterval());
         // check recording mode
         assertTrue(exercise.getRecordingMode().isSpeed());
