@@ -1,11 +1,8 @@
 package de.saring.exerciseviewer.parser.impl.garminfit;
 
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
 
 import com.garmin.fit.DateTime;
 import com.garmin.fit.DeviceInfoMesg;
@@ -286,7 +283,6 @@ class FitMessageListener implements MesgListener {
         storeSamples();
         storeLaps();
 
-        calculateAltitudeSummary();
         calculateTemperatureSummary();
         calculateMissingAverageSpeed();
         
@@ -371,30 +367,6 @@ class FitMessageListener implements MesgListener {
             }
         }
         return closestSample;
-    }
-
-    /**
-     * Calculates the min, max and average altitude (if available) from the sample data.
-     */
-    private void calculateAltitudeSummary() {
-        if (exercise.getRecordingMode().isAltitude() &&
-                exercise.getSampleList().length > 0) {
-
-            short altMin = Short.MAX_VALUE;
-            short altMax = Short.MIN_VALUE;
-            int altitudeSum = 0;
-
-            for (ExerciseSample sample : exercise.getSampleList()) {
-                altMin = (short) Math.min(sample.getAltitude(), altMin);
-                altMax = (short) Math.max(sample.getAltitude(), altMax);
-                altitudeSum += sample.getAltitude();
-            }
-
-            exercise.getAltitude().setAltitudeMin(altMin);
-            exercise.getAltitude().setAltitudeMax(altMax);
-            exercise.getAltitude().setAltitudeAVG(
-                    (short) (Math.round(altitudeSum / (double) exercise.getSampleList().length)));
-        }
     }
 
     /**
