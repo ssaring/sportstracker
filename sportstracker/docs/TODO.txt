@@ -1,29 +1,19 @@
 SportsTracker-TODO
 ==================
 
-Garmin Edge 520 / FIT:
-- update to latest FIT support library
-- parse HR monitor name name from exercise file and display in the main view
-- if possible, parse and display bike name too
-=> FitMessageListener: parse message types BIKE_PROFILE and DEVICE_INFO, they
-   could contain the needed data
-
-Before next release:
-- BUG with JDK8u66: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:
-  Caused by: java.lang.IllegalArgumentException:
-     DialogPane@4a0efce0[styleClass=root dialog-pane]is already inside a scene-graph and cannot be set as root
-  -> ControlsFX issue, see details here: https://bitbucket.org/controlsfx/controlsfx/issues/539/multiple-dialog-fields-with-validation
-  -> remove workaround when the bug has been fixed
-- add info to website: support for Polar RCX3 HRM files
-
 - Database Export (to SQLite?)
-  - users will technical skills have all possibilities for custom queries and
+  - users with technical skills have all possibilities for custom queries and
     statistics
   - provides new possibilities for data migration
 
 - Add search for comments in Note and Weight entries (currently for Exercises only)
 
 JavaFX Migration:
+- BUG with JDK8u66+: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:
+  Caused by: java.lang.IllegalArgumentException:
+     DialogPane@4a0efce0[styleClass=root dialog-pane]is already inside a scene-graph and cannot be set as root
+  -> ControlsFX issue, see details here: https://bitbucket.org/controlsfx/controlsfx/issues/539/multiple-dialog-fields-with-validation
+  -> remove workaround when the bug has been fixed
 - DatePicker validation does not work => when removing the date no error will be shown (uses previous date)
 - ControlsFX bug, remove workaround when fixed:
   - Dialogs can't be displayed when they contain multiple controls with validation support

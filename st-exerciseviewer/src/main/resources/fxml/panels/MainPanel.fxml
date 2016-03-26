@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane hgap="48.0" stylesheets="@../ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.MainPanelController">
+<GridPane hgap="48.0" stylesheets="@../ExerciseViewer.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.MainPanelController">
     <columnConstraints>
-        <ColumnConstraints percentWidth="50.0"/>
-        <ColumnConstraints percentWidth="50.0"/>
+        <ColumnConstraints percentWidth="50.0" />
+        <ColumnConstraints percentWidth="50.0" />
     </columnConstraints>
     <children>
         <VBox spacing="28.0">
@@ -21,35 +21,35 @@
                     <children>
                         <HBox alignment="CENTER_LEFT">
                             <children>
-                                <Label styleClass="label-header" text="%pv.main.general_data.text"/>
+                                <Label styleClass="label-header" text="%pv.main.general_data.text" />
                             </children>
                         </HBox>
                         <GridPane hgap="16.0" vgap="10.0">
                             <columnConstraints>
-                                <ColumnConstraints/>
-                                <ColumnConstraints/>
+                                <ColumnConstraints />
+                                <ColumnConstraints />
                             </columnConstraints>
                             <children>
-                                <Label text="%pv.main.type.text"/>
-                                <Label fx:id="laTypeValue" text="%common.n_a_" GridPane.columnIndex="1"/>
-                                <Label text="%pv.main.user.text" GridPane.rowIndex="1"/>
-                                <Label fx:id="laUserValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                <Label text="%pv.main.date.text" GridPane.rowIndex="2"/>
-                                <Label fx:id="laDateTimeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                                <Label text="%pv.main.duration.text" GridPane.rowIndex="3"/>
-                                <Label fx:id="laDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                                <Label text="%pv.main.energy.text" GridPane.rowIndex="4"/>
-                                <Label fx:id="laEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                <Label text="%pv.main.date.text" />
+                                <Label fx:id="laDateTimeValue" text="%common.n_a_" GridPane.columnIndex="1" />
+                                <Label text="%pv.main.duration.text" GridPane.rowIndex="1" />
+                                <Label fx:id="laDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label text="%pv.main.energy.text" GridPane.rowIndex="2" />
+                                <Label fx:id="laEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label text="%pv.main.device.text" GridPane.rowIndex="3" />
+                                <Label fx:id="laDeviceValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <Label text="%pv.main.type.text" GridPane.rowIndex="4" />
+                                <Label fx:id="laTypeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             </children>
                             <VBox.margin>
-                                <Insets left="24.0"/>
+                                <Insets left="24.0" />
                             </VBox.margin>
                             <rowConstraints>
-                                <RowConstraints/>
-                                <RowConstraints/>
-                                <RowConstraints/>
-                                <RowConstraints/>
-                                <RowConstraints/>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
                             </rowConstraints>
                         </GridPane>
                     </children>
@@ -58,26 +58,26 @@
                     <children>
                         <HBox alignment="CENTER_LEFT">
                             <children>
-                                <Label styleClass="label-header" text="%pv.main.heartrate_data.text"/>
+                                <Label styleClass="label-header" text="%pv.main.heartrate_data.text" />
                             </children>
                         </HBox>
                         <GridPane hgap="16.0" vgap="10.0">
                             <columnConstraints>
-                                <ColumnConstraints/>
-                                <ColumnConstraints/>
+                                <ColumnConstraints />
+                                <ColumnConstraints />
                             </columnConstraints>
                             <children>
-                                <Label text="%pv.main.average.text"/>
-                                <Label fx:id="laHeartrateAvgValue" text="%common.n_a_" GridPane.columnIndex="1"/>
-                                <Label text="%pv.main.maximum.text" GridPane.rowIndex="1"/>
-                                <Label fx:id="laHeartrateMaxValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="%pv.main.average.text" />
+                                <Label fx:id="laHeartrateAvgValue" text="%common.n_a_" GridPane.columnIndex="1" />
+                                <Label text="%pv.main.maximum.text" GridPane.rowIndex="1" />
+                                <Label fx:id="laHeartrateMaxValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             </children>
                             <VBox.margin>
-                                <Insets left="24.0"/>
+                                <Insets left="24.0" />
                             </VBox.margin>
                             <rowConstraints>
-                                <RowConstraints/>
-                                <RowConstraints/>
+                                <RowConstraints />
+                                <RowConstraints />
                             </rowConstraints>
                         </GridPane>
                     </children>
@@ -86,32 +86,32 @@
                     <children>
                         <HBox alignment="CENTER_LEFT">
                             <children>
-                                <Label styleClass="label-header" text="%pv.main.heartrate_limits.text"/>
+                                <Label styleClass="label-header" text="%pv.main.heartrate_limits.text" />
                             </children>
                         </HBox>
                         <GridPane hgap="16.0" vgap="10.0">
                             <columnConstraints>
-                                <ColumnConstraints/>
-                                <ColumnConstraints/>
+                                <ColumnConstraints />
+                                <ColumnConstraints />
                             </columnConstraints>
                             <children>
-                                <Label text="%pv.main.range.text"/>
-                                <ChoiceBox fx:id="cbHeartrateRanges" prefWidth="140.0" GridPane.columnIndex="1"/>
-                                <Label text="%pv.main.time_below.text" GridPane.rowIndex="1"/>
-                                <Label fx:id="laTimeBelowValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                <Label text="%pv.main.time_within.text" GridPane.rowIndex="2"/>
-                                <Label fx:id="laTimeWithinValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                                <Label text="%pv.main.time_above.text" GridPane.rowIndex="3"/>
-                                <Label fx:id="laTimeAboveValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                <Label text="%pv.main.range.text" />
+                                <ChoiceBox fx:id="cbHeartrateRanges" prefWidth="140.0" GridPane.columnIndex="1" />
+                                <Label text="%pv.main.time_below.text" GridPane.rowIndex="1" />
+                                <Label fx:id="laTimeBelowValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label text="%pv.main.time_within.text" GridPane.rowIndex="2" />
+                                <Label fx:id="laTimeWithinValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label text="%pv.main.time_above.text" GridPane.rowIndex="3" />
+                                <Label fx:id="laTimeAboveValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                             </children>
                             <VBox.margin>
-                                <Insets left="24.0"/>
+                                <Insets left="24.0" />
                             </VBox.margin>
                             <rowConstraints>
-                                <RowConstraints/>
-                                <RowConstraints/>
-                                <RowConstraints/>
-                                <RowConstraints/>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
                             </rowConstraints>
                         </GridPane>
                     </children>
@@ -124,33 +124,33 @@
                     <children>
                         <HBox alignment="CENTER_LEFT">
                             <children>
-                                <Label styleClass="label-header" text="%pv.main.recording_mode.text"/>
+                                <Label styleClass="label-header" text="%pv.main.recording_mode.text" />
                             </children>
                         </HBox>
                         <GridPane hgap="16.0" vgap="10.0">
                             <columnConstraints>
-                                <ColumnConstraints/>
-                                <ColumnConstraints/>
+                                <ColumnConstraints />
+                                <ColumnConstraints />
                             </columnConstraints>
                             <children>
-                                <Label text="%pv.main.speed.text"/>
-                                <Label fx:id="laModeSpeedValue" text="%common.disabled" GridPane.columnIndex="1"/>
-                                <Label text="%pv.main.altitude.text" GridPane.rowIndex="1"/>
-                                <Label fx:id="laModeAltitudeValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                <Label text="%pv.main.cadence.text" GridPane.rowIndex="2"/>
-                                <Label fx:id="laModeCadendeValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                                <Label text="%pv.main.power.text" GridPane.rowIndex="3"/>
-                                <Label fx:id="laModePowerValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                <Label text="%pv.main.speed.text" />
+                                <Label fx:id="laModeSpeedValue" text="%common.disabled" GridPane.columnIndex="1" />
+                                <Label text="%pv.main.altitude.text" GridPane.rowIndex="1" />
+                                <Label fx:id="laModeAltitudeValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label text="%pv.main.cadence.text" GridPane.rowIndex="2" />
+                                <Label fx:id="laModeCadendeValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label text="%pv.main.power.text" GridPane.rowIndex="3" />
+                                <Label fx:id="laModePowerValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                             </children>
                             <VBox.margin>
-                                <Insets left="24.0"/>
+                                <Insets left="24.0" />
                             </VBox.margin>
                             <rowConstraints>
-                                <RowConstraints/>
-                                <RowConstraints/>
-                                <RowConstraints/>
-                                <RowConstraints/>
-                                <RowConstraints/>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
                             </rowConstraints>
                         </GridPane>
                     </children>
@@ -159,33 +159,33 @@
                     <children>
                         <HBox alignment="CENTER_LEFT">
                             <children>
-                                <Label styleClass="label-header" text="%pv.main.statistics.text"/>
+                                <Label styleClass="label-header" text="%pv.main.statistics.text" />
                             </children>
                         </HBox>
                         <GridPane hgap="16.0" vgap="10.0">
                             <columnConstraints>
-                                <ColumnConstraints/>
-                                <ColumnConstraints/>
+                                <ColumnConstraints />
+                                <ColumnConstraints />
                             </columnConstraints>
                             <children>
-                                <Label text="%pv.main.total_exercise_time.text"/>
-                                <Label fx:id="laTotalExerciseTimeValue" text="%common.n_a_" GridPane.columnIndex="1"/>
-                                <Label text="%pv.main.total_riding_time.text" GridPane.rowIndex="1"/>
-                                <Label fx:id="laTotalRidingTimeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                <Label text="%pv.main.total_energy.text" GridPane.rowIndex="2"/>
-                                <Label fx:id="laTotalEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                                <Label text="%pv.main.odometer.text" GridPane.rowIndex="3"/>
-                                <Label fx:id="laOdometerValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                <Label text="%pv.main.total_exercise_time.text" />
+                                <Label fx:id="laTotalExerciseTimeValue" text="%common.n_a_" GridPane.columnIndex="1" />
+                                <Label text="%pv.main.total_riding_time.text" GridPane.rowIndex="1" />
+                                <Label fx:id="laTotalRidingTimeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label text="%pv.main.total_energy.text" GridPane.rowIndex="2" />
+                                <Label fx:id="laTotalEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label text="%pv.main.odometer.text" GridPane.rowIndex="3" />
+                                <Label fx:id="laOdometerValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                             </children>
                             <VBox.margin>
-                                <Insets left="24.0"/>
+                                <Insets left="24.0" />
                             </VBox.margin>
                             <rowConstraints>
-                                <RowConstraints/>
-                                <RowConstraints/>
-                                <RowConstraints/>
-                                <RowConstraints/>
-                                <RowConstraints/>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
                             </rowConstraints>
                         </GridPane>
                     </children>
@@ -194,9 +194,9 @@
         </VBox>
     </children>
     <rowConstraints>
-        <RowConstraints/>
+        <RowConstraints />
     </rowConstraints>
     <padding>
-        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
+        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
     </padding>
 </GridPane>

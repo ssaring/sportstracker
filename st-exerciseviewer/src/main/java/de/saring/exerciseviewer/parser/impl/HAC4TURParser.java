@@ -203,6 +203,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         if (strVersion == null || !strVersion.equals(VERSION_HEADER_STRING)) {
             throw new EVException("Failed to read HAC4 TUR File. Can't find correct header in file");
         }
+        exercise.setDeviceName(strVersion);
 
         // get the nr of lines there are in the note. This is important,
         // as this decides were all the following data can be found.

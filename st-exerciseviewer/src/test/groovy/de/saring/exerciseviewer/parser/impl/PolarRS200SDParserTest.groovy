@@ -44,6 +44,7 @@ class PolarRS200SDParserTest extends GroovyTestCase {
 
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.RS200SDRAW, exercise.fileType)
+        assertEquals('Polar RS200', exercise.deviceName)
 
         assertEquals(LocalDateTime.of(2006, 2, 20, 16, 54, 11), exercise.dateTime);
         assertEquals(28 * 60 * 10 + 51 * 10 + 5, exercise.duration)

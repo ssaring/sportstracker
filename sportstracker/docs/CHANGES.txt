@@ -1,7 +1,11 @@
 Changelog
 ---------
 
-v7.1.1:
+v7.2.1:
+ SportsTracker changes:
+  - removed invalid version numbers from french and spanish translations
+
+v7.2.0:
  SportsTracker changes:
   - Native SportsTracker packages are now containing all documentation files
     (README, LICENSE, CHANGES, AUTHORS, ...)
@@ -18,9 +22,22 @@ v7.1.1:
     - much faster startup time (DI takes about 200 msec instead of 700 msec)
     - much smaller library (6 KByte instead of 2,7 MByte for Guice incl. Guava)
     - less memory usage after startup (about 10 MByte)
-  - removed cyclic dependencies on STController in all entry views    
+  - removed cyclic dependencies on STController in all entry views
+  - update of the bundled Java runtime to Java SE/FX 8u77, which contains many
+    bug and security fixes
  ExerciseViewer changes:
   - added support for Polar RCX3 HRM files (contains limited data only)
+  - bugfix for parsing FIT files of Garmin Fenix 2 devices (missing max speed)
+    (contribution by Alex Rampp, GitHub pull request #6)
+  - updated Garmin FIT SDK library to version 16.50
+    (improves support for latest Garmin Devices)
+  - Exercise parsers: read device name from exercise files if available
+    (e.g. "Garmin EDGE 520" or "Timex Global Trainer")
+  - Main Panel:
+    - display device name if available
+    - moved 'device name' and 'type' to bottom of 'General Data' section
+  - removed Polar-specific exercise attributes 'type number' and 'user ID' from
+    parser and Exercise Viewer (no usage, very cryptic, e.g. "2")
  Project changes:
   - use the Ubuntu Trusty image in Travis CI builds, it contains the latest
     Java 8 JDK (no workaround installation needed anymore)

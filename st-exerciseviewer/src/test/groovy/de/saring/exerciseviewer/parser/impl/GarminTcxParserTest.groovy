@@ -41,6 +41,7 @@ class GarminTcxParserTest extends GroovyTestCase {
 
         def exercise = parser.parseExercise('misc/testdata/garmin-tcx/Forerunner305-Running-NoHeartrate-1Lap.tcx')
         assertEquals(EVExercise.ExerciseFileType.GARMIN_TCX, exercise.fileType)
+        assertEquals('Garmin Forerunner305', exercise.deviceName)
         assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)
@@ -126,6 +127,7 @@ class GarminTcxParserTest extends GroovyTestCase {
 
         def exercise = parser.parseExercise('misc/testdata/garmin-tcx/Edge705-Running-Heartrate-2Laps.tcx')
         assertEquals(EVExercise.ExerciseFileType.GARMIN_TCX, exercise.fileType)
+        assertEquals('Garmin EDGE705', exercise.deviceName)
         assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
         assertTrue(exercise.recordingMode.altitude)
         assertTrue(exercise.recordingMode.speed)

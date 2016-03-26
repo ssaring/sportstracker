@@ -57,10 +57,9 @@ public class PolarHsrParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S510RAW);
-        assertEquals(exercise.getUserID(), (byte) 1);
+        assertEquals("Polar S4xx/S5xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2007, 11, 3, 11, 03, 53), exercise.getDateTime());
-        assertEquals(exercise.getType(), (byte) 0);
-        assertEquals(exercise.getTypeLabel(), "BasicUse");
+        assertEquals(exercise.getType(), "BasicUse");
         assertEquals(exercise.getRecordingMode().isAltitude(), false);
         assertEquals(exercise.getRecordingMode().isSpeed(), true);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
@@ -169,10 +168,9 @@ public class PolarHsrParserTest {
 
         // check exercise data
         assertEquals(exercise.getFileType(), EVExercise.ExerciseFileType.S510RAW);
-        assertEquals(exercise.getUserID(), (byte) 1);
+        assertEquals("Polar S4xx/S5xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2007, 8, 20, 21, 10, 11), exercise.getDateTime());
-        assertEquals(exercise.getType(), (byte) 5);
-        assertEquals(exercise.getTypeLabel(), "ExeSet5");
+        assertEquals(exercise.getType(), "ExeSet5");
         assertEquals(exercise.getRecordingMode().isAltitude(), false);
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
