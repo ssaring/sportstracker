@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.saring.util.gui.javafx.TimeToStringConverter;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -45,6 +44,7 @@ import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.NameableStringConverter;
 import de.saring.util.gui.javafx.SpeedToStringConverter;
 import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
+import de.saring.util.gui.javafx.TimeToStringConverter;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
 
@@ -458,13 +458,16 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         int importedDuration = pvExercise.getDuration() / 10;
 
-        // fill speed-related values if available, otherwise just the duration
-        if (pvExercise.getSpeed() != null) {
+        // fill speed-related values if available and recorded for the selected sport type,
+        // otherwise import just the duration
+        if (exerciseViewModel.sportTypeRecordDistance.get() && pvExercise.getSpeed() != null) {
             exerciseViewModel.setAutoCalcFields(
                     pvExercise.getSpeed().getDistance() / 1000f,
                     pvExercise.getSpeed().getSpeedAVG(),
                     importedDuration);
         } else {
+            exerciseViewModel.distance.set(0f);
+            exerciseViewModel.avgSpeed.set(0f);
             exerciseViewModel.duration.set(importedDuration);
         }
 

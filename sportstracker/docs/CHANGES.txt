@@ -4,6 +4,8 @@ Changelog
 v7.2.1:
  SportsTracker changes:
   - removed invalid version numbers from french and spanish translations
+  - bugfix #51 for importing HRM exercise files: import duration only, when no
+    distance is being recorded for the selected sport type
 
 v7.2.0:
  SportsTracker changes:
