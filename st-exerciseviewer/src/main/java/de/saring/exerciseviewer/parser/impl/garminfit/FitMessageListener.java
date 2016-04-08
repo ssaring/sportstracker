@@ -1,15 +1,37 @@
 package de.saring.exerciseviewer.parser.impl.garminfit;
 
-import com.garmin.fit.*;
-import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.*;
-import de.saring.util.Date310Utils;
-import de.saring.util.unitcalc.CalculationUtils;
-import de.saring.util.unitcalc.ConvertUtils;
-
 import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.garmin.fit.DateTime;
+import com.garmin.fit.DeviceInfoMesg;
+import com.garmin.fit.GarminProduct;
+import com.garmin.fit.LapMesg;
+import com.garmin.fit.LengthMesg;
+import com.garmin.fit.Mesg;
+import com.garmin.fit.MesgListener;
+import com.garmin.fit.MesgNum;
+import com.garmin.fit.RecordMesg;
+import com.garmin.fit.SessionMesg;
+
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.ExerciseAltitude;
+import de.saring.exerciseviewer.data.ExerciseCadence;
+import de.saring.exerciseviewer.data.ExerciseSample;
+import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.data.ExerciseTemperature;
+import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.data.LapAltitude;
+import de.saring.exerciseviewer.data.LapSpeed;
+import de.saring.exerciseviewer.data.LapTemperature;
+import de.saring.exerciseviewer.data.Position;
+import de.saring.exerciseviewer.data.RecordingMode;
+import de.saring.exerciseviewer.parser.impl.garminfit.summaryCalculators.ExerciseSummaryValuesDecorator;
+import de.saring.util.Date310Utils;
+import de.saring.util.unitcalc.CalculationUtils;
+import de.saring.util.unitcalc.ConvertUtils;
 
 /**
  * This message listener implementation creates the EVExercise object from
@@ -261,13 +283,16 @@ class FitMessageListener implements MesgListener {
         storeSamples();
         storeLaps();
 
-        calculateAltitudeSummary();
         calculateTemperatureSummary();
         calculateMissingAverageSpeed();
+        
+        // todo methos for summaries above are missing
+        ExerciseSummaryValuesDecorator decorator = new ExerciseSummaryValuesDecorator();
+        decorator.addMissingSummaries(exercise);
         return exercise;
     }
 
-    /**
+	/**
      * Stores the sample data in the exercise. It also fixes the timestamps in all
      * ExerciseSamples, it must be the offset from the start time.
      */
@@ -345,30 +370,6 @@ class FitMessageListener implements MesgListener {
     }
 
     /**
-     * Calculates the min, max and average altitude (if available) from the sample data.
-     */
-    private void calculateAltitudeSummary() {
-        if (exercise.getRecordingMode().isAltitude() &&
-                exercise.getSampleList().length > 0) {
-
-            short altMin = Short.MAX_VALUE;
-            short altMax = Short.MIN_VALUE;
-            int altitudeSum = 0;
-
-            for (ExerciseSample sample : exercise.getSampleList()) {
-                altMin = (short) Math.min(sample.getAltitude(), altMin);
-                altMax = (short) Math.max(sample.getAltitude(), altMax);
-                altitudeSum += sample.getAltitude();
-            }
-
-            exercise.getAltitude().setAltitudeMin(altMin);
-            exercise.getAltitude().setAltitudeMax(altMax);
-            exercise.getAltitude().setAltitudeAVG(
-                    (short) (Math.round(altitudeSum / (double) exercise.getSampleList().length)));
-        }
-    }
-
-    /**
      * Calculates the min, max and average temperature (if available) from the sample data.
      */
     private void calculateTemperatureSummary() {
@@ -416,7 +417,7 @@ class FitMessageListener implements MesgListener {
             }
         }
     }
-
+	
     /**
      * Gets the name of the Garmin product ID constant from class GarminProduct for the specified product ID
      * (done via Reflection).
