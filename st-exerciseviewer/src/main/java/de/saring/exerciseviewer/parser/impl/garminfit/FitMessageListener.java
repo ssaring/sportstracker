@@ -1,15 +1,39 @@
 package de.saring.exerciseviewer.parser.impl.garminfit;
 
-import com.garmin.fit.*;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+
+import com.garmin.fit.DateTime;
+import com.garmin.fit.DeviceInfoMesg;
+import com.garmin.fit.GarminProduct;
+import com.garmin.fit.LapMesg;
+import com.garmin.fit.LengthMesg;
+import com.garmin.fit.Mesg;
+import com.garmin.fit.MesgListener;
+import com.garmin.fit.MesgNum;
+import com.garmin.fit.RecordMesg;
+import com.garmin.fit.SessionMesg;
+
 import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.*;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.ExerciseAltitude;
+import de.saring.exerciseviewer.data.ExerciseCadence;
+import de.saring.exerciseviewer.data.ExerciseSample;
+import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.data.ExerciseTemperature;
+import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.data.LapAltitude;
+import de.saring.exerciseviewer.data.LapSpeed;
+import de.saring.exerciseviewer.data.LapTemperature;
+import de.saring.exerciseviewer.data.Position;
+import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.util.Date310Utils;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
-
-import java.lang.reflect.Modifier;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * This message listener implementation creates the EVExercise object from
@@ -92,7 +116,7 @@ class FitMessageListener implements MesgListener {
                 exercise.getSpeed().setSpeedAVG(
                         ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
             }
-            
+
             Float maxSpeed = mesg.getMaxSpeed();
             if (maxSpeed != null) {
             	exercise.getSpeed().setSpeedMax(
@@ -175,7 +199,7 @@ class FitMessageListener implements MesgListener {
         ExerciseSample sample = new ExerciseSample();
         lSamples.add(sample);
 
-        // sample timestamp must be the offset from start time, will be corrected later 
+        // sample timestamp must be the offset from start time, will be corrected later
         // (in some cases the timestamp is missing and will be read from the next Length message)
         DateTime timestamp = mesg.getTimestamp();
         if (timestamp != null) {
@@ -264,10 +288,13 @@ class FitMessageListener implements MesgListener {
         calculateAltitudeSummary();
         calculateTemperatureSummary();
         calculateMissingAverageSpeed();
+        calculateMissingMaxSpeed();
+        calculateMissingHeartRateAVG();
+        calculateMissingHeartRateMax();
         return exercise;
     }
 
-    /**
+	/**
      * Stores the sample data in the exercise. It also fixes the timestamps in all
      * ExerciseSamples, it must be the offset from the start time.
      */
@@ -440,4 +467,47 @@ class FitMessageListener implements MesgListener {
         }
         return null;
     }
+
+	private void calculateMissingMaxSpeed() {
+		float maxSpeed = exercise.getSpeed().getSpeedMax();
+		if (maxSpeed > 0.01) {
+			return;
+		}
+
+		OptionalDouble calculatedMaxSpeed = Arrays.asList(exercise.getSampleList()).stream()
+				.mapToDouble(sample -> sample.getSpeed())
+				.max();
+		
+		if (calculatedMaxSpeed.isPresent()) {
+			exercise.getSpeed().setSpeedMax((float) calculatedMaxSpeed.getAsDouble());
+		}
+	}
+    
+    private void calculateMissingHeartRateAVG() {
+		short heartRateAVG = exercise.getHeartRateAVG();
+		if (heartRateAVG > 0) {
+			return;
+		};
+		OptionalDouble avgHeartRate = Arrays.asList(exercise.getSampleList()).stream()
+		.mapToDouble(sample -> sample.getHeartRate())
+		.average();
+		if (avgHeartRate.isPresent()) {
+			exercise.setHeartRateAVG((short) avgHeartRate.getAsDouble());
+		}
+
+    }
+
+	private void calculateMissingHeartRateMax() {
+
+		short heartRateMax = exercise.getHeartRateMax();
+		if (heartRateMax > 0) {
+			return;
+		}
+		OptionalInt maxHeartRate = Arrays.asList(exercise.getSampleList()).stream()
+		.mapToInt(sample -> sample.getHeartRate())
+		.max();
+		if (maxHeartRate.isPresent()) {
+			exercise.setHeartRateMax((short) maxHeartRate.getAsInt());
+		}
+	}
 }

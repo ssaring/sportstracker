@@ -1,19 +1,23 @@
 package de.saring.exerciseviewer.parser.impl;
 
-import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.EVExercise;
-import de.saring.exerciseviewer.parser.AbstractExerciseParser;
-import de.saring.exerciseviewer.parser.impl.garminfit.GarminFitParser;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
+
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.parser.AbstractExerciseParser;
+import de.saring.exerciseviewer.parser.impl.garminfit.GarminFitParser;
 
 /**
  * This class contains all unit tests for the GarminFitParser class.
@@ -248,4 +252,86 @@ public class GarminFitParserTest {
         assertEquals(8.63364d, exercise.getSampleList()[500].getPosition().getLongitude(), 0.001d);
         assertEquals(0, exercise.getSampleList()[500].getTemperature());
     }
+
+	/**
+	 * This method tests the parser with an exercise file with running data
+	 * recorded by a Garmin Fenix 2. Mostly the differences of this device are
+	 * tested here.
+	 */
+	@Test
+	public void testParseExerciseFenix2() throws EVException {
+		EVExercise exercise = parser.parseExercise("misc/testdata/garmin-fit/Garmin_Fenix2_running_with_hrm.fit");
+
+		// check exercise data
+		assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.getFileType());
+		assertEquals("Garmin FENIX2", exercise.getDeviceName());
+		assertTrue(exercise.getRecordingMode().isSpeed());
+		assertTrue(exercise.getRecordingMode().isLocation());
+		assertTrue(exercise.getRecordingMode().isAltitude());
+		assertFalse(exercise.getRecordingMode().isCadence());
+		assertTrue(exercise.getRecordingMode().isTemperature());
+
+		assertEquals(LocalDateTime.of(2015, 7, 21, 19, 8, 50), exercise.getDateTime());
+		assertEquals(23960, exercise.getDuration());
+
+		assertEquals(169, exercise.getHeartRateAVG());
+		assertEquals(192, exercise.getHeartRateMax());
+		assertEquals(553, exercise.getEnergy());
+
+		assertEquals(6235, exercise.getSpeed().getDistance());
+		assertEquals(9.36, exercise.getSpeed().getSpeedAVG(), 0.01d);
+		assertEquals(15.58, exercise.getSpeed().getSpeedMax(), 0.01d);
+
+		assertEquals(4, exercise.getAltitude().getAscent());
+		assertEquals(304, exercise.getAltitude().getAltitudeMin());
+		assertEquals(305, exercise.getAltitude().getAltitudeAVG());
+		assertEquals(307, exercise.getAltitude().getAltitudeMax());
+
+		assertNull(exercise.getCadence());
+
+		assertEquals(30, exercise.getTemperature().getTemperatureMin());
+		assertEquals(31, exercise.getTemperature().getTemperatureAVG());
+		assertEquals(34, exercise.getTemperature().getTemperatureMax());
+
+		// check some lap data
+		assertEquals(7, exercise.getLapList().length);
+
+		Lap lap5 = exercise.getLapList()[4];
+		assertEquals(19520, lap5.getTimeSplit());
+
+		// average values of heart rate are still missing
+		// assertEquals(169, lap5.getHeartRateAVG());
+		// assertEquals(173, lap5.getHeartRateMax());
+		assertEquals(170, lap5.getHeartRateSplit());
+		assertEquals(5000, lap5.getSpeed().getDistance());
+		assertEquals(9.22, lap5.getSpeed().getSpeedAVG(), 0.01d);
+		assertEquals(8.35, lap5.getSpeed().getSpeedEnd(), 0.01d);
+		assertEquals(0, lap5.getAltitude().getAscent());
+		assertEquals(305, lap5.getAltitude().getAltitude());
+		assertEquals(31, lap5.getTemperature().getTemperature());
+		assertEquals(49.426330681890d, lap5.getPositionSplit().getLatitude(), 0.000001d);
+		assertEquals(11.115129310637, lap5.getPositionSplit().getLongitude(), 0.000001d);
+
+		// check some sample data
+		assertEquals(2392, exercise.getSampleList().length);
+		assertEquals(0, exercise.getSampleList()[0].getTimestamp());
+		assertEquals(140, exercise.getSampleList()[0].getHeartRate());
+		assertEquals(0, exercise.getSampleList()[0].getDistance());
+		assertEquals(3.56d, exercise.getSampleList()[0].getSpeed(), 0.01d);
+		assertEquals(304, exercise.getSampleList()[0].getAltitude());
+		assertEquals(73, exercise.getSampleList()[0].getCadence());
+		assertEquals(49.430309236049, exercise.getSampleList()[0].getPosition().getLatitude(), 0.000001d);
+		assertEquals(11.1262008827179, exercise.getSampleList()[0].getPosition().getLongitude(), 0.000001d);
+		assertEquals(32, exercise.getSampleList()[0].getTemperature());
+
+		assertEquals(500000, exercise.getSampleList()[500].getTimestamp());
+		assertEquals(166, exercise.getSampleList()[500].getHeartRate());
+		assertEquals(1395, exercise.getSampleList()[500].getDistance());
+		assertEquals(9.0, exercise.getSampleList()[500].getSpeed(), 0.01d);
+		assertEquals(305, exercise.getSampleList()[500].getAltitude());
+		assertEquals(80, exercise.getSampleList()[500].getCadence());
+		assertEquals(49.433980593457d, exercise.getSampleList()[500].getPosition().getLatitude(), 0.000001d);
+		assertEquals(11.1192220263183, exercise.getSampleList()[500].getPosition().getLongitude(), 0.000001d);
+		assertEquals(32, exercise.getSampleList()[500].getTemperature());
+	}
 }
