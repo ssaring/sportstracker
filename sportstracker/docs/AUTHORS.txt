@@ -6,6 +6,7 @@ Main Developer:
 Contributors for the new Java version (alphabetical order):
 
   Alex Wulms <awulms@users.sourceforge.net>
+  Alexander Rampp <alex@axgr.de>
   Kai Pastor <dg0yt@users.sourceforge.net>
   Mathias Obst <luettfite@users.sourceforge.net>
   Philippe Marzouk <philm@users.sourceforge.net>
