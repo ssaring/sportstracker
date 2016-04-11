@@ -1,11 +1,9 @@
 package de.saring.exerciseviewer.parser.impl.garminfit;
 
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
+import java.util.stream.Stream;
 
 import com.garmin.fit.DateTime;
 import com.garmin.fit.DeviceInfoMesg;
@@ -468,46 +466,42 @@ class FitMessageListener implements MesgListener {
         return null;
     }
 
+    /**
+     * Calculates the max speed of the exercise, if missing (e.g. in Fenix exercise files).
+     */
 	private void calculateMissingMaxSpeed() {
-		float maxSpeed = exercise.getSpeed().getSpeedMax();
-		if (maxSpeed > 0.01) {
-			return;
-		}
+        if (exercise.getSpeed().getSpeedMax() < 0.01) {
 
-		OptionalDouble calculatedMaxSpeed = Arrays.asList(exercise.getSampleList()).stream()
-				.mapToDouble(sample -> sample.getSpeed())
-				.max();
-		
-		if (calculatedMaxSpeed.isPresent()) {
-			exercise.getSpeed().setSpeedMax((float) calculatedMaxSpeed.getAsDouble());
-		}
+            Stream.of(exercise.getSampleList()) //
+                .mapToDouble(sample -> sample.getSpeed()) //
+                .max() //
+                .ifPresent(maxSpeed -> exercise.getSpeed().setSpeedMax((float) maxSpeed));
+        }
 	}
-    
-    private void calculateMissingHeartRateAVG() {
-		short heartRateAVG = exercise.getHeartRateAVG();
-		if (heartRateAVG > 0) {
-			return;
-		};
-		OptionalDouble avgHeartRate = Arrays.asList(exercise.getSampleList()).stream()
-		.mapToDouble(sample -> sample.getHeartRate())
-		.average();
-		if (avgHeartRate.isPresent()) {
-			exercise.setHeartRateAVG((short) avgHeartRate.getAsDouble());
-		}
 
+    /**
+     * Calculates the average heartrate of the exercise, if missing (e.g. in Fenix exercise files).
+     */
+    private void calculateMissingHeartRateAVG() {
+		if (exercise.getHeartRateAVG() == 0) {
+
+            Stream.of(exercise.getSampleList()) //
+                    .mapToDouble(sample -> sample.getHeartRate()) //
+                    .average() //
+                    .ifPresent(avgHeartRate -> exercise.setHeartRateAVG((short) Math.round(avgHeartRate)));
+		}
     }
 
+    /**
+     * Calculates the maximum heartrate of the exercise, if missing (e.g. in Fenix exercise files).
+     */
 	private void calculateMissingHeartRateMax() {
+        if (exercise.getHeartRateMax() == 0) {
 
-		short heartRateMax = exercise.getHeartRateMax();
-		if (heartRateMax > 0) {
-			return;
-		}
-		OptionalInt maxHeartRate = Arrays.asList(exercise.getSampleList()).stream()
-		.mapToInt(sample -> sample.getHeartRate())
-		.max();
-		if (maxHeartRate.isPresent()) {
-			exercise.setHeartRateMax((short) maxHeartRate.getAsInt());
-		}
-	}
+            Stream.of(exercise.getSampleList()) //
+                    .mapToInt(sample -> sample.getHeartRate()) //
+                    .max() //
+                    .ifPresent(maxHeartRate -> exercise.setHeartRateMax((short) maxHeartRate));
+        }
+    }
 }
