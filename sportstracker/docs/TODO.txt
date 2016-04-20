@@ -8,6 +8,9 @@ SportsTracker-TODO
 
 - Add search for comments in Note and Weight entries (currently for Exercises only)
 
+- Use of JavaFX-based Gluon Maps instead of Swing-based JXMapViewer?
+  - http://gluonhq.com/announcing-gluon-maps/ + http://gluonhq.com/open-source/maps/
+
 JavaFX Migration:
 - BUG with JDK8u66+: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:
   Caused by: java.lang.IllegalArgumentException:
