@@ -442,10 +442,12 @@ Contact
 The website of SportsTracker can be found at:
 http://www.saring.de/sportstracker
 
-You are welcome to use the forum and the bug system on the Sourceforge
-project page (http://sourceforge.net/projects/sportstracker) when you
-have comments, suggestions or problems with bugs.
-The most recent version of this tool can also be found there.
+Download packages are available at the SourceForge project site
+(https://sourceforge.net/projects/sportstracker/), the discussion forum is
+located there too. 
+
+For enhancement requests or bug reports please use the issue tracker on the 
+GitHub project page (https://github.com/ssaring/sportstracker/issues).
 
 If you want to contribute improvements or translations, feel free to fork the
 GitHub repository and submit Pull Requests. It would be great when bigger 
@@ -474,4 +476,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2016/02/23
+2016/04/24
