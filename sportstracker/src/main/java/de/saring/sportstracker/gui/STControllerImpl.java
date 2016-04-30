@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.sportstracker.storage.SQLiteExporter;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -70,6 +71,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
 
     private final STContext context;
     private final STDocument document;
+    private final SQLiteExporter exporter;
 
     private CalendarViewController calendarViewController;
     private ExerciseListViewController exerciseListViewController;
@@ -168,6 +170,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      *
      * @param context the SportsTracker context
      * @param document the document component
+     * @param exporter the SQLite exporter
      * @param calendarViewController controller of the calendar view
      * @param exerciseListViewController controller of the exercise list view
      * @param noteListViewController controller of the note list view
@@ -176,7 +179,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @param dialogProvider provider of all dialogs
      */
     @Inject
-    public STControllerImpl(final STContext context, final STDocument document,
+    public STControllerImpl(final STContext context, final STDocument document, final SQLiteExporter exporter,
                             final CalendarViewController calendarViewController,
                             final ExerciseListViewController exerciseListViewController,
                             final NoteListViewController noteListViewController,
@@ -185,6 +188,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
                             final DialogProvider dialogProvider) {
         this.context = context;
         this.document = document;
+        this.exporter = exporter;
         this.calendarViewController = calendarViewController;
         this.exerciseListViewController = exerciseListViewController;
         this.noteListViewController = noteListViewController;
@@ -263,6 +267,12 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     public void onSave(final ActionEvent event) {
         context.blockMainWindow(true);
         new Thread(new SaveTask(false)).start();
+    }
+
+    @Override
+    public void onExportSqlite(final ActionEvent event) {
+        context.blockMainWindow(true);
+        new Thread(new ExportSqliteTask()).start();
     }
 
     @Override
@@ -941,6 +951,38 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             LOGGER.log(Level.SEVERE, "Failed to store application data!", getException());
             context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
                     "common.error", "st.main.error.save_data");
+        }
+    }
+
+    /**
+     * This class executes the Export to SQLite action inside a background task without blocking the UI thread.
+     */
+    private class ExportSqliteTask extends Task<Void> {
+
+        @Override
+        protected Void call() throws Exception {
+            LOGGER.info("Exporting application data to SQLite...");
+            exporter.exportToSqlite();
+            return null;
+        }
+
+        @Override
+        protected void succeeded() {
+            super.succeeded();
+            context.blockMainWindow(false);
+
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
+                    "common.info", "st.main.info.export_sqlite_success", exporter.getDatabasePath().toString());
+        }
+
+        @Override
+        protected void failed() {
+            super.failed();
+            context.blockMainWindow(false);
+
+            LOGGER.log(Level.SEVERE, "Failed to export application data to SQLite!", getException());
+            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
+                    "common.error", "st.main.error.export_sqlite");
         }
     }
 }

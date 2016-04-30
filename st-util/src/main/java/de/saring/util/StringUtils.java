@@ -55,4 +55,14 @@ public final class StringUtils {
             }
         }
     }
+
+    /**
+     * Returns true when the specified text is null or when the trimmed text is empty.
+     *
+     * @param text text to check
+     * @return when null or empty
+     */
+    public static boolean isNullOrEmpty(String text) {
+        return text == null || text.trim().isEmpty();
+    }
 }

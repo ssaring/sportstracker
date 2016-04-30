@@ -1,9 +1,11 @@
 package de.saring.util;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  * This class contains all unit tests for the StringUtils class.
@@ -44,5 +46,16 @@ public class StringUtilsTest {
         assertEquals("", StringUtils.getFirstLineOfText(""));
         assertEquals("Foo Bar", StringUtils.getFirstLineOfText(" Foo Bar "));
         assertEquals("Foo Bar", StringUtils.getFirstLineOfText(" Foo Bar \n Bar Foo \n Foo Bar "));
+    }
+
+    /**
+     * Tests the method isNullOrEmpty().
+     */
+    @Test
+    public void testIsNullOrEmpty() {
+        assertTrue(StringUtils.isNullOrEmpty(null));
+        assertTrue(StringUtils.isNullOrEmpty(""));
+        assertTrue(StringUtils.isNullOrEmpty("   "));
+        assertFalse(StringUtils.isNullOrEmpty("a"));
     }
 }

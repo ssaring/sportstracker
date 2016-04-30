@@ -1,10 +1,10 @@
 SportsTracker-TODO
 ==================
 
-- Database Export (to SQLite?)
-  - users with technical skills have all possibilities for custom queries and
-    statistics
-  - provides new possibilities for data migration
+SQLite export:
+- implementation completed and tested
+- create a branch and commit
+- test on Windows and Linux
 
 - Add search for comments in Note and Weight entries (currently for Exercises only)
 

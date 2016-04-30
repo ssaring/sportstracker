@@ -6,6 +6,7 @@ syntax: glob
 *.swp
 .#*
 .DS_Store
+st-export.sqlite
 
 # ignore Maven build directories and Eclipse, IDEA, Netbeans project files
 target
