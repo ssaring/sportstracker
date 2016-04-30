@@ -50,6 +50,11 @@ public enum STExceptionID {
     DOCUMENT_CREATE_APP_DIRECTORY,
 
     /**
+     * failed to export application data to SQLite
+     */
+    SQLITE_EXPORT,
+
+    /**
      * failed to parse the distance entry in the exercise dialog
      */
     GUI_EXERCISEDIALOG_INVALID_DISTANCE,

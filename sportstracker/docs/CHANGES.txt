@@ -6,6 +6,9 @@ v7.2.1:
   - removed invalid version numbers from french and spanish translations
   - bugfix #51 for importing HRM exercise files: import duration only, when no
     distance is being recorded for the selected sport type
+  - Export of all SportsTracker application data to a SQLite database,
+    provides much more capabilities for data analysis, statistics or migration
+    (for advanced users with SQL skills, see README.txt for documentation)
  ExerciseViewer changes:
   - Pull Request #9: Improved support for Garmin Fenix (2) exercise files, the
     missing max speed, avg and max heartrate are now calculated

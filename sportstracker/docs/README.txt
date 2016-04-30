@@ -304,6 +304,38 @@ this case, the data files will be stored as though you were not connected to
 the Internet.
 
 
+SQLite export
+-------------
+
+Advances users with SQL skills can export all SportsTracker application data to
+a SQLite v3 database. This provides much more capabilities for data analysis,
+statistics or migration.
+On each export a new database will be created in the current directory, an
+existing database will be overwritten. The database schema is defined in the
+source file 'st-export.sql'.
+
+The SportsTracker application already contains the native SQLite libraries for
+Windows, Mac and Linux (part of the sqlite-jdbc library). Users of other
+systems must provide the native libraries manually.
+
+There are many command line and graphical tools available for working with
+SQLite. If you´re looking for a handy, cross platform, open source application
+you should try 'DB Browser for SQLite' (http://sqlitebrowser.org/).
+
+Note: SQLite does not provides a date and time data type, the export uses an
+INTEGER as Unix-Time instead, this is the number of seconds since 1970-01-01
+00:00:00 UTC (see https://www.sqlite.org/datatype3.html).
+The queries can use the built-in functions for conversion and formatting (see
+https://www.sqlite.org/lang_datefunc.html).
+
+Examples for date queries:
+select datetime(date_time, 'unixepoch') from exercise;
+select e.id, datetime(e.date_time, 'unixepoch'), max(e.distance)
+    from exercise e
+    where date(e.date_time, 'unixepoch')
+    between date('2015-06-29') and date('2015-12-31');
+
+
 Developer Requirements
 ----------------------
 
@@ -384,6 +416,8 @@ The SportsTracker project uses the following libraries:
   - ControlsFX 8.40.10 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - commons-cli 1.2 (http://commons.apache.org/cli/)
+      License: Apache License v2.0
+  - sqlite-jdbc 3.8.11.2 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
   - JUnit 4.11 (http://www.junit.org)
       License: Common Public License v1.0
@@ -476,4 +510,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2016/04/24
+2016/04/30
