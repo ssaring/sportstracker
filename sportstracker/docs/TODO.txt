@@ -1,11 +1,6 @@
 SportsTracker-TODO
 ==================
 
-SQLite export:
-- implementation completed and tested
-- create a branch and commit
-- test on Windows and Linux
-
 - Add search for comments in Note and Weight entries (currently for Exercises only)
 
 - Use of JavaFX-based Gluon Maps instead of Swing-based JXMapViewer?
