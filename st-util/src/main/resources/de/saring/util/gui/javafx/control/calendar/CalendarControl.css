@@ -28,12 +28,14 @@
 .calendar-control-cell > .number {
     -fx-text-fill-default: black;
     -fx-text-fill-sunday: red;
-    -fx-text-fill-today: darkblue;
+    -fx-text-fill-today: white;
+    -fx-background-color-today: darkblue;
     -fx-text-fill: -fx-text-fill-default;
 }
 
 .calendar-control-cell > .number:today {
     -fx-text-fill: -fx-text-fill-today;
+	-fx-background-color: -fx-background-color-today;
     -fx-font-weight: bold;
 }
 
@@ -69,6 +71,12 @@
 .calendar-control-summary-cell {
     -fx-background-color: peachpuff; /* or antiquewhite */
 }
+
+/* Style of calendar rest cells. */
+.calendar-control-rest-cell {
+    -fx-background-color: darkgrey;
+}
+
 
 /* Style of entries in calendar day cells (entries are selectable). */
 .calendar-control-entry:selected {

@@ -2,10 +2,12 @@ package de.saring.util.gui.javafx.control.calendar;
 
 import java.util.List;
 
+import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
  * Abstract base class for all calendar content cell implementations. Each cell is a VBox
