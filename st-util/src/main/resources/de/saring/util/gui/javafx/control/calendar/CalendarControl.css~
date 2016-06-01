@@ -1,0 +1,83 @@
+/********************************************
+ *                                          *
+ *   CSS definitions of CalendarControl     *
+ *                                          *
+ ********************************************/
+
+.calendar-control {
+    -fx-skin: "de.saring.util.gui.javafx.control.calendar.CalendarControlSkin";
+
+    /* draw a border line around the complete calendar */
+    -fx-cell-border-color: #707070;
+    -fx-border-color: -fx-cell-border-color;
+
+    /* use font size 11pt everywhere in the calendar (default is 12pt or 1em) */
+    -fx-font-size: 0.916667em;
+}
+
+/* Base class of all calendar cells. */
+.calendar-control-cell {
+    /* draw a top and left border line around each calendar cell */
+    -fx-border-color: -fx-cell-border-color transparent transparent -fx-cell-border-color;
+    /* use inset of -1 for top and left border, so it matches the borders of the calendar-control
+       (otherwise the outer borders have double width) */
+    -fx-border-insets: -1 0 0 -1;
+}
+
+/* Style of the upper left number of calendar cells. */
+.calendar-control-cell > .number {
+    -fx-text-fill-default: black;
+    -fx-text-fill-sunday: red;
+    -fx-text-fill-today: darkblue;
+    -fx-text-fill: -fx-text-fill-default;
+}
+
+.calendar-control-cell > .number:today {
+    -fx-text-fill: -fx-text-fill-today;
+    -fx-font-weight: bold;
+}
+
+.calendar-control-cell > .number:sunday {
+    -fx-text-fill: -fx-text-fill-sunday;
+}
+
+.calendar-control-cell > .number:outside-month {
+    -fx-text-fill: derive(-fx-text-fill-default, 90%);
+}
+
+.calendar-control-cell > .number:sunday:outside-month {
+    -fx-text-fill: derive(-fx-text-fill-sunday, 90%);
+}
+
+/* Style of calendar header cells. */
+.calendar-control-header-cell {
+    -fx-background-color: cornflowerblue;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.calendar-control-header-cell:summary {
+    -fx-background-color: coral;
+}
+
+/* Style of calendar day cells. */
+.calendar-control-day-cell {
+    -fx-background-color: white;
+}
+
+/* Style of calendar summary cells. */
+.calendar-control-summary-cell {
+    -fx-background-color: peachpuff; /* or antiquewhite */
+}
+
+/* Style of entries in calendar day cells (entries are selectable). */
+.calendar-control-entry:selected {
+    -fx-background-color: lightskyblue;
+    -fx-background-insets: -1 -5 -1 -4; /* fill the padding space when selected */
+}
+
+.calendar-control-entry > .tooltip {
+    /* increase the downsized tooltip font size */
+    -fx-font-size: 0.9em;
+}
+
