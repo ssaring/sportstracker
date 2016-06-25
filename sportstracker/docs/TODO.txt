@@ -5,6 +5,7 @@ SportsTracker-TODO
 
 - Use of JavaFX-based Gluon Maps instead of Swing-based JXMapViewer?
   - http://gluonhq.com/announcing-gluon-maps/ + http://gluonhq.com/open-source/maps/
+  -> does not provide zoom and move controls (yet)
 
 JavaFX Migration:
 - BUG with JDK8u66+: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:
