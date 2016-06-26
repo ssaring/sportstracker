@@ -48,6 +48,11 @@ SportsTracker 7.2.1:
 - st.view.export_sqlite.Action.text (new)
 - st.main.error.export_sqlite (new)
 
+- st.dlg.filter.entry_type.text (new)
+- st.dlg.filter.entry_type_exercise.text (new)
+- st.dlg.filter.entry_type_note.text (new)
+- st.dlg.filter.entry_type_weight.text (new)
+
 SportsTracker 7.1.1:
 - pv.main.device.text (new)
 - pv.main.user.text (removed)

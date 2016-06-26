@@ -2,6 +2,11 @@ SportsTracker-TODO
 ==================
 
 - Add search for comments in Note and Weight entries (currently for Exercises only)
+  - Entry type selection in the UI of the Filter dialog has been added
+  - Next:
+    - implementation in FilterDialogController
+    - show only filtered note and weight entries in the views and Overview dialog
+    - unit tests
 
 - Use of JavaFX-based Gluon Maps instead of Swing-based JXMapViewer?
   - http://gluonhq.com/announcing-gluon-maps/ + http://gluonhq.com/open-source/maps/

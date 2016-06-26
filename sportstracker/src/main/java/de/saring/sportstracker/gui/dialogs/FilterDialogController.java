@@ -16,6 +16,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
@@ -47,6 +48,13 @@ public class FilterDialogController extends AbstractDialogController {
     private DatePicker dpStart;
     @FXML
     private DatePicker dpEnd;
+
+    @FXML
+    private RadioButton rbTypeExercise;
+    @FXML
+    private RadioButton rbTypeNote;
+    @FXML
+    private RadioButton rbTypeWeight;
 
     @FXML
     private ChoiceBox<SportType> cbSportType;
