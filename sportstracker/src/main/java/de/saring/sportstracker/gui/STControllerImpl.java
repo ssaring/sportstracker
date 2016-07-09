@@ -422,7 +422,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     }
 
     @Override
-    public void onFilterExercises(final ActionEvent event) {
+    public void onFilterEntries(final ActionEvent event) {
         final FilterDialogController controller = dialogProvider.prFilterDialogController.get();
         controller.show(context.getPrimaryStage(), document.getCurrentFilter());
 

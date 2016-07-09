@@ -8,6 +8,8 @@ SportsTracker-TODO
     - show only filtered note and weight entries in the views and Overview dialog
     - unit tests
 
+- Update to ControlsFX 8.40.11 - Validation Bug fixed?
+
 - Use of JavaFX-based Gluon Maps instead of Swing-based JXMapViewer?
   - http://gluonhq.com/announcing-gluon-maps/ + http://gluonhq.com/open-source/maps/
   -> does not provide zoom and move controls (yet)
