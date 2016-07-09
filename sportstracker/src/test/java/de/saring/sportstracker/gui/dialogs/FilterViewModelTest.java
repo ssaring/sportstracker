@@ -28,6 +28,7 @@ public class FilterViewModelTest {
         exerciseFilter = new ExerciseFilter();
         exerciseFilter.setDateStart(LocalDate.of(2014, 10, 1));
         exerciseFilter.setDateEnd(LocalDate.of(2014, 10, 31));
+        exerciseFilter.setEntryType(ExerciseFilter.EntryType.EXERCISE);
         exerciseFilter.setSportType(new SportType(100));
         exerciseFilter.setSportSubType(new SportSubType(200));
         exerciseFilter.setIntensity(Exercise.IntensityType.HIGH);
@@ -47,6 +48,7 @@ public class FilterViewModelTest {
         ExerciseFilter unmodifiedFilter = viewModel.getExerciseFilter();
         assertEquals(exerciseFilter.getDateStart(), unmodifiedFilter.getDateStart());
         assertEquals(exerciseFilter.getDateEnd(), unmodifiedFilter.getDateEnd());
+        assertEquals(exerciseFilter.getEntryType(), unmodifiedFilter.getEntryType());
         assertEquals(exerciseFilter.getSportType(), unmodifiedFilter.getSportType());
         assertEquals(exerciseFilter.getSportSubType(), unmodifiedFilter.getSportSubType());
         assertEquals(exerciseFilter.getIntensity(), unmodifiedFilter.getIntensity());
@@ -56,12 +58,14 @@ public class FilterViewModelTest {
 
         // test after modifications
         viewModel.dateEnd.set(LocalDate.of(2014, 12, 31));
+        viewModel.entryType.set(ExerciseFilter.EntryType.WEIGHT);
         viewModel.sportSubtype.set(new SportSubType(201));
         viewModel.intensity.set(new FilterViewModel.IntensityItem(null));
         viewModel.commentSubString.set("   Bar Foo    ");
 
         ExerciseFilter modifiedFilter = viewModel.getExerciseFilter();
         assertEquals(LocalDate.of(2014, 12, 31), modifiedFilter.getDateEnd());
+        assertEquals(ExerciseFilter.EntryType.WEIGHT, modifiedFilter.getEntryType());
         assertEquals(201, modifiedFilter.getSportSubType().getId());
         assertNull(modifiedFilter.getIntensity());
         assertEquals("Bar Foo", modifiedFilter.getCommentSubString());

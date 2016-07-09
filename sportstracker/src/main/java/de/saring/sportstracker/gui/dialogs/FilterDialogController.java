@@ -9,6 +9,8 @@ import java.util.stream.Stream;
 
 import de.saring.util.gui.javafx.BindingUtils;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -204,6 +206,14 @@ public class FilterDialogController extends AbstractDialogController {
         if (filterViewModel.sportType.get() == null) {
             filterViewModel.sportType.set(sportTypeAll);
         }
+
+        // sport type, subtype, itensity and equipment selection is enabled for entry type "exercise" only
+        final BooleanBinding entryTypeNotExercise = Bindings.notEqual(
+                ExerciseFilter.EntryType.EXERCISE, filterViewModel.entryType);
+        cbSportType.disableProperty().bind(entryTypeNotExercise);
+        cbSportSubtype.disableProperty().bind(entryTypeNotExercise);
+        cbIntensity.disableProperty().bind(entryTypeNotExercise);
+        cbEquipment.disableProperty().bind(entryTypeNotExercise);
     }
 
     /**
