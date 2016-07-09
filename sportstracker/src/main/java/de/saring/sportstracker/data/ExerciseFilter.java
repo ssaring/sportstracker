@@ -15,6 +15,15 @@ import java.time.temporal.TemporalAdjusters;
 public final class ExerciseFilter {
 
     /**
+     * Enumeration with all possible entry types to be filtered.
+     */
+    public enum EntryType {
+        EXERCISE,
+        NOTE,
+        WEIGHT
+    }
+
+    /**
      * The exercise dates needs to be greater or same as this start date.
      */
     private LocalDate dateStart;
@@ -23,6 +32,11 @@ public final class ExerciseFilter {
      * The exercise dates needs to be lesser or same as this end date.
      */
     private LocalDate dateEnd;
+
+    /**
+     * The entry type to be filtered.
+     */
+    private EntryType entryType;
 
     /**
      * The exercise needs to have the same sport type (ignore, when null).
@@ -70,6 +84,14 @@ public final class ExerciseFilter {
 
     public void setDateEnd(LocalDate dateEnd) {
         this.dateEnd = dateEnd;
+    }
+
+    public EntryType getEntryType() {
+        return entryType;
+    }
+
+    public void setEntryType(EntryType entryType) {
+        this.entryType = entryType;
     }
 
     public SportType getSportType() {
@@ -133,6 +155,7 @@ public final class ExerciseFilter {
         ExerciseFilter filter = new ExerciseFilter();
         filter.dateStart = now.with(TemporalAdjusters.firstDayOfMonth());
         filter.dateEnd = now.with(TemporalAdjusters.lastDayOfMonth());
+        filter.entryType = EntryType.EXERCISE;
         filter.sportType = null;
         filter.sportSubType = null;
         filter.intensity = null;

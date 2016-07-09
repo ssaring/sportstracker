@@ -7,22 +7,21 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import de.saring.util.ValidationUtils;
+import de.saring.util.gui.javafx.BindingUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Window;
 
 import javax.inject.Inject;
 
-import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 
 import de.saring.sportstracker.data.Equipment;
@@ -55,6 +54,8 @@ public class FilterDialogController extends AbstractDialogController {
     private RadioButton rbTypeNote;
     @FXML
     private RadioButton rbTypeWeight;
+    @FXML
+    private ToggleGroup tgEntryType;
 
     @FXML
     private ChoiceBox<SportType> cbSportType;
@@ -167,6 +168,11 @@ public class FilterDialogController extends AbstractDialogController {
         cbEquipment.valueProperty().bindBidirectional(filterViewModel.equipment);
         tfComment.textProperty().bindBidirectional(filterViewModel.commentSubString);
         cbRegExpression.selectedProperty().bindBidirectional(filterViewModel.regularExpressionMode);
+
+        rbTypeExercise.setUserData(ExerciseFilter.EntryType.EXERCISE);
+        rbTypeNote.setUserData(ExerciseFilter.EntryType.NOTE);
+        rbTypeWeight.setUserData(ExerciseFilter.EntryType.WEIGHT);
+        BindingUtils.bindToggleGroupToProperty(tgEntryType, filterViewModel.entryType);
     }
 
     /**

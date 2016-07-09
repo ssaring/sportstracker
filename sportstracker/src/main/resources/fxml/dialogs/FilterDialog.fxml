@@ -70,11 +70,11 @@
                    <Label text="%st.dlg.filter.entry_type.text" />
                   <RadioButton fx:id="rbTypeExercise" mnemonicParsing="false" selected="true" text="%st.dlg.filter.entry_type_exercise.text">
                      <toggleGroup>
-                        <ToggleGroup fx:id="bgEntryType" />
+                        <ToggleGroup fx:id="tgEntryType" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rbTypeNote" mnemonicParsing="false" text="%st.dlg.filter.entry_type_note.text" toggleGroup="$bgEntryType" />
-                  <RadioButton fx:id="rbTypeWeigt" mnemonicParsing="false" text="%st.dlg.filter.entry_type_weight.text" toggleGroup="$bgEntryType" />
+                  <RadioButton fx:id="rbTypeNote" mnemonicParsing="false" text="%st.dlg.filter.entry_type_note.text" toggleGroup="$tgEntryType" />
+                  <RadioButton fx:id="rbTypeWeight" mnemonicParsing="false" text="%st.dlg.filter.entry_type_weight.text" toggleGroup="$tgEntryType" />
                </children>
                <padding>
                   <Insets left="24.0" />

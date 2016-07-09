@@ -4,8 +4,9 @@ SportsTracker-TODO
 - Add search for comments in Note and Weight entries (currently for Exercises only)
   - Entry type selection in the UI of the Filter dialog has been added
   - Next:
-    - implementation in FilterDialogController
+    - FilterDialogController => Done, selected entry type is stored in ExerciseFilter, default is Exercise
     - show only filtered note and weight entries in the views and Overview dialog
+    - add / extend unit tests?
     - unit tests
 
 - Update to ControlsFX 8.40.11 - Validation Bug fixed?

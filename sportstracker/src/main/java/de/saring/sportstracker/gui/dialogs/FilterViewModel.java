@@ -27,6 +27,7 @@ public class FilterViewModel {
 
     public final ObjectProperty<LocalDate> dateStart;
     public final ObjectProperty<LocalDate> dateEnd;
+    public final ObjectProperty<ExerciseFilter.EntryType> entryType;
     public final ObjectProperty<SportType> sportType;
     public final ObjectProperty<SportSubType> sportSubtype;
     public final ObjectProperty<IntensityItem> intensity;
@@ -42,6 +43,7 @@ public class FilterViewModel {
     public FilterViewModel(final ExerciseFilter exerciseFilter) {
         dateStart = new SimpleObjectProperty<>(exerciseFilter.getDateStart());
         dateEnd = new SimpleObjectProperty<>(exerciseFilter.getDateEnd());
+        entryType = new SimpleObjectProperty<>(exerciseFilter.getEntryType());
         sportType = new SimpleObjectProperty<>(exerciseFilter.getSportType());
         sportSubtype = new SimpleObjectProperty<>(exerciseFilter.getSportSubType());
         intensity = new SimpleObjectProperty<>(new IntensityItem(exerciseFilter.getIntensity()));
@@ -60,6 +62,7 @@ public class FilterViewModel {
         final ExerciseFilter exerciseFilter = new ExerciseFilter();
         exerciseFilter.setDateStart(dateStart.get());
         exerciseFilter.setDateEnd(dateEnd.get());
+        exerciseFilter.setEntryType(entryType.get());
         exerciseFilter.setSportType(sportType.get());
         exerciseFilter.setSportSubType(sportSubtype.get());
         exerciseFilter.setIntensity(intensity.get().intensityType);
