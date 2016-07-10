@@ -36,7 +36,7 @@ public final class ExerciseFilter {
     /**
      * The entry type to be filtered.
      */
-    private EntryType entryType;
+    private EntryType entryType = EntryType.EXERCISE;
 
     /**
      * The exercise needs to have the same sport type (ignore, when null).
@@ -199,6 +199,7 @@ public final class ExerciseFilter {
         sBuilder.append(ExerciseFilter.class.getName()).append(":\n");
         sBuilder.append(" [dateStart=").append(this.dateStart).append("\n");
         sBuilder.append("  dateEnd=").append(this.dateEnd).append("\n");
+        sBuilder.append("  entryType=").append(this.entryType).append("\n");
         sBuilder.append("  sportType=").append(this.sportType).append("\n");
         sBuilder.append("  sportSubType=").append(this.sportSubType).append("\n");
         sBuilder.append("  intensity=").append(this.intensity).append("\n");

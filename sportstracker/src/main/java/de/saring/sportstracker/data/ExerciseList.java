@@ -61,6 +61,11 @@ public final class ExerciseList extends IdDateObjectList<Exercise> {
      */
     public IdDateObjectList<Exercise> getExercisesForFilter(ExerciseFilter filter) throws PatternSyntaxException {
 
+        // ignore the filter when not set for exercises
+        if (filter.getEntryType() != ExerciseFilter.EntryType.EXERCISE) {
+            return this;
+        }
+
         final IdDateObjectList<Exercise> foundExercises = new IdDateObjectList<>();
         stream().filter(exercise -> filterExercise(exercise, filter))
                 .forEach(foundExercises::set);
