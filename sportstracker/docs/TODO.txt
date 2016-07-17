@@ -7,7 +7,6 @@ SportsTracker-TODO
     - FilterDialogController => Done, selected entry type is stored in ExerciseFilter, default is Exercise
     - Exercise/Note/WeighList: check entry type of filter and extend tests
       -> done for ExerciseList
-    - Problem in OverviewDialog: does not show any exercises when the filter type is note or weight => ignore the filter in this case
     - Rename ExerciseFilter to EntryFilter
     - show only filtered note and weight entries in the views and Overview dialog
     - add / extend unit tests?

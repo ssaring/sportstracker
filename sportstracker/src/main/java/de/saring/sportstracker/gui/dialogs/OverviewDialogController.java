@@ -9,17 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-import de.saring.util.gui.javafx.ColorUtils;
-import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Window;
-
 import javax.inject.Inject;
 
 import org.jfree.chart.ChartFactory;
@@ -54,11 +43,21 @@ import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.AppResources;
 import de.saring.util.Date310Utils;
 import de.saring.util.data.IdObjectList;
+import de.saring.util.gui.javafx.ColorUtils;
 import de.saring.util.gui.javafx.NameableStringConverter;
 import de.saring.util.gui.jfreechart.ChartUtils;
 import de.saring.util.gui.jfreechart.StackedRenderer;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
+import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Window;
 
 /**
  * Controller (MVC) class of the Overview dialog of the SportsTracker application.
@@ -121,7 +120,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
         // display in title when exercise filter is being used
         String dlgTitle = context.getResources().getString("st.dlg.overview.title");
-        if (document.isFilterEnabled()) {
+        if (isExerciseFilterEnabled()) {
             dlgTitle += " " + context.getResources().getString("st.dlg.overview.title.filter");
         }
 
@@ -862,6 +861,11 @@ public class OverviewDialogController extends AbstractDialogController {
         return document.getOptions().isWeekStartSunday() ? WeekFields.SUNDAY_START : WeekFields.ISO;
     }
 
+    private boolean isExerciseFilterEnabled() {
+        return document.isFilterEnabled()
+                && document.getCurrentFilter().getEntryType() == ExerciseFilter.EntryType.EXERCISE;
+    }
+
     /**
      * Merges the specified filter for time series creation with the existing filter
      * in the SportsTracker view (if it is enabled).
@@ -871,7 +875,7 @@ public class OverviewDialogController extends AbstractDialogController {
     private void mergeExerciseFilterIfEnabled(ExerciseFilter filter) {
         // when the exercise filter is enabled in the GUI then we need to
         // merge these filter criterias into the created diagram filter
-        if (document.isFilterEnabled()) {
+        if (isExerciseFilterEnabled()) {
             ExerciseFilter currentFilter = document.getCurrentFilter();
 
             // merge filter date
