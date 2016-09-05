@@ -3,10 +3,7 @@ SportsTracker-TODO
 
 - Add search for comments in Note and Weight entries (currently for Exercises only)
   - implementation completed (incl. unit tests)
-  - TODO
-    - manual UI tests (initial tests completed)
-    - add to ChangeLog, ReadMe
-    - close branch
+  - TODO: close branch
 
 - Update to ControlsFX 8.40.11
   - fixes compatibility issues with JDK 8 u102
@@ -23,7 +20,7 @@ SportsTracker-TODO
     - displays small trails too (tested for Dresdner Heide)
     - demo app needs a lot of memory (after start 135 MB, after short usage > 200 MB)
   - To be tested: can the route and lap markers with numbers be displayed?
-- Alternative: Use of JavaFX-based Gluon Maps
+- Alternative: Use of JavaFX-based Gluon Maps®
   - http://gluonhq.com/announcing-gluon-maps/ + http://gluonhq.com/open-source/maps/
   -> does not provide zoom and move controls (yet)
 

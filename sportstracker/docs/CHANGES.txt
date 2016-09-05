@@ -9,6 +9,8 @@ v7.2.1:
   - Export of all SportsTracker application data to a SQLite database,
     provides much more capabilities for data analysis, statistics or migration
     (for advanced users with SQL skills, see README.txt for documentation)
+  - added generic filter for all entry types, note and weight entries are now
+    filterable too (user can select the filter type in the filter dialog)
  ExerciseViewer changes:
   - Pull Request #9: Improved support for Garmin Fenix (2) exercise files, the
     missing max speed, avg and max heartrate are now calculated

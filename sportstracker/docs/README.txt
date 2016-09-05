@@ -43,7 +43,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - CicloSport HAC4    (tested)
   - CicloSport HAC4Pro (tested)
   - CicloSport HAC5    (tested)
-  - Garmin Edge        (tested with Edge 500 and Edge 705, FIT and TCX files)
+  - Garmin Edge        (tested with Edge 500, 520, 705, FIT and TCX files)
   - Garmin Forerunner  (tested with Forerunner 305, 910XT, FIT and TCX files)
   - Garmin Oregon      (tested with Oregon 450, GPX files)
   - Garmin Fenix       (tested with Fenix 2, FIT files)
@@ -199,6 +199,9 @@ by double clicking it.
 Additionally there are special list views for all exercise, note and weight
 entries. These list views are very helpful for the analysis, especially when
 using sorting and filters.
+Filters can be used in all views, all entry types are filterable. The filter
+can only be enabled for one specific entry type, the entries of all other types
+will not be filtered meanwhile.
 
 Users of heartrate monitors (HRM) can assign the recorded file to the exercise.
 Most of the exercise data can be imported from this file, so it does
