@@ -1,10 +1,6 @@
 SportsTracker-TODO
 ==================
 
-- Add search for comments in Note and Weight entries (currently for Exercises only)
-  - implementation completed (incl. unit tests)
-  - TODO: close branch
-
 - Update to ControlsFX 8.40.11
   - fixes compatibility issues with JDK 8 u102
   - has the validation bug been fixed?
