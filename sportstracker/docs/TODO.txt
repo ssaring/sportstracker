@@ -5,8 +5,8 @@ SportsTracker-TODO
   - Entry type selection in the UI of the Filter dialog has been added
     - FilterDialogController => Done, selected entry type is stored in ExerciseFilter, default is Exercise
   - Base class EntryList for common filtering has been added, other list types are refactored
+  - Unit tests for generic list filtering are completed
   - Next:
-    - add / extend unit tests for filtering in Exercise-, Note- and WeightList
     - use EntryList.getEntriesForFilter() method in the controllers for Notes and Weights
     - show only filtered note and weight entries in the views and Overview dialog
     - add to ChangeLog, ReadMe
