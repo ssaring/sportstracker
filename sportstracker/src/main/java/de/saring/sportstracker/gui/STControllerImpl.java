@@ -424,7 +424,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     @Override
     public void onFilterEntries(final ActionEvent event) {
         final FilterDialogController controller = dialogProvider.prFilterDialogController.get();
-        controller.show(context.getPrimaryStage(), document.getCurrentFilter());
+        controller.show(context.getPrimaryStage(), document.getCurrentFilter(), true);
 
         // set and enable filter when available after dialog has been closed
         controller.getSelectedFilter().ifPresent(selectedFilter -> {

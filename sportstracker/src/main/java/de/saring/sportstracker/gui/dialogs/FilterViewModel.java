@@ -34,13 +34,15 @@ public class FilterViewModel {
     public final ObjectProperty<Equipment> equipment;
     public final StringProperty commentSubString;
     public final BooleanProperty regularExpressionMode;
+    public final BooleanProperty entryTypeSelectable;
 
     /**
      * Creates the FilterViewModel with JavaFX properties for the passed EntryFilter object.
      *
      * @param entryFilter filter to be edited
+     * @param entryTypeSelectable flag whether the filter entry type can be selected or not
      */
-    public FilterViewModel(final EntryFilter entryFilter) {
+    public FilterViewModel(final EntryFilter entryFilter, final boolean entryTypeSelectable) {
         dateStart = new SimpleObjectProperty<>(entryFilter.getDateStart());
         dateEnd = new SimpleObjectProperty<>(entryFilter.getDateEnd());
         entryType = new SimpleObjectProperty<>(entryFilter.getEntryType());
@@ -51,6 +53,7 @@ public class FilterViewModel {
         commentSubString = new SimpleStringProperty(StringUtils.getTextOrEmptyString(
                 entryFilter.getCommentSubString()));
         regularExpressionMode = new SimpleBooleanProperty(entryFilter.isRegularExpressionMode());
+        this.entryTypeSelectable = new SimpleBooleanProperty(entryTypeSelectable);
     }
 
     /**

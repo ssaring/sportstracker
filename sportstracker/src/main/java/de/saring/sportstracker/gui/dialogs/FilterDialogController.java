@@ -118,9 +118,10 @@ public class FilterDialogController extends AbstractDialogController {
      *
      * @param parent parent window of the dialog
      * @param filter Filter to be edited
+     * @param entryTypeSelectable flag whether the filter entry type can be selected or not
      */
-    public void show(final Window parent, final EntryFilter filter) {
-        this.filterViewModel = new FilterViewModel(filter);
+    public void show(final Window parent, final EntryFilter filter, final boolean entryTypeSelectable) {
+        this.filterViewModel = new FilterViewModel(filter, entryTypeSelectable);
         this.selectedFilter = Optional.empty();
 
         showEditDialog("/fxml/dialogs/FilterDialog.fxml", parent, context.getResources().getString("st.dlg.filter.title"));
@@ -175,6 +176,11 @@ public class FilterDialogController extends AbstractDialogController {
         rbTypeNote.setUserData(EntryFilter.EntryType.NOTE);
         rbTypeWeight.setUserData(EntryFilter.EntryType.WEIGHT);
         BindingUtils.bindToggleGroupToProperty(tgEntryType, filterViewModel.entryType);
+
+        BooleanBinding entryTypeSelectionDisabled = Bindings.not(filterViewModel.entryTypeSelectable);
+        rbTypeExercise.disableProperty().bind(entryTypeSelectionDisabled);
+        rbTypeNote.disableProperty().bind(entryTypeSelectionDisabled);
+        rbTypeWeight.disableProperty().bind(entryTypeSelectionDisabled);
     }
 
     /**

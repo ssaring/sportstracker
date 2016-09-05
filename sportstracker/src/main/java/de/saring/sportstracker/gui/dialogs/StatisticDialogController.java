@@ -77,8 +77,12 @@ public class StatisticDialogController extends AbstractDialogController {
      */
     public void show(final Window parent) {
 
-        // start with current filter criteria stored in document => user can change it
+        // start with current exercise filter criteria stored in document => user can change it
+        // (create a new default exercise filter, if current filter is not for exercises)
         statisticFilter = document.getCurrentFilter();
+        if (statisticFilter.getEntryType() != EntryFilter.EntryType.EXERCISE) {
+            statisticFilter = EntryFilter.createDefaultExerciseFilter();
+        }
 
         showInfoDialog("/fxml/dialogs/StatisticDialog.fxml", parent,
                 context.getResources().getString("st.dlg.statistic.title"));
@@ -157,7 +161,7 @@ public class StatisticDialogController extends AbstractDialogController {
 
         // show Filter dialog for current filter and use the selected filter afterwards
         final FilterDialogController controller = prFilterDialogController.get();
-        controller.show(context.getPrimaryStage(), statisticFilter);
+        controller.show(context.getPrimaryStage(), statisticFilter, false);
 
         controller.getSelectedFilter().ifPresent(selectedFilter -> {
             statisticFilter = selectedFilter;

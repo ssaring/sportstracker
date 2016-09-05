@@ -42,7 +42,7 @@ public class FilterViewModelTest {
      */
     @Test
     public void testGetExerciseFilter() {
-        FilterViewModel viewModel = new FilterViewModel(entryFilter);
+        FilterViewModel viewModel = new FilterViewModel(entryFilter, true);
 
         // test without modifications
         EntryFilter unmodifiedFilter = viewModel.getExerciseFilter();
