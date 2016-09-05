@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v7.2.1:
+v7.3.0:
  SportsTracker changes:
   - removed invalid version numbers from french and spanish translations
   - bugfix #51 for importing HRM exercise files: import duration only, when no

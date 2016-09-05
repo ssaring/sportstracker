@@ -44,7 +44,7 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
-SportsTracker 7.2.1:
+SportsTracker 7.3.0:
 - st.view.export_sqlite.Action.text (new)
 - st.main.error.export_sqlite (new)
 
