@@ -15,6 +15,7 @@ import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.EntryFilter;
+import de.saring.sportstracker.data.EntryList;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.NoteList;
@@ -22,7 +23,6 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.util.XmlBeanStorage;
-import de.saring.util.data.IdDateObjectList;
 import de.saring.util.data.IdObject;
 import de.saring.util.data.IdObjectListChangeListener;
 
@@ -235,11 +235,11 @@ public class STDocumentImpl implements STDocument {
     }
 
     @Override
-    public IdDateObjectList<Exercise> getFilterableExerciseList() {
+    public EntryList<Exercise> getFilterableExerciseList() {
 
         if ((filterEnabled) && (currentFilter != null)) {
             // use current filter to get list
-            return exerciseList.getExercisesForFilter(currentFilter);
+            return exerciseList.getEntriesForFilter(currentFilter);
         } else {
             // no filter: return list of all exercises
             return exerciseList;

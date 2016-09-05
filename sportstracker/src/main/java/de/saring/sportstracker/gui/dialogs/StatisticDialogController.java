@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
 import de.saring.sportstracker.data.EntryFilter;
+import de.saring.sportstracker.data.EntryList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -22,7 +23,6 @@ import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
-import de.saring.util.data.IdObjectList;
 
 /**
  * Controller (MVC) class of the Statistic dialog.
@@ -171,8 +171,8 @@ public class StatisticDialogController extends AbstractDialogController {
     private void onCalculate(final ActionEvent event) {
 
         // search for exercises with the selected filter criteria
-        final IdObjectList<Exercise> lFoundExercises =
-                document.getExerciseList().getExercisesForFilter(statisticFilter);
+        final EntryList<Exercise> lFoundExercises =
+                document.getExerciseList().getEntriesForFilter(statisticFilter);
 
         // make sure that at least one exercise was found
         if (lFoundExercises.size() == 0) {

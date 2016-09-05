@@ -4,13 +4,13 @@ import java.util.List;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STOptions;
+import de.saring.sportstracker.data.EntryList;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.EntryFilter;
 import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.WeightList;
-import de.saring.util.data.IdDateObjectList;
 import de.saring.util.data.IdObjectListChangeListener;
 
 /**
@@ -81,7 +81,7 @@ public interface STDocument extends IdObjectListChangeListener {
      *
      * @return list of Exercise objects
      */
-    IdDateObjectList<Exercise> getFilterableExerciseList();
+    EntryList<Exercise> getFilterableExerciseList();
 
     /**
      * This method reads both the exercise and the sport-type list from the

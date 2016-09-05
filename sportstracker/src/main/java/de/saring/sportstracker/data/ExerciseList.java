@@ -42,32 +42,16 @@ public final class ExerciseList extends EntryList<Exercise> {
     }
 
     /**
-     * This method searches through the whole exercise list and returns an list
-     * of all exercises which are fullfilling all the specified filter
-     * criterias. The filters for sport type, subtype and intensity and comment
-     * searching are optional. The filtering by a comment substring is only case
-     * sensitive in regualar expression mode.
+     * This method checks whether the specified exercise entry matches the specified entry filter criteria.
+     * It extends the default filter (date time and comment) by sport type, subtype, intensity and equipment criteria.
      *
-     * @param filter the exercise filter criterias
-     * @return List of Exercise objects which are valid for the specified
-     *         filters
-     * @throws PatternSyntaxException thrown on parsing problems of the regular
-     * expression for comment searching
+     * @param exercise the exercise to check
+     * @param filter the entry filter criterias
+     * @return true if the exercise matches the filter criteria
+     * @throws PatternSyntaxException thrown on parsing problems of the regular expression for comment searching
      */
-    public EntryList<Exercise> getExercisesForFilter(EntryFilter filter) throws PatternSyntaxException {
-
-        // ignore the filter when not set for exercises
-        if (filter.getEntryType() != EntryFilter.EntryType.EXERCISE) {
-            return this;
-        }
-
-        final EntryList<Exercise> foundExercises = new EntryList<>();
-        stream().filter(exercise -> filterExercise(exercise, filter))
-                .forEach(foundExercises::set);
-        return foundExercises;
-    }
-
-    protected boolean filterExercise(Exercise exercise, EntryFilter filter) {
+    @Override
+    protected boolean filterEntry(Exercise exercise, EntryFilter filter) {
 
         // entry datetime and comment are filtered by the base class
         if (!super.filterEntry(exercise, filter)) {

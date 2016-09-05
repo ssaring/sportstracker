@@ -54,7 +54,7 @@ public class EntryList<T extends Entry> extends IdDateObjectList<T> {
      * @param filter entry filter
      * @return true if the filter matches
      */
-    protected boolean filterEntry(Entry entry, EntryFilter filter) {
+    protected boolean filterEntry(T entry, EntryFilter filter) {
 
         // make sure that the entry is in the specified time period
         LocalDate entryDate = entry.getDateTime().toLocalDate();

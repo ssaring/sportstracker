@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import de.saring.sportstracker.data.EntryFilter;
+import de.saring.sportstracker.data.EntryList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -42,7 +43,6 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.AppResources;
 import de.saring.util.Date310Utils;
-import de.saring.util.data.IdObjectList;
 import de.saring.util.gui.javafx.ColorUtils;
 import de.saring.util.gui.javafx.NameableStringConverter;
 import de.saring.util.gui.jfreechart.ChartUtils;
@@ -428,7 +428,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
             // get exercises for defined filter
             // (add value 0 and skip to next time step when no exercises found)
-            IdObjectList<Exercise> lExercises = document.getExerciseList().getExercisesForFilter(filter);
+            EntryList<Exercise> lExercises = document.getExerciseList().getEntriesForFilter(filter);
             if (lExercises.size() == 0) {
                 dataset.add(timePeriod, 0, seriesName);
                 continue;
@@ -558,7 +558,7 @@ public class OverviewDialogController extends AbstractDialogController {
             mergeExerciseFilterIfEnabled(filter);
 
             // get exercises for defined filter
-            IdObjectList<Exercise> lExercises = document.getExerciseList().getExercisesForFilter(filter);
+            EntryList<Exercise> lExercises = document.getExerciseList().getEntriesForFilter(filter);
 
             // create distance sum of all found exercises
             double sumDistance = 0d;
@@ -635,7 +635,7 @@ public class OverviewDialogController extends AbstractDialogController {
             mergeExerciseFilterIfEnabled(filter);
 
             // get exercises for defined filter
-            IdObjectList<Exercise> lExercises = document.getExerciseList().getExercisesForFilter(filter);
+            EntryList<Exercise> lExercises = document.getExerciseList().getEntriesForFilter(filter);
 
             // create distance sum of all found exercises
             double sumDistance = 0d;

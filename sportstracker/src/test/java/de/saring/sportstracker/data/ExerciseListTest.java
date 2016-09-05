@@ -1,6 +1,5 @@
 package de.saring.sportstracker.data;
 
-import de.saring.util.data.IdDateObjectList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -143,7 +142,7 @@ public class ExerciseListTest {
      * Tests the appropriate method.
      */
     @Test
-    public void testGetExercisesForFilter() {
+    public void testGetEntriesForFilter() {
 
         // all 3 exercises should be found
         EntryFilter filter = new EntryFilter();
@@ -155,7 +154,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        IdDateObjectList<Exercise> exeList = list.getExercisesForFilter(filter);
+        EntryList<Exercise> exeList = list.getEntriesForFilter(filter);
         assertEquals(3, exeList.size());
 
         // no exercises should be found (no exercises in time span)
@@ -168,7 +167,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(0, exeList.size());
 
         // all exercises should be found (no exercises in time span, but filter is set to type NOTE)
@@ -182,7 +181,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(3, exeList.size());
 
         // no exercises should be found (sport type does not exists)
@@ -197,7 +196,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(0, exeList.size());
 
         // no exercises should be found (sport subtype does not exists)
@@ -212,7 +211,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(0, exeList.size());
 
         // no exercises should be found (no exercise with intensity NORMAL)
@@ -225,7 +224,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(0, exeList.size());
 
         // no exercises should be found (in specified time span and with intensity LOW and sport type ID 1)
@@ -238,7 +237,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(0, exeList.size());
 
         // 2 exercises should be found (in the specified time span)
@@ -251,7 +250,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(2, exeList.size());
 
         // 2 exercises should be found (with sport type ID 1)
@@ -264,7 +263,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(2, exeList.size());
 
         // 1 exercises should be found (with sport type ID 1 and sport subtype ID 2)
@@ -277,7 +276,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(1, exeList.size());
 
         // 2 exercises should be found (with intensity LOW)
@@ -290,7 +289,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(2, exeList.size());
 
         // 1 exercises should be found (with intensity LOW and sport type ID 1)
@@ -303,7 +302,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(1, exeList.size());
 
         // 1 exercise (ID 3) should be found for equipment with ID 22
@@ -317,7 +316,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(1, exeList.size());
         assertEquals(3, exeList.getAt(0).getId());
 
@@ -332,7 +331,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(0, exeList.size());
 
         // 2 exercises should be found (with comment substring "EXERCISE" and sport type ID 1)
@@ -345,7 +344,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("EXERCISE");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(2, exeList.size());
 
         // 1 exercise should be found (with comment substring "CISE 2" and sport type ID 1)
@@ -358,7 +357,7 @@ public class ExerciseListTest {
         filter.setCommentSubString(" CISE 2 ");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(1, exeList.size());
 
         // 0 exercises should be found (with comment substring "NotInThere" and sport type ID 1)
@@ -371,7 +370,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("NotInThere");
         filter.setRegularExpressionMode(false);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(0, exeList.size());
 
         // 2 exercises should be found (with comment regular expression substring "cise [0-2]")
@@ -384,7 +383,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("cise [0-2]");
         filter.setRegularExpressionMode(true);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(2, exeList.size());
 
         // 3 exercises should be found (with comment regular expression substring for 4 small characters)
@@ -397,7 +396,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("[a-z]{4}");
         filter.setRegularExpressionMode(true);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(3, exeList.size());
 
         // 0 exercises should be found (with comment regular expression substring for 8 small characters)
@@ -410,7 +409,7 @@ public class ExerciseListTest {
         filter.setCommentSubString("[a-z]{8}");
         filter.setRegularExpressionMode(true);
 
-        exeList = list.getExercisesForFilter(filter);
+        exeList = list.getEntriesForFilter(filter);
         assertEquals(0, exeList.size());
 
         // use of regular expression "cise [0-2" with syntax error => ArgumentException needs to be thrown
@@ -424,7 +423,7 @@ public class ExerciseListTest {
             filter.setCommentSubString("cise [0-2");
             filter.setRegularExpressionMode(true);
 
-            exeList = list.getExercisesForFilter(filter);
+            exeList = list.getEntriesForFilter(filter);
             fail("The expected System.ArgumentException was not thown!");
         } catch (PatternSyntaxException pse) {
         } catch (Exception e) {
