@@ -14,15 +14,17 @@ import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
 import de.saring.sportstracker.core.STOptions;
+import de.saring.sportstracker.data.EntryFilter;
+import de.saring.sportstracker.data.EntryList;
 import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
 import de.saring.sportstracker.data.ExerciseList;
+import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
+import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.util.XmlBeanStorage;
-import de.saring.util.data.IdDateObjectList;
 import de.saring.util.data.IdObject;
 import de.saring.util.data.IdObjectListChangeListener;
 
@@ -90,7 +92,7 @@ public class STDocumentImpl implements STDocument {
     /**
      * The current exercise filter in the view.
      */
-    private ExerciseFilter currentFilter;
+    private EntryFilter currentFilter;
 
     /**
      * Standard c'tor.
@@ -118,7 +120,7 @@ public class STDocumentImpl implements STDocument {
 
         // create default filter for current month, but it is disabled
         filterEnabled = false;
-        currentFilter = ExerciseFilter.createDefaultExerciseFilter();
+        currentFilter = EntryFilter.createDefaultExerciseFilter();
     }
 
     @Override
@@ -162,12 +164,12 @@ public class STDocumentImpl implements STDocument {
     }
 
     @Override
-    public ExerciseFilter getCurrentFilter() {
+    public EntryFilter getCurrentFilter() {
         return currentFilter;
     }
 
     @Override
-    public void setCurrentFilter(ExerciseFilter currentFilter) {
+    public void setCurrentFilter(EntryFilter currentFilter) {
         this.currentFilter = currentFilter;
     }
 
@@ -235,14 +237,38 @@ public class STDocumentImpl implements STDocument {
     }
 
     @Override
-    public IdDateObjectList<Exercise> getFilterableExerciseList() {
+    public EntryList<Exercise> getFilterableExerciseList() {
 
         if ((filterEnabled) && (currentFilter != null)) {
             // use current filter to get list
-            return exerciseList.getExercisesForFilter(currentFilter);
+            return exerciseList.getEntriesForFilter(currentFilter);
         } else {
             // no filter: return list of all exercises
             return exerciseList;
+        }
+    }
+
+    @Override
+    public EntryList<Note> getFilterableNoteList() {
+
+        if ((filterEnabled) && (currentFilter != null)) {
+            // use current filter to get list
+            return noteList.getEntriesForFilter(currentFilter);
+        } else {
+            // no filter: return list of all notes
+            return noteList;
+        }
+    }
+
+    @Override
+    public EntryList<Weight> getFilterableWeightList() {
+
+        if ((filterEnabled) && (currentFilter != null)) {
+            // use current filter to get list
+            return weightList.getEntriesForFilter(currentFilter);
+        } else {
+            // no filter: return list of all weights
+            return weightList;
         }
     }
 

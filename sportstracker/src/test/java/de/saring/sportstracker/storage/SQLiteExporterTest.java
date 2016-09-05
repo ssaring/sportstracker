@@ -91,7 +91,7 @@ public class SQLiteExporterTest {
 
         Note note = new Note(1);
         note.setDateTime(LocalDateTime.now());
-        note.setText("Some comment...");
+        note.setComment("Some comment...");
 
         Weight weight = new Weight(1);
         weight.setValue(123.4f);

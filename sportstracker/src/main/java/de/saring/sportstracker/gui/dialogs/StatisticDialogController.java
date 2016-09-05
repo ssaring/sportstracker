@@ -3,6 +3,8 @@ package de.saring.sportstracker.gui.dialogs;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
+import de.saring.sportstracker.data.EntryFilter;
+import de.saring.sportstracker.data.EntryList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,12 +19,10 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
 import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
-import de.saring.util.data.IdObjectList;
 
 /**
  * Controller (MVC) class of the Statistic dialog.
@@ -48,8 +48,8 @@ public class StatisticDialogController extends AbstractDialogController {
     @FXML
     private Label laCommentValue;
 
-    /** The exercise filter used for statistic calculation. */
-    private ExerciseFilter statisticFilter;
+    /** The entry filter used for statistic calculation. */
+    private EntryFilter statisticFilter;
 
 
     /**
@@ -77,8 +77,12 @@ public class StatisticDialogController extends AbstractDialogController {
      */
     public void show(final Window parent) {
 
-        // start with current filter criteria stored in document => user can change it
+        // start with current exercise filter criteria stored in document => user can change it
+        // (create a new default exercise filter, if current filter is not for exercises)
         statisticFilter = document.getCurrentFilter();
+        if (statisticFilter.getEntryType() != EntryFilter.EntryType.EXERCISE) {
+            statisticFilter = EntryFilter.createDefaultExerciseFilter();
+        }
 
         showInfoDialog("/fxml/dialogs/StatisticDialog.fxml", parent,
                 context.getResources().getString("st.dlg.statistic.title"));
@@ -157,7 +161,7 @@ public class StatisticDialogController extends AbstractDialogController {
 
         // show Filter dialog for current filter and use the selected filter afterwards
         final FilterDialogController controller = prFilterDialogController.get();
-        controller.show(context.getPrimaryStage(), statisticFilter);
+        controller.show(context.getPrimaryStage(), statisticFilter, false);
 
         controller.getSelectedFilter().ifPresent(selectedFilter -> {
             statisticFilter = selectedFilter;
@@ -171,8 +175,8 @@ public class StatisticDialogController extends AbstractDialogController {
     private void onCalculate(final ActionEvent event) {
 
         // search for exercises with the selected filter criteria
-        final IdObjectList<Exercise> lFoundExercises =
-                document.getExerciseList().getExercisesForFilter(statisticFilter);
+        final EntryList<Exercise> lFoundExercises =
+                document.getExerciseList().getEntriesForFilter(statisticFilter);
 
         // make sure that at least one exercise was found
         if (lFoundExercises.size() == 0) {

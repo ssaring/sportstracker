@@ -1,7 +1,6 @@
 package de.saring.sportstracker.data;
 
 import de.saring.util.AppResources;
-import de.saring.util.data.IdDateObject;
 
 /**
  * This class contains all information of a single exercise (or workout).
@@ -9,7 +8,7 @@ import de.saring.util.data.IdDateObject;
  * @author Stefan Saring
  * @version 1.0
  */
-public final class Exercise extends IdDateObject implements Cloneable {
+public final class Exercise extends Entry implements Cloneable {
 
     /**
      * The related SportType object.
@@ -65,11 +64,6 @@ public final class Exercise extends IdDateObject implements Cloneable {
      * The equipment used in this exercise (optional).
      */
     private Equipment equipment;
-
-    /**
-     * Some exercise comments (optional).
-     */
-    private String comment;
 
     /**
      * This is the list of possible file types of an exercise.
@@ -236,14 +230,6 @@ public final class Exercise extends IdDateObject implements Cloneable {
         this.equipment = equipment;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     /**
      * Returns a complete clone of this Exercise object. All the attributes are
      * the same, but the ID of the clone is the specified one.
@@ -287,7 +273,7 @@ public final class Exercise extends IdDateObject implements Cloneable {
         sBuilder.append("  calories=").append(this.calories).append("\n");
         sBuilder.append("  hrmFile=").append(this.hrmFile).append("\n");
         sBuilder.append("  equipment=").append(this.equipment).append("\n");
-        sBuilder.append("  comment=").append(this.comment).append("]\n");
+        sBuilder.append("  comment=").append(this.getComment()).append("]\n");
         return sBuilder.toString();
     }
 

@@ -109,6 +109,6 @@ public class WeightListViewController extends AbstractListViewController<Weight>
 
     @Override
     protected List<Weight> getTableEntries() {
-        return getDocument().getWeightList().stream().collect(Collectors.toList());
+        return getDocument().getFilterableWeightList().stream().collect(Collectors.toList());
     }
 }

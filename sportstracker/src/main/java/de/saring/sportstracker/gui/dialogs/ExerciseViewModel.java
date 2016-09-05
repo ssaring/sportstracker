@@ -110,7 +110,7 @@ public class ExerciseViewModel {
         exercise.setAscent(ascent.getValue());
         exercise.setCalories(calories.getValue());
         exercise.setEquipment(equipment.getValue());
-        // ignore empty text for optional inputs
+        // ignore empty comment for optional inputs
         exercise.setHrmFile(StringUtils.getTrimmedTextOrNull(hrmFile.getValue()));
         exercise.setComment(StringUtils.getTrimmedTextOrNull(comment.getValue()));
 

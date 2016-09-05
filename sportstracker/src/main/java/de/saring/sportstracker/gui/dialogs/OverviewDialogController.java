@@ -9,19 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-import de.saring.util.gui.javafx.ColorUtils;
-import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Window;
-
 import javax.inject.Inject;
 
+import de.saring.sportstracker.data.EntryFilter;
+import de.saring.sportstracker.data.EntryList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -45,7 +36,6 @@ import org.jfree.ui.TextAnchor;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.Weight;
@@ -53,12 +43,21 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.AppResources;
 import de.saring.util.Date310Utils;
-import de.saring.util.data.IdObjectList;
+import de.saring.util.gui.javafx.ColorUtils;
 import de.saring.util.gui.javafx.NameableStringConverter;
 import de.saring.util.gui.jfreechart.ChartUtils;
 import de.saring.util.gui.jfreechart.StackedRenderer;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
+import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Window;
 
 /**
  * Controller (MVC) class of the Overview dialog of the SportsTracker application.
@@ -121,7 +120,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
         // display in title when exercise filter is being used
         String dlgTitle = context.getResources().getString("st.dlg.overview.title");
-        if (document.isFilterEnabled()) {
+        if (isExerciseFilterEnabled()) {
             dlgTitle += " " + context.getResources().getString("st.dlg.overview.title.filter");
         }
 
@@ -422,14 +421,14 @@ public class OverviewDialogController extends AbstractDialogController {
             // create time period for current time step
             RegularTimePeriod timePeriod = createTimePeriodForTimeStep(timeType, year, timeStep);
 
-            // create the ExerciseFilter for the time range of the current time step
-            ExerciseFilter filter = createExerciseFilterForTimeStep(timeType, year, timeStep);
+            // create the EntryFilter for the time range of the current time step
+            EntryFilter filter = createExerciseFilterForTimeStep(timeType, year, timeStep);
             filter.setSportType(sportType);
             mergeExerciseFilterIfEnabled(filter);
 
             // get exercises for defined filter
             // (add value 0 and skip to next time step when no exercises found)
-            IdObjectList<Exercise> lExercises = document.getExerciseList().getExercisesForFilter(filter);
+            EntryList<Exercise> lExercises = document.getExerciseList().getEntriesForFilter(filter);
             if (lExercises.size() == 0) {
                 dataset.add(timePeriod, 0, seriesName);
                 continue;
@@ -552,14 +551,14 @@ public class OverviewDialogController extends AbstractDialogController {
             // create time period for current time step
             RegularTimePeriod timePeriod = createTimePeriodForTimeStep(timeType, year, timeStep);
 
-            // create the ExerciseFilter for the time range of the current time step
-            ExerciseFilter filter = createExerciseFilterForTimeStep(timeType, year, timeStep);
+            // create the EntryFilter for the time range of the current time step
+            EntryFilter filter = createExerciseFilterForTimeStep(timeType, year, timeStep);
             filter.setSportType(sportType);
             filter.setSportSubType(sportSubType);
             mergeExerciseFilterIfEnabled(filter);
 
             // get exercises for defined filter
-            IdObjectList<Exercise> lExercises = document.getExerciseList().getExercisesForFilter(filter);
+            EntryList<Exercise> lExercises = document.getExerciseList().getEntriesForFilter(filter);
 
             // create distance sum of all found exercises
             double sumDistance = 0d;
@@ -629,14 +628,14 @@ public class OverviewDialogController extends AbstractDialogController {
             // create time period for current time step
             RegularTimePeriod timePeriod = createTimePeriodForTimeStep(timeType, year, timeStep);
 
-            // create the ExerciseFilter for the time range of the current time step
-            ExerciseFilter filter = createExerciseFilterForTimeStep(timeType, year, timeStep);
+            // create the EntryFilter for the time range of the current time step
+            EntryFilter filter = createExerciseFilterForTimeStep(timeType, year, timeStep);
             filter.setSportType(sportType);
             filter.setEquipment(equipment);
             mergeExerciseFilterIfEnabled(filter);
 
             // get exercises for defined filter
-            IdObjectList<Exercise> lExercises = document.getExerciseList().getExercisesForFilter(filter);
+            EntryList<Exercise> lExercises = document.getExerciseList().getEntriesForFilter(filter);
 
             // create distance sum of all found exercises
             double sumDistance = 0d;
@@ -694,9 +693,9 @@ public class OverviewDialogController extends AbstractDialogController {
             // create time period for current time step
             RegularTimePeriod timePeriod = createTimePeriodForTimeStep(timeType, year, timeStep);
 
-            // create the ExerciseFilter for the time range of the current time step
-            // (ExerciseFilter was not made for Weight, but it's also handy to use here :-)
-            ExerciseFilter filter = createExerciseFilterForTimeStep(timeType, year, timeStep);
+            // create the EntryFilter for the time range of the current time step
+            // (EntryFilter was not made for Weight, but it's also handy to use here :-)
+            EntryFilter filter = createExerciseFilterForTimeStep(timeType, year, timeStep);
 
             // get average weight for the time range of this step
             double avgWeight = getAverageWeightInTimeRange(filter);
@@ -778,18 +777,18 @@ public class OverviewDialogController extends AbstractDialogController {
     }
 
     /**
-     * Creates the ExerciseFilter with the time range (dateStart/dateEnd)
+     * Creates the EntryFilter with the time range (dateStart/dateEnd)
      * to be shown in the TimeSeries graph for the specified time step.
-     * All the other ExerciseFilter attributes are not set yet.
+     * All the other EntryFilter attributes are not set yet.
      *
      * @param timeType the time range type to be displayed
      * @param year the year to be displayed
      * @param timeStep the current time step in the graph
-     * @return the created ExerciseFilter for the current time step
+     * @return the created EntryFilter for the current time step
      */
-    private ExerciseFilter createExerciseFilterForTimeStep(TimeRangeType timeType, int year, int timeStep) {
+    private EntryFilter createExerciseFilterForTimeStep(TimeRangeType timeType, int year, int timeStep) {
 
-        ExerciseFilter filter = new ExerciseFilter();
+        EntryFilter filter = new EntryFilter();
         LocalDate now = LocalDate.now();
 
         LocalDate dateRangeStart;
@@ -862,17 +861,22 @@ public class OverviewDialogController extends AbstractDialogController {
         return document.getOptions().isWeekStartSunday() ? WeekFields.SUNDAY_START : WeekFields.ISO;
     }
 
+    private boolean isExerciseFilterEnabled() {
+        return document.isFilterEnabled()
+                && document.getCurrentFilter().getEntryType() == EntryFilter.EntryType.EXERCISE;
+    }
+
     /**
      * Merges the specified filter for time series creation with the existing filter
      * in the SportsTracker view (if it is enabled).
      *
      * @param filter the filter used for time series creation
      */
-    private void mergeExerciseFilterIfEnabled(ExerciseFilter filter) {
+    private void mergeExerciseFilterIfEnabled(EntryFilter filter) {
         // when the exercise filter is enabled in the GUI then we need to
         // merge these filter criterias into the created diagram filter
-        if (document.isFilterEnabled()) {
-            ExerciseFilter currentFilter = document.getCurrentFilter();
+        if (isExerciseFilterEnabled()) {
+            EntryFilter currentFilter = document.getCurrentFilter();
 
             // merge filter date
             if (currentFilter.getDateStart().isAfter(filter.getDateStart())) {
@@ -922,12 +926,12 @@ public class OverviewDialogController extends AbstractDialogController {
 
     /**
      * Returns the average weight value for all Weight entries in the time range
-     * of the specified ExerciseFilter.
+     * of the specified EntryFilter.
      *
-     * @param filter the ExerciseFilter with the time range to be used
+     * @param filter the EntryFilter with the time range to be used
      * @return the average weight value or 0 when no Weight entries found
      */
-    private double getAverageWeightInTimeRange(ExerciseFilter filter) {
+    private double getAverageWeightInTimeRange(EntryFilter filter) {
         java.util.List<Weight> weightsInTimeRange = document.getWeightList().getEntriesInDateRange(
                 filter.getDateStart(), filter.getDateEnd());
 

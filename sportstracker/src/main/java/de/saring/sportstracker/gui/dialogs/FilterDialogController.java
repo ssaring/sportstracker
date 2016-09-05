@@ -7,26 +7,28 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import de.saring.util.ValidationUtils;
+import de.saring.sportstracker.data.EntryFilter;
+import de.saring.util.gui.javafx.BindingUtils;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Window;
 
 import javax.inject.Inject;
 
-import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
@@ -47,6 +49,15 @@ public class FilterDialogController extends AbstractDialogController {
     private DatePicker dpStart;
     @FXML
     private DatePicker dpEnd;
+
+    @FXML
+    private RadioButton rbTypeExercise;
+    @FXML
+    private RadioButton rbTypeNote;
+    @FXML
+    private RadioButton rbTypeWeight;
+    @FXML
+    private ToggleGroup tgEntryType;
 
     @FXML
     private ChoiceBox<SportType> cbSportType;
@@ -75,7 +86,7 @@ public class FilterDialogController extends AbstractDialogController {
     /** ViewModel of the edited Filter. */
     private FilterViewModel filterViewModel;
 
-    private Optional<ExerciseFilter> selectedFilter = Optional.empty();
+    private Optional<EntryFilter> selectedFilter = Optional.empty();
 
 
     /**
@@ -103,13 +114,14 @@ public class FilterDialogController extends AbstractDialogController {
     }
 
     /**
-     * Displays the Filter dialog for the passed ExerciseFilter instance.
+     * Displays the Filter dialog for the passed EntryFilter instance.
      *
      * @param parent parent window of the dialog
      * @param filter Filter to be edited
+     * @param entryTypeSelectable flag whether the filter entry type can be selected or not
      */
-    public void show(final Window parent, final ExerciseFilter filter) {
-        this.filterViewModel = new FilterViewModel(filter);
+    public void show(final Window parent, final EntryFilter filter, final boolean entryTypeSelectable) {
+        this.filterViewModel = new FilterViewModel(filter, entryTypeSelectable);
         this.selectedFilter = Optional.empty();
 
         showEditDialog("/fxml/dialogs/FilterDialog.fxml", parent, context.getResources().getString("st.dlg.filter.title"));
@@ -121,7 +133,7 @@ public class FilterDialogController extends AbstractDialogController {
      *
      * @return the selected exercise filter if available
      */
-    public Optional<ExerciseFilter> getSelectedFilter() {
+    public Optional<EntryFilter> getSelectedFilter() {
         return selectedFilter;
     }
 
@@ -159,6 +171,16 @@ public class FilterDialogController extends AbstractDialogController {
         cbEquipment.valueProperty().bindBidirectional(filterViewModel.equipment);
         tfComment.textProperty().bindBidirectional(filterViewModel.commentSubString);
         cbRegExpression.selectedProperty().bindBidirectional(filterViewModel.regularExpressionMode);
+
+        rbTypeExercise.setUserData(EntryFilter.EntryType.EXERCISE);
+        rbTypeNote.setUserData(EntryFilter.EntryType.NOTE);
+        rbTypeWeight.setUserData(EntryFilter.EntryType.WEIGHT);
+        BindingUtils.bindToggleGroupToProperty(tgEntryType, filterViewModel.entryType);
+
+        BooleanBinding entryTypeSelectionDisabled = Bindings.not(filterViewModel.entryTypeSelectable);
+        rbTypeExercise.disableProperty().bind(entryTypeSelectionDisabled);
+        rbTypeNote.disableProperty().bind(entryTypeSelectionDisabled);
+        rbTypeWeight.disableProperty().bind(entryTypeSelectionDisabled);
     }
 
     /**
@@ -190,6 +212,14 @@ public class FilterDialogController extends AbstractDialogController {
         if (filterViewModel.sportType.get() == null) {
             filterViewModel.sportType.set(sportTypeAll);
         }
+
+        // sport type, subtype, itensity and equipment selection is enabled for entry type "exercise" only
+        final BooleanBinding entryTypeNotExercise = Bindings.notEqual(
+                EntryFilter.EntryType.EXERCISE, filterViewModel.entryType);
+        cbSportType.disableProperty().bind(entryTypeNotExercise);
+        cbSportSubtype.disableProperty().bind(entryTypeNotExercise);
+        cbIntensity.disableProperty().bind(entryTypeNotExercise);
+        cbEquipment.disableProperty().bind(entryTypeNotExercise);
     }
 
     /**
@@ -221,7 +251,7 @@ public class FilterDialogController extends AbstractDialogController {
 
     @Override
     protected boolean validateAndStore() {
-        final ExerciseFilter newFilter = filterViewModel.getExerciseFilter();
+        final EntryFilter newFilter = filterViewModel.getExerciseFilter();
 
         // make sure that start date is before end date
         if (newFilter.getDateEnd().isBefore(newFilter.getDateStart())) {

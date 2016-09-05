@@ -1,10 +1,24 @@
 SportsTracker-TODO
 ==================
 
-- Add search for comments in Note and Weight entries (currently for Exercises only)
+- Update to ControlsFX 8.40.11
+  - fixes compatibility issues with JDK 8 u102
+  - has the validation bug been fixed?
 
-- Use of JavaFX-based Gluon Maps instead of Swing-based JXMapViewer?
+- Use of JavaFX-based GMapsFX instead of Swing-based JXMapViewer?
+  - Homepage: http://rterp.github.io/GMapsFX/
+  - Test notes:
+    - Apache License 2.0
+    - uses Google Maps only, no API key needed
+    - super fast and good rendering
+    - controls for zoom and display options (map, satellite, ...) can be shown on demand
+      (also scale via scaleControl=true)
+    - displays small trails too (tested for Dresdner Heide)
+    - demo app needs a lot of memory (after start 135 MB, after short usage > 200 MB)
+  - To be tested: can the route and lap markers with numbers be displayed?
+- Alternative: Use of JavaFX-based Gluon Maps®
   - http://gluonhq.com/announcing-gluon-maps/ + http://gluonhq.com/open-source/maps/
+  -> does not provide zoom and move controls (yet)
 
 JavaFX Migration:
 - BUG with JDK8u66+: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:

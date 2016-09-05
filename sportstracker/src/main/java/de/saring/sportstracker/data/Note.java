@@ -1,7 +1,5 @@
 package de.saring.sportstracker.data;
 
-import de.saring.util.data.IdDateObject;
-
 /**
  * This class defines a note for a specific date (e.g. for creating training
  * plans in the calendar).
@@ -9,12 +7,7 @@ import de.saring.util.data.IdDateObject;
  * @author Stefan Saring
  * @version 1.0
  */
-public final class Note extends IdDateObject {
-
-    /**
-     * The text of the note.
-     */
-    private String text;
+public final class Note extends Entry {
 
     /**
      * Standard c'tor.
@@ -23,14 +16,6 @@ public final class Note extends IdDateObject {
      */
     public Note(int id) {
         super(id);
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     /**
@@ -43,7 +28,7 @@ public final class Note extends IdDateObject {
     public Note clone(int cloneId) {
         Note clone = new Note(cloneId);
         clone.setDateTime(this.getDateTime());
-        clone.setText(this.getText());
+        clone.setComment(this.getComment());
         return clone;
     }
 
@@ -53,7 +38,7 @@ public final class Note extends IdDateObject {
         sBuilder.append(this.getClass().getName()).append(":\n");
         sBuilder.append(" [id=").append(this.getId()).append("\n");
         sBuilder.append("  date=").append(this.getDateTime()).append("\n");
-        sBuilder.append("  text=").append(this.text).append("]\n");
+        sBuilder.append("  comment=").append(this.getComment()).append("]\n");
         return sBuilder.toString();
     }
 }

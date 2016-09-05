@@ -70,7 +70,7 @@ public class XMLNoteList {
      */
     private Note readNote(Element eNote) {
         Note note = new Note(Integer.parseInt(eNote.getChildText("id")));
-        note.setText(eNote.getChildText("text"));
+        note.setComment(eNote.getChildText("text"));
 
         // get and convert date (format already checked by XSD schema)
         String strDate = eNote.getChildText("date");
@@ -120,7 +120,7 @@ public class XMLNoteList {
 
             XMLUtils.addElement(eNote, "id", String.valueOf(note.getId()));
             XMLUtils.addElement(eNote, "date", note.getDateTime().format(XMLUtils.DATE_TIME_FORMAT));
-            XMLUtils.addElement(eNote, "text", note.getText());
+            XMLUtils.addElement(eNote, "text", note.getComment());
         });
         return eNoteList;
     }

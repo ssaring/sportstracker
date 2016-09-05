@@ -1,24 +1,16 @@
 package de.saring.sportstracker.data;
 
-import de.saring.util.data.IdDateObject;
-
 /**
  * This class defines a body weight entry for a specific date.
  *
  * @author Stefan Saring
- * @version 1.0
  */
-public final class Weight extends IdDateObject {
+public final class Weight extends Entry {
 
     /**
      * The weight value in kilograms.
      */
     private float value;
-
-    /**
-     * Comment for the weight entry.
-     */
-    private String comment;
 
     /**
      * Standard c'tor.
@@ -35,14 +27,6 @@ public final class Weight extends IdDateObject {
 
     public void setValue(float value) {
         this.value = value;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     /**
@@ -67,7 +51,7 @@ public final class Weight extends IdDateObject {
         sBuilder.append(" [id=").append(this.getId()).append("\n");
         sBuilder.append("  date=").append(this.getDateTime()).append("\n");
         sBuilder.append("  value=").append(this.value).append("\n");
-        sBuilder.append("  comment=").append(this.comment).append("]\n");
+        sBuilder.append("  comment=").append(this.getComment()).append("]\n");
         return sBuilder.toString();
     }
 }

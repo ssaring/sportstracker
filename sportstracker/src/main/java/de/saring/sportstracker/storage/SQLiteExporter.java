@@ -204,7 +204,7 @@ public class SQLiteExporter {
 
             statement.setInt(1, note.getId());
             statement.setLong(2, Date310Utils.localDateTimeToUnixTime(note.getDateTime()));
-            statement.setString(3, note.getText());
+            statement.setString(3, note.getComment());
             statement.executeUpdate();
         }
     }

@@ -61,7 +61,7 @@ public class WeightViewModel {
         final Weight weight = new Weight(id);
         weight.setDateTime(LocalDateTime.of(date.get(), time.get()));
         weight.setValue(value.get());
-        // ignore empty text for optional inputs
+        // ignore empty comment for optional inputs
         weight.setComment(StringUtils.getTrimmedTextOrNull(comment.getValue()));
 
         // convert weight value when english unit system is enabled

@@ -6,7 +6,9 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -15,112 +17,127 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="24.0" stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogs.FilterDialogController">
+<VBox spacing="24.0" stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogs.FilterDialogController">
     <children>
         <VBox spacing="12.0">
             <children>
-                <Label styleClass="label-header" text="%st.dlg.filter.time_period.text"/>
+                <Label styleClass="label-header" text="%st.dlg.filter.time_period.text" />
                 <HBox alignment="CENTER_LEFT" spacing="16.0">
                     <children>
-                        <Label maxWidth="140.0" text="%st.dlg.filter.from.text"/>
-                        <DatePicker fx:id="dpStart" maxWidth="140.0"/>
-                        <Label maxWidth="140.0" text="%st.dlg.filter.to.text"/>
-                        <DatePicker fx:id="dpEnd" maxWidth="140.0"/>
+                        <Label maxWidth="140.0" text="%st.dlg.filter.from.text" />
+                        <DatePicker fx:id="dpStart" maxWidth="140.0" />
+                        <Label maxWidth="140.0" text="%st.dlg.filter.to.text" />
+                        <DatePicker fx:id="dpEnd" maxWidth="140.0" />
                     </children>
                     <padding>
-                        <Insets left="24.0"/>
+                        <Insets left="24.0" />
                     </padding>
                 </HBox>
                 <GridPane hgap="24.0">
                     <columnConstraints>
-                        <ColumnConstraints percentWidth="25.0"/>
-                        <ColumnConstraints percentWidth="25.0"/>
-                        <ColumnConstraints percentWidth="25.0"/>
-                        <ColumnConstraints percentWidth="25.0"/>
+                        <ColumnConstraints percentWidth="25.0" />
+                        <ColumnConstraints percentWidth="25.0" />
+                        <ColumnConstraints percentWidth="25.0" />
+                        <ColumnConstraints percentWidth="25.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints/>
+                        <RowConstraints />
                     </rowConstraints>
                     <children>
                     </children>
                     <padding>
-                        <Insets left="24.0"/>
+                        <Insets left="24.0" />
                     </padding>
                 </GridPane>
                 <TilePane hgap="24.0" prefColumns="4">
                     <children>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCurrentWeek" text="%st.dlg.filter.current_week.Action.text"/>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCurrentMonth" text="%st.dlg.filter.current_month.Action.text"/>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCurrentYear" text="%st.dlg.filter.current_year.Action.text"/>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAllTime" text="%st.dlg.filter.all_time.Action.text"/>
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCurrentWeek" text="%st.dlg.filter.current_week.Action.text" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCurrentMonth" text="%st.dlg.filter.current_month.Action.text" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCurrentYear" text="%st.dlg.filter.current_year.Action.text" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAllTime" text="%st.dlg.filter.all_time.Action.text" />
                     </children>
                     <VBox.margin>
-                        <Insets left="24.0"/>
+                        <Insets left="24.0" />
                     </VBox.margin>
                 </TilePane>
             </children>
         </VBox>
         <VBox spacing="20.0">
             <children>
-                <Label styleClass="label-header" text="%st.dlg.filter.filter.text"/>
+                <Label styleClass="label-header" text="%st.dlg.filter.filter.text" />
+            <HBox alignment="CENTER_LEFT" spacing="24.0">
+               <children>
+                   <Label text="%st.dlg.filter.entry_type.text" />
+                  <RadioButton fx:id="rbTypeExercise" mnemonicParsing="false" selected="true" text="%st.dlg.filter.entry_type_exercise.text">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgEntryType" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rbTypeNote" mnemonicParsing="false" text="%st.dlg.filter.entry_type_note.text" toggleGroup="$tgEntryType" />
+                  <RadioButton fx:id="rbTypeWeight" mnemonicParsing="false" text="%st.dlg.filter.entry_type_weight.text" toggleGroup="$tgEntryType" />
+               </children>
+               <padding>
+                  <Insets left="24.0" />
+               </padding>
+            </HBox>
                 <GridPane hgap="24.0" vgap="8.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES"/>
-                        <ColumnConstraints hgrow="SOMETIMES"/>
-                        <ColumnConstraints hgrow="SOMETIMES"/>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints vgrow="SOMETIMES"/>
-                        <RowConstraints vgrow="SOMETIMES"/>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
                     </rowConstraints>
                     <padding>
-                        <Insets left="24.0"/>
+                        <Insets left="24.0" />
                     </padding>
                     <children>
-                        <Label text="%st.dlg.filter.sport_type.text"/>
-                        <Label text="%st.dlg.filter.sport_subtype.text" GridPane.columnIndex="1"/>
-                        <Label text="%st.dlg.filter.intensity.text" GridPane.columnIndex="2"/>
-                        <ChoiceBox fx:id="cbSportType" maxWidth="1.7976931348623157E308" minWidth="120.0" GridPane.rowIndex="1"/>
-                        <ChoiceBox fx:id="cbSportSubtype" maxWidth="1.7976931348623157E308" minWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                        <ChoiceBox fx:id="cbIntensity" maxWidth="1.7976931348623157E308" minWidth="120.0" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <Label text="%st.dlg.filter.sport_type.text" />
+                        <Label text="%st.dlg.filter.sport_subtype.text" GridPane.columnIndex="1" />
+                        <Label text="%st.dlg.filter.intensity.text" GridPane.columnIndex="2" />
+                        <ChoiceBox fx:id="cbSportType" maxWidth="1.7976931348623157E308" minWidth="120.0" GridPane.rowIndex="1" />
+                        <ChoiceBox fx:id="cbSportSubtype" maxWidth="1.7976931348623157E308" minWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ChoiceBox fx:id="cbIntensity" maxWidth="1.7976931348623157E308" minWidth="120.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
                 <BorderPane>
                     <left>
                         <Label text="%st.dlg.filter.equipment.text" BorderPane.alignment="CENTER">
                             <padding>
-                                <Insets right="16.0"/>
+                                <Insets right="16.0" />
                             </padding>
                         </Label>
                     </left>
                     <center>
-                        <ChoiceBox fx:id="cbEquipment" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER"/>
+                        <ChoiceBox fx:id="cbEquipment" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER" />
                     </center>
                     <padding>
-                        <Insets left="24.0"/>
+                        <Insets left="24.0" />
                     </padding>
                 </BorderPane>
                 <BorderPane>
                     <left>
                         <Label text="%st.dlg.filter.string_comments.text" BorderPane.alignment="CENTER">
                             <padding>
-                                <Insets right="16.0"/>
+                                <Insets right="16.0" />
                             </padding>
                         </Label>
                     </left>
                     <center>
-                        <TextField fx:id="tfComment" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER"/>
+                        <TextField fx:id="tfComment" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER" />
                     </center>
                     <padding>
-                        <Insets left="24.0"/>
+                        <Insets left="24.0" />
                     </padding>
                 </BorderPane>
                 <HBox alignment="CENTER_LEFT" spacing="16.0">
                     <children>
-                        <CheckBox fx:id="cbRegExpression" mnemonicParsing="false" text="%st.dlg.filter.reg_expression.text"/>
+                        <CheckBox fx:id="cbRegExpression" mnemonicParsing="false" text="%st.dlg.filter.reg_expression.text" />
                     </children>
                     <padding>
-                        <Insets left="24.0"/>
+                        <Insets left="24.0" />
                     </padding>
                 </HBox>
             </children>

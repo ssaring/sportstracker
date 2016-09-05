@@ -4,13 +4,15 @@ import java.util.List;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STOptions;
+import de.saring.sportstracker.data.EntryList;
 import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
+import de.saring.sportstracker.data.EntryFilter;
 import de.saring.sportstracker.data.ExerciseList;
+import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
+import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.data.WeightList;
-import de.saring.util.data.IdDateObjectList;
 import de.saring.util.data.IdObjectListChangeListener;
 
 /**
@@ -42,9 +44,9 @@ public interface STDocument extends IdObjectListChangeListener {
 
     void setFilterEnabled(boolean filterEnabled);
 
-    ExerciseFilter getCurrentFilter();
+    EntryFilter getCurrentFilter();
 
-    void setCurrentFilter(ExerciseFilter currentFilter);
+    void setCurrentFilter(EntryFilter currentFilter);
 
     String getDataDirectory();
 
@@ -81,7 +83,25 @@ public interface STDocument extends IdObjectListChangeListener {
      *
      * @return list of Exercise objects
      */
-    IdDateObjectList<Exercise> getFilterableExerciseList();
+    EntryList<Exercise> getFilterableExerciseList();
+
+    /**
+     * This method returns the list of notes for display in the GUI.
+     * If the filter is enabled, the returned list will contains just the
+     * filtered notes, otherwise it will contain all.
+     *
+     * @return list of Note objects
+     */
+    EntryList<Note> getFilterableNoteList();
+
+    /**
+     * This method returns the list of weights for display in the GUI.
+     * If the filter is enabled, the returned list will contains just the
+     * filtered weights, otherwise it will contain all.
+     *
+     * @return list of Weight objects
+     */
+    EntryList<Weight> getFilterableWeightList();
 
     /**
      * This method reads both the exercise and the sport-type list from the

@@ -22,7 +22,7 @@ import de.saring.util.data.IdObject;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 
 /**
- * Controller class of the Note List View, which displays all the user notes in a table view.
+ * Controller class of the Note List View, which displays all the user notes  (or a filtered list) in a table view.
  *
  * @author Stefan Saring
  */
@@ -35,7 +35,7 @@ public class NoteListViewController extends AbstractListViewController<Note> {
     @FXML
     private TableColumn<Note, LocalDateTime> tcDate;
     @FXML
-    private TableColumn<Note, String> tcText;
+    private TableColumn<Note, String> tcComment;
 
     /**
      * Standard c'tor for dependency injection.
@@ -86,8 +86,8 @@ public class NoteListViewController extends AbstractListViewController<Note> {
 
         // setup factories for providing cell values
         tcDate.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-        tcText.setCellValueFactory(cellData -> new SimpleStringProperty( //
-                StringUtils.getFirstLineOfText(cellData.getValue().getText())));
+        tcComment.setCellValueFactory(cellData -> new SimpleStringProperty( //
+                StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 
         // setup custom factories for displaying cells
         tcDate.setCellFactory(new LocalDateCellFactory<>());
@@ -102,6 +102,6 @@ public class NoteListViewController extends AbstractListViewController<Note> {
 
     @Override
     protected List<Note> getTableEntries() {
-        return getDocument().getNoteList().stream().collect(Collectors.toList());
+        return getDocument().getFilterableNoteList().stream().collect(Collectors.toList());
     }
 }

@@ -65,15 +65,15 @@ public final class XMLUtils {
     }
 
     /**
-     * Creates the element with the specified name and text and adds it to the parent.
+     * Creates the element with the specified name and comment and adds it to the parent.
      *
      * @param eParent the parent element
      * @param name name of the new element
-     * @param text text of the new element
+     * @param comment comment of the new element
      */
-    public static void addElement(Element eParent, String name, String text) {
+    public static void addElement(Element eParent, String name, String comment) {
         Element element = new Element(name);
-        element.setText(text);
+        element.setText(comment);
         eParent.addContent(element);
     }
 

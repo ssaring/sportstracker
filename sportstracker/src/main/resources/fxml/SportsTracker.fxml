@@ -73,7 +73,7 @@
                                 <MenuItem fx:id="miNoteListView" mnemonicParsing="true" onAction="#onNoteListView" styleClass="menuBarItem" text="%st.view.note_list_view.Action.text"/>
                                 <MenuItem fx:id="miWeightListView" mnemonicParsing="true" onAction="#onWeightListView" styleClass="menuBarItem" text="%st.view.weight_list_view.Action.text"/>
                                 <SeparatorMenuItem/>
-                                <MenuItem mnemonicParsing="true" onAction="#onFilterExercises" styleClass="menuBarItem" text="%st.view.filter_exercises.Action.text"/>
+                                <MenuItem mnemonicParsing="true" onAction="#onFilterEntries" styleClass="menuBarItem" text="%st.view.filter_entries.Action.text"/>
                                 <MenuItem fx:id="miFilterDisable" mnemonicParsing="true" onAction="#onFilterDisable" styleClass="menuBarItem" text="%st.view.filter_disable.Action.text"/>
                             </items>
                         </Menu>
@@ -131,9 +131,9 @@
                             </tooltip>
                         </Button>
                         <Separator/>
-                        <Button fx:id="btFilterExercises" mnemonicParsing="false" onAction="#onFilterExercises" styleClass="toolbarButton" text="">
+                        <Button fx:id="btFilterExercises" mnemonicParsing="false" onAction="#onFilterEntries" styleClass="toolbarButton" text="">
                             <tooltip>
-                                <Tooltip text="%st.view.filter_exercises.Action.shortDescription"/>
+                                <Tooltip text="%st.view.filter_entries.Action.shortDescription"/>
                             </tooltip>
                         </Button>
                         <Button fx:id="btFilterDisable" mnemonicParsing="false" onAction="#onFilterDisable" styleClass="toolbarButton" text="">

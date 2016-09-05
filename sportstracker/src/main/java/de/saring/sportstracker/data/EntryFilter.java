@@ -6,13 +6,37 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 
 /**
- * This class defines the criterias for filtering the exercise list (e.g. for
- * creation of statistics).
+ * This class defines the criteria for filtering the entry list (e.g. for creation of statistics).
+ * It supports the entry types exercise, note and weight.
  *
  * @author Stefan Saring
- * @version 1.1
  */
-public final class ExerciseFilter {
+public final class EntryFilter {
+
+    /**
+     * Enumeration with all possible entry types to be filtered.
+     */
+    public enum EntryType {
+
+        EXERCISE(Exercise.class),
+        NOTE(Note.class),
+        WEIGHT(Weight.class);
+
+        private Class<? extends Entry> entryClass;
+
+        private EntryType(Class<? extends Entry> entryClass) {
+            this.entryClass = entryClass;
+        }
+
+        /**
+         * Returns the class of the entries for this type.
+         *
+         * @return class
+         */
+        public Class<? extends Entry> getEntryClass() {
+            return entryClass;
+        }
+    }
 
     /**
      * The exercise dates needs to be greater or same as this start date.
@@ -23,6 +47,11 @@ public final class ExerciseFilter {
      * The exercise dates needs to be lesser or same as this end date.
      */
     private LocalDate dateEnd;
+
+    /**
+     * The entry type to be filtered.
+     */
+    private EntryType entryType = EntryType.EXERCISE;
 
     /**
      * The exercise needs to have the same sport type (ignore, when null).
@@ -70,6 +99,14 @@ public final class ExerciseFilter {
 
     public void setDateEnd(LocalDate dateEnd) {
         this.dateEnd = dateEnd;
+    }
+
+    public EntryType getEntryType() {
+        return entryType;
+    }
+
+    public void setEntryType(EntryType entryType) {
+        this.entryType = entryType;
     }
 
     public SportType getSportType() {
@@ -127,12 +164,13 @@ public final class ExerciseFilter {
      *
      * @return the default filter object
      */
-    public static ExerciseFilter createDefaultExerciseFilter() {
+    public static EntryFilter createDefaultExerciseFilter() {
         LocalDate now = LocalDate.now();
 
-        ExerciseFilter filter = new ExerciseFilter();
+        EntryFilter filter = new EntryFilter();
         filter.dateStart = now.with(TemporalAdjusters.firstDayOfMonth());
         filter.dateEnd = now.with(TemporalAdjusters.lastDayOfMonth());
+        filter.entryType = EntryType.EXERCISE;
         filter.sportType = null;
         filter.sportSubType = null;
         filter.intensity = null;
@@ -173,9 +211,10 @@ public final class ExerciseFilter {
     public String toString() {
 
         StringBuilder sBuilder = new StringBuilder();
-        sBuilder.append(ExerciseFilter.class.getName()).append(":\n");
+        sBuilder.append(EntryFilter.class.getName()).append(":\n");
         sBuilder.append(" [dateStart=").append(this.dateStart).append("\n");
         sBuilder.append("  dateEnd=").append(this.dateEnd).append("\n");
+        sBuilder.append("  entryType=").append(this.entryType).append("\n");
         sBuilder.append("  sportType=").append(this.sportType).append("\n");
         sBuilder.append("  sportSubType=").append(this.sportSubType).append("\n");
         sBuilder.append("  intensity=").append(this.intensity).append("\n");

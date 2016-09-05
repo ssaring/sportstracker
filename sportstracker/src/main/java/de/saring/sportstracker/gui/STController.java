@@ -82,9 +82,9 @@ public interface STController extends EntryViewEventHandler {
     void onWeightListView(ActionEvent event);
 
     /**
-     * Event handler for action "Set Exercise Filter".
+     * Event handler for action "Filter Entries".
      */
-    void onFilterExercises(ActionEvent event);
+    void onFilterEntries(ActionEvent event);
 
     /**
      * Event handler for action "Disable Exercise Filter".

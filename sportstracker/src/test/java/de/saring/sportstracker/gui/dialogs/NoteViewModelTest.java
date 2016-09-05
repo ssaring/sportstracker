@@ -22,7 +22,7 @@ public class NoteViewModelTest {
     public void setUp() {
         note = new Note(123);
         note.setDateTime(LocalDateTime.of(2014, 10, 20, 7, 30, 0));
-        note.setText("Foo Bar");
+        note.setComment("Foo Bar");
     }
 
     /**
@@ -36,14 +36,14 @@ public class NoteViewModelTest {
         Note unmodifiedNote = viewModel.getNote();
         assertEquals(note.getId(), unmodifiedNote.getId());
         assertEquals(note.getDateTime(), unmodifiedNote.getDateTime());
-        assertEquals(note.getText(), unmodifiedNote.getText());
+        assertEquals(note.getComment(), unmodifiedNote.getComment());
 
         // test after modifications
         viewModel.time.set(LocalTime.of(14, 45));
-        viewModel.text.set("  Bar Foo  ");
+        viewModel.comment.set("  Bar Foo  ");
 
         Note modifiedNote = viewModel.getNote();
         assertEquals(LocalDateTime.of(2014, 10, 20, 14, 45, 0), modifiedNote.getDateTime());
-        assertEquals("Bar Foo", modifiedNote.getText());
+        assertEquals("Bar Foo", modifiedNote.getComment());
     }
 }

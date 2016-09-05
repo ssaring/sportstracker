@@ -46,12 +46,12 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
     @Override
     public List<CalendarEntry> getCalendarEntriesForDate(final LocalDate date) {
 
-        final List<Note> notes = document.getNoteList().getEntriesInDateRange(date, date);
+        final List<Note> notes = document.getFilterableNoteList().getEntriesInDateRange(date, date);
         final List<CalendarEntry> calendarEntries = notes.stream() //
                 .map(note -> createCalendarEntryForNote(note)) //
                 .collect(Collectors.toList());
 
-        final List<Weight> weights = document.getWeightList().getEntriesInDateRange(date, date);
+        final List<Weight> weights = document.getFilterableWeightList().getEntriesInDateRange(date, date);
         calendarEntries.addAll(weights.stream() //
                 .map(weight -> createCalendarEntryForWeight(weight)) //
                 .collect(Collectors.toList()));
@@ -94,9 +94,9 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
         final StringBuilder sbText = new StringBuilder();
         sbText.append(context.getResources().getString("st.calview.note_short")) //
                 .append(" ") //
-                .append(StringUtils.getFirstLineOfText(note.getText()));
+                .append(StringUtils.getFirstLineOfText(note.getComment()));
 
-        return new CalendarEntry(note, sbText.toString(), note.getText(), null);
+        return new CalendarEntry(note, sbText.toString(), note.getComment(), null);
     }
 
     private CalendarEntry createCalendarEntryForWeight(final Weight weight) {

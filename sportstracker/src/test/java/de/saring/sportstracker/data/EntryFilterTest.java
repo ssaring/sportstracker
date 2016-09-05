@@ -7,11 +7,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 /**
- * This class contains all unit tests for the ExerciseFilter class.
+ * This class contains all unit tests for the EntryFilter class.
  *
  * @author Stefan Saring
  */
-public class ExerciseFilterTest {
+public class EntryFilterTest {
 
     private SportTypeList sportTypeList;
 
@@ -51,7 +51,7 @@ public class ExerciseFilterTest {
     @Test
     public void testUpdateSportTypes() {
 
-        ExerciseFilter filter = ExerciseFilter.createDefaultExerciseFilter();
+        EntryFilter filter = EntryFilter.createDefaultExerciseFilter();
 
         // nothing happens when the filter has no sport type and subtype
         filter.updateSportTypes(sportTypeList);

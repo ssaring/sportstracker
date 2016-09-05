@@ -46,7 +46,7 @@ public abstract class AbstractDialogController {
      *
      * @param fxmlFilename FXML filename of the dialog content
      * @param parent parent window of the dialog
-     * @param title dialog title text
+     * @param title dialog title comment
      */
     protected void showInfoDialog(final String fxmlFilename, final Window parent, final String title) {
 
@@ -67,7 +67,7 @@ public abstract class AbstractDialogController {
      *
      * @param fxmlFilename FXML filename of the dialog content
      * @param parent parent window of the dialog
-     * @param title dialog title text
+     * @param title dialog title comment
      */
     protected void showEditDialog(final String fxmlFilename, final Window parent, final String title) {
 
