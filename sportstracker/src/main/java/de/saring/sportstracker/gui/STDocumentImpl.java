@@ -18,8 +18,10 @@ import de.saring.sportstracker.data.EntryFilter;
 import de.saring.sportstracker.data.EntryList;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.ExerciseList;
+import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
+import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.util.XmlBeanStorage;
@@ -243,6 +245,30 @@ public class STDocumentImpl implements STDocument {
         } else {
             // no filter: return list of all exercises
             return exerciseList;
+        }
+    }
+
+    @Override
+    public EntryList<Note> getFilterableNoteList() {
+
+        if ((filterEnabled) && (currentFilter != null)) {
+            // use current filter to get list
+            return noteList.getEntriesForFilter(currentFilter);
+        } else {
+            // no filter: return list of all notes
+            return noteList;
+        }
+    }
+
+    @Override
+    public EntryList<Weight> getFilterableWeightList() {
+
+        if ((filterEnabled) && (currentFilter != null)) {
+            // use current filter to get list
+            return weightList.getEntriesForFilter(currentFilter);
+        } else {
+            // no filter: return list of all weights
+            return weightList;
         }
     }
 

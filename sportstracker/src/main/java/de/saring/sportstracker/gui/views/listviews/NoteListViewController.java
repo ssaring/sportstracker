@@ -22,7 +22,7 @@ import de.saring.util.data.IdObject;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 
 /**
- * Controller class of the Note List View, which displays all the user notes in a table view.
+ * Controller class of the Note List View, which displays all the user notes  (or a filtered list) in a table view.
  *
  * @author Stefan Saring
  */
@@ -102,6 +102,6 @@ public class NoteListViewController extends AbstractListViewController<Note> {
 
     @Override
     protected List<Note> getTableEntries() {
-        return getDocument().getNoteList().stream().collect(Collectors.toList());
+        return getDocument().getFilterableNoteList().stream().collect(Collectors.toList());
     }
 }

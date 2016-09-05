@@ -46,12 +46,12 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
     @Override
     public List<CalendarEntry> getCalendarEntriesForDate(final LocalDate date) {
 
-        final List<Note> notes = document.getNoteList().getEntriesInDateRange(date, date);
+        final List<Note> notes = document.getFilterableNoteList().getEntriesInDateRange(date, date);
         final List<CalendarEntry> calendarEntries = notes.stream() //
                 .map(note -> createCalendarEntryForNote(note)) //
                 .collect(Collectors.toList());
 
-        final List<Weight> weights = document.getWeightList().getEntriesInDateRange(date, date);
+        final List<Weight> weights = document.getFilterableWeightList().getEntriesInDateRange(date, date);
         calendarEntries.addAll(weights.stream() //
                 .map(weight -> createCalendarEntryForWeight(weight)) //
                 .collect(Collectors.toList()));
