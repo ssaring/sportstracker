@@ -17,13 +17,11 @@ import de.saring.util.data.IdDateObjectList;
  */
 public class EntryList<T extends Entry> extends IdDateObjectList<T> {
 
-    // TODO this filter method is not in use by the controllers yet, could replace ExerciseList.getExercisesForFilter()
-    // TODO add unit tests
-
     /**
      * This method searches through the whole entry list and returns an list of all notes which are fulfilling
      * all the specified filter criteria. The comment filter is optional. The filtering by a comment substring
-     * is only case sensitive in regualar expression mode.
+     * is only case sensitive in regular expression mode.<br/>
+     * The filter will be ignored when it is for another entry type than the entries stored in this list.
      *
      * @param filter the entry filter criteria
      * @return List of Entry objects which are valid for the specified filters
@@ -31,9 +29,14 @@ public class EntryList<T extends Entry> extends IdDateObjectList<T> {
      */
     public EntryList<T> getEntriesForFilter(EntryFilter filter) throws PatternSyntaxException {
 
-        // TODO must work for all entry types !!!
-        // ignore the filter when not set for notes
-        if (filter.getEntryType() != EntryFilter.EntryType.NOTE) {
+        if (size() == 0) {
+            return this;
+        }
+
+        // check the list type and filter type by using the first list entry
+        T firstEntry = getAt(0);
+        Class<? extends Entry> filterTypeClass = filter.getEntryType().getEntryClass();
+        if (!filterTypeClass.isInstance(firstEntry)) {
             return this;
         }
 

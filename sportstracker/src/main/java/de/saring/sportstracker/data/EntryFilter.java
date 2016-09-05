@@ -17,9 +17,25 @@ public final class EntryFilter {
      * Enumeration with all possible entry types to be filtered.
      */
     public enum EntryType {
-        EXERCISE,
-        NOTE,
-        WEIGHT
+
+        EXERCISE(Exercise.class),
+        NOTE(Note.class),
+        WEIGHT(Weight.class);
+
+        private Class<? extends Entry> entryClass;
+
+        private EntryType(Class<? extends Entry> entryClass) {
+            this.entryClass = entryClass;
+        }
+
+        /**
+         * Returns the class of the entries for this type.
+         *
+         * @return class
+         */
+        public Class<? extends Entry> getEntryClass() {
+            return entryClass;
+        }
     }
 
     /**
