@@ -392,17 +392,17 @@ public class XMLStorageTest {
         Note note1 = noteList.getByID(1);
         assertEquals(1, note1.getId());
         assertEquals(note1.getDateTime(), LocalDateTime.of(2009, 01, 02, 9, 10, 11));
-        assertEquals("Note 1", note1.getText());
+        assertEquals("Note 1", note1.getComment());
 
         Note note2 = noteList.getByID(2);
         assertEquals(2, note2.getId());
         assertEquals(note2.getDateTime(), LocalDateTime.of(2009, 01, 05, 13, 14, 15));
-        assertEquals("Note 2", note2.getText());
+        assertEquals("Note 2", note2.getComment());
 
         Note note3 = noteList.getByID(3);
         assertEquals(3, note3.getId());
         assertEquals(note3.getDateTime(), LocalDateTime.of(2009, 01, 07, 20, 21, 22));
-        assertEquals("Note 3", note3.getText());
+        assertEquals("Note 3", note3.getComment());
     }
 
     /**

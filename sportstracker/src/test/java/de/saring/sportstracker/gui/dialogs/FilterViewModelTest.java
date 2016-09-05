@@ -5,12 +5,12 @@ import static org.junit.Assert.assertNull;
 
 import java.time.LocalDate;
 
+import de.saring.sportstracker.data.EntryFilter;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 
@@ -21,20 +21,20 @@ import de.saring.sportstracker.data.SportType;
  */
 public class FilterViewModelTest {
 
-    private ExerciseFilter exerciseFilter;
+    private EntryFilter entryFilter;
 
     @Before
     public void setUp() {
-        exerciseFilter = new ExerciseFilter();
-        exerciseFilter.setDateStart(LocalDate.of(2014, 10, 1));
-        exerciseFilter.setDateEnd(LocalDate.of(2014, 10, 31));
-        exerciseFilter.setEntryType(ExerciseFilter.EntryType.EXERCISE);
-        exerciseFilter.setSportType(new SportType(100));
-        exerciseFilter.setSportSubType(new SportSubType(200));
-        exerciseFilter.setIntensity(Exercise.IntensityType.HIGH);
-        exerciseFilter.setEquipment(new Equipment(300));
-        exerciseFilter.setCommentSubString("Foo Bar");
-        exerciseFilter.setRegularExpressionMode(true);
+        entryFilter = new EntryFilter();
+        entryFilter.setDateStart(LocalDate.of(2014, 10, 1));
+        entryFilter.setDateEnd(LocalDate.of(2014, 10, 31));
+        entryFilter.setEntryType(EntryFilter.EntryType.EXERCISE);
+        entryFilter.setSportType(new SportType(100));
+        entryFilter.setSportSubType(new SportSubType(200));
+        entryFilter.setIntensity(Exercise.IntensityType.HIGH);
+        entryFilter.setEquipment(new Equipment(300));
+        entryFilter.setCommentSubString("Foo Bar");
+        entryFilter.setRegularExpressionMode(true);
     }
 
     /**
@@ -42,30 +42,30 @@ public class FilterViewModelTest {
      */
     @Test
     public void testGetExerciseFilter() {
-        FilterViewModel viewModel = new FilterViewModel(exerciseFilter);
+        FilterViewModel viewModel = new FilterViewModel(entryFilter);
 
         // test without modifications
-        ExerciseFilter unmodifiedFilter = viewModel.getExerciseFilter();
-        assertEquals(exerciseFilter.getDateStart(), unmodifiedFilter.getDateStart());
-        assertEquals(exerciseFilter.getDateEnd(), unmodifiedFilter.getDateEnd());
-        assertEquals(exerciseFilter.getEntryType(), unmodifiedFilter.getEntryType());
-        assertEquals(exerciseFilter.getSportType(), unmodifiedFilter.getSportType());
-        assertEquals(exerciseFilter.getSportSubType(), unmodifiedFilter.getSportSubType());
-        assertEquals(exerciseFilter.getIntensity(), unmodifiedFilter.getIntensity());
-        assertEquals(exerciseFilter.getEquipment(), unmodifiedFilter.getEquipment());
-        assertEquals(exerciseFilter.getCommentSubString(), unmodifiedFilter.getCommentSubString());
-        assertEquals(exerciseFilter.isRegularExpressionMode(), unmodifiedFilter.isRegularExpressionMode());
+        EntryFilter unmodifiedFilter = viewModel.getExerciseFilter();
+        assertEquals(entryFilter.getDateStart(), unmodifiedFilter.getDateStart());
+        assertEquals(entryFilter.getDateEnd(), unmodifiedFilter.getDateEnd());
+        assertEquals(entryFilter.getEntryType(), unmodifiedFilter.getEntryType());
+        assertEquals(entryFilter.getSportType(), unmodifiedFilter.getSportType());
+        assertEquals(entryFilter.getSportSubType(), unmodifiedFilter.getSportSubType());
+        assertEquals(entryFilter.getIntensity(), unmodifiedFilter.getIntensity());
+        assertEquals(entryFilter.getEquipment(), unmodifiedFilter.getEquipment());
+        assertEquals(entryFilter.getCommentSubString(), unmodifiedFilter.getCommentSubString());
+        assertEquals(entryFilter.isRegularExpressionMode(), unmodifiedFilter.isRegularExpressionMode());
 
         // test after modifications
         viewModel.dateEnd.set(LocalDate.of(2014, 12, 31));
-        viewModel.entryType.set(ExerciseFilter.EntryType.WEIGHT);
+        viewModel.entryType.set(EntryFilter.EntryType.WEIGHT);
         viewModel.sportSubtype.set(new SportSubType(201));
         viewModel.intensity.set(new FilterViewModel.IntensityItem(null));
         viewModel.commentSubString.set("   Bar Foo    ");
 
-        ExerciseFilter modifiedFilter = viewModel.getExerciseFilter();
+        EntryFilter modifiedFilter = viewModel.getExerciseFilter();
         assertEquals(LocalDate.of(2014, 12, 31), modifiedFilter.getDateEnd());
-        assertEquals(ExerciseFilter.EntryType.WEIGHT, modifiedFilter.getEntryType());
+        assertEquals(EntryFilter.EntryType.WEIGHT, modifiedFilter.getEntryType());
         assertEquals(201, modifiedFilter.getSportSubType().getId());
         assertNull(modifiedFilter.getIntensity());
         assertEquals("Bar Foo", modifiedFilter.getCommentSubString());

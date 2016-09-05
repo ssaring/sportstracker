@@ -61,7 +61,7 @@ public class NoteDialogController extends AbstractDialogController {
     public void show(final Window parent, final Note note) {
         this.noteViewModel = new NoteViewModel(note);
 
-        final String dlgTitleKey = note.getText() == null ? "st.dlg.note.title.add" : "st.dlg.note.title";
+        final String dlgTitleKey = note.getComment() == null ? "st.dlg.note.title.add" : "st.dlg.note.title";
         final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
         showEditDialog("/fxml/dialogs/NoteDialog.fxml", parent, dlgTitle);
@@ -78,7 +78,7 @@ public class NoteDialogController extends AbstractDialogController {
         timeTextFormatter.valueProperty().bindBidirectional(noteViewModel.time);
         tfTime.setTextFormatter(timeTextFormatter);
 
-        taText.textProperty().bindBidirectional(noteViewModel.text);
+        taText.textProperty().bindBidirectional(noteViewModel.comment);
 
         // setup validation of the UI controls
         // => due to a ControlsFX bug the validation setup must be executed after the dialog has been shown

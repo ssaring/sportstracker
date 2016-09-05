@@ -1,10 +1,5 @@
 package de.saring.sportstracker.data;
 
-import de.saring.util.data.IdDateObjectList;
-
-import java.time.LocalDate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -14,7 +9,7 @@ import java.util.regex.PatternSyntaxException;
  * @author Stefan Saring
  * @version 1.0
  */
-public final class ExerciseList extends IdDateObjectList<Exercise> {
+public final class ExerciseList extends EntryList<Exercise> {
 
     /**
      * This method updates the sport type, the subtype and the equipment objects
@@ -59,24 +54,23 @@ public final class ExerciseList extends IdDateObjectList<Exercise> {
      * @throws PatternSyntaxException thrown on parsing problems of the regular
      * expression for comment searching
      */
-    public IdDateObjectList<Exercise> getExercisesForFilter(ExerciseFilter filter) throws PatternSyntaxException {
+    public EntryList<Exercise> getExercisesForFilter(EntryFilter filter) throws PatternSyntaxException {
 
         // ignore the filter when not set for exercises
-        if (filter.getEntryType() != ExerciseFilter.EntryType.EXERCISE) {
+        if (filter.getEntryType() != EntryFilter.EntryType.EXERCISE) {
             return this;
         }
 
-        final IdDateObjectList<Exercise> foundExercises = new IdDateObjectList<>();
+        final EntryList<Exercise> foundExercises = new EntryList<>();
         stream().filter(exercise -> filterExercise(exercise, filter))
                 .forEach(foundExercises::set);
         return foundExercises;
     }
 
-    private boolean filterExercise(Exercise exercise, ExerciseFilter filter) {
+    protected boolean filterExercise(Exercise exercise, EntryFilter filter) {
 
-        // make sure that the exercise is in the specified time period
-        LocalDate exerciseDate = exercise.getDateTime().toLocalDate();
-        if (filter.getDateStart().isAfter(exerciseDate) || filter.getDateEnd().isBefore(exerciseDate)) {
+        // entry datetime and comment are filtered by the base class
+        if (!super.filterEntry(exercise, filter)) {
             return false;
         }
 
@@ -100,42 +94,7 @@ public final class ExerciseList extends IdDateObjectList<Exercise> {
             return false;
         }
 
-        // do we need to search in comments ?
-        if (filter.getCommentSubString() != null && !filter.getCommentSubString().isEmpty()) {
-            if (!filterExerciseByComment(exercise, filter)) {
-                return false;
-            }
-        }
-
-        // all filter criterias are fulfilled
-        return true;
-    }
-
-    private boolean filterExerciseByComment(Exercise exercise, ExerciseFilter filter) {
-
-        // ignore this exercise, when it has no comment
-        if ((exercise.getComment() == null) || (exercise.getComment().length() == 0)) {
-            return false;
-        }
-
-        String strCommentSubString = filter.getCommentSubString().trim();
-
-        if (!filter.isRegularExpressionMode()) {
-            // normal searching for substring (is not case sensitive !)
-            strCommentSubString = strCommentSubString.toLowerCase();
-            String strExerciseComment = exercise.getComment().toLowerCase();
-            if (!strExerciseComment.contains(strCommentSubString)) {
-                return false;
-            }
-        } else {
-            // regular expression searching for substring (is case sensitive !)
-            Pattern ptnCommentSubString = Pattern.compile(strCommentSubString);
-            Matcher matcher = ptnCommentSubString.matcher(exercise.getComment());
-            if (!matcher.find()) {
-                return false;
-            }
-        }
-
+        // all filter criteria are fulfilled
         return true;
     }
 }

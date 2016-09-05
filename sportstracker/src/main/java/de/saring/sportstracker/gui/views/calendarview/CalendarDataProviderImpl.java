@@ -94,9 +94,9 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
         final StringBuilder sbText = new StringBuilder();
         sbText.append(context.getResources().getString("st.calview.note_short")) //
                 .append(" ") //
-                .append(StringUtils.getFirstLineOfText(note.getText()));
+                .append(StringUtils.getFirstLineOfText(note.getComment()));
 
-        return new CalendarEntry(note, sbText.toString(), note.getText(), null);
+        return new CalendarEntry(note, sbText.toString(), note.getComment(), null);
     }
 
     private CalendarEntry createCalendarEntryForWeight(final Weight weight) {

@@ -146,7 +146,7 @@ public class ExerciseListTest {
     public void testGetExercisesForFilter() {
 
         // all 3 exercises should be found
-        ExerciseFilter filter = new ExerciseFilter();
+        EntryFilter filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 2, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(null);
@@ -159,7 +159,7 @@ public class ExerciseListTest {
         assertEquals(3, exeList.size());
 
         // no exercises should be found (no exercises in time span)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 04, 30));
         filter.setSportType(null);
@@ -172,10 +172,10 @@ public class ExerciseListTest {
         assertEquals(0, exeList.size());
 
         // all exercises should be found (no exercises in time span, but filter is set to type NOTE)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 04, 30));
-        filter.setEntryType(ExerciseFilter.EntryType.NOTE);
+        filter.setEntryType(EntryFilter.EntryType.NOTE);
         filter.setSportType(null);
         filter.setSportSubType(null);
         filter.setIntensity(null);
@@ -188,7 +188,7 @@ public class ExerciseListTest {
         // no exercises should be found (sport type does not exists)
         SportType sportTypeUnknown = new SportType(4);
 
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(sportTypeUnknown);
@@ -203,7 +203,7 @@ public class ExerciseListTest {
         // no exercises should be found (sport subtype does not exists)
         SportSubType sportSubTypeUnknown = new SportSubType(7);
 
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(sportTypeList.getByID(1));
@@ -216,7 +216,7 @@ public class ExerciseListTest {
         assertEquals(0, exeList.size());
 
         // no exercises should be found (no exercise with intensity NORMAL)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(null);
@@ -229,7 +229,7 @@ public class ExerciseListTest {
         assertEquals(0, exeList.size());
 
         // no exercises should be found (in specified time span and with intensity LOW and sport type ID 1)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 7, 31));
         filter.setSportType(sportTypeList.getByID(1));
@@ -242,7 +242,7 @@ public class ExerciseListTest {
         assertEquals(0, exeList.size());
 
         // 2 exercises should be found (in the specified time span)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 9, 2));
         filter.setDateEnd(LocalDate.of(2003, 9, 6));
         filter.setSportType(null);
@@ -255,7 +255,7 @@ public class ExerciseListTest {
         assertEquals(2, exeList.size());
 
         // 2 exercises should be found (with sport type ID 1)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(sportTypeList.getByID(1));
@@ -268,7 +268,7 @@ public class ExerciseListTest {
         assertEquals(2, exeList.size());
 
         // 1 exercises should be found (with sport type ID 1 and sport subtype ID 2)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(sportTypeList.getByID(1));
@@ -281,7 +281,7 @@ public class ExerciseListTest {
         assertEquals(1, exeList.size());
 
         // 2 exercises should be found (with intensity LOW)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(null);
@@ -294,7 +294,7 @@ public class ExerciseListTest {
         assertEquals(2, exeList.size());
 
         // 1 exercises should be found (with intensity LOW and sport type ID 1)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(sportTypeList.getByID(1));
@@ -307,7 +307,7 @@ public class ExerciseListTest {
         assertEquals(1, exeList.size());
 
         // 1 exercise (ID 3) should be found for equipment with ID 22
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(sportTypeList.getByID(2));
@@ -322,7 +322,7 @@ public class ExerciseListTest {
         assertEquals(3, exeList.getAt(0).getId());
 
         // no exercise should be found for equipment with ID 21
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(sportTypeList.getByID(2));
@@ -336,7 +336,7 @@ public class ExerciseListTest {
         assertEquals(0, exeList.size());
 
         // 2 exercises should be found (with comment substring "EXERCISE" and sport type ID 1)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(sportTypeList.getByID(1));
@@ -349,7 +349,7 @@ public class ExerciseListTest {
         assertEquals(2, exeList.size());
 
         // 1 exercise should be found (with comment substring "CISE 2" and sport type ID 1)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(sportTypeList.getByID(1));
@@ -362,7 +362,7 @@ public class ExerciseListTest {
         assertEquals(1, exeList.size());
 
         // 0 exercises should be found (with comment substring "NotInThere" and sport type ID 1)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(sportTypeList.getByID(1));
@@ -375,7 +375,7 @@ public class ExerciseListTest {
         assertEquals(0, exeList.size());
 
         // 2 exercises should be found (with comment regular expression substring "cise [0-2]")
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(null);
@@ -388,7 +388,7 @@ public class ExerciseListTest {
         assertEquals(2, exeList.size());
 
         // 3 exercises should be found (with comment regular expression substring for 4 small characters)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(null);
@@ -401,7 +401,7 @@ public class ExerciseListTest {
         assertEquals(3, exeList.size());
 
         // 0 exercises should be found (with comment regular expression substring for 8 small characters)
-        filter = new ExerciseFilter();
+        filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
         filter.setDateEnd(LocalDate.of(2003, 12, 31));
         filter.setSportType(null);
@@ -415,7 +415,7 @@ public class ExerciseListTest {
 
         // use of regular expression "cise [0-2" with syntax error => ArgumentException needs to be thrown
         try {
-            filter = new ExerciseFilter();
+            filter = new EntryFilter();
             filter.setDateStart(LocalDate.of(2003, 1, 1));
             filter.setDateEnd(LocalDate.of(2003, 12, 31));
             filter.setSportType(null);

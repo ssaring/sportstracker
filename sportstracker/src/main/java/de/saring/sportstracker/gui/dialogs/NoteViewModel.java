@@ -22,7 +22,7 @@ public class NoteViewModel {
     private final int id;
     public final ObjectProperty<LocalDate> date;
     public final ObjectProperty<LocalTime> time;
-    public final StringProperty text;
+    public final StringProperty comment;
 
     /**
      * Creates the NoteViewModel with JavaFX properties for the passed Note object.
@@ -33,7 +33,7 @@ public class NoteViewModel {
         this.id = note.getId();
         this.date = new SimpleObjectProperty(note.getDateTime().toLocalDate());
         this.time = new SimpleObjectProperty(note.getDateTime().toLocalTime());
-        this.text = new SimpleStringProperty(note.getText());
+        this.comment = new SimpleStringProperty(note.getComment());
     }
 
     /**
@@ -44,7 +44,7 @@ public class NoteViewModel {
     public Note getNote() {
         final Note note = new Note(id);
         note.setDateTime(LocalDateTime.of(date.get(), time.get()));
-        note.setText(text.getValue().trim());
+        note.setComment(comment.getValue().trim());
         return note;
     }
 }

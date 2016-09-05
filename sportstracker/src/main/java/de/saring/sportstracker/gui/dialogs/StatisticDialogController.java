@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui.dialogs;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
+import de.saring.sportstracker.data.EntryFilter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,7 +18,6 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
 import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
@@ -48,8 +48,8 @@ public class StatisticDialogController extends AbstractDialogController {
     @FXML
     private Label laCommentValue;
 
-    /** The exercise filter used for statistic calculation. */
-    private ExerciseFilter statisticFilter;
+    /** The entry filter used for statistic calculation. */
+    private EntryFilter statisticFilter;
 
 
     /**

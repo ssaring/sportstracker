@@ -6,13 +6,12 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 
 /**
- * This class defines the criterias for filtering the exercise list (e.g. for
- * creation of statistics).
+ * This class defines the criteria for filtering the entry list (e.g. for creation of statistics).
+ * It supports the entry types exercise, note and weight.
  *
  * @author Stefan Saring
- * @version 1.1
  */
-public final class ExerciseFilter {
+public final class EntryFilter {
 
     /**
      * Enumeration with all possible entry types to be filtered.
@@ -149,10 +148,10 @@ public final class ExerciseFilter {
      *
      * @return the default filter object
      */
-    public static ExerciseFilter createDefaultExerciseFilter() {
+    public static EntryFilter createDefaultExerciseFilter() {
         LocalDate now = LocalDate.now();
 
-        ExerciseFilter filter = new ExerciseFilter();
+        EntryFilter filter = new EntryFilter();
         filter.dateStart = now.with(TemporalAdjusters.firstDayOfMonth());
         filter.dateEnd = now.with(TemporalAdjusters.lastDayOfMonth());
         filter.entryType = EntryType.EXERCISE;
@@ -196,7 +195,7 @@ public final class ExerciseFilter {
     public String toString() {
 
         StringBuilder sBuilder = new StringBuilder();
-        sBuilder.append(ExerciseFilter.class.getName()).append(":\n");
+        sBuilder.append(EntryFilter.class.getName()).append(":\n");
         sBuilder.append(" [dateStart=").append(this.dateStart).append("\n");
         sBuilder.append("  dateEnd=").append(this.dateEnd).append("\n");
         sBuilder.append("  entryType=").append(this.entryType).append("\n");

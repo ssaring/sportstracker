@@ -5,7 +5,7 @@ import java.util.List;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
+import de.saring.sportstracker.data.EntryFilter;
 import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
@@ -42,9 +42,9 @@ public interface STDocument extends IdObjectListChangeListener {
 
     void setFilterEnabled(boolean filterEnabled);
 
-    ExerciseFilter getCurrentFilter();
+    EntryFilter getCurrentFilter();
 
-    void setCurrentFilter(ExerciseFilter currentFilter);
+    void setCurrentFilter(EntryFilter currentFilter);
 
     String getDataDirectory();
 

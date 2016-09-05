@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.dialogs;
 
 import java.time.LocalDate;
 
+import de.saring.sportstracker.data.EntryFilter;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -11,14 +12,13 @@ import javafx.beans.property.StringProperty;
 
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.util.StringUtils;
 import de.saring.util.data.Nameable;
 
 /**
- * This ViewModel class provides JavaFX properties of all ExerciseFilter attributes to be edited in the
+ * This ViewModel class provides JavaFX properties of all EntryFilter attributes to be edited in the
  * Filter dialog. So they can be bound to the appropriate dialog view controls.
  *
  * @author Stefan Saring
@@ -27,7 +27,7 @@ public class FilterViewModel {
 
     public final ObjectProperty<LocalDate> dateStart;
     public final ObjectProperty<LocalDate> dateEnd;
-    public final ObjectProperty<ExerciseFilter.EntryType> entryType;
+    public final ObjectProperty<EntryFilter.EntryType> entryType;
     public final ObjectProperty<SportType> sportType;
     public final ObjectProperty<SportSubType> sportSubtype;
     public final ObjectProperty<IntensityItem> intensity;
@@ -36,40 +36,40 @@ public class FilterViewModel {
     public final BooleanProperty regularExpressionMode;
 
     /**
-     * Creates the FilterViewModel with JavaFX properties for the passed ExerciseFilter object.
+     * Creates the FilterViewModel with JavaFX properties for the passed EntryFilter object.
      *
-     * @param exerciseFilter filter to be edited
+     * @param entryFilter filter to be edited
      */
-    public FilterViewModel(final ExerciseFilter exerciseFilter) {
-        dateStart = new SimpleObjectProperty<>(exerciseFilter.getDateStart());
-        dateEnd = new SimpleObjectProperty<>(exerciseFilter.getDateEnd());
-        entryType = new SimpleObjectProperty<>(exerciseFilter.getEntryType());
-        sportType = new SimpleObjectProperty<>(exerciseFilter.getSportType());
-        sportSubtype = new SimpleObjectProperty<>(exerciseFilter.getSportSubType());
-        intensity = new SimpleObjectProperty<>(new IntensityItem(exerciseFilter.getIntensity()));
-        equipment = new SimpleObjectProperty<>(exerciseFilter.getEquipment());
+    public FilterViewModel(final EntryFilter entryFilter) {
+        dateStart = new SimpleObjectProperty<>(entryFilter.getDateStart());
+        dateEnd = new SimpleObjectProperty<>(entryFilter.getDateEnd());
+        entryType = new SimpleObjectProperty<>(entryFilter.getEntryType());
+        sportType = new SimpleObjectProperty<>(entryFilter.getSportType());
+        sportSubtype = new SimpleObjectProperty<>(entryFilter.getSportSubType());
+        intensity = new SimpleObjectProperty<>(new IntensityItem(entryFilter.getIntensity()));
+        equipment = new SimpleObjectProperty<>(entryFilter.getEquipment());
         commentSubString = new SimpleStringProperty(StringUtils.getTextOrEmptyString(
-                exerciseFilter.getCommentSubString()));
-        regularExpressionMode = new SimpleBooleanProperty(exerciseFilter.isRegularExpressionMode());
+                entryFilter.getCommentSubString()));
+        regularExpressionMode = new SimpleBooleanProperty(entryFilter.isRegularExpressionMode());
     }
 
     /**
-     * Creates a new ExerciseFilter domain object from the edited JavaFX properties.
+     * Creates a new EntryFilter domain object from the edited JavaFX properties.
      *
-     * @return ExerciseFilter
+     * @return EntryFilter
      */
-    public ExerciseFilter getExerciseFilter() {
-        final ExerciseFilter exerciseFilter = new ExerciseFilter();
-        exerciseFilter.setDateStart(dateStart.get());
-        exerciseFilter.setDateEnd(dateEnd.get());
-        exerciseFilter.setEntryType(entryType.get());
-        exerciseFilter.setSportType(sportType.get());
-        exerciseFilter.setSportSubType(sportSubtype.get());
-        exerciseFilter.setIntensity(intensity.get().intensityType);
-        exerciseFilter.setEquipment(equipment.get());
-        exerciseFilter.setCommentSubString(StringUtils.getTrimmedTextOrNull(commentSubString.get()));
-        exerciseFilter.setRegularExpressionMode(regularExpressionMode.get());
-        return exerciseFilter;
+    public EntryFilter getExerciseFilter() {
+        final EntryFilter entryFilter = new EntryFilter();
+        entryFilter.setDateStart(dateStart.get());
+        entryFilter.setDateEnd(dateEnd.get());
+        entryFilter.setEntryType(entryType.get());
+        entryFilter.setSportType(sportType.get());
+        entryFilter.setSportSubType(sportSubtype.get());
+        entryFilter.setIntensity(intensity.get().intensityType);
+        entryFilter.setEquipment(equipment.get());
+        entryFilter.setCommentSubString(StringUtils.getTrimmedTextOrNull(commentSubString.get()));
+        entryFilter.setRegularExpressionMode(regularExpressionMode.get());
+        return entryFilter;
     }
 
     /**

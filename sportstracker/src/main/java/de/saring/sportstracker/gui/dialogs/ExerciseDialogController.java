@@ -240,7 +240,7 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         dpDate.valueProperty().bindBidirectional(exerciseViewModel.date);
 
-        // use text formatter for time values => makes sure that the value is also valid
+        // use comment formatter for time values => makes sure that the value is also valid
         final TextFormatter<LocalTime> timeTextFormatter = new TextFormatter<>(new TimeToStringConverter());
         timeTextFormatter.valueProperty().bindBidirectional(exerciseViewModel.time);
         tfTime.setTextFormatter(timeTextFormatter);

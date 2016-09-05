@@ -14,8 +14,8 @@ import javax.inject.Singleton;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
 import de.saring.sportstracker.core.STOptions;
+import de.saring.sportstracker.data.EntryFilter;
 import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.ExerciseFilter;
 import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
@@ -90,7 +90,7 @@ public class STDocumentImpl implements STDocument {
     /**
      * The current exercise filter in the view.
      */
-    private ExerciseFilter currentFilter;
+    private EntryFilter currentFilter;
 
     /**
      * Standard c'tor.
@@ -118,7 +118,7 @@ public class STDocumentImpl implements STDocument {
 
         // create default filter for current month, but it is disabled
         filterEnabled = false;
-        currentFilter = ExerciseFilter.createDefaultExerciseFilter();
+        currentFilter = EntryFilter.createDefaultExerciseFilter();
     }
 
     @Override
@@ -162,12 +162,12 @@ public class STDocumentImpl implements STDocument {
     }
 
     @Override
-    public ExerciseFilter getCurrentFilter() {
+    public EntryFilter getCurrentFilter() {
         return currentFilter;
     }
 
     @Override
-    public void setCurrentFilter(ExerciseFilter currentFilter) {
+    public void setCurrentFilter(EntryFilter currentFilter) {
         this.currentFilter = currentFilter;
     }
 

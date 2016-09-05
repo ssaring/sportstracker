@@ -12,7 +12,7 @@
         <TableView fx:id="tvNotes" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="tcDate" prefWidth="90.0" text="%st.notelistview.date"/>
-                <TableColumn fx:id="tcText" prefWidth="600.0" text="%st.notelistview.text"/>
+                <TableColumn fx:id="tcComment" prefWidth="600.0" text="%st.notelistview.text"/>
             </columns>
             <placeholder>
                 <Label text="%st.notelistview.empty"/>

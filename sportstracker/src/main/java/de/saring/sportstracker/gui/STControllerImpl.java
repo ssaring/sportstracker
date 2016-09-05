@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.sportstracker.data.Entry;
+import de.saring.sportstracker.data.EntryList;
 import de.saring.sportstracker.storage.SQLiteExporter;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -51,8 +53,6 @@ import de.saring.sportstracker.gui.views.listviews.WeightListViewController;
 import de.saring.util.Date310Utils;
 import de.saring.util.StringUtils;
 import de.saring.util.SystemUtils;
-import de.saring.util.data.IdDateObject;
-import de.saring.util.data.IdDateObjectList;
 import de.saring.util.gui.javafx.FxmlLoader;
 import de.saring.util.gui.mac.PlatformUtils;
 import de.saring.util.unitcalc.FormatUtils;
@@ -353,7 +353,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     @Override
     public void onDeleteEntry(final ActionEvent event) {
         int[] selectedEntryIDs = null;
-        IdDateObjectList<? extends IdDateObject> entryList = null;
+        EntryList<? extends Entry> entryList = null;
 
         // get selected entry IDs and the type of their list
         if (currentViewController.getSelectedExerciseCount() > 0) {

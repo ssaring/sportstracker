@@ -35,7 +35,7 @@ public class NoteListViewController extends AbstractListViewController<Note> {
     @FXML
     private TableColumn<Note, LocalDateTime> tcDate;
     @FXML
-    private TableColumn<Note, String> tcText;
+    private TableColumn<Note, String> tcComment;
 
     /**
      * Standard c'tor for dependency injection.
@@ -86,8 +86,8 @@ public class NoteListViewController extends AbstractListViewController<Note> {
 
         // setup factories for providing cell values
         tcDate.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-        tcText.setCellValueFactory(cellData -> new SimpleStringProperty( //
-                StringUtils.getFirstLineOfText(cellData.getValue().getText())));
+        tcComment.setCellValueFactory(cellData -> new SimpleStringProperty( //
+                StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 
         // setup custom factories for displaying cells
         tcDate.setCellFactory(new LocalDateCellFactory<>());
