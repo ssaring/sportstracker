@@ -23,7 +23,7 @@
         <dependency>
             <groupId>org.jxmapviewer</groupId>
             <artifactId>jxmapviewer2</artifactId>
-            <version>2.0</version>
+            <version>2.2</version>
         </dependency>
         <dependency>
             <groupId>com.garmin.fit</groupId>

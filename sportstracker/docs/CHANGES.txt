@@ -15,6 +15,7 @@ v7.3.0:
   - Pull Request #9: Improved support for Garmin Fenix (2) exercise files, the
     missing max speed, avg and max heartrate are now calculated
     (contributed by Alexander Rampp <alex@axgr.de>)
+  - updated map viewer component JXMapViewer2 to version 2.2 (bugfixes)
 
 v7.2.0:
  SportsTracker changes:
