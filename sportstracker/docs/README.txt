@@ -410,13 +410,13 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - JFreeChart 1.0.19 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
-  - JDOM 2.0.5 (http://www.jdom.org)
+  - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
   - JXMapViewer2 2.2 (based on of SwingX-WS)
       URL: https://github.com/msteiger/jxmapviewer2
       Includes: commons-logging-1.1.1
       License: Lesser General Public License (LGPL)
-  - ControlsFX 8.40.10 (http://controlsfx.org/)
+  - ControlsFX 8.40.11 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - commons-cli 1.2 (http://commons.apache.org/cli/)
       License: Apache License v2.0
