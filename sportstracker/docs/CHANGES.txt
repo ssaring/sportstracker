@@ -11,10 +11,15 @@ v7.3.0:
     (for advanced users with SQL skills, see README.txt for documentation)
   - added generic filter for all entry types, note and weight entries are now
     filterable too (user can select the filter type in the filter dialog)
+  - updated ControlsFX to version 8.40.11 (fixes JDK compatibility issues)
+  - updated JDOM to version 2.0.6 (bugfixes)
+  - updated JUnit to version 4.12
+  - updated Mockito to version 1.10.19
  ExerciseViewer changes:
   - Pull Request #9: Improved support for Garmin Fenix (2) exercise files, the
     missing max speed, avg and max heartrate are now calculated
     (contributed by Alexander Rampp <alex@axgr.de>)
+  - updated map viewer component JXMapViewer2 to version 2.2 (bugfixes)
 
 v7.2.0:
  SportsTracker changes:

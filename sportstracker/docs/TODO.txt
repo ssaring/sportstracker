@@ -1,10 +1,6 @@
 SportsTracker-TODO
 ==================
 
-- Update to ControlsFX 8.40.11
-  - fixes compatibility issues with JDK 8 u102
-  - has the validation bug been fixed?
-
 - Use of JavaFX-based GMapsFX instead of Swing-based JXMapViewer?
   - Homepage: http://rterp.github.io/GMapsFX/
   - Test notes:

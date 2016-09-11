@@ -410,21 +410,21 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - JFreeChart 1.0.19 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
-  - JDOM 2.0.5 (http://www.jdom.org)
+  - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
-  - JXMapViewer2 2.0 (based on of SwingX-WS)
+  - JXMapViewer2 2.2 (based on of SwingX-WS)
       URL: https://github.com/msteiger/jxmapviewer2
       Includes: commons-logging-1.1.1
       License: Lesser General Public License (LGPL)
-  - ControlsFX 8.40.10 (http://controlsfx.org/)
+  - ControlsFX 8.40.11 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - commons-cli 1.2 (http://commons.apache.org/cli/)
       License: Apache License v2.0
   - sqlite-jdbc 3.8.11.2 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
-  - JUnit 4.11 (http://www.junit.org)
+  - JUnit 4.12 (http://www.junit.org)
       License: Common Public License v1.0
-  - Mockito 1.9.5 (http://code.google.com/p/mockito/)
+  - Mockito 1.10.19 (http://code.google.com/p/mockito/)
       License: MIT License
   - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 16.50
       URL: http://www.thisisant.com/pages/products/fit-sdk
