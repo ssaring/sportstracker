@@ -416,7 +416,7 @@ The SportsTracker project uses the following libraries:
       URL: https://github.com/msteiger/jxmapviewer2
       Includes: commons-logging-1.1.1
       License: Lesser General Public License (LGPL)
-  - ControlsFX 8.40.11 (http://controlsfx.org/)
+  - ControlsFX 8.40.12 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - commons-cli 1.2 (http://commons.apache.org/cli/)
       License: Apache License v2.0

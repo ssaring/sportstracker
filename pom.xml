@@ -107,7 +107,7 @@
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>8.40.11</version>
+            <version>8.40.12</version>
         </dependency>
         <!-- Common test dependencies -->
         <dependency>
