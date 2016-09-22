@@ -115,8 +115,8 @@ If you want to download exercise files from your heartrate monitor you might
 need one of the download tools listed above.
 
 The application was tested on GNU/Linux (e.g. Ubuntu 14.04), Windows (7,
-8.1) and Mac OS X (10.9 - 10.10), although it should work on all systems with
-the required Java Runtime Environment.
+8, 10), Mac OS X (10.9 - 10.11) and FreeBSD (TrueOS with OpenJDK), although it
+should work on all systems with the required Java Runtime Environment.
 
 
 Installation and Start
