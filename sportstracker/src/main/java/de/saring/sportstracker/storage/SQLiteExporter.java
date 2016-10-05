@@ -1,7 +1,8 @@
 package de.saring.sportstracker.storage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,8 +11,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Singleton;
 
@@ -99,10 +98,17 @@ public class SQLiteExporter {
 
     private String readDatabaseSchema() throws STException {
 
-        try {
-            final List<String> lines = Files.readAllLines(Paths.get(this.getClass().getResource(SCHEMA_FILE).toURI()));
-            return lines.stream().collect(Collectors.joining("\n"));
-        } catch (IOException | URISyntaxException e) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                this.getClass().getResourceAsStream(SCHEMA_FILE)))) {
+
+            StringBuffer fileContent = new StringBuffer();
+            String line;
+            while((line = reader.readLine()) != null) {
+                fileContent.append(line).append('\n');
+            }
+
+            return fileContent.toString();
+        } catch (IOException e) {
             throw new STException(STExceptionID.SQLITE_EXPORT, //
                     "Failed to read the database schema file '" + SCHEMA_FILE + "'!", e);
         }
