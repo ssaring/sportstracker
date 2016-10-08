@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+v7.3.1:
+ SportsTracker changes:
+
 v7.3.0:
  SportsTracker changes:
   - removed invalid version numbers from french and spanish translations
