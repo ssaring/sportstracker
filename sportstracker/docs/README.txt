@@ -313,7 +313,7 @@ SQLite export
 Advances users with SQL skills can export all SportsTracker application data to
 a SQLite v3 database. This provides much more capabilities for data analysis,
 statistics or migration.
-On each export a new database will be created in the current directory, an
+On each export a new database will be created in the users home directory, an
 existing database will be overwritten. The database schema is defined in the
 source file 'st-export.sql'.
 

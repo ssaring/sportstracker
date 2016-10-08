@@ -37,7 +37,7 @@ import de.saring.util.gui.javafx.ColorUtils;
 public class SQLiteExporter {
 
     private static final String SCHEMA_FILE = "/sql/st-export.sql";
-    private static final String DATABASE_FILE = "st-export.sqlite";
+    private static final String DATABASE_FILE = System.getProperty("user.home") + "/st-export.sqlite";
 
     private STDocument document;
 
