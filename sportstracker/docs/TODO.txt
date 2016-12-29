@@ -15,6 +15,10 @@ SportsTracker-TODO
 - Alternative: Use of JavaFX-based Gluon Maps®
   - http://gluonhq.com/announcing-gluon-maps/ + http://gluonhq.com/open-source/maps/
   -> does not provide zoom and move controls (yet)
+- Alternative 2: Use of JavaFX WebView and display a OpenStreetMap-specific or generic web component
+  - OSM-Specific and very simple: Leaflet, see http://leafletjs.com/
+    (or http://leafletjs.com/examples/quick-start/ and https://wiki.openstreetmap.org/wiki/Leaflet )
+  - Generic: OpenLayers, see http://openlayers.org/ or http://wiki.openstreetmap.org/wiki/OpenLayers
 
 JavaFX Migration:
 - BUG with JDK8u66+: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:
