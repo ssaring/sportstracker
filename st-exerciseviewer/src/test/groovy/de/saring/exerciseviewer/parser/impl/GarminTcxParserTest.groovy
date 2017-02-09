@@ -219,4 +219,82 @@ class GarminTcxParserTest extends GroovyTestCase {
         assertEquals((short) 0, exercise.sampleList[1253].cadence)
         assertEquals(18990, exercise.sampleList[1253].distance)
     }
+
+    /**
+     * This test parses a TCX file from a Garmin Forerunner 405 (Running, 6 laps, with heartrate and run cadence data).
+     */
+    void testForerunner405_Running_Heartrate_RunCadence() {
+
+        def exercise = parser.parseExercise('misc/testdata/garmin-tcx/Forerunner405-Running_CadenceSensor.tcx')
+        assertEquals(EVExercise.ExerciseFileType.GARMIN_TCX, exercise.fileType)
+        assertEquals('Garmin Forerunner 405 Software Version 2.80', exercise.deviceName)
+        assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
+        assertFalse(exercise.recordingMode.altitude)
+        assertTrue(exercise.recordingMode.speed)
+        assertTrue(exercise.recordingMode.cadence)
+        assertFalse(exercise.recordingMode.location)
+        assertEquals(LocalDateTime.of(2017, 1, 16, 19, 02, 0), exercise.dateTime);
+        assertEquals(1542 * 10, exercise.duration)
+
+        // heart rates
+        assertEquals((short) 173, exercise.heartRateAVG)
+        assertEquals((short) 191, exercise.heartRateMax)
+        assertEquals(446, exercise.energy)
+
+        // heartrate limits not available in TCX files
+        assertNull(exercise.heartRateLimits)
+
+        // distance & speed & odometer
+        assertEquals(5599, exercise.speed.distance)
+        assertEquals(16.5737d, exercise.speed.speedMax, 0.001d)
+        assertEquals(13.0716d, exercise.speed.speedAVG, 0.001d)
+
+        // altitude
+        assertNull(exercise.altitude)
+
+        // (run) cadence
+        assertEquals((short) 80, exercise.cadence.cadenceAVG)
+        assertEquals((short) 90, exercise.cadence.cadenceMax)
+
+        // lap data (check the first only)
+        assertEquals(6, exercise.lapList.size())
+
+        assertEquals((4 * 60 + 56) * 10, exercise.lapList[0].timeSplit)
+        assertEquals((short) 164, exercise.lapList[0].heartRateSplit)
+        assertEquals((short) 150, exercise.lapList[0].heartRateAVG)
+        assertEquals((short) 164, exercise.lapList[0].heartRateMax)
+        assertEquals(1000, exercise.lapList[0].speed.distance)
+        assertEquals(12.1622d, exercise.lapList[0].speed.speedAVG, 0.001d)
+        assertEquals(12.3965d, exercise.lapList[0].speed.speedEnd, 0.001d)
+        assertNull(exercise.lapList[0].altitude)
+        assertEquals((short) 80, exercise.lapList[0].speed.cadence)
+        assertNull(exercise.lapList[0].positionSplit)
+
+        // sample data
+        assertEquals(270, exercise.sampleList.size())
+
+        assertEquals(1 * 1000L, exercise.sampleList[0].timestamp)
+        assertEquals((short) 94, exercise.sampleList[0].heartRate)
+        assertEquals(0, exercise.sampleList[0].speed)
+        assertEquals((short) 50, exercise.sampleList[0].cadence)
+        assertEquals(2, exercise.sampleList[0].distance)
+        assertEquals(0, exercise.sampleList[0].altitude)
+        assertNull(exercise.sampleList[0].position)
+
+        assertEquals(31 * 1000L, exercise.sampleList[10].timestamp)
+        assertEquals((short) 125, exercise.sampleList[10].heartRate)
+        assertEquals(11.5263d, exercise.sampleList[10].speed, 0.001d)
+        assertEquals((short) 90, exercise.sampleList[10].cadence)
+        assertEquals(92, exercise.sampleList[10].distance)
+        assertEquals(0, exercise.sampleList[10].altitude)
+        assertNull(exercise.sampleList[10].position)
+
+        assertEquals(86 * 1000L, exercise.sampleList[20].timestamp)
+        assertEquals((short) 150, exercise.sampleList[20].heartRate)
+        assertEquals(12.0612d, exercise.sampleList[20].speed, 0.001d)
+        assertEquals((short) 79, exercise.sampleList[20].cadence)
+        assertEquals(278, exercise.sampleList[20].distance)
+        assertEquals(0, exercise.sampleList[20].altitude)
+        assertNull(exercise.sampleList[20].position)
+    }
 }

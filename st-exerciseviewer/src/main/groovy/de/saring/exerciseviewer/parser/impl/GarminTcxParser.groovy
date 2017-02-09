@@ -168,8 +168,9 @@ class GarminTcxParser extends AbstractExerciseParser {
                     }
 
                     // get optional cadence data
-                    if (!trackpoint.Cadence.isEmpty()) {
-                        evSample.cadence = trackpoint.Cadence.toInteger()
+                    int cadence = getCadenceOfTrackpoint(trackpoint)
+                    if (cadence >= 0) {
+                        evSample.cadence = cadence
                         evLap.speed.cadence = evSample.cadence
 
                         // create cadence object for exercise if not done yet
@@ -274,6 +275,27 @@ class GarminTcxParser extends AbstractExerciseParser {
             evSample.heartRate = tpElement.HeartRateBpm.Value.toInteger()
             evLap.heartRateSplit = evSample.heartRate
         }
+    }
+
+    /**
+     * Returns the optional cadence value as an integer if present, else -1. It looks first for the
+     * cycling cadence. If not found it looks for the run cadence extension.
+     *
+     * @param trackpoint to check
+     * @return cadence or -1
+     */
+    def getCadenceOfTrackpoint(trackpoint) {
+
+        if (!trackpoint.Cadence.isEmpty()) {
+            return trackpoint.Cadence.toInteger()
+        }
+        if (!trackpoint.Extensions.isEmpty()
+                && !trackpoint.Extensions.TPX.isEmpty()
+                && !trackpoint.Extensions.TPX.RunCadence.isEmpty()) {
+            return trackpoint.Extensions.TPX.RunCadence.toInteger()
+        }
+
+        return -1
     }
 
     def calculateAvgSpeed(exercise) {
