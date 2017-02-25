@@ -162,7 +162,7 @@ public class DiagramPanelController extends AbstractPanelController {
         }
 
         // do we need to display the second diagram too?
-        if (getDocument().getOptions().isDisplaySecondDiagram()) {
+        if (getDocument().getOptions().isDisplaySecondChart()) {
             // it's only possible when additional data is available (first 2 entries
             // are nothing and heartrate, which is already displayed)
             if (cbRightAxis.getItems().size() > 2) {
@@ -197,11 +197,11 @@ public class DiagramPanelController extends AbstractPanelController {
 
         // fill data series with all recorded exercise samples
         if (exercise.getSampleList() != null) {
-            for (int i = 0; i < exercise.getSampleList().length; i++) {
+            for (int index = 0; index < exercise.getSampleList().length; index++) {
 
-                final ExerciseSample sample = exercise.getSampleList()[i];
-                final Number valueLeft = getSampleValue(axisTypeLeft, sample);
-                final Number valueRight = getSampleValue(axisTypeRight, sample);
+                final ExerciseSample sample = exercise.getSampleList()[index];
+                final Number valueLeft = getSampleValue(axisTypeLeft, index);
+                final Number valueRight = getSampleValue(axisTypeRight, index);
 
                 if (fDomainAxisTime) {
                     // calculate current second
@@ -473,11 +473,12 @@ public class DiagramPanelController extends AbstractPanelController {
      * also converts the value to the current unit system and speed view.
      *
      * @param axisType the axis type to be displayed
-     * @param sample the exercise sample to display
+     * @param sampleIndex index of the sample in the exercise
      * @return the requested value
      */
-    private Number getSampleValue(AxisType axisType, ExerciseSample sample) {
+    private Number getSampleValue(AxisType axisType, int sampleIndex) {
 
+        final ExerciseSample sample = getDocument().getExercise().getSampleList()[sampleIndex];
         final FormatUtils formatUtils = getContext().getFormatUtils();
 
         switch (axisType) {
@@ -490,7 +491,7 @@ public class DiagramPanelController extends AbstractPanelController {
                     return ConvertUtils.convertMeter2Feet(sample.getAltitude());
                 }
             case SPEED:
-                float speed = sample.getSpeed();
+                float speed = getAveragedSampleSpeed(sampleIndex);
                 if (formatUtils.getUnitSystem() != FormatUtils.UnitSystem.Metric) {
                     speed = (float) ConvertUtils.convertKilometer2Miles(speed, false);
                 }
@@ -512,6 +513,45 @@ public class DiagramPanelController extends AbstractPanelController {
             default:
                 return 0;
         }
+    }
+
+    /**
+     * Returns the averaged speed value of the specified sample. It computes the average with a number of samples before
+     * and after the specified index. The average computation is for displaying a smooth speed graph, otherwise the
+     * graph is hardly readable due to precise sensor values.<br/>
+     * A speed value of 0 stays as 0, otherwise will short stops not be visible.
+     *
+     * @param sampleIndex sample index
+     * @return averaged speed value
+     */
+    private float getAveragedSampleSpeed(int sampleIndex) {
+
+        final ExerciseSample[] sampleList = getDocument().getExercise().getSampleList();
+        if (sampleList[sampleIndex].getSpeed() == 0f) {
+            return 0f;
+        }
+
+        // compute size of average range, depending on number of samples
+        final int rangeSteps = Math.max(1, Math.round(sampleList.length / 500f));
+        final int rangeLength = (2 * rangeSteps) + 1;
+        System.out.println(rangeLength);
+
+        // create speed sum, but exclude indices out of range
+        float speedSum = 0f;
+        for (int i = sampleIndex - rangeSteps; i <= sampleIndex + rangeSteps; i++) {
+            int valueIndex =  Math.max(0, i);
+            valueIndex = Math.min(sampleList.length - 1, valueIndex);
+
+            // ignore range values of 0 for the average, use the specified index instead
+            float valueAtIndex = sampleList[valueIndex].getSpeed();
+            if (valueAtIndex == 0f) {
+                valueAtIndex = sampleList[sampleIndex].getSpeed();
+            }
+
+            speedSum += valueAtIndex;
+        }
+
+        return speedSum / rangeLength;
     }
 
     /**

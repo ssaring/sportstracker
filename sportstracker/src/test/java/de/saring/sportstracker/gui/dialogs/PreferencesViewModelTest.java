@@ -27,7 +27,8 @@ public class PreferencesViewModelTest {
         options.setSpeedView(FormatUtils.SpeedView.DistancePerHour);
         options.setDefaultAutoCalcuation(STOptions.AutoCalculation.AvgSpeed);
         options.setSaveOnExit(true);
-        options.setDisplaySecondDiagram(false);
+        options.setDisplaySecondChart(false);
+        options.setDisplaySmoothedCharts(false);
         options.setWeekStartSunday(true);
         options.setListViewShowAvgHeartrate(true);
         options.setListViewShowAscent(false);
@@ -51,7 +52,8 @@ public class PreferencesViewModelTest {
         assertEquals(FormatUtils.SpeedView.DistancePerHour, options.getSpeedView());
         assertEquals(STOptions.AutoCalculation.AvgSpeed, options.getDefaultAutoCalcuation());
         assertTrue(options.isSaveOnExit());
-        assertFalse(options.isDisplaySecondDiagram());
+        assertFalse(options.isDisplaySecondChart());
+        assertFalse(options.isDisplaySmoothedCharts());
         assertTrue(options.isWeekStartSunday());
         assertTrue(options.isListViewShowAvgHeartrate());
         assertFalse(options.isListViewShowAscent());

@@ -74,6 +74,8 @@ public class PreferencesDialogController extends AbstractDialogController {
     // tab pane "ExerciseViewer"
     @FXML
     private CheckBox cbDiagramTwoGraphs;
+    @FXML
+    private CheckBox cbDiagramSmoothedCharts;
 
     /** ViewModel of the edited options. */
     private PreferencesViewModel preferencesViewModel;
@@ -123,7 +125,8 @@ public class PreferencesDialogController extends AbstractDialogController {
         cbOptionalEquipment.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowEquipment);
         cbOptionalComment.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowComment);
 
-        cbDiagramTwoGraphs.selectedProperty().bindBidirectional(preferencesViewModel.evDisplaySecondDiagram);
+        cbDiagramTwoGraphs.selectedProperty().bindBidirectional(preferencesViewModel.evDisplaySecondChart);
+        cbDiagramSmoothedCharts.selectedProperty().bindBidirectional(preferencesViewModel.evDisplaySmoothedCharts);
     }
 
     @Override
