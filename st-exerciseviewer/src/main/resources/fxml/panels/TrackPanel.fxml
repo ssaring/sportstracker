@@ -20,7 +20,7 @@
                 <HBox alignment="CENTER_LEFT" spacing="12.0">
                     <children>
                         <Label text="%pv.track.position.text" />
-                        <Slider fx:id="slPosition" HBox.hgrow="ALWAYS" />
+                        <Slider fx:id="slPosition" max="0.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
             </children>

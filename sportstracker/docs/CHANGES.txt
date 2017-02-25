@@ -12,6 +12,26 @@ v7.3.1:
    (some users can loose their previous preferences, needs to be set again)
  - Garmin TCX parser: added support for run cadence sensors (issue #154)
    (no need to add to Garmin FIT parser, already supported there)
+ - Track Panel: use of Leaflet map viewer instead of Swing-based JXMapViewer2
+   - added JavaFX component leafletmap as a separate Maven module, it's a
+     wrapper for simple usage of the Leafletmap JavaScript map viewer inside
+     the embedded JavaFX web browser
+   - new map viewer supports multiple map layers, changeable inside the viewer
+     - OpenStreetMap (default)
+     - OpenCycleMap
+     - Hike & Bike Map
+     - MTB Map
+   - new map viewer displays a scale control
+   - new map viewer display common markers in multiple colors for start, end
+     and all the lap split positions
+   - implementation details:
+     - leafletmap was implemented in Kotlin for SportsTracker
+     - leafletmap has no SportsTracker dependencies, can be used in other
+       projects too
+     - much less implementation code for map usage (50% removed in
+       TrackPanelController)
+     - JavaFX migration is now completed, no more Swing usage in SportsTracker
+     - all the Swing-in-JavaFX integration workarounds were removed
 
 v7.3.0:
  SportsTracker changes:

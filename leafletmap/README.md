@@ -15,7 +15,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 * JavaSE 8 (tested with 8u121)
 * Leaflet 1.0.3 (included)
     * Homepage: http://leafletjs.com/
-    * License: 2-clause BSD License
+    * License: BSD 2-Clause License
     * Documentation: http://leafletjs.com/reference-1.0.3.html
 * leaflet-color-markers (included, modified)
     * Homepage: https://github.com/pointhi/leaflet-color-markers

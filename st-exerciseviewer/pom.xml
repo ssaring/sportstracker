@@ -21,9 +21,9 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.jxmapviewer</groupId>
-            <artifactId>jxmapviewer2</artifactId>
-            <version>2.2</version>
+            <groupId>de.saring</groupId>
+            <artifactId>leafletmap</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.garmin.fit</groupId>

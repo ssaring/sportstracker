@@ -11,7 +11,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import de.saring.exerciseviewer.gui.panels.DiagramPanelController;
 import de.saring.exerciseviewer.gui.panels.LapPanelController;
@@ -92,9 +91,6 @@ public class EVController {
 
         setupPanels();
 
-        // register cleanup of JXMapViewer in TrackPanel on dialog close, otherwise there are memory leaks
-        stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> trackPanelController.cleanupPanel());
-
         // create scene and show dialog
         final Scene scene = new Scene(root);
         setCloseOnEscape(scene);
@@ -114,11 +110,10 @@ public class EVController {
             tabDiagram.setContent(diagramPanelController.loadAndSetupPanelContent());
             tabTrack.setContent(trackPanelController.loadAndSetupPanelContent());
 
-            // display exercise track not before the user wants to see it
-            // (prevents layout problems and reduces startup time)
+            // display map and exercise track not before the user wants to see it (reduces startup time)
             tabTrack.setOnSelectionChanged(event -> {
                 if (tabTrack.isSelected()) {
-                    trackPanelController.showTrack();
+                    trackPanelController.showMapAndTrack();
                 }
             });
         });
