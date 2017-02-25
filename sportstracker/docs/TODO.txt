@@ -1,17 +1,6 @@
 SportsTracker-TODO
 ==================
 
-- Issue #153: Curve smoothing in diagram view
-  - smoothing needs to be used for speed, cadence and hr - altitude and temp are quite constant
-  - add user option for displaying smooth, average filtered graphs
-  - sample implementation for a smooth speed graph is completed in DiagramPanelController.getAveragedSampleSpeed
-    -> computes the average of some values before and some after
-    -> test with small and bigger exercise files, is the computation value of range width OK?
-    -> also use for other value types, e.g. hartrate? => improvement for big exercises
-  - started a question for smoother graphs in the JFreeChart forum, are there helpful answers?
-    http://www.jfree.org/forum/viewtopic.php?f=3&t=117776
-    => they suggest use of MovingAverage class -> no documentation available, but seems to be a similar concept
-
 - Use of JavaFX-based GMapsFX instead of Swing-based JXMapViewer?
   - Homepage: http://rterp.github.io/GMapsFX/
   - Test notes:
@@ -19,7 +8,7 @@ SportsTracker-TODO
     - uses Google Maps only, no API key needed
     - super fast and good rendering
     - controls for zoom and display options (map, satellite, ...) can be shown on demand
-      (scale via scaleControl=true)
+      (also scale via scaleControl=true)
     - displays small trails too (tested for Dresdner Heide)
     - demo app needs a lot of memory (after start 135 MB, after short usage > 200 MB)
   - To be tested: can the route and lap markers with numbers be displayed?
