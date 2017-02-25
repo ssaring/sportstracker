@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="16.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.leafletmapdemo.Controller">
+   <children>
+      <StackPane fx:id="spMapView" prefHeight="480.0" prefWidth="640.0" VBox.vgrow="ALWAYS" />
+      <HBox alignment="CENTER_LEFT" spacing="16.0">
+         <children>
+            <Button fx:id="btDisplayTrack" mnemonicParsing="false" onAction="#onDisplayTrack" text="Display Track" />
+            <Label text="Position:">
+               <HBox.margin>
+                  <Insets left="8.0" />
+               </HBox.margin>
+            </Label>
+            <Slider fx:id="slPosition" max="0.0" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+   </padding>
+</VBox>
