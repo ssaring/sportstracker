@@ -71,6 +71,9 @@ public class DiagramPanelController extends AbstractPanelController {
     /** The exercise heartrate range to be highlighted (null for no highlighting). */
     private HeartRateLimit highlightHeartrateRange = null;
 
+    /** The size of the average range if smoothed charts are enabled (otherwise 0). */
+    private int averagedRangeSteps;
+
     @FXML
     private StackPane spDiagram;
 
@@ -116,6 +119,7 @@ public class DiagramPanelController extends AbstractPanelController {
     @Override
     protected void setupPanel() {
         setupAxisChoiceBoxes();
+        computeAveragedFilterRange();
         updateDiagram();
     }
 
@@ -162,7 +166,7 @@ public class DiagramPanelController extends AbstractPanelController {
         }
 
         // do we need to display the second diagram too?
-        if (getDocument().getOptions().isDisplaySecondDiagram()) {
+        if (getDocument().getOptions().isDisplaySecondChart()) {
             // it's only possible when additional data is available (first 2 entries
             // are nothing and heartrate, which is already displayed)
             if (cbRightAxis.getItems().size() > 2) {
@@ -174,6 +178,20 @@ public class DiagramPanelController extends AbstractPanelController {
         cbLeftAxis.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
         cbRightAxis.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
         cbBottomAxis.addEventHandler(ActionEvent.ACTION, event -> updateDiagram());
+    }
+
+    /**
+     * Compute the number of steps to be used for the averaged filter is smoothed charts are enabled. The size of
+     * the average range depends on the number of samples in the current exercise.
+     */
+    private void computeAveragedFilterRange() {
+        if (getDocument().getOptions().isDisplaySmoothedCharts()) {
+            final ExerciseSample[] sampleList = getDocument().getExercise().getSampleList();
+            // results seem to be best when sample count is devided by 800 (tested with many exercises)
+            averagedRangeSteps = Math.max(1, Math.round(sampleList.length / 800f));
+        } else {
+            averagedRangeSteps = 0;
+        }
     }
 
     /**
@@ -197,11 +215,11 @@ public class DiagramPanelController extends AbstractPanelController {
 
         // fill data series with all recorded exercise samples
         if (exercise.getSampleList() != null) {
-            for (int i = 0; i < exercise.getSampleList().length; i++) {
+            for (int index = 0; index < exercise.getSampleList().length; index++) {
 
-                final ExerciseSample sample = exercise.getSampleList()[i];
-                final Number valueLeft = getSampleValue(axisTypeLeft, sample);
-                final Number valueRight = getSampleValue(axisTypeRight, sample);
+                final ExerciseSample sample = exercise.getSampleList()[index];
+                final Number valueLeft = getConvertedSampleValue(axisTypeLeft, index);
+                final Number valueRight = getConvertedSampleValue(axisTypeRight, index);
 
                 if (fDomainAxisTime) {
                     // calculate current second
@@ -469,48 +487,115 @@ public class DiagramPanelController extends AbstractPanelController {
     }
 
     /**
-     * Returns the value specified by the axis type of the exercise sample. It
-     * also converts the value to the current unit system and speed view.
+     * Returns the value specified by the axis type of the exercise sample. It also converts the value to the current
+     * unit system and speed view.
      *
      * @param axisType the axis type to be displayed
-     * @param sample the exercise sample to display
+     * @param sampleIndex index of the sample in the exercise
      * @return the requested value
      */
-    private Number getSampleValue(AxisType axisType, ExerciseSample sample) {
+    private Number getConvertedSampleValue(AxisType axisType, int sampleIndex) {
+
+        if (axisType == AxisType.NOTHING) {
+            return 0;
+        }
 
         final FormatUtils formatUtils = getContext().getFormatUtils();
+        final double sampleValue = getSampleValue(axisType, sampleIndex);
+
+        switch (axisType) {
+            case HEARTRATE:
+            case CADENCE:
+                return sampleValue;
+            case ALTITUDE:
+                if (formatUtils.getUnitSystem() == FormatUtils.UnitSystem.Metric) {
+                    return sampleValue;
+                } else {
+                    return ConvertUtils.convertMeter2Feet((int) Math.round(sampleValue));
+                }
+            case SPEED:
+                double speedValue = sampleValue;
+                if (formatUtils.getUnitSystem() != FormatUtils.UnitSystem.Metric) {
+                    speedValue = ConvertUtils.convertKilometer2Miles(speedValue, false);
+                }
+                if (formatUtils.getSpeedView() == FormatUtils.SpeedView.MinutesPerDistance) {
+                    // convert speed to minutes per distance
+                    if (speedValue != 0f) {
+                        speedValue = 60 / speedValue;
+                    }
+                }
+                return speedValue;
+            case TEMPERATURE:
+                if (formatUtils.getUnitSystem() == FormatUtils.UnitSystem.Metric) {
+                    return sampleValue;
+                } else {
+                    return ConvertUtils.convertCelsius2Fahrenheit((short) Math.round(sampleValue));
+                }
+            default:
+                throw new IllegalArgumentException("Unknown axis type: " + axisType + "!");
+        }
+    }
+
+    /**
+     * Returns the value specified by the axis type of the exercise sample. If smoothed charts are enabled, then
+     * the smoothed value will be calculated by using the average filter of the computed size.
+     *
+     * @param axisType the axis type to be displayed
+     * @param sampleIndex index of the sample in the exercise
+     * @return the requested value
+     */
+    private double getSampleValue(AxisType axisType, int sampleIndex) {
+
+        if (averagedRangeSteps <= 0) {
+            // smoothing is disabled, just return the raw value
+            return getRawSampleValue(axisType, sampleIndex);
+        } else {
+
+             // the value of 0 stays 0, otherwise short stops will not be visible
+            final double rawSampleValue = getRawSampleValue(axisType, sampleIndex);
+            if (rawSampleValue == 0d) {
+                return 0d;
+            }
+
+            final int rangeLength = (2 * averagedRangeSteps) + 1;
+            final int lastSampleIndex = getDocument().getExercise().getSampleList().length - 1;
+
+            // create sum for all range values
+            double valueSum = 0d;
+            for (int i = sampleIndex - averagedRangeSteps; i <= sampleIndex + averagedRangeSteps; i++) {
+                // exclude indices out of range, use first or last sample instead
+                int valueIndex =  Math.max(0, i);
+                valueIndex = Math.min(lastSampleIndex, valueIndex);
+
+                // ignore range values of 0 for the average, use the specified index instead
+                double valueAtIndex = getRawSampleValue(axisType, valueIndex);
+                if (valueAtIndex == 0d) {
+                    valueAtIndex = getRawSampleValue(axisType, sampleIndex);
+                }
+
+                valueSum += valueAtIndex;
+            }
+
+            return valueSum / rangeLength;
+        }
+    }
+
+    private double getRawSampleValue(AxisType axisType, int sampleIndex) {
+        final ExerciseSample sample = getDocument().getExercise().getSampleList()[sampleIndex];
 
         switch (axisType) {
             case HEARTRATE:
                 return sample.getHeartRate();
             case ALTITUDE:
-                if (formatUtils.getUnitSystem() == FormatUtils.UnitSystem.Metric) {
-                    return sample.getAltitude();
-                } else {
-                    return ConvertUtils.convertMeter2Feet(sample.getAltitude());
-                }
+                return sample.getAltitude();
             case SPEED:
-                float speed = sample.getSpeed();
-                if (formatUtils.getUnitSystem() != FormatUtils.UnitSystem.Metric) {
-                    speed = (float) ConvertUtils.convertKilometer2Miles(speed, false);
-                }
-                if (formatUtils.getSpeedView() == FormatUtils.SpeedView.MinutesPerDistance) {
-                    // convert speed to minutes per distance
-                    if (speed != 0f) {
-                        speed = 60 / speed;
-                    }
-                }
-                return speed;
+                return sample.getSpeed();
             case CADENCE:
                 return sample.getCadence();
             case TEMPERATURE:
-                if (formatUtils.getUnitSystem() == FormatUtils.UnitSystem.Metric) {
-                    return sample.getTemperature();
-                } else {
-                    return ConvertUtils.convertCelsius2Fahrenheit(sample.getTemperature());
-                }
+                return sample.getTemperature();
             default:
-                return 0;
+                throw new IllegalArgumentException("Unknown axis type: " + axisType + "!");
         }
     }
 

@@ -41,7 +41,8 @@ public class PreferencesViewModel {
     public final BooleanProperty listViewShowEquipment;
     public final BooleanProperty listViewShowComment;
 
-    public final BooleanProperty evDisplaySecondDiagram;
+    public final BooleanProperty evDisplaySecondChart;
+    public final BooleanProperty evDisplaySmoothedCharts;
 
     /**
      * Creates the PreferencesViewModel with JavaFX properties for the passed STOptions object.
@@ -64,7 +65,8 @@ public class PreferencesViewModel {
         this.listViewShowEquipment = new SimpleBooleanProperty(options.isListViewShowEquipment());
         this.listViewShowComment = new SimpleBooleanProperty(options.isListViewShowComment());
 
-        this.evDisplaySecondDiagram = new SimpleBooleanProperty(options.isDisplaySecondDiagram());
+        this.evDisplaySecondChart = new SimpleBooleanProperty(options.isDisplaySecondChart());
+        this.evDisplaySmoothedCharts = new SimpleBooleanProperty(options.isDisplaySmoothedCharts());
     }
 
     /**
@@ -88,6 +90,7 @@ public class PreferencesViewModel {
         options.setListViewShowEquipment(listViewShowEquipment.get());
         options.setListViewShowComment(listViewShowComment.get());
 
-        options.setDisplaySecondDiagram(evDisplaySecondDiagram.get());
+        options.setDisplaySecondChart(evDisplaySecondChart.get());
+        options.setDisplaySmoothedCharts(evDisplaySmoothedCharts.get());
     }
 }

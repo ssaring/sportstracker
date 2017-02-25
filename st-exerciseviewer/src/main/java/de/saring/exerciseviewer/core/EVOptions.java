@@ -11,6 +11,7 @@ import de.saring.util.unitcalc.FormatUtils.UnitSystem;
  * @version 1.0
  */
 public interface EVOptions {
+
     /**
      * Returns the unit system to be used in the GUI.
      *
@@ -19,13 +20,21 @@ public interface EVOptions {
     public UnitSystem getUnitSystem();
 
     /**
-     * The returned flag is true, when the second diagram graph should
-     * always be displayed in the ExerciseViewer diagram panel (data must be
+     * The returned flag is true, when the second chart should always be displayed in the diagram panel (data must be
      * available).
      *
-     * @return the flag for displaying the second diagram
+     * @return the flag for displaying the second chart
      */
-    public boolean isDisplaySecondDiagram();
+    public boolean isDisplaySecondChart();
+
+    /**
+     * Returns the flag for display smoothed charts for all value types (heartrate, speed, cadence) in the Exercise
+     * Viewer diagram panel. If set to true then a average filter will be used to smooth the charts and make the diagram
+     * more readable.
+     *
+     * @return the flag for displaying smoothed charts
+     */
+    public boolean isDisplaySmoothedCharts();
 
     /**
      * Returns the speed view system to be used in GUI.

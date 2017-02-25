@@ -44,6 +44,11 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 7.3.1:
+
+- st.dlg.options.smoothed_charts.text (new)
+
+
 SportsTracker 7.3.0:
 - st.view.export_sqlite.Action.text (new)
 - st.main.error.export_sqlite (new)

@@ -17,82 +17,65 @@ public class STOptions implements EVOptions, Serializable {
 
     private static final long serialVersionUID = 6756725362338738970L;
 
-    /**
-     * This is the list of possible views.
-     */
+    /**  This is the list of possible views. */
     public enum View {
         Calendar, List
     }
 
-    /**
-     * This is the list of possible automatic calculation values.
-     */
+    /** This is the list of possible automatic calculation values. */
     public enum AutoCalculation {
         Distance, AvgSpeed, Duration
     }
 
-    /**
-     * This is the initial view of the GUI (at startup).
-     */
+    /** This is the initial view of the GUI (at startup). */
     private View initialView;
 
-    /**
-     * This is the unit system used in GUI.
-     */
+    /** This is the unit system used in GUI. */
     private UnitSystem unitSystem;
 
-    /**
-     * This is the speed view system used in GUI.
-     */
+    /** This is the speed view system used in GUI. */
     private SpeedView speedView;
 
-    /**
-     * This is the value which will be calculated automatically by default.
-     */
+    /** This is the value which will be calculated automatically by default. */
     private AutoCalculation defaultAutoCalcuation;
 
-    /**
-     * If this flag is true, then the data will be saved automatically on exit
-     * (no confirmation dialog).
+    /** If this flag is true, then the data will be saved automatically on exit (no confirmation dialog).
      */
     private boolean saveOnExit;
 
     /**
-     * If this flag is true, then the second diagram graph will always be
-     * displayed in the ExerciseViewer diagram panel (data must be available).
+     * If this flag is true, then the second chart will always be displayed in the ExerciseViewer diagram panel (data
+     * must be available).
      */
-    private boolean displaySecondDiagram;
+    private boolean displaySecondChart;
 
     /**
-     * If this flag is true, then the week in the calendar starts with sunday,
-     * otherwise monday.
+     * Flag for display smoothed charts for all value types (heartrate, speed, cadence) in the ExerciseViewer diagram
+     * panel. If set to true then a average filter will be used to smooth the charts and make the diagram more readable.
      */
+    private boolean displaySmoothedCharts;
+
+    /** If this flag is true, then the week in the calendar starts with sunday, otherwise monday. */
     private boolean weekStartSunday;
 
-    /**
-     * The list view shows the average heartrate when this flag is true.
-     */
+    /** The list view shows the average heartrate when this flag is true. */
     private boolean listViewShowAvgHeartrate;
-    /**
-     * The list view shows the ascent when this flag is true.
-     */
+
+    /** The list view shows the ascent when this flag is true. */
     private boolean listViewShowAscent;
-    /**
-     * The list view shows the consumed energy when this flag is true.
-     */
+
+    /** The list view shows the consumed energy when this flag is true. */
     private boolean listViewShowEnergy;
-    /**
-     * The list view shows the equipment when this flag is true.
-     */
+
+    /** The list view shows the equipment when this flag is true. */
     private boolean listViewShowEquipment;
-    /**
-     * The list view shows the comment when this flag is true.
-     */
+
+    /** The list view shows the comment when this flag is true. */
     private boolean listViewShowComment;
 
     /**
-     * The directory of the previous opened HRM exercise file, so the user must
-     * not go to this directory every time again (optional, can be null).
+     * The directory of the previous opened HRM exercise file, so the user must not go to this directory every time
+     * again (optional, can be null).
      */
     private String previousExerciseDirectory;
 
@@ -105,7 +88,8 @@ public class STOptions implements EVOptions, Serializable {
         this.speedView = SpeedView.DistancePerHour;
         this.defaultAutoCalcuation = AutoCalculation.Duration;
         this.saveOnExit = false;
-        this.displaySecondDiagram = false;
+        this.displaySecondChart = false;
+        this.displaySmoothedCharts = true;
         this.weekStartSunday = false;
         this.listViewShowAvgHeartrate = true;
         this.listViewShowAscent = true;
@@ -159,12 +143,20 @@ public class STOptions implements EVOptions, Serializable {
         this.saveOnExit = saveOnExit;
     }
 
-    public boolean isDisplaySecondDiagram() {
-        return displaySecondDiagram;
+    public boolean isDisplaySecondChart() {
+        return displaySecondChart;
     }
 
-    public void setDisplaySecondDiagram(boolean displaySecondDiagram) {
-        this.displaySecondDiagram = displaySecondDiagram;
+    public void setDisplaySecondChart(boolean displaySecondChart) {
+        this.displaySecondChart = displaySecondChart;
+    }
+
+    public boolean isDisplaySmoothedCharts() {
+        return displaySmoothedCharts;
+    }
+
+    public void setDisplaySmoothedCharts(boolean displaySmoothedCharts) {
+        this.displaySmoothedCharts = displaySmoothedCharts;
     }
 
     public boolean isWeekStartSunday() {

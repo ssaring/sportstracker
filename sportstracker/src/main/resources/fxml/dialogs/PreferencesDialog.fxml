@@ -167,11 +167,15 @@
                                 <VBox spacing="12.0">
                                     <children>
                                         <Label styleClass="label-header" text="%st.dlg.options.diagram.text"/>
-                                        <CheckBox fx:id="cbDiagramTwoGraphs" mnemonicParsing="false" text="%st.dlg.options.second_graph.text">
+                                        <VBox spacing="12.0">
+                                            <children>
+                                                <CheckBox fx:id="cbDiagramTwoGraphs" mnemonicParsing="false" text="%st.dlg.options.second_graph.text"/>
+                                                <CheckBox fx:id="cbDiagramSmoothedCharts" mnemonicParsing="false" text="%st.dlg.options.smoothed_charts.text"/>
+                                            </children>
                                             <VBox.margin>
                                                 <Insets left="24.0"/>
                                             </VBox.margin>
-                                        </CheckBox>
+                                        </VBox>
                                     </children>
                                 </VBox>
                             </children>
