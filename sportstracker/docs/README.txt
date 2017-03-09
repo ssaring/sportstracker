@@ -407,7 +407,7 @@ The SportsTracker project uses the following libraries:
       License: Apache-style open source license
   - ControlsFX 8.40.12 (http://controlsfx.org/)
       License: BSD 3-Clause License
-  - Kotlin 1.0.6 (http://kotlinlang.org/)
+  - Kotlin 1.1.0 (http://kotlinlang.org/)
       License: Apache License v2.0
   - Leaflet.js 1.0.3 (http://leafletjs.com/)
       License: BSD 2-Clause License

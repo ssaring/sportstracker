@@ -11,7 +11,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Dependencies and used libraries
 
-* Kotlin 1.0.6
+* Kotlin 1.1.0
 * JavaSE 8 (tested with 8u121)
 * Leaflet 1.0.3 (included)
     * Homepage: http://leafletjs.com/
@@ -20,7 +20,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 * leaflet-color-markers (included, modified)
     * Homepage: https://github.com/pointhi/leaflet-color-markers
     * License: not specified
-* jackson-module-kotlin 2.8.6 (for the demo only, uses Jackson 2.8)
+* jackson-module-kotlin 2.8.7 (for the demo only, uses Jackson 2.8)
     * Homepage: https://github.com/FasterXML/jackson-module-kotlin
     * License: not specified
 
@@ -49,8 +49,3 @@ Both the LeafletMap component and the demo application are written in Kotlin.
   (default method parameters are supported via @JvmOverloads)
 * the demo application displays a GPS track read from a JSON file, the user can
   replay the track by using a position slider
-
-
-#### TODO
-
-* test memory usage
