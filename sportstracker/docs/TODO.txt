@@ -22,7 +22,6 @@ LeafletMap integration:
       -> JVM process uses 570 MB RAM
 - make leafletmap module release-ready (README.md, License info needed?)
   - which version number to use for leafletmap module - 1.0.0?
-- set ST version to 7.4.0
 
 JavaFX Migration:
 - Migration status:

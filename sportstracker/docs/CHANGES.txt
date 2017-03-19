@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v7.3.1:
+v7.4.0:
  SportsTracker changes:
  ExerciseViewer changes:
  - Issue #153: added chart smoothing in diagram view for all axis types
