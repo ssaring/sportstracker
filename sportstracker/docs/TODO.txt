@@ -3,7 +3,23 @@ SportsTracker-TODO
 
 LeafletMap integration:
 - initial switch to Track panel takes quite long
-- test memory usage, remove TODO
+- improve memory usage, there seems to be a memory leak
+  - tests were done using JVisualVM
+  - JXMapViewer based ST has used less memory
+    -> 26 MB Heap after GC when multiple EV->Maps were opened and closed
+    -> JVM process uses 360 MB RAM
+  - LeafletMap based ST uses more memory
+    -> 41 MB Heap after GC when multiple EV->Maps were opened and closed
+    -> JVM process uses > 800 MB RAM
+  - EVController and LeafletMap view instances are not removed after EV was clased and GC triggered
+     (also the case in the JXMapViewer based ST)
+  - new problem: even after multiple GC runs there are 2 TrackPanelController$$Lambda instances in the heap
+  - memory leak is probably caused by https://bugs.openjdk.java.net/browse/JDK-8164792
+    (problem with Java<->JavaScript interoperability)
+    -> bugfix will be available in JDK 8u131, see https://bugs.openjdk.java.net/browse/JDK-8170938
+    -> when JavaScript execution disabled (displayed only a fixed map in HTML) then there is less memory usage
+      -> 43 MB Heap after GC when multiple EV->Maps were opened and closed
+      -> JVM process uses 570 MB RAM
 - make leafletmap module release-ready (README.md, License info needed?)
   - which version number to use for leafletmap module - 1.0.0?
 - set ST version to 7.4.0
@@ -30,7 +46,7 @@ JavaFX Migration:
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
 - JavaFX bug in GridPane layout since JavaFX 8u40 in (now using a workaround, see TODOs in CalendarControlSkin)
   - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-40099
-- Print Views: Done for all views
+- Print Views: Done for all viewsis
   - Problem in List Views: tables can't be printed completely, the JavaFX API support only the printing
     of one single node at one single page
   - Used workaround: create a snapshot image of the current displayed table view, scale to fit on paper
