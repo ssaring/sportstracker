@@ -20,6 +20,12 @@ LeafletMap integration:
     -> when JavaScript execution disabled (displayed only a fixed map in HTML) then there is less memory usage
       -> 43 MB Heap after GC when multiple EV->Maps were opened and closed
       -> JVM process uses 570 MB RAM
+  - retested with JDK 8u152 EA b01 on macOS (contains bugfix for JDK-8170938)
+    - all tests with JavaScript in Leaflet enabled
+    - better memory results, but not perfect
+      -> 39 MB Heap after GC when multiple EV->Maps were opened (also in parallel) and closed
+      -> JVM process uses 550 MB RAM
+    - retest with JDK 8u131 final release
 - make leafletmap module release-ready (README.md, License info needed?)
   - which version number to use for leafletmap module - 1.0.0?
 
