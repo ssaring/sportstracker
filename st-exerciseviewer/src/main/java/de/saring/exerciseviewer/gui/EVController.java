@@ -8,8 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import de.saring.exerciseviewer.gui.panels.DiagramPanelController;
@@ -93,7 +91,6 @@ public class EVController {
 
         // create scene and show dialog
         final Scene scene = new Scene(root);
-        setCloseOnEscape(scene);
         stage.setScene(scene);
         stage.show();
     }
@@ -116,19 +113,6 @@ public class EVController {
                     trackPanelController.showMapAndTrack();
                 }
             });
-        });
-    }
-
-    /**
-     * Closes the dialog when the user presses the Escape key.
-     *
-     * @param scene dialog scene
-     */
-    private void setCloseOnEscape(final Scene scene) {
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-            if (keyEvent.getCode().equals(KeyCode.ESCAPE)) {
-                onClose(null);
-            }
         });
     }
 
