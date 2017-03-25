@@ -6,6 +6,7 @@ import javafx.scene.web.WebView
 
 import java.net.URL
 import javafx.concurrent.Worker
+import java.util.concurrent.CompletableFuture
 
 
 /**
@@ -32,13 +33,14 @@ class LeafletMapView : StackPane() {
 
     /**
      * Displays the initial map in the web view. Needs to be called and complete before adding any markers or tracks.
-     * The completionNotifier callback can be used for notification when the map is initially displayed.
+     * The returned CompletableFuture will provide the final map load state, the map can be used when the load has
+     * completed with state SUCCEEDED (use CompletableFuture#whenComplete() for waiting to complete).
      *
      * @param mapConfig configuration of the map layers and controls
-     * @param completionNotifier notifies the caller when the map is displayed or the loading has failed (optional)
+     * @return the CompletableFuture which will provide the final map load state
      */
-    @JvmOverloads
-    fun displayMap(mapConfig: MapConfig, completionNotifier: ((Worker.State) -> Unit)? = null) {
+    fun displayMap(mapConfig: MapConfig): CompletableFuture<Worker.State> {
+        val finalMapLoadState = CompletableFuture<Worker.State>()
 
         webEngine.loadWorker.stateProperty().addListener { observable, oldValue, newValue ->
 
@@ -46,13 +48,14 @@ class LeafletMapView : StackPane() {
                 executeMapSetupScripts(mapConfig)
             }
 
-            if (completionNotifier != null && (newValue == Worker.State.SUCCEEDED || newValue == Worker.State.FAILED)) {
-                completionNotifier(newValue)
+            if (newValue == Worker.State.SUCCEEDED || newValue == Worker.State.FAILED) {
+                finalMapLoadState.complete(newValue)
             }
         }
 
         val localFileUrl: URL = LeafletMapView::class.java.getResource("/leafletmap/leafletmap.html")
         webEngine.load(localFileUrl.toExternalForm())
+        return finalMapLoadState
     }
 
     private fun executeMapSetupScripts(mapConfig: MapConfig) {

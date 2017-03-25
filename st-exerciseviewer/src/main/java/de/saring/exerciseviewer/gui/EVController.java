@@ -2,6 +2,7 @@ package de.saring.exerciseviewer.gui;
 
 import java.io.IOException;
 
+import de.saring.util.SystemUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -92,7 +93,10 @@ public class EVController {
         // create scene and show dialog
         final Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();
+        stage.showAndWait();
+
+        // trigger a garbage collection when EV has been closed to avoid allocation of additional heap space
+        SystemUtils.triggerGC();
     }
 
     private void setupPanels() {

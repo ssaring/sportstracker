@@ -27,18 +27,17 @@ class Controller {
     fun initialize() {
         spMapView.children.add(mapView)
 
-        val mapConfig = MapConfig(
+        val cfMapLoadState = mapView.displayMap(MapConfig(
                 layers = MapLayer.values().asList(),
                 zoomControlConfig = ZoomControlConfig(true, ControlPosition.BOTTOM_LEFT),
-                scaleControlConfig = ScaleControlConfig(true, ControlPosition.BOTTOM_LEFT, metric = true))
+                scaleControlConfig = ScaleControlConfig(true, ControlPosition.BOTTOM_LEFT, metric = true)))
 
-        mapView.displayMap(mapConfig)
-        /* for test only: display track after map displayed
-        mapView.displayMap(mapConfig, { status: Worker.State ->
-            if (status == Worker.State.SUCCEEDED) {
+        // example code when the route has to be displayed immediately
+        /* cfMapLoadState.whenComplete { workerState, throwable  ->
+            if (workerState == Worker.State.SUCCEEDED) {
                 onDisplayTrack()
             }
-        }) */
+        } */
 
         positionTooltip.setAutoHide(true)
 

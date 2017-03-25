@@ -32,6 +32,7 @@ v7.4.0:
        TrackPanelController)
      - JavaFX migration is now completed, no more Swing usage in SportsTracker
      - all the Swing-in-JavaFX integration workarounds were removed
+ - fixed memory leaks when closing the ExerciseViewer window
 
 v7.3.0:
  SportsTracker changes:

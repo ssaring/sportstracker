@@ -3,35 +3,16 @@ SportsTracker-TODO
 
 LeafletMap integration:
 - initial switch to Track panel takes quite long
-- improve memory usage, there seems to be a memory leak
-  - tests were done using JVisualVM
-  - JXMapViewer based ST has used less memory
-    -> 26 MB Heap after GC when multiple EV->Maps were opened and closed
-    -> JVM process uses 360 MB RAM
-  - LeafletMap based ST uses more memory
-    -> 41 MB Heap after GC when multiple EV->Maps were opened and closed
-    -> JVM process uses > 800 MB RAM
-  - EVController and LeafletMap view instances are not removed after EV was clased and GC triggered
-     (also the case in the JXMapViewer based ST)
-  - new problem: even after multiple GC runs there are 2 TrackPanelController$$Lambda instances in the heap
-  - memory leak is probably caused by https://bugs.openjdk.java.net/browse/JDK-8164792
-    (problem with Java<->JavaScript interoperability)
-    -> bugfix will be available in JDK 8u131, see https://bugs.openjdk.java.net/browse/JDK-8170938
-    -> when JavaScript execution disabled (displayed only a fixed map in HTML) then there is less memory usage
-      -> 43 MB Heap after GC when multiple EV->Maps were opened and closed
-      -> JVM process uses 570 MB RAM
-  - retested with JDK 8u152 EA b01 on macOS (contains bugfix for JDK-8170938)
-    - all tests with JavaScript in Leaflet enabled
-    - better memory results, but not perfect
-      -> 39 MB Heap after GC when multiple EV->Maps were opened (also in parallel) and closed
-      -> JVM process uses 550 MB RAM
-    - retest with JDK 8u131 final release
 - make leafletmap module release-ready (README.md, License info needed?)
   - which version number to use for leafletmap module - 1.0.0?
+- Kotlin 1.1.1 can't be used due to missing pom.xml in kotlin-maven-plugin => restest with 1.1.2
+  (local build works fine, but Travis build crashes)
+
+Travis:
+- use Ubuntu 16.04 instead of 14.04
 
 JavaFX Migration:
-- Migration status:
-  - SportsTracker and ExerciseViewer: completed, Swing is not in use anymore
+- Migration status: completed, Swing is not in use anymore
 - DatePicker validation does not work => when removing the date no error will be shown (uses previous date)
 - ControlsFX bug, remove workaround when fixed:
   - Dialogs can't be displayed when they contain multiple controls with validation support
@@ -70,12 +51,11 @@ Java 8 migration status:
 - the Parser implementations of the ExerciseViewer has not been updated for
   using the latest Java 8 features 
   => they are isolated and not the base for further development
-- IDE support: works fine in IDEA 13.1, NetBeans 8.0 and Eclipse 4.4
 
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
-  => Known bug, maybe it will be fixed in next JDK release
+  => JDK 9 will provide a new API for macOS specific dock and menu integration
 - SportsTracker.app and native packages work properly, the name and icons are
   set via JVM parameter there
 

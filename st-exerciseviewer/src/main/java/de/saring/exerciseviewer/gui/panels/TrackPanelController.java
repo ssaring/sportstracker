@@ -3,8 +3,8 @@ package de.saring.exerciseviewer.gui.panels;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import de.saring.leafletmap.ColorMarker;
 import de.saring.leafletmap.ControlPosition;
@@ -40,6 +40,8 @@ import de.saring.util.unitcalc.FormatUtils;
  * @author Stefan Saring
  */
 public class TrackPanelController extends AbstractPanelController {
+
+    private static final Logger LOGGER = Logger.getLogger(TrackPanelController.class.getName());
 
     private static final int TRACKPOINT_TOOLTIP_DISTANCE_BUFFER = 4;
 
@@ -154,20 +156,24 @@ public class TrackPanelController extends AbstractPanelController {
 
             EVExercise exercise = getDocument().getExercise();
             if (exercise.getRecordingMode().isLocation()) {
-                mapView.displayMap(mapConfig, status -> {
-                    if (status == Worker.State.SUCCEEDED) {
-                        // display track and laps not before the map has been loaded
-                        showTrackAndLaps(exercise);
+
+                // display map, on success display the track and laps
+                mapView.displayMap(mapConfig).whenComplete((workerState, throwable) -> {
+
+                    if (workerState == Worker.State.SUCCEEDED) {
+                        showTrackAndLaps();
                         // enable position slider by setting max. sample count
                         slPosition.setMax(exercise.getSampleList().length - 1);
+                    } else if (throwable != null) {
+                        LOGGER.log(Level.SEVERE, "Failed to display map!", throwable);
                     }
-                    return null;
                 });
             }
         }
     }
 
-    public void showTrackAndLaps(EVExercise exercise) {
+    public void showTrackAndLaps() {
+        EVExercise exercise = getDocument().getExercise();
         List<LatLong> samplePositions = createSamplePositionList(exercise);
 
         if (!samplePositions.isEmpty()) {
@@ -191,14 +197,19 @@ public class TrackPanelController extends AbstractPanelController {
     }
 
     private List<LatLong> createSamplePositionList(final EVExercise exercise) {
-        return Stream.of(exercise.getSampleList())
-                .filter(sample -> sample.getPosition() != null)
-                .map(sample -> new LatLong(sample.getPosition().getLatitude(), sample.getPosition().getLongitude()))
-                .collect(Collectors.toList());
+        final List<LatLong> positions = new ArrayList<>();
+
+        for (ExerciseSample sample : exercise.getSampleList()) {
+            final Position pos = sample.getPosition();
+            if (pos != null) {
+                positions.add(new LatLong(pos.getLatitude(), pos.getLongitude()));
+            }
+        }
+        return positions;
     }
 
     private List<LatLong> createLapPositionList(final EVExercise exercise) {
-        final ArrayList<LatLong> lapPositions = new ArrayList<>();
+        final List<LatLong> lapPositions = new ArrayList<>();
 
         // ignore last lap split position, it's the exercise end position
         for (int i = 0; i < exercise.getLapList().length - 1; i++) {
