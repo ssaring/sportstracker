@@ -172,7 +172,7 @@ public class TrackPanelController extends AbstractPanelController {
         }
     }
 
-    public void showTrackAndLaps() {
+    private void showTrackAndLaps() {
         EVExercise exercise = getDocument().getExercise();
         List<LatLong> samplePositions = createSamplePositionList(exercise);
 

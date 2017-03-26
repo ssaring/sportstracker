@@ -1,16 +1,16 @@
 SportsTracker-TODO
 ==================
 
-LeafletMap integration:
-- initial switch to Track panel takes quite long
-- Kotlin 1.1.1 can't be used due to missing pom.xml in kotlin-maven-plugin => retest with 1.1.2
-  (local build works fine, but Travis build crashes)
-
 Travis:
 - use Ubuntu 16.04 instead of 14.04
 
+LeafletMap integration:
+- Kotlin 1.1.1 can't be used due to missing pom.xml in kotlin-maven-plugin => retest with 1.1.2
+  (local build works fine, but Travis build crashes)
+
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore
+- tested on macOS, Windows and Linux (incl. printing, drag & drop)
 - DatePicker validation does not work => when removing the date no error will be shown (uses previous date)
 - ControlsFX bug, remove workaround when fixed:
   - Dialogs can't be displayed when they contain multiple controls with validation support
@@ -37,10 +37,6 @@ JavaFX Migration:
     and print the image instead the view (prints only the visible rows)
   - Update ViewPrinter when JavaFX API supports the printing of the complete tables
     (the I18N properties for list printing on multiple pages are present, see st.???view.print.???)
-- Linux test (Ubuntu 14.04 x64, Java 8u40 (needed!), VirtualBox):
-  - SportsTracker and ExerciseViewer are running fine (Look&Feel, printing, HRM file Drag&Drop)
-  - Application icon can't be set in code, must be defined in the .desktop launcher file
-    (see example in misc/linux-launcher/SportsTracker.desktop)
 - Spinner in Overview Dialog: remove mouse wheel workaround when added to JavaFX by default
   - I've filed a tweak request: https://javafx-jira.kenai.com/browse/RT-40269
 
