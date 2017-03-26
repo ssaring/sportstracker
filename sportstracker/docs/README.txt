@@ -409,8 +409,8 @@ The SportsTracker project uses the following libraries:
       License: BSD 3-Clause License
   - Kotlin 1.1.0 (http://kotlinlang.org/)
       License: Apache License v2.0
-  - Leaflet.js 1.0.3 (http://leafletjs.com/)
-      License: BSD 2-Clause License
+  - LeafletMap 1.0.0 (https://github.com/ssaring/sportstracker)
+      License: Apache License v2.0
   - leaflet-color-markers (https://github.com/pointhi/leaflet-color-markers)
     - Modified version, included in leafletmap
     - License: not specified

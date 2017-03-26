@@ -3,9 +3,7 @@ SportsTracker-TODO
 
 LeafletMap integration:
 - initial switch to Track panel takes quite long
-- make leafletmap module release-ready (README.md, License info needed?)
-  - which version number to use for leafletmap module - 1.0.0?
-- Kotlin 1.1.1 can't be used due to missing pom.xml in kotlin-maven-plugin => restest with 1.1.2
+- Kotlin 1.1.1 can't be used due to missing pom.xml in kotlin-maven-plugin => retest with 1.1.2
   (local build works fine, but Travis build crashes)
 
 Travis:
