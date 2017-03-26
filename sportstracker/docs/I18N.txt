@@ -44,10 +44,13 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
-SportsTracker 7.3.1:
+SportsTracker 7.4.0:
 
 - st.dlg.options.smoothed_charts.text (new)
 
+- pv.track.maptooltip.start (new)
+- pv.track.maptooltip.end (new)
+- pv.track.maptooltip.lap (new)
 
 SportsTracker 7.3.0:
 - st.view.export_sqlite.Action.text (new)
@@ -63,7 +66,6 @@ SportsTracker 7.3.0:
 - st.dlg.filter.entry_type_exercise.text (new)
 - st.dlg.filter.entry_type_note.text (new)
 - st.dlg.filter.entry_type_weight.text (new)
-
 
 SportsTracker 7.1.1:
 - pv.main.device.text (new)

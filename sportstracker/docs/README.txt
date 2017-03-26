@@ -102,8 +102,8 @@ files (.ped extension) in ExerciseViewer.
 Requirements
 ------------
 
-SportsTracker is an application for the Java platform written in Java and
-Groovy. It was developed and tested with the Oracle JVM, other JVM
+SportsTracker is an application for the Java platform written in Java, Groovy
+and Kotlin. It was developed and tested with the Oracle JVM, other JVM
 implementations will probably work too.
 
 The SportsTracker installer packages contain an embedded Java SE Runtime
@@ -236,13 +236,13 @@ If the heartrate monitor has an integrated GPS receiver and stores the
 location data in the exercise file (e.g. in TCX files from the Garmin Edge 
 series), then ExerciseViewer will show the exercise track inside a map viewer
 component. This interactive map is zoomable and moveable, so it's easy to 
-view all details of the track. Tooltips on all trackpoints will show you
-further information.
-The green waypoint is the start, the red is the end position and the white
-waypoints are the lap split positions.
+view all details of the track. The map viewer supports multiple layers, e.g.
+OpenStreetMap, OpenCycleMap and Hike&Bike Map.
+The green marker is the start, the red is the end position and the grey markers
+are the lap split positions.
 The exercise track can be replayed by using the track position slider. The
-current position is marked in the map by a violet waypoint. A tooltip shows
-all the details of the current position.
+current position is marked in the map by the blue marker. A tooltip shows all
+the details of the current position.
 The map data will be downloaded on demand from the OpenStreetMap project
 (http://www.openstreetmap.org).
 
@@ -349,15 +349,12 @@ For compilation of the SportsTracker sources you need:
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
-  - IntelliJ IDEA 14 Community Edition (http://www.jetbrains.com/idea/)
-    => preferred IDE, project files are in VCS
-  - NetBeans IDE 8.0 (from http://www.netbeans.org)
+  - IntelliJ IDEA Community Edition (http://www.jetbrains.com/idea/)
+    => preferred IDE, tested with version 2016.3
+  - NetBeans IDE (from http://www.netbeans.org)
     (Maven support is included, Groovy plugin needs to be installed)
-  - Eclipse 4.4 (from http://eclipse.org) with following plugins:
+  - Eclipse (from http://eclipse.org) with following plugins:
     - Groovy-Eclipse (from http://groovy.codehaus.org/Eclipse+Plugin)
-      - with Groovy-Eclipse Feature
-      - with Groovy Compiler Feature
-      - with Groovy-Eclipse M2E integration
 
 The Maven build configuration supports all typical goals (clean, compile,
 test, package, ...). The project is splitted into following modules (Maven
@@ -374,6 +371,8 @@ multi project), so it's not possible to create circular module dependencies.
     Component with common util classes for calculation, UI and more
   - st-packager:
     Module for creating native application packages for distribution
+  - leafletmap:
+    Module for the JavaFX wrapper component of the Leaflet map viewer
 
 In NetBeans you can open the project by "Open project", you need to select the
 project root directory and import all required projects.
@@ -393,13 +392,7 @@ project. That's why all developers need to use the same configuration for their
 IDE. This configuration and the documentation can be found in the directory
 'sportstracker/misc/ide-configuration'.
 
-All user interfaces are defined in FXML by using the JavaFX Scene Builder 2.0.
-Unfortunately Scene Builder creates a lot of unused import statements in the
-FXML files, which are a performance brake when loading the FXML files at
-runtime.
-So the edited FXML files always needs to be corrected manually after editing in
-Scene Builder. A FXML file must not contain unused and wildcard (*) imports!
-IntelliJ IDEA and Eclipse with the e(fx)clipse plugin can support here.
+All user interfaces are defined in FXML by using the JavaFX Scene Builder 8.x.
 
 The SportsTracker project uses the following libraries:
 
@@ -412,12 +405,15 @@ The SportsTracker project uses the following libraries:
       License: Lesser General Public License (LGPL)
   - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
-  - JXMapViewer2 2.2 (based on of SwingX-WS)
-      URL: https://github.com/msteiger/jxmapviewer2
-      Includes: commons-logging-1.1.1
-      License: Lesser General Public License (LGPL)
   - ControlsFX 8.40.12 (http://controlsfx.org/)
       License: BSD 3-Clause License
+  - Kotlin 1.1.0 (http://kotlinlang.org/)
+      License: Apache License v2.0
+  - LeafletMap 1.0.0 (https://github.com/ssaring/sportstracker)
+      License: Apache License v2.0
+  - leaflet-color-markers (https://github.com/pointhi/leaflet-color-markers)
+    - Modified version, included in leafletmap
+    - License: not specified
   - commons-cli 1.2 (http://commons.apache.org/cli/)
       License: Apache License v2.0
   - sqlite-jdbc 3.8.11.2 (https://github.com/xerial/sqlite-jdbc)
@@ -439,8 +435,8 @@ repository for them. It's available at: http://saring.de/st-maven-repo/
 
 
 If you're wondering why the complete application has been ported from the .NET
-platform (C# language, running on Mono) to the Java platform (Java and Groovy
-language), here are the most important reasons:
+platform (C# language, running on Mono) to the Java platform, here are the most
+important reasons:
 
   - much better tooling support for development, e.g. IDE's, debuggers,
     profilers, refactoring tools and so on
@@ -513,4 +509,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2016/10/04
+2017/02/25

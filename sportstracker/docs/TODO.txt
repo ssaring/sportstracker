@@ -1,31 +1,16 @@
 SportsTracker-TODO
 ==================
 
-- Use of JavaFX-based GMapsFX instead of Swing-based JXMapViewer?
-  - Homepage: http://rterp.github.io/GMapsFX/
-  - Test notes:
-    - Apache License 2.0
-    - uses Google Maps only, no API key needed
-    - super fast and good rendering
-    - controls for zoom and display options (map, satellite, ...) can be shown on demand
-      (also scale via scaleControl=true)
-    - displays small trails too (tested for Dresdner Heide)
-    - demo app needs a lot of memory (after start 135 MB, after short usage > 200 MB)
-  - To be tested: can the route and lap markers with numbers be displayed?
-- Alternative: Use of JavaFX-based Gluon Maps®
-  - http://gluonhq.com/announcing-gluon-maps/ + http://gluonhq.com/open-source/maps/
-  -> does not provide zoom and move controls (yet)
-- Alternative 2: Use of JavaFX WebView and display a OpenStreetMap-specific or generic web component
-  - OSM-Specific and very simple: Leaflet, see http://leafletjs.com/
-    (or http://leafletjs.com/examples/quick-start/ and https://wiki.openstreetmap.org/wiki/Leaflet )
-  - Generic: OpenLayers, see http://openlayers.org/ or http://wiki.openstreetmap.org/wiki/OpenLayers
+Travis:
+- use Ubuntu 16.04 instead of 14.04
+
+LeafletMap integration:
+- Kotlin 1.1.1 can't be used due to missing pom.xml in kotlin-maven-plugin => retest with 1.1.2
+  (local build works fine, but Travis build crashes)
 
 JavaFX Migration:
-- BUG with JDK8u66+: FilterDialog, NoteDialog and WeightDialog can't be opened anymore:
-  Caused by: java.lang.IllegalArgumentException:
-     DialogPane@4a0efce0[styleClass=root dialog-pane]is already inside a scene-graph and cannot be set as root
-  -> ControlsFX issue, see details here: https://bitbucket.org/controlsfx/controlsfx/issues/539/multiple-dialog-fields-with-validation
-  -> remove workaround when the bug has been fixed
+- Migration status: completed, Swing is not in use anymore
+- tested on macOS, Windows and Linux (incl. printing, drag & drop)
 - DatePicker validation does not work => when removing the date no error will be shown (uses previous date)
 - ControlsFX bug, remove workaround when fixed:
   - Dialogs can't be displayed when they contain multiple controls with validation support
@@ -45,38 +30,26 @@ JavaFX Migration:
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
 - JavaFX bug in GridPane layout since JavaFX 8u40 in (now using a workaround, see TODOs in CalendarControlSkin)
   - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-40099
-- Print Views: Done for all views
+- Print Views: Done for all viewsis
   - Problem in List Views: tables can't be printed completely, the JavaFX API support only the printing
     of one single node at one single page
   - Used workaround: create a snapshot image of the current displayed table view, scale to fit on paper
     and print the image instead the view (prints only the visible rows)
   - Update ViewPrinter when JavaFX API supports the printing of the complete tables
     (the I18N properties for list printing on multiple pages are present, see st.???view.print.???)
-- Linux test (Ubuntu 14.04 x64, Java 8u40 (needed!), VirtualBox):
-  - SportsTracker and ExerciseViewer are running fine (Look&Feel, printing, HRM file Drag&Drop)
-  - Application icon can't be set in code, must be defined in the .desktop launcher file
-    (see example in misc/linux-launcher/SportsTracker.desktop)
-- Exercise Viewer: use a JavaFX-based map viewer, currently it's the Swing-based JXMapViewer
-  - tested various JavaFX based components, none of them is stable and provides all features
-  - the integration of the Swing-based viewer works fine, there's no need to replace it instantly
 - Spinner in Overview Dialog: remove mouse wheel workaround when added to JavaFX by default
   - I've filed a tweak request: https://javafx-jira.kenai.com/browse/RT-40269
-
-JavaFX Migration status:
-- SportsTracker: completed
-- Exercise Viewer: completed (map viewer is still Swing based)
 
 Java 8 migration status:
 - full use of Lambdas and the new Java Date API (JSR 310) in all modules
 - the Parser implementations of the ExerciseViewer has not been updated for
   using the latest Java 8 features 
   => they are isolated and not the base for further development
-- IDE support: works fine in IDEA 13.1, NetBeans 8.0 and Eclipse 4.4
 
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
-  => Known bug, maybe it will be fixed in next JDK release
+  => JDK 9 will provide a new API for macOS specific dock and menu integration
 - SportsTracker.app and native packages work properly, the name and icons are
   set via JVM parameter there
 
@@ -131,7 +104,6 @@ ExerciseViewer-TODO
 Diagram panel:
 - there's no space at the left side when the bottom axis displays "by distance"
   (between left axis and graph start)
-Tack Panel: improve icons for start/end/lap points
 
 ExerciseParsers:
 - GarminTcxParser:

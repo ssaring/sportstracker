@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map</title>
+
+    <meta charset="utf-8" />
+    <!-- only needed for mobile browsers: disable unwanted scaling and use full width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- force the map to use the full available space -->
+    <style>
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+            padding: 0px;
+            margin: 0px;
+         }
+   </style>
+
+    <!-- for remote access of the Leaflet library
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script> -->
+
+    <link rel="stylesheet" href="leaflet/leaflet.css" />
+    <script src="leaflet/leaflet.js"></script>
+
+    <script src="leaflet-color-markers/leaflet-color-markers.js"></script>
+</head>
+<body>
+    <div id="map" />
+</body>
+</html>

@@ -2,16 +2,14 @@ package de.saring.exerciseviewer.gui;
 
 import java.io.IOException;
 
+import de.saring.util.SystemUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import de.saring.exerciseviewer.gui.panels.DiagramPanelController;
 import de.saring.exerciseviewer.gui.panels.LapPanelController;
@@ -92,14 +90,13 @@ public class EVController {
 
         setupPanels();
 
-        // register cleanup of JXMapViewer in TrackPanel on dialog close, otherwise there are memory leaks
-        stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> trackPanelController.cleanupPanel());
-
         // create scene and show dialog
         final Scene scene = new Scene(root);
-        setCloseOnEscape(scene);
         stage.setScene(scene);
-        stage.show();
+        stage.showAndWait();
+
+        // trigger a garbage collection when EV has been closed to avoid allocation of additional heap space
+        SystemUtils.triggerGC();
     }
 
     private void setupPanels() {
@@ -114,26 +111,12 @@ public class EVController {
             tabDiagram.setContent(diagramPanelController.loadAndSetupPanelContent());
             tabTrack.setContent(trackPanelController.loadAndSetupPanelContent());
 
-            // display exercise track not before the user wants to see it
-            // (prevents layout problems and reduces startup time)
+            // display map and exercise track not before the user wants to see it (reduces startup time)
             tabTrack.setOnSelectionChanged(event -> {
                 if (tabTrack.isSelected()) {
-                    trackPanelController.showTrack();
+                    trackPanelController.showMapAndTrack();
                 }
             });
-        });
-    }
-
-    /**
-     * Closes the dialog when the user presses the Escape key.
-     *
-     * @param scene dialog scene
-     */
-    private void setCloseOnEscape(final Scene scene) {
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-            if (keyEvent.getCode().equals(KeyCode.ESCAPE)) {
-                onClose(null);
-            }
         });
     }
 

@@ -22,6 +22,7 @@
     </properties>
     
     <modules>
+        <module>leafletmap</module>
         <module>st-util</module>
         <module>st-exerciseviewer</module>
         <module>sportstracker</module>

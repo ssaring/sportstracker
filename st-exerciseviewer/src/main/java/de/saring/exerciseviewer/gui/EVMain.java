@@ -6,12 +6,10 @@ import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import javax.inject.Inject;
 
 import de.saring.exerciseviewer.core.EVOptions;
-import de.saring.util.SystemUtils;
 import de.saring.util.gui.javafx.WindowBoundsPersistence;
 
 /**
@@ -81,8 +79,5 @@ public class EVMain {
 
         // init controller and show dialog
         controller.show(stage);
-
-        // trigger a garbage collection when EV has been closed to avoid allocation of additional heap space
-        stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, event -> SystemUtils.triggerGC());
     }
 }
