@@ -1,9 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Travis:
-- use Ubuntu 16.04 instead of 14.04
-
 LeafletMap integration:
 - Kotlin 1.1.1 can't be used due to missing pom.xml in kotlin-maven-plugin => retest with 1.1.2
   (local build works fine, but Travis build crashes)
