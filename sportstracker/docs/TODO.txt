@@ -50,6 +50,7 @@ Mac OS X integration:
 - SportsTracker.app and native packages work properly, the name and icons are
   set via JVM parameter there
 
+
 General TODOs:
 --------------
 
