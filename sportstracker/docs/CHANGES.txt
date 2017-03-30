@@ -1,6 +1,8 @@
 Changelog
 ---------
 
+v7.4.1:
+
 v7.4.0:
  SportsTracker changes:
  - the bundled Java runtime has been updated to Java SE/FX 8u121
