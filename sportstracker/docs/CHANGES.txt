@@ -2,11 +2,15 @@ Changelog
 ---------
 
 v7.4.1:
+ SportsTracker changes:
+ - Calendar View: removed layout workarounds (JavaFX bugs have been fixed)
+ ExerciseViewer changes:
+ - removed compiler warnings in LeafletMap component
 
 v7.4.0:
  SportsTracker changes:
  - the bundled Java runtime has been updated to Java SE/FX 8u121
-ExerciseViewer changes:
+ ExerciseViewer changes:
  - Issue #153: added chart smoothing in diagram view for all axis types
    - makes charts with a lot of sample data better readable
    - most improvements for speed, cadence and heartrate charts

@@ -25,9 +25,7 @@ JavaFX Migration:
   - installation of custom build in local repository:
     mvn install:install-file -Dfile=jfreechart-1.0.19.jar -DgroupId=org.jfree
       -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
-- JavaFX bug in GridPane layout since JavaFX 8u40 in (now using a workaround, see TODOs in CalendarControlSkin)
-  - I've filed a JavaFX bug: https://javafx-jira.kenai.com/browse/RT-40099
-- Print Views: Done for all viewsis
+- Print Views: Done for all views
   - Problem in List Views: tables can't be printed completely, the JavaFX API support only the printing
     of one single node at one single page
   - Used workaround: create a snapshot image of the current displayed table view, scale to fit on paper
