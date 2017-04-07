@@ -23,7 +23,7 @@
         <dependency>
             <groupId>de.saring</groupId>
             <artifactId>leafletmap</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.garmin.fit</groupId>

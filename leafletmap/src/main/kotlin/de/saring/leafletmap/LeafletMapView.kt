@@ -42,7 +42,7 @@ class LeafletMapView : StackPane() {
     fun displayMap(mapConfig: MapConfig): CompletableFuture<Worker.State> {
         val finalMapLoadState = CompletableFuture<Worker.State>()
 
-        webEngine.loadWorker.stateProperty().addListener { observable, oldValue, newValue ->
+        webEngine.loadWorker.stateProperty().addListener { _, _, newValue ->
 
             if (newValue == Worker.State.SUCCEEDED) {
                 executeMapSetupScripts(mapConfig)

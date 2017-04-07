@@ -41,7 +41,7 @@ class Controller {
 
         positionTooltip.setAutoHide(true)
 
-        slPosition.valueProperty().addListener { observable, oldValue, newValue ->
+        slPosition.valueProperty().addListener { _, oldValue, newValue ->
             if (oldValue.toInt() != newValue.toInt()) {
                 movePositionMarker()
             }
