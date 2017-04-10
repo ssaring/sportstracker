@@ -3,7 +3,9 @@ Changelog
 
 v7.4.1:
  SportsTracker changes:
- - Calendar View: removed layout workarounds (JavaFX bugs have been fixed)
+ - Calendar View:
+   - Issue #141: today is highlighted in a blue circle (red  for sundays)
+   - removed layout workarounds (JavaFX bugs have been fixed)
  ExerciseViewer changes:
  - removed compiler warnings in LeafletMap component
 

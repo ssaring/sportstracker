@@ -25,28 +25,42 @@
 }
 
 /* Style of the upper left number of calendar cells. */
-.calendar-control-cell > .number {
+.calendar-control-cell > .number-panel > .number {
     -fx-text-fill-default: black;
     -fx-text-fill-sunday: red;
-    -fx-text-fill-today: darkblue;
+    -fx-text-fill-today: white;
     -fx-text-fill: -fx-text-fill-default;
+
+    -fx-text-background-today: cornflowerblue;
+    -fx-text-background-today-sunday: orangered;
 }
 
-.calendar-control-cell > .number:today {
-    -fx-text-fill: -fx-text-fill-today;
-    -fx-font-weight: bold;
-}
-
-.calendar-control-cell > .number:sunday {
+.calendar-control-cell > .number-panel > .number:sunday {
     -fx-text-fill: -fx-text-fill-sunday;
 }
 
-.calendar-control-cell > .number:outside-month {
+.calendar-control-cell > .number-panel > .number:today {
+    -fx-text-fill: -fx-text-fill-today;
+    -fx-background-color: -fx-text-background-today;
+    -fx-font-weight: bold;
+    -fx-background-insets: -2 -3 -2 -3;
+    -fx-background-radius: 30;
+}
+
+.calendar-control-cell > .number-panel > .number:today:sunday {
+    -fx-background-color: -fx-text-background-today-sunday;
+}
+
+.calendar-control-cell > .number-panel > .number:outside-month {
     -fx-text-fill: derive(-fx-text-fill-default, 90%);
 }
 
-.calendar-control-cell > .number:sunday:outside-month {
+.calendar-control-cell > .number-panel > .number:sunday:outside-month {
     -fx-text-fill: derive(-fx-text-fill-sunday, 90%);
+}
+
+.calendar-control-cell > .number-panel > .number:outside-month:today {
+    -fx-text-fill: derive(-fx-text-fill-today, 90%);
 }
 
 /* Style of calendar header cells. */
@@ -80,4 +94,3 @@
     /* increase the downsized tooltip font size */
     -fx-font-size: 0.9em;
 }
-

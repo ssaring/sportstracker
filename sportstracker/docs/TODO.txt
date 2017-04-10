@@ -14,8 +14,6 @@ JavaFX Migration:
     (see https://bitbucket.org/controlsfx/controlsfx/issues/539/multiple-dialog-fields-with-validation )
   - workaround is to setup the validation after the dialog has been shown (with Platform.invokeLater(...)
     => remove after the bug has been fixed in Filter-, Note- and Weight Dialog
-- Calendar: current day must be better recognizable, see
-  https://sourceforge.net/p/sportstracker/feature-requests/80/
 - ExerciseViewer: Done & tested
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)

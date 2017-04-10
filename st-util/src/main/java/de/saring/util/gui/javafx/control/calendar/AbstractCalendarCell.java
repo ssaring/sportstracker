@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -25,12 +26,15 @@ abstract class AbstractCalendarCell extends VBox {
         setPadding(new Insets(3, 4, 3, 4));
         setSpacing(3);
 
+        HBox hbNumber = new HBox();
+        hbNumber.setAlignment(Pos.CENTER_RIGHT);
+        getChildren().add(hbNumber);
+
         laNumber = new Label();
-        laNumber.setAlignment(Pos.CENTER_RIGHT);
-        laNumber.setMaxWidth(Double.MAX_VALUE);
-        getChildren().add(laNumber);
+        hbNumber.getChildren().add(laNumber);
 
         getStyleClass().add("calendar-control-cell");
+        hbNumber.getStyleClass().add("number-panel");
         getNumberLabel().getStyleClass().add("number");
     }
 
@@ -40,7 +44,9 @@ abstract class AbstractCalendarCell extends VBox {
      * @param number number to display
      */
     public void setNumber(final int number) {
-        laNumber.setText(String.valueOf(number));
+        // add spaces around day number when < 10 => otherwise the highlighted background for today is too slim
+        String preSuffix = number < 10 ? " " : "";
+        laNumber.setText(preSuffix + String.valueOf(number) + preSuffix);
     }
 
     /**
