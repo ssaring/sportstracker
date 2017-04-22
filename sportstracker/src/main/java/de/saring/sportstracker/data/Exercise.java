@@ -1,7 +1,5 @@
 package de.saring.sportstracker.data;
 
-import de.saring.util.AppResources;
-
 /**
  * This class contains all information of a single exercise (or workout).
  *
@@ -70,28 +68,22 @@ public final class Exercise extends Entry implements Cloneable {
      */
     public enum IntensityType {
 
-        MINIMUM(0), LOW(1), NORMAL(2), HIGH(3), MAXIMUM(4), INTERVALS(5);
+        MINIMUM(0, "st.intensity.minimum"),
+        LOW(1, "st.intensity.low"),
+        NORMAL(2, "st.intensity.normal"),
+        HIGH(3, "st.intensity.high"),
+        MAXIMUM(4, "st.intensity.maximum"),
+        INTERVALS(5, "st.intensity.intervals");
 
-        /**
-         * Value of the intensity type (needed for sorting).
-         */
+        /** Value of the intensity type (needed for sorting). */
         private final int value;
 
-        /**
-         * Static resource reader is needed for string creation.
-         */
-        // TODO remove the resource reader instance from the domain class !!!
-        private static AppResources appResources;
+        /** Resource key of the intensity name. */
+        private final String resourceKey;
 
-        public static void setAppResources(AppResources appResources) {
-            IntensityType.appResources = appResources;
-        }
-
-        /**
-         * Standard c'tor.
-         */
-        IntensityType(int value) {
+        private IntensityType(int value, String resourceKey) {
             this.value = value;
+            this.resourceKey = resourceKey;
         }
 
         public int getValue() {
@@ -99,37 +91,12 @@ public final class Exercise extends Entry implements Cloneable {
         }
 
         /**
-         * Returns the translated name (to be displayed) for this intensity.
+         * Returns the I18N resource key of the intensity name.
          *
-         * @return name of this intensity
+         * @return resource key
          */
-        @Override
-        public String toString() {
-            switch (this) {
-                case MINIMUM:
-                    return IntensityType.appResources.getString("st.intensity.minimum");
-                case LOW:
-                    return IntensityType.appResources.getString("st.intensity.low");
-                case NORMAL:
-                    return IntensityType.appResources.getString("st.intensity.normal");
-                case HIGH:
-                    return IntensityType.appResources.getString("st.intensity.high");
-                case MAXIMUM:
-                    return IntensityType.appResources.getString("st.intensity.maximum");
-                case INTERVALS:
-                    return IntensityType.appResources.getString("st.intensity.intervals");
-            }
-            return "???";
-        }
-
-        /**
-         * Returns the string representation of this enum value created by the
-         * toString()) method of the superclass.
-         *
-         * @return String representation of the value
-         */
-        public String toStringEnum() {
-            return super.toString();
+        public String getResourceKey() {
+            return resourceKey;
         }
     }
 

@@ -130,7 +130,7 @@ public class StatisticDialogController extends AbstractDialogController {
             statisticFilter.getSportSubType().getName();
 
         final String strIntensity = statisticFilter.getIntensity() == null ? strAll :
-            statisticFilter.getIntensity().toString();
+                context.getResources().getString(statisticFilter.getIntensity().getResourceKey());
 
         final String strEquipment = statisticFilter.getEquipment() == null ? strAll :
             statisticFilter.getEquipment().getName();

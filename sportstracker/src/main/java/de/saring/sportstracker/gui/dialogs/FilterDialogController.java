@@ -25,6 +25,7 @@ import javafx.stage.Window;
 
 import javax.inject.Inject;
 
+import javafx.util.StringConverter;
 import org.controlsfx.validation.Validator;
 
 import de.saring.sportstracker.data.Equipment;
@@ -109,8 +110,6 @@ public class FilterDialogController extends AbstractDialogController {
 
         equipmentAll = new Equipment(Integer.MAX_VALUE);
         equipmentAll.setName(resourceAll);
-
-        FilterViewModel.IntensityItem.nameAll = resourceAll;
     }
 
     /**
@@ -191,7 +190,7 @@ public class FilterDialogController extends AbstractDialogController {
 
         cbSportType.setConverter(new NameableStringConverter<>());
         cbSportSubtype.setConverter(new NameableStringConverter<>());
-        cbIntensity.setConverter(new NameableStringConverter<>());
+        cbIntensity.setConverter(new IntensityItemToStringConverter());
         cbEquipment.setConverter(new NameableStringConverter<>());
 
         cbSportType.getItems().add(sportTypeAll);
@@ -335,5 +334,26 @@ public class FilterDialogController extends AbstractDialogController {
     private void onAllTime(final ActionEvent event) {
         filterViewModel.dateStart.set(LocalDate.of(1900, 1, 1));
         filterViewModel.dateEnd.set(LocalDate.of(2999, 12, 31));
+    }
+
+    /**
+     * Custom JavaFX StringConverter class for converting an intensity item to a localized string.
+     */
+    public class IntensityItemToStringConverter extends StringConverter<FilterViewModel.IntensityItem> {
+
+        @Override
+        public String toString(final FilterViewModel.IntensityItem iValue) {
+            if (iValue == null) {
+                return "";
+            }
+
+            return context.getResources().getString(
+                    iValue.intensityType == null ? "st.dlg.filter.all.text" : iValue.intensityType.getResourceKey());
+        }
+
+        @Override
+        public FilterViewModel.IntensityItem fromString(final String strValue) {
+            throw new UnsupportedOperationException();
+        }
     }
 }

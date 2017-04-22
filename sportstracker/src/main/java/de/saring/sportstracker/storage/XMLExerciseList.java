@@ -195,7 +195,7 @@ public class XMLExerciseList {
             XMLUtils.addElement(eExercise, "sport-subtype-id", String.valueOf(exercise.getSportSubType().getId()));
             XMLUtils.addElement(eExercise, "date", exercise.getDateTime().format(XMLUtils.DATE_TIME_FORMAT));
             XMLUtils.addElement(eExercise, "duration", String.valueOf(exercise.getDuration()));
-            XMLUtils.addElement(eExercise, "intensity", exercise.getIntensity().toStringEnum());
+            XMLUtils.addElement(eExercise, "intensity", String.valueOf(exercise.getIntensity()));
             XMLUtils.addElement(eExercise, "distance", String.valueOf(exercise.getDistance()));
             XMLUtils.addElement(eExercise, "avg-speed", String.valueOf(exercise.getAvgSpeed()));
 

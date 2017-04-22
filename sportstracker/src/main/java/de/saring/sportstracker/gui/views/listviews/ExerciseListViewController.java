@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import de.saring.sportstracker.gui.views.ViewPrinter;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -18,6 +19,7 @@ import javax.inject.Singleton;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.Exercise.IntensityType;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
@@ -27,6 +29,7 @@ import de.saring.util.data.IdObject;
 import de.saring.util.gui.javafx.ColorUtils;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
+import javafx.util.Callback;
 
 /**
  * Controller class of the Exercise List View, which displays all the user exercises
@@ -49,7 +52,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     @FXML
     private TableColumn<Exercise, Number> tcDuration;
     @FXML
-    private TableColumn<Exercise, Object> tcIntensity;
+    private TableColumn<Exercise, Exercise.IntensityType> tcIntensity;
     @FXML
     private TableColumn<Exercise, Number> tcDistance;
     @FXML
@@ -142,6 +145,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         tcDate.setCellFactory(new LocalDateCellFactory());
         tcDuration.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().seconds2TimeString(value.intValue())));
+        tcIntensity.setCellFactory(new IntensityCellFactory());
         tcDistance.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().distanceToString(value.doubleValue(), 3)));
         tcAvgSpeed.setCellFactory(new FormattedNumberCellFactory<>(value -> //
@@ -184,6 +188,27 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
             final boolean useDefaultColor = tableRow.isSelected() && tvExercises.isFocused();
             final String color = useDefaultColor ? "white" : ColorUtils.toRGBCode(exercise.getSportType().getColor());
             tableRow.setStyle("-fx-text-background-color: " + color + ";");
+        }
+    }
+
+    /**
+     * TableColumn cell factory implementation for displaying the exercise intensity name as localized text inside
+     * table cells.
+     */
+    public class IntensityCellFactory implements Callback<TableColumn<Exercise, IntensityType>, TableCell<Exercise, IntensityType>> {
+
+        @Override
+        public TableCell<Exercise, IntensityType> call(final TableColumn<Exercise, IntensityType> column) {
+            return new TableCell<Exercise, IntensityType>() {
+
+                @Override
+                protected void updateItem(final IntensityType value, final boolean empty) {
+                    super.updateItem(value, empty);
+
+                    String text = empty || value == null ? null : getContext().getResources().getString(value.getResourceKey());
+                    setText(text);
+                }
+            };
         }
     }
 }

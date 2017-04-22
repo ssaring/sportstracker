@@ -15,7 +15,6 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.util.StringUtils;
-import de.saring.util.data.Nameable;
 
 /**
  * This ViewModel class provides JavaFX properties of all EntryFilter attributes to be edited in the
@@ -80,10 +79,7 @@ public class FilterViewModel {
      * can't contain IntensityType items, because the selection "all" is not available in the IntensityType
      * enumeration.
      */
-    public static class IntensityItem implements Nameable {
-
-        /** Displayed name to be used when the intensity type is null (all intensities). */
-        public static String nameAll;
+    public static class IntensityItem {
 
         /** The wrapped intensity type. The value null means "all intensities. */
         public final Exercise.IntensityType intensityType;
@@ -95,11 +91,6 @@ public class FilterViewModel {
          */
         public IntensityItem(final Exercise.IntensityType intensityType) {
             this.intensityType = intensityType;
-        }
-
-        @Override
-        public String getName() {
-            return intensityType == null ? nameAll : intensityType.toString();
         }
 
         @Override

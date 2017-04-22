@@ -180,7 +180,7 @@ public class SQLiteExporter {
             statement.setLong(2, Date310Utils.localDateTimeToUnixTime(exercise.getDateTime()));
             statement.setInt(3, exercise.getSportType().getId());
             statement.setInt(4, exercise.getSportSubType().getId());
-            statement.setString(5, exercise.getIntensity().toStringEnum());
+            statement.setString(5, String.valueOf(exercise.getIntensity()));
             statement.setInt(6, exercise.getDuration());
             statement.setFloat(7, exercise.getDistance());
             statement.setFloat(8, exercise.getAvgSpeed());

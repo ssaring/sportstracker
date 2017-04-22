@@ -105,9 +105,6 @@ public class STDocumentImpl implements STDocument {
         this.context = context;
         this.storage = storage;
 
-        // init enumerations (they need ResourceReader for string creation)
-        Exercise.IntensityType.setAppResources(context.getResources());
-
         // create name of directory where the data is stored
         dataDirectory = System.getProperty("user.home") + "/.sportstracker";
 

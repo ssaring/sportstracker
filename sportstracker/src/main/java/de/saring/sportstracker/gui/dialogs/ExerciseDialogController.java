@@ -22,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Window;
+import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 
 import javax.inject.Inject;
@@ -312,6 +313,8 @@ public class ExerciseDialogController extends AbstractDialogController {
         cbEquipment.setConverter(new NameableStringConverter<>());
 
         document.getSportTypeList().forEach(sportType -> cbSportType.getItems().add(sportType));
+
+        cbIntensity.setConverter(new IntensityToStringConverter());
         cbIntensity.getItems().addAll(Arrays.asList(IntensityType.values()));
 
         // update the sport type dependent choiceboxes on each sport type selection change
@@ -532,5 +535,21 @@ public class ExerciseDialogController extends AbstractDialogController {
         previousExerciseIndex = null;
         context.showMessageDialog(getWindow(taComment), Alert.AlertType.INFORMATION,
                 "common.info", "st.dlg.exercise.error.no_previous_exercise");
+    }
+
+    /**
+     * Custom JavaFX StringConverter class for converting a exercise intensity to a localized string.
+     */
+    public class IntensityToStringConverter extends StringConverter<IntensityType> {
+
+        @Override
+        public String toString(final IntensityType iValue) {
+            return iValue == null ? "" : context.getResources().getString(iValue.getResourceKey());
+        }
+
+        @Override
+        public IntensityType fromString(final String strValue) {
+            throw new UnsupportedOperationException();
+        }
     }
 }
