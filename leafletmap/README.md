@@ -11,7 +11,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Dependencies and used libraries
 
-* Kotlin 1.1.0
+* Kotlin 1.1.2
 * JavaSE 8 (tested with 8u121)
 * Leaflet 1.0.3 (included)
     * Homepage: http://leafletjs.com/
@@ -49,6 +49,13 @@ Both the LeafletMap component and the demo application are written in Kotlin.
   (default method parameters are supported via @JvmOverloads)
 * the demo application displays a GPS track read from a JSON file, the user can
   replay the track by using a position slider
+
+
+#### Changelog
+
+LeafletMap 1.0.1-SNAPSHOT:
+
+* Updated to Kotlin 1.1.2
 
 
 #### License
