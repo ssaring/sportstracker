@@ -106,7 +106,32 @@ class LeafletMapView : StackPane() {
     }
 
     /**
-     * Sets a marker at the specified position.
+     * Sets the view of the map to the specified geographical center position and zoom level.
+     *
+     * @param position map center position
+     * @param zoomLevel zoom level (0 - 19 for OpenStreetMap)
+     */
+    fun setView(position: LatLong, zoomLevel: Int) =
+            execScript("myMap.setView([${position.latitude}, ${position.longitude}], $zoomLevel);")
+
+    /**
+     * Pans the map to the specified geographical center position.
+     *
+     * @param position map center position
+     */
+    fun panTo(position: LatLong) =
+            execScript("myMap.panTo([${position.latitude}, ${position.longitude}]);")
+
+    /**
+     * Sets the zoom of the map to the specified level.
+     *
+     * @param zoomLevel zoom level (0 - 19 for OpenStreetMap)
+     */
+    fun setZoom(zoomLevel: Int) =
+        execScript("myMap.setZoom([$zoomLevel]);")
+
+    /**
+     * Sets a marker at the specified geographical position.
      *
      * @param position marker position
      * @param title marker title shown in tooltip (pass empty string when tooltip not needed)
@@ -123,7 +148,7 @@ class LeafletMapView : StackPane() {
     }
 
     /**
-     * Moves the existing marker specified by the variable name to the new position.
+     * Moves the existing marker specified by the variable name to the new geographical position.
      *
      * @param markerName variable name of the marker
      * @param position new marker position
@@ -133,7 +158,7 @@ class LeafletMapView : StackPane() {
     }
 
     /**
-     * Draws a track path anlong the specified positions in the color red and zooms the map to fit the track perfectly.
+     * Draws a track path along the specified positions in the color red and zooms the map to fit the track perfectly.
      *
      * @param positions list of track positions
      */

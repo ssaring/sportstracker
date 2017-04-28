@@ -1,6 +1,7 @@
 package de.saring.leafletmapdemo
 
 import de.saring.leafletmap.*
+import javafx.concurrent.Worker
 import javafx.fxml.FXML
 import javafx.geometry.Point2D
 import javafx.scene.control.Slider
@@ -32,12 +33,12 @@ class Controller {
                 zoomControlConfig = ZoomControlConfig(true, ControlPosition.BOTTOM_LEFT),
                 scaleControlConfig = ScaleControlConfig(true, ControlPosition.BOTTOM_LEFT, metric = true)))
 
-        // example code when the route has to be displayed immediately
-        /* cfMapLoadState.whenComplete { workerState, throwable  ->
+        // display Berlin initially after map has been loaded
+        cfMapLoadState.whenComplete { workerState, _ ->
             if (workerState == Worker.State.SUCCEEDED) {
-                onDisplayTrack()
+                mapView.setView(LatLong(52.5172, 13.4040), 9)
             }
-        } */
+        }
 
         positionTooltip.setAutoHide(true)
 

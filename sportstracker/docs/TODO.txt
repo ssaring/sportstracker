@@ -1,10 +1,6 @@
 SportsTracker-TODO
 ==================
 
-LeafletMap integration:
-- Kotlin 1.1.1 can't be used due to missing pom.xml in kotlin-maven-plugin => retest with 1.1.2
-  (local build works fine, but Travis build crashes)
-
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore
 - tested on macOS, Windows and Linux (incl. printing, drag & drop)

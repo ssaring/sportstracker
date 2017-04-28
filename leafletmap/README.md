@@ -56,6 +56,8 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 LeafletMap 1.0.1-SNAPSHOT:
 
 * Updated to Kotlin 1.1.2
+* API: added methods for setting the center position and zoom level
+  (was only possible for tracks before)
 
 
 #### License
