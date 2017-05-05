@@ -13,6 +13,10 @@
         <version>1.0.0</version>
     </parent>
 
+    <properties>
+        <kotlin.version>1.1.2</kotlin.version>
+    </properties>
+
     <dependencies>
         <!-- Additional dependencies -->
         <dependency>
@@ -34,6 +38,35 @@
 
     <build>
         <plugins>
+            <plugin>
+                <!-- Kotlin compiler configuration for mixed compilation -->
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <goals> <goal>compile</goal> </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                                <sourceDir>${project.basedir}/src/main/java</sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <goals> <goal>test-compile</goal> </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                                <sourceDir>${project.basedir}/src/test/java</sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Compiler plugin configuration: use groovy-eclipse-compiler for
                  mixed Java/Groovy compilation (only needed in this module). -->
             <plugin>
