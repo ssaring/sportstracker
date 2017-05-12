@@ -4,6 +4,7 @@ SportsTracker-TODO
 ExerciseViewer Kotlin port:
 - GarminTcxParser + Test => Done
 - TopoGrafixGpxParser + Test => Done
+- PolarRS200SDParser + Test => Done
 - port all other parsers and tests
 - update ChangeLog and project description
 - remove Groovy dependencies
