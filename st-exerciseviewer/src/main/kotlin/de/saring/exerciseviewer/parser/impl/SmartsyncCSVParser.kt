@@ -1,7 +1,9 @@
 package de.saring.exerciseviewer.parser.impl
 
 import de.saring.exerciseviewer.core.EVException
-import de.saring.exerciseviewer.data.*
+import de.saring.exerciseviewer.data.EVExercise
+import de.saring.exerciseviewer.data.ExerciseSample
+import de.saring.exerciseviewer.data.RecordingMode
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
 import java.io.File

@@ -1,7 +1,14 @@
 package de.saring.exerciseviewer.parser.impl
 
 import de.saring.exerciseviewer.core.EVException
-import de.saring.exerciseviewer.data.*
+import de.saring.exerciseviewer.data.EVExercise
+import de.saring.exerciseviewer.data.ExerciseAltitude
+import de.saring.exerciseviewer.data.ExerciseSample
+import de.saring.exerciseviewer.data.ExerciseSpeed
+import de.saring.exerciseviewer.data.HeartRateLimit
+import de.saring.exerciseviewer.data.Lap
+import de.saring.exerciseviewer.data.Position
+import de.saring.exerciseviewer.data.RecordingMode
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
 import de.saring.util.Date310Utils
@@ -9,7 +16,6 @@ import de.saring.util.unitcalc.CalculationUtils
 import org.jdom2.Element
 import org.jdom2.Namespace
 import org.jdom2.input.SAXBuilder
-
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

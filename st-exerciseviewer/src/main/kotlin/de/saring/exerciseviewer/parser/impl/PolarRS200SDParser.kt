@@ -1,7 +1,12 @@
 package de.saring.exerciseviewer.parser.impl
 
 import de.saring.exerciseviewer.core.EVException
-import de.saring.exerciseviewer.data.*
+import de.saring.exerciseviewer.data.EVExercise
+import de.saring.exerciseviewer.data.ExerciseSpeed
+import de.saring.exerciseviewer.data.HeartRateLimit
+import de.saring.exerciseviewer.data.Lap
+import de.saring.exerciseviewer.data.LapSpeed
+import de.saring.exerciseviewer.data.RecordingMode
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
 import org.jdom2.Element
