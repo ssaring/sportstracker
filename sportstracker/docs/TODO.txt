@@ -3,7 +3,7 @@ SportsTracker-TODO
 
 ExerciseViewer Kotlin port:
 - Status: all Groovy parsers unit tests are ported to Kotlin, except:
-- PolarHRMParser + PolarHRMParserTest needs to be ported
+- PolarHRMParser needs to be ported (test already done)
 - update ChangeLog and project description
 - remove Groovy dependencies
 
