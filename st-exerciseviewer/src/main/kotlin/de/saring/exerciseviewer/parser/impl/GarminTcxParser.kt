@@ -46,7 +46,7 @@ class GarminTcxParser : AbstractExerciseParser() {
             return parseExerciseElement(document.rootElement)
         }
         catch (e: Exception) {
-            throw EVException("Failed to read the Garmin TCX exercise file '${filename}'!", e)
+            throw EVException("Failed to read the Garmin TCX exercise file '$filename'!", e)
         }
     }
 

@@ -2,13 +2,14 @@ SportsTracker-TODO
 ==================
 
 ExerciseViewer Kotlin port:
-- Status: all Groovy parsers unit tests are ported to Kotlin, except:
-- PolarHRMParser needs to be ported (test already done)
-- update ChangeLog and project description
+- Status: all Groovy parsers unit tests are ported to Kotlin
+- see TODO in PolarHRMParser (refactoring needed)
 - remove Groovy dependencies
+- update ChangeLog and project description
 
 - GitHub issue #159: Cannot parse Garmin Edge 820 files
   -> update FIT SDK library for parsing files and add test case for the Edge 820 file
+- add Garmin Forerunner 35 to compatibility list
 
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore

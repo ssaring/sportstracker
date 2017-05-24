@@ -48,7 +48,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
             return parseExerciseElement(document.rootElement)
         }
         catch (e: Exception) {
-            throw EVException("Failed to read the TopoGrafix GPX exercise file '${filename}'!", e)
+            throw EVException("Failed to read the TopoGrafix GPX exercise file '$filename'!", e)
         }
     }
 
