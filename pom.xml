@@ -18,7 +18,6 @@
         <application.name>SportsTracker</application.name>
         <application.mainClass>de.saring.sportstracker.gui.STApplication</application.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <groovy.version>2.4.1</groovy.version>
     </properties>
     
     <modules>
@@ -53,35 +52,6 @@
             <artifactId>jdom2</artifactId>
             <version>2.0.6</version>
         </dependency>
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>${groovy.version}</version>
-            <exclusions>
-                <!-- Exclude all not needed dependecies, only asm-core and antlr are needed -->
-                <exclusion>
-                    <groupId>org.ow2.asm</groupId>
-                    <artifactId>asm-analysis</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.ow2.asm</groupId>
-                    <artifactId>asm-commons</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.ow2.asm</groupId>
-                    <artifactId>asm-tree</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.ow2.asm</groupId>
-                    <artifactId>asm-util</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-xml</artifactId>
-            <version>${groovy.version}</version>
-        </dependency>
         <!-- JavaFX version of JFreeChart is currently not available at Maven Central, using a custom build from saring.de repository -->
         <dependency>
             <groupId>org.jfree</groupId>
@@ -115,12 +85,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-test</artifactId>
-            <version>${groovy.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

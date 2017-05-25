@@ -66,31 +66,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!-- Compiler plugin configuration: use groovy-eclipse-compiler for
-                 mixed Java/Groovy compilation (only needed in this module). -->
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <compilerId>groovy-eclipse-compiler</compilerId>
-                    <verbose>false</verbose>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-eclipse-compiler</artifactId>
-                        <version>2.9.1-01</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-eclipse-batch</artifactId>
-                        <version>2.3.7-01</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
         </plugins>
     </build>
 

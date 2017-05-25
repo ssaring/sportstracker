@@ -4,7 +4,6 @@ SportsTracker-TODO
 ExerciseViewer Kotlin port:
 - Status: all Groovy parsers unit tests are ported to Kotlin
 - see TODO in PolarHRMParser (refactoring needed)
-- remove Groovy dependencies
 
 - GitHub issue #159: Cannot parse Garmin Edge 820 files
   -> update FIT SDK library for parsing files and add test case for the Edge 820 file
