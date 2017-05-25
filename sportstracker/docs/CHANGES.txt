@@ -19,6 +19,10 @@ v7.4.1:
    - Kotlin can now be used in all modules together with Java
      (no more mixed compilation issues with Groovy code)
  - removed compiler warnings in LeafletMap component
+ - Issue #159: added support for Garmin Edge 820 exercise files
+   - updated Garmin FIT SDK library to version 20.33.01, previous FIT library
+     was not able to parse exercise files with the new protocol format 2.0
+   - added unit test for a Garmin Edge 820 exercise file
 
 v7.4.0:
  SportsTracker changes:

@@ -43,7 +43,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - CicloSport HAC4    (tested)
   - CicloSport HAC4Pro (tested)
   - CicloSport HAC5    (tested)
-  - Garmin Edge        (tested with Edge 500, 520, 705, FIT and TCX files)
+  - Garmin Edge        (tested with Edge 500, 520, 705, 820, FIT and TCX files)
   - Garmin Forerunner  (tested with Forerunner 35, 305, 910XT, FIT and TCX files)
   - Garmin Oregon      (tested with Oregon 450, GPX files)
   - Garmin Fenix       (tested with Fenix 2, FIT files)
@@ -418,7 +418,7 @@ The SportsTracker project uses the following libraries:
       License: Common Public License v1.0
   - Mockito 1.10.19 (http://code.google.com/p/mockito/)
       License: MIT License
-  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 16.50
+  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 20.33.01
       URL: http://www.thisisant.com/pages/products/fit-sdk
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: https://www.thisisant.com/resources/fit

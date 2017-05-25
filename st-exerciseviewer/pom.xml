@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.garmin.fit</groupId>
             <artifactId>fit</artifactId>
-            <version>16.50</version>
+            <version>20.33.1</version>
         </dependency>
     </dependencies>
 
