@@ -23,8 +23,6 @@ import java.time.LocalDateTime
  * the extension ".hrm". They can be read from the Polar device using the software shipped with most Polar devices.
  * The format description is taken from the file "Polar_HRM2_file_format.pdf".
  *
- * TODO Refactor the huge parser method, has been converted 1:1 from Groovy to Kotlin.
- *
  * @author Stefan Saring
  */
 class PolarHRMParser : AbstractExerciseParser() {
@@ -53,8 +51,28 @@ class PolarHRMParser : AbstractExerciseParser() {
         exercise.fileType = EVExercise.ExerciseFileType.HRM
         exercise.deviceName = "Polar HRM"
 
-        //////////////////////////////////////////////////////////////////////
-        // parse 'Params' block
+        // parse exercise file blocks
+        val fMetricUnits = parseBlockParams(fileContent, exercise)
+        parseBlockIntTimes(fileContent, exercise, fMetricUnits)
+        parseBlockSummaryTimes(fileContent, exercise)
+        // ignore 'Summary-TH', 'HRZones' and 'SwapTimes' block
+        parseBlockTrip(fileContent, exercise, fMetricUnits)
+        parseBlockHrData(fileContent, exercise, fMetricUnits)
+
+        // calculate average lap speed, the data was not recorded here
+        calculateAverageLapSpeed(exercise)
+
+        return exercise
+    }
+
+    /**
+     * Parses the 'Params' block of the exercise file.
+     *
+     * @param fileContent all exercise file lines
+     * @param exercise the created exercise
+     * @return flag whether the exercise file uses metric (true) or english (false) units
+     */
+    private fun parseBlockParams(fileContent: List<String>, exercise: EVExercise): Boolean {
 
         // get lines of 'Params' block
         val lParamsBlock = getBlockLines(fileContent, "Params", true)
@@ -120,7 +138,17 @@ class PolarHRMParser : AbstractExerciseParser() {
 
         // ignore Upper1, Lower1, ... Lower3, they're again in block Summary-123
         // ignore Timer1,Timer2,Timer3, ActiveLimit, MaxHR, RestHR, StartDelay, VO2max, Weight
+        return fMetricUnits
+    }
 
+    /**
+     * Parses the 'IntTimes' block of the exercise file, which contains the lap information.
+     *
+     * @param fileContent all exercise file lines
+     * @param exercise the created exercise
+     * @param fMetricUnits flag whether the exercise file uses metric (true) or english (false) units
+     */
+    private fun  parseBlockIntTimes(fileContent: List<String>, exercise: EVExercise, fMetricUnits: Boolean) {
         //////////////////////////////////////////////////////////////////////
         // parse 'IntTimes' block (Lap times)
 
@@ -231,10 +259,15 @@ class PolarHRMParser : AbstractExerciseParser() {
 
             // the 5. lap line can be ignored completely
         }
+    }
 
-
-        //////////////////////////////////////////////////////////////////////
-        // parse 'Summary-123' block (Lap times)
+    /**
+     * Parses the 'Summary-123' block of the exercise file, which contains the heart rate range information.
+     *
+     * @param fileContent all exercise file lines
+     * @param exercise the created exercise
+     */
+    private fun parseBlockSummaryTimes(fileContent: List<String>, exercise: EVExercise) {
 
         // get lines of 'Summary-123' block
         // (mostly 7 lines, 8 lines for Polar CS600, data of last line is unknown)
@@ -282,11 +315,17 @@ class PolarHRMParser : AbstractExerciseParser() {
             //     exercise.heartRateLimits[i].upperHeartRate = (maxHR * exercise.heartRateLimits[i].upperHeartRate) / 100f
             // }
         }
+    }
 
-        // ignore 'Summary-TH', 'HRZones' and 'SwapTimes' block
-
-        //////////////////////////////////////////////////////////////////////////
-        // parse 'Trip' block (Cycling data) (it's not in all files, e.g. on S410 or S610)
+    /**
+     * Parses the 'Trip' block of the exercise file, which contains the speed and altitude information. This block is
+     * not contained in all files (e.g. missing on S410 or S610).
+     *
+     * @param fileContent all exercise file lines
+     * @param exercise the created exercise
+     * @param fMetricUnits flag whether the exercise file uses metric (true) or english (false) units
+     */
+    private fun parseBlockTrip(fileContent: List<String>, exercise: EVExercise, fMetricUnits: Boolean) {
 
         // get lines of 'Trip' block
         val lTripBlock = getBlockLines(fileContent, "Trip", false)
@@ -335,9 +374,16 @@ class PolarHRMParser : AbstractExerciseParser() {
                 exercise.odometer = ConvertUtils.convertMiles2Kilometer(exercise.odometer)
             }
         }
+    }
 
-        //////////////////////////////////////////////////////////////////////
-        // parse 'HRData' block (Sample data)
+    /**
+     * Parses the 'HRData' block of the exercise file, which contains the exercise sample information.
+     *
+     * @param fileContent all exercise file lines
+     * @param exercise the created exercise
+     * @param fMetricUnits flag whether the exercise file uses metric (true) or english (false) units
+     */
+    private fun parseBlockHrData(fileContent: List<String>, exercise: EVExercise, fMetricUnits: Boolean) {
 
         // get lines of 'HRData' block
         val lHRDataBlock = getBlockLines(fileContent, "HRData", true)
@@ -446,11 +492,6 @@ class PolarHRMParser : AbstractExerciseParser() {
 
         // repair distance values of samples
         exercise.repairSamples()
-
-        // calculate average lap speed, the data was not recorded here
-        calculateAverageLapSpeed(exercise)
-
-        return exercise
     }
 
     /**

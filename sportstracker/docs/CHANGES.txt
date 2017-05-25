@@ -14,6 +14,8 @@ v7.4.1:
  - ported all exercise parsers and the unit tests written in Groovy to Kotlin
    - less dependencies, Groovy is not needed anymore (was big)
    - parser implementations are now faster and more stable (Kotlin is typesafe)
+   - refactoring of PolarHrmParser and some other parsers implemented in Groovy
+     (huge monolithic code blocks)
    - Kotlin can now be used in all modules together with Java
      (no more mixed compilation issues with Groovy code)
  - removed compiler warnings in LeafletMap component
