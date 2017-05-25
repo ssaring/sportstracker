@@ -44,7 +44,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - CicloSport HAC4Pro (tested)
   - CicloSport HAC5    (tested)
   - Garmin Edge        (tested with Edge 500, 520, 705, FIT and TCX files)
-  - Garmin Forerunner  (tested with Forerunner 305, 910XT, FIT and TCX files)
+  - Garmin Forerunner  (tested with Forerunner 35, 305, 910XT, FIT and TCX files)
   - Garmin Oregon      (tested with Oregon 450, GPX files)
   - Garmin Fenix       (tested with Fenix 2, FIT files)
   - Timex Ironmen Race Trainer (tested)
@@ -102,8 +102,8 @@ files (.ped extension) in ExerciseViewer.
 Requirements
 ------------
 
-SportsTracker is an application for the Java platform written in Java, Groovy
-and Kotlin. It was developed and tested with the Oracle JVM, other JVM
+SportsTracker is an application for the Java platform written in Java and
+Kotlin. It was developed and tested with the Oracle JVM, other JVM
 implementations will probably work too.
 
 The SportsTracker installer packages contain an embedded Java SE Runtime
@@ -350,11 +350,9 @@ For compilation of the SportsTracker sources you need:
 
 Tested IDE's (should work an any IDE with Maven support)
   - IntelliJ IDEA Community Edition (http://www.jetbrains.com/idea/)
-    => preferred IDE, tested with version 2016.3
-  - NetBeans IDE (from http://www.netbeans.org)
-    (Maven support is included, Groovy plugin needs to be installed)
-  - Eclipse (from http://eclipse.org) with following plugins:
-    - Groovy-Eclipse (from http://groovy.codehaus.org/Eclipse+Plugin)
+    => preferred IDE, tested with version 2017.1
+  - NetBeans IDE (from http://www.netbeans.org), Kotlin support not tested
+  - Eclipse (from http://eclipse.org), Kotlin support not tested
 
 The Maven build configuration supports all typical goals (clean, compile,
 test, package, ...). The project is splitted into following modules (Maven
@@ -396,19 +394,17 @@ All user interfaces are defined in FXML by using the JavaFX Scene Builder 8.x.
 
 The SportsTracker project uses the following libraries:
 
-  - Groovy 2.4.1 (http://groovy.codehaus.org)
-      License: Apache License v2.0
   - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
       Includes: javax.inject-1.jar
       License: Apache License v2.0
-  - JFreeChart 1.0.19 (http://www.jfree.org/)
-      License: Lesser General Public License (LGPL)
+  - Kotlin 1.1.2 (http://kotlinlang.org/)
+      License: Apache License v2.0
   - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
   - ControlsFX 8.40.12 (http://controlsfx.org/)
       License: BSD 3-Clause License
-  - Kotlin 1.1.0 (http://kotlinlang.org/)
-      License: Apache License v2.0
+  - JFreeChart 1.0.19 (http://www.jfree.org/)
+      License: Lesser General Public License (LGPL)
   - LeafletMap 1.0.0 (https://github.com/ssaring/sportstracker)
       License: Apache License v2.0
   - leaflet-color-markers (https://github.com/pointhi/leaflet-color-markers)
@@ -509,4 +505,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2017/02/25
+2017/05/25
