@@ -11,6 +11,11 @@ v7.4.1:
  - updated Java runtime to Java SE/FX 8u131, contains a bugfix for a memory
    leak in the WebView used by LeafletMap
  ExerciseViewer changes:
+ - ported all exercise parsers and the unit tests written in Groovy to Kotlin
+   - less dependencies, Groovy is not needed anymore (was big)
+   - parser implementations are now faster and more stable (Kotlin is typesafe)
+   - Kotlin can now be used in all modules together with Java
+     (no more mixed compilation issues with Groovy code)
  - removed compiler warnings in LeafletMap component
 
 v7.4.0:
