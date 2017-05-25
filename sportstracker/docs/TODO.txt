@@ -1,9 +1,6 @@
 SportsTracker-TODO
 ==================
 
-- GitHub issue #159: Cannot parse Garmin Edge 820 files
-  -> update FIT SDK library for parsing files and add test case for the Edge 820 file
-
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore
 - tested on macOS, Windows and Linux (incl. printing, drag & drop)
