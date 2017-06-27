@@ -1,6 +1,12 @@
 SportsTracker-TODO
 ==================
 
+ST-ExerciseViewer Kotlin port:
+- fix Kotlin compilation warnings?
+- continue with port of other EV data classes
+  -> data classes should be mutable (except e.g. for Position), no concurrency concerns here
+  -> this makes the parser implementations much simpler, no need to collect all the data before object creation
+
 - imminent ST release needed due to parsing problems with newer Garmin devices
   (e.g. for Garmin Edge 820 or Edge 520 with firmware >= 12.10)
   -> bugfix is done and tested
