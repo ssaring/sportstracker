@@ -111,10 +111,10 @@ class PolarRS200SDParser : AbstractExerciseParser() {
             lap.heartRateMax = eLap.getChildText("max_hr").toShort()
 
             if (hasSpeedData) {
-                lap.speed = LapSpeed()
-                lap.speed.distance = eLap.getChildText("lap_length").toInt()
-                lap.speed.speedEnd = convertSpeed(eLap.getChildText("end_pace").toFloat())
-                lap.speed.speedAVG = convertSpeed(eLap.getChildText("avg_pace").toFloat())
+                val lapSpeedDistance = eLap.getChildText("lap_length").toInt()
+                val lapSpeedEnd = convertSpeed(eLap.getChildText("end_pace").toFloat())
+                val lapSpeedAVG = convertSpeed(eLap.getChildText("avg_pace").toFloat())
+                lap.speed = LapSpeed(lapSpeedEnd, lapSpeedAVG, lapSpeedDistance)
             }
         }
 

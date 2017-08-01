@@ -203,9 +203,9 @@ class PolarHRMParser : AbstractExerciseParser() {
                     lapSpeed = ConvertUtils.convertMiles2Kilometer(lapSpeed)
                 }
 
-                exercise.lapList[i].speed = LapSpeed()
-                exercise.lapList[i].speed.speedEnd = lapSpeed.toFloat()
-                exercise.lapList[i].speed.cadence = currLapLineSplitted[4].toShort()
+                val lapSpeedCadence = if (exercise.recordingMode.isCadence)
+                    currLapLineSplitted[4].toShort() else null
+                exercise.lapList[i].speed = LapSpeed(lapSpeed.toFloat(), 0f, 0, lapSpeedCadence)
             }
 
             // parse altitude at lap split
@@ -215,9 +215,8 @@ class PolarHRMParser : AbstractExerciseParser() {
                     lapAltitude = ConvertUtils.convertFeet2Meter(lapAltitude)
                 }
 
-                exercise.lapList[i].altitude = LapAltitude()
-                exercise.lapList[i].altitude.altitude = lapAltitude.toShort()
                 // lap ascent can't be read from HRM files
+                exercise.lapList[i].altitude = LapAltitude(lapAltitude.toShort(), 0)
             }
 
             // the 3. lap line can be ignored completely
@@ -244,17 +243,18 @@ class PolarHRMParser : AbstractExerciseParser() {
 
             // get lap temperature
             if (exercise.recordingMode.isAltitude) {
-                exercise.lapList[i].temperature = LapTemperature()
 
-                if (fMetricUnits) {
+                val lapTemperature = if (fMetricUnits) {
                     // temperature is C / 10
                     val lapTemperature = currLapLineSplitted[3].toInt()
-                    exercise.lapList[i].temperature.temperature = (lapTemperature / 10).toShort()
+                    (lapTemperature / 10).toShort()
                 } else {
                     // temperature is Fahreinheit / 10
                     val lapTemperature = currLapLineSplitted[3].toInt() / 10
-                    exercise.lapList[i].temperature.temperature = ConvertUtils.convertFahrenheit2Celsius(lapTemperature.toShort())
+                    ConvertUtils.convertFahrenheit2Celsius(lapTemperature.toShort())
                 }
+
+                exercise.lapList[i].temperature = LapTemperature(lapTemperature)
             }
 
             // the 5. lap line can be ignored completely
@@ -441,9 +441,10 @@ class PolarHRMParser : AbstractExerciseParser() {
             exercise.speed.speedMax = 0f
 
             for (sample in exercise.sampleList) {
+                val sampleSpeed = sample.speed ?: 0f
                 sample.distance = distanceAccum.toInt()
-                distanceAccum += (sample.speed * exercise.recordingInterval) / 3.6
-                exercise.speed.speedMax = Math.max(sample.speed, exercise.speed.speedMax)
+                distanceAccum += (sampleSpeed * exercise.recordingInterval) / 3.6
+                exercise.speed.speedMax = Math.max(sampleSpeed, exercise.speed.speedMax)
             }
         }
 
@@ -452,8 +453,9 @@ class PolarHRMParser : AbstractExerciseParser() {
         exercise.heartRateMax = 0
 
         for (sample in exercise.sampleList) {
-            avgHeartrateSum += sample.heartRate
-            exercise.heartRateMax = maxShort(sample.heartRate, exercise.heartRateMax)
+            val sampleHeartRate = sample.heartRate ?: 0
+            avgHeartrateSum += sampleHeartRate
+            exercise.heartRateMax = maxShort(sampleHeartRate, exercise.heartRateMax)
         }
 
         // calculate AVG heartrate
@@ -464,7 +466,7 @@ class PolarHRMParser : AbstractExerciseParser() {
             exercise.altitude.altitudeMin = Short.MAX_VALUE
 
             for (sample in exercise.sampleList) {
-                exercise.altitude.altitudeMin = minShort(exercise.altitude.altitudeMin, sample.altitude)
+                exercise.altitude.altitudeMin = minShort(exercise.altitude.altitudeMin, sample.altitude ?: Short.MAX_VALUE)
             }
         }
 
@@ -477,12 +479,12 @@ class PolarHRMParser : AbstractExerciseParser() {
             var avgCadenceSamples = 0
 
             for (sample in exercise.sampleList) {
-                if (sample.cadence > 0) {
-                    avgCadenceSum += sample.cadence
+                sample.cadence?.let { sampleCadence ->
+                    avgCadenceSum += sampleCadence
                     avgCadenceSamples++
                 }
 
-                exercise.cadence.cadenceMax = maxShort(sample.cadence, exercise.cadence.cadenceMax)
+                exercise.cadence.cadenceMax = maxShort(sample.cadence ?: 0, exercise.cadence.cadenceMax)
             }
 
             if (avgCadenceSum > 0 && avgCadenceSamples > 0) {

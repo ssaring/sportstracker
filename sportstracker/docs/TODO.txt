@@ -2,14 +2,16 @@ SportsTracker-TODO
 ==================
 
 ST-ExerciseViewer Kotlin port:
-- fix Kotlin compilation warnings?
-- continue with port of other EV data classes
+- continue with port of remaining EV data classes
   -> data classes should be mutable (except e.g. for Position), no concurrency concerns here
   -> this makes the parser implementations much simpler, no need to collect all the data before object creation
+- finally: test all available exercise files whether they can can be opened without errors in ExerciseViewer
+- test exercise import in SportsTracker
 
 - imminent ST release needed due to parsing problems with newer Garmin devices
   (e.g. for Garmin Edge 820 or Edge 520 with firmware >= 12.10)
   -> bugfix is done and tested
+- update ControlsFX to version 8.40.13
 - Issue #162: ExerciseViewer Diagram panel: display average line for heartrate and other data
 
 JavaFX Migration:

@@ -330,46 +330,44 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
             // get altitude related data of lap (if recorded)
             if (recMode.isAltitude()) {
-                lap.setAltitude(new LapAltitude());
-                lap.setTemperature(new LapTemperature());
 
                 // get altitude at end of the lap (has on offset of 512)
                 short lapEndAltitude = (short) (fileContent[lapOffset] + (fileContent[lapOffset + 1] << 8) - 512);
-                if (fMetricUnits) {
-                    // metric units: meters without modification
-                    lap.getAltitude().setAltitude(lapEndAltitude);
-                } else {
+                if (!fMetricUnits) {
                     // english units: multiples of 5 feets
-                    lap.getAltitude().setAltitude((short) ConvertUtils.convertFeet2Meter(lapEndAltitude * 5));
+                    lapEndAltitude = (short) ConvertUtils.convertFeet2Meter(lapEndAltitude * 5);
                 }
 
                 // get ascent of the lap
                 int lapAscent = (fileContent[lapOffset + 2] + (fileContent[lapOffset + 3] << 8));
-                if (fMetricUnits) {
-                    lap.getAltitude().setAscent(lapAscent);
-                } else {
-                    lap.getAltitude().setAscent(ConvertUtils.convertFeet2Meter(lapAscent));
+                if (!fMetricUnits) {
+                    lapAscent = ConvertUtils.convertFeet2Meter(lapAscent);
                 }
 
+                lap.setAltitude(new LapAltitude(lapEndAltitude, lapAscent));
+
+
                 // get temperature at end of the lap
+                short lapTemperature;
                 if (fMetricUnits) {
                     // metric units: offset from -10 C
-                    lap.getTemperature().setTemperature((short) (fileContent[lapOffset + 4] - 10));
+                    lapTemperature = (short) (fileContent[lapOffset + 4] - 10);
                 } else {
                     // english units: offset from 14 F
-                    lap.getTemperature().setTemperature(ConvertUtils.convertFahrenheit2Celsius((short) (fileContent[lapOffset + 4] + 14)));
+                    lapTemperature = ConvertUtils.convertFahrenheit2Celsius((short) (fileContent[lapOffset + 4] + 14));
                 }
+                lap.setTemperature(new LapTemperature(lapTemperature));
 
                 lapOffset += 5;
             }
 
             // get speed (bicycle) related data of lap (if recorded)
             if (recMode.isSpeed()) {
-                lap.setSpeed(new LapSpeed());
 
                 // get cadence at end of the lap (if recorded)
+                Short lapCadence = null;
                 if (recMode.isCadence()) {
-                    lap.getSpeed().setCadence((short) fileContent[lapOffset]);
+                    lapCadence = (short) fileContent[lapOffset];
                     lapOffset += 1;
                 }
 
@@ -380,20 +378,17 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
                 // get lap distance (in 1/10th of km)
                 int lapDistance = (fileContent[lapOffset] + (fileContent[lapOffset + 1] << 8)) * 100;
-                if (fMetricUnits) {
-                    lap.getSpeed().setDistance(lapDistance);
-                } else {
-                    lap.getSpeed().setDistance(ConvertUtils.convertMiles2Kilometer(lapDistance));
+                if (!fMetricUnits) {
+                    lapDistance = ConvertUtils.convertMiles2Kilometer(lapDistance);
                 }
 
                 // get lap speed
                 float lapEndSpeed = ((float) (fileContent[lapOffset + 2] + ((fileContent[lapOffset + 3] & 0xf0) << 4)) / 16);
-                if (fMetricUnits) {
-                    lap.getSpeed().setSpeedEnd(lapEndSpeed);
-                } else {
-                    lap.getSpeed().setSpeedEnd((float) ConvertUtils.convertMiles2Kilometer(lapEndSpeed));
+                if (!fMetricUnits) {
+                    lapEndSpeed = (float) ConvertUtils.convertMiles2Kilometer(lapEndSpeed);
                 }
 
+                lap.setSpeed(new LapSpeed(lapEndSpeed, 0f, lapDistance, lapCadence));
                 lapOffset += 4;
             }
         }

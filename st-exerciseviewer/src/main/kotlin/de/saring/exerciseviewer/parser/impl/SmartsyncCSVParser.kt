@@ -98,11 +98,11 @@ class SmartsyncCSVParser : AbstractExerciseParser() {
 
         // compute average/maximum heartrate of exercise (not in HRM file)
         exercise.heartRateAVG = Math.round(sampleList
-                .map { it.heartRate }
+                .map { it.heartRate ?: 0 }
                 .average()).toShort()
 
         exercise.heartRateMax = sampleList
-                .map { it.heartRate }
+                .map { it.heartRate ?: 0}
                 .max() ?: 0
 
         // compute timestamps for all recorded exercise samples

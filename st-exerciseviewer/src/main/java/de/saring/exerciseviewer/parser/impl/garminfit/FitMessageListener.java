@@ -161,20 +161,20 @@ class FitMessageListener implements MesgListener {
 
         // read optional speed data
         if (mesg.getTotalDistance() != null) {
-            lap.setSpeed(new LapSpeed());
-            lap.getSpeed().setDistance(Math.round(mesg.getTotalDistance()));
+            int lapSpeedDistance = Math.round(mesg.getTotalDistance());
             // AVG speed might be missing in Garmin Forerunner 910XT exercises, will be calculated afterwards
-            Float avgSpeed = mesg.getAvgSpeed();
-            if (avgSpeed != null) {
-                lap.getSpeed().setSpeedAVG(
-                        ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
+            Float lapSpeedAVG = mesg.getAvgSpeed();
+            if (lapSpeedAVG != null) {
+                lapSpeedAVG = ConvertUtils.convertMeterPerSecond2KilometerPerHour(lapSpeedAVG);
+            } else {
+                lapSpeedAVG = 0f;
             }
+            lap.setSpeed(new LapSpeed(0f, lapSpeedAVG, lapSpeedDistance, null));
         }
 
         // read optional ascent data
         if (mesg.getTotalAscent() != null) {
-            lap.setAltitude(new LapAltitude());
-            lap.getAltitude().setAscent(mesg.getTotalAscent());
+            lap.setAltitude(new LapAltitude((short) 0, mesg.getTotalAscent()));
         }
 
         // read optional position data
@@ -229,7 +229,7 @@ class FitMessageListener implements MesgListener {
 
         if (mesg.getTemperature() != null) {
             temperatureAvailable = true;
-            sample.setTemperature(mesg.getTemperature());
+            sample.setTemperature(mesg.getTemperature().shortValue());
         }
     }
 
@@ -336,12 +336,12 @@ class FitMessageListener implements MesgListener {
             }
 
             if (lap.getAltitude() != null) {
-                lap.getAltitude().setAltitude(sampleAtLapEnd.getAltitude());
+                lap.setAltitude(lap.getAltitude().copy(
+                        (short) sampleAtLapEnd.getAltitude(), lap.getAltitude().getAscent()));
             }
 
             if (temperatureAvailable) {
-                lap.setTemperature(new LapTemperature());
-                lap.getTemperature().setTemperature(sampleAtLapEnd.getTemperature());
+                lap.setTemperature(new LapTemperature(sampleAtLapEnd.getTemperature()));
             }
         }
 

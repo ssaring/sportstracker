@@ -174,10 +174,10 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
             var distanceInMeter = 0.0
             if (prevPosition != null) {
                 // Calculate distance based on GPS coordinates, using haversine formula
-                val dLat = (sample.position.latitude - prevPosition.latitude) / degreeToRadianDivider
-                val dLon = (sample.position.longitude - prevPosition.longitude) / degreeToRadianDivider
+                val dLat = (sample.position!!.latitude - prevPosition.latitude) / degreeToRadianDivider
+                val dLon = (sample.position!!.longitude - prevPosition.longitude) / degreeToRadianDivider
                 val prevLat = prevPosition.latitude / degreeToRadianDivider
-                val currLat = sample.position.latitude / degreeToRadianDivider
+                val currLat = sample.position!!.latitude / degreeToRadianDivider
                 val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                         Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(prevLat) * Math.cos(currLat)
                 distanceInMeter = earthRadiosInMeter * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
@@ -192,7 +192,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
                 // (e.g. when two timestamps are less then 500 milliseconds apart)
                 // Note that timestamps are in milliseconds
                 // Note that speed is in km/h
-                val deltaTime = sample.timestamp - prevTimestamp
+                val deltaTime = sample.timestamp!! - prevTimestamp
                 // Note that deltaTime can be 0, either when GPX file contains two
                 // consecutive points with same timestamp or when it does not contain
                 // any timestamps at all. In both cases, speed will be set to 0 for
@@ -210,6 +210,14 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
             }
             prevTimestamp = sample.timestamp
         }
+
+        // speed and distance data in samples will be 0 if no timestamps were available => set them to null
+        if (!exercise.recordingMode.isSpeed) {
+            exercise.sampleList.forEach {
+                it.speed = null
+                it.distance = null
+            }
+        }
     }
 
     /**
@@ -223,18 +231,19 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
         altitude.altitudeMax = Short.MIN_VALUE
 
         var altitudeSum = 0L
-        var previousAltitude:Short = exercise.sampleList[0].altitude
+        var previousAltitude:Short = exercise.sampleList[0].altitude!!
 
         for (sample in exercise.sampleList) {
+            val sampleAltitude = sample.altitude!!
 
-            altitude.altitudeMin = Math.min(sample.altitude.toInt(), altitude.altitudeMin.toInt()).toShort()
-            altitude.altitudeMax = Math.max(sample.altitude.toInt(), altitude.altitudeMax.toInt()).toShort()
-            altitudeSum += sample.altitude
+            altitude.altitudeMin = Math.min(sampleAltitude.toInt(), altitude.altitudeMin.toInt()).toShort()
+            altitude.altitudeMax = Math.max(sampleAltitude.toInt(), altitude.altitudeMax.toInt()).toShort()
+            altitudeSum += sample.altitude!!
 
-            if (previousAltitude < sample.altitude) {
-                altitude.ascent += sample.altitude - previousAltitude
+            if (previousAltitude < sampleAltitude) {
+                altitude.ascent += sampleAltitude - previousAltitude
             }
-            previousAltitude = sample.altitude
+            previousAltitude = sampleAltitude
         }
 
         altitude.altitudeAVG = Math.round(altitudeSum / exercise.sampleList.size.toDouble()).toShort()
@@ -247,7 +256,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
         val sampleCount = exercise.sampleList.size
 
         if (sampleCount > 0) {
-            val lastSampleTimestamp = exercise.sampleList[sampleCount - 1].timestamp
+            val lastSampleTimestamp = exercise.sampleList[sampleCount - 1].timestamp!!
             if (lastSampleTimestamp > 0) {
                 exercise.duration = (lastSampleTimestamp / 100).toInt()
             }
@@ -263,8 +272,9 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
         // Determine maximum speed
         exercise.speed.speedMax = 0f
         for (sample in exercise.sampleList) {
-            if (sample.speed > exercise.speed.speedMax) {
-                exercise.speed.speedMax = sample.speed
+            val sampleSpeed = sample.speed!!
+            if (sampleSpeed > exercise.speed.speedMax) {
+                exercise.speed.speedMax = sampleSpeed
             }
         }
 
@@ -272,9 +282,9 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
         val sampleCount = exercise.sampleList.size
         if (sampleCount > 0) {
             val lastSample = exercise.sampleList[sampleCount - 1]
-            exercise.speed.distance = lastSample.distance
+            exercise.speed.distance = lastSample.distance!!
             exercise.speed.speedAVG = CalculationUtils.calculateAvgSpeed(
-                    exercise.speed.distance / 1000f, Math.round(lastSample.timestamp / 1000f))
+                    exercise.speed.distance / 1000f, Math.round(lastSample.timestamp!! / 1000f))
         } else {
             exercise.speed.distance = 0
             exercise.speed.speedAVG = 0f
@@ -290,9 +300,10 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
         exercise.heartRateMax = Short.MIN_VALUE
 
         for (sample in exercise.sampleList) {
-            heartRateSum += sample.heartRate
-            if (sample.heartRate > exercise.heartRateMax) {
-                exercise.heartRateMax = sample.heartRate
+            val sampleHeartRate = sample.heartRate!!
+            heartRateSum += sampleHeartRate
+            if (sampleHeartRate > exercise.heartRateMax) {
+                exercise.heartRateMax = sampleHeartRate
             }
         }
 

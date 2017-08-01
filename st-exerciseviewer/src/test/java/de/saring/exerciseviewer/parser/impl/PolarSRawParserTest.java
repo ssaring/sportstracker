@@ -1,15 +1,19 @@
 package de.saring.exerciseviewer.parser.impl;
 
-import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.EVExercise;
-import de.saring.exerciseviewer.parser.AbstractExerciseParser;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
+
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 
 /**
  * This class contains all unit tests for the PolarSRawParser class.
@@ -120,33 +124,33 @@ public class PolarSRawParserTest {
 
         // check sample data (first, two from middle and last only)
         assertEquals(exercise.getSampleList().length, 1163);
-        assertEquals(0, exercise.getSampleList()[0].getTimestamp());
-        assertEquals(exercise.getSampleList()[0].getHeartRate(), (short) 109);
-        assertEquals(exercise.getSampleList()[0].getAltitude(), (short) 0);
-        assertEquals(exercise.getSampleList()[0].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[0].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[0].getDistance(), 0);
+        assertEquals(0L, exercise.getSampleList()[0].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[0].getHeartRate().intValue(), 109);
+        assertNull(exercise.getSampleList()[0].getAltitude());
+        assertNull(exercise.getSampleList()[0].getSpeed());
+        assertNull(exercise.getSampleList()[0].getCadence());
+        assertNull(exercise.getSampleList()[0].getDistance());
 
-        assertEquals(240 * 5 * 1000, exercise.getSampleList()[240].getTimestamp());
-        assertEquals(exercise.getSampleList()[240].getHeartRate(), (short) 160);
-        assertEquals(exercise.getSampleList()[240].getAltitude(), (short) 0);
-        assertEquals(exercise.getSampleList()[240].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[240].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[240].getDistance(), 0);
+        assertEquals(240 * 5 * 1000L, exercise.getSampleList()[240].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[240].getHeartRate().intValue(), 160);
+        assertNull(exercise.getSampleList()[240].getAltitude());
+        assertNull(exercise.getSampleList()[240].getSpeed());
+        assertNull(exercise.getSampleList()[240].getCadence());
+        assertNull(exercise.getSampleList()[240].getDistance());
 
-        assertEquals(480 * 5 * 1000, exercise.getSampleList()[480].getTimestamp());
-        assertEquals(exercise.getSampleList()[480].getHeartRate(), (short) 161);
-        assertEquals(exercise.getSampleList()[480].getAltitude(), (short) 0);
-        assertEquals(exercise.getSampleList()[480].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[480].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[480].getDistance(), 0);
+        assertEquals(480 * 5 * 1000L, exercise.getSampleList()[480].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[480].getHeartRate().intValue(), 161);
+        assertNull(exercise.getSampleList()[480].getAltitude());
+        assertNull(exercise.getSampleList()[480].getSpeed());
+        assertNull(exercise.getSampleList()[480].getCadence());
+        assertNull(exercise.getSampleList()[480].getDistance());
 
-        assertEquals(1162 * 5 * 1000, exercise.getSampleList()[1162].getTimestamp());
-        assertEquals(exercise.getSampleList()[1162].getHeartRate(), (short) 159);
-        assertEquals(exercise.getSampleList()[1162].getAltitude(), (short) 0);
-        assertEquals(exercise.getSampleList()[1162].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[1162].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[1162].getDistance(), 0);
+        assertEquals(1162 * 5 * 1000L, exercise.getSampleList()[1162].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[1162].getHeartRate().intValue(), 159);
+        assertNull(exercise.getSampleList()[1162].getAltitude());
+        assertNull(exercise.getSampleList()[1162].getSpeed());
+        assertNull(exercise.getSampleList()[1162].getCadence());
+        assertNull(exercise.getSampleList()[1162].getDistance());
     }
 
     /**
@@ -221,7 +225,7 @@ public class PolarSRawParserTest {
         assertEquals(141, Math.round(exercise.getLapList()[0].getSpeed().getSpeedEnd() * 10));
         assertEquals(258, Math.round(exercise.getLapList()[0].getSpeed().getSpeedAVG() * 10));
         assertEquals(3 * 1000, exercise.getLapList()[0].getSpeed().getDistance());
-        assertEquals((short) 0, exercise.getLapList()[0].getSpeed().getCadence());
+        assertNull(exercise.getLapList()[0].getSpeed().getCadence());
         assertEquals((short) 231, exercise.getLapList()[0].getAltitude().getAltitude());
         assertEquals(25, exercise.getLapList()[0].getAltitude().getAscent());
         assertEquals((short) 4, exercise.getLapList()[0].getTemperature().getTemperature());
@@ -233,7 +237,7 @@ public class PolarSRawParserTest {
         assertEquals(193, Math.round(exercise.getLapList()[2].getSpeed().getSpeedEnd() * 10));
         assertEquals(242, Math.round(exercise.getLapList()[2].getSpeed().getSpeedAVG() * 10));
         assertEquals(15700, exercise.getLapList()[2].getSpeed().getDistance());
-        assertEquals((short) 0, exercise.getLapList()[2].getSpeed().getCadence());
+        assertNull(exercise.getLapList()[2].getSpeed().getCadence());
         assertEquals((short) 247, exercise.getLapList()[2].getAltitude().getAltitude());
         assertEquals(135, exercise.getLapList()[2].getAltitude().getAscent());
         assertEquals((short) 4, exercise.getLapList()[2].getTemperature().getTemperature());
@@ -245,40 +249,40 @@ public class PolarSRawParserTest {
         assertEquals(0 * 10, Math.round(exercise.getLapList()[4].getSpeed().getSpeedEnd() * 10));
         assertEquals(0 * 10, Math.round(exercise.getLapList()[4].getSpeed().getSpeedAVG() * 10));
         assertEquals(29900, exercise.getLapList()[4].getSpeed().getDistance());
-        assertEquals((short) 0, exercise.getLapList()[4].getSpeed().getCadence());
+        assertNull(exercise.getLapList()[4].getSpeed().getCadence());
         assertEquals((short) 229, exercise.getLapList()[4].getAltitude().getAltitude());
         assertEquals(240, exercise.getLapList()[4].getAltitude().getAscent());
         assertEquals((short) 4, exercise.getLapList()[4].getTemperature().getTemperature());
 
         // check sample data (first, two from middle and last only)
         assertEquals(295, exercise.getSampleList().length);
-        assertEquals(0, exercise.getSampleList()[0].getTimestamp());
-        assertEquals((short) 101, exercise.getSampleList()[0].getHeartRate());
-        assertEquals((short) 240, exercise.getSampleList()[0].getAltitude());
+        assertEquals(0L, exercise.getSampleList()[0].getTimestamp().longValue());
+        assertEquals(101, exercise.getSampleList()[0].getHeartRate().intValue());
+        assertEquals(240, exercise.getSampleList()[0].getAltitude().intValue());
         assertEquals(42, Math.round(exercise.getSampleList()[0].getSpeed() * 10));
-        assertEquals((short) 0, exercise.getSampleList()[0].getCadence());
-        assertEquals(0, exercise.getSampleList()[0].getDistance());
+        assertNull(exercise.getSampleList()[0].getCadence());
+        assertEquals(0, exercise.getSampleList()[0].getDistance().intValue());
 
-        assertEquals(100 * 15 * 1000, exercise.getSampleList()[100].getTimestamp());
-        assertEquals((short) 147, exercise.getSampleList()[100].getHeartRate());
-        assertEquals((short) 278, exercise.getSampleList()[100].getAltitude());
+        assertEquals(100 * 15 * 1000L, exercise.getSampleList()[100].getTimestamp().longValue());
+        assertEquals(147, exercise.getSampleList()[100].getHeartRate().intValue());
+        assertEquals(278, exercise.getSampleList()[100].getAltitude().intValue());
         assertEquals(171, Math.round(exercise.getSampleList()[100].getSpeed() * 10));
-        assertEquals((short) 0, exercise.getSampleList()[100].getCadence());
-        assertEquals(9479, exercise.getSampleList()[100].getDistance());
+        assertNull(exercise.getSampleList()[100].getCadence());
+        assertEquals(9479, exercise.getSampleList()[100].getDistance().intValue());
 
-        assertEquals(200 * 15 * 1000, exercise.getSampleList()[200].getTimestamp());
-        assertEquals((short) 166, exercise.getSampleList()[200].getHeartRate());
-        assertEquals((short) 275, exercise.getSampleList()[200].getAltitude());
+        assertEquals(200 * 15 * 1000L, exercise.getSampleList()[200].getTimestamp().longValue());
+        assertEquals(166, exercise.getSampleList()[200].getHeartRate().intValue());
+        assertEquals(275, exercise.getSampleList()[200].getAltitude().intValue());
         assertEquals(141, Math.round(exercise.getSampleList()[200].getSpeed() * 10));
-        assertEquals((short) 0, exercise.getSampleList()[200].getCadence());
-        assertEquals(19256, exercise.getSampleList()[200].getDistance());
+        assertNull(exercise.getSampleList()[200].getCadence());
+        assertEquals(19256, exercise.getSampleList()[200].getDistance().intValue());
 
-        assertEquals(294 * 15 * 1000, exercise.getSampleList()[294].getTimestamp());
-        assertEquals((short) 123, exercise.getSampleList()[294].getHeartRate());
-        assertEquals((short) 229, exercise.getSampleList()[294].getAltitude());
+        assertEquals(294 * 15 * 1000L, exercise.getSampleList()[294].getTimestamp().longValue());
+        assertEquals(123, exercise.getSampleList()[294].getHeartRate().intValue());
+        assertEquals(229, exercise.getSampleList()[294].getAltitude().intValue());
         assertEquals(0, Math.round(exercise.getSampleList()[294].getSpeed() * 10));
-        assertEquals((short) 0, exercise.getSampleList()[294].getCadence());
-        assertEquals(29900, exercise.getSampleList()[294].getDistance());
+        assertNull(exercise.getSampleList()[294].getCadence());
+        assertEquals(29900, exercise.getSampleList()[294].getDistance().intValue());
     }
 
     /**
@@ -354,7 +358,7 @@ public class PolarSRawParserTest {
         assertEquals(Math.round(exercise.getLapList()[0].getSpeed().getSpeedEnd() * 10), 206);
         assertEquals(Math.round(exercise.getLapList()[0].getSpeed().getSpeedAVG() * 10), 230);
         assertEquals(exercise.getLapList()[0].getSpeed().getDistance(), 7886);
-        assertEquals(exercise.getLapList()[0].getSpeed().getCadence(), (short) 0);
+        assertNull(exercise.getLapList()[0].getSpeed().getCadence());
         assertEquals(exercise.getLapList()[0].getAltitude().getAltitude(), (short) 273);
         assertEquals(exercise.getLapList()[0].getAltitude().getAscent(), 73);
         assertEquals(exercise.getLapList()[0].getTemperature().getTemperature(), (short) 3);
@@ -366,7 +370,7 @@ public class PolarSRawParserTest {
         assertEquals(Math.round(exercise.getLapList()[1].getSpeed().getSpeedEnd() * 10), 353);
         assertEquals(Math.round(exercise.getLapList()[1].getSpeed().getSpeedAVG() * 10), 253);
         assertEquals(exercise.getLapList()[1].getSpeed().getDistance(), 18990);
-        assertEquals(exercise.getLapList()[1].getSpeed().getCadence(), (short) 0);
+        assertNull(exercise.getLapList()[1].getSpeed().getCadence());
         assertEquals(exercise.getLapList()[1].getAltitude().getAltitude(), (short) 248);
         assertEquals(exercise.getLapList()[1].getAltitude().getAscent(), 146);
         assertEquals(exercise.getLapList()[1].getTemperature().getTemperature(), (short) 3);
@@ -378,40 +382,40 @@ public class PolarSRawParserTest {
         assertEquals(Math.round(exercise.getLapList()[3].getSpeed().getSpeedEnd() * 10), 0);
         assertEquals(Math.round(exercise.getLapList()[3].getSpeed().getSpeedAVG() * 10), 0);
         assertEquals(exercise.getLapList()[3].getSpeed().getDistance(), 20921);
-        assertEquals(exercise.getLapList()[3].getSpeed().getCadence(), (short) 0);
+        assertNull(exercise.getLapList()[3].getSpeed().getCadence());
         assertEquals(exercise.getLapList()[3].getAltitude().getAltitude(), (short) 239);
         assertEquals(exercise.getLapList()[3].getAltitude().getAscent(), 152);
         assertEquals(exercise.getLapList()[3].getTemperature().getTemperature(), (short) 4);
 
         // check sample data (first, two from middle and last only)
         assertEquals(exercise.getSampleList().length, 206);
-        assertEquals(0, exercise.getSampleList()[0].getTimestamp());
-        assertEquals(exercise.getSampleList()[0].getHeartRate(), (short) 83);
-        assertEquals(exercise.getSampleList()[0].getAltitude(), (short) 221);
+        assertEquals(0L, exercise.getSampleList()[0].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[0].getHeartRate().intValue(), 83);
+        assertEquals(exercise.getSampleList()[0].getAltitude().intValue(), 221);
         assertEquals(Math.round(exercise.getSampleList()[0].getSpeed() * 10), 0 * 10);
-        assertEquals(exercise.getSampleList()[0].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[0].getDistance(), 0);
+        assertNull(exercise.getSampleList()[0].getCadence());
+        assertEquals(exercise.getSampleList()[0].getDistance().intValue(), 0);
 
-        assertEquals(100 * 15 * 1000, exercise.getSampleList()[100].getTimestamp());
-        assertEquals(exercise.getSampleList()[100].getHeartRate(), (short) 124);
-        assertEquals(exercise.getSampleList()[100].getAltitude(), (short) 270);
+        assertEquals(100 * 15 * 1000L, exercise.getSampleList()[100].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[100].getHeartRate().intValue(), 124);
+        assertEquals(exercise.getSampleList()[100].getAltitude().intValue(), 270);
         assertEquals(Math.round(exercise.getSampleList()[100].getSpeed() * 10), 350);
-        assertEquals(exercise.getSampleList()[100].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[100].getDistance(), 9972);
+        assertNull(exercise.getSampleList()[100].getCadence());
+        assertEquals(exercise.getSampleList()[100].getDistance().intValue(), 9972);
 
-        assertEquals(200 * 15 * 1000, exercise.getSampleList()[200].getTimestamp());
-        assertEquals(exercise.getSampleList()[200].getHeartRate(), (short) 138);
-        assertEquals(exercise.getSampleList()[200].getAltitude(), (short) 242);
+        assertEquals(200 * 15 * 1000L, exercise.getSampleList()[200].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[200].getHeartRate().intValue(), 138);
+        assertEquals(exercise.getSampleList()[200].getAltitude().intValue(), 242);
         assertEquals(Math.round(exercise.getSampleList()[200].getSpeed() * 10), 291);
-        assertEquals(exercise.getSampleList()[200].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[200].getDistance(), 20451);
+        assertNull(exercise.getSampleList()[200].getCadence());
+        assertEquals(exercise.getSampleList()[200].getDistance().intValue(), 20451);
 
-        assertEquals(205 * 15 * 1000, exercise.getSampleList()[205].getTimestamp());
-        assertEquals(exercise.getSampleList()[205].getHeartRate(), (short) 113);
-        assertEquals(exercise.getSampleList()[205].getAltitude(), (short) 239);
+        assertEquals(205 * 15 * 1000L, exercise.getSampleList()[205].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[205].getHeartRate().intValue(), 113);
+        assertEquals(exercise.getSampleList()[205].getAltitude().intValue(), 239);
         assertEquals(Math.round(exercise.getSampleList()[205].getSpeed() * 10), 0);
-        assertEquals(exercise.getSampleList()[205].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[205].getDistance(), 20921);
+        assertNull(exercise.getSampleList()[205].getCadence());
+        assertEquals(exercise.getSampleList()[205].getDistance().intValue(), 20921);
     }
 
     /**
@@ -489,33 +493,33 @@ public class PolarSRawParserTest {
 
         // check sample data (first, two from middle and last only)
         assertEquals(exercise.getSampleList().length, 170);
-        assertEquals(0 * 15 * 1000, exercise.getSampleList()[0].getTimestamp());
-        assertEquals(exercise.getSampleList()[0].getHeartRate(), (short) 0);
-        assertEquals(exercise.getSampleList()[0].getAltitude(), (short) 91);
-        assertEquals(exercise.getSampleList()[0].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[0].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[0].getDistance(), 0);
+        assertEquals(0 * 15 * 1000L, exercise.getSampleList()[0].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[0].getHeartRate().intValue(), 0);
+        assertEquals(exercise.getSampleList()[0].getAltitude().intValue(), 91);
+        assertNull(exercise.getSampleList()[0].getSpeed());
+        assertNull(exercise.getSampleList()[0].getCadence());
+        assertNull(exercise.getSampleList()[0].getDistance());
 
-        assertEquals(100 * 15 * 1000, exercise.getSampleList()[100].getTimestamp());
-        assertEquals(exercise.getSampleList()[100].getHeartRate(), (short) 149);
-        assertEquals(exercise.getSampleList()[100].getAltitude(), (short) 98);
-        assertEquals(exercise.getSampleList()[100].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[100].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[100].getDistance(), 0);
+        assertEquals(100 * 15 * 1000L, exercise.getSampleList()[100].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[100].getHeartRate().intValue(), 149);
+        assertEquals(exercise.getSampleList()[100].getAltitude().intValue(), 98);
+        assertNull(exercise.getSampleList()[100].getSpeed());
+        assertNull(exercise.getSampleList()[100].getCadence());
+        assertNull(exercise.getSampleList()[100].getDistance());
 
-        assertEquals(150 * 15 * 1000, exercise.getSampleList()[150].getTimestamp());
-        assertEquals(exercise.getSampleList()[150].getHeartRate(), (short) 142);
-        assertEquals(exercise.getSampleList()[150].getAltitude(), (short) 89);
-        assertEquals(exercise.getSampleList()[150].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[150].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[150].getDistance(), 0);
+        assertEquals(150 * 15 * 1000L, exercise.getSampleList()[150].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[150].getHeartRate().intValue(), 142);
+        assertEquals(exercise.getSampleList()[150].getAltitude().intValue(), 89);
+        assertNull(exercise.getSampleList()[150].getSpeed());
+        assertNull(exercise.getSampleList()[150].getCadence());
+        assertNull(exercise.getSampleList()[150].getDistance());
 
-        assertEquals(169 * 15 * 1000, exercise.getSampleList()[169].getTimestamp());
-        assertEquals(exercise.getSampleList()[169].getHeartRate(), (short) 147);
-        assertEquals(exercise.getSampleList()[169].getAltitude(), (short) 88);
-        assertEquals(exercise.getSampleList()[169].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[169].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[169].getDistance(), 0);
+        assertEquals(169 * 15 * 1000L, exercise.getSampleList()[169].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[169].getHeartRate().intValue(), 147);
+        assertEquals(exercise.getSampleList()[169].getAltitude().intValue(), 88);
+        assertNull(exercise.getSampleList()[169].getSpeed());
+        assertNull(exercise.getSampleList()[169].getCadence());
+        assertNull(exercise.getSampleList()[169].getDistance());
     }
 
     /**
@@ -591,7 +595,7 @@ public class PolarSRawParserTest {
         assertEquals(Math.round(exercise.getLapList()[0].getSpeed().getSpeedEnd() * 10), 0 * 10);
         assertEquals(Math.round(exercise.getLapList()[0].getSpeed().getSpeedAVG() * 10), 202);
         assertEquals(exercise.getLapList()[0].getSpeed().getDistance(), 48600);
-        assertEquals(exercise.getLapList()[0].getSpeed().getCadence(), (short) 0);
+        assertNull(exercise.getLapList()[0].getSpeed().getCadence());
         assertEquals(exercise.getLapList()[0].getAltitude().getAltitude(), (short) 392);
         assertEquals(exercise.getLapList()[0].getAltitude().getAscent(), 675);
         assertEquals(exercise.getLapList()[0].getTemperature().getTemperature(), (short) 20);
@@ -603,40 +607,40 @@ public class PolarSRawParserTest {
         assertEquals(Math.round(exercise.getLapList()[1].getSpeed().getSpeedEnd() * 10), 38);
         assertEquals(Math.round(exercise.getLapList()[1].getSpeed().getSpeedAVG() * 10), 229);
         assertEquals(exercise.getLapList()[1].getSpeed().getDistance(), 111700);
-        assertEquals(exercise.getLapList()[1].getSpeed().getCadence(), (short) 0);
+        assertNull(exercise.getLapList()[1].getSpeed().getCadence());
         assertEquals(exercise.getLapList()[1].getAltitude().getAltitude(), (short) 244);
         assertEquals(exercise.getLapList()[1].getAltitude().getAscent(), 1255);
         assertEquals(exercise.getLapList()[1].getTemperature().getTemperature(), (short) 25);
 
         // check sample data (first, two from middle and last only)
         assertEquals(exercise.getSampleList().length, 3720);
-        assertEquals(0, exercise.getSampleList()[0].getTimestamp());
-        assertEquals(exercise.getSampleList()[0].getHeartRate(), (short) 81);
-        assertEquals(exercise.getSampleList()[0].getAltitude(), (short) 219);
+        assertEquals(0L, exercise.getSampleList()[0].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[0].getHeartRate().intValue(), 81);
+        assertEquals(exercise.getSampleList()[0].getAltitude().intValue(), 219);
         assertEquals(Math.round(exercise.getSampleList()[0].getSpeed() * 10), 0 * 10);
-        assertEquals(exercise.getSampleList()[0].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[0].getDistance(), 0);
+        assertNull(exercise.getSampleList()[0].getCadence());
+        assertEquals(exercise.getSampleList()[0].getDistance().intValue(), 0);
 
-        assertEquals(1020 * 5 * 1000, exercise.getSampleList()[1020].getTimestamp());
-        assertEquals(exercise.getSampleList()[1020].getHeartRate(), (short) 134);
-        assertEquals(exercise.getSampleList()[1020].getAltitude(), (short) 190);
+        assertEquals(1020 * 5 * 1000L, exercise.getSampleList()[1020].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[1020].getHeartRate().intValue(), 134);
+        assertEquals(exercise.getSampleList()[1020].getAltitude().intValue(), 190);
         assertEquals(Math.round(exercise.getSampleList()[1020].getSpeed() * 10), 246);
-        assertEquals(exercise.getSampleList()[1020].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[1020].getDistance(), 30927);
+        assertNull(exercise.getSampleList()[1020].getCadence());
+        assertEquals(exercise.getSampleList()[1020].getDistance().intValue(), 30927);
 
-        assertEquals(2880 * 5 * 1000, exercise.getSampleList()[2880].getTimestamp());
-        assertEquals(exercise.getSampleList()[2880].getHeartRate(), (short) 131);
-        assertEquals(exercise.getSampleList()[2880].getAltitude(), (short) 276);
+        assertEquals(2880 * 5 * 1000L, exercise.getSampleList()[2880].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[2880].getHeartRate().intValue(), 131);
+        assertEquals(exercise.getSampleList()[2880].getAltitude().intValue(), 276);
         assertEquals(Math.round(exercise.getSampleList()[2880].getSpeed() * 10), 383);
-        assertEquals(exercise.getSampleList()[2880].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[2880].getDistance(), 79820);
+        assertNull(exercise.getSampleList()[2880].getCadence());
+        assertEquals(exercise.getSampleList()[2880].getDistance().intValue(), 79820);
 
-        assertEquals(3719 * 5 * 1000, exercise.getSampleList()[3719].getTimestamp());
-        assertEquals(exercise.getSampleList()[3719].getHeartRate(), (short) 123);
-        assertEquals(exercise.getSampleList()[3719].getAltitude(), (short) 243);
+        assertEquals(3719 * 5 * 1000L, exercise.getSampleList()[3719].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[3719].getHeartRate().intValue(), 123);
+        assertEquals(exercise.getSampleList()[3719].getAltitude().intValue(), 243);
         assertEquals(Math.round(exercise.getSampleList()[3719].getSpeed() * 10), 54);
-        assertEquals(exercise.getSampleList()[3719].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[3719].getDistance(), 111700);
+        assertNull(exercise.getSampleList()[3719].getCadence());
+        assertEquals(exercise.getSampleList()[3719].getDistance().intValue(), 111700);
     }
 
     /**
@@ -723,32 +727,32 @@ public class PolarSRawParserTest {
 
         // check sample data (first, two from middle and last only)
         assertEquals(exercise.getSampleList().length, 1789);
-        assertEquals(0, exercise.getSampleList()[0].getTimestamp());
-        assertEquals(exercise.getSampleList()[0].getHeartRate(), (short) 76);
-        assertEquals(exercise.getSampleList()[0].getAltitude(), (short) 274);
-        assertEquals(exercise.getSampleList()[0].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[0].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[0].getDistance(), 0);
+        assertEquals(0L, exercise.getSampleList()[0].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[0].getHeartRate().intValue(), 76);
+        assertEquals(exercise.getSampleList()[0].getAltitude().intValue(), 274);
+        assertNull(exercise.getSampleList()[0].getSpeed());
+        assertNull(exercise.getSampleList()[0].getCadence());
+        assertNull(exercise.getSampleList()[0].getDistance());
 
-        assertEquals(720 * 5 * 1000, exercise.getSampleList()[720].getTimestamp());
-        assertEquals(exercise.getSampleList()[720].getHeartRate(), (short) 125);
-        assertEquals(exercise.getSampleList()[720].getAltitude(), (short) 202);
-        assertEquals(exercise.getSampleList()[720].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[720].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[720].getDistance(), 0);
+        assertEquals(720 * 5 * 1000L, exercise.getSampleList()[720].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[720].getHeartRate().intValue(), 125);
+        assertEquals(exercise.getSampleList()[720].getAltitude().intValue(), 202);
+        assertNull(exercise.getSampleList()[720].getSpeed());
+        assertNull(exercise.getSampleList()[720].getCadence());
+        assertNull(exercise.getSampleList()[720].getDistance());
 
-        assertEquals(1440 * 5 * 1000, exercise.getSampleList()[1440].getTimestamp());
-        assertEquals(exercise.getSampleList()[1440].getAltitude(), (short) 143);
-        assertEquals(exercise.getSampleList()[1440].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[1440].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[1440].getDistance(), 0);
+        assertEquals(1440 * 5 * 1000L, exercise.getSampleList()[1440].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[1440].getAltitude().intValue(), 143);
+        assertNull(exercise.getSampleList()[1440].getSpeed());
+        assertNull(exercise.getSampleList()[1440].getCadence());
+        assertNull(exercise.getSampleList()[1440].getDistance());
 
-        assertEquals(1788 * 5 * 1000, exercise.getSampleList()[1788].getTimestamp());
-        assertEquals(exercise.getSampleList()[1788].getHeartRate(), (short) 86);
-        assertEquals(exercise.getSampleList()[1788].getAltitude(), (short) 281);
-        assertEquals(exercise.getSampleList()[1788].getSpeed(), 0f, 0f);
-        assertEquals(exercise.getSampleList()[1788].getCadence(), (short) 0);
-        assertEquals(exercise.getSampleList()[1788].getDistance(), 0);
+        assertEquals(1788 * 5 * 1000L, exercise.getSampleList()[1788].getTimestamp().longValue());
+        assertEquals(exercise.getSampleList()[1788].getHeartRate().intValue(), 86);
+        assertEquals(exercise.getSampleList()[1788].getAltitude().intValue(), 281);
+        assertNull(exercise.getSampleList()[1788].getSpeed());
+        assertNull(exercise.getSampleList()[1788].getCadence());
+        assertNull(exercise.getSampleList()[1788].getDistance());
     }
 
     /**
@@ -787,7 +791,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getLapList()[10].getHeartRateSplit(), (short) 130);
 
         // check some sample data 
-        assertEquals(exercise.getSampleList()[0].getHeartRate(), (short) 116);
-        assertEquals(exercise.getSampleList()[10].getHeartRate(), (short) 135);
+        assertEquals(exercise.getSampleList()[0].getHeartRate().intValue(), 116);
+        assertEquals(exercise.getSampleList()[10].getHeartRate().intValue(), 135);
     }
 }

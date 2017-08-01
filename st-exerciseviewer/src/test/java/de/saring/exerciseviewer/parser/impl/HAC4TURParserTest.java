@@ -100,9 +100,9 @@ public class HAC4TURParserTest {
         assertEquals(1, exercise.getLapList().length);
 
         // too lazy to check samples for now..
-        assertEquals(0, exercise.getSampleList()[0].getTimestamp());
-        assertEquals(50 * 20 * 1000, exercise.getSampleList()[50].getTimestamp());
-        assertEquals(100 * 20 * 1000, exercise.getSampleList()[100].getTimestamp());
+        assertEquals(0L, exercise.getSampleList()[0].getTimestamp().longValue());
+        assertEquals(50 * 20 * 1000L, exercise.getSampleList()[50].getTimestamp().longValue());
+        assertEquals(100 * 20 * 1000L, exercise.getSampleList()[100].getTimestamp().longValue());
     }
 
     /**
@@ -164,8 +164,8 @@ public class HAC4TURParserTest {
         assertEquals(1, exercise.getLapList().length);
 
         // too lazy to check samples for now..
-        assertEquals(0, exercise.getSampleList()[0].getTimestamp());
-        assertEquals(50 * 5 * 1000, exercise.getSampleList()[50].getTimestamp());
-        assertEquals(100 * 5 * 1000, exercise.getSampleList()[100].getTimestamp());
+        assertEquals(0L, exercise.getSampleList()[0].getTimestamp().longValue());
+        assertEquals(50 * 5 * 1000L, exercise.getSampleList()[50].getTimestamp().longValue());
+        assertEquals(100 * 5 * 1000L, exercise.getSampleList()[100].getTimestamp().longValue());
     }
 }

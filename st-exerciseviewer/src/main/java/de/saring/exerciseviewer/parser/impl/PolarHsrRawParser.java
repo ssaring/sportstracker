@@ -369,29 +369,25 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
 
             // get speed (bicycle) related data of lap (if recorded)
             if (recMode.isSpeed()) {
-                lap.setSpeed(new LapSpeed());
 
                 // TODO get lap distance (in 1/10th of km)
                 int lapDistance = sdata(lapsec, os + 6);
                 lapDistance += (sdata(lapsec, os + 7) << 8);
                 //lapDistance += (sdata(lapsec, os + 8) << 16); not sure about this byte..
                 lapDistance *= 100;
-                if (fMetricUnits) {
-                    lap.getSpeed().setDistance(lapDistance);
-                } else {
-                    lap.getSpeed().setDistance(ConvertUtils.convertMiles2Kilometer(lapDistance));
+                if (!fMetricUnits) {
+                    lapDistance = ConvertUtils.convertMiles2Kilometer(lapDistance);
                 }
 
                 // get speed at end of lap
                 float lapEndSpeed = sdata(lapsec, os + 9);
                 lapEndSpeed += sdata(lapsec, os + 10) << 8;
                 lapEndSpeed *= 5.0f / 80;
-                if (fMetricUnits) {
-                    lap.getSpeed().setSpeedEnd(lapEndSpeed);
-                } else {
-                    lap.getSpeed().setSpeedEnd((float) ConvertUtils.convertMiles2Kilometer(lapEndSpeed));
+                if (!fMetricUnits) {
+                    lapEndSpeed = (float) ConvertUtils.convertMiles2Kilometer(lapEndSpeed);
                 }
 
+                lap.setSpeed(new LapSpeed(lapEndSpeed, 0f, lapDistance, null));
             } // end of if(isSpeed())
 
             // process exercise interval data | TODO, implement in polarviewer

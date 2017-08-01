@@ -23,7 +23,9 @@ v7.4.1:
    - updated Garmin FIT SDK library to version 20.33.01, previous FIT library
      was not able to parse exercise files with the new protocol format 2.0
    - added unit test for a Garmin Edge 820 exercise file
-  - updated Kotlin to version 1.1.3
+ - updated Kotlin to version 1.1.3
+ - TimexPwxParser: bugfixes for parsing of recording modes, speed and distance
+   data
 
 v7.4.0:
  SportsTracker changes:
