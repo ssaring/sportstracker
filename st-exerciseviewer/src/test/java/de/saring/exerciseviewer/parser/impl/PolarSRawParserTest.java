@@ -66,7 +66,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
         assertEquals(exercise.getRecordingMode().isPower(), false);
-        assertEquals(exercise.getRecordingMode().getBikeNumber(), (byte) 0);
+        assertNull(exercise.getRecordingMode().getBikeNumber());
         assertEquals(exercise.getDuration(), (1 * 60 * 60 * 10) + (36 * 60 * 10) + 50 * 10 + 8);
         assertEquals(exercise.getRecordingInterval(), (short) 5);
         assertEquals(exercise.getHeartRateAVG(), (short) 158);
@@ -173,7 +173,7 @@ public class PolarSRawParserTest {
         assertTrue(exercise.getRecordingMode().isSpeed());
         assertFalse(exercise.getRecordingMode().isCadence());
         assertFalse(exercise.getRecordingMode().isPower());
-        assertEquals((byte) 2, exercise.getRecordingMode().getBikeNumber());
+        assertEquals(2, exercise.getRecordingMode().getBikeNumber().intValue());
         assertEquals((short) 15, exercise.getRecordingInterval());
         assertEquals((short) 135, exercise.getHeartRateAVG());
         assertEquals((short) 232, exercise.getHeartRateMax());
@@ -305,7 +305,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getRecordingMode().isSpeed(), true);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
         assertEquals(exercise.getRecordingMode().isPower(), false);
-        assertEquals(exercise.getRecordingMode().getBikeNumber(), (byte) 2);
+        assertEquals(2, exercise.getRecordingMode().getBikeNumber().intValue());
         assertEquals(exercise.getDuration(), (0 * 60 * 60 * 10) + (51 * 60 * 10) + 22 * 10 + 6);
         assertEquals(exercise.getRecordingInterval(), (short) 15);
         assertEquals(exercise.getHeartRateAVG(), (short) 137);
@@ -438,7 +438,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
         assertEquals(exercise.getRecordingMode().isPower(), false);
-        assertEquals(exercise.getRecordingMode().getBikeNumber(), (byte) 0);
+        assertNull(exercise.getRecordingMode().getBikeNumber());
         assertEquals(exercise.getDuration(), (0 * 60 * 60 * 10) + (42 * 60 * 10) + 24 * 10 + 7);
         assertEquals(exercise.getRecordingInterval(), (short) 15);
         assertEquals(exercise.getHeartRateAVG(), (short) 148);
@@ -542,7 +542,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getRecordingMode().isSpeed(), true);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
         assertEquals(exercise.getRecordingMode().isPower(), false);
-        assertEquals(exercise.getRecordingMode().getBikeNumber(), (byte) 1);
+        assertEquals(1, exercise.getRecordingMode().getBikeNumber().intValue());
         assertEquals(exercise.getDuration(), (5 * 60 * 60 * 10) + (9 * 60 * 10) + 58 * 10 + 5);
         assertEquals(exercise.getRecordingInterval(), (short) 5);
         assertEquals(exercise.getHeartRateAVG(), (short) 134);
@@ -663,7 +663,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
         assertEquals(exercise.getRecordingMode().isPower(), false);
-        assertEquals(exercise.getRecordingMode().getBikeNumber(), (byte) 0);
+        assertNull(exercise.getRecordingMode().getBikeNumber());
         assertEquals(exercise.getDuration(), (2 * 60 * 60 * 10) + (29 * 60 * 10) + 1 * 10 + 9);
         assertEquals(exercise.getRecordingInterval(), (short) 5);
         assertEquals(exercise.getHeartRateAVG(), (short) 112);

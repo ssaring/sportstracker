@@ -346,7 +346,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         recMode.setCadence(false);
         recMode.setAltitude(true);
         recMode.setSpeed(true);
-        recMode.setBikeNumber((byte) 0);
+        recMode.setBikeNumber(null);
         recMode.setIntervalExercise(false); //
 
         exercise.setRecordingMode(recMode);
@@ -480,7 +480,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         recMode.setCadence(false);
         recMode.setAltitude(false);
         recMode.setSpeed(false);
-        recMode.setBikeNumber((byte) 0);
+        recMode.setBikeNumber(null);
         recMode.setIntervalExercise(false); //
 
         exercise.setRecordingMode(recMode);

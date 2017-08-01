@@ -122,7 +122,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
             if (!fBike1 && !fBike2) {
                 recMode.setSpeed(false);
-                recMode.setBikeNumber((byte) 0);
+                recMode.setBikeNumber(null);
             } else {
                 recMode.setSpeed(true);
                 if (fBike1) {

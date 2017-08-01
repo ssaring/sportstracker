@@ -68,7 +68,7 @@ public class TimexPwxParserTest {
         assertEquals(false, exercise.getRecordingMode().isSpeed());
         assertEquals(false, exercise.getRecordingMode().isCadence());
         assertEquals(false, exercise.getRecordingMode().isPower());
-        assertEquals((byte) 0, exercise.getRecordingMode().getBikeNumber());
+        assertNull(exercise.getRecordingMode().getBikeNumber());
         assertEquals(10 * ((0 * 60 * 60) + (36 * 60) + 11) + 0, exercise.getDuration());
         assertEquals((short) 2, exercise.getRecordingInterval());
         assertEquals((short) 141, exercise.getHeartRateAVG());
@@ -211,7 +211,7 @@ public class TimexPwxParserTest {
         assertEquals(true, exercise.getRecordingMode().isSpeed());
         assertEquals(false, exercise.getRecordingMode().isCadence());
         assertEquals(false, exercise.getRecordingMode().isPower());
-        assertEquals((byte) 0, exercise.getRecordingMode().getBikeNumber());
+        assertNull(exercise.getRecordingMode().getBikeNumber());
         assertEquals(10 * ((0 * 60 * 60) + (10 * 60) + 06) + 0, exercise.getDuration());
         assertEquals((short) 2, exercise.getRecordingInterval());
         assertEquals((short) 145, exercise.getHeartRateAVG());
@@ -327,7 +327,7 @@ public class TimexPwxParserTest {
         assertEquals(true, exercise.getRecordingMode().isSpeed());
         assertEquals(false, exercise.getRecordingMode().isCadence());
         assertEquals(false, exercise.getRecordingMode().isPower());
-        assertEquals((byte) 0, exercise.getRecordingMode().getBikeNumber());
+        assertNull(exercise.getRecordingMode().getBikeNumber());
         assertEquals(39 * 60 * 10 + 41 * 10 + 0, exercise.getDuration());
         assertEquals((short) 2, exercise.getRecordingInterval());
         assertEquals((short) 141, exercise.getHeartRateAVG());

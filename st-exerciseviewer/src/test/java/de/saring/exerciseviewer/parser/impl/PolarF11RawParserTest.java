@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 /**
@@ -63,7 +64,7 @@ public class PolarF11RawParserTest {
         assertEquals(false, exercise.getRecordingMode().isSpeed());
         assertEquals(false, exercise.getRecordingMode().isCadence());
         assertEquals(false, exercise.getRecordingMode().isPower());
-        assertEquals((byte) 0, exercise.getRecordingMode().getBikeNumber());
+        assertNull(exercise.getRecordingMode().getBikeNumber());
         assertEquals((54 * 60 * 10) + 31 * 10, exercise.getDuration());
         assertEquals((short) 0, exercise.getRecordingInterval());
         assertEquals((short) 156, exercise.getHeartRateAVG());

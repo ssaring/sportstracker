@@ -2,6 +2,7 @@ SportsTracker-TODO
 ==================
 
 ST-ExerciseViewer Kotlin port:
+- Diagram and Track panels does not work (tested with a FIT file)
 - continue with port of remaining EV data classes
   -> data classes should be mutable (except e.g. for Position), no concurrency concerns here
   -> this makes the parser implementations much simpler, no need to collect all the data before object creation

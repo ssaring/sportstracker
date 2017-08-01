@@ -67,7 +67,7 @@ public class PolarHsrParserTest {
         assertEquals(exercise.getRecordingMode().isSpeed(), true);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
         assertEquals(exercise.getRecordingMode().isPower(), false);
-        assertEquals(exercise.getRecordingMode().getBikeNumber(), (byte) 2);
+        assertEquals(2, exercise.getRecordingMode().getBikeNumber().intValue());
         assertEquals(exercise.getDuration(), 10 * ((2 * 60 * 60) + (14 * 60) + 51) + 5);
         assertEquals(exercise.getRecordingInterval(), (short) 120);
         assertEquals(exercise.getHeartRateAVG(), (short) 171);
@@ -178,7 +178,7 @@ public class PolarHsrParserTest {
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
         assertEquals(exercise.getRecordingMode().isPower(), false);
-        assertEquals(exercise.getRecordingMode().getBikeNumber(), (byte) 0);
+        assertNull(exercise.getRecordingMode().getBikeNumber());
         assertEquals(exercise.getDuration(), 10 * ((0 * 60 * 60) + (59 * 60) + 31) + 7);
         assertEquals(exercise.getRecordingInterval(), (short) 30);
         assertEquals(exercise.getHeartRateAVG(), (short) 161);
