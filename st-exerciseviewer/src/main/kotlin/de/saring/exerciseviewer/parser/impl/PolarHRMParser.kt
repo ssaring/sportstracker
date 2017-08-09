@@ -238,7 +238,7 @@ class PolarHRMParser : AbstractExerciseParser() {
 
                 // distance needs to be accumulated
                 lapDistanceAccumulated += lapDistance
-                exercise.lapList[i].speed.distance = lapDistanceAccumulated
+                exercise.lapList[i].speed!!.distance = lapDistanceAccumulated
             }
 
             // get lap temperature
@@ -347,8 +347,8 @@ class PolarHRMParser : AbstractExerciseParser() {
                 // distance)
                 if (exercise.lapList != null) {
                     for (i in 0..(exercise.lapList.size - 1)) {
-                        exercise.lapList[i].speed.distance = Math.min(
-                                exercise.lapList[i].speed.distance, exercise.speed.distance)
+                        exercise.lapList[i].speed!!.distance = Math.min(
+                                exercise.lapList[i].speed!!.distance, exercise.speed.distance)
                     }
                 }
             }

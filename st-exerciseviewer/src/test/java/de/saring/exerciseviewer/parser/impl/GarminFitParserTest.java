@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import de.saring.exerciseviewer.data.Lap;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
-import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.impl.garminfit.GarminFitParser;
 
@@ -106,9 +106,9 @@ public class GarminFitParserTest {
         // check lap data
         assertEquals(5, exercise.getLapList().length);
         assertEquals(((0 * 3600) + (29 * 60) + 15) * 10, exercise.getLapList()[0].getTimeSplit());
-        assertEquals(126, exercise.getLapList()[0].getHeartRateAVG());
-        assertEquals(146, exercise.getLapList()[0].getHeartRateMax());
-        assertEquals(122, exercise.getLapList()[0].getHeartRateSplit());
+        assertEquals(126, exercise.getLapList()[0].getHeartRateAVG().intValue());
+        assertEquals(146, exercise.getLapList()[0].getHeartRateMax().intValue());
+        assertEquals(122, exercise.getLapList()[0].getHeartRateSplit().intValue());
         assertEquals(11084, exercise.getLapList()[0].getSpeed().getDistance());
         assertEquals(22.7334, exercise.getLapList()[0].getSpeed().getSpeedAVG(), 0.001d);
         assertEquals(22.1364, exercise.getLapList()[0].getSpeed().getSpeedEnd(), 0.001d);
@@ -119,9 +119,9 @@ public class GarminFitParserTest {
         assertEquals(13.93589d, exercise.getLapList()[0].getPositionSplit().getLongitude(), 0.001d);
 
         assertEquals(((2 * 3600) + (11 * 60) + 46) * 10, exercise.getLapList()[2].getTimeSplit());
-        assertEquals(124, exercise.getLapList()[2].getHeartRateAVG());
-        assertEquals(145, exercise.getLapList()[2].getHeartRateMax());
-        assertEquals(98, exercise.getLapList()[2].getHeartRateSplit());
+        assertEquals(124, exercise.getLapList()[2].getHeartRateAVG().intValue());
+        assertEquals(145, exercise.getLapList()[2].getHeartRateMax().intValue());
+        assertEquals(98, exercise.getLapList()[2].getHeartRateSplit().intValue());
         assertEquals(48391, exercise.getLapList()[2].getSpeed().getDistance());
         assertEquals(21.7080, exercise.getLapList()[2].getSpeed().getSpeedAVG(), 0.001d);
         assertEquals(1.0440, exercise.getLapList()[2].getSpeed().getSpeedEnd(), 0.001d);
@@ -132,9 +132,9 @@ public class GarminFitParserTest {
         assertEquals(14.20151d, exercise.getLapList()[2].getPositionSplit().getLongitude(), 0.001d);
 
         assertEquals(((4 * 3600) + (28 * 60) + 16) * 10, exercise.getLapList()[4].getTimeSplit());
-        assertEquals(120, exercise.getLapList()[4].getHeartRateAVG());
-        assertEquals(144, exercise.getLapList()[4].getHeartRateMax());
-        assertEquals(94, exercise.getLapList()[4].getHeartRateSplit());
+        assertEquals(120, exercise.getLapList()[4].getHeartRateAVG().intValue());
+        assertEquals(144, exercise.getLapList()[4].getHeartRateMax().intValue());
+        assertEquals(94, exercise.getLapList()[4].getHeartRateSplit().intValue());
         assertEquals(101711, exercise.getLapList()[4].getSpeed().getDistance());
         assertEquals(26.0136, exercise.getLapList()[4].getSpeed().getSpeedAVG(), 0.001d);
         assertEquals(0d, exercise.getLapList()[4].getSpeed().getSpeedEnd(), 0.001d);
@@ -218,9 +218,9 @@ public class GarminFitParserTest {
         assertEquals(10, exercise.getLapList().length);
 
         assertEquals(((0 * 3600) + (25 * 60) + 53) * 10, exercise.getLapList()[4].getTimeSplit());
-        assertEquals(155, exercise.getLapList()[4].getHeartRateAVG());
-        assertEquals(159, exercise.getLapList()[4].getHeartRateMax());
-        assertEquals(159, exercise.getLapList()[4].getHeartRateSplit());
+        assertEquals(155, exercise.getLapList()[4].getHeartRateAVG().intValue());
+        assertEquals(159, exercise.getLapList()[4].getHeartRateMax().intValue());
+        assertEquals(159, exercise.getLapList()[4].getHeartRateSplit().intValue());
         assertEquals(5000, exercise.getLapList()[4].getSpeed().getDistance());
         assertEquals(11.5905, exercise.getLapList()[4].getSpeed().getSpeedAVG(), 0.001d);
         assertEquals(11.5848, exercise.getLapList()[4].getSpeed().getSpeedEnd(), 0.001d);
@@ -302,7 +302,7 @@ public class GarminFitParserTest {
 		// average values of heart rate are still missing
 		// assertEquals(169, lap5.getHeartRateAVG());
 		// assertEquals(173, lap5.getHeartRateMax());
-		assertEquals(170, lap5.getHeartRateSplit());
+		assertEquals(170, lap5.getHeartRateSplit().intValue());
 		assertEquals(5000, lap5.getSpeed().getDistance());
 		assertEquals(9.22, lap5.getSpeed().getSpeedAVG(), 0.01d);
 		assertEquals(8.35, lap5.getSpeed().getSpeedEnd(), 0.01d);
@@ -381,7 +381,7 @@ public class GarminFitParserTest {
 
         Lap lap1 = exercise.getLapList()[0];
         assertEquals(76570, lap1.getTimeSplit());
-        assertEquals(107, lap1.getHeartRateSplit());
+        assertEquals(107, lap1.getHeartRateSplit().intValue());
         assertEquals(51110, lap1.getSpeed().getDistance());
         assertEquals(25.93, lap1.getSpeed().getSpeedAVG(), 0.01d);
         assertEquals(0.0, lap1.getSpeed().getSpeedEnd(), 0.01d);

@@ -126,8 +126,8 @@ class PolarRS200SDParser : AbstractExerciseParser() {
             var accumulatedSpeed = 0
 
             for (lap in exercise.lapList) {
-                lap.speed.distance += accumulatedSpeed
-                accumulatedSpeed = lap.speed.distance
+                lap.speed!!.distance += accumulatedSpeed
+                accumulatedSpeed = lap.speed!!.distance
             }
         }
 

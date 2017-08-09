@@ -111,18 +111,18 @@ public class PolarHsrParserTest {
         // check lap data
         assertEquals(exercise.getLapList().length, 2);
         assertEquals(exercise.getLapList()[0].getTimeSplit(), (1 * 60 * 60 * 10) + (31 * 60 * 10) + (11 * 10) + 7);
-        assertEquals(exercise.getLapList()[0].getHeartRateSplit(), (short) 156);
-        assertEquals(exercise.getLapList()[0].getHeartRateAVG(), (short) 173);
-        assertEquals(exercise.getLapList()[0].getHeartRateMax(), (short) 194);
+        assertEquals(exercise.getLapList()[0].getHeartRateSplit().intValue(), 156);
+        assertEquals(exercise.getLapList()[0].getHeartRateAVG().intValue(), 173);
+        assertEquals(exercise.getLapList()[0].getHeartRateMax().intValue(), 194);
         assertEquals(Math.round(exercise.getLapList()[0].getSpeed().getSpeedEnd() * 10), 164);
         assertEquals(Math.round(exercise.getLapList()[0].getSpeed().getDistance() / 100f), 310);
         assertEquals(exercise.getLapList()[0].getAltitude(), null);
         assertEquals(exercise.getLapList()[0].getTemperature(), null);
 
         assertEquals(exercise.getLapList()[1].getTimeSplit(), (2 * 60 * 60 * 10) + (14 * 60 * 10) + (51 * 10) + 5);
-        assertEquals(exercise.getLapList()[1].getHeartRateSplit(), (short) 155);
-        assertEquals(exercise.getLapList()[1].getHeartRateAVG(), (short) 169);
-        assertEquals(exercise.getLapList()[1].getHeartRateMax(), (short) 189);
+        assertEquals(exercise.getLapList()[1].getHeartRateSplit().intValue(), 155);
+        assertEquals(exercise.getLapList()[1].getHeartRateAVG().intValue(), 169);
+        assertEquals(exercise.getLapList()[1].getHeartRateMax().intValue(), 189);
         assertEquals(Math.round(exercise.getLapList()[1].getSpeed().getSpeedEnd() * 10), 3);
         assertEquals(Math.round(exercise.getLapList()[1].getSpeed().getDistance() / 100), 458);
         assertEquals(exercise.getLapList()[1].getAltitude(), null);
@@ -219,27 +219,27 @@ public class PolarHsrParserTest {
         // check lap data (first, two from middle and last only)
         assertEquals(exercise.getLapList().length, 7);
         assertEquals(exercise.getLapList()[0].getTimeSplit(), 10 * ((0 * 60 * 60) + (15 * 60) + 0) + 0);
-        assertEquals(exercise.getLapList()[0].getHeartRateSplit(), (short) 154);
-        assertEquals(exercise.getLapList()[0].getHeartRateAVG(), (short) 155);
-        assertEquals(exercise.getLapList()[0].getHeartRateMax(), (short) 168);
+        assertEquals(exercise.getLapList()[0].getHeartRateSplit().intValue(), 154);
+        assertEquals(exercise.getLapList()[0].getHeartRateAVG().intValue(), 155);
+        assertEquals(exercise.getLapList()[0].getHeartRateMax().intValue(), 168);
         assertEquals(exercise.getLapList()[0].getSpeed(), null);
         assertEquals(exercise.getLapList()[0].getAltitude(), null);
         assertEquals(exercise.getLapList()[0].getTemperature(), null);
 
         assertEquals(exercise.getLapList()[2].getTimeSplit(), 10 * ((0 * 60 * 60) + (27 * 60) + 20) + 0);
-        assertEquals(exercise.getLapList()[2].getHeartRateSplit(), (short) 187);
-        assertEquals(exercise.getLapList()[2].getHeartRateAVG(), (short) 182);
-        assertEquals(exercise.getLapList()[2].getHeartRateMax(), (short) 188);
+        assertEquals(exercise.getLapList()[2].getHeartRateSplit().intValue(), 187);
+        assertEquals(exercise.getLapList()[2].getHeartRateAVG().intValue(), 182);
+        assertEquals(exercise.getLapList()[2].getHeartRateMax().intValue(), 188);
 
         assertEquals(exercise.getLapList()[4].getTimeSplit(), 10 * ((0 * 60 * 60) + (39 * 60) + 30) + 0);
-        assertEquals(exercise.getLapList()[4].getHeartRateSplit(), (short) 147);
-        assertEquals(exercise.getLapList()[4].getHeartRateAVG(), (short) 182);
-        assertEquals(exercise.getLapList()[4].getHeartRateMax(), (short) 147);
+        assertEquals(exercise.getLapList()[4].getHeartRateSplit().intValue(), 147);
+        assertEquals(exercise.getLapList()[4].getHeartRateAVG().intValue(), 182);
+        assertEquals(exercise.getLapList()[4].getHeartRateMax().intValue(), 147);
 
         assertEquals(exercise.getLapList()[6].getTimeSplit(), 10 * ((0 * 60 * 60) + (59 * 60) + 31) + 7);
-        assertEquals(exercise.getLapList()[6].getHeartRateSplit(), (short) 126);
-        assertEquals(exercise.getLapList()[6].getHeartRateAVG(), (short) 161);
-        assertEquals(exercise.getLapList()[6].getHeartRateMax(), (short) 190);
+        assertEquals(exercise.getLapList()[6].getHeartRateSplit().intValue(), 126);
+        assertEquals(exercise.getLapList()[6].getHeartRateAVG().intValue(), 161);
+        assertEquals(exercise.getLapList()[6].getHeartRateMax().intValue(), 190);
 
 
         // check sample data (first, two from middle and last only)

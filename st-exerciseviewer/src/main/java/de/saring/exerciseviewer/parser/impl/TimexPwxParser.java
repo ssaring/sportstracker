@@ -556,8 +556,6 @@ public class TimexPwxParser extends AbstractExerciseParser {
                         null);
                 lap.setSpeed(lapSpd);
                 lap.setTemperature(new LapTemperature((short) 25));
-                lap.setHeartRateSplit((short) 0);
-                lap.setHeartRateMax((short) 0);
                 for (int j = 0; j < segmentChildren.getLength(); j++) {
                     childName = segmentChildren.item(j).getNodeName();
                     if (childName.equals("summarydata")) {
@@ -576,8 +574,12 @@ public class TimexPwxParser extends AbstractExerciseParser {
                         }
                         lap.setSpeed(lapSpd);
                         if (segmentSummary.getHr() != null) {
-                            lap.setHeartRateAVG((short) segmentSummary.getHr().getAvg());
-                            lap.setHeartRateMax((short) segmentSummary.getHr().getMax());
+                            if (segmentSummary.getHr().getAvg() > 0) {
+                                lap.setHeartRateAVG((short) segmentSummary.getHr().getAvg());
+                            }
+                            if (segmentSummary.getHr().getMax() > 0) {
+                                lap.setHeartRateMax((short) segmentSummary.getHr().getMax());
+                            }
                         }
                         if (segmentSummary.getAltitude() != null) {
                             short lapAltitude = (short) segmentSummary.getAltitude().getMax();

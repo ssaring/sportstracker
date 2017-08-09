@@ -139,7 +139,7 @@ class GarminTcxParser : AbstractExerciseParser() {
                         previousTrackpointTimestamp = tpMillis
                         previousTrackpointDistanceMeters = tpDistanceMeters
 
-                        evLap.speed.speedEnd = evSample.speed ?: 0f
+                        evLap.speed!!.speedEnd = evSample.speed ?: 0f
                         exercise.speed.speedMax = Math.max(evSample.speed ?: 0f, exercise.speed.speedMax)
                     }
 
@@ -179,7 +179,7 @@ class GarminTcxParser : AbstractExerciseParser() {
                     val cadence = getCadenceOfTrackpoint(eTrackpoint)
                     if (cadence != null) {
                         evSample.cadence = cadence
-                        evLap.speed.cadence = evSample.cadence ?: 0
+                        evLap.speed!!.cadence = evSample.cadence ?: 0
 
                         // create cadence object for exercise if not done yet
                         if (exercise.cadence == null) {
@@ -255,7 +255,7 @@ class GarminTcxParser : AbstractExerciseParser() {
         val eMaximumHeartRateBpm = lapElement.getChild("MaximumHeartRateBpm", namespace)
         if (eMaximumHeartRateBpm != null) {
             evLap.heartRateMax = eMaximumHeartRateBpm.getChildText("Value", namespace).toShort()
-            exercise.heartRateMax = Math.max(evLap.heartRateMax.toInt(), exercise.heartRateMax.toInt()).toShort()
+            exercise.heartRateMax = Math.max(evLap.heartRateMax!!.toInt(), exercise.heartRateMax.toInt()).toShort()
         }
     }
 
@@ -335,9 +335,9 @@ class GarminTcxParser : AbstractExerciseParser() {
             val lapDuration = evLap.timeSplit - previousLapTimeSplit
             previousLapTimeSplit = evLap.timeSplit
 
-            if (evLap.heartRateAVG > 0) {
+            if (evLap.heartRateAVG != null) {
                 totalHeartRateDuration += lapDuration
-                totalHeartRateSum += evLap.heartRateAVG * lapDuration
+                totalHeartRateSum += evLap.heartRateAVG!! * lapDuration
             }
         }
 
@@ -353,7 +353,7 @@ class GarminTcxParser : AbstractExerciseParser() {
 
             for (evLap in exercise.lapList) {
                 if (evLap.altitude != null) {
-                    exercise.altitude.ascent += evLap.altitude.ascent
+                    exercise.altitude.ascent += evLap.altitude!!.ascent
                 }
             }
         }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.exerciseviewer.data.Lap;
 import de.saring.leafletmap.ColorMarker;
 import de.saring.leafletmap.ControlPosition;
 import de.saring.leafletmap.LatLong;
@@ -26,7 +27,6 @@ import javafx.stage.Window;
 
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.ExerciseSample;
-import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.data.Position;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.exerciseviewer.gui.EVDocument;

@@ -107,17 +107,17 @@ public class PolarSRawParserTest {
         // check lap data (first and last lap only)
         assertEquals(exercise.getLapList().length, 3);
         assertEquals(exercise.getLapList()[0].getTimeSplit(), (0 * 60 * 60 * 10) + (50 * 60 * 10) + (17 * 10) + 2);
-        assertEquals(exercise.getLapList()[0].getHeartRateSplit(), (short) 165);
-        assertEquals(exercise.getLapList()[0].getHeartRateAVG(), (short) 157);
-        assertEquals(exercise.getLapList()[0].getHeartRateMax(), (short) 176);
+        assertEquals(exercise.getLapList()[0].getHeartRateSplit().intValue(), 165);
+        assertEquals(exercise.getLapList()[0].getHeartRateAVG().intValue(), 157);
+        assertEquals(exercise.getLapList()[0].getHeartRateMax().intValue(), 176);
         assertEquals(exercise.getLapList()[0].getSpeed(), null);
         assertEquals(exercise.getLapList()[0].getAltitude(), null);
         assertEquals(exercise.getLapList()[0].getTemperature(), null);
 
         assertEquals(exercise.getLapList()[2].getTimeSplit(), (1 * 60 * 60 * 10) + (36 * 60 * 10) + (50 * 10) + 8);
-        assertEquals(exercise.getLapList()[2].getHeartRateSplit(), (short) 159);
-        assertEquals(exercise.getLapList()[2].getHeartRateAVG(), (short) 160);
-        assertEquals(exercise.getLapList()[2].getHeartRateMax(), (short) 171);
+        assertEquals(exercise.getLapList()[2].getHeartRateSplit().intValue(), 159);
+        assertEquals(exercise.getLapList()[2].getHeartRateAVG().intValue(), 160);
+        assertEquals(exercise.getLapList()[2].getHeartRateMax().intValue(), 171);
         assertEquals(exercise.getLapList()[2].getSpeed(), null);
         assertEquals(exercise.getLapList()[2].getAltitude(), null);
         assertEquals(exercise.getLapList()[2].getTemperature(), null);
@@ -219,9 +219,9 @@ public class PolarSRawParserTest {
         // check lap data (first, one from middle and last lap only)
         assertEquals(5, exercise.getLapList().length);
         assertEquals((0 * 60 * 60 * 10) + (06 * 60 * 10) + (59 * 10) + 2, exercise.getLapList()[0].getTimeSplit());
-        assertEquals((short) 136, exercise.getLapList()[0].getHeartRateSplit());
-        assertEquals((short) 128, exercise.getLapList()[0].getHeartRateAVG());
-        assertEquals((short) 152, exercise.getLapList()[0].getHeartRateMax());
+        assertEquals(136, exercise.getLapList()[0].getHeartRateSplit().intValue());
+        assertEquals(128, exercise.getLapList()[0].getHeartRateAVG().intValue());
+        assertEquals(152, exercise.getLapList()[0].getHeartRateMax().intValue());
         assertEquals(141, Math.round(exercise.getLapList()[0].getSpeed().getSpeedEnd() * 10));
         assertEquals(258, Math.round(exercise.getLapList()[0].getSpeed().getSpeedAVG() * 10));
         assertEquals(3 * 1000, exercise.getLapList()[0].getSpeed().getDistance());
@@ -231,9 +231,9 @@ public class PolarSRawParserTest {
         assertEquals((short) 4, exercise.getLapList()[0].getTemperature().getTemperature());
 
         assertEquals((0 * 60 * 60 * 10) + (40 * 60 * 10) + (18 * 10) + 8, exercise.getLapList()[2].getTimeSplit());
-        assertEquals((short) 136, exercise.getLapList()[2].getHeartRateSplit());
-        assertEquals((short) 134, exercise.getLapList()[2].getHeartRateAVG());
-        assertEquals((short) 168, exercise.getLapList()[2].getHeartRateMax());
+        assertEquals(136, exercise.getLapList()[2].getHeartRateSplit().intValue());
+        assertEquals(134, exercise.getLapList()[2].getHeartRateAVG().intValue());
+        assertEquals(168, exercise.getLapList()[2].getHeartRateMax().intValue());
         assertEquals(193, Math.round(exercise.getLapList()[2].getSpeed().getSpeedEnd() * 10));
         assertEquals(242, Math.round(exercise.getLapList()[2].getSpeed().getSpeedAVG() * 10));
         assertEquals(15700, exercise.getLapList()[2].getSpeed().getDistance());
@@ -243,9 +243,9 @@ public class PolarSRawParserTest {
         assertEquals((short) 4, exercise.getLapList()[2].getTemperature().getTemperature());
 
         assertEquals((1 * 60 * 60 * 10) + (13 * 60 * 10) + (34 * 10) + 3, exercise.getLapList()[4].getTimeSplit());
-        assertEquals((short) 123, exercise.getLapList()[4].getHeartRateSplit());
-        assertEquals((short) 121, exercise.getLapList()[4].getHeartRateAVG());
-        assertEquals((short) 123, exercise.getLapList()[4].getHeartRateMax());
+        assertEquals(123, exercise.getLapList()[4].getHeartRateSplit().intValue());
+        assertEquals(121, exercise.getLapList()[4].getHeartRateAVG().intValue());
+        assertEquals(123, exercise.getLapList()[4].getHeartRateMax().intValue());
         assertEquals(0 * 10, Math.round(exercise.getLapList()[4].getSpeed().getSpeedEnd() * 10));
         assertEquals(0 * 10, Math.round(exercise.getLapList()[4].getSpeed().getSpeedAVG() * 10));
         assertEquals(29900, exercise.getLapList()[4].getSpeed().getDistance());
@@ -352,9 +352,9 @@ public class PolarSRawParserTest {
         // check lap data (first, one from middle and last lap only)
         assertEquals(exercise.getLapList().length, 4);
         assertEquals(exercise.getLapList()[0].getTimeSplit(), (0 * 60 * 60 * 10) + (20 * 60 * 10) + (34 * 10) + 6);
-        assertEquals(exercise.getLapList()[0].getHeartRateSplit(), (short) 143);
-        assertEquals(exercise.getLapList()[0].getHeartRateAVG(), (short) 141);
-        assertEquals(exercise.getLapList()[0].getHeartRateMax(), (short) 232);
+        assertEquals(exercise.getLapList()[0].getHeartRateSplit().intValue(), 143);
+        assertEquals(exercise.getLapList()[0].getHeartRateAVG().intValue(), 141);
+        assertEquals(exercise.getLapList()[0].getHeartRateMax().intValue(), 232);
         assertEquals(Math.round(exercise.getLapList()[0].getSpeed().getSpeedEnd() * 10), 206);
         assertEquals(Math.round(exercise.getLapList()[0].getSpeed().getSpeedAVG() * 10), 230);
         assertEquals(exercise.getLapList()[0].getSpeed().getDistance(), 7886);
@@ -364,9 +364,9 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getLapList()[0].getTemperature().getTemperature(), (short) 3);
 
         assertEquals(exercise.getLapList()[1].getTimeSplit(), (0 * 60 * 60 * 10) + (46 * 60 * 10) + (51 * 10) + 2);
-        assertEquals(exercise.getLapList()[1].getHeartRateSplit(), (short) 129);
-        assertEquals(exercise.getLapList()[1].getHeartRateAVG(), (short) 133);
-        assertEquals(exercise.getLapList()[1].getHeartRateMax(), (short) 160);
+        assertEquals(exercise.getLapList()[1].getHeartRateSplit().intValue(), 129);
+        assertEquals(exercise.getLapList()[1].getHeartRateAVG().intValue(), 133);
+        assertEquals(exercise.getLapList()[1].getHeartRateMax().intValue(), 160);
         assertEquals(Math.round(exercise.getLapList()[1].getSpeed().getSpeedEnd() * 10), 353);
         assertEquals(Math.round(exercise.getLapList()[1].getSpeed().getSpeedAVG() * 10), 253);
         assertEquals(exercise.getLapList()[1].getSpeed().getDistance(), 18990);
@@ -376,9 +376,9 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getLapList()[1].getTemperature().getTemperature(), (short) 3);
 
         assertEquals(exercise.getLapList()[3].getTimeSplit(), (0 * 60 * 60 * 10) + (51 * 60 * 10) + (22 * 10) + 6);
-        assertEquals(exercise.getLapList()[3].getHeartRateSplit(), (short) 116);
-        assertEquals(exercise.getLapList()[3].getHeartRateAVG(), (short) 119);
-        assertEquals(exercise.getLapList()[3].getHeartRateMax(), (short) 125);
+        assertEquals(exercise.getLapList()[3].getHeartRateSplit().intValue(), 116);
+        assertEquals(exercise.getLapList()[3].getHeartRateAVG().intValue(), 119);
+        assertEquals(exercise.getLapList()[3].getHeartRateMax().intValue(), 125);
         assertEquals(Math.round(exercise.getLapList()[3].getSpeed().getSpeedEnd() * 10), 0);
         assertEquals(Math.round(exercise.getLapList()[3].getSpeed().getSpeedAVG() * 10), 0);
         assertEquals(exercise.getLapList()[3].getSpeed().getDistance(), 20921);
@@ -483,9 +483,9 @@ public class PolarSRawParserTest {
         // check lap data (one lap only)
         assertEquals(exercise.getLapList().length, 1);
         assertEquals(exercise.getLapList()[0].getTimeSplit(), (0 * 60 * 60 * 10) + (42 * 60 * 10) + (24 * 10) + 7);
-        assertEquals(exercise.getLapList()[0].getHeartRateSplit(), (short) 146);
-        assertEquals(exercise.getLapList()[0].getHeartRateAVG(), (short) 148);
-        assertEquals(exercise.getLapList()[0].getHeartRateMax(), (short) 159);
+        assertEquals(exercise.getLapList()[0].getHeartRateSplit().intValue(), 146);
+        assertEquals(exercise.getLapList()[0].getHeartRateAVG().intValue(), 148);
+        assertEquals(exercise.getLapList()[0].getHeartRateMax().intValue(), 159);
         assertEquals(exercise.getLapList()[0].getSpeed(), null);
         assertEquals(exercise.getLapList()[0].getAltitude().getAltitude(), (short) 88);
         assertEquals(exercise.getLapList()[0].getAltitude().getAscent(), 20);
@@ -589,9 +589,9 @@ public class PolarSRawParserTest {
         // check lap data (just 2 laps)
         assertEquals(exercise.getLapList().length, 2);
         assertEquals(exercise.getLapList()[0].getTimeSplit(), (2 * 60 * 60 * 10) + (24 * 60 * 10) + (19 * 10) + 9);
-        assertEquals(exercise.getLapList()[0].getHeartRateSplit(), (short) 122);
-        assertEquals(exercise.getLapList()[0].getHeartRateAVG(), (short) 133);
-        assertEquals(exercise.getLapList()[0].getHeartRateMax(), (short) 229);
+        assertEquals(exercise.getLapList()[0].getHeartRateSplit().intValue(), 122);
+        assertEquals(exercise.getLapList()[0].getHeartRateAVG().intValue(), 133);
+        assertEquals(exercise.getLapList()[0].getHeartRateMax().intValue(), 229);
         assertEquals(Math.round(exercise.getLapList()[0].getSpeed().getSpeedEnd() * 10), 0 * 10);
         assertEquals(Math.round(exercise.getLapList()[0].getSpeed().getSpeedAVG() * 10), 202);
         assertEquals(exercise.getLapList()[0].getSpeed().getDistance(), 48600);
@@ -601,9 +601,9 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getLapList()[0].getTemperature().getTemperature(), (short) 20);
 
         assertEquals(exercise.getLapList()[1].getTimeSplit(), (5 * 60 * 60 * 10) + (9 * 60 * 10) + (58 * 10) + 5);
-        assertEquals(exercise.getLapList()[1].getHeartRateSplit(), (short) 123);
-        assertEquals(exercise.getLapList()[1].getHeartRateAVG(), (short) 135);
-        assertEquals(exercise.getLapList()[1].getHeartRateMax(), (short) 232);
+        assertEquals(exercise.getLapList()[1].getHeartRateSplit().intValue(), 123);
+        assertEquals(exercise.getLapList()[1].getHeartRateAVG().intValue(), 135);
+        assertEquals(exercise.getLapList()[1].getHeartRateMax().intValue(), 232);
         assertEquals(Math.round(exercise.getLapList()[1].getSpeed().getSpeedEnd() * 10), 38);
         assertEquals(Math.round(exercise.getLapList()[1].getSpeed().getSpeedAVG() * 10), 229);
         assertEquals(exercise.getLapList()[1].getSpeed().getDistance(), 111700);
@@ -708,18 +708,18 @@ public class PolarSRawParserTest {
         // check lap data (first and last lap only)
         assertEquals(exercise.getLapList().length, 3);
         assertEquals(exercise.getLapList()[0].getTimeSplit(), (1 * 60 * 60 * 10) + (31 * 60 * 10) + (8 * 10) + 8);
-        assertEquals(exercise.getLapList()[0].getHeartRateSplit(), (short) 70);
-        assertEquals(exercise.getLapList()[0].getHeartRateAVG(), (short) 112);
-        assertEquals(exercise.getLapList()[0].getHeartRateMax(), (short) 147);
+        assertEquals(exercise.getLapList()[0].getHeartRateSplit().intValue(), 70);
+        assertEquals(exercise.getLapList()[0].getHeartRateAVG().intValue(), 112);
+        assertEquals(exercise.getLapList()[0].getHeartRateMax().intValue(), 147);
         assertEquals(exercise.getLapList()[0].getSpeed(), null);
         assertEquals(exercise.getLapList()[0].getAltitude().getAltitude(), (short) 174);
         assertEquals(exercise.getLapList()[0].getAltitude().getAscent(), 160);
         assertEquals(exercise.getLapList()[0].getTemperature().getTemperature(), (short) 17);
 
         assertEquals(exercise.getLapList()[2].getTimeSplit(), (2 * 60 * 60 * 10) + (29 * 60 * 10) + (1 * 10) + 9);
-        assertEquals(exercise.getLapList()[2].getHeartRateSplit(), (short) 86);
-        assertEquals(exercise.getLapList()[2].getHeartRateAVG(), (short) 117);
-        assertEquals(exercise.getLapList()[2].getHeartRateMax(), (short) 142);
+        assertEquals(exercise.getLapList()[2].getHeartRateSplit().intValue(), 86);
+        assertEquals(exercise.getLapList()[2].getHeartRateAVG().intValue(), 117);
+        assertEquals(exercise.getLapList()[2].getHeartRateMax().intValue(), 142);
         assertEquals(exercise.getLapList()[2].getSpeed(), null);
         assertEquals(exercise.getLapList()[2].getAltitude().getAltitude(), (short) 281);
         assertEquals(exercise.getLapList()[2].getAltitude().getAscent(), 315);
@@ -787,8 +787,8 @@ public class PolarSRawParserTest {
 
         // check some lap data 
         assertEquals(exercise.getLapList().length, 12);
-        assertEquals(exercise.getLapList()[0].getHeartRateSplit(), (short) 141);
-        assertEquals(exercise.getLapList()[10].getHeartRateSplit(), (short) 130);
+        assertEquals(exercise.getLapList()[0].getHeartRateSplit().intValue(), 141);
+        assertEquals(exercise.getLapList()[10].getHeartRateSplit().intValue(), 130);
 
         // check some sample data 
         assertEquals(exercise.getSampleList()[0].getHeartRate().intValue(), 116);
