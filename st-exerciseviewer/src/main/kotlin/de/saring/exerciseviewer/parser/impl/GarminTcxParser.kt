@@ -183,7 +183,7 @@ class GarminTcxParser : AbstractExerciseParser() {
 
                         // create cadence object for exercise if not done yet
                         if (exercise.cadence == null) {
-                            exercise.cadence = ExerciseCadence()
+                            exercise.cadence = ExerciseCadence(0, 0)
                             exercise.recordingMode.isCadence = true
                         }
 
@@ -191,7 +191,7 @@ class GarminTcxParser : AbstractExerciseParser() {
                         exercise.cadence.cadenceMax = Math.max(cadence.toInt(), exercise.cadence.cadenceMax.toInt()).toShort()
                         if (cadence > 0) {
                             cadenceSum += cadence
-                            exercise.cadence.cadenceAVG = Math.round(cadenceSum / (++cadenceCount).toDouble()).toShort()
+                            exercise.cadence.cadenceAvg = Math.round(cadenceSum / (++cadenceCount).toDouble()).toShort()
                         }
                     }
                 }

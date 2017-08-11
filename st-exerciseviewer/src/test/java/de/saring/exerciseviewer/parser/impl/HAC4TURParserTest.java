@@ -139,7 +139,7 @@ public class HAC4TURParserTest {
         assertEquals(105, exercise.getOdometer());
 
         // Cadence values
-        assertEquals((short) 58, exercise.getCadence().getCadenceAVG());
+        assertEquals((short) 58, exercise.getCadence().getCadenceAvg());
         assertEquals((short) 110, exercise.getCadence().getCadenceMax());
         // altitudes
         assertEquals((short) 5, exercise.getAltitude().getAltitudeMax());

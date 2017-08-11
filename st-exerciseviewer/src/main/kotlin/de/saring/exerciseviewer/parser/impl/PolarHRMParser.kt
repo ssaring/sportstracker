@@ -473,11 +473,12 @@ class PolarHRMParser : AbstractExerciseParser() {
 
         // compute min and max cadence when recorded (not in HRM file)
         if (exercise.recordingMode.isCadence) {
-            exercise.cadence = ExerciseCadence()
 
             // compute average cadence from all samples, where cadence > 0
             var avgCadenceSum = 0
             var avgCadenceSamples = 0
+            var cadenceAvg: Short = 0
+            var cadenceMax: Short = 0
 
             for (sample in exercise.sampleList) {
                 sample.cadence?.let { sampleCadence ->
@@ -485,12 +486,14 @@ class PolarHRMParser : AbstractExerciseParser() {
                     avgCadenceSamples++
                 }
 
-                exercise.cadence.cadenceMax = maxShort(sample.cadence ?: 0, exercise.cadence.cadenceMax)
+                cadenceMax = maxShort(sample.cadence ?: 0, cadenceMax)
             }
 
             if (avgCadenceSum > 0 && avgCadenceSamples > 0) {
-                exercise.cadence.cadenceAVG = Math.round(avgCadenceSum / avgCadenceSamples.toDouble()).toShort()
+                cadenceAvg = Math.round(avgCadenceSum / avgCadenceSamples.toDouble()).toShort()
             }
+
+            exercise.cadence = ExerciseCadence(cadenceAvg, cadenceMax)
         }
 
         // repair distance values of samples

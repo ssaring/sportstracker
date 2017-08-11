@@ -8,5 +8,5 @@ package de.saring.exerciseviewer.data
  */
 data class LapTemperature(
 
-        /** Temperature at lap (in celcius degrees). */
+        /** Temperature at lap (in celsius degrees). */
         var temperature: Short)

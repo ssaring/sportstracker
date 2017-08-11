@@ -299,19 +299,17 @@ public class HAC4TURParser extends AbstractExerciseParser {
      * Calculates the cadence information.
      */
     private ExerciseCadence calculateCadence(EVExercise exercise) {
-        int maximum = Integer.MIN_VALUE;
+        int cadenceMax = Integer.MIN_VALUE;
         long total = 0;
 
         for (ExerciseSample sample : exercise.getSampleList()) {
             short cadence = sample.getCadence();
-            maximum = Math.max(cadence, maximum);
+            cadenceMax = Math.max(cadence, cadenceMax);
             total += cadence;
         }
 
-        ExerciseCadence ec = new ExerciseCadence();
-        ec.setCadenceMax((short) maximum);
-        ec.setCadenceAVG((short) (total / exercise.getSampleList().length));
-        return ec;
+        short cadenceAvg = (short) (total / exercise.getSampleList().length);
+        return new ExerciseCadence(cadenceAvg, (short) cadenceMax);
     }
 
     /**

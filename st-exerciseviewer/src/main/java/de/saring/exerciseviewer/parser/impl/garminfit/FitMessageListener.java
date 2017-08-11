@@ -137,9 +137,7 @@ class FitMessageListener implements MesgListener {
         // read optional cadence data
         if (mesg.getAvgCadence() != null) {
             exercise.getRecordingMode().setCadence(true);
-            exercise.setCadence(new ExerciseCadence());
-            exercise.getCadence().setCadenceAVG(mesg.getAvgCadence());
-            exercise.getCadence().setCadenceMax(mesg.getMaxCadence());
+            exercise.setCadence(new ExerciseCadence(mesg.getAvgCadence(), mesg.getMaxCadence()));
         }
     }
 

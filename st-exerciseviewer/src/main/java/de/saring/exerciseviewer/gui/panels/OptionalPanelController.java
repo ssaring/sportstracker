@@ -84,7 +84,7 @@ public class OptionalPanelController extends AbstractPanelController {
 
         // fill cadence data
         if (exercise.getCadence() != null) {
-            laCadenceAvgValue.setText(formatUtils.cadenceToString(exercise.getCadence().getCadenceAVG()));
+            laCadenceAvgValue.setText(formatUtils.cadenceToString(exercise.getCadence().getCadenceAvg()));
             laCadenceMaxValue.setText(formatUtils.cadenceToString(exercise.getCadence().getCadenceMax()));
         }
 

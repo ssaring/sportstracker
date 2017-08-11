@@ -149,7 +149,7 @@ class GarminTcxParserTest {
         assertEquals(388, exercise.altitude.ascent)
 
         // cadence
-        assertEquals(88.toShort(), exercise.cadence.cadenceAVG)
+        assertEquals(88.toShort(), exercise.cadence.cadenceAvg)
         assertEquals(90.toShort(), exercise.cadence.cadenceMax)
 
         // lap data
@@ -247,7 +247,7 @@ class GarminTcxParserTest {
         assertNull(exercise.altitude)
 
         // (run) cadence
-        assertEquals(80.toShort(), exercise.cadence.cadenceAVG)
+        assertEquals(80.toShort(), exercise.cadence.cadenceAvg)
         assertEquals(90.toShort(), exercise.cadence.cadenceMax)
 
         // lap data (check the first only)
