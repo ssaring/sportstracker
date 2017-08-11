@@ -327,12 +327,9 @@ public class HAC4TURParser extends AbstractExerciseParser {
             previousDistance = sample.getDistance();
         }
 
-        ExerciseSpeed es = new ExerciseSpeed();
         int sampleCount = exercise.getSampleList().length;
-        es.setDistance(exercise.getSampleList()[sampleCount - 1].getDistance());
-        es.setSpeedAVG(speedAVG);
-        es.setSpeedMax(max);
-        return es;
+        int distance = exercise.getSampleList()[sampleCount - 1].getDistance();
+        return new ExerciseSpeed(speedAVG, max, distance);
     }
 
     /**
@@ -405,7 +402,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
 
         lap.setSpeed(new LapSpeed(
                 lastSample.getSpeed(),
-                exercise.getSpeed().getSpeedAVG(),
+                exercise.getSpeed().getSpeedAvg(),
                 exercise.getSpeed().getDistance(),
                 lastSample.getCadence()));
 

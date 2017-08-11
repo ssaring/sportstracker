@@ -72,7 +72,7 @@ public class OptionalPanelController extends AbstractPanelController {
 
         // fill speed data
         if (exercise.getSpeed() != null) {
-            laSpeedAvgValue.setText(formatUtils.speedToString(exercise.getSpeed().getSpeedAVG(), 2));
+            laSpeedAvgValue.setText(formatUtils.speedToString(exercise.getSpeed().getSpeedAvg(), 2));
             laSpeedMaxValue.setText(formatUtils.speedToString(exercise.getSpeed().getSpeedMax(), 2));
             laDistanceValue.setText(formatUtils.distanceToString(exercise.getSpeed().getDistance() / 1000f, 2));
 

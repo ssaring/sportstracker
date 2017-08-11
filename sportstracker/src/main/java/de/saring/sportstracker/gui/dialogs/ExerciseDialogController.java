@@ -466,7 +466,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         if (exerciseViewModel.sportTypeRecordDistance.get() && pvExercise.getSpeed() != null) {
             exerciseViewModel.setAutoCalcFields(
                     pvExercise.getSpeed().getDistance() / 1000f,
-                    pvExercise.getSpeed().getSpeedAVG(),
+                    pvExercise.getSpeed().getSpeedAvg(),
                     importedDuration);
         } else {
             exerciseViewModel.distance.set(0f);

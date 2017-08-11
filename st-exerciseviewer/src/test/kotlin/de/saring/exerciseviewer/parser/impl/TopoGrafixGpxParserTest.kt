@@ -62,7 +62,7 @@ class TopoGrafixGpxParserTest {
         // check speed summary data
         assertEquals(39.38832f, exercise.speed.speedMax)
         assertEquals(16484, exercise.speed.distance)
-        assertEquals(20.998724f, exercise.speed.speedAVG)
+        assertEquals(20.998724f, exercise.speed.speedAvg)
 
         // check sample data
         assertEquals(199, exercise.sampleList.size)
@@ -123,7 +123,7 @@ class TopoGrafixGpxParserTest {
         // check speed summary data
         assertEquals(37.978153f, exercise.speed.speedMax)
         assertEquals(4494, exercise.speed.distance)
-        assertEquals(26.565517f, exercise.speed.speedAVG)
+        assertEquals(26.565517f, exercise.speed.speedAvg)
 
         // check heartRate data
         assertEquals(152.toShort(), exercise.heartRateAVG)
@@ -192,7 +192,7 @@ class TopoGrafixGpxParserTest {
         // check speed summary data
         assertEquals(39.3484f, exercise.speed.speedMax)
         assertEquals(1055, exercise.speed.distance)
-        assertEquals(21.337078f, exercise.speed.speedAVG)
+        assertEquals(21.337078f, exercise.speed.speedAvg)
 
         // check heartRate data
         assertEquals(140.toShort(), exercise.heartRateAVG)

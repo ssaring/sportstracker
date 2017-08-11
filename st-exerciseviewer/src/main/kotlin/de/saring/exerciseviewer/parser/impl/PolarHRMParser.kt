@@ -93,7 +93,7 @@ class PolarHRMParser : AbstractExerciseParser() {
         exercise.recordingMode.isPower = strSMode[3] == '1'
 
         if (exercise.recordingMode.isSpeed) {
-            exercise.speed = ExerciseSpeed()
+            exercise.speed = ExerciseSpeed(0f, 0f, 0)
         }
 
         // does the HRM file uses metric or english units ?
@@ -334,12 +334,12 @@ class PolarHRMParser : AbstractExerciseParser() {
             // parse speed informations
             if (exercise.recordingMode.isSpeed) {
                 exercise.speed.distance = lTripBlock[0].toInt() * 100
-                exercise.speed.speedAVG = lTripBlock[5].toInt() / 128f
+                exercise.speed.speedAvg = lTripBlock[5].toInt() / 128f
                 // ignore maximum speed data, it is often wrong for many Polar models (will be calculated later)
 
                 if (!fMetricUnits) {
                     exercise.speed.distance = ConvertUtils.convertMiles2Kilometer(exercise.speed.distance)
-                    exercise.speed.speedAVG = ConvertUtils.convertMiles2Kilometer(exercise.speed.speedAVG.toDouble()).toFloat()
+                    exercise.speed.speedAvg = ConvertUtils.convertMiles2Kilometer(exercise.speed.speedAvg.toDouble()).toFloat()
                 }
 
                 // now we have the exercise distance, that's why the lap distances needs to be corrected

@@ -270,29 +270,19 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
      * Calculates the speed summary (only when samples contain timestamps, from which speed is derived).
      */
     private fun calculateSpeedSummary(exercise: EVExercise) {
-        exercise.speed = ExerciseSpeed()
+        if (!exercise.sampleList.isEmpty()) {
 
-        // Determine maximum speed
-        exercise.speed.speedMax = 0f
-        for (sample in exercise.sampleList) {
-            val sampleSpeed = sample.speed!!
-            if (sampleSpeed > exercise.speed.speedMax) {
-                exercise.speed.speedMax = sampleSpeed
-            }
+            val speedMax = exercise.sampleList
+                    .map { it.speed!! }
+                    .max()!!
+
+            val lastSample = exercise.sampleList[exercise.sampleList.size - 1]
+            val distance = lastSample.distance!!
+            val speedAvg = CalculationUtils.calculateAvgSpeed(
+                    distance / 1000f, Math.round(lastSample.timestamp!! / 1000f))
+
+            exercise.speed = ExerciseSpeed(speedAvg, speedMax, distance)
         }
-
-        // Determine total duration and average speed
-        val sampleCount = exercise.sampleList.size
-        if (sampleCount > 0) {
-            val lastSample = exercise.sampleList[sampleCount - 1]
-            exercise.speed.distance = lastSample.distance!!
-            exercise.speed.speedAVG = CalculationUtils.calculateAvgSpeed(
-                    exercise.speed.distance / 1000f, Math.round(lastSample.timestamp!! / 1000f))
-        } else {
-            exercise.speed.distance = 0
-            exercise.speed.speedAVG = 0f
-        }
-
     }
 
     /**

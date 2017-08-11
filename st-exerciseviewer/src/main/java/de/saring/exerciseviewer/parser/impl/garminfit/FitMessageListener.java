@@ -106,20 +106,24 @@ class FitMessageListener implements MesgListener {
         // read optional speed data
         if (mesg.getTotalDistance() != null) {
             exercise.getRecordingMode().setSpeed(true);
-            exercise.setSpeed(new ExerciseSpeed());
-            exercise.getSpeed().setDistance(Math.round(mesg.getTotalDistance()));
+
+            int distance = Math.round(mesg.getTotalDistance());
             // AVG speed might be missing in Garmin Forerunner 910XT exercises, will be calculated afterwards
             Float avgSpeed = mesg.getAvgSpeed();
             if (avgSpeed != null) {
-                exercise.getSpeed().setSpeedAVG(
-                        ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
+                avgSpeed = ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed());
+            } else {
+                avgSpeed = 0f;
             }
 
             Float maxSpeed = mesg.getMaxSpeed();
             if (maxSpeed != null) {
-            	exercise.getSpeed().setSpeedMax(
-            			ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getMaxSpeed()));
+            	maxSpeed = ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getMaxSpeed());
+            } else {
+                maxSpeed = 0f;
             }
+
+            exercise.setSpeed(new ExerciseSpeed(avgSpeed, maxSpeed, distance));
         }
 
         // read optional speed data
@@ -422,8 +426,8 @@ class FitMessageListener implements MesgListener {
     private void calculateMissingAverageSpeed() {
 
         ExerciseSpeed exerciseSpeed = exercise.getSpeed();
-        if (exerciseSpeed != null && exerciseSpeed.getSpeedAVG() == 0f) {
-            exerciseSpeed.setSpeedAVG(CalculationUtils.calculateAvgSpeed(
+        if (exerciseSpeed != null && exerciseSpeed.getSpeedAvg() == 0f) {
+            exerciseSpeed.setSpeedAvg(CalculationUtils.calculateAvgSpeed(
                     exerciseSpeed.getDistance() / 1000f, Math.round(exercise.getDuration() / 10f)));
         }
 

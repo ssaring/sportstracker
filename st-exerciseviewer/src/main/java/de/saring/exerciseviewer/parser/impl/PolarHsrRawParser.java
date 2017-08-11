@@ -278,36 +278,30 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
 
         // get speed (bicycle) related data of exercise (if recorded)
         if (recMode.isSpeed()) {
-            ExerciseSpeed speed = new ExerciseSpeed();
-            exercise.setSpeed(speed);
 
             // get exercise distance (in 1/10th of km)
             int distance = (sdata(1, 84) + (sdata(1, 85) << 8)) * 100;
-            if (fMetricUnits) {
-                speed.setDistance(distance);
-            } else {
-                speed.setDistance(ConvertUtils.convertMiles2Kilometer(distance));
+            if (!fMetricUnits) {
+                distance = ConvertUtils.convertMiles2Kilometer(distance);
             }
 
             // get AVG speed
             int avgSpeedPart1 = sdata(1, 86);
             int avgSpeedPart2 = (sdata(1, 87) & 0x0f);
             float avgSpeed = ((avgSpeedPart2 << 8) | avgSpeedPart1) / 16f;
-            if (fMetricUnits) {
-                speed.setSpeedAVG(avgSpeed);
-            } else {
-                speed.setSpeedAVG((float) ConvertUtils.convertMiles2Kilometer(avgSpeed));
+            if (!fMetricUnits) {
+                avgSpeed = (float) ConvertUtils.convertMiles2Kilometer(avgSpeed);
             }
 
             // get max speed
             int maxSpeedPart1 = sdata(1, 87) >> 4;
             int maxSpeedPart2 = sdata(1, 88);
             float maxSpeed = ((maxSpeedPart2 << 4) | maxSpeedPart1) / 16f;
-            if (fMetricUnits) {
-                speed.setSpeedMax(maxSpeed);
-            } else {
-                speed.setSpeedMax((float) ConvertUtils.convertMiles2Kilometer(maxSpeed));
+            if (!fMetricUnits) {
+                maxSpeed = (float) ConvertUtils.convertMiles2Kilometer(maxSpeed);
             }
+
+            exercise.setSpeed(new ExerciseSpeed(avgSpeed, maxSpeed, distance));
         }
 
         // get cadence (bicycle) data of exercise (if recorded)

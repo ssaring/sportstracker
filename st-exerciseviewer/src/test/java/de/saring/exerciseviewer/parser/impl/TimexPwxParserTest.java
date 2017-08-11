@@ -217,7 +217,7 @@ public class TimexPwxParserTest {
         assertEquals((short) 145, exercise.getHeartRateAVG());
         assertEquals((short) 197, exercise.getHeartRateMax());
         assertEquals(exercise.getSpeed().getDistance(), 5319);
-        assertEquals(exercise.getSpeed().getSpeedAVG(), 31.550005, .001);
+        assertEquals(exercise.getSpeed().getSpeedAvg(), 31.550005, .001);
         assertEquals(exercise.getSpeed().getSpeedMax(), 39.579838, .001);
         assertEquals(exercise.getCadence(), null);
         assertEquals(exercise.getAltitude().getAltitudeMin(), 0);
@@ -333,7 +333,7 @@ public class TimexPwxParserTest {
         assertEquals((short) 141, exercise.getHeartRateAVG());
         assertEquals((short) 159, exercise.getHeartRateMax());
         assertEquals(3869, exercise.getSpeed().getDistance());
-        assertEquals(5.85, exercise.getSpeed().getSpeedAVG(), 0.001);
+        assertEquals(5.85, exercise.getSpeed().getSpeedAvg(), 0.001);
         assertEquals(7.938, exercise.getSpeed().getSpeedMax(), 0.001);
         assertNull(exercise.getCadence());
         assertEquals(12, exercise.getAltitude().getAltitudeMin());

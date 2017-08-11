@@ -3,10 +3,11 @@ SportsTracker-TODO
 
 ST-ExerciseViewer Kotlin port:
 - Diagram and Track panels does not work (tested with a FIT file)
-- continue with port of remaining EV data classes
+- continue with port of the remaining EVExercise data class
   -> data classes should be mutable (except e.g. for Position), no concurrency concerns here
   -> this makes the parser implementations much simpler, no need to collect all the data before object creation
 - finally: test all available exercise files whether they can can be opened without errors in ExerciseViewer
+- port classes of core package too
 - test exercise import in SportsTracker
 
 - imminent ST release needed due to parsing problems with newer Garmin devices

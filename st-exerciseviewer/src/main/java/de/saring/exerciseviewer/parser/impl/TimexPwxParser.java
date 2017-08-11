@@ -260,11 +260,10 @@ public class TimexPwxParser extends AbstractExerciseParser {
                     }
                     exercise.setOdometer((int) workoutSummary.getDistance() / 1000);
                     if (workoutSummary.getSpeed() != null) {
-                        ExerciseSpeed workoutSpeed = new ExerciseSpeed();
-                        workoutSpeed.setDistance((int) workoutSummary.getDistance());
-                        workoutSpeed.setSpeedAVG(workoutSummary.getSpeed().getAvg() * (float) 3.6);
-                        workoutSpeed.setSpeedMax(workoutSummary.getSpeed().getMax() * (float) 3.6);
-                        exercise.setSpeed(workoutSpeed);
+                        int distance = (int) workoutSummary.getDistance();
+                        float speedAvg = workoutSummary.getSpeed().getAvg() * (float) 3.6;
+                        float speedMax = workoutSummary.getSpeed().getMax() * (float) 3.6;
+                        exercise.setSpeed(new ExerciseSpeed(speedAvg, speedMax, distance));
                     }
                     if (workoutSummary.getAltitude() != null) {
                         short altitudeMin = (short) workoutSummary.getAltitude().getMin();
@@ -791,20 +790,17 @@ public class TimexPwxParser extends AbstractExerciseParser {
     private void computeSpeedStatisticIfMissing(EVExercise exercise) {
         if (exercise.getRecordingMode().isSpeed() && exercise.getSpeed() == null) {
 
-            ExerciseSpeed exSpeed = new ExerciseSpeed();
-            exSpeed.setSpeedMax(Float.MIN_VALUE);
-            exercise.setSpeed(exSpeed);
-
-            for (ExerciseSample sample : exercise.getSampleList()) {
-                exSpeed.setSpeedMax(Math.max(exSpeed.getSpeedMax(),
-                        sample.getSpeed() == null ? 0f : sample.getSpeed()));
-            }
+            float speedMax = (float) Stream.of(exercise.getSampleList())
+                    .mapToDouble(sample -> sample.getSpeed() == null ? 0f : sample.getSpeed())
+                    .max()
+                    .orElse(0f);
 
             ExerciseSample lastSample = exercise.getSampleList()[exercise.getSampleList().length - 1];
-            exSpeed.setDistance(lastSample.getDistance());
-            exSpeed.setSpeedAVG(CalculationUtils.calculateAvgSpeed(
-                    exSpeed.getDistance() / 1000f,
+            int distance = lastSample.getDistance();
+            float speedAvg = (CalculationUtils.calculateAvgSpeed(distance / 1000f,
                     Math.round(exercise.getDuration() / 10f)));
+
+            exercise.setSpeed(new ExerciseSpeed(speedAvg, speedMax, distance));
         }
     }
 

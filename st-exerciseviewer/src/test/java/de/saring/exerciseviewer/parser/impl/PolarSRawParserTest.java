@@ -177,7 +177,7 @@ public class PolarSRawParserTest {
         assertEquals((short) 15, exercise.getRecordingInterval());
         assertEquals((short) 135, exercise.getHeartRateAVG());
         assertEquals((short) 232, exercise.getHeartRateMax());
-        assertEquals(251, Math.round(exercise.getSpeed().getSpeedAVG() * 10));
+        assertEquals(251, Math.round(exercise.getSpeed().getSpeedAvg() * 10));
         assertEquals(1093, Math.round(exercise.getSpeed().getSpeedMax() * 10));
         assertEquals(29900, exercise.getSpeed().getDistance());
         assertNull(exercise.getCadence());
@@ -310,7 +310,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getRecordingInterval(), (short) 15);
         assertEquals(exercise.getHeartRateAVG(), (short) 137);
         assertEquals(exercise.getHeartRateMax(), (short) 232);
-        assertEquals(Math.round(exercise.getSpeed().getSpeedAVG() * 10), 247);
+        assertEquals(Math.round(exercise.getSpeed().getSpeedAvg() * 10), 247);
         assertEquals(Math.round(exercise.getSpeed().getSpeedMax() * 10), 1076);
         assertEquals(exercise.getSpeed().getDistance(), 20921);
         assertEquals(exercise.getCadence(), null);
@@ -547,7 +547,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getRecordingInterval(), (short) 5);
         assertEquals(exercise.getHeartRateAVG(), (short) 134);
         assertEquals(exercise.getHeartRateMax(), (short) 232);                      // recording error due to electric tram
-        assertEquals(Math.round(exercise.getSpeed().getSpeedAVG() * 10), 246);
+        assertEquals(Math.round(exercise.getSpeed().getSpeedAvg() * 10), 246);
         assertEquals(Math.round(exercise.getSpeed().getSpeedMax() * 10), 1103); // recording error due to electric tram
         assertEquals(exercise.getSpeed().getDistance(), 111700);
         assertEquals(exercise.getCadence(), null);

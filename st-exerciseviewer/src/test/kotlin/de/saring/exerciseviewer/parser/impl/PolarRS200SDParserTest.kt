@@ -61,7 +61,7 @@ class PolarRS200SDParserTest {
         // distance & speed & odometer
         assertEquals(5680, exercise.speed.distance)
         assertEquals(13745, (exercise.speed.speedMax * 1000).toInt())
-        assertEquals(11811, (exercise.speed.speedAVG * 1000).toInt())
+        assertEquals(11811, (exercise.speed.speedAvg * 1000).toInt())
 
         // lap data
         assertEquals(6, exercise.lapList.size)

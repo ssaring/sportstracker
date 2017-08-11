@@ -63,7 +63,7 @@ class GarminTcxParser : AbstractExerciseParser() {
         exercise.recordingInterval = EVExercise.DYNAMIC_RECORDING_INTERVAL
         exercise.recordingMode = RecordingMode()
         exercise.recordingMode.isSpeed = true
-        exercise.speed = ExerciseSpeed()
+        exercise.speed = ExerciseSpeed(0f, 0f, 0)
 
         val eActivity = eExercise.getChild("Activities", namespace).getChild("Activity", namespace)
         exercise.dateTime = parseDateTime(eActivity.getChildText("Id", namespace))
@@ -293,7 +293,7 @@ class GarminTcxParser : AbstractExerciseParser() {
     }
 
     private fun calculateAvgSpeed(exercise: EVExercise) {
-        exercise.speed.speedAVG = CalculationUtils.calculateAvgSpeed(
+        exercise.speed.speedAvg = CalculationUtils.calculateAvgSpeed(
                 exercise.speed.distance / 1000f, Math.round(exercise.duration / 10f))
     }
 

@@ -88,7 +88,7 @@ public class GarminFitParserTest {
         assertEquals(1567, exercise.getEnergy());
 
         assertEquals(101710, exercise.getSpeed().getDistance());
-        assertEquals(24.9948, exercise.getSpeed().getSpeedAVG(), 0.001d);
+        assertEquals(24.9948, exercise.getSpeed().getSpeedAvg(), 0.001d);
         assertEquals(68.4648, exercise.getSpeed().getSpeedMax(), 0.001d);
 
         assertEquals(1115, exercise.getAltitude().getAscent());
@@ -203,7 +203,7 @@ public class GarminFitParserTest {
         assertEquals(681, exercise.getEnergy());
 
         assertEquals(9843, exercise.getSpeed().getDistance());
-        assertEquals(11.7841, exercise.getSpeed().getSpeedAVG(), 0.001d);
+        assertEquals(11.7841, exercise.getSpeed().getSpeedAvg(), 0.001d);
         assertEquals(15.2424, exercise.getSpeed().getSpeedMax(), 0.001d);
 
         assertEquals(69, exercise.getAltitude().getAscent());
@@ -279,7 +279,7 @@ public class GarminFitParserTest {
 		assertEquals(553, exercise.getEnergy());
 
 		assertEquals(6235, exercise.getSpeed().getDistance());
-		assertEquals(9.36, exercise.getSpeed().getSpeedAVG(), 0.01d);
+		assertEquals(9.36, exercise.getSpeed().getSpeedAvg(), 0.01d);
 		assertEquals(15.58, exercise.getSpeed().getSpeedMax(), 0.01d);
 
 		assertEquals(4, exercise.getAltitude().getAscent());
@@ -360,7 +360,7 @@ public class GarminFitParserTest {
         assertEquals(910, exercise.getEnergy());
 
         assertEquals(51110, exercise.getSpeed().getDistance());
-        assertEquals(25.93, exercise.getSpeed().getSpeedAVG(), 0.01d);
+        assertEquals(25.93, exercise.getSpeed().getSpeedAvg(), 0.01d);
         assertEquals(56.37, exercise.getSpeed().getSpeedMax(), 0.01d);
 
         assertEquals(653, exercise.getAltitude().getAscent());

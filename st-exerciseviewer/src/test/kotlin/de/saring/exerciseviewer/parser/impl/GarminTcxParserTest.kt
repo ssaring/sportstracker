@@ -53,7 +53,7 @@ class GarminTcxParserTest {
         // distance & speed & odometer
         assertEquals(8349, exercise.speed.distance)
         assertEquals(72.284f, exercise.speed.speedMax, 0.001f)
-        assertEquals(12.817f, exercise.speed.speedAVG, 0.001f)
+        assertEquals(12.817f, exercise.speed.speedAvg, 0.001f)
 
         // altitude
         assertEquals((-4).toShort(), exercise.altitude.altitudeMin)
@@ -140,7 +140,7 @@ class GarminTcxParserTest {
         // distance & speed & odometer
         assertEquals(18990, exercise.speed.distance)
         assertEquals(164.425f, exercise.speed.speedMax, 0.001f)
-        assertEquals(11.232f, exercise.speed.speedAVG, 0.001f)
+        assertEquals(11.232f, exercise.speed.speedAvg, 0.001f)
 
         // altitude
         assertEquals(94.toShort(), exercise.altitude.altitudeMin)
@@ -241,7 +241,7 @@ class GarminTcxParserTest {
         // distance & speed & odometer
         assertEquals(5599, exercise.speed.distance)
         assertEquals(16.5737f, exercise.speed.speedMax, 0.001f)
-        assertEquals(13.0716f, exercise.speed.speedAVG, 0.001f)
+        assertEquals(13.0716f, exercise.speed.speedAvg, 0.001f)
 
         // altitude
         assertNull(exercise.altitude)

@@ -50,7 +50,7 @@ class PolarHRMParserTest {
 
         assertEquals(135.toShort(), exercise.heartRateAVG)
         assertEquals(218.toShort(), exercise.heartRateMax)
-        assertEquals(251, Math.round(exercise.speed.speedAVG * 10))
+        assertEquals(251, Math.round(exercise.speed.speedAvg * 10))
         assertEquals(969, Math.round(exercise.speed.speedMax * 10))
         assertEquals(29900, exercise.speed.distance)
 
@@ -168,7 +168,7 @@ class PolarHRMParserTest {
 
         assertEquals(136.toShort(), exercise.heartRateAVG)
         assertEquals(232.toShort(), exercise.heartRateMax)
-        assertEquals(247, Math.round(exercise.speed.speedAVG * 10))
+        assertEquals(247, Math.round(exercise.speed.speedAvg * 10))
         assertEquals(1077, Math.round(exercise.speed.speedMax * 10))
         assertEquals(20921, exercise.speed.distance)
         assertNull(exercise.cadence)

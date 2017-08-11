@@ -74,7 +74,7 @@ public class HAC4TURParserTest {
         // distance & speed & odometer
         assertEquals(40.1f, exercise.getSpeed().getDistance() / 1000f, 0.01f);
         assertEquals(72f, exercise.getSpeed().getSpeedMax(), 0.01f);
-        assertEquals(22.21f, exercise.getSpeed().getSpeedAVG(), 0.01f);
+        assertEquals(22.21f, exercise.getSpeed().getSpeedAvg(), 0.01f);
         assertEquals(4817, exercise.getOdometer());
 
         // altitudes
@@ -135,7 +135,7 @@ public class HAC4TURParserTest {
         // distance & speed & odometer
         assertEquals(105.56f, exercise.getSpeed().getDistance() / 1000f, 0.01f);
         assertEquals(43.2f, exercise.getSpeed().getSpeedMax(), 0.01f);
-        assertEquals(27.21f, exercise.getSpeed().getSpeedAVG(), 0.01f);
+        assertEquals(27.21f, exercise.getSpeed().getSpeedAvg(), 0.01f);
         assertEquals(105, exercise.getOdometer());
 
         // Cadence values

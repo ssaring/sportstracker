@@ -87,10 +87,10 @@ class PolarRS200SDParser : AbstractExerciseParser() {
         // => then the speed needs to be disabled in exercise, ExerciseViewer will have problems to display
         //    the inconsistent data (see SourceForge bug #1524834)
         if (hasSpeedData && distance > 0) {
-            exercise.speed = ExerciseSpeed()
-            exercise.speed.distance = distance
-            exercise.speed.speedMax = convertSpeed(eSummary.getChildText("max_pace").toFloat())
-            exercise.speed.speedAVG = convertSpeed(eSummary.getChildText("avg_pace").toFloat())
+            exercise.speed = ExerciseSpeed(
+                    speedAvg = convertSpeed(eSummary.getChildText("avg_pace").toFloat()),
+                    speedMax = convertSpeed(eSummary.getChildText("max_pace").toFloat()),
+                    distance = distance)
             exercise.recordingMode.isSpeed = true
         } else {
             exercise.recordingMode.isSpeed = false

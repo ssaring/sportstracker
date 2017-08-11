@@ -74,7 +74,7 @@ public class PolarHsrParserTest {
         assertEquals(exercise.getHeartRateMax(), (short) 194);
         assertEquals(exercise.getSpeed().getDistance(), 45800);
 
-        assertEquals(Math.round(exercise.getSpeed().getSpeedAVG() * 10), 206);
+        assertEquals(Math.round(exercise.getSpeed().getSpeedAvg() * 10), 206);
         assertEquals(Math.round(exercise.getSpeed().getSpeedMax() * 10), 494);
         assertEquals(exercise.getCadence(), null);
         assertEquals(exercise.getAltitude(), null);
