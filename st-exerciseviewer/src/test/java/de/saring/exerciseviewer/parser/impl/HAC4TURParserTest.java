@@ -85,7 +85,7 @@ public class HAC4TURParserTest {
 
         // temperatures
         assertEquals((short) 15, exercise.getTemperature().getTemperatureMin());
-        assertEquals((short) 17, exercise.getTemperature().getTemperatureAVG());
+        assertEquals((short) 17, exercise.getTemperature().getTemperatureAvg());
         assertEquals((short) 23, exercise.getTemperature().getTemperatureMax());
 
         // heart rate limits
@@ -149,7 +149,7 @@ public class HAC4TURParserTest {
 
         // temperatures
         assertEquals((short) 6, exercise.getTemperature().getTemperatureMin());
-        assertEquals((short) 7, exercise.getTemperature().getTemperatureAVG());
+        assertEquals((short) 7, exercise.getTemperature().getTemperatureAvg());
         assertEquals((short) 16, exercise.getTemperature().getTemperatureMax());
 
         // heart rate limits

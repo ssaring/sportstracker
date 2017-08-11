@@ -353,11 +353,8 @@ public class HAC4TURParser extends AbstractExerciseParser {
             total += sample.getTemperature();
         }
 
-        ExerciseTemperature et = new ExerciseTemperature();
-        et.setTemperatureMax((short) max);
-        et.setTemperatureMin((short) min);
-        et.setTemperatureAVG((short) (total / exercise.getSampleList().length));
-        return et;
+        short avg = (short) (total / exercise.getSampleList().length);
+        return new ExerciseTemperature((short) min, avg, (short) max);
     }
 
     /**

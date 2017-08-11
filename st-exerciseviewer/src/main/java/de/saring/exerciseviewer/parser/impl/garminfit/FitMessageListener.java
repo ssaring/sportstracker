@@ -397,7 +397,6 @@ class FitMessageListener implements MesgListener {
     private void calculateTemperatureSummary() {
         if (temperatureAvailable) {
             exercise.getRecordingMode().setTemperature(true);
-            exercise.setTemperature(new ExerciseTemperature());
 
             short tempMin = Short.MAX_VALUE;
             short tempMax = Short.MIN_VALUE;
@@ -409,10 +408,8 @@ class FitMessageListener implements MesgListener {
                 temperatureSum += sample.getTemperature();
             }
 
-            exercise.getTemperature().setTemperatureMin(tempMin);
-            exercise.getTemperature().setTemperatureMax(tempMax);
-            exercise.getTemperature().setTemperatureAVG(
-                    (short) (Math.round(temperatureSum / (double) exercise.getSampleList().length)));
+            short tempAvg = (short) (Math.round(temperatureSum / (double) exercise.getSampleList().length));
+            exercise.setTemperature(new ExerciseTemperature(tempMin, tempAvg, tempMax));
         }
     }
 

@@ -100,7 +100,7 @@ public class GarminFitParserTest {
         assertEquals(119, exercise.getCadence().getCadenceMax());
 
         assertEquals(19, exercise.getTemperature().getTemperatureMin());
-        assertEquals(24, exercise.getTemperature().getTemperatureAVG());
+        assertEquals(24, exercise.getTemperature().getTemperatureAvg());
         assertEquals(32, exercise.getTemperature().getTemperatureMax());
 
         // check lap data
@@ -290,7 +290,7 @@ public class GarminFitParserTest {
 		assertNull(exercise.getCadence());
 
 		assertEquals(30, exercise.getTemperature().getTemperatureMin());
-		assertEquals(31, exercise.getTemperature().getTemperatureAVG());
+		assertEquals(31, exercise.getTemperature().getTemperatureAvg());
 		assertEquals(34, exercise.getTemperature().getTemperatureMax());
 
 		// check some lap data
@@ -373,7 +373,7 @@ public class GarminFitParserTest {
 
 
         assertEquals(16, exercise.getTemperature().getTemperatureMin());
-        assertEquals(18, exercise.getTemperature().getTemperatureAVG());
+        assertEquals(18, exercise.getTemperature().getTemperatureAvg());
         assertEquals(20, exercise.getTemperature().getTemperatureMax());
 
         // check some lap data

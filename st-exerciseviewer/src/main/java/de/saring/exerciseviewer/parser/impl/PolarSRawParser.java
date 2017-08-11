@@ -268,11 +268,10 @@ public class PolarSRawParser extends AbstractExerciseParser {
             }
 
             // get temperature data of exercise (only available, when altitude recorded)
-            ExerciseTemperature temperature = new ExerciseTemperature();
-            exercise.setTemperature(temperature);
-            temperature.setTemperatureMin(decodeTemperature(fileContent[98], fMetricUnits));
-            temperature.setTemperatureAVG(decodeTemperature(fileContent[99], fMetricUnits));
-            temperature.setTemperatureMax(decodeTemperature(fileContent[100], fMetricUnits));
+            short temperatureMin = decodeTemperature(fileContent[98], fMetricUnits);
+            short temperatureAvg = decodeTemperature(fileContent[99], fMetricUnits);
+            short temperatureMax = decodeTemperature(fileContent[100], fMetricUnits);
+            exercise.setTemperature(new ExerciseTemperature(temperatureMin, temperatureAvg, temperatureMax));
         }
 
 

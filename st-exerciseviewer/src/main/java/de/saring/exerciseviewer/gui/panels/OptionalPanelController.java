@@ -101,7 +101,7 @@ public class OptionalPanelController extends AbstractPanelController {
             laTemperatureMinValue.setText(formatUtils
                     .temperatureToString(exercise.getTemperature().getTemperatureMin()));
             laTemperatureAvgValue.setText(formatUtils
-                    .temperatureToString(exercise.getTemperature().getTemperatureAVG()));
+                    .temperatureToString(exercise.getTemperature().getTemperatureAvg()));
             laTemperatureMaxValue.setText(formatUtils
                     .temperatureToString(exercise.getTemperature().getTemperatureMax()));
         }
