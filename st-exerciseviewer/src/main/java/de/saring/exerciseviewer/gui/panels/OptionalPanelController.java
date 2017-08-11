@@ -91,7 +91,7 @@ public class OptionalPanelController extends AbstractPanelController {
         // fill altitude data
         if (exercise.getAltitude() != null) {
             laAltitudeMinValue.setText(formatUtils.heightToString(exercise.getAltitude().getAltitudeMin()));
-            laAltitudeAvgValue.setText(formatUtils.heightToString(exercise.getAltitude().getAltitudeAVG()));
+            laAltitudeAvgValue.setText(formatUtils.heightToString(exercise.getAltitude().getAltitudeAvg()));
             laAltitudeMaxValue.setText(formatUtils.heightToString(exercise.getAltitude().getAltitudeMax()));
             laAscentValue.setText(formatUtils.heightToString(exercise.getAltitude().getAscent()));
         }

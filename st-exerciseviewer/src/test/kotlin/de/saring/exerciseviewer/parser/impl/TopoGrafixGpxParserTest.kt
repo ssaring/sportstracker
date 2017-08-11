@@ -55,7 +55,7 @@ class TopoGrafixGpxParserTest {
 
         // check altitude data
         assertEquals(236.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(270.toShort(), exercise.altitude.altitudeAVG)
+        assertEquals(270.toShort(), exercise.altitude.altitudeAvg)
         assertEquals(315.toShort(), exercise.altitude.altitudeMax)
         assertEquals(245, exercise.altitude.ascent)
 
@@ -116,7 +116,7 @@ class TopoGrafixGpxParserTest {
 
         // check altitude data
         assertEquals(32.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(41.toShort(), exercise.altitude.altitudeAVG)
+        assertEquals(41.toShort(), exercise.altitude.altitudeAvg)
         assertEquals(53.toShort(), exercise.altitude.altitudeMax)
         assertEquals(41, exercise.altitude.ascent)
 
@@ -185,7 +185,7 @@ class TopoGrafixGpxParserTest {
 
         // check altitude data
         assertEquals(212.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(221.toShort(), exercise.altitude.altitudeAVG)
+        assertEquals(221.toShort(), exercise.altitude.altitudeAvg)
         assertEquals(226.toShort(), exercise.altitude.altitudeMax)
         assertEquals(22, exercise.altitude.ascent)
 

@@ -57,7 +57,7 @@ class GarminTcxParserTest {
 
         // altitude
         assertEquals((-4).toShort(), exercise.altitude.altitudeMin)
-        assertEquals(8.toShort(), exercise.altitude.altitudeAVG)
+        assertEquals(8.toShort(), exercise.altitude.altitudeAvg)
         assertEquals(21.toShort(), exercise.altitude.altitudeMax)
         assertEquals(149, exercise.altitude.ascent)
 
@@ -144,7 +144,7 @@ class GarminTcxParserTest {
 
         // altitude
         assertEquals(94.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(115.toShort(), exercise.altitude.altitudeAVG)
+        assertEquals(115.toShort(), exercise.altitude.altitudeAvg)
         assertEquals(153.toShort(), exercise.altitude.altitudeMax)
         assertEquals(388, exercise.altitude.ascent)
 

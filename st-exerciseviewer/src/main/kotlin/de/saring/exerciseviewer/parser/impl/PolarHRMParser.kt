@@ -356,17 +356,18 @@ class PolarHRMParser : AbstractExerciseParser() {
 
             // parse altitude informations
             if (exercise.recordingMode.isAltitude) {
-                exercise.altitude = ExerciseAltitude()
-                exercise.altitude.ascent = lTripBlock[1].toInt()
+                var ascent = lTripBlock[1].toInt()
                 // minimum exercise altitude is not available in HRM files
-                exercise.altitude.altitudeAVG = lTripBlock[3].toShort()
-                exercise.altitude.altitudeMax = lTripBlock[4].toShort()
+                var altitudeAvg = lTripBlock[3].toInt()
+                var altitudeMax = lTripBlock[4].toInt()
 
                 if (!fMetricUnits) {
-                    exercise.altitude.ascent = ConvertUtils.convertFeet2Meter(exercise.altitude.ascent)
-                    exercise.altitude.altitudeAVG = ConvertUtils.convertFeet2Meter(exercise.altitude.altitudeAVG.toInt()).toShort()
-                    exercise.altitude.altitudeMax = ConvertUtils.convertFeet2Meter(exercise.altitude.altitudeMax.toInt()).toShort()
+                    ascent = ConvertUtils.convertFeet2Meter(ascent)
+                    altitudeAvg = ConvertUtils.convertFeet2Meter(altitudeAvg)
+                    altitudeMax = ConvertUtils.convertFeet2Meter(altitudeMax)
                 }
+
+                exercise.altitude = ExerciseAltitude(0, altitudeAvg.toShort(), altitudeMax.toShort(), ascent)
             }
 
             // parse odometer value

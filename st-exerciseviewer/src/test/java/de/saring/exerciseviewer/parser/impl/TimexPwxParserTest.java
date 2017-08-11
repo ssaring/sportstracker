@@ -222,7 +222,7 @@ public class TimexPwxParserTest {
         assertEquals(exercise.getCadence(), null);
         assertEquals(exercise.getAltitude().getAltitudeMin(), 0);
         assertEquals(exercise.getAltitude().getAltitudeMax(), 59);
-        assertEquals(exercise.getAltitude().getAltitudeAVG(), 0); // Global Trainer doesn't provide this data.
+        assertEquals(exercise.getAltitude().getAltitudeAvg(), 0); // Global Trainer doesn't provide this data.
         assertEquals(exercise.getAltitude().getAscent(), 52);
         assertEquals(exercise.getTemperature(), null);
         assertEquals(108, exercise.getEnergy());     // This is calculated from Work
@@ -337,7 +337,7 @@ public class TimexPwxParserTest {
         assertEquals(7.938, exercise.getSpeed().getSpeedMax(), 0.001);
         assertNull(exercise.getCadence());
         assertEquals(12, exercise.getAltitude().getAltitudeMin());
-        assertEquals(44, exercise.getAltitude().getAltitudeAVG());
+        assertEquals(44, exercise.getAltitude().getAltitudeAvg());
         assertEquals(64, exercise.getAltitude().getAltitudeMax());
         assertEquals(117, exercise.getAltitude().getAscent());
         assertNull(exercise.getTemperature());

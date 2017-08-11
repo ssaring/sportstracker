@@ -130,8 +130,7 @@ class FitMessageListener implements MesgListener {
         // read optional ascent data
         if (mesg.getTotalAscent() != null) {
             exercise.getRecordingMode().setAltitude(true);
-            exercise.setAltitude(new ExerciseAltitude());
-            exercise.getAltitude().setAscent(mesg.getTotalAscent());
+            exercise.setAltitude(new ExerciseAltitude((short) 0, (short) 0, (short) 0, mesg.getTotalAscent()));
         }
 
         // read optional cadence data
@@ -386,7 +385,7 @@ class FitMessageListener implements MesgListener {
 
             exercise.getAltitude().setAltitudeMin(altMin);
             exercise.getAltitude().setAltitudeMax(altMax);
-            exercise.getAltitude().setAltitudeAVG(
+            exercise.getAltitude().setAltitudeAvg(
                     (short) (Math.round(altitudeSum / (double) exercise.getSampleList().length)));
         }
     }

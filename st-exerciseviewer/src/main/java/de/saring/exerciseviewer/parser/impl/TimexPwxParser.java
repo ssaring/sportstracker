@@ -267,11 +267,10 @@ public class TimexPwxParser extends AbstractExerciseParser {
                         exercise.setSpeed(workoutSpeed);
                     }
                     if (workoutSummary.getAltitude() != null) {
-                        ExerciseAltitude workoutAltitude = new ExerciseAltitude();
-                        workoutAltitude.setAltitudeAVG((short) workoutSummary.getAltitude().getAvg());
-                        workoutAltitude.setAltitudeMax((short) workoutSummary.getAltitude().getMax());
-                        workoutAltitude.setAltitudeMin((short) workoutSummary.getAltitude().getMin());
-                        exercise.setAltitude(workoutAltitude);
+                        short altitudeMin = (short) workoutSummary.getAltitude().getMin();
+                        short altitudeAvg = (short) workoutSummary.getAltitude().getAvg();
+                        short altitudeMax = (short) workoutSummary.getAltitude().getMax();
+                        exercise.setAltitude(new ExerciseAltitude(altitudeMin, altitudeAvg, altitudeMax, 0));
                     }
                     break;
                 case "segment":
@@ -812,25 +811,25 @@ public class TimexPwxParser extends AbstractExerciseParser {
     private void computeAltitudeStatisticIfMissing(EVExercise exercise) {
         if (exercise.getRecordingMode().isAltitude() && exercise.getAltitude() == null) {
 
-            ExerciseAltitude exAltitude = new ExerciseAltitude();
-            exAltitude.setAltitudeMin(Short.MAX_VALUE);
-            exAltitude.setAltitudeMax(Short.MIN_VALUE);
-            exercise.setAltitude(exAltitude);
-
+            short altitudeMin = Short.MAX_VALUE;
+            short altitudeMax = Short.MIN_VALUE;
+            int ascent = 0;
             double sumAltitude = 0;
             short previousAltitude = Short.MAX_VALUE;
 
             for (ExerciseSample sample : exercise.getSampleList()) {
                 sumAltitude += sample.getAltitude();
-                exAltitude.setAltitudeMin((short) Math.min(exAltitude.getAltitudeMin(), sample.getAltitude()));
-                exAltitude.setAltitudeMax((short) Math.max(exAltitude.getAltitudeMax(), sample.getAltitude()));
+                altitudeMin = (short) Math.min(altitudeMin, sample.getAltitude());
+                altitudeMax = (short) Math.max(altitudeMax, sample.getAltitude());
 
                 if (previousAltitude < sample.getAltitude()) {
-                    exAltitude.setAscent(exAltitude.getAscent() + (sample.getAltitude() - previousAltitude));
+                    ascent += sample.getAltitude() - previousAltitude;
                 }
                 previousAltitude = sample.getAltitude();
             }
-            exAltitude.setAltitudeAVG((short) Math.round(sumAltitude / (double) exercise.getSampleList().length));
+
+            short altitudeAvg = (short) Math.round(sumAltitude / (double) exercise.getSampleList().length);
+            exercise.setAltitude(new ExerciseAltitude(altitudeMin, altitudeAvg, altitudeMax, ascent));
         }
     }
 

@@ -152,13 +152,12 @@ class GarminTcxParser : AbstractExerciseParser() {
 
                         // create altitude objects for exercise and current lap if not done yet
                         if (exercise.altitude == null) {
-                            exercise.altitude = ExerciseAltitude()
                             exercise.recordingMode.isAltitude = true
-
-                            exercise.altitude.altitudeMin = Short.MAX_VALUE
-                            exercise.altitude.altitudeMax = Short.MIN_VALUE
-                            exercise.altitude.altitudeAVG = Math.round(altitudeMetersTotal / trackpointCount).toShort()
-                            exercise.altitude.ascent = 0
+                            exercise.altitude = ExerciseAltitude(
+                                    altitudeMin = Short.MAX_VALUE,
+                                    altitudeAvg = Math.round(altitudeMetersTotal / trackpointCount).toShort(),
+                                    altitudeMax = Short.MIN_VALUE,
+                                    ascent = 0)
                         }
 
                         lapAltitude = Math.round(tpAltitude).toShort()
@@ -349,7 +348,7 @@ class GarminTcxParser : AbstractExerciseParser() {
     private fun calculateAvgAltitude(exercise: EVExercise, altitudeMetersTotal: Double, trackpointCount: Int) {
         // calculate average altitude and total ascent (if recorded)
         if (exercise.altitude != null) {
-            exercise.altitude.altitudeAVG = Math.round(altitudeMetersTotal / trackpointCount.toDouble()).toShort()
+            exercise.altitude.altitudeAvg = Math.round(altitudeMetersTotal / trackpointCount.toDouble()).toShort()
 
             for (evLap in exercise.lapList) {
                 if (evLap.altitude != null) {

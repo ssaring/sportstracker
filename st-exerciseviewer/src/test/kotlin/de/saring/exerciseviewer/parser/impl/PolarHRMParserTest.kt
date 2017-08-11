@@ -56,7 +56,7 @@ class PolarHRMParserTest {
 
         assertNull(exercise.cadence)
         assertEquals(215.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(253.toShort(), exercise.altitude.altitudeAVG)
+        assertEquals(253.toShort(), exercise.altitude.altitudeAvg)
         assertEquals(300.toShort(), exercise.altitude.altitudeMax)
         assertEquals(1024, exercise.odometer)
 
@@ -173,7 +173,7 @@ class PolarHRMParserTest {
         assertEquals(20921, exercise.speed.distance)
         assertNull(exercise.cadence)
         assertEquals(221.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(245.toShort(), exercise.altitude.altitudeAVG)
+        assertEquals(245.toShort(), exercise.altitude.altitudeAvg)
         assertEquals(277.toShort(), exercise.altitude.altitudeMax)
         assertEquals(exercise.odometer, 993)
 
@@ -286,7 +286,7 @@ class PolarHRMParserTest {
         assertNull(exercise.speed)
         assertNull(exercise.cadence)
         assertEquals(86.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(93.toShort(), exercise.altitude.altitudeAVG)
+        assertEquals(93.toShort(), exercise.altitude.altitudeAvg)
         assertEquals(101.toShort(), exercise.altitude.altitudeMax)
         assertEquals(1200, exercise.odometer)
 

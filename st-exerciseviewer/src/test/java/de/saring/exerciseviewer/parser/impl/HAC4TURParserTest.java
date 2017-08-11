@@ -80,7 +80,7 @@ public class HAC4TURParserTest {
         // altitudes
         assertEquals((short) 1901, exercise.getAltitude().getAltitudeMax());
         assertEquals((short) 624, exercise.getAltitude().getAltitudeMin());
-        assertEquals((short) 1352, exercise.getAltitude().getAltitudeAVG());
+        assertEquals((short) 1352, exercise.getAltitude().getAltitudeAvg());
         assertEquals(1281, exercise.getAltitude().getAscent());
 
         // temperatures
@@ -144,7 +144,7 @@ public class HAC4TURParserTest {
         // altitudes
         assertEquals((short) 5, exercise.getAltitude().getAltitudeMax());
         assertEquals((short) 2, exercise.getAltitude().getAltitudeMin());
-        assertEquals((short) 2, exercise.getAltitude().getAltitudeAVG());
+        assertEquals((short) 2, exercise.getAltitude().getAltitudeAvg());
         assertEquals(10, exercise.getAltitude().getAscent());
 
         // temperatures

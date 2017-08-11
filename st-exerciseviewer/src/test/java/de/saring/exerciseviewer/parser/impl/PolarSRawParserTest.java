@@ -182,7 +182,7 @@ public class PolarSRawParserTest {
         assertEquals(29900, exercise.getSpeed().getDistance());
         assertNull(exercise.getCadence());
         assertEquals((short) 215, exercise.getAltitude().getAltitudeMin(), 215);
-        assertEquals((short) 253, exercise.getAltitude().getAltitudeAVG(), 253);
+        assertEquals((short) 253, exercise.getAltitude().getAltitudeAvg(), 253);
         assertEquals((short) 300, exercise.getAltitude().getAltitudeMax(), 300);
         assertEquals((short) 3, exercise.getTemperature().getTemperatureMin(), 3);
         assertEquals((short) 3, exercise.getTemperature().getTemperatureAvg(), 3);
@@ -315,7 +315,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getSpeed().getDistance(), 20921);
         assertEquals(exercise.getCadence(), null);
         assertEquals(exercise.getAltitude().getAltitudeMin(), (short) 221);
-        assertEquals(exercise.getAltitude().getAltitudeAVG(), (short) 245);
+        assertEquals(exercise.getAltitude().getAltitudeAvg(), (short) 245);
         assertEquals(exercise.getAltitude().getAltitudeMax(), (short) 277);
         assertEquals(exercise.getTemperature().getTemperatureMin(), (short) 3);
         assertEquals(exercise.getTemperature().getTemperatureAvg(), (short) 4);
@@ -446,7 +446,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getSpeed(), null);
         assertEquals(exercise.getCadence(), null);
         assertEquals(exercise.getAltitude().getAltitudeMin(), (short) 86);
-        assertEquals(exercise.getAltitude().getAltitudeAVG(), (short) 93);
+        assertEquals(exercise.getAltitude().getAltitudeAvg(), (short) 93);
         assertEquals(exercise.getAltitude().getAltitudeMax(), (short) 101);
         assertEquals(exercise.getTemperature().getTemperatureMin(), (short) 18);
         assertEquals(exercise.getTemperature().getTemperatureAvg(), (short) 21);
@@ -552,7 +552,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getSpeed().getDistance(), 111700);
         assertEquals(exercise.getCadence(), null);
         assertEquals(exercise.getAltitude().getAltitudeMin(), (short) 174);
-        assertEquals(exercise.getAltitude().getAltitudeAVG(), (short) 276);
+        assertEquals(exercise.getAltitude().getAltitudeAvg(), (short) 276);
         assertEquals(exercise.getAltitude().getAltitudeMax(), (short) 403);
         assertEquals(exercise.getTemperature().getTemperatureMin(), (short) 19);
         assertEquals(exercise.getTemperature().getTemperatureAvg(), (short) 22);
@@ -671,7 +671,7 @@ public class PolarSRawParserTest {
         assertEquals(exercise.getSpeed(), null);
         assertEquals(exercise.getCadence(), null);
         assertEquals(exercise.getAltitude().getAltitudeMin(), (short) 142);
-        assertEquals(exercise.getAltitude().getAltitudeAVG(), (short) 186);
+        assertEquals(exercise.getAltitude().getAltitudeAvg(), (short) 186);
         assertEquals(exercise.getAltitude().getAltitudeMax(), (short) 284);
         assertEquals(exercise.getTemperature().getTemperatureMin(), (short) 16);
         assertEquals(exercise.getTemperature().getTemperatureAvg(), (short) 18);

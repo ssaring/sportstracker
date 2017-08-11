@@ -253,19 +253,19 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
         // get altitude data of exercise (if recorded)
         if (recMode.isAltitude()) {
-            ExerciseAltitude altitude = new ExerciseAltitude();
-            exercise.setAltitude(altitude);
-            altitude.setAltitudeMin(decodeAltitude(fileContent[92], fileContent[93]));
-            altitude.setAltitudeAVG(decodeAltitude(fileContent[94], fileContent[95]));
-            altitude.setAltitudeMax(decodeAltitude(fileContent[96], fileContent[97]));
-            altitude.setAscent(fileContent[101] + (fileContent[102] << 8));
+            short altitudeMin = decodeAltitude(fileContent[92], fileContent[93]);
+            short altitudeAvg = decodeAltitude(fileContent[94], fileContent[95]);
+            short altitudeMax = decodeAltitude(fileContent[96], fileContent[97]);
+            int ascent = fileContent[101] + (fileContent[102] << 8);
 
             if (!fMetricUnits) {
-                altitude.setAltitudeMin((short) ConvertUtils.convertFeet2Meter(altitude.getAltitudeMin()));
-                altitude.setAltitudeAVG((short) ConvertUtils.convertFeet2Meter(altitude.getAltitudeAVG()));
-                altitude.setAltitudeMax((short) ConvertUtils.convertFeet2Meter(altitude.getAltitudeMax()));
-                altitude.setAscent(ConvertUtils.convertFeet2Meter(altitude.getAscent()));
+                altitudeMin = (short) ConvertUtils.convertFeet2Meter(altitudeMin);
+                altitudeAvg = (short) ConvertUtils.convertFeet2Meter(altitudeAvg);
+                altitudeMax = (short) ConvertUtils.convertFeet2Meter(altitudeMax);
+                ascent = (short) ConvertUtils.convertFeet2Meter(ascent);
             }
+
+            exercise.setAltitude(new ExerciseAltitude(altitudeMin, altitudeAvg, altitudeMax, ascent));
 
             // get temperature data of exercise (only available, when altitude recorded)
             short temperatureMin = decodeTemperature(fileContent[98], fMetricUnits);

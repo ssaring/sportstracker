@@ -93,7 +93,7 @@ public class GarminFitParserTest {
 
         assertEquals(1115, exercise.getAltitude().getAscent());
         assertEquals(127, exercise.getAltitude().getAltitudeMin());
-        assertEquals(290, exercise.getAltitude().getAltitudeAVG());
+        assertEquals(290, exercise.getAltitude().getAltitudeAvg());
         assertEquals(419, exercise.getAltitude().getAltitudeMax());
 
         assertEquals(84, exercise.getCadence().getCadenceAvg());
@@ -208,7 +208,7 @@ public class GarminFitParserTest {
 
         assertEquals(69, exercise.getAltitude().getAscent());
         assertEquals(97, exercise.getAltitude().getAltitudeMin());
-        assertEquals(108, exercise.getAltitude().getAltitudeAVG());
+        assertEquals(108, exercise.getAltitude().getAltitudeAvg());
         assertEquals(116, exercise.getAltitude().getAltitudeMax());
 
         assertNull(exercise.getCadence());
@@ -284,7 +284,7 @@ public class GarminFitParserTest {
 
 		assertEquals(4, exercise.getAltitude().getAscent());
 		assertEquals(304, exercise.getAltitude().getAltitudeMin());
-		assertEquals(305, exercise.getAltitude().getAltitudeAVG());
+		assertEquals(305, exercise.getAltitude().getAltitudeAvg());
 		assertEquals(307, exercise.getAltitude().getAltitudeMax());
 
 		assertNull(exercise.getCadence());
@@ -365,7 +365,7 @@ public class GarminFitParserTest {
 
         assertEquals(653, exercise.getAltitude().getAscent());
         assertEquals(35, exercise.getAltitude().getAltitudeMin());
-        assertEquals(130, exercise.getAltitude().getAltitudeAVG());
+        assertEquals(130, exercise.getAltitude().getAltitudeAvg());
         assertEquals(320, exercise.getAltitude().getAltitudeMax());
 
         assertEquals(78, exercise.getCadence().getCadenceAvg());

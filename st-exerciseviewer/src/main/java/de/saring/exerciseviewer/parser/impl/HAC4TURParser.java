@@ -287,12 +287,8 @@ public class HAC4TURParser extends AbstractExerciseParser {
             total += alt;
         }
 
-        ExerciseAltitude ea = new ExerciseAltitude();
-        ea.setAltitudeMin((short) min);
-        ea.setAltitudeMax((short) max);
-        ea.setAltitudeAVG((short) (total / exercise.getSampleList().length));
-        ea.setAscent(ascent);
-        return ea;
+        short altitudeAVG = (short) (total / exercise.getSampleList().length);
+        return new ExerciseAltitude((short) min, altitudeAVG, (short) max, ascent);
     }
 
     /**

@@ -224,11 +224,10 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
      * Calculates the min, avg and max altitude and the ascent of the exercise.
      */
     private fun calculateAltitudeSummary(exercise: EVExercise) {
-        val altitude = ExerciseAltitude()
 
-        exercise.altitude = altitude
-        altitude.altitudeMin = Short.MAX_VALUE
-        altitude.altitudeMax = Short.MIN_VALUE
+        var altitudeMin = Int.MAX_VALUE
+        var altitudeMax = Int.MIN_VALUE
+        var ascent = 0
 
         var altitudeSum = 0L
         var previousAltitude:Short = exercise.sampleList[0].altitude!!
@@ -236,17 +235,21 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
         for (sample in exercise.sampleList) {
             val sampleAltitude = sample.altitude!!
 
-            altitude.altitudeMin = Math.min(sampleAltitude.toInt(), altitude.altitudeMin.toInt()).toShort()
-            altitude.altitudeMax = Math.max(sampleAltitude.toInt(), altitude.altitudeMax.toInt()).toShort()
+            altitudeMin = Math.min(sampleAltitude.toInt(), altitudeMin)
+            altitudeMax = Math.max(sampleAltitude.toInt(), altitudeMax)
             altitudeSum += sample.altitude!!
 
             if (previousAltitude < sampleAltitude) {
-                altitude.ascent += sampleAltitude - previousAltitude
+                ascent += sampleAltitude - previousAltitude
             }
             previousAltitude = sampleAltitude
         }
 
-        altitude.altitudeAVG = Math.round(altitudeSum / exercise.sampleList.size.toDouble()).toShort()
+        exercise.altitude = ExerciseAltitude(
+                altitudeMin = altitudeMin.toShort(),
+                altitudeAvg = Math.round(altitudeSum / exercise.sampleList.size.toDouble()).toShort(),
+                altitudeMax = altitudeMax.toShort(),
+                ascent = ascent)
     }
 
     /**
