@@ -586,25 +586,22 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
      * @return the filled HeartRateLimit object
      */
     private HeartRateLimit decodeHeartRateLimit(int offsetLimits, int offsetTimes) throws EVException {
-        HeartRateLimit hrLimit = new HeartRateLimit();
-        hrLimit.setLowerHeartRate((short) sdata(1, offsetLimits + 0));
-        hrLimit.setUpperHeartRate((short) sdata(1, offsetLimits + 1));
+        short lowerHeartRate = (short) sdata(1, offsetLimits + 0);
+        short upperHeartRate = (short) sdata(1, offsetLimits + 1);
 
         int hrLimitBelowSecs = decodeBCD(sdata(1, offsetTimes + 0));
         hrLimitBelowSecs += decodeBCD(sdata(1, offsetTimes + 1)) * 60;
         hrLimitBelowSecs += decodeBCD(sdata(1, offsetTimes + 2)) * 60 * 60;
-        hrLimit.setTimeBelow(hrLimitBelowSecs);
 
         int hrLimitWithinSecs = decodeBCD(sdata(1, offsetTimes + 3));
         hrLimitWithinSecs += decodeBCD(sdata(1, offsetTimes + 4)) * 60;
         hrLimitWithinSecs += decodeBCD(sdata(1, offsetTimes + 5)) * 60 * 60;
-        hrLimit.setTimeWithin(hrLimitWithinSecs);
 
         int hrLimitAboveSecs = decodeBCD(sdata(1, offsetTimes + 6));
         hrLimitAboveSecs += decodeBCD(sdata(1, offsetTimes + 7)) * 60;
         hrLimitAboveSecs += decodeBCD(sdata(1, offsetTimes + 8)) * 60 * 60;
-        hrLimit.setTimeAbove(hrLimitAboveSecs);
 
-        return hrLimit;
+        return new HeartRateLimit(lowerHeartRate, upperHeartRate,
+                hrLimitBelowSecs, hrLimitWithinSecs, hrLimitAboveSecs, true);
     }
 }

@@ -296,15 +296,13 @@ public class PolarF6RawParser extends AbstractExerciseParser {
      * @return the filled HeartRateLimit object
      */
     private HeartRateLimit decodeHeartRateLimit(int offsetLimits, int offsetTimes) {
-        HeartRateLimit hrLimit = new HeartRateLimit();
-        hrLimit.setLowerHeartRate((short) fileContent[offsetLimits + 0]);
-        hrLimit.setUpperHeartRate((short) fileContent[offsetLimits + 1]);
+        short lowerHeartRate = (short) fileContent[offsetLimits + 0];
+        short upperHeartRate = (short) fileContent[offsetLimits + 1];
 
         int hrLimitWithinSecs = decodeBCD(fileContent[offsetTimes]);
         hrLimitWithinSecs += decodeBCD(fileContent[offsetTimes + 1]) * 60;
         hrLimitWithinSecs += decodeBCD(fileContent[offsetTimes + 2]) * 60 * 60;
-        hrLimit.setTimeWithin(hrLimitWithinSecs);
 
-        return hrLimit;
+        return new HeartRateLimit(lowerHeartRate, upperHeartRate, null, hrLimitWithinSecs, null, true);
     }
 }

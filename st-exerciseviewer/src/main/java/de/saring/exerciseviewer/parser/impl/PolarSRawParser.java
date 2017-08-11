@@ -635,26 +635,23 @@ public class PolarSRawParser extends AbstractExerciseParser {
      * @return the filled HeartRateLimit object
      */
     private HeartRateLimit decodeHeartRateLimit(int offsetLimits, int offsetTimes) {
-        HeartRateLimit hrLimit = new HeartRateLimit();
-        hrLimit.setLowerHeartRate((short) fileContent[offsetLimits + 0]);
-        hrLimit.setUpperHeartRate((short) fileContent[offsetLimits + 1]);
+        short lowerHeartRate = (short) fileContent[offsetLimits + 0];
+        short upperHeartRate = (short) fileContent[offsetLimits + 1];
 
         int hrLimitBelowSecs = decodeBCD(fileContent[offsetTimes + 0]);
         hrLimitBelowSecs += decodeBCD(fileContent[offsetTimes + 1]) * 60;
         hrLimitBelowSecs += decodeBCD(fileContent[offsetTimes + 2]) * 60 * 60;
-        hrLimit.setTimeBelow(hrLimitBelowSecs);
 
         int hrLimitWithinSecs = decodeBCD(fileContent[offsetTimes + 3]);
         hrLimitWithinSecs += decodeBCD(fileContent[offsetTimes + 4]) * 60;
         hrLimitWithinSecs += decodeBCD(fileContent[offsetTimes + 5]) * 60 * 60;
-        hrLimit.setTimeWithin(hrLimitWithinSecs);
 
         int hrLimitAboveSecs = decodeBCD(fileContent[offsetTimes + 6]);
         hrLimitAboveSecs += decodeBCD(fileContent[offsetTimes + 7]) * 60;
         hrLimitAboveSecs += decodeBCD(fileContent[offsetTimes + 8]) * 60 * 60;
-        hrLimit.setTimeAbove(hrLimitAboveSecs);
 
-        return hrLimit;
+        return new HeartRateLimit(lowerHeartRate, upperHeartRate,
+                hrLimitBelowSecs, hrLimitWithinSecs, hrLimitAboveSecs, true);
     }
 
     /**

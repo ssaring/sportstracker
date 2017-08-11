@@ -356,13 +356,9 @@ public class TimexPwxParser extends AbstractExerciseParser {
     private EVExercise setGlobalTrainerZones(EVExercise exercise) {
         HeartRateLimit Zones[] = new HeartRateLimit[6];
         for (int i = 0; i < 6; i++) {
-            Zones[i] = new HeartRateLimit();
-            Zones[i].setUpperHeartRate((short) (50 + (i + 1) * 25));
-            Zones[i].setLowerHeartRate((short) (50 + i * 25));
-            Zones[i].setAbsoluteRange(true);
-            Zones[i].setTimeAbove(0);
-            Zones[i].setTimeBelow(0);
-            Zones[i].setTimeWithin(0);
+            short upperHeartRate = (short) (50 + (i + 1) * 25);
+            short lowerHeartRate = (short) (50 + i * 25);
+            Zones[i] = new HeartRateLimit(lowerHeartRate, upperHeartRate, null, 0, null, true);
         }
 
         exercise.setHeartRateLimits(new HeartRateLimit[6]);
@@ -393,13 +389,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         // Create and Initialize Heart Rate Limits
         HeartRateLimit Zones[] = new HeartRateLimit[6];
         for (int i = 0; i < 6; i++) {
-            Zones[i] = new HeartRateLimit();
-            Zones[i].setUpperHeartRate((short) 0);
-            Zones[i].setLowerHeartRate((short) 0);
-            Zones[i].setAbsoluteRange(true);
-            Zones[i].setTimeAbove(0);
-            Zones[i].setTimeBelow(0);
-            Zones[i].setTimeWithin(0);
+            Zones[i] = new HeartRateLimit((short) 0, (short) 0, null, 0, null, true);
         }
 
         for (int i = 0; i < children.getLength(); i++) {
@@ -409,13 +399,9 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 short HRMMaxHR = Short.valueOf(children.item(i).getTextContent());
                 double HRZonesPercentages[] = {1, .9, .8, .7, .6, .5};
                 for (int k = 0; k < 5; k++) {
-                    Zones[k] = new HeartRateLimit();
-                    Zones[k].setUpperHeartRate((short) (HRZonesPercentages[k] * HRMMaxHR));
-                    Zones[k].setLowerHeartRate((short) (1 + HRZonesPercentages[k + 1] * HRMMaxHR));
-                    Zones[k].setAbsoluteRange(true);
-                    Zones[k].setTimeAbove(0);
-                    Zones[k].setTimeBelow(0);
-                    Zones[k].setTimeWithin(0);
+                    short upperHeartRate = (short) (HRZonesPercentages[k] * HRMMaxHR);
+                    short lowerHeartRate = (short) (1 + HRZonesPercentages[k + 1] * HRMMaxHR);
+                    Zones[k] = new HeartRateLimit(lowerHeartRate, upperHeartRate, null, 0, null, true);
                 }
             } else if (childName.equals("CHRManualZoneHigherLimit") || childName.equals("HRMBpmManHi")) {
                 // obtain Manual Zone Higher Limit
@@ -719,9 +705,9 @@ public class TimexPwxParser extends AbstractExerciseParser {
         // Store Zone Information in the exercise file
         if (exercise.getHeartRateLimits() != null) {
             for (int i = 0; i < 6; i++) {
-                exercise.getHeartRateLimits()[i].setTimeAbove((short) aboveZone[i]);
-                exercise.getHeartRateLimits()[i].setTimeBelow((short) belowZone[i]);
-                exercise.getHeartRateLimits()[i].setTimeWithin((short) inZone[i]);
+                exercise.getHeartRateLimits()[i].setTimeAbove((int) aboveZone[i]);
+                exercise.getHeartRateLimits()[i].setTimeBelow((int) belowZone[i]);
+                exercise.getHeartRateLimits()[i].setTimeWithin((int) inZone[i]);
             }
         }
         exercise.setRecordingInterval((short) 2);

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import de.saring.exerciseviewer.data.HeartRateLimit;
 import de.saring.exerciseviewer.data.Lap;
 import de.saring.exerciseviewer.gui.EVDocument;
 import de.saring.util.gui.jfreechart.ChartUtils;
@@ -41,7 +42,6 @@ import org.jfree.ui.TextAnchor;
 
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.ExerciseSample;
-import de.saring.exerciseviewer.data.HeartRateLimit;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.AppResources;
 import de.saring.util.unitcalc.ConvertUtils;

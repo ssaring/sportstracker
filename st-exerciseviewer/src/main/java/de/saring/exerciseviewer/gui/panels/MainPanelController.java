@@ -3,6 +3,7 @@ package de.saring.exerciseviewer.gui.panels;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
+import de.saring.exerciseviewer.data.HeartRateLimit;
 import de.saring.exerciseviewer.gui.EVDocument;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,7 +11,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
 import de.saring.exerciseviewer.data.EVExercise;
-import de.saring.exerciseviewer.data.HeartRateLimit;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.util.unitcalc.FormatUtils;
 import javafx.util.StringConverter;

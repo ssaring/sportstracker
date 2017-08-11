@@ -83,30 +83,30 @@ public class PolarF6RawParserTest {
         assertEquals((short) 158, exercise.getHeartRateLimits()[0].getLowerHeartRate());
         assertEquals((short) 176, exercise.getHeartRateLimits()[0].getUpperHeartRate());
         assertEquals(true, exercise.getHeartRateLimits()[0].isAbsoluteRange());
-        assertEquals(0, exercise.getHeartRateLimits()[0].getTimeBelow());
+        assertNull(exercise.getHeartRateLimits()[0].getTimeBelow());
         assertEquals((36 * 60) + 13, exercise.getHeartRateLimits()[0].getTimeWithin());
-        assertEquals(0, exercise.getHeartRateLimits()[0].getTimeAbove());
+        assertNull(exercise.getHeartRateLimits()[0].getTimeAbove());
 
         assertEquals((short) 60, exercise.getHeartRateLimits()[1].getLowerHeartRate());
         assertEquals((short) 70, exercise.getHeartRateLimits()[1].getUpperHeartRate());
         assertEquals(false, exercise.getHeartRateLimits()[1].isAbsoluteRange());
-        assertEquals(0, exercise.getHeartRateLimits()[1].getTimeBelow());
+        assertNull(exercise.getHeartRateLimits()[1].getTimeBelow());
         assertEquals(40, exercise.getHeartRateLimits()[1].getTimeWithin());
-        assertEquals(0, exercise.getHeartRateLimits()[1].getTimeAbove());
+        assertNull(exercise.getHeartRateLimits()[1].getTimeAbove());
 
         assertEquals((short) 71, exercise.getHeartRateLimits()[2].getLowerHeartRate());
         assertEquals((short) 80, exercise.getHeartRateLimits()[2].getUpperHeartRate());
         assertEquals(false, exercise.getHeartRateLimits()[2].isAbsoluteRange());
-        assertEquals(0, exercise.getHeartRateLimits()[2].getTimeBelow());
+        assertNull(exercise.getHeartRateLimits()[2].getTimeBelow());
         assertEquals((1 * 60) + 49, exercise.getHeartRateLimits()[2].getTimeWithin());
-        assertEquals(0, exercise.getHeartRateLimits()[2].getTimeAbove());
+        assertNull(exercise.getHeartRateLimits()[2].getTimeAbove());
 
         assertEquals((short) 81, exercise.getHeartRateLimits()[3].getLowerHeartRate());
         assertEquals((short) 90, exercise.getHeartRateLimits()[3].getUpperHeartRate());
         assertEquals(false, exercise.getHeartRateLimits()[3].isAbsoluteRange());
-        assertEquals(0, exercise.getHeartRateLimits()[3].getTimeBelow());
+        assertNull(exercise.getHeartRateLimits()[3].getTimeBelow());
         assertEquals((37 * 60) + 57, exercise.getHeartRateLimits()[3].getTimeWithin());
-        assertEquals(0, exercise.getHeartRateLimits()[3].getTimeAbove());
+        assertNull(exercise.getHeartRateLimits()[3].getTimeAbove());
 
         // check lap data
         assertEquals(exercise.getLapList().length, 0);

@@ -92,9 +92,9 @@ public class HAC4TURParserTest {
         assertEquals(1, exercise.getHeartRateLimits().length);
         assertEquals((short) 140, exercise.getHeartRateLimits()[0].getLowerHeartRate());
         assertEquals((short) 150, exercise.getHeartRateLimits()[0].getUpperHeartRate());
-        assertEquals(61 * 60, exercise.getHeartRateLimits()[0].getTimeBelow());
+        assertEquals(61 * 60, exercise.getHeartRateLimits()[0].getTimeBelow().intValue());
         assertEquals(6 * 60 + 20, exercise.getHeartRateLimits()[0].getTimeWithin());
-        assertEquals((1 * 60 + 23) * 60 + 40, exercise.getHeartRateLimits()[0].getTimeAbove());
+        assertEquals((1 * 60 + 23) * 60 + 40, exercise.getHeartRateLimits()[0].getTimeAbove().intValue());
 
         // we don't have any lap data yet:
         assertEquals(1, exercise.getLapList().length);
@@ -156,9 +156,9 @@ public class HAC4TURParserTest {
         assertEquals(1, exercise.getHeartRateLimits().length);
         assertEquals((short) 42, exercise.getHeartRateLimits()[0].getLowerHeartRate());
         assertEquals((short) 195, exercise.getHeartRateLimits()[0].getUpperHeartRate());
-        assertEquals(0, exercise.getHeartRateLimits()[0].getTimeBelow());
+        assertEquals(0, exercise.getHeartRateLimits()[0].getTimeBelow().intValue());
         assertEquals(16680, exercise.getHeartRateLimits()[0].getTimeWithin());
-        assertEquals(0, exercise.getHeartRateLimits()[0].getTimeAbove());
+        assertEquals(0, exercise.getHeartRateLimits()[0].getTimeAbove().intValue());
 
         // we don't have any lap data yet:
         assertEquals(1, exercise.getLapList().length);

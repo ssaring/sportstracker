@@ -389,13 +389,11 @@ public class HAC4TURParser extends AbstractExerciseParser {
         }
         exercise.setHeartRateMax((short) max);
 
-        HeartRateLimit hrl = new HeartRateLimit();
-        hrl.setLowerHeartRate(lower);
-        hrl.setUpperHeartRate(upper);
-        hrl.setTimeBelow(intervalsBelow * sampleInterval);
-        hrl.setTimeWithin(intervalsBetween * sampleInterval);
-        hrl.setTimeAbove(intervalsAbove * sampleInterval);
-        return hrl;
+        return new HeartRateLimit(lower, upper,
+                intervalsBelow * sampleInterval,
+                intervalsBetween * sampleInterval,
+                intervalsAbove * sampleInterval,
+                true);
     }
 
     /**

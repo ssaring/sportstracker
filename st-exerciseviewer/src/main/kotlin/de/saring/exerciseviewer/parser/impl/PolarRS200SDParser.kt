@@ -71,12 +71,11 @@ class PolarRS200SDParser : AbstractExerciseParser() {
         val heartRateLimits = mutableListOf<HeartRateLimit>()
 
         for (eSortzone in eSortzoneList) {
-            val heartRateLimit = HeartRateLimit()
-            heartRateLimits.add(heartRateLimit)
+            val lowerHeartRate = (eSortzone.getChildText("low_percent").toInt() * maxSetHr / 100).toShort()
+            val upperHeartRate = (eSortzone.getChildText("high_percent").toInt() * maxSetHr / 100).toShort()
+            val timeWithin = eSortzone.getChildText("time_on").toDouble().toInt()
 
-            heartRateLimit.lowerHeartRate = (eSortzone.getChildText("low_percent").toInt() * maxSetHr / 100).toShort()
-            heartRateLimit.upperHeartRate = (eSortzone.getChildText("high_percent").toInt() * maxSetHr / 100).toShort()
-            heartRateLimit.timeWithin = eSortzone.getChildText("time_on").toDouble().toInt()
+            heartRateLimits.add(HeartRateLimit(lowerHeartRate, upperHeartRate, null, timeWithin, null))
         }
         exercise.heartRateLimits = heartRateLimits.toTypedArray()
 

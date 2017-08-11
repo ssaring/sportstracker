@@ -289,10 +289,9 @@ class PolarHRMParser : AbstractExerciseParser() {
             }
 
             // get seconds below, within and above current heartrate range
-            exercise.heartRateLimits[i] = HeartRateLimit()
-            exercise.heartRateLimits[i].timeAbove = firstHRLLineSplitted[2].toInt()
-            exercise.heartRateLimits[i].timeWithin = firstHRLLineSplitted[3].toInt()
-            exercise.heartRateLimits[i].timeBelow = firstHRLLineSplitted[4].toInt()
+            val timeAbove = firstHRLLineSplitted[2].toInt()
+            val timeWithin = firstHRLLineSplitted[3].toInt()
+            val timeBelow = firstHRLLineSplitted[4].toInt()
 
             // 2. heratrate limits info line needs to be of 4 parts
             val secondHRLLineSplitted = lSummary123Block[(i * 2) + 1].split("\t")
@@ -300,8 +299,10 @@ class PolarHRMParser : AbstractExerciseParser() {
                 throw EVException("Failed to read HRM file, can't parse 2. line of current heartrate limits in block 'Summary-123'!")
             }
 
-            exercise.heartRateLimits[i].upperHeartRate = secondHRLLineSplitted[1].toShort()
-            exercise.heartRateLimits[i].lowerHeartRate = secondHRLLineSplitted[2].toShort()
+            val upperHeartRate = secondHRLLineSplitted[1].toShort()
+            val lowerHeartRate = secondHRLLineSplitted[2].toShort()
+
+            exercise.heartRateLimits[i] = HeartRateLimit(lowerHeartRate, upperHeartRate, timeBelow, timeWithin, timeAbove)
 
             // TODO: When the monitor displays heartrate and ranges in percent instead in bpm
             // the heartrate limit ranges in the HRM files are also stored in percent. But it's
