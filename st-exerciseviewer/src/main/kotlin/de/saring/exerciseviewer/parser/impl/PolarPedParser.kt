@@ -62,8 +62,7 @@ class PolarPedParser : AbstractExerciseParser() {
         }
 
         // parse basic exercise data
-        val exercise = EVExercise()
-        exercise.fileType = EVExercise.ExerciseFileType.PED
+        val exercise = EVExercise(EVExercise.ExerciseFileType.PED)
         exercise.deviceName = "Polar PED"
 
         // Exercise Date
@@ -102,10 +101,6 @@ class PolarPedParser : AbstractExerciseParser() {
         // Heart rate maximum
         exercise.heartRateMax =
                 eResult.getChild("heart-rate", namespace)?.getChildText("maximum", namespace)?.toShort() ?: 0
-
-        // set an empty LapList and SampleList
-        exercise.lapList = arrayOf()
-        exercise.sampleList = arrayOf()
 
         return exercise
     }

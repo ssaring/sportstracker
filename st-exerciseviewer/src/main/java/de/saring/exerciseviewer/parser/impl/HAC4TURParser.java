@@ -195,8 +195,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         fileContentsBytes = readFileToByteArray(filename);
 
         // Create a new exercise file and give it the right type
-        EVExercise exercise = new EVExercise();
-        exercise.setFileType(EVExercise.ExerciseFileType.HAC4TUR);
+        EVExercise exercise = new EVExercise(EVExercise.ExerciseFileType.HAC4TUR);
 
         // check the first line to see if we're really dealing with a HAC4 TUR file
         String strVersion = fileContents[FilePosition.VERSION_HEADER];
@@ -253,8 +252,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         exercise.setTemperature(calculateTemperature(exercise));
 
         // calculate heartrate limits (only one available in HAC files)
-        exercise.setHeartRateLimits(new HeartRateLimit[1]);
-        exercise.getHeartRateLimits()[0] = calculateHeartRate(exercise);
+        exercise.getHeartRateLimits().add(calculateHeartRate(exercise));
 
         // get lap data
         exercise.setLapList(getLaps(exercise));
@@ -287,7 +285,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
             total += alt;
         }
 
-        short altitudeAVG = (short) (total / exercise.getSampleList().length);
+        short altitudeAVG = (short) (total / exercise.getSampleList().size());
         return new ExerciseAltitude((short) min, altitudeAVG, (short) max, ascent);
     }
 
@@ -304,7 +302,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
             total += cadence;
         }
 
-        short cadenceAvg = (short) (total / exercise.getSampleList().length);
+        short cadenceAvg = (short) (total / exercise.getSampleList().size());
         return new ExerciseCadence(cadenceAvg, (short) cadenceMax);
     }
 
@@ -327,8 +325,8 @@ public class HAC4TURParser extends AbstractExerciseParser {
             previousDistance = sample.getDistance();
         }
 
-        int sampleCount = exercise.getSampleList().length;
-        int distance = exercise.getSampleList()[sampleCount - 1].getDistance();
+        int sampleCount = exercise.getSampleList().size();
+        int distance = exercise.getSampleList().get(sampleCount - 1).getDistance();
         return new ExerciseSpeed(speedAVG, max, distance);
     }
 
@@ -346,7 +344,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
             total += sample.getTemperature();
         }
 
-        short avg = (short) (total / exercise.getSampleList().length);
+        short avg = (short) (total / exercise.getSampleList().size());
         return new ExerciseTemperature((short) min, avg, (short) max);
     }
 
@@ -389,8 +387,8 @@ public class HAC4TURParser extends AbstractExerciseParser {
      * I cannot do anything with this yet. Maybe later.. For now I'll just fill
      * a Lap object with values from the complete exercise.
      */
-    private Lap[] getLaps(EVExercise exercise) {
-        ExerciseSample lastSample = exercise.getSampleList()[exercise.getSampleList().length - 1];
+    private List<Lap> getLaps(EVExercise exercise) {
+        ExerciseSample lastSample = exercise.getSampleList().get(exercise.getSampleList().size() - 1);
 
         Lap lap = new Lap();
         lap.setTimeSplit(exercise.getDuration());
@@ -408,7 +406,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
 
         lap.setTemperature(new LapTemperature(lastSample.getTemperature()));
 
-        return new Lap[]{lap};
+        return Arrays.asList(lap);
     }
 
     /**
@@ -438,9 +436,9 @@ public class HAC4TURParser extends AbstractExerciseParser {
      *
      * @param fpNrSamples file position for the number of samples
      * @param fpBeginSamples file position for the begin of sample data
-     * @return the created array of exercise samples
+     * @return the created list of exercise samples
      */
-    private ExerciseSample[] readSamples(int fpNrSamples, int fpBeginSamples) throws EVException {
+    private List<ExerciseSample> readSamples(int fpNrSamples, int fpBeginSamples) throws EVException {
 
         int nrSamples = readInteger(fpNrSamples);
         // find length of all strings to this point
@@ -457,22 +455,23 @@ public class HAC4TURParser extends AbstractExerciseParser {
             samples.add(new Sample(sampleBytes));
         }
 
-        ExerciseSample[] eSamples = new ExerciseSample[nrSamples];
+        List<ExerciseSample> eSamples = new ArrayList<>();
         int previousDistance = 0;
         long firstTimestamp = nrSamples > 0 ? samples.get(0).getTime() : 0;
 
         for (int i = 0; i < nrSamples; i++) {
             Sample sample = samples.get(i);
-            eSamples[i] = new ExerciseSample();
-            eSamples[i].setTimestamp((sample.getTime() - firstTimestamp) * 1000L);
-            eSamples[i].setHeartRate((short) sample.getHeartRate());
-            eSamples[i].setAltitude((short) sample.getAltitude());
-            eSamples[i].setCadence((short) sample.getCadence());
+            ExerciseSample eSample = new ExerciseSample();
+            eSamples.add(eSample);
+            eSample.setTimestamp((sample.getTime() - firstTimestamp) * 1000L);
+            eSample.setHeartRate((short) sample.getHeartRate());
+            eSample.setAltitude((short) sample.getAltitude());
+            eSample.setCadence((short) sample.getCadence());
             int distanceDiff = sample.getDistance() - previousDistance;
             previousDistance = sample.getDistance();
-            eSamples[i].setDistance(sample.getDistance() * 10);
-            eSamples[i].setSpeed(((float) distanceDiff / (float) sampleInterval) * (float) 3.6 * 10f);
-            eSamples[i].setTemperature((short) sample.getTemperature());
+            eSample.setDistance(sample.getDistance() * 10);
+            eSample.setSpeed(((float) distanceDiff / (float) sampleInterval) * (float) 3.6 * 10f);
+            eSample.setTemperature((short) sample.getTemperature());
         }
 
         return eSamples;

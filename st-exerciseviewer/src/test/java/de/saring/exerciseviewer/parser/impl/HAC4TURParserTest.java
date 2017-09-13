@@ -54,7 +54,7 @@ public class HAC4TURParserTest {
 
         assertEquals(EVExercise.ExerciseFileType.HAC4TUR, exercise.getFileType());
         assertEquals("HACtronic - Tour", exercise.getDeviceName());
-        assertEquals((short) 20, exercise.getRecordingInterval());
+        assertEquals(20, exercise.getRecordingInterval().intValue());
         // check recording mode
         assertTrue(exercise.getRecordingMode().isSpeed());
         assertFalse(exercise.getRecordingMode().isCadence());
@@ -64,18 +64,18 @@ public class HAC4TURParserTest {
 
         // time information
         assertEquals(LocalDateTime.of(2005, 10, 10, 14, 5, 0), exercise.getDateTime());
-        assertEquals(9037 * 10, exercise.getDuration());
-        assertEquals(183 * 60 + 14, exercise.getSumExerciseTime());
+        assertEquals(9037 * 10, exercise.getDuration().intValue());
+        assertEquals(183 * 60 + 14, exercise.getSumExerciseTime().intValue());
 
         // heart rates
-        assertEquals((short) 159, exercise.getHeartRateAVG());
-        assertEquals((short) 184, exercise.getHeartRateMax());
+        assertEquals(159, exercise.getHeartRateAVG().intValue());
+        assertEquals(184, exercise.getHeartRateMax().intValue());
 
         // distance & speed & odometer
         assertEquals(40.1f, exercise.getSpeed().getDistance() / 1000f, 0.01f);
         assertEquals(72f, exercise.getSpeed().getSpeedMax(), 0.01f);
         assertEquals(22.21f, exercise.getSpeed().getSpeedAvg(), 0.01f);
-        assertEquals(4817, exercise.getOdometer());
+        assertEquals(4817, exercise.getOdometer().intValue());
 
         // altitudes
         assertEquals((short) 1901, exercise.getAltitude().getAltitudeMax());
@@ -89,20 +89,20 @@ public class HAC4TURParserTest {
         assertEquals((short) 23, exercise.getTemperature().getTemperatureMax());
 
         // heart rate limits
-        assertEquals(1, exercise.getHeartRateLimits().length);
-        assertEquals((short) 140, exercise.getHeartRateLimits()[0].getLowerHeartRate());
-        assertEquals((short) 150, exercise.getHeartRateLimits()[0].getUpperHeartRate());
-        assertEquals(61 * 60, exercise.getHeartRateLimits()[0].getTimeBelow().intValue());
-        assertEquals(6 * 60 + 20, exercise.getHeartRateLimits()[0].getTimeWithin());
-        assertEquals((1 * 60 + 23) * 60 + 40, exercise.getHeartRateLimits()[0].getTimeAbove().intValue());
+        assertEquals(1, exercise.getHeartRateLimits().size());
+        assertEquals((short) 140, exercise.getHeartRateLimits().get(0).getLowerHeartRate());
+        assertEquals((short) 150, exercise.getHeartRateLimits().get(0).getUpperHeartRate());
+        assertEquals(61 * 60, exercise.getHeartRateLimits().get(0).getTimeBelow().intValue());
+        assertEquals(6 * 60 + 20, exercise.getHeartRateLimits().get(0).getTimeWithin());
+        assertEquals((1 * 60 + 23) * 60 + 40, exercise.getHeartRateLimits().get(0).getTimeAbove().intValue());
 
         // we don't have any lap data yet:
-        assertEquals(1, exercise.getLapList().length);
+        assertEquals(1, exercise.getLapList().size());
 
         // too lazy to check samples for now..
-        assertEquals(0L, exercise.getSampleList()[0].getTimestamp().longValue());
-        assertEquals(50 * 20 * 1000L, exercise.getSampleList()[50].getTimestamp().longValue());
-        assertEquals(100 * 20 * 1000L, exercise.getSampleList()[100].getTimestamp().longValue());
+        assertEquals(0L, exercise.getSampleList().get(0).getTimestamp().longValue());
+        assertEquals(50 * 20 * 1000L, exercise.getSampleList().get(50).getTimestamp().longValue());
+        assertEquals(100 * 20 * 1000L, exercise.getSampleList().get(100).getTimestamp().longValue());
     }
 
     /**
@@ -115,7 +115,7 @@ public class HAC4TURParserTest {
 
         assertEquals(EVExercise.ExerciseFileType.HAC4TUR, exercise.getFileType());
         assertEquals("HACtronic - Tour", exercise.getDeviceName());
-        assertEquals((short) 5, exercise.getRecordingInterval());
+        assertEquals(5, exercise.getRecordingInterval().intValue());
         // check recording mode
         assertTrue(exercise.getRecordingMode().isSpeed());
         assertTrue(exercise.getRecordingMode().isCadence());
@@ -125,18 +125,18 @@ public class HAC4TURParserTest {
 
         // time information
         assertEquals(LocalDateTime.of(2006, 2, 4, 10, 34, 0), exercise.getDateTime());
-        assertEquals(16675 * 10, exercise.getDuration());
-        assertEquals(13965 / 60, exercise.getSumExerciseTime());
+        assertEquals(16675 * 10, exercise.getDuration().intValue());
+        assertEquals(13965 / 60, exercise.getSumExerciseTime().intValue());
 
         // heart rates
-        assertEquals((short) 128, exercise.getHeartRateAVG());
-        assertEquals((short) 157, exercise.getHeartRateMax());
+        assertEquals(128, exercise.getHeartRateAVG().intValue());
+        assertEquals(157, exercise.getHeartRateMax().intValue());
 
         // distance & speed & odometer
         assertEquals(105.56f, exercise.getSpeed().getDistance() / 1000f, 0.01f);
         assertEquals(43.2f, exercise.getSpeed().getSpeedMax(), 0.01f);
         assertEquals(27.21f, exercise.getSpeed().getSpeedAvg(), 0.01f);
-        assertEquals(105, exercise.getOdometer());
+        assertEquals(105, exercise.getOdometer().intValue());
 
         // Cadence values
         assertEquals((short) 58, exercise.getCadence().getCadenceAvg());
@@ -153,19 +153,19 @@ public class HAC4TURParserTest {
         assertEquals((short) 16, exercise.getTemperature().getTemperatureMax());
 
         // heart rate limits
-        assertEquals(1, exercise.getHeartRateLimits().length);
-        assertEquals((short) 42, exercise.getHeartRateLimits()[0].getLowerHeartRate());
-        assertEquals((short) 195, exercise.getHeartRateLimits()[0].getUpperHeartRate());
-        assertEquals(0, exercise.getHeartRateLimits()[0].getTimeBelow().intValue());
-        assertEquals(16680, exercise.getHeartRateLimits()[0].getTimeWithin());
-        assertEquals(0, exercise.getHeartRateLimits()[0].getTimeAbove().intValue());
+        assertEquals(1, exercise.getHeartRateLimits().size());
+        assertEquals((short) 42, exercise.getHeartRateLimits().get(0).getLowerHeartRate());
+        assertEquals((short) 195, exercise.getHeartRateLimits().get(0).getUpperHeartRate());
+        assertEquals(0, exercise.getHeartRateLimits().get(0).getTimeBelow().intValue());
+        assertEquals(16680, exercise.getHeartRateLimits().get(0).getTimeWithin());
+        assertEquals(0, exercise.getHeartRateLimits().get(0).getTimeAbove().intValue());
 
         // we don't have any lap data yet:
-        assertEquals(1, exercise.getLapList().length);
+        assertEquals(1, exercise.getLapList().size());
 
         // too lazy to check samples for now..
-        assertEquals(0L, exercise.getSampleList()[0].getTimestamp().longValue());
-        assertEquals(50 * 5 * 1000L, exercise.getSampleList()[50].getTimestamp().longValue());
-        assertEquals(100 * 5 * 1000L, exercise.getSampleList()[100].getTimestamp().longValue());
+        assertEquals(0L, exercise.getSampleList().get(0).getTimestamp().longValue());
+        assertEquals(50 * 5 * 1000L, exercise.getSampleList().get(50).getTimestamp().longValue());
+        assertEquals(100 * 5 * 1000L, exercise.getSampleList().get(100).getTimestamp().longValue());
     }
 }

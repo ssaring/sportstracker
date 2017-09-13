@@ -54,15 +54,15 @@ class TopoGrafixGpxParserTest {
         assertEquals(((47 * 60) + 6) * 10, exercise.duration)
 
         // check altitude data
-        assertEquals(236.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(270.toShort(), exercise.altitude.altitudeAvg)
-        assertEquals(315.toShort(), exercise.altitude.altitudeMax)
-        assertEquals(245, exercise.altitude.ascent)
+        assertEquals(236.toShort(), exercise.altitude!!.altitudeMin)
+        assertEquals(270.toShort(), exercise.altitude!!.altitudeAvg)
+        assertEquals(315.toShort(), exercise.altitude!!.altitudeMax)
+        assertEquals(245, exercise.altitude!!.ascent)
 
         // check speed summary data
-        assertEquals(39.38832f, exercise.speed.speedMax)
-        assertEquals(16484, exercise.speed.distance)
-        assertEquals(20.998724f, exercise.speed.speedAvg)
+        assertEquals(39.38832f, exercise.speed!!.speedMax)
+        assertEquals(16484, exercise.speed!!.distance)
+        assertEquals(20.998724f, exercise.speed!!.speedAvg)
 
         // check sample data
         assertEquals(199, exercise.sampleList.size)
@@ -115,15 +115,15 @@ class TopoGrafixGpxParserTest {
         assertEquals(6090, exercise.duration)
 
         // check altitude data
-        assertEquals(32.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(41.toShort(), exercise.altitude.altitudeAvg)
-        assertEquals(53.toShort(), exercise.altitude.altitudeMax)
-        assertEquals(41, exercise.altitude.ascent)
+        assertEquals(32.toShort(), exercise.altitude!!.altitudeMin)
+        assertEquals(41.toShort(), exercise.altitude!!.altitudeAvg)
+        assertEquals(53.toShort(), exercise.altitude!!.altitudeMax)
+        assertEquals(41, exercise.altitude!!.ascent)
 
         // check speed summary data
-        assertEquals(37.978153f, exercise.speed.speedMax)
-        assertEquals(4494, exercise.speed.distance)
-        assertEquals(26.565517f, exercise.speed.speedAvg)
+        assertEquals(37.978153f, exercise.speed!!.speedMax)
+        assertEquals(4494, exercise.speed!!.distance)
+        assertEquals(26.565517f, exercise.speed!!.speedAvg)
 
         // check heartRate data
         assertEquals(152.toShort(), exercise.heartRateAVG)
@@ -184,15 +184,15 @@ class TopoGrafixGpxParserTest {
         assertEquals(1780, exercise.duration)
 
         // check altitude data
-        assertEquals(212.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(221.toShort(), exercise.altitude.altitudeAvg)
-        assertEquals(226.toShort(), exercise.altitude.altitudeMax)
-        assertEquals(22, exercise.altitude.ascent)
+        assertEquals(212.toShort(), exercise.altitude!!.altitudeMin)
+        assertEquals(221.toShort(), exercise.altitude!!.altitudeAvg)
+        assertEquals(226.toShort(), exercise.altitude!!.altitudeMax)
+        assertEquals(22, exercise.altitude!!.ascent)
 
         // check speed summary data
-        assertEquals(39.3484f, exercise.speed.speedMax)
-        assertEquals(1055, exercise.speed.distance)
-        assertEquals(21.337078f, exercise.speed.speedAvg)
+        assertEquals(39.3484f, exercise.speed!!.speedMax)
+        assertEquals(1055, exercise.speed!!.distance)
+        assertEquals(21.337078f, exercise.speed!!.speedAvg)
 
         // check heartRate data
         assertEquals(140.toShort(), exercise.heartRateAVG)
@@ -248,7 +248,7 @@ class TopoGrafixGpxParserTest {
 
         // check exercise time and duration
         assertNull(exercise.dateTime)
-        assertEquals(0, exercise.duration)
+        assertNull(exercise.duration)
         assertNull(exercise.altitude)
 
         // check sample data

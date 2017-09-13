@@ -41,11 +41,9 @@ class SmartsyncCSVParser : AbstractExerciseParser() {
     private fun parseExerciseFromContent(fileContent: List<String>): EVExercise {
 
         // parse basic exercise data
-        val exercise = EVExercise()
-        exercise.fileType = EVExercise.ExerciseFileType.SSCSV // FIXME
+        val exercise = EVExercise(EVExercise.ExerciseFileType.SSCSV) // FIXME
         exercise.deviceName = "Oregon Scientific Smartsync"
         exercise.recordingMode = RecordingMode()
-        exercise.lapList = arrayOf()
 
         val now = LocalDateTime.now()
         var exeYear = now.year
@@ -55,14 +53,12 @@ class SmartsyncCSVParser : AbstractExerciseParser() {
         var exeMinute = 0
         var exeSecond = 0
 
-        val sampleList = mutableListOf<ExerciseSample>()
-
         for (line in fileContent) {
             // most frequent element first
             if (line.startsWith(",")) {
                 val exeSample = ExerciseSample()
                 exeSample.heartRate = line.substring(1).toShort()
-                sampleList.add(exeSample)
+                exercise.sampleList.add(exeSample)
             } else if (line.startsWith("Name,")) {
                 // not supported in EVExercise
             } else if (line.startsWith("Description,")) {
@@ -92,22 +88,20 @@ class SmartsyncCSVParser : AbstractExerciseParser() {
 
         exercise.dateTime = LocalDateTime.of(exeYear, exeMonth, exeDay, exeHour, exeMinute, exeSecond)
 
-        exercise.sampleList = sampleList.toTypedArray()
-
-        exercise.duration = (sampleList.size - 1) * exercise.recordingInterval * 10
+        exercise.duration = (exercise.sampleList.size - 1) * exercise.recordingInterval!! * 10
 
         // compute average/maximum heartrate of exercise (not in HRM file)
-        exercise.heartRateAVG = Math.round(sampleList
+        exercise.heartRateAVG = Math.round(exercise.sampleList
                 .map { it.heartRate ?: 0 }
                 .average()).toShort()
 
-        exercise.heartRateMax = sampleList
+        exercise.heartRateMax = exercise.sampleList
                 .map { it.heartRate ?: 0}
                 .max() ?: 0
 
         // compute timestamps for all recorded exercise samples
-        for (i in 0..sampleList.size - 1) {
-            sampleList[i].timestamp = i * exercise.recordingInterval * 1000L
+        for (i in 0..exercise.sampleList.size - 1) {
+            exercise.sampleList[i].timestamp = i * exercise.recordingInterval!! * 1000L
         }
 
         // done :-)

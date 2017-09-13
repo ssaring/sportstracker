@@ -177,7 +177,7 @@ public class MainPanelController extends AbstractPanelController {
         });
 
         final EVExercise exercise = getDocument().getExercise();
-        if (exercise.getHeartRateLimits() != null && exercise.getHeartRateLimits().length > 0) {
+        if (!exercise.getHeartRateLimits().isEmpty()) {
             cbHeartrateRanges.getItems().addAll(exercise.getHeartRateLimits());
             cbHeartrateRanges.getSelectionModel().select(0);
         } else {

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -64,54 +65,54 @@ public class PolarF6RawParserTest {
         assertEquals(false, exercise.getRecordingMode().isCadence());
         assertEquals(false, exercise.getRecordingMode().isPower());
         assertNull(exercise.getRecordingMode().getBikeNumber());
-        assertEquals((40 * 60 * 10) + 26 * 10, exercise.getDuration());
-        assertEquals((short) 0, exercise.getRecordingInterval());
-        assertEquals((short) 169, exercise.getHeartRateAVG());
-        assertEquals((short) 178, exercise.getHeartRateMax());
+        assertEquals((40 * 60 * 10) + 26 * 10, exercise.getDuration().intValue());
+        assertNull(exercise.getRecordingInterval());
+        assertEquals(169, exercise.getHeartRateAVG().intValue());
+        assertEquals(178, exercise.getHeartRateMax().intValue());
         assertEquals(null, exercise.getSpeed());
         assertEquals(null, exercise.getCadence());
         assertEquals(null, exercise.getAltitude());
         assertEquals(null, exercise.getTemperature());
-        assertEquals(595, exercise.getEnergy());
-        assertEquals(54377, exercise.getEnergyTotal());
-        assertEquals((65 * 60) + 9, exercise.getSumExerciseTime());
-        assertEquals(0, exercise.getSumRideTime());
-        assertEquals(0, exercise.getOdometer());
+        assertEquals(595, exercise.getEnergy().intValue());
+        assertEquals(54377, exercise.getEnergyTotal().intValue());
+        assertEquals((65 * 60) + 9, exercise.getSumExerciseTime().intValue());
+        assertNull(exercise.getSumRideTime());
+        assertNull(exercise.getOdometer());
 
         // check heart rate limits
-        assertEquals(4, exercise.getHeartRateLimits().length);//--
-        assertEquals((short) 158, exercise.getHeartRateLimits()[0].getLowerHeartRate());
-        assertEquals((short) 176, exercise.getHeartRateLimits()[0].getUpperHeartRate());
-        assertEquals(true, exercise.getHeartRateLimits()[0].isAbsoluteRange());
-        assertNull(exercise.getHeartRateLimits()[0].getTimeBelow());
-        assertEquals((36 * 60) + 13, exercise.getHeartRateLimits()[0].getTimeWithin());
-        assertNull(exercise.getHeartRateLimits()[0].getTimeAbove());
+        assertEquals(4, exercise.getHeartRateLimits().size());
+        assertEquals((short) 158, exercise.getHeartRateLimits().get(0).getLowerHeartRate());
+        assertEquals((short) 176, exercise.getHeartRateLimits().get(0).getUpperHeartRate());
+        assertEquals(true, exercise.getHeartRateLimits().get(0).isAbsoluteRange());
+        assertNull(exercise.getHeartRateLimits().get(0).getTimeBelow());
+        assertEquals((36 * 60) + 13, exercise.getHeartRateLimits().get(0).getTimeWithin());
+        assertNull(exercise.getHeartRateLimits().get(0).getTimeAbove());
 
-        assertEquals((short) 60, exercise.getHeartRateLimits()[1].getLowerHeartRate());
-        assertEquals((short) 70, exercise.getHeartRateLimits()[1].getUpperHeartRate());
-        assertEquals(false, exercise.getHeartRateLimits()[1].isAbsoluteRange());
-        assertNull(exercise.getHeartRateLimits()[1].getTimeBelow());
-        assertEquals(40, exercise.getHeartRateLimits()[1].getTimeWithin());
-        assertNull(exercise.getHeartRateLimits()[1].getTimeAbove());
+        assertEquals((short) 60, exercise.getHeartRateLimits().get(1).getLowerHeartRate());
+        assertEquals((short) 70, exercise.getHeartRateLimits().get(1).getUpperHeartRate());
+        assertEquals(false, exercise.getHeartRateLimits().get(1).isAbsoluteRange());
+        assertNull(exercise.getHeartRateLimits().get(1).getTimeBelow());
+        assertEquals(40, exercise.getHeartRateLimits().get(1).getTimeWithin());
+        assertNull(exercise.getHeartRateLimits().get(1).getTimeAbove());
 
-        assertEquals((short) 71, exercise.getHeartRateLimits()[2].getLowerHeartRate());
-        assertEquals((short) 80, exercise.getHeartRateLimits()[2].getUpperHeartRate());
-        assertEquals(false, exercise.getHeartRateLimits()[2].isAbsoluteRange());
-        assertNull(exercise.getHeartRateLimits()[2].getTimeBelow());
-        assertEquals((1 * 60) + 49, exercise.getHeartRateLimits()[2].getTimeWithin());
-        assertNull(exercise.getHeartRateLimits()[2].getTimeAbove());
+        assertEquals((short) 71, exercise.getHeartRateLimits().get(2).getLowerHeartRate());
+        assertEquals((short) 80, exercise.getHeartRateLimits().get(2).getUpperHeartRate());
+        assertEquals(false, exercise.getHeartRateLimits().get(2).isAbsoluteRange());
+        assertNull(exercise.getHeartRateLimits().get(2).getTimeBelow());
+        assertEquals((1 * 60) + 49, exercise.getHeartRateLimits().get(2).getTimeWithin());
+        assertNull(exercise.getHeartRateLimits().get(2).getTimeAbove());
 
-        assertEquals((short) 81, exercise.getHeartRateLimits()[3].getLowerHeartRate());
-        assertEquals((short) 90, exercise.getHeartRateLimits()[3].getUpperHeartRate());
-        assertEquals(false, exercise.getHeartRateLimits()[3].isAbsoluteRange());
-        assertNull(exercise.getHeartRateLimits()[3].getTimeBelow());
-        assertEquals((37 * 60) + 57, exercise.getHeartRateLimits()[3].getTimeWithin());
-        assertNull(exercise.getHeartRateLimits()[3].getTimeAbove());
+        assertEquals((short) 81, exercise.getHeartRateLimits().get(3).getLowerHeartRate());
+        assertEquals((short) 90, exercise.getHeartRateLimits().get(3).getUpperHeartRate());
+        assertEquals(false, exercise.getHeartRateLimits().get(3).isAbsoluteRange());
+        assertNull(exercise.getHeartRateLimits().get(3).getTimeBelow());
+        assertEquals((37 * 60) + 57, exercise.getHeartRateLimits().get(3).getTimeWithin());
+        assertNull(exercise.getHeartRateLimits().get(3).getTimeAbove());
 
         // check lap data
-        assertEquals(exercise.getLapList().length, 0);
+        assertTrue(exercise.getLapList().isEmpty());
 
         // check sample data
-        assertEquals(exercise.getSampleList().length, 0);
+        assertTrue(exercise.getSampleList().isEmpty());
     }
 }

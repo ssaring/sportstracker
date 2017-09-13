@@ -58,12 +58,13 @@ class GarminTcxParser : AbstractExerciseParser() {
     private fun parseExerciseElement(eExercise: Element): EVExercise {
 
         // parse basic exercise data
-        val exercise = EVExercise()
-        exercise.fileType = EVExercise.ExerciseFileType.GARMIN_TCX
+        val exercise = EVExercise(EVExercise.ExerciseFileType.GARMIN_TCX)
         exercise.recordingInterval = EVExercise.DYNAMIC_RECORDING_INTERVAL
         exercise.recordingMode = RecordingMode()
         exercise.recordingMode.isSpeed = true
+        exercise.duration = 0
         exercise.speed = ExerciseSpeed(0f, 0f, 0)
+        exercise.energy = 0
 
         val eActivity = eExercise.getChild("Activities", namespace).getChild("Activity", namespace)
         exercise.dateTime = parseDateTime(eActivity.getChildText("Id", namespace))
@@ -79,12 +80,9 @@ class GarminTcxParser : AbstractExerciseParser() {
 
         // no summary data, everything is stored in laps
         // parse each lap and create a ExerciseViewer Lap object
-        val evLaps = mutableListOf<Lap>()
-        val evSamples = mutableListOf<ExerciseSample>()
-
         for (eLap in eActivity.getChildren("Lap", namespace)) {
             val evLap = parseLapData(exercise, eLap)
-            evLaps.add(evLap)
+            exercise.lapList.add(evLap)
 
             // compute the total time gap between all laps
             if (lastTrackpointTimestamp > 0) {
@@ -108,7 +106,7 @@ class GarminTcxParser : AbstractExerciseParser() {
                     trackpointCount++
 
                     val evSample = ExerciseSample()
-                    evSamples.add(evSample)
+                    exercise.sampleList.add(evSample)
 
                     // calculate sample timestamp (time gap between laps must be substracted here)
                     val tpDateTime = parseDateTime(eTrackpoint.getChildText("Time", namespace))
@@ -140,7 +138,7 @@ class GarminTcxParser : AbstractExerciseParser() {
                         previousTrackpointDistanceMeters = tpDistanceMeters
 
                         evLap.speed!!.speedEnd = evSample.speed ?: 0f
-                        exercise.speed.speedMax = Math.max(evSample.speed ?: 0f, exercise.speed.speedMax)
+                        exercise.speed!!.speedMax = Math.max(evSample.speed ?: 0f, exercise.speed!!.speedMax)
                     }
 
                     // get optional altitude data
@@ -162,8 +160,8 @@ class GarminTcxParser : AbstractExerciseParser() {
 
                         lapAltitude = Math.round(tpAltitude).toShort()
 
-                        exercise.altitude.altitudeMin = Math.min(tpAltitude.toInt(), exercise.altitude.altitudeMin.toInt()).toShort()
-                        exercise.altitude.altitudeMax = Math.max(tpAltitude.toInt(), exercise.altitude.altitudeMax.toInt()).toShort()
+                        exercise.altitude!!.altitudeMin = Math.min(tpAltitude.toInt(), exercise.altitude!!.altitudeMin.toInt()).toShort()
+                        exercise.altitude!!.altitudeMax = Math.max(tpAltitude.toInt(), exercise.altitude!!.altitudeMax.toInt()).toShort()
 
                         // calculate lap ascent (need to use double precision here)
                         if (previousTrackpointAltitudeMeters > Double.MIN_VALUE &&
@@ -187,10 +185,10 @@ class GarminTcxParser : AbstractExerciseParser() {
                         }
 
                         // compute max and average cadence if present
-                        exercise.cadence.cadenceMax = Math.max(cadence.toInt(), exercise.cadence.cadenceMax.toInt()).toShort()
+                        exercise.cadence!!.cadenceMax = Math.max(cadence.toInt(), exercise.cadence!!.cadenceMax.toInt()).toShort()
                         if (cadence > 0) {
                             cadenceSum += cadence
-                            exercise.cadence.cadenceAvg = Math.round(cadenceSum / (++cadenceCount).toDouble()).toShort()
+                            exercise.cadence!!.cadenceAvg = Math.round(cadenceSum / (++cadenceCount).toDouble()).toShort()
                         }
                     }
                 }
@@ -201,16 +199,13 @@ class GarminTcxParser : AbstractExerciseParser() {
             }
 
             // store position of last sample as lap split position
-            if (!evSamples.isEmpty()) {
-                evLap.positionSplit = evSamples.last().position
+            if (!exercise.sampleList.isEmpty()) {
+                evLap.positionSplit = exercise.sampleList.last().position
             }
         }
 
         // parse device model name, it's always an Garmin
         exercise.deviceName = "Garmin ${eActivity.getChild("Creator", namespace).getChildText("Name", namespace)}"
-
-        exercise.lapList = evLaps.toTypedArray()
-        exercise.sampleList = evSamples.toTypedArray()
 
         calculateAvgSpeed(exercise)
         calculateAvgHeartrate(exercise)
@@ -225,11 +220,11 @@ class GarminTcxParser : AbstractExerciseParser() {
         // stored lap duration in XML is often wrong, needs to be calculated
         val lapDurationSeconds = calculateLapDuration(lapElement)
         val distanceMeters = lapElement.getChildText("DistanceMeters", namespace).toDouble()
-        exercise.duration += Math.round(lapDurationSeconds * 10).toInt()
-        evLap.timeSplit = exercise.duration
-        exercise.speed.distance += Math.round(distanceMeters).toInt()
-        val lapSpeedDistance = exercise.speed.distance
-        exercise.energy += lapElement.getChildText("Calories", namespace).toInt()
+        exercise.duration = exercise.duration!! + Math.round(lapDurationSeconds * 10).toInt()
+        evLap.timeSplit = exercise.duration!!
+        exercise.speed!!.distance += Math.round(distanceMeters).toInt()
+        val lapSpeedDistance = exercise.speed!!.distance
+        exercise.energy = exercise.energy!! + lapElement.getChildText("Calories", namespace).toInt()
 
         // stored maximum lap speed in XML is wrong, will be calculated
 
@@ -254,7 +249,7 @@ class GarminTcxParser : AbstractExerciseParser() {
         val eMaximumHeartRateBpm = lapElement.getChild("MaximumHeartRateBpm", namespace)
         if (eMaximumHeartRateBpm != null) {
             evLap.heartRateMax = eMaximumHeartRateBpm.getChildText("Value", namespace).toShort()
-            exercise.heartRateMax = Math.max(evLap.heartRateMax!!.toInt(), exercise.heartRateMax.toInt()).toShort()
+            exercise.heartRateMax = Math.max(evLap.heartRateMax!!.toInt(), exercise.heartRateMax?.toInt() ?: 0).toShort()
         }
     }
 
@@ -293,8 +288,8 @@ class GarminTcxParser : AbstractExerciseParser() {
     }
 
     private fun calculateAvgSpeed(exercise: EVExercise) {
-        exercise.speed.speedAvg = CalculationUtils.calculateAvgSpeed(
-                exercise.speed.distance / 1000f, Math.round(exercise.duration / 10f))
+        exercise.speed!!.speedAvg = CalculationUtils.calculateAvgSpeed(
+                exercise.speed!!.distance / 1000f, Math.round(exercise.duration!! / 10f))
     }
 
     /**
@@ -348,11 +343,11 @@ class GarminTcxParser : AbstractExerciseParser() {
     private fun calculateAvgAltitude(exercise: EVExercise, altitudeMetersTotal: Double, trackpointCount: Int) {
         // calculate average altitude and total ascent (if recorded)
         if (exercise.altitude != null) {
-            exercise.altitude.altitudeAvg = Math.round(altitudeMetersTotal / trackpointCount.toDouble()).toShort()
+            exercise.altitude!!.altitudeAvg = Math.round(altitudeMetersTotal / trackpointCount.toDouble()).toShort()
 
             for (evLap in exercise.lapList) {
                 if (evLap.altitude != null) {
-                    exercise.altitude.ascent += evLap.altitude!!.ascent
+                    exercise.altitude!!.ascent += evLap.altitude!!.ascent
                 }
             }
         }

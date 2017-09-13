@@ -50,14 +50,14 @@ class PolarHRMParserTest {
 
         assertEquals(135.toShort(), exercise.heartRateAVG)
         assertEquals(218.toShort(), exercise.heartRateMax)
-        assertEquals(251, Math.round(exercise.speed.speedAvg * 10))
-        assertEquals(969, Math.round(exercise.speed.speedMax * 10))
-        assertEquals(29900, exercise.speed.distance)
+        assertEquals(251, Math.round(exercise.speed!!.speedAvg * 10))
+        assertEquals(969, Math.round(exercise.speed!!.speedMax * 10))
+        assertEquals(29900, exercise.speed!!.distance)
 
         assertNull(exercise.cadence)
-        assertEquals(215.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(253.toShort(), exercise.altitude.altitudeAvg)
-        assertEquals(300.toShort(), exercise.altitude.altitudeMax)
+        assertEquals(215.toShort(), exercise.altitude!!.altitudeMin)
+        assertEquals(253.toShort(), exercise.altitude!!.altitudeAvg)
+        assertEquals(300.toShort(), exercise.altitude!!.altitudeMax)
         assertEquals(1024, exercise.odometer)
 
         // check heart rate limits
@@ -168,13 +168,13 @@ class PolarHRMParserTest {
 
         assertEquals(136.toShort(), exercise.heartRateAVG)
         assertEquals(232.toShort(), exercise.heartRateMax)
-        assertEquals(247, Math.round(exercise.speed.speedAvg * 10))
-        assertEquals(1077, Math.round(exercise.speed.speedMax * 10))
-        assertEquals(20921, exercise.speed.distance)
+        assertEquals(247, Math.round(exercise.speed!!.speedAvg * 10))
+        assertEquals(1077, Math.round(exercise.speed!!.speedMax * 10))
+        assertEquals(20921, exercise.speed!!.distance)
         assertNull(exercise.cadence)
-        assertEquals(221.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(245.toShort(), exercise.altitude.altitudeAvg)
-        assertEquals(277.toShort(), exercise.altitude.altitudeMax)
+        assertEquals(221.toShort(), exercise.altitude!!.altitudeMin)
+        assertEquals(245.toShort(), exercise.altitude!!.altitudeAvg)
+        assertEquals(277.toShort(), exercise.altitude!!.altitudeMax)
         assertEquals(exercise.odometer, 993)
 
         // check heart rate limits
@@ -285,9 +285,9 @@ class PolarHRMParserTest {
         assertEquals(158.toShort(), exercise.heartRateMax)
         assertNull(exercise.speed)
         assertNull(exercise.cadence)
-        assertEquals(86.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(93.toShort(), exercise.altitude.altitudeAvg)
-        assertEquals(101.toShort(), exercise.altitude.altitudeMax)
+        assertEquals(86.toShort(), exercise.altitude!!.altitudeMin)
+        assertEquals(93.toShort(), exercise.altitude!!.altitudeAvg)
+        assertEquals(101.toShort(), exercise.altitude!!.altitudeMax)
         assertEquals(1200, exercise.odometer)
 
         // check heart rate limits

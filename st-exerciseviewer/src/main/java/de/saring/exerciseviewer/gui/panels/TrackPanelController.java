@@ -124,7 +124,7 @@ public class TrackPanelController extends AbstractPanelController {
     }
 
     private void movePositionMarker(final int positionIndex) {
-        final ExerciseSample sample = getDocument().getExercise().getSampleList()[positionIndex];
+        final ExerciseSample sample = getDocument().getExercise().getSampleList().get(positionIndex);
 
         // some samples could have no position
         if (sample.getPosition() != null) {
@@ -163,7 +163,7 @@ public class TrackPanelController extends AbstractPanelController {
                     if (workerState == Worker.State.SUCCEEDED) {
                         showTrackAndLaps();
                         // enable position slider by setting max. sample count
-                        slPosition.setMax(exercise.getSampleList().length - 1);
+                        slPosition.setMax(exercise.getSampleList().size() - 1);
                     } else if (throwable != null) {
                         LOGGER.log(Level.SEVERE, "Failed to display map!", throwable);
                     }
@@ -212,8 +212,8 @@ public class TrackPanelController extends AbstractPanelController {
         final List<LatLong> lapPositions = new ArrayList<>();
 
         // ignore last lap split position, it's the exercise end position
-        for (int i = 0; i < exercise.getLapList().length - 1; i++) {
-            final Lap lap = exercise.getLapList()[i];
+        for (int i = 0; i < exercise.getLapList().size() - 1; i++) {
+            final Lap lap = exercise.getLapList().get(i);
             final Position pos = lap.getPositionSplit();
             if (pos != null) {
                 lapPositions.add(new LatLong(pos.getLatitude(), pos.getLongitude()));
@@ -237,7 +237,7 @@ public class TrackPanelController extends AbstractPanelController {
     private String createToolTipText(int sampleIndex) {
 
         EVExercise exercise = getDocument().getExercise();
-        ExerciseSample sample = exercise.getSampleList()[sampleIndex];
+        ExerciseSample sample = exercise.getSampleList().get(sampleIndex);
         FormatUtils formatUtils = getContext().getFormatUtils();
 
         StringBuilder sb = new StringBuilder();

@@ -43,23 +43,23 @@ class GarminTcxParserTest {
         assertEquals((39 * 60 + 5) * 10, exercise.duration)
 
         // heart rates
-        assertEquals(0.toShort(), exercise.heartRateAVG)
-        assertEquals(0.toShort(), exercise.heartRateMax)
+        assertNull(exercise.heartRateAVG)
+        assertNull(exercise.heartRateMax)
         assertEquals(285, exercise.energy)
 
         // heartrate limits not available in TCX files
-        assertNull(exercise.heartRateLimits)
+        assertTrue(exercise.heartRateLimits.isEmpty())
 
         // distance & speed & odometer
-        assertEquals(8349, exercise.speed.distance)
-        assertEquals(72.284f, exercise.speed.speedMax, 0.001f)
-        assertEquals(12.817f, exercise.speed.speedAvg, 0.001f)
+        assertEquals(8349, exercise.speed!!.distance)
+        assertEquals(72.284f, exercise.speed!!.speedMax, 0.001f)
+        assertEquals(12.817f, exercise.speed!!.speedAvg, 0.001f)
 
         // altitude
-        assertEquals((-4).toShort(), exercise.altitude.altitudeMin)
-        assertEquals(8.toShort(), exercise.altitude.altitudeAvg)
-        assertEquals(21.toShort(), exercise.altitude.altitudeMax)
-        assertEquals(149, exercise.altitude.ascent)
+        assertEquals((-4).toShort(), exercise.altitude!!.altitudeMin)
+        assertEquals(8.toShort(), exercise.altitude!!.altitudeAvg)
+        assertEquals(21.toShort(), exercise.altitude!!.altitudeMax)
+        assertEquals(149, exercise.altitude!!.ascent)
 
         // cadence
         assertNull(exercise.cadence)
@@ -135,22 +135,22 @@ class GarminTcxParserTest {
         assertEquals(2251, exercise.energy)
 
         // heartrate limits not available in TCX files
-        assertNull(exercise.heartRateLimits)
+        assertTrue(exercise.heartRateLimits.isEmpty())
 
         // distance & speed & odometer
-        assertEquals(18990, exercise.speed.distance)
-        assertEquals(164.425f, exercise.speed.speedMax, 0.001f)
-        assertEquals(11.232f, exercise.speed.speedAvg, 0.001f)
+        assertEquals(18990, exercise.speed!!.distance)
+        assertEquals(164.425f, exercise.speed!!.speedMax, 0.001f)
+        assertEquals(11.232f, exercise.speed!!.speedAvg, 0.001f)
 
         // altitude
-        assertEquals(94.toShort(), exercise.altitude.altitudeMin)
-        assertEquals(115.toShort(), exercise.altitude.altitudeAvg)
-        assertEquals(153.toShort(), exercise.altitude.altitudeMax)
-        assertEquals(388, exercise.altitude.ascent)
+        assertEquals(94.toShort(), exercise.altitude!!.altitudeMin)
+        assertEquals(115.toShort(), exercise.altitude!!.altitudeAvg)
+        assertEquals(153.toShort(), exercise.altitude!!.altitudeMax)
+        assertEquals(388, exercise.altitude!!.ascent)
 
         // cadence
-        assertEquals(88.toShort(), exercise.cadence.cadenceAvg)
-        assertEquals(90.toShort(), exercise.cadence.cadenceMax)
+        assertEquals(88.toShort(), exercise.cadence!!.cadenceAvg)
+        assertEquals(90.toShort(), exercise.cadence!!.cadenceMax)
 
         // lap data
         assertEquals(2, exercise.lapList.size)
@@ -236,19 +236,19 @@ class GarminTcxParserTest {
         assertEquals(446, exercise.energy)
 
         // heartrate limits not available in TCX files
-        assertNull(exercise.heartRateLimits)
+        assertTrue(exercise.heartRateLimits.isEmpty())
 
         // distance & speed & odometer
-        assertEquals(5599, exercise.speed.distance)
-        assertEquals(16.5737f, exercise.speed.speedMax, 0.001f)
-        assertEquals(13.0716f, exercise.speed.speedAvg, 0.001f)
+        assertEquals(5599, exercise.speed!!.distance)
+        assertEquals(16.5737f, exercise.speed!!.speedMax, 0.001f)
+        assertEquals(13.0716f, exercise.speed!!.speedAvg, 0.001f)
 
         // altitude
         assertNull(exercise.altitude)
 
         // (run) cadence
-        assertEquals(80.toShort(), exercise.cadence.cadenceAvg)
-        assertEquals(90.toShort(), exercise.cadence.cadenceMax)
+        assertEquals(80.toShort(), exercise.cadence!!.cadenceAvg)
+        assertEquals(90.toShort(), exercise.cadence!!.cadenceMax)
 
         // lap data (check the first only)
         assertEquals(6, exercise.lapList.size)

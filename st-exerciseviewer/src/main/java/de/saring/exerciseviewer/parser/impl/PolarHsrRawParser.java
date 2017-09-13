@@ -1,12 +1,18 @@
 package de.saring.exerciseviewer.parser.impl;
 
+import java.time.LocalDateTime;
+
 import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.*;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.ExerciseSample;
+import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.data.HeartRateLimit;
+import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.data.LapSpeed;
+import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
 import de.saring.util.unitcalc.ConvertUtils;
-
-import java.time.LocalDateTime;
 
 /**
  * This implementation of an ExerciseParser is for reading RAW files of the
@@ -73,8 +79,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
 
         // create an PVExercise object from this data and set file type
         // TODO - support S410 and S520
-        EVExercise exercise = new EVExercise();
-        exercise.setFileType(EVExercise.ExerciseFileType.S510RAW);
+        EVExercise exercise = new EVExercise(EVExercise.ExerciseFileType.S510RAW);
         exercise.setDeviceName("Polar S4xx/S5xx Series");
 
         // get bytes in file
@@ -233,10 +238,14 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
 
         // get the heartrate limit data (Polar S510 has 3 limits)
         int indexHRLimitStart = 28;
-        exercise.setHeartRateLimits(new HeartRateLimit[3]);
-        exercise.getHeartRateLimits()[0] = decodeHeartRateLimit(indexHRLimitStart + 0, indexHRLimitStart + 9);
-        exercise.getHeartRateLimits()[1] = decodeHeartRateLimit(indexHRLimitStart + 2, indexHRLimitStart + 18);
-        exercise.getHeartRateLimits()[2] = decodeHeartRateLimit(indexHRLimitStart + 4, indexHRLimitStart + 27);
+
+        HeartRateLimit hrLimit1 = decodeHeartRateLimit(indexHRLimitStart + 0, indexHRLimitStart + 9);
+        exercise.getHeartRateLimits().add(hrLimit1);
+        HeartRateLimit hrLimit2 = decodeHeartRateLimit(indexHRLimitStart + 2, indexHRLimitStart + 18);
+        exercise.getHeartRateLimits().add(hrLimit2);
+        HeartRateLimit hrLimit3 = decodeHeartRateLimit(indexHRLimitStart + 4, indexHRLimitStart + 27);
+        exercise.getHeartRateLimits().add(hrLimit3);
+
         for (HeartRateLimit hrLimit : exercise.getHeartRateLimits()) {
             hrLimit.setAbsoluteRange(fHeartRateRangeAbsolute);
         }
@@ -337,17 +346,13 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         }
 
         // process all laps
-        if (recMode.isIntervalExercise()) {
-            exercise.setLapList(new Lap[numberOfMeas]);
-        } else {
-            exercise.setLapList(new Lap[numberOfLaps]);
-        }
-        for (int l = 0; l < exercise.getLapList().length; l++) {
+        int lapCount = recMode.isIntervalExercise() ? numberOfMeas : numberOfLaps;
+        for (int l = 0; l < lapCount; l++) {
             int os = l * lapSize; // data offset 
 
             // get offset where the current lap starts
             Lap lap = new Lap();
-            exercise.getLapList()[l] = lap;
+            exercise.getLapList().add(lap);
 
             // get lap split time (in 1/10th seconds)
             int bLapEndHour = sdata(lapsec, os + 2);
@@ -396,14 +401,11 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         int hrsec = 3;
         int spdsec = 4 + (numberOfSamples - 1) / 60;
 
-        // create sample list
-        exercise.setSampleList(new ExerciseSample[numberOfSamples]);
-
-        // process all recorded samples
+        // create sample list => process all recorded samples
         for (int i = 0; i < numberOfSamples; i++) {
             ExerciseSample exeSample = new ExerciseSample();
             exeSample.setTimestamp(i * exercise.getRecordingInterval() * 1000L);
-            exercise.getSampleList()[i] = exeSample;
+            exercise.getSampleList().add(exeSample);
 
             // get sample heartrate
             exeSample.setHeartRate((short) sdata(hrsec, i));

@@ -3,7 +3,6 @@ package de.saring.exerciseviewer.parser.impl.garminfit;
 import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import com.garmin.fit.DateTime;
 import com.garmin.fit.DeviceInfoMesg;
@@ -42,7 +41,7 @@ class FitMessageListener implements MesgListener {
     /**
      * The parsed exercise.
      */
-    private EVExercise exercise = new EVExercise();
+    private EVExercise exercise = new EVExercise(EVExercise.ExerciseFileType.GARMIN_FIT);
     /**
      * List of created laps (collected in a LinkedList and not in EVExercise array, much faster).
      */
@@ -87,7 +86,6 @@ class FitMessageListener implements MesgListener {
     private void readSessionMessage(SessionMesg mesg) {
 
         // read time data
-        exercise.setFileType(EVExercise.ExerciseFileType.GARMIN_FIT);
         exercise.setDateTime(Date310Utils.dateToLocalDateTime(mesg.getStartTime().getDate()));
         exercise.setDuration(Math.round(mesg.getTotalTimerTime() * 10));
         exercise.setRecordingMode(new RecordingMode());
@@ -302,7 +300,7 @@ class FitMessageListener implements MesgListener {
         for (ExerciseSample sample : lSamples) {
             sample.setTimestamp(sample.getTimestamp() - startTime);
         }
-        exercise.setSampleList(lSamples.toArray(new ExerciseSample[lSamples.size()]));
+        exercise.getSampleList().addAll(lSamples);
     }
 
     /**
@@ -346,7 +344,7 @@ class FitMessageListener implements MesgListener {
             }
         }
 
-        exercise.setLapList(lLaps.toArray(new Lap[lLaps.size()]));
+        exercise.getLapList().addAll(lLaps);
     }
 
     /**
@@ -375,7 +373,7 @@ class FitMessageListener implements MesgListener {
      */
     private void calculateAltitudeSummary() {
         if (exercise.getRecordingMode().isAltitude() &&
-                exercise.getSampleList().length > 0) {
+                exercise.getSampleList().size() > 0) {
 
             short altMin = Short.MAX_VALUE;
             short altMax = Short.MIN_VALUE;
@@ -390,7 +388,7 @@ class FitMessageListener implements MesgListener {
             exercise.getAltitude().setAltitudeMin(altMin);
             exercise.getAltitude().setAltitudeMax(altMax);
             exercise.getAltitude().setAltitudeAvg(
-                    (short) (Math.round(altitudeSum / (double) exercise.getSampleList().length)));
+                    (short) (Math.round(altitudeSum / (double) exercise.getSampleList().size())));
         }
     }
 
@@ -411,7 +409,7 @@ class FitMessageListener implements MesgListener {
                 temperatureSum += sample.getTemperature();
             }
 
-            short tempAvg = (short) (Math.round(temperatureSum / (double) exercise.getSampleList().length));
+            short tempAvg = (short) (Math.round(temperatureSum / (double) exercise.getSampleList().size()));
             exercise.setTemperature(new ExerciseTemperature(tempMin, tempAvg, tempMax));
         }
     }
@@ -470,7 +468,7 @@ class FitMessageListener implements MesgListener {
 	private void calculateMissingMaxSpeed() {
         if (exercise.getSpeed().getSpeedMax() < 0.01) {
 
-            Stream.of(exercise.getSampleList()) //
+            exercise.getSampleList().stream() //
                 .mapToDouble(sample -> sample.getSpeed()) //
                 .max() //
                 .ifPresent(maxSpeed -> exercise.getSpeed().setSpeedMax((float) maxSpeed));
@@ -481,9 +479,9 @@ class FitMessageListener implements MesgListener {
      * Calculates the average heartrate of the exercise, if missing (e.g. in Fenix exercise files).
      */
     private void calculateMissingHeartRateAVG() {
-		if (exercise.getHeartRateAVG() == 0) {
+		if (exercise.getHeartRateAVG() == null) {
 
-            Stream.of(exercise.getSampleList()) //
+            exercise.getSampleList().stream() //
                     .mapToDouble(sample -> sample.getHeartRate()) //
                     .average() //
                     .ifPresent(avgHeartRate -> exercise.setHeartRateAVG((short) Math.round(avgHeartRate)));
@@ -494,9 +492,9 @@ class FitMessageListener implements MesgListener {
      * Calculates the maximum heartrate of the exercise, if missing (e.g. in Fenix exercise files).
      */
 	private void calculateMissingHeartRateMax() {
-        if (exercise.getHeartRateMax() == 0) {
+        if (exercise.getHeartRateMax() == null) {
 
-            Stream.of(exercise.getSampleList()) //
+            exercise.getSampleList().stream() //
                     .mapToInt(sample -> sample.getHeartRate()) //
                     .max() //
                     .ifPresent(maxHeartRate -> exercise.setHeartRateMax((short) maxHeartRate));

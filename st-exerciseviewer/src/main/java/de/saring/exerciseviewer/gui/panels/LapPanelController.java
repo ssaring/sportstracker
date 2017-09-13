@@ -152,15 +152,14 @@ public class LapPanelController extends AbstractPanelController {
          */
         public static LapRow[] createLapRows(final EVExercise exercise) {
 
-            final Lap[] laps = exercise.getLapList();
-            if (laps == null || laps.length == 0) {
+            if (exercise.getLapList().isEmpty()) {
                 return new LapRow[0];
             }
 
-            final LapRow[] lapRows = new LapRow[laps.length];
-            for (int rowNr = 0; rowNr < laps.length; rowNr++) {
+            final LapRow[] lapRows = new LapRow[exercise.getLapList().size()];
+            for (int rowNr = 0; rowNr < exercise.getLapList().size(); rowNr++) {
 
-                final Lap lap = laps[rowNr];
+                final Lap lap = exercise.getLapList().get(rowNr);
                 final LapRow lapRow = new LapRow();
                 lapRows[rowNr] = lapRow;
                 lapRow.lapNumber = rowNr + 1;
@@ -168,7 +167,7 @@ public class LapPanelController extends AbstractPanelController {
                 // lap time (= split time of current - split time of previous lap)
                 int previousLapSplitTime = 0;
                 if (rowNr > 0) {
-                    previousLapSplitTime = laps[rowNr - 1].getTimeSplit();
+                    previousLapSplitTime = exercise.getLapList().get(rowNr - 1).getTimeSplit();
                 }
                 lapRow.lapTime = lap.getTimeSplit() - previousLapSplitTime;
                 lapRow.splitTime = lap.getTimeSplit();

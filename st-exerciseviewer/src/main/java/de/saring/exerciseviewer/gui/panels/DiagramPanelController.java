@@ -186,9 +186,9 @@ public class DiagramPanelController extends AbstractPanelController {
      */
     private void computeAveragedFilterRange() {
         if (getDocument().getOptions().isDisplaySmoothedCharts()) {
-            final ExerciseSample[] sampleList = getDocument().getExercise().getSampleList();
+            final int sampleListLength = getDocument().getExercise().getSampleList().size();
             // results seem to be best when sample count is devided by 800 (tested with many exercises)
-            averagedRangeSteps = Math.max(1, Math.round(sampleList.length / 800f));
+            averagedRangeSteps = Math.max(1, Math.round(sampleListLength / 800f));
         } else {
             averagedRangeSteps = 0;
         }
@@ -215,9 +215,9 @@ public class DiagramPanelController extends AbstractPanelController {
 
         // fill data series with all recorded exercise samples
         if (exercise.getSampleList() != null) {
-            for (int index = 0; index < exercise.getSampleList().length; index++) {
+            for (int index = 0; index < exercise.getSampleList().size(); index++) {
 
-                final ExerciseSample sample = exercise.getSampleList()[index];
+                final ExerciseSample sample = exercise.getSampleList().get(index);
                 final Number valueLeft = getConvertedSampleValue(axisTypeLeft, index);
                 final Number valueRight = getConvertedSampleValue(axisTypeRight, index);
 
@@ -246,9 +246,9 @@ public class DiagramPanelController extends AbstractPanelController {
             }
 
             // fill data series with all recorded exercise laps
-            for (int i = 0; i < exercise.getLapList().length; i++) {
+            for (int i = 0; i < exercise.getLapList().size(); i++) {
 
-                final Lap lap = exercise.getLapList()[i];
+                final Lap lap = exercise.getLapList().get(i);
                 final Number valueLeft = getLapValue(axisTypeLeft, lap);
                 final Number valueRight = getLapValue(axisTypeRight, lap);
 
@@ -344,10 +344,10 @@ public class DiagramPanelController extends AbstractPanelController {
         }
 
         // draw a vertical marker line for each lap (not for the last)
-        if (exercise.getLapList().length > 0) {
+        if (exercise.getLapList().size() > 0) {
 
-            for (int i = 0; i < exercise.getLapList().length - 1; i++) {
-                final Lap lap = exercise.getLapList()[i];
+            for (int i = 0; i < exercise.getLapList().size() - 1; i++) {
+                final Lap lap = exercise.getLapList().get(i);
                 double lapSplitValue;
 
                 // compute lap split value (different for time or distance mode)
@@ -558,7 +558,7 @@ public class DiagramPanelController extends AbstractPanelController {
             }
 
             final int rangeLength = (2 * averagedRangeSteps) + 1;
-            final int lastSampleIndex = getDocument().getExercise().getSampleList().length - 1;
+            final int lastSampleIndex = getDocument().getExercise().getSampleList().size() - 1;
 
             // create sum for all range values
             double valueSum = 0d;
@@ -581,7 +581,7 @@ public class DiagramPanelController extends AbstractPanelController {
     }
 
     private double getRawSampleValue(AxisType axisType, int sampleIndex) {
-        final ExerciseSample sample = getDocument().getExercise().getSampleList()[sampleIndex];
+        final ExerciseSample sample = getDocument().getExercise().getSampleList().get(sampleIndex);
 
         switch (axisType) {
             case HEARTRATE:

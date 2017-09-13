@@ -1,12 +1,23 @@
 package de.saring.exerciseviewer.parser.impl;
 
+import java.time.LocalDateTime;
+
 import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.*;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.ExerciseAltitude;
+import de.saring.exerciseviewer.data.ExerciseCadence;
+import de.saring.exerciseviewer.data.ExerciseSample;
+import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.data.ExerciseTemperature;
+import de.saring.exerciseviewer.data.HeartRateLimit;
+import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.data.LapAltitude;
+import de.saring.exerciseviewer.data.LapSpeed;
+import de.saring.exerciseviewer.data.LapTemperature;
+import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
 import de.saring.util.unitcalc.ConvertUtils;
-
-import java.time.LocalDateTime;
 
 /**
  * This implementation of an ExerciseParser is for reading RAW files of the
@@ -54,11 +65,11 @@ public class PolarSRawParser extends AbstractExerciseParser {
         boolean fS610 = (fileContent[34] == 0) && (fileContent[36] == 251);
 
         // create an PVExercise object from this data and set file type
-        EVExercise exercise = new EVExercise();
+        EVExercise exercise;
         if (!fS610) {
-            exercise.setFileType(EVExercise.ExerciseFileType.S710RAW);
+            exercise = new EVExercise(EVExercise.ExerciseFileType.S710RAW);
         } else {
-            exercise.setFileType(EVExercise.ExerciseFileType.S610RAW);
+            exercise = new EVExercise(EVExercise.ExerciseFileType.S610RAW);
         }
         exercise.setDeviceName("Polar S6xx/S7xx Series");
 
@@ -161,10 +172,13 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
         // get the heartrate limit data (Polar S710 has 3 limits)
         int indexHRLimitStart = getProperIndex(29, 28, fS610);
-        exercise.setHeartRateLimits(new HeartRateLimit[3]);
-        exercise.getHeartRateLimits()[0] = decodeHeartRateLimit(indexHRLimitStart + 0, indexHRLimitStart + 9);
-        exercise.getHeartRateLimits()[1] = decodeHeartRateLimit(indexHRLimitStart + 2, indexHRLimitStart + 18);
-        exercise.getHeartRateLimits()[2] = decodeHeartRateLimit(indexHRLimitStart + 4, indexHRLimitStart + 27);
+
+        HeartRateLimit hrLimit1 = decodeHeartRateLimit(indexHRLimitStart + 0, indexHRLimitStart + 9);
+        exercise.getHeartRateLimits().add(hrLimit1);
+        HeartRateLimit hrLimit2 = decodeHeartRateLimit(indexHRLimitStart + 2, indexHRLimitStart + 18);
+        exercise.getHeartRateLimits().add(hrLimit2);
+        HeartRateLimit hrLimit3 = decodeHeartRateLimit(indexHRLimitStart + 4, indexHRLimitStart + 27);
+        exercise.getHeartRateLimits().add(hrLimit3);
 
         for (HeartRateLimit hrLimit : exercise.getHeartRateLimits()) {
             hrLimit.setAbsoluteRange(fHeartRateRangeAbsolute);
@@ -299,13 +313,12 @@ public class PolarSRawParser extends AbstractExerciseParser {
         int indexLapsStart = bytesInFile - totalLapSize - totalSampleSize;
 
         // process all laps
-        exercise.setLapList(new Lap[numberOfLaps]);
 
         for (int i = 0; i < numberOfLaps; i++) {
             // get offset where the current lap starts
             int lapOffset = indexLapsStart + i * lapSize;
             Lap lap = new Lap();
-            exercise.getLapList()[i] = lap;
+            exercise.getLapList().add(lap);
 
             // get lap split time (in 1/10th seconds)
             int bLapEndHour = fileContent[lapOffset + 2];
@@ -392,15 +405,14 @@ public class PolarSRawParser extends AbstractExerciseParser {
         int sampleOffset = indexLapsStart + (numberOfLaps * lapSize);
 
         // create sample list
-        exercise.setSampleList(new ExerciseSample[numberOfSamples]);
 
         // process all recorded samples
         for (int i = 0; i < numberOfSamples; i++) {
-            // store sample in list in reverse order
+            // store sample in list in reverse order (insert new samples at the list start)
             int sampleIndex = numberOfSamples - i - 1;
             ExerciseSample exeSample = new ExerciseSample();
             exeSample.setTimestamp(sampleIndex * exercise.getRecordingInterval() * 1000L);
-            exercise.getSampleList()[sampleIndex] = exeSample;
+            exercise.getSampleList().add(0, exeSample);
 
             // get sample heartrate
             exeSample.setHeartRate((short) fileContent[sampleOffset]);

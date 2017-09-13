@@ -5,8 +5,6 @@ import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.data.ExerciseAltitude
 import de.saring.exerciseviewer.data.ExerciseSample
 import de.saring.exerciseviewer.data.ExerciseSpeed
-import de.saring.exerciseviewer.data.HeartRateLimit
-import de.saring.exerciseviewer.data.Lap
 import de.saring.exerciseviewer.data.Position
 import de.saring.exerciseviewer.data.RecordingMode
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
@@ -82,15 +80,11 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
      */
     private fun createExercise(eGpx: Element): EVExercise {
 
-        val exercise = EVExercise()
-        exercise.fileType = EVExercise.ExerciseFileType.GPX
+        val exercise = EVExercise(EVExercise.ExerciseFileType.GPX)
         exercise.deviceName = "Garmin GPX"
         exercise.recordingInterval = EVExercise.DYNAMIC_RECORDING_INTERVAL
         exercise.recordingMode = RecordingMode()
         exercise.recordingMode.isLocation = true
-
-        exercise.heartRateLimits = arrayOf<HeartRateLimit>()
-        exercise.lapList = arrayOf<Lap>()
 
         // get dateTime and time (optional)
         val strTime = eGpx.getChild("metadata")?.getChildText("time")
@@ -104,7 +98,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
     /**
      * Parses all trackpoints in all tracks and track segments under the "gpx" element and returns the exercise samples.
      */
-    private fun parseSampleTrackpoints(eGpx: Element, exercise: EVExercise): Array<ExerciseSample> {
+    private fun parseSampleTrackpoints(eGpx: Element, exercise: EVExercise): MutableList<ExerciseSample> {
         val samples = mutableListOf<ExerciseSample>()
 
         for (eTrk in eGpx.getChildren("trk", namespace)) {
@@ -135,7 +129,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
                         //  GPX file, the time stamp in the meta data is the time the track
                         //  was saved -thus after the exercise- and not the time the track
                         //  was started)
-                        if (exercise.dateTime == null || exercise.dateTime.isAfter(timestampSample)) {
+                        if (exercise.dateTime == null || exercise.dateTime!!.isAfter(timestampSample)) {
                             exercise.dateTime = timestampSample
                         }
                         sample.timestamp = Date310Utils.getMilliseconds(timestampSample) -
@@ -157,7 +151,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
             }
         }
 
-        return samples.toTypedArray()
+        return samples
     }
 
     /**
@@ -295,8 +289,8 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
         for (sample in exercise.sampleList) {
             val sampleHeartRate = sample.heartRate!!
             heartRateSum += sampleHeartRate
-            if (sampleHeartRate > exercise.heartRateMax) {
-                exercise.heartRateMax = sampleHeartRate
+            if (sampleHeartRate > exercise.heartRateMax ?: 0) {
+            exercise.heartRateMax = sampleHeartRate
             }
         }
 

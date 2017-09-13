@@ -44,11 +44,9 @@ class PolarRS200SDParser : AbstractExerciseParser() {
     private fun parseExerciseElement(eSession: Element): EVExercise {
 
         // parse basic exercise data
-        val exercise = EVExercise()
-        exercise.fileType = EVExercise.ExerciseFileType.RS200SDRAW
+        val exercise = EVExercise(EVExercise.ExerciseFileType.RS200SDRAW)
         exercise.deviceName = "Polar RS200"
         exercise.recordingMode = RecordingMode()
-        exercise.sampleList = arrayOf()
 
         val eSessionData = eSession.getChild("session_data")
         exercise.dateTime = LocalDateTime.of(
@@ -68,16 +66,14 @@ class PolarRS200SDParser : AbstractExerciseParser() {
 
         // parse heartrate limits
         val eSortzoneList = eSessionData.getChild("sportzones").getChildren("sportzone")
-        val heartRateLimits = mutableListOf<HeartRateLimit>()
 
         for (eSortzone in eSortzoneList) {
             val lowerHeartRate = (eSortzone.getChildText("low_percent").toInt() * maxSetHr / 100).toShort()
             val upperHeartRate = (eSortzone.getChildText("high_percent").toInt() * maxSetHr / 100).toShort()
             val timeWithin = eSortzone.getChildText("time_on").toDouble().toInt()
 
-            heartRateLimits.add(HeartRateLimit(lowerHeartRate, upperHeartRate, null, timeWithin, null))
+            exercise.heartRateLimits.add(HeartRateLimit(lowerHeartRate, upperHeartRate, null, timeWithin, null))
         }
-        exercise.heartRateLimits = heartRateLimits.toTypedArray()
 
         // parse speed data when available
         val hasSpeedData = eSessionData.getChildText("has_pace_data").toBoolean()
@@ -98,11 +94,10 @@ class PolarRS200SDParser : AbstractExerciseParser() {
 
         // parse laps (they are in reverse order in XML)
         val eLapList = eSessionData.getChild("laps").getChildren("lap")
-        val laps = mutableListOf<Lap>()
 
         for (eLap in eLapList) {
             val lap = Lap()
-            laps.add(lap)
+            exercise.lapList.add(lap)
 
             lap.timeSplit = (eLap.getChildText("lap_end_time").toDouble() * 10.0).toInt()
             lap.heartRateSplit = eLap.getChildText("end_hr").toShort()
@@ -117,8 +112,7 @@ class PolarRS200SDParser : AbstractExerciseParser() {
             }
         }
 
-        laps.reverse()
-        exercise.lapList = laps.toTypedArray()
+        exercise.lapList.reverse()
 
         // calculate distance for all laps
         if (hasSpeedData) {

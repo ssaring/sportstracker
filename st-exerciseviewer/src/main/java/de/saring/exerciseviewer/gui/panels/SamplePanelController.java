@@ -92,8 +92,7 @@ public class SamplePanelController extends AbstractPanelController {
 
         // set table data
         tvSamples.setPlaceholder(new Label(getContext().getResources().getString("pv.info.no_data_available")));
-        final ExerciseSample[] samples = getDocument().getExercise().getSampleList();
-        tvSamples.setItems(FXCollections.observableArrayList(samples == null ? new ExerciseSample[0] : samples));
+        tvSamples.setItems(FXCollections.observableArrayList(getDocument().getExercise().getSampleList()));
 
         // default sort is the time column
         tvSamples.getSortOrder().add(tcTime);

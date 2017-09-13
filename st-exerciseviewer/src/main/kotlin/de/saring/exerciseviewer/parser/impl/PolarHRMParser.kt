@@ -47,8 +47,7 @@ class PolarHRMParser : AbstractExerciseParser() {
     private fun parseExerciseFromContent(fileContent: List<String>): EVExercise
     {
         // parse basic exercise data
-        val exercise = EVExercise()
-        exercise.fileType = EVExercise.ExerciseFileType.HRM
+        val exercise = EVExercise(EVExercise.ExerciseFileType.HRM)
         exercise.deviceName = "Polar HRM"
 
         // parse exercise file blocks
@@ -160,11 +159,11 @@ class PolarHRMParser : AbstractExerciseParser() {
 
         // parse all laps of exercise (each lap consists of 5 lines)
         val numberOfLaps = lIntTimesBlock.size / 5
-        exercise.lapList = arrayOfNulls(numberOfLaps)
         var lapDistanceAccumulated = 0
 
         for (i in 0..(numberOfLaps - 1)) {
-            exercise.lapList[i] = Lap()
+            val lap = Lap()
+            exercise.lapList.add(lap)
 
             // 1. lap line needs to be of 5 parts
             var currLapLineSplitted = lIntTimesBlock[i * 5].split("\t")
@@ -182,13 +181,13 @@ class PolarHRMParser : AbstractExerciseParser() {
             val lapSplitTimeMinute = lapSplitTimeSplitted[1].toInt()
             val lapSplitTimeSecond = lapSplitTimeSplitted[2].toInt()
             val lapSplitTimeTenthSecond = lapSplitTimeSplitted[3].toInt()
-            exercise.lapList[i].timeSplit = (lapSplitTimeHour * 60 * 60 * 10) + (lapSplitTimeMinute * 60 * 10) + (lapSplitTimeSecond * 10) + lapSplitTimeTenthSecond
+            lap.timeSplit = (lapSplitTimeHour * 60 * 60 * 10) + (lapSplitTimeMinute * 60 * 10) + (lapSplitTimeSecond * 10) + lapSplitTimeTenthSecond
 
             // get lap heartrate values (the other parts of the first line)
-            exercise.lapList[i].heartRateSplit = currLapLineSplitted[1].toShort()
+            lap.heartRateSplit = currLapLineSplitted[1].toShort()
             // minimum lap heartrate will be ignored
-            exercise.lapList[i].heartRateAVG = currLapLineSplitted[3].toShort()
-            exercise.lapList[i].heartRateMax = currLapLineSplitted[4].toShort()
+            lap.heartRateAVG = currLapLineSplitted[3].toShort()
+            lap.heartRateMax = currLapLineSplitted[4].toShort()
 
             // parse 2. lap line (needs to be of 6 parts)
             currLapLineSplitted = lIntTimesBlock[(i * 5) + 1].split("\t")
@@ -205,7 +204,7 @@ class PolarHRMParser : AbstractExerciseParser() {
 
                 val lapSpeedCadence = if (exercise.recordingMode.isCadence)
                     currLapLineSplitted[4].toShort() else null
-                exercise.lapList[i].speed = LapSpeed(lapSpeed.toFloat(), 0f, 0, lapSpeedCadence)
+                lap.speed = LapSpeed(lapSpeed.toFloat(), 0f, 0, lapSpeedCadence)
             }
 
             // parse altitude at lap split
@@ -216,7 +215,7 @@ class PolarHRMParser : AbstractExerciseParser() {
                 }
 
                 // lap ascent can't be read from HRM files
-                exercise.lapList[i].altitude = LapAltitude(lapAltitude.toShort(), 0)
+                lap.altitude = LapAltitude(lapAltitude.toShort(), 0)
             }
 
             // the 3. lap line can be ignored completely
@@ -238,7 +237,7 @@ class PolarHRMParser : AbstractExerciseParser() {
 
                 // distance needs to be accumulated
                 lapDistanceAccumulated += lapDistance
-                exercise.lapList[i].speed!!.distance = lapDistanceAccumulated
+                lap.speed!!.distance = lapDistanceAccumulated
             }
 
             // get lap temperature
@@ -254,7 +253,7 @@ class PolarHRMParser : AbstractExerciseParser() {
                     ConvertUtils.convertFahrenheit2Celsius(lapTemperature.toShort())
                 }
 
-                exercise.lapList[i].temperature = LapTemperature(lapTemperature)
+                lap.temperature = LapTemperature(lapTemperature)
             }
 
             // the 5. lap line can be ignored completely
@@ -279,7 +278,6 @@ class PolarHRMParser : AbstractExerciseParser() {
 
         // parse data for 3 heartrate limit ranges
         // TODO: second and third HR ranges does not have sensefull content
-        exercise.heartRateLimits = arrayOfNulls(3)
         for (i in 0..(3-1)) {
 
             // 1. heratrate limits info line needs to be of 6 parts
@@ -302,7 +300,7 @@ class PolarHRMParser : AbstractExerciseParser() {
             val upperHeartRate = secondHRLLineSplitted[1].toShort()
             val lowerHeartRate = secondHRLLineSplitted[2].toShort()
 
-            exercise.heartRateLimits[i] = HeartRateLimit(lowerHeartRate, upperHeartRate, timeBelow, timeWithin, timeAbove)
+            exercise.heartRateLimits.add(HeartRateLimit(lowerHeartRate, upperHeartRate, timeBelow, timeWithin, timeAbove))
 
             // TODO: When the monitor displays heartrate and ranges in percent instead in bpm
             // the heartrate limit ranges in the HRM files are also stored in percent. But it's
@@ -333,24 +331,20 @@ class PolarHRMParser : AbstractExerciseParser() {
         if (lTripBlock.size == 8) {
             // parse speed informations
             if (exercise.recordingMode.isSpeed) {
-                exercise.speed.distance = lTripBlock[0].toInt() * 100
-                exercise.speed.speedAvg = lTripBlock[5].toInt() / 128f
+                exercise.speed!!.distance = lTripBlock[0].toInt() * 100
+                exercise.speed!!.speedAvg = lTripBlock[5].toInt() / 128f
                 // ignore maximum speed data, it is often wrong for many Polar models (will be calculated later)
 
                 if (!fMetricUnits) {
-                    exercise.speed.distance = ConvertUtils.convertMiles2Kilometer(exercise.speed.distance)
-                    exercise.speed.speedAvg = ConvertUtils.convertMiles2Kilometer(exercise.speed.speedAvg.toDouble()).toFloat()
+                    exercise.speed!!.distance = ConvertUtils.convertMiles2Kilometer(exercise.speed!!.distance)
+                    exercise.speed!!.speedAvg = ConvertUtils.convertMiles2Kilometer(exercise.speed!!.speedAvg.toDouble()).toFloat()
                 }
 
                 // now we have the exercise distance, that's why the lap distances needs to be corrected
                 // (in HRM file format is an error, the distances of the last laps are often greater then
-                // the complete exercise distance, so the greater values needs to be set to exercise
-                // distance)
-                if (exercise.lapList != null) {
-                    for (i in 0..(exercise.lapList.size - 1)) {
-                        exercise.lapList[i].speed!!.distance = Math.min(
-                                exercise.lapList[i].speed!!.distance, exercise.speed.distance)
-                    }
+                // the complete exercise distance, so the greater values needs to be set to exercise distance)
+                for (lap in exercise.lapList) {
+                    lap.speed!!.distance = Math.min(lap.speed!!.distance, exercise.speed!!.distance)
                 }
             }
 
@@ -373,7 +367,7 @@ class PolarHRMParser : AbstractExerciseParser() {
             // parse odometer value
             exercise.odometer = lTripBlock[7].toInt()
             if (!fMetricUnits) {
-                exercise.odometer = ConvertUtils.convertMiles2Kilometer(exercise.odometer)
+                exercise.odometer = ConvertUtils.convertMiles2Kilometer(exercise.odometer!!)
             }
         }
     }
@@ -389,21 +383,20 @@ class PolarHRMParser : AbstractExerciseParser() {
 
         // get lines of 'HRData' block
         val lHRDataBlock = getBlockLines(fileContent, "HRData", true)
-
-        // create array of exercise sample
-        exercise.sampleList = arrayOfNulls(lHRDataBlock.size)
+        val sampleCount = lHRDataBlock.size
 
         // parse each exercise sample line
-        for (i in 0..(exercise.sampleList.size - 1)) {
+        for (i in 0..(sampleCount - 1)) {
             var tokenIndex = 0
-            exercise.sampleList[i] = ExerciseSample()
-            exercise.sampleList[i].timestamp = i * exercise.recordingInterval * 1000L
+            val sample = ExerciseSample()
+            exercise.sampleList.add(sample)
+            sample.timestamp = i * exercise.recordingInterval!! * 1000L
 
             // split sample line into parts
             val currSampleSplitted = lHRDataBlock[i].split("\t")
 
             // 1. part is heartrate
-            exercise.sampleList[i].heartRate = currSampleSplitted[tokenIndex].toShort()
+            sample.heartRate = currSampleSplitted[tokenIndex].toShort()
             tokenIndex++
 
             // next part can be speed, when recorded
@@ -414,13 +407,13 @@ class PolarHRMParser : AbstractExerciseParser() {
                     speedX10 = ConvertUtils.convertMiles2Kilometer(speedX10)
                 }
 
-                exercise.sampleList[i].speed = speedX10 / 10f
+                sample.speed = speedX10 / 10f
                 tokenIndex++
             }
 
             // next part can be cadence, when recorded
             if (currSampleSplitted.size > tokenIndex && exercise.recordingMode.isCadence) {
-                exercise.sampleList[i].cadence = currSampleSplitted[tokenIndex].toShort()
+                sample.cadence = currSampleSplitted[tokenIndex].toShort()
                 tokenIndex++
             }
 
@@ -431,7 +424,7 @@ class PolarHRMParser : AbstractExerciseParser() {
                     altitude = ConvertUtils.convertFeet2Meter(altitude)
                 }
 
-                exercise.sampleList[i].altitude = altitude.toShort()
+                sample.altitude = altitude.toShort()
             }
         }
 
@@ -440,13 +433,13 @@ class PolarHRMParser : AbstractExerciseParser() {
         // - find the maximum speed from samples (max speed is stored in HRM files, but often a wrong value)
         if (exercise.recordingMode.isSpeed) {
             var distanceAccum = 0.0
-            exercise.speed.speedMax = 0f
+            exercise.speed!!.speedMax = 0f
 
             for (sample in exercise.sampleList) {
                 val sampleSpeed = sample.speed ?: 0f
                 sample.distance = distanceAccum.toInt()
-                distanceAccum += (sampleSpeed * exercise.recordingInterval) / 3.6
-                exercise.speed.speedMax = Math.max(sampleSpeed, exercise.speed.speedMax)
+                distanceAccum += (sampleSpeed * exercise.recordingInterval!!) / 3.6
+                exercise.speed!!.speedMax = Math.max(sampleSpeed, exercise.speed!!.speedMax)
             }
         }
 
@@ -457,7 +450,7 @@ class PolarHRMParser : AbstractExerciseParser() {
         for (sample in exercise.sampleList) {
             val sampleHeartRate = sample.heartRate ?: 0
             avgHeartrateSum += sampleHeartRate
-            exercise.heartRateMax = maxShort(sampleHeartRate, exercise.heartRateMax)
+            exercise.heartRateMax = maxShort(sampleHeartRate, exercise.heartRateMax ?: 0)
         }
 
         // calculate AVG heartrate
@@ -465,10 +458,10 @@ class PolarHRMParser : AbstractExerciseParser() {
 
         // when altitude is recorded => search minimum altitude of exercise (is not in HRM file)
         if (exercise.recordingMode.isAltitude) {
-            exercise.altitude.altitudeMin = Short.MAX_VALUE
+            exercise.altitude!!.altitudeMin = Short.MAX_VALUE
 
             for (sample in exercise.sampleList) {
-                exercise.altitude.altitudeMin = minShort(exercise.altitude.altitudeMin, sample.altitude ?: Short.MAX_VALUE)
+                exercise.altitude!!.altitudeMin = minShort(exercise.altitude!!.altitudeMin, sample.altitude ?: Short.MAX_VALUE)
             }
         }
 
