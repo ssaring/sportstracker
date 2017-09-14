@@ -7,10 +7,10 @@ import static org.junit.Assert.fail;
 
 import java.time.LocalDateTime;
 
+import de.saring.exerciseviewer.core.EVException;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 

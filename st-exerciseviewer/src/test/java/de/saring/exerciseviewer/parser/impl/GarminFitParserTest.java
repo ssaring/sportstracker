@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.Lap;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.impl.garminfit.GarminFitParser;

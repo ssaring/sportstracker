@@ -2,12 +2,12 @@ SportsTracker-TODO
 ==================
 
 ST-ExerciseViewer Kotlin port:
-- port classes of core package too
 - Diagram and Track panels does not work (tested with a FIT file)
+- port all gui classes to Kotlin?
 - finally: test all available exercise files whether they can can be opened without errors in ExerciseViewer
 - test exercise import in SportsTracker
 - port status:
-  - all data class have been ported, all unit tests are green again
+  - all core and data class have been ported, all unit tests are green again
 
 - imminent ST release needed due to parsing problems with newer Garmin devices
   (e.g. for Garmin Edge 820 or Edge 520 with firmware >= 12.10)
