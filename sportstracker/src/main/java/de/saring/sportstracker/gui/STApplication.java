@@ -3,6 +3,7 @@ package de.saring.sportstracker.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.exerciseviewer.core.EVOptions;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.sportstracker.storage.XMLStorage;
 import eu.lestard.easydi.EasyDI;
@@ -44,14 +45,16 @@ public class STApplication extends Application {
         easyDI.bindInterface(STDocument.class, STDocumentImpl.class);
         easyDI.bindInterface(STController.class, STControllerImpl.class);
 
-        // initialize the document
+        // initialize the document and options
         document = easyDI.getInstance(STDocument.class);
         document.evaluateCommandLineParameters(getParameters().getRaw());
         document.loadOptions();
 
+        final STOptions options = document.getOptions();
+        easyDI.bindInstance(EVOptions.class, options);
+
         // initialize the context (set format utils for current configuration)
         context = easyDI.getInstance(STContext.class);
-        final STOptions options = document.getOptions();
         context.setFormatUtils(new FormatUtils(options.getUnitSystem(), options.getSpeedView()));
 
         controller = easyDI.getInstance(STController.class);

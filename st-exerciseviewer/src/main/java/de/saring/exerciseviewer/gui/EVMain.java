@@ -33,16 +33,17 @@ public class EVMain {
      * Standard c'tor.
      *
      * @param context the ExerciseViewer context
+     * @param options the options to be used in ExerciseViewer
      */
     @Inject
-    public EVMain(final EVContext context) {
+    public EVMain(final EVContext context, final EVOptions options) {
 
         // create ExerciseViewer components by using manual dependency injection
         // => Guice can't be used here, it does not provide a scope for dialogs
         // => Guice-Workaround would be the use of a new Injector per EV window,
         // but this costs performance and can cause memory leaks
         this.context = context;
-        this.document = new EVDocument();
+        this.document = new EVDocument(options);
         this.controller = new EVController(context, document);
     }
 
@@ -57,9 +58,7 @@ public class EVMain {
     public void showExercise(final String exerciseFilename, final EVOptions options, final Stage parent,
             final boolean modal) {
 
-        // init document and load exercise file
-        document.setOptions(options);
-
+        // load exercise file
         try {
             document.openExerciseFile(exerciseFilename);
         } catch (Exception e) {
