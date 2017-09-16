@@ -3,13 +3,14 @@ package de.saring.exerciseviewer.data
 /**
  * This class stores the temperature summary of a recorded exercise.
  *
+ * @property temperatureMin Minimum temperature of an exercise (in celsius degrees).
+ * @property temperatureAvg Average temperature of an exercise (in celsius degrees).
+ * @property temperatureMax Maximum temperature of an exercise (in celsius degrees).
+ *
  * @author Stefan Saring
  */
 data class ExerciseTemperature(
 
-    /** Minimum temperature of an exercise (in celsius degrees). */
     var temperatureMin: Short,
-    /** Average temperature of an exercise (in celsius degrees). */
     var temperatureAvg: Short,
-    /** Maximum temperature of an exercise (in celsius degrees). */
     var temperatureMax: Short)

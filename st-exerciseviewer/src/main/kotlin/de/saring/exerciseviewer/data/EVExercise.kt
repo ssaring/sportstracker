@@ -5,52 +5,53 @@ import java.time.LocalDateTime
 /**
  * This class represents an exercise recorded with a heartrate monitor device (e.g. a Polar S710 or a Garmin Edge 520).
  *
+ * @property fileType File type of an exercise (see enums).
+ * @property deviceName Name of the HRM device (optional).
+ * @property dateTime Timestamp of exercise.
+ * @property type Exercise type (label).
+ * @property recordingMode Record mode (what was recorded in exercise).
+ * @property duration Duration of exercise in tenths of a second.
+ * @property recordingInterval Recording interval in seconds (e.g. 5s, 15s, 60s or DYNAMIC_RECORDING_INTERVAL).
+ * @property heartRateAVG Average heart rate of exercise.
+ * @property heartRateMax Maximum heart rate of exercise.
+ * @property speed The speed data of exercise (if recorded).
+ * @property cadence The cadence data of exercise (if recorded).
+ * @property altitude The altitude data of exercise (if recorded).
+ * @property temperature The temperature data of exercise (if recorded).
+ * @property energy Energy "wasted" for exercise (in kCal).
+ * @property energyTotal Cumulative "wasted" energy of all exercises (in kCal).
+ * @property sumExerciseTime Cumulative workout time (in minutes).
+ * @property sumRideTime Cumulative ride time (in minutes).
+ * @property odometer  Odometer (cumulative ride distance) in km.
+ * @property heartRateLimits List of heartrate limit data (can be more then one).
+ * @property lapList List containing the data of all exercise laps.
+ * @property sampleList List containing the data of all recorded exercise samples (for each interval).
+ *
  * @author Stefan Saring
  */
 data class EVExercise(
 
-    /** File type of an exercise (see enums). */
     var fileType: ExerciseFileType,
-    /** Name of the HRM device (optional). */
     var deviceName: String? = null,
-    /** Timestamp of exercise. */
     var dateTime: LocalDateTime? = null,
-    /** Exercise type (label). */
     var type: String? = null,
-    /** Record mode (what was recorded in exercise). */
     var recordingMode: RecordingMode = RecordingMode(),
-    /** Duration of exercise in tenths of a second. */
     var duration: Int? = null,
-    /** Recording interval in seconds (e.g. 5s, 15s, 60s or DYNAMIC_RECORDING_INTERVAL). */
     var recordingInterval: Short? = null,
-    /** Average heart rate of exercise. */
     var heartRateAVG: Short? = null,
-    /** Maximim heart rate of exercise. */
     var heartRateMax: Short? = null,
-    /** The speed data of exercise (if recorded). */
     var speed: ExerciseSpeed? = null,
-    /** The cadence data of exercise (if recorded). */
     var cadence: ExerciseCadence? = null,
-    /** The altitude data of exercise (if recorded). */
     var altitude: ExerciseAltitude? = null,
-    /** The temperature data of exercise. */
     var temperature: ExerciseTemperature? = null,
-    /** Energy "wasted" for exercise (in kCal). */
     var energy: Int? = null,
-    /** Cumulative "wasted" energy of all exercises (in kCal). */
     var energyTotal: Int? = null,
-    /** Cumulative workout time (in minutes). */
     var sumExerciseTime: Int? = null,
-    /** Cumulative ride time (in minutes). */
     var sumRideTime: Int? = null,
-    /** Odometer (cumulative ride distance) in km. */
     var odometer: Int? = null,
 
-    /** List of heartrate limit data (can be more then one). */
     var heartRateLimits: MutableList<HeartRateLimit> = mutableListOf(),
-    /** List containing the data of all exercise laps. */
     var lapList: MutableList<Lap> = mutableListOf(),
-    /** List containing the data of all recorded exercise samples (for each interval). */
     var sampleList: MutableList<ExerciseSample> = mutableListOf())
 {
     /**

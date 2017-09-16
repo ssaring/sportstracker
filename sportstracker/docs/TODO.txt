@@ -3,7 +3,7 @@ SportsTracker-TODO
 
 ST-ExerciseViewer Kotlin port:
 - Diagram and Track panels does not work (tested with a FIT file)
-- port all gui classes to Kotlin?
+- port all gui classes to Kotlin
 - finally: test all available exercise files whether they can can be opened without errors in ExerciseViewer
 - test exercise import in SportsTracker
 - port status:
