@@ -14,7 +14,7 @@ import javax.inject.Inject
  * It creates all the components via Guice dependency injection and starts the ExerciseViewer for the passed exercise.
  *
  * @constructor constructor for dependency injection
- * @param context the ExerciseViewer context
+ * @param context the ExerciseViewer UI context
  * @param options the options to be used in ExerciseViewer
  *
  * @author Stefan Saring

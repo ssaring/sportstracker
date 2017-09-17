@@ -23,7 +23,7 @@ import de.saring.util.gui.javafx.FxmlLoader
  * Main Controller (MVC) class of the ExerciseViewer dialog window.
  *
  * @constructor constructor for dependency injection
- * @param context the ExerciseViewer context
+ * @param context the ExerciseViewer UI context
  * @param document the ExerciseViewer document / model
  *
  * @author Stefan Saring
@@ -99,7 +99,7 @@ class EVController(
             tabTrack.content = trackPanelController.loadAndSetupPanelContent()
 
             // display map and exercise track not before the user wants to see it (reduces startup time)
-            tabTrack.setOnSelectionChanged { event ->
+            tabTrack.setOnSelectionChanged { _ ->
                 if (tabTrack.isSelected) {
                     trackPanelController.showMapAndTrack()
                 }
