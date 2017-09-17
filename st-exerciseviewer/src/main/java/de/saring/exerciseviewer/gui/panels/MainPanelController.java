@@ -99,15 +99,15 @@ public class MainPanelController extends AbstractPanelController {
         if (exercise.getFileType() != EVExercise.ExerciseFileType.HRM) {
 
             // fill energy data
-            if (exercise.getEnergy() > 0) {
+            if (exercise.getEnergy() != null) {
                 laEnergyValue.setText(formatUtils.caloriesToString(exercise.getEnergy()));
             }
 
             // fill statistics data
-            if (exercise.getSumExerciseTime() > 0) {
+            if (exercise.getSumExerciseTime() != null) {
                 laTotalExerciseTimeValue.setText(formatUtils.minutes2TimeString(exercise.getSumExerciseTime()));
             }
-            if (exercise.getEnergyTotal() > 0) {
+            if (exercise.getEnergyTotal() != null) {
                 laTotalEnergyValue.setText(formatUtils.caloriesToString(exercise.getEnergyTotal()));
             }
 
@@ -131,15 +131,15 @@ public class MainPanelController extends AbstractPanelController {
                     DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));
         }
 
-        if (exercise.getDuration() > 0) {
+        if (exercise.getDuration() != null) {
             laDurationValue.setText(formatUtils.tenthSeconds2TimeString(exercise.getDuration()));
         }
 
         // fill heartrate data
-        if (exercise.getHeartRateAVG() > 0) {
+        if (exercise.getHeartRateAVG() != null) {
             laHeartrateAvgValue.setText(formatUtils.heartRateToString(exercise.getHeartRateAVG()));
         }
-        if (exercise.getHeartRateMax() > 0) {
+        if (exercise.getHeartRateMax() != null) {
             laHeartrateMaxValue.setText(formatUtils.heartRateToString(exercise.getHeartRateMax()));
         }
 
@@ -150,7 +150,7 @@ public class MainPanelController extends AbstractPanelController {
         laModePowerValue.setText(boolean2EnabledString(exercise.getRecordingMode().isPower()));
 
         // fill odometer data (if available, e.g. not on Polar S410 or S610)
-        if (exercise.getOdometer() != 0) {
+        if (exercise.getOdometer() != null) {
             laOdometerValue.setText(formatUtils.distanceToString(exercise.getOdometer(), 2));
         }
     }
@@ -196,7 +196,7 @@ public class MainPanelController extends AbstractPanelController {
 
         // calculate percentages of times below, within and above
         int percentsBelow = 0, percentsWithin = 0, percentsAbove = 0;
-        if (exercise.getDuration() > 0) {
+        if (exercise.getDuration() != null) {
             percentsBelow = (int) Math.round(limit.getTimeBelow() / (double) exercise.getDuration() * 10 * 100);
             percentsWithin = (int) Math.round(limit.getTimeWithin() / (double) exercise.getDuration() * 10 * 100);
             percentsAbove = (int) Math.round(limit.getTimeAbove() / (double) exercise.getDuration() * 10 * 100);
