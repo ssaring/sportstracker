@@ -87,7 +87,7 @@ class EVController(
     private fun setupPanels() {
 
         // load and setup main panel immediately, this tab must be visible on startup
-        mainPanelController.setDiagramPanelController(diagramPanelController)
+        mainPanelController.diagramPanelController = diagramPanelController
         tabMain.content = mainPanelController.loadAndSetupPanelContent()
 
         // load all other panels asynchronously, this reduces the startup time massively
