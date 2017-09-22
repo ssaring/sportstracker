@@ -28,10 +28,10 @@ import java.time.LocalDateTime
 class PolarHRMParser : AbstractExerciseParser() {
 
     /** Information about this parser. */
-    private val info = ExerciseParserInfo("Polar HRM", listOf("hrm", "HRM"))
+    private val parserInfo = ExerciseParserInfo("Polar HRM", listOf("hrm", "HRM"))
 
     override
-    fun getInfo(): ExerciseParserInfo = info
+    val info:ExerciseParserInfo = parserInfo
 
     override
     fun parseExercise(filename: String): EVExercise {

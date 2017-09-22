@@ -21,10 +21,10 @@ import java.time.LocalDateTime
 class PolarRS200SDParser : AbstractExerciseParser() {
 
     /** Information about this parser. */
-    private val info = ExerciseParserInfo("Polar RS200", listOf("xml", "XML"))
+    private val parserInfo = ExerciseParserInfo("Polar RS200", listOf("xml", "XML"))
 
     override
-    fun getInfo(): ExerciseParserInfo = info
+    val info: ExerciseParserInfo = parserInfo
 
     override
     fun parseExercise(filename: String): EVExercise {

@@ -440,7 +440,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         // parse exercise file
         EVExercise pvExercise = null;
         try {
-            ExerciseParser parser = ExerciseParserFactory.getParser(hrmFile);
+            ExerciseParser parser = ExerciseParserFactory.INSTANCE.getParser(hrmFile);
             pvExercise = parser.parseExercise(hrmFile);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to parse exercise file!", e);

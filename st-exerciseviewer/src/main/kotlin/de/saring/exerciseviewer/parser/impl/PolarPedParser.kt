@@ -26,14 +26,14 @@ import java.time.format.DateTimeFormatter
 class PolarPedParser : AbstractExerciseParser() {
 
     /** Information about this parser. */
-    private val info = ExerciseParserInfo("Polar Personal Trainer Export Data", listOf("ped", "PED"))
+    private val parserInfo = ExerciseParserInfo("Polar Personal Trainer Export Data", listOf("ped", "PED"))
 
     private val formatUtils = FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour)
 
     private val namespace = Namespace.getNamespace("http://www.polarpersonaltrainer.com")
 
     override
-    fun getInfo(): ExerciseParserInfo = info
+    val info: ExerciseParserInfo = parserInfo
 
     override
     fun parseExercise(filename: String): EVExercise {
