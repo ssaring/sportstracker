@@ -5,6 +5,7 @@ ST-ExerciseViewer Kotlin port:
 - Diagram and Track panels does not work (tested with a FIT file)
 - port DiagramPanelController to Kotlin
   - make sure that Diagram panel does not throws NPE when exercise samples have no heartrate value (e.g. for 06.09.2017)
+- port Parser interface, abstract class and factory to Kotlin
 - finally: test all available exercise files whether they can can be opened without errors in ExerciseViewer
 - test exercise import in SportsTracker
 - port status:
@@ -16,6 +17,20 @@ ST-ExerciseViewer Kotlin port:
   -> bugfix is done and tested
 - update ControlsFX to version 8.40.13
 - Issue #162: ExerciseViewer Diagram panel: display average line for heartrate and other data
+
+Java 9 migration:
+- Ensure Java 9 compatibility (problems in ControlsFX, ...?)
+- Update to Java 9, make use of these features:
+  - JEP 272: Platform-Specific Desktop Features for mac-specific menu items
+    http://openjdk.java.net/jeps/272
+  - JEP 226: UTF-8 Property Resource Bundles (no conversion for umlauts anymore)
+    http://openjdk.java.net/jeps/226
+  - JEP 269: Convenience Factory Methods for Collections
+    http://openjdk.java.net/jeps/269
+  - More Concise try-with-resources Statements
+    https://docs.oracle.com/javase/9/language/toc.htm#JSLAN-GUID-A920DB06-0FD1-4F9C-8A9A-15FC979D5DA3
+  - Use Java Module System?
+    Does the JavaFX packager (and the maven plugin) already support modules?
 
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore
