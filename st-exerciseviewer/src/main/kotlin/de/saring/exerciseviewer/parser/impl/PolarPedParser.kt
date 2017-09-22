@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatter
 class PolarPedParser : AbstractExerciseParser() {
 
     /** Information about this parser. */
-    private val info = ExerciseParserInfo("Polar Personal Trainer Export Data", arrayOf("ped", "PED"))
+    private val info = ExerciseParserInfo("Polar Personal Trainer Export Data", listOf("ped", "PED"))
 
     private val formatUtils = FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour)
 

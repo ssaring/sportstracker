@@ -1,6 +1,7 @@
 package de.saring.exerciseviewer.parser.impl;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
@@ -37,7 +38,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
     /**
      * Informations about this parser.
      */
-    private final ExerciseParserInfo info = new ExerciseParserInfo("Polar HSR", new String[]{"hsr", "HSR"});
+    private final ExerciseParserInfo info = new ExerciseParserInfo("Polar HSR", Arrays.asList("hsr", "HSR"));
 
     /**
      * The binary data of the exercise file.

@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter
 class TopoGrafixGpxParser : AbstractExerciseParser() {
 
     /** Information about this parser. */
-    private val info = ExerciseParserInfo("TopoGrafix GPX", arrayOf("gpx", "GPX"))
+    private val info = ExerciseParserInfo("TopoGrafix GPX", listOf("gpx", "GPX"))
 
     private val degreeToRadianDivider: Double = 57.29577951
     private val earthRadiosInMeter: Double = 6371000.0

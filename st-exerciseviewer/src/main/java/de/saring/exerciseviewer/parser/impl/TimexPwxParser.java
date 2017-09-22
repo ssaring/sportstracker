@@ -58,7 +58,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
     /**
      * Informations about this parser.
      */
-    private final ExerciseParserInfo info = new ExerciseParserInfo("Timex PWX", new String[]{"pwx", "PWX"});
+    private final ExerciseParserInfo info = new ExerciseParserInfo("Timex PWX", Arrays.asList("pwx", "PWX"));
 
     private static class MinMaxAvg {
         private float min = 0;

@@ -30,7 +30,7 @@ import java.time.format.DateTimeFormatter
 class GarminTcxParser : AbstractExerciseParser() {
 
     /** Information about this parser. */
-    private val info = ExerciseParserInfo("Garmin TCX", arrayOf("tcx", "TCX"))
+    private val info = ExerciseParserInfo("Garmin TCX", listOf("tcx", "TCX"))
 
     private val namespace = Namespace.getNamespace("http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2")
     private val namespaceExt = Namespace.getNamespace("ext", "http://www.garmin.com/xmlschemas/ActivityExtension/v2")

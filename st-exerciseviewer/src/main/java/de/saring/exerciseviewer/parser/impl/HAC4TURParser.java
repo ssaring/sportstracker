@@ -22,7 +22,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
     /**
      * Informations about this parser.
      */
-    private final ExerciseParserInfo info = new ExerciseParserInfo("HACTronic", new String[]{"tur", "TUR"});
+    private final ExerciseParserInfo info = new ExerciseParserInfo("HACTronic", Arrays.asList("tur", "TUR"));
 
     /**
      * String that's always on top of TUR files.

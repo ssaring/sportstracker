@@ -21,7 +21,7 @@ import java.time.LocalDateTime
 class SmartsyncCSVParser : AbstractExerciseParser() {
 
     /** Information about this parser. */
-    private val info = ExerciseParserInfo("Smartsync CSV", arrayOf("csv", "CSV"))
+    private val info = ExerciseParserInfo("Smartsync CSV", listOf("csv", "CSV"))
 
     override
     fun getInfo(): ExerciseParserInfo = info

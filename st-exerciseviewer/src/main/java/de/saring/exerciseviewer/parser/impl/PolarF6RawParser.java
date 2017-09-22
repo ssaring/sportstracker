@@ -6,6 +6,7 @@ import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 /**
  * This implementation of an ExerciseParser is for reading RAW files of the
@@ -42,7 +43,7 @@ public class PolarF6RawParser extends AbstractExerciseParser {
     /**
      * Informations about this parser.
      */
-    private final ExerciseParserInfo info = new ExerciseParserInfo("Polar F6/F11", new String[]{"frd", "FRD"});
+    private final ExerciseParserInfo info = new ExerciseParserInfo("Polar F6/F11", Arrays.asList("frd", "FRD"));
 
     /**
      * The binary data of the exercise file.
