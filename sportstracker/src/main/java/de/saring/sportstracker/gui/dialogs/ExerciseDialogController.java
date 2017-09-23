@@ -438,10 +438,10 @@ public class ExerciseDialogController extends AbstractDialogController {
         }
 
         // parse exercise file
-        EVExercise pvExercise = null;
+        EVExercise evExercise = null;
         try {
             ExerciseParser parser = ExerciseParserFactory.INSTANCE.getParser(hrmFile);
-            pvExercise = parser.parseExercise(hrmFile);
+            evExercise = parser.parseExercise(hrmFile);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to parse exercise file!", e);
             context.showMessageDialog(getWindow(tfHrmFile), Alert.AlertType.ERROR, "common.error",
@@ -450,33 +450,40 @@ public class ExerciseDialogController extends AbstractDialogController {
         }
 
         // fill dialog widgets with values from parsed HRM exercise
-        final LocalDateTime pvExerciseDateTime = pvExercise.getDateTime();
+        final LocalDateTime pvExerciseDateTime = evExercise.getDateTime();
         if (pvExerciseDateTime != null) {
             exerciseViewModel.date.setValue(pvExerciseDateTime.toLocalDate());
             exerciseViewModel.time.set(pvExerciseDateTime.toLocalTime());
         }
 
-        exerciseViewModel.avgHeartRate.set(pvExercise.getHeartRateAVG());
-        exerciseViewModel.calories.set(pvExercise.getEnergy());
+        exerciseViewModel.avgHeartRate.setValue(evExercise.getHeartRateAVG());
+        exerciseViewModel.calories.setValue(evExercise.getEnergy());
 
-        int importedDuration = pvExercise.getDuration() / 10;
+        if (evExercise.getDuration() != null) {
+            int importedDuration = evExercise.getDuration() / 10;
 
-        // fill speed-related values if available and recorded for the selected sport type,
-        // otherwise import just the duration
-        if (exerciseViewModel.sportTypeRecordDistance.get() && pvExercise.getSpeed() != null) {
-            exerciseViewModel.setAutoCalcFields(
-                    pvExercise.getSpeed().getDistance() / 1000f,
-                    pvExercise.getSpeed().getSpeedAvg(),
-                    importedDuration);
-        } else {
+            // fill speed-related values if available and recorded for the selected sport type,
+            // otherwise import just the duration
+            if (exerciseViewModel.sportTypeRecordDistance.get() && evExercise.getSpeed() != null) {
+                exerciseViewModel.setAutoCalcFields(
+                        evExercise.getSpeed().getDistance() / 1000f,
+                        evExercise.getSpeed().getSpeedAvg(),
+                        importedDuration);
+            } else {
+                exerciseViewModel.distance.set(0f);
+                exerciseViewModel.avgSpeed.set(0f);
+                exerciseViewModel.duration.set(importedDuration);
+            }
+        }
+        else {
             exerciseViewModel.distance.set(0f);
             exerciseViewModel.avgSpeed.set(0f);
-            exerciseViewModel.duration.set(importedDuration);
+            exerciseViewModel.duration.set(0);
         }
 
         // fill ascent-related values
-        if (pvExercise.getAltitude() != null) {
-            exerciseViewModel.ascent.set(pvExercise.getAltitude().getAscent());
+        if (evExercise.getAltitude() != null) {
+            exerciseViewModel.ascent.set(evExercise.getAltitude().getAscent());
 
             if (document.getOptions().getUnitSystem() == FormatUtils.UnitSystem.English) {
                 exerciseViewModel.ascent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.ascent.get()));

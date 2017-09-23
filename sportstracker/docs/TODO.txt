@@ -1,22 +1,16 @@
 SportsTracker-TODO
 ==================
 
-ST-ExerciseViewer Kotlin port:
-- Diagram panel does not work (tested with a FIT file)
-- port DiagramPanelController to Kotlin
-  - make sure that Diagram panel does not throws NPE when exercise samples have no heartrate value (e.g. for 06.09.2017)
-- port Parser interface, abstract class and factory to Kotlin
-- finally: test all available exercise files whether they can can be opened without errors in ExerciseViewer
-- test exercise import in SportsTracker
-- port status:
-  - all core and data class have been ported, all unit tests are green again
-  - port of GUI classes almost completed
-
 - imminent ST release needed due to parsing problems with newer Garmin devices
   (e.g. for Garmin Edge 820 or Edge 520 with firmware >= 12.10)
   -> bugfix is done and tested
 - update ControlsFX to version 8.40.13
 - Issue #162: ExerciseViewer Diagram panel: display average line for heartrate and other data
+
+EV Diagram panel:
+- remove heartrate axis type when no heartrate is available
+- don't display a chart when no data at all available (as done in Track panel)
+  (e.g. in exercise "testdata/gpx/bike-tour-track_only.gpx")
 
 Java 9 migration:
 - Ensure Java 9 compatibility (problems in ControlsFX, ...?)

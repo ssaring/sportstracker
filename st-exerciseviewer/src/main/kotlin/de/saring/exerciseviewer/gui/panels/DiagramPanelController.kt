@@ -201,16 +201,20 @@ class DiagramPanelController(
 
                 if (fDomainAxisTime) {
                     // calculate current second
-                    val timeSeconds = (sample.timestamp!! / 1000).toInt()
-                    val second = createJFreeChartSecond(timeSeconds)
-                    fillDataInTimeSeries(sLeft as TimeSeries, sRight as TimeSeries?, second, valueLeft, valueRight)
+                    sample.timestamp?.let { timestamp ->
+                        val timeSeconds = (timestamp / 1000).toInt()
+                        val second = createJFreeChartSecond(timeSeconds)
+                        fillDataInTimeSeries(sLeft as TimeSeries, sRight as TimeSeries?, second, valueLeft, valueRight)
+                    }
                 } else {
                     // get current distance of this sample
-                    var fDistance = (sample.distance!! / 1000f).toDouble()
-                    if (context.formatUtils.unitSystem != FormatUtils.UnitSystem.Metric) {
-                        fDistance = ConvertUtils.convertKilometer2Miles(fDistance, false)
+                    sample.distance?.let { distance ->
+                        var fDistance = (distance / 1000f).toDouble()
+                        if (context.formatUtils.unitSystem != FormatUtils.UnitSystem.Metric) {
+                            fDistance = ConvertUtils.convertKilometer2Miles(fDistance, false)
+                        }
+                        fillDataInXYSeries(sLeft as XYSeries, sRight as XYSeries?, fDistance, valueLeft, valueRight)
                     }
-                    fillDataInXYSeries(sLeft as XYSeries, sRight as XYSeries?, fDistance, valueLeft, valueRight)
                 }
             }
         } else if (!exercise.lapList.isEmpty()) {
@@ -399,12 +403,16 @@ class DiagramPanelController(
      * @param valueRight the value of the right time series
      */
     private fun fillDataInTimeSeries(sLeft: TimeSeries, sRight: TimeSeries?, second: Second,
-                                     valueLeft: Number, valueRight: Number?) {
+                                     valueLeft: Number?, valueRight: Number?) {
 
         // don't add the data when the specified second was already added
         if (sLeft.getValue(second) == null) {
-            sLeft.add(second, valueLeft)
-            sRight?.add(second, valueRight)
+            if (valueLeft != null) {
+                sLeft.add(second, valueLeft)
+            }
+            if (valueRight != null) {
+                sRight?.add(second, valueRight)
+            }
         }
     }
 
@@ -453,14 +461,14 @@ class DiagramPanelController(
      * @param sampleIndex index of the sample in the exercise
      * @return the requested value
      */
-    private fun getConvertedSampleValue(axisType: AxisType, sampleIndex: Int): Number {
+    private fun getConvertedSampleValue(axisType: AxisType, sampleIndex: Int): Number? {
+        val formatUtils = context.formatUtils
 
         if (axisType == AxisType.NOTHING) {
-            return 0
+            return null
         }
 
-        val formatUtils = context.formatUtils
-        val sampleValue = getSampleValue(axisType, sampleIndex)
+        val sampleValue = getSampleValue(axisType, sampleIndex) ?: return null
 
         when (axisType) {
             AxisType.HEARTRATE, AxisType.CADENCE ->
@@ -501,7 +509,7 @@ class DiagramPanelController(
      * @param sampleIndex index of the sample in the exercise
      * @return the requested value
      */
-    private fun getSampleValue(axisType: AxisType, sampleIndex: Int): Double {
+    private fun getSampleValue(axisType: AxisType, sampleIndex: Int): Double? {
 
         if (averagedRangeSteps <= 0) {
             // smoothing is disabled, just return the raw value
@@ -524,11 +532,9 @@ class DiagramPanelController(
                 var valueIndex = Math.max(0, i)
                 valueIndex = Math.min(lastSampleIndex, valueIndex)
 
-                // ignore range values of 0 for the average, use the specified index instead
-                var valueAtIndex = getRawSampleValue(axisType, valueIndex)
-                if (valueAtIndex == 0.0) {
-                    valueAtIndex = getRawSampleValue(axisType, sampleIndex)
-                }
+                // ignore range values of null for the average, use the specified index instead (or 0 if also missing)
+                val valueAtIndex = getRawSampleValue(axisType, valueIndex) ?:
+                        getRawSampleValue(axisType, sampleIndex) ?: 0.0
 
                 valueSum += valueAtIndex
             }
@@ -537,20 +543,20 @@ class DiagramPanelController(
         }
     }
 
-    private fun getRawSampleValue(axisType: AxisType, sampleIndex: Int): Double {
+    private fun getRawSampleValue(axisType: AxisType, sampleIndex: Int): Double? {
         val sample = document.exercise.sampleList[sampleIndex]
 
         when (axisType) {
             AxisType.HEARTRATE ->
-                return sample.heartRate!!.toDouble()
+                return sample.heartRate?.toDouble()
             AxisType.ALTITUDE ->
-                return sample.altitude!!.toDouble()
+                return sample.altitude?.toDouble()
             AxisType.SPEED ->
-                return sample.speed!!.toDouble()
+                return sample.speed?.toDouble()
             AxisType.CADENCE ->
-                return sample.cadence!!.toDouble()
+                return sample.cadence?.toDouble()
             AxisType.TEMPERATURE ->
-                return sample.temperature!!.toDouble()
+                return sample.temperature?.toDouble()
             else ->
                 throw IllegalArgumentException("Unknown axis type: $axisType!")
         }
@@ -564,28 +570,30 @@ class DiagramPanelController(
      * @param lap the exercise lap to display
      * @return the requested value
      */
-    private fun getLapValue(axisType: AxisType, lap: Lap): Number {
+    private fun getLapValue(axisType: AxisType, lap: Lap): Number? {
 
         val formatUtils = context.formatUtils
 
         when (axisType) {
             AxisType.HEARTRATE ->
-                return lap.heartRateAVG!!
+                return lap.heartRateAVG
             AxisType.SPEED -> {
-                var speed = lap.speed!!.speedAVG
-                if (formatUtils.unitSystem != FormatUtils.UnitSystem.Metric) {
-                    speed = ConvertUtils.convertKilometer2Miles(speed.toDouble(), false).toFloat()
-                }
-                if (formatUtils.speedView == FormatUtils.SpeedView.MinutesPerDistance) {
-                    // convert speed to minutes per distance
-                    if (speed != 0f) {
-                        speed = 60 / speed
+                var speed = lap.speed?.speedAVG
+                if (speed != null) {
+                    if (formatUtils.unitSystem != FormatUtils.UnitSystem.Metric) {
+                        speed = ConvertUtils.convertKilometer2Miles(speed.toDouble(), false).toFloat()
+                    }
+                    if (formatUtils.speedView == FormatUtils.SpeedView.MinutesPerDistance) {
+                        // convert speed to minutes per distance
+                        if (speed != 0f) {
+                            speed = 60 / speed
+                        }
                     }
                 }
                 return speed
             }
             else ->
-                return 0
+                return null
         }
     }
 
