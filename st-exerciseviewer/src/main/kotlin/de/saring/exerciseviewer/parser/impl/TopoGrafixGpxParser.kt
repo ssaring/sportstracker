@@ -26,9 +26,6 @@ import java.time.format.DateTimeFormatter
  */
 class TopoGrafixGpxParser : AbstractExerciseParser() {
 
-    /** Information about this parser. */
-    private val parserInfo = ExerciseParserInfo("TopoGrafix GPX", listOf("gpx", "GPX"))
-
     private val degreeToRadianDivider: Double = 57.29577951
     private val earthRadiosInMeter: Double = 6371000.0
 
@@ -36,7 +33,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
     private val namespaceExt = Namespace.getNamespace("http://www.garmin.com/xmlschemas/TrackPointExtension/v1")
 
     override
-    val info: ExerciseParserInfo = parserInfo
+    val info = ExerciseParserInfo("TopoGrafix GPX", listOf("gpx", "GPX"))
 
     override
     fun parseExercise(filename: String): EVExercise {
