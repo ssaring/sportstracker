@@ -20,8 +20,8 @@ v7.4.1:
      (no more mixed compilation issues with Groovy code)
  - ported all data, core and UI classes from Java to Kotlin
    - less and simpler code, better maintainable
-   - null safety in data model and view classes
-     (no exceptions anymore when specific values are missing / null)
+   - null safety in data model and view classes => no exceptions anymore when
+     specific values are missing / null
  - Diagram Panel: missing values are not longer displayed as 0 values
    -> improves readability of diagrams
  - removed compiler warnings in LeafletMap component
