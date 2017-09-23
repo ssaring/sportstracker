@@ -25,15 +25,12 @@ import java.time.format.DateTimeFormatter
  */
 class PolarPedParser : AbstractExerciseParser() {
 
-    /** Information about this parser. */
-    private val info = ExerciseParserInfo("Polar Personal Trainer Export Data", arrayOf("ped", "PED"))
-
     private val formatUtils = FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour)
 
     private val namespace = Namespace.getNamespace("http://www.polarpersonaltrainer.com")
 
     override
-    fun getInfo(): ExerciseParserInfo = info
+    val info = ExerciseParserInfo("Polar Personal Trainer Export Data", listOf("ped", "PED"))
 
     override
     fun parseExercise(filename: String): EVExercise {
@@ -62,8 +59,7 @@ class PolarPedParser : AbstractExerciseParser() {
         }
 
         // parse basic exercise data
-        val exercise = EVExercise()
-        exercise.fileType = EVExercise.ExerciseFileType.PED
+        val exercise = EVExercise(EVExercise.ExerciseFileType.PED)
         exercise.deviceName = "Polar PED"
 
         // Exercise Date
@@ -83,14 +79,14 @@ class PolarPedParser : AbstractExerciseParser() {
         exercise.duration = exerciseDuration * 10
 
         // Distance
-        val speed = ExerciseSpeed()
-        exercise.speed = speed
-        speed.distance = eResult.getChildText("distance", namespace).toDouble().toInt()
+        val distance = eResult.getChildText("distance", namespace).toDouble().toInt()
 
         // calculate average speed
-        if (exerciseDuration > 0) {
-            speed.speedAVG = CalculationUtils.calculateAvgSpeed((speed.distance / 1000.0).toFloat(), exerciseDuration)
-        }
+        val speedAvg = if (exerciseDuration > 0) {
+            CalculationUtils.calculateAvgSpeed((distance / 1000.0).toFloat(), exerciseDuration)
+        } else 0f
+
+        exercise.speed = ExerciseSpeed(speedAvg, 0f, distance)
 
         // Wasted Energy
         exercise.energy = eResult.getChildText("calories", namespace)?.toInt() ?: 0
@@ -102,10 +98,6 @@ class PolarPedParser : AbstractExerciseParser() {
         // Heart rate maximum
         exercise.heartRateMax =
                 eResult.getChild("heart-rate", namespace)?.getChildText("maximum", namespace)?.toShort() ?: 0
-
-        // set an empty LapList and SampleList
-        exercise.lapList = arrayOf()
-        exercise.sampleList = arrayOf()
 
         return exercise
     }

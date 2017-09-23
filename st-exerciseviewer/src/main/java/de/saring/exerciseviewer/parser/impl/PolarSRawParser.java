@@ -1,12 +1,24 @@
 package de.saring.exerciseviewer.parser.impl;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
 import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.*;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.ExerciseAltitude;
+import de.saring.exerciseviewer.data.ExerciseCadence;
+import de.saring.exerciseviewer.data.ExerciseSample;
+import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.data.ExerciseTemperature;
+import de.saring.exerciseviewer.data.HeartRateLimit;
+import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.data.LapAltitude;
+import de.saring.exerciseviewer.data.LapSpeed;
+import de.saring.exerciseviewer.data.LapTemperature;
+import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
 import de.saring.util.unitcalc.ConvertUtils;
-
-import java.time.LocalDateTime;
 
 /**
  * This implementation of an ExerciseParser is for reading RAW files of the
@@ -32,7 +44,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
     /**
      * Informations about this parser.
      */
-    private final ExerciseParserInfo info = new ExerciseParserInfo("Polar SRD", new String[]{"srd", "SRD"});
+    private final ExerciseParserInfo info = new ExerciseParserInfo("Polar SRD", Arrays.asList("srd", "SRD"));
 
     /**
      * The binary data of the exercise file.
@@ -54,11 +66,11 @@ public class PolarSRawParser extends AbstractExerciseParser {
         boolean fS610 = (fileContent[34] == 0) && (fileContent[36] == 251);
 
         // create an PVExercise object from this data and set file type
-        EVExercise exercise = new EVExercise();
+        EVExercise exercise;
         if (!fS610) {
-            exercise.setFileType(EVExercise.ExerciseFileType.S710RAW);
+            exercise = new EVExercise(EVExercise.ExerciseFileType.S710RAW);
         } else {
-            exercise.setFileType(EVExercise.ExerciseFileType.S610RAW);
+            exercise = new EVExercise(EVExercise.ExerciseFileType.S610RAW);
         }
         exercise.setDeviceName("Polar S6xx/S7xx Series");
 
@@ -122,7 +134,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
             if (!fBike1 && !fBike2) {
                 recMode.setSpeed(false);
-                recMode.setBikeNumber((byte) 0);
+                recMode.setBikeNumber(null);
             } else {
                 recMode.setSpeed(true);
                 if (fBike1) {
@@ -161,10 +173,13 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
         // get the heartrate limit data (Polar S710 has 3 limits)
         int indexHRLimitStart = getProperIndex(29, 28, fS610);
-        exercise.setHeartRateLimits(new HeartRateLimit[3]);
-        exercise.getHeartRateLimits()[0] = decodeHeartRateLimit(indexHRLimitStart + 0, indexHRLimitStart + 9);
-        exercise.getHeartRateLimits()[1] = decodeHeartRateLimit(indexHRLimitStart + 2, indexHRLimitStart + 18);
-        exercise.getHeartRateLimits()[2] = decodeHeartRateLimit(indexHRLimitStart + 4, indexHRLimitStart + 27);
+
+        HeartRateLimit hrLimit1 = decodeHeartRateLimit(indexHRLimitStart + 0, indexHRLimitStart + 9);
+        exercise.getHeartRateLimits().add(hrLimit1);
+        HeartRateLimit hrLimit2 = decodeHeartRateLimit(indexHRLimitStart + 2, indexHRLimitStart + 18);
+        exercise.getHeartRateLimits().add(hrLimit2);
+        HeartRateLimit hrLimit3 = decodeHeartRateLimit(indexHRLimitStart + 4, indexHRLimitStart + 27);
+        exercise.getHeartRateLimits().add(hrLimit3);
 
         for (HeartRateLimit hrLimit : exercise.getHeartRateLimits()) {
             hrLimit.setAbsoluteRange(fHeartRateRangeAbsolute);
@@ -212,68 +227,60 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
         // get speed (bicycle) related data of exercise (if recorded)
         if (recMode.isSpeed()) {
-            ExerciseSpeed speed = new ExerciseSpeed();
-            exercise.setSpeed(speed);
 
             // get exercise distance (in 1/10th of km)
             int distance = (fileContent[85] + (fileContent[86] << 8)) * 100;
-            if (fMetricUnits) {
-                speed.setDistance(distance);
-            } else {
-                speed.setDistance(ConvertUtils.convertMiles2Kilometer(distance));
+            if (!fMetricUnits) {
+                distance = ConvertUtils.convertMiles2Kilometer(distance);
             }
 
             // get AVG speed
             int avgSpeedPart1 = fileContent[87];
             int avgSpeedPart2 = (fileContent[88] & 0x0f);
             float avgSpeed = ((avgSpeedPart2 << 8) | avgSpeedPart1) / 16f;
-            if (fMetricUnits) {
-                speed.setSpeedAVG(avgSpeed);
-            } else {
-                speed.setSpeedAVG((float) ConvertUtils.convertMiles2Kilometer(avgSpeed));
+            if (!fMetricUnits) {
+                avgSpeed = (float) ConvertUtils.convertMiles2Kilometer(avgSpeed);
             }
 
             // get max speed
             int maxSpeedPart1 = fileContent[88] >> 4;
             int maxSpeedPart2 = fileContent[89];
             float maxSpeed = ((maxSpeedPart2 << 4) | maxSpeedPart1) / 16f;
-            if (fMetricUnits) {
-                speed.setSpeedMax(maxSpeed);
-            } else {
-                speed.setSpeedMax((float) ConvertUtils.convertMiles2Kilometer(maxSpeed));
+            if (!fMetricUnits) {
+                maxSpeed = (float) ConvertUtils.convertMiles2Kilometer(maxSpeed);
             }
+
+            exercise.setSpeed(new ExerciseSpeed(avgSpeed, maxSpeed, distance));
         }
 
         // get cadence (bicycle) data of exercise (if recorded)
         if (recMode.isCadence()) {
-            ExerciseCadence cadence = new ExerciseCadence();
-            exercise.setCadence(cadence);
-            cadence.setCadenceAVG((short) fileContent[90]);
-            cadence.setCadenceMax((short) fileContent[91]);
+            short cadenceAvg = (short) fileContent[90];
+            short cadenceMax = (short) fileContent[91];
+            exercise.setCadence(new ExerciseCadence(cadenceAvg, cadenceMax));
         }
 
         // get altitude data of exercise (if recorded)
         if (recMode.isAltitude()) {
-            ExerciseAltitude altitude = new ExerciseAltitude();
-            exercise.setAltitude(altitude);
-            altitude.setAltitudeMin(decodeAltitude(fileContent[92], fileContent[93]));
-            altitude.setAltitudeAVG(decodeAltitude(fileContent[94], fileContent[95]));
-            altitude.setAltitudeMax(decodeAltitude(fileContent[96], fileContent[97]));
-            altitude.setAscent(fileContent[101] + (fileContent[102] << 8));
+            short altitudeMin = decodeAltitude(fileContent[92], fileContent[93]);
+            short altitudeAvg = decodeAltitude(fileContent[94], fileContent[95]);
+            short altitudeMax = decodeAltitude(fileContent[96], fileContent[97]);
+            int ascent = fileContent[101] + (fileContent[102] << 8);
 
             if (!fMetricUnits) {
-                altitude.setAltitudeMin((short) ConvertUtils.convertFeet2Meter(altitude.getAltitudeMin()));
-                altitude.setAltitudeAVG((short) ConvertUtils.convertFeet2Meter(altitude.getAltitudeAVG()));
-                altitude.setAltitudeMax((short) ConvertUtils.convertFeet2Meter(altitude.getAltitudeMax()));
-                altitude.setAscent(ConvertUtils.convertFeet2Meter(altitude.getAscent()));
+                altitudeMin = (short) ConvertUtils.convertFeet2Meter(altitudeMin);
+                altitudeAvg = (short) ConvertUtils.convertFeet2Meter(altitudeAvg);
+                altitudeMax = (short) ConvertUtils.convertFeet2Meter(altitudeMax);
+                ascent = (short) ConvertUtils.convertFeet2Meter(ascent);
             }
 
+            exercise.setAltitude(new ExerciseAltitude(altitudeMin, altitudeAvg, altitudeMax, ascent));
+
             // get temperature data of exercise (only available, when altitude recorded)
-            ExerciseTemperature temperature = new ExerciseTemperature();
-            exercise.setTemperature(temperature);
-            temperature.setTemperatureMin(decodeTemperature(fileContent[98], fMetricUnits));
-            temperature.setTemperatureAVG(decodeTemperature(fileContent[99], fMetricUnits));
-            temperature.setTemperatureMax(decodeTemperature(fileContent[100], fMetricUnits));
+            short temperatureMin = decodeTemperature(fileContent[98], fMetricUnits);
+            short temperatureAvg = decodeTemperature(fileContent[99], fMetricUnits);
+            short temperatureMax = decodeTemperature(fileContent[100], fMetricUnits);
+            exercise.setTemperature(new ExerciseTemperature(temperatureMin, temperatureAvg, temperatureMax));
         }
 
 
@@ -307,13 +314,12 @@ public class PolarSRawParser extends AbstractExerciseParser {
         int indexLapsStart = bytesInFile - totalLapSize - totalSampleSize;
 
         // process all laps
-        exercise.setLapList(new Lap[numberOfLaps]);
 
         for (int i = 0; i < numberOfLaps; i++) {
             // get offset where the current lap starts
             int lapOffset = indexLapsStart + i * lapSize;
             Lap lap = new Lap();
-            exercise.getLapList()[i] = lap;
+            exercise.getLapList().add(lap);
 
             // get lap split time (in 1/10th seconds)
             int bLapEndHour = fileContent[lapOffset + 2];
@@ -330,46 +336,44 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
             // get altitude related data of lap (if recorded)
             if (recMode.isAltitude()) {
-                lap.setAltitude(new LapAltitude());
-                lap.setTemperature(new LapTemperature());
 
                 // get altitude at end of the lap (has on offset of 512)
                 short lapEndAltitude = (short) (fileContent[lapOffset] + (fileContent[lapOffset + 1] << 8) - 512);
-                if (fMetricUnits) {
-                    // metric units: meters without modification
-                    lap.getAltitude().setAltitude(lapEndAltitude);
-                } else {
+                if (!fMetricUnits) {
                     // english units: multiples of 5 feets
-                    lap.getAltitude().setAltitude((short) ConvertUtils.convertFeet2Meter(lapEndAltitude * 5));
+                    lapEndAltitude = (short) ConvertUtils.convertFeet2Meter(lapEndAltitude * 5);
                 }
 
                 // get ascent of the lap
                 int lapAscent = (fileContent[lapOffset + 2] + (fileContent[lapOffset + 3] << 8));
-                if (fMetricUnits) {
-                    lap.getAltitude().setAscent(lapAscent);
-                } else {
-                    lap.getAltitude().setAscent(ConvertUtils.convertFeet2Meter(lapAscent));
+                if (!fMetricUnits) {
+                    lapAscent = ConvertUtils.convertFeet2Meter(lapAscent);
                 }
 
+                lap.setAltitude(new LapAltitude(lapEndAltitude, lapAscent));
+
+
                 // get temperature at end of the lap
+                short lapTemperature;
                 if (fMetricUnits) {
                     // metric units: offset from -10 C
-                    lap.getTemperature().setTemperature((short) (fileContent[lapOffset + 4] - 10));
+                    lapTemperature = (short) (fileContent[lapOffset + 4] - 10);
                 } else {
                     // english units: offset from 14 F
-                    lap.getTemperature().setTemperature(ConvertUtils.convertFahrenheit2Celsius((short) (fileContent[lapOffset + 4] + 14)));
+                    lapTemperature = ConvertUtils.convertFahrenheit2Celsius((short) (fileContent[lapOffset + 4] + 14));
                 }
+                lap.setTemperature(new LapTemperature(lapTemperature));
 
                 lapOffset += 5;
             }
 
             // get speed (bicycle) related data of lap (if recorded)
             if (recMode.isSpeed()) {
-                lap.setSpeed(new LapSpeed());
 
                 // get cadence at end of the lap (if recorded)
+                Short lapCadence = null;
                 if (recMode.isCadence()) {
-                    lap.getSpeed().setCadence((short) fileContent[lapOffset]);
+                    lapCadence = (short) fileContent[lapOffset];
                     lapOffset += 1;
                 }
 
@@ -380,20 +384,17 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
                 // get lap distance (in 1/10th of km)
                 int lapDistance = (fileContent[lapOffset] + (fileContent[lapOffset + 1] << 8)) * 100;
-                if (fMetricUnits) {
-                    lap.getSpeed().setDistance(lapDistance);
-                } else {
-                    lap.getSpeed().setDistance(ConvertUtils.convertMiles2Kilometer(lapDistance));
+                if (!fMetricUnits) {
+                    lapDistance = ConvertUtils.convertMiles2Kilometer(lapDistance);
                 }
 
                 // get lap speed
                 float lapEndSpeed = ((float) (fileContent[lapOffset + 2] + ((fileContent[lapOffset + 3] & 0xf0) << 4)) / 16);
-                if (fMetricUnits) {
-                    lap.getSpeed().setSpeedEnd(lapEndSpeed);
-                } else {
-                    lap.getSpeed().setSpeedEnd((float) ConvertUtils.convertMiles2Kilometer(lapEndSpeed));
+                if (!fMetricUnits) {
+                    lapEndSpeed = (float) ConvertUtils.convertMiles2Kilometer(lapEndSpeed);
                 }
 
+                lap.setSpeed(new LapSpeed(lapEndSpeed, 0f, lapDistance, lapCadence));
                 lapOffset += 4;
             }
         }
@@ -405,15 +406,14 @@ public class PolarSRawParser extends AbstractExerciseParser {
         int sampleOffset = indexLapsStart + (numberOfLaps * lapSize);
 
         // create sample list
-        exercise.setSampleList(new ExerciseSample[numberOfSamples]);
 
         // process all recorded samples
         for (int i = 0; i < numberOfSamples; i++) {
-            // store sample in list in reverse order
+            // store sample in list in reverse order (insert new samples at the list start)
             int sampleIndex = numberOfSamples - i - 1;
             ExerciseSample exeSample = new ExerciseSample();
             exeSample.setTimestamp(sampleIndex * exercise.getRecordingInterval() * 1000L);
-            exercise.getSampleList()[sampleIndex] = exeSample;
+            exercise.getSampleList().add(0, exeSample);
 
             // get sample heartrate
             exeSample.setHeartRate((short) fileContent[sampleOffset]);
@@ -640,26 +640,23 @@ public class PolarSRawParser extends AbstractExerciseParser {
      * @return the filled HeartRateLimit object
      */
     private HeartRateLimit decodeHeartRateLimit(int offsetLimits, int offsetTimes) {
-        HeartRateLimit hrLimit = new HeartRateLimit();
-        hrLimit.setLowerHeartRate((short) fileContent[offsetLimits + 0]);
-        hrLimit.setUpperHeartRate((short) fileContent[offsetLimits + 1]);
+        short lowerHeartRate = (short) fileContent[offsetLimits + 0];
+        short upperHeartRate = (short) fileContent[offsetLimits + 1];
 
         int hrLimitBelowSecs = decodeBCD(fileContent[offsetTimes + 0]);
         hrLimitBelowSecs += decodeBCD(fileContent[offsetTimes + 1]) * 60;
         hrLimitBelowSecs += decodeBCD(fileContent[offsetTimes + 2]) * 60 * 60;
-        hrLimit.setTimeBelow(hrLimitBelowSecs);
 
         int hrLimitWithinSecs = decodeBCD(fileContent[offsetTimes + 3]);
         hrLimitWithinSecs += decodeBCD(fileContent[offsetTimes + 4]) * 60;
         hrLimitWithinSecs += decodeBCD(fileContent[offsetTimes + 5]) * 60 * 60;
-        hrLimit.setTimeWithin(hrLimitWithinSecs);
 
         int hrLimitAboveSecs = decodeBCD(fileContent[offsetTimes + 6]);
         hrLimitAboveSecs += decodeBCD(fileContent[offsetTimes + 7]) * 60;
         hrLimitAboveSecs += decodeBCD(fileContent[offsetTimes + 8]) * 60 * 60;
-        hrLimit.setTimeAbove(hrLimitAboveSecs);
 
-        return hrLimit;
+        return new HeartRateLimit(lowerHeartRate, upperHeartRate,
+                hrLimitBelowSecs, hrLimitWithinSecs, hrLimitAboveSecs, true);
     }
 
     /**

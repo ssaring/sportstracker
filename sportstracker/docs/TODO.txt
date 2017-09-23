@@ -4,7 +4,27 @@ SportsTracker-TODO
 - imminent ST release needed due to parsing problems with newer Garmin devices
   (e.g. for Garmin Edge 820 or Edge 520 with firmware >= 12.10)
   -> bugfix is done and tested
+- update ControlsFX to version 8.40.13
 - Issue #162: ExerciseViewer Diagram panel: display average line for heartrate and other data
+
+EV Diagram panel:
+- remove heartrate axis type when no heartrate is available
+- don't display a chart when no data at all available (as done in Track panel)
+  (e.g. in exercise "testdata/gpx/bike-tour-track_only.gpx")
+
+Java 9 migration:
+- Ensure Java 9 compatibility (problems in ControlsFX, ...?)
+- Update to Java 9, make use of these features:
+  - JEP 272: Platform-Specific Desktop Features for mac-specific menu items
+    http://openjdk.java.net/jeps/272
+  - JEP 226: UTF-8 Property Resource Bundles (no conversion for umlauts anymore)
+    http://openjdk.java.net/jeps/226
+  - JEP 269: Convenience Factory Methods for Collections
+    http://openjdk.java.net/jeps/269
+  - More Concise try-with-resources Statements
+    https://docs.oracle.com/javase/9/language/toc.htm#JSLAN-GUID-A920DB06-0FD1-4F9C-8A9A-15FC979D5DA3
+  - Use Java Module System?
+    Does the JavaFX packager (and the maven plugin) already support modules?
 
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore

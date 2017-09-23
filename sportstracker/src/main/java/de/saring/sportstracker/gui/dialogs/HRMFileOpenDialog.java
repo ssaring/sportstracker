@@ -91,7 +91,7 @@ public class HRMFileOpenDialog {
      * @param fileChooser file chooser to add to
      */
     private void addFileExtensionFilters(FileChooser fileChooser) {
-        List<ExerciseParserInfo> parserInfos = ExerciseParserFactory.getExerciseParserInfos();
+        List<ExerciseParserInfo> parserInfos = ExerciseParserFactory.INSTANCE.getExerciseParserInfos();
         List<String> lAllExtensions = new ArrayList<>();
 
         // append a file filter for all files

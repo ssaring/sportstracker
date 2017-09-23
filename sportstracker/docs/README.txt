@@ -350,7 +350,7 @@ For compilation of the SportsTracker sources you need:
 
 Tested IDE's (should work an any IDE with Maven support)
   - IntelliJ IDEA Community Edition (http://www.jetbrains.com/idea/)
-    => preferred IDE, tested with version 2017.1
+    => preferred IDE, tested with version 2017.2
   - NetBeans IDE (from http://www.netbeans.org), Kotlin support not tested
   - Eclipse (from http://eclipse.org), Kotlin support not tested
 
@@ -363,8 +363,9 @@ multi project), so it's not possible to create circular module dependencies.
   - sportstracker: 
     Main application component
   - st-exerciseviewer: 
-    Component for parsing and displaying HRM exercise files
-    (was named PolarViewer before, but support now many other devices too)
+    Component for parsing and displaying HRM exercise files, written mostly in
+    Kotlin (was named PolarViewer before, but support now many other devices
+    too)
   - st-util: 
     Component with common util classes for calculation, UI and more
   - st-packager:
@@ -397,7 +398,7 @@ The SportsTracker project uses the following libraries:
   - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
       Includes: javax.inject-1.jar
       License: Apache License v2.0
-  - Kotlin 1.1.2 (http://kotlinlang.org/)
+  - Kotlin 1.1.50 (http://kotlinlang.org/)
       License: Apache License v2.0
   - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
@@ -505,4 +506,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2017/05/25
+2017/09/23

@@ -18,11 +18,20 @@ v7.4.1:
      (huge monolithic code blocks)
    - Kotlin can now be used in all modules together with Java
      (no more mixed compilation issues with Groovy code)
+ - ported all data, core and UI classes from Java to Kotlin
+   - less and simpler code, better maintainable
+   - null safety in data model and view classes => no exceptions anymore when
+     specific values are missing / null
+ - Diagram Panel: missing values are not longer displayed as 0 values
+   -> improves readability of diagrams
  - removed compiler warnings in LeafletMap component
  - Issue #159: added support for Garmin Edge 820 exercise files
    - updated Garmin FIT SDK library to version 20.33.01, previous FIT library
      was not able to parse exercise files with the new protocol format 2.0
    - added unit test for a Garmin Edge 820 exercise file
+ - updated Kotlin to version 1.1.50
+ - TimexPwxParser: bugfixes for parsing of recording modes, speed and distance
+   data
 
 v7.4.0:
  SportsTracker changes:

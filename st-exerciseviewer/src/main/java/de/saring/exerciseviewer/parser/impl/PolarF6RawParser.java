@@ -6,6 +6,7 @@ import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 /**
  * This implementation of an ExerciseParser is for reading RAW files of the
@@ -42,7 +43,7 @@ public class PolarF6RawParser extends AbstractExerciseParser {
     /**
      * Informations about this parser.
      */
-    private final ExerciseParserInfo info = new ExerciseParserInfo("Polar F6/F11", new String[]{"frd", "FRD"});
+    private final ExerciseParserInfo info = new ExerciseParserInfo("Polar F6/F11", Arrays.asList("frd", "FRD"));
 
     /**
      * The binary data of the exercise file.
@@ -60,8 +61,7 @@ public class PolarF6RawParser extends AbstractExerciseParser {
         fileContent = readFileToByteArray(filename);
 
         // create an PVExercise object from this data and set file type
-        EVExercise exercise = new EVExercise();
-        exercise.setFileType(EVExercise.ExerciseFileType.F6RAW);
+        EVExercise exercise = new EVExercise(EVExercise.ExerciseFileType.F6RAW);
         exercise.setDeviceName("Polar F Series");
 
         // check wheter the read data fits the expected data length
@@ -110,29 +110,32 @@ public class PolarF6RawParser extends AbstractExerciseParser {
         // to get the bpm limits out of the watch for these limits. Therefore,
         // the percental heartrate representation is used
         // get the heartrate limit data (3 zones + the selected zone)
-        exercise.setHeartRateLimits(new HeartRateLimit[4]);
-        exercise.getHeartRateLimits()[0] = decodeHeartRateLimit(35, 23); // in-zone
-        exercise.getHeartRateLimits()[1] = decodeHeartRateLimit(37, 26); // light
-        exercise.getHeartRateLimits()[1].setLowerHeartRate((short) 60);
-        exercise.getHeartRateLimits()[1].setUpperHeartRate((short) 70);
-        exercise.getHeartRateLimits()[1].setAbsoluteRange(false);
-        exercise.getHeartRateLimits()[2] = decodeHeartRateLimit(39, 29); // moderate
-        exercise.getHeartRateLimits()[2].setLowerHeartRate((short) 71);
-        exercise.getHeartRateLimits()[2].setUpperHeartRate((short) 80);
-        exercise.getHeartRateLimits()[2].setAbsoluteRange(false);
-        exercise.getHeartRateLimits()[3] = decodeHeartRateLimit(41, 32); // hard
-        exercise.getHeartRateLimits()[3].setLowerHeartRate((short) 81);
-        exercise.getHeartRateLimits()[3].setUpperHeartRate((short) 90);
-        exercise.getHeartRateLimits()[3].setAbsoluteRange(false);
+
+        HeartRateLimit heartRateLimit0 = decodeHeartRateLimit(35, 23); // in-zone
+        exercise.getHeartRateLimits().add(heartRateLimit0);
+
+        HeartRateLimit heartRateLimit1 = decodeHeartRateLimit(37, 26); // light
+        heartRateLimit1.setLowerHeartRate((short) 60);
+        heartRateLimit1.setUpperHeartRate((short) 70);
+        heartRateLimit1.setAbsoluteRange(false);
+        exercise.getHeartRateLimits().add(heartRateLimit1);
+
+        HeartRateLimit heartRateLimit2 = decodeHeartRateLimit(39, 29); // moderate
+        heartRateLimit2.setLowerHeartRate((short) 71);
+        heartRateLimit2.setUpperHeartRate((short) 80);
+        heartRateLimit2.setAbsoluteRange(false);
+        exercise.getHeartRateLimits().add(heartRateLimit2);
+
+        HeartRateLimit heartRateLimit3 = decodeHeartRateLimit(41, 32); // hard
+        heartRateLimit3.setLowerHeartRate((short) 81);
+        heartRateLimit3.setUpperHeartRate((short) 90);
+        heartRateLimit3.setAbsoluteRange(false);
+        exercise.getHeartRateLimits().add(heartRateLimit3);
 
         // get energy (in kCal)
         int energyLowByte = fileContent[19];
         int energyHighByte = fileContent[20];
         exercise.setEnergy(energyLowByte + (energyHighByte << 8));
-
-        // set an empty LapList and SampleList
-        exercise.setLapList(new Lap[0]);
-        exercise.setSampleList(new ExerciseSample[0]);
 
         // Note: the following data is appended from the totals section to each
         // exercise by the f6-split-tool to enhance the ExerciseViewer display
@@ -296,15 +299,13 @@ public class PolarF6RawParser extends AbstractExerciseParser {
      * @return the filled HeartRateLimit object
      */
     private HeartRateLimit decodeHeartRateLimit(int offsetLimits, int offsetTimes) {
-        HeartRateLimit hrLimit = new HeartRateLimit();
-        hrLimit.setLowerHeartRate((short) fileContent[offsetLimits + 0]);
-        hrLimit.setUpperHeartRate((short) fileContent[offsetLimits + 1]);
+        short lowerHeartRate = (short) fileContent[offsetLimits + 0];
+        short upperHeartRate = (short) fileContent[offsetLimits + 1];
 
         int hrLimitWithinSecs = decodeBCD(fileContent[offsetTimes]);
         hrLimitWithinSecs += decodeBCD(fileContent[offsetTimes + 1]) * 60;
         hrLimitWithinSecs += decodeBCD(fileContent[offsetTimes + 2]) * 60 * 60;
-        hrLimit.setTimeWithin(hrLimitWithinSecs);
 
-        return hrLimit;
+        return new HeartRateLimit(lowerHeartRate, upperHeartRate, null, hrLimitWithinSecs, null, true);
     }
 }

@@ -3,7 +3,6 @@ package de.saring.exerciseviewer.parser.impl.garminfit;
 import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import com.garmin.fit.DateTime;
 import com.garmin.fit.DeviceInfoMesg;
@@ -42,7 +41,7 @@ class FitMessageListener implements MesgListener {
     /**
      * The parsed exercise.
      */
-    private EVExercise exercise = new EVExercise();
+    private EVExercise exercise = new EVExercise(EVExercise.ExerciseFileType.GARMIN_FIT);
     /**
      * List of created laps (collected in a LinkedList and not in EVExercise array, much faster).
      */
@@ -87,7 +86,6 @@ class FitMessageListener implements MesgListener {
     private void readSessionMessage(SessionMesg mesg) {
 
         // read time data
-        exercise.setFileType(EVExercise.ExerciseFileType.GARMIN_FIT);
         exercise.setDateTime(Date310Utils.dateToLocalDateTime(mesg.getStartTime().getDate()));
         exercise.setDuration(Math.round(mesg.getTotalTimerTime() * 10));
         exercise.setRecordingMode(new RecordingMode());
@@ -106,20 +104,24 @@ class FitMessageListener implements MesgListener {
         // read optional speed data
         if (mesg.getTotalDistance() != null) {
             exercise.getRecordingMode().setSpeed(true);
-            exercise.setSpeed(new ExerciseSpeed());
-            exercise.getSpeed().setDistance(Math.round(mesg.getTotalDistance()));
+
+            int distance = Math.round(mesg.getTotalDistance());
             // AVG speed might be missing in Garmin Forerunner 910XT exercises, will be calculated afterwards
             Float avgSpeed = mesg.getAvgSpeed();
             if (avgSpeed != null) {
-                exercise.getSpeed().setSpeedAVG(
-                        ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
+                avgSpeed = ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed());
+            } else {
+                avgSpeed = 0f;
             }
 
             Float maxSpeed = mesg.getMaxSpeed();
             if (maxSpeed != null) {
-            	exercise.getSpeed().setSpeedMax(
-            			ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getMaxSpeed()));
+            	maxSpeed = ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getMaxSpeed());
+            } else {
+                maxSpeed = 0f;
             }
+
+            exercise.setSpeed(new ExerciseSpeed(avgSpeed, maxSpeed, distance));
         }
 
         // read optional speed data
@@ -130,16 +132,13 @@ class FitMessageListener implements MesgListener {
         // read optional ascent data
         if (mesg.getTotalAscent() != null) {
             exercise.getRecordingMode().setAltitude(true);
-            exercise.setAltitude(new ExerciseAltitude());
-            exercise.getAltitude().setAscent(mesg.getTotalAscent());
+            exercise.setAltitude(new ExerciseAltitude((short) 0, (short) 0, (short) 0, mesg.getTotalAscent()));
         }
 
         // read optional cadence data
         if (mesg.getAvgCadence() != null) {
             exercise.getRecordingMode().setCadence(true);
-            exercise.setCadence(new ExerciseCadence());
-            exercise.getCadence().setCadenceAVG(mesg.getAvgCadence());
-            exercise.getCadence().setCadenceMax(mesg.getMaxCadence());
+            exercise.setCadence(new ExerciseCadence(mesg.getAvgCadence(), mesg.getMaxCadence()));
         }
     }
 
@@ -161,20 +160,20 @@ class FitMessageListener implements MesgListener {
 
         // read optional speed data
         if (mesg.getTotalDistance() != null) {
-            lap.setSpeed(new LapSpeed());
-            lap.getSpeed().setDistance(Math.round(mesg.getTotalDistance()));
+            int lapSpeedDistance = Math.round(mesg.getTotalDistance());
             // AVG speed might be missing in Garmin Forerunner 910XT exercises, will be calculated afterwards
-            Float avgSpeed = mesg.getAvgSpeed();
-            if (avgSpeed != null) {
-                lap.getSpeed().setSpeedAVG(
-                        ConvertUtils.convertMeterPerSecond2KilometerPerHour(mesg.getAvgSpeed()));
+            Float lapSpeedAVG = mesg.getAvgSpeed();
+            if (lapSpeedAVG != null) {
+                lapSpeedAVG = ConvertUtils.convertMeterPerSecond2KilometerPerHour(lapSpeedAVG);
+            } else {
+                lapSpeedAVG = 0f;
             }
+            lap.setSpeed(new LapSpeed(0f, lapSpeedAVG, lapSpeedDistance, null));
         }
 
         // read optional ascent data
         if (mesg.getTotalAscent() != null) {
-            lap.setAltitude(new LapAltitude());
-            lap.getAltitude().setAscent(mesg.getTotalAscent());
+            lap.setAltitude(new LapAltitude((short) 0, mesg.getTotalAscent()));
         }
 
         // read optional position data
@@ -229,7 +228,7 @@ class FitMessageListener implements MesgListener {
 
         if (mesg.getTemperature() != null) {
             temperatureAvailable = true;
-            sample.setTemperature(mesg.getTemperature());
+            sample.setTemperature(mesg.getTemperature().shortValue());
         }
     }
 
@@ -301,7 +300,7 @@ class FitMessageListener implements MesgListener {
         for (ExerciseSample sample : lSamples) {
             sample.setTimestamp(sample.getTimestamp() - startTime);
         }
-        exercise.setSampleList(lSamples.toArray(new ExerciseSample[lSamples.size()]));
+        exercise.getSampleList().addAll(lSamples);
     }
 
     /**
@@ -336,16 +335,16 @@ class FitMessageListener implements MesgListener {
             }
 
             if (lap.getAltitude() != null) {
-                lap.getAltitude().setAltitude(sampleAtLapEnd.getAltitude());
+                lap.setAltitude(lap.getAltitude().copy(
+                        (short) sampleAtLapEnd.getAltitude(), lap.getAltitude().getAscent()));
             }
 
             if (temperatureAvailable) {
-                lap.setTemperature(new LapTemperature());
-                lap.getTemperature().setTemperature(sampleAtLapEnd.getTemperature());
+                lap.setTemperature(new LapTemperature(sampleAtLapEnd.getTemperature()));
             }
         }
 
-        exercise.setLapList(lLaps.toArray(new Lap[lLaps.size()]));
+        exercise.getLapList().addAll(lLaps);
     }
 
     /**
@@ -374,7 +373,7 @@ class FitMessageListener implements MesgListener {
      */
     private void calculateAltitudeSummary() {
         if (exercise.getRecordingMode().isAltitude() &&
-                exercise.getSampleList().length > 0) {
+                exercise.getSampleList().size() > 0) {
 
             short altMin = Short.MAX_VALUE;
             short altMax = Short.MIN_VALUE;
@@ -388,8 +387,8 @@ class FitMessageListener implements MesgListener {
 
             exercise.getAltitude().setAltitudeMin(altMin);
             exercise.getAltitude().setAltitudeMax(altMax);
-            exercise.getAltitude().setAltitudeAVG(
-                    (short) (Math.round(altitudeSum / (double) exercise.getSampleList().length)));
+            exercise.getAltitude().setAltitudeAvg(
+                    (short) (Math.round(altitudeSum / (double) exercise.getSampleList().size())));
         }
     }
 
@@ -399,7 +398,6 @@ class FitMessageListener implements MesgListener {
     private void calculateTemperatureSummary() {
         if (temperatureAvailable) {
             exercise.getRecordingMode().setTemperature(true);
-            exercise.setTemperature(new ExerciseTemperature());
 
             short tempMin = Short.MAX_VALUE;
             short tempMax = Short.MIN_VALUE;
@@ -411,10 +409,8 @@ class FitMessageListener implements MesgListener {
                 temperatureSum += sample.getTemperature();
             }
 
-            exercise.getTemperature().setTemperatureMin(tempMin);
-            exercise.getTemperature().setTemperatureMax(tempMax);
-            exercise.getTemperature().setTemperatureAVG(
-                    (short) (Math.round(temperatureSum / (double) exercise.getSampleList().length)));
+            short tempAvg = (short) (Math.round(temperatureSum / (double) exercise.getSampleList().size()));
+            exercise.setTemperature(new ExerciseTemperature(tempMin, tempAvg, tempMax));
         }
     }
 
@@ -428,8 +424,8 @@ class FitMessageListener implements MesgListener {
     private void calculateMissingAverageSpeed() {
 
         ExerciseSpeed exerciseSpeed = exercise.getSpeed();
-        if (exerciseSpeed != null && exerciseSpeed.getSpeedAVG() == 0f) {
-            exerciseSpeed.setSpeedAVG(CalculationUtils.calculateAvgSpeed(
+        if (exerciseSpeed != null && exerciseSpeed.getSpeedAvg() == 0f) {
+            exerciseSpeed.setSpeedAvg(CalculationUtils.calculateAvgSpeed(
                     exerciseSpeed.getDistance() / 1000f, Math.round(exercise.getDuration() / 10f)));
         }
 
@@ -472,7 +468,7 @@ class FitMessageListener implements MesgListener {
 	private void calculateMissingMaxSpeed() {
         if (exercise.getSpeed().getSpeedMax() < 0.01) {
 
-            Stream.of(exercise.getSampleList()) //
+            exercise.getSampleList().stream() //
                 .mapToDouble(sample -> sample.getSpeed()) //
                 .max() //
                 .ifPresent(maxSpeed -> exercise.getSpeed().setSpeedMax((float) maxSpeed));
@@ -483,9 +479,9 @@ class FitMessageListener implements MesgListener {
      * Calculates the average heartrate of the exercise, if missing (e.g. in Fenix exercise files).
      */
     private void calculateMissingHeartRateAVG() {
-		if (exercise.getHeartRateAVG() == 0) {
+		if (exercise.getHeartRateAVG() == null) {
 
-            Stream.of(exercise.getSampleList()) //
+            exercise.getSampleList().stream() //
                     .mapToDouble(sample -> sample.getHeartRate()) //
                     .average() //
                     .ifPresent(avgHeartRate -> exercise.setHeartRateAVG((short) Math.round(avgHeartRate)));
@@ -496,9 +492,9 @@ class FitMessageListener implements MesgListener {
      * Calculates the maximum heartrate of the exercise, if missing (e.g. in Fenix exercise files).
      */
 	private void calculateMissingHeartRateMax() {
-        if (exercise.getHeartRateMax() == 0) {
+        if (exercise.getHeartRateMax() == null) {
 
-            Stream.of(exercise.getSampleList()) //
+            exercise.getSampleList().stream() //
                     .mapToInt(sample -> sample.getHeartRate()) //
                     .max() //
                     .ifPresent(maxHeartRate -> exercise.setHeartRateMax((short) maxHeartRate));

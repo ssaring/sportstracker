@@ -40,8 +40,8 @@ class PolarPedParserTest {
         assertEquals("Polar PED", exercise.deviceName)
         assertEquals(LocalDateTime.of(2010, 4, 2, 19, 19, 0), exercise.dateTime)
         assertEquals(31560, exercise.duration)
-        assertEquals(12800, exercise.speed.distance)
-        assertEquals(14600, (exercise.speed.speedAVG * 1000).toInt())
+        assertEquals(12800, exercise.speed!!.distance)
+        assertEquals(14600, (exercise.speed!!.speedAvg * 1000).toInt())
 
         assertEquals(367, exercise.energy)
 

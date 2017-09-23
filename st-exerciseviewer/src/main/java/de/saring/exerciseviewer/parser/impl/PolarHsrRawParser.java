@@ -1,12 +1,19 @@
 package de.saring.exerciseviewer.parser.impl;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
 import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.*;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.ExerciseSample;
+import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.data.HeartRateLimit;
+import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.data.LapSpeed;
+import de.saring.exerciseviewer.data.RecordingMode;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
 import de.saring.util.unitcalc.ConvertUtils;
-
-import java.time.LocalDateTime;
 
 /**
  * This implementation of an ExerciseParser is for reading RAW files of the
@@ -31,7 +38,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
     /**
      * Informations about this parser.
      */
-    private final ExerciseParserInfo info = new ExerciseParserInfo("Polar HSR", new String[]{"hsr", "HSR"});
+    private final ExerciseParserInfo info = new ExerciseParserInfo("Polar HSR", Arrays.asList("hsr", "HSR"));
 
     /**
      * The binary data of the exercise file.
@@ -73,8 +80,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
 
         // create an PVExercise object from this data and set file type
         // TODO - support S410 and S520
-        EVExercise exercise = new EVExercise();
-        exercise.setFileType(EVExercise.ExerciseFileType.S510RAW);
+        EVExercise exercise = new EVExercise(EVExercise.ExerciseFileType.S510RAW);
         exercise.setDeviceName("Polar S4xx/S5xx Series");
 
         // get bytes in file
@@ -218,7 +224,7 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
 
         if (!fBike1 && !fBike2) {
             recMode.setSpeed(false);
-            recMode.setBikeNumber((byte) 0);
+            recMode.setBikeNumber(null);
         } else {
             recMode.setSpeed(true);
             if (fBike1) {
@@ -233,10 +239,14 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
 
         // get the heartrate limit data (Polar S510 has 3 limits)
         int indexHRLimitStart = 28;
-        exercise.setHeartRateLimits(new HeartRateLimit[3]);
-        exercise.getHeartRateLimits()[0] = decodeHeartRateLimit(indexHRLimitStart + 0, indexHRLimitStart + 9);
-        exercise.getHeartRateLimits()[1] = decodeHeartRateLimit(indexHRLimitStart + 2, indexHRLimitStart + 18);
-        exercise.getHeartRateLimits()[2] = decodeHeartRateLimit(indexHRLimitStart + 4, indexHRLimitStart + 27);
+
+        HeartRateLimit hrLimit1 = decodeHeartRateLimit(indexHRLimitStart + 0, indexHRLimitStart + 9);
+        exercise.getHeartRateLimits().add(hrLimit1);
+        HeartRateLimit hrLimit2 = decodeHeartRateLimit(indexHRLimitStart + 2, indexHRLimitStart + 18);
+        exercise.getHeartRateLimits().add(hrLimit2);
+        HeartRateLimit hrLimit3 = decodeHeartRateLimit(indexHRLimitStart + 4, indexHRLimitStart + 27);
+        exercise.getHeartRateLimits().add(hrLimit3);
+
         for (HeartRateLimit hrLimit : exercise.getHeartRateLimits()) {
             hrLimit.setAbsoluteRange(fHeartRateRangeAbsolute);
         }
@@ -278,36 +288,30 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
 
         // get speed (bicycle) related data of exercise (if recorded)
         if (recMode.isSpeed()) {
-            ExerciseSpeed speed = new ExerciseSpeed();
-            exercise.setSpeed(speed);
 
             // get exercise distance (in 1/10th of km)
             int distance = (sdata(1, 84) + (sdata(1, 85) << 8)) * 100;
-            if (fMetricUnits) {
-                speed.setDistance(distance);
-            } else {
-                speed.setDistance(ConvertUtils.convertMiles2Kilometer(distance));
+            if (!fMetricUnits) {
+                distance = ConvertUtils.convertMiles2Kilometer(distance);
             }
 
             // get AVG speed
             int avgSpeedPart1 = sdata(1, 86);
             int avgSpeedPart2 = (sdata(1, 87) & 0x0f);
             float avgSpeed = ((avgSpeedPart2 << 8) | avgSpeedPart1) / 16f;
-            if (fMetricUnits) {
-                speed.setSpeedAVG(avgSpeed);
-            } else {
-                speed.setSpeedAVG((float) ConvertUtils.convertMiles2Kilometer(avgSpeed));
+            if (!fMetricUnits) {
+                avgSpeed = (float) ConvertUtils.convertMiles2Kilometer(avgSpeed);
             }
 
             // get max speed
             int maxSpeedPart1 = sdata(1, 87) >> 4;
             int maxSpeedPart2 = sdata(1, 88);
             float maxSpeed = ((maxSpeedPart2 << 4) | maxSpeedPart1) / 16f;
-            if (fMetricUnits) {
-                speed.setSpeedMax(maxSpeed);
-            } else {
-                speed.setSpeedMax((float) ConvertUtils.convertMiles2Kilometer(maxSpeed));
+            if (!fMetricUnits) {
+                maxSpeed = (float) ConvertUtils.convertMiles2Kilometer(maxSpeed);
             }
+
+            exercise.setSpeed(new ExerciseSpeed(avgSpeed, maxSpeed, distance));
         }
 
         // get cadence (bicycle) data of exercise (if recorded)
@@ -343,17 +347,13 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         }
 
         // process all laps
-        if (recMode.isIntervalExercise()) {
-            exercise.setLapList(new Lap[numberOfMeas]);
-        } else {
-            exercise.setLapList(new Lap[numberOfLaps]);
-        }
-        for (int l = 0; l < exercise.getLapList().length; l++) {
+        int lapCount = recMode.isIntervalExercise() ? numberOfMeas : numberOfLaps;
+        for (int l = 0; l < lapCount; l++) {
             int os = l * lapSize; // data offset 
 
             // get offset where the current lap starts
             Lap lap = new Lap();
-            exercise.getLapList()[l] = lap;
+            exercise.getLapList().add(lap);
 
             // get lap split time (in 1/10th seconds)
             int bLapEndHour = sdata(lapsec, os + 2);
@@ -369,29 +369,25 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
 
             // get speed (bicycle) related data of lap (if recorded)
             if (recMode.isSpeed()) {
-                lap.setSpeed(new LapSpeed());
 
                 // TODO get lap distance (in 1/10th of km)
                 int lapDistance = sdata(lapsec, os + 6);
                 lapDistance += (sdata(lapsec, os + 7) << 8);
                 //lapDistance += (sdata(lapsec, os + 8) << 16); not sure about this byte..
                 lapDistance *= 100;
-                if (fMetricUnits) {
-                    lap.getSpeed().setDistance(lapDistance);
-                } else {
-                    lap.getSpeed().setDistance(ConvertUtils.convertMiles2Kilometer(lapDistance));
+                if (!fMetricUnits) {
+                    lapDistance = ConvertUtils.convertMiles2Kilometer(lapDistance);
                 }
 
                 // get speed at end of lap
                 float lapEndSpeed = sdata(lapsec, os + 9);
                 lapEndSpeed += sdata(lapsec, os + 10) << 8;
                 lapEndSpeed *= 5.0f / 80;
-                if (fMetricUnits) {
-                    lap.getSpeed().setSpeedEnd(lapEndSpeed);
-                } else {
-                    lap.getSpeed().setSpeedEnd((float) ConvertUtils.convertMiles2Kilometer(lapEndSpeed));
+                if (!fMetricUnits) {
+                    lapEndSpeed = (float) ConvertUtils.convertMiles2Kilometer(lapEndSpeed);
                 }
 
+                lap.setSpeed(new LapSpeed(lapEndSpeed, 0f, lapDistance, null));
             } // end of if(isSpeed())
 
             // process exercise interval data | TODO, implement in polarviewer
@@ -406,14 +402,11 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         int hrsec = 3;
         int spdsec = 4 + (numberOfSamples - 1) / 60;
 
-        // create sample list
-        exercise.setSampleList(new ExerciseSample[numberOfSamples]);
-
-        // process all recorded samples
+        // create sample list => process all recorded samples
         for (int i = 0; i < numberOfSamples; i++) {
             ExerciseSample exeSample = new ExerciseSample();
             exeSample.setTimestamp(i * exercise.getRecordingInterval() * 1000L);
-            exercise.getSampleList()[i] = exeSample;
+            exercise.getSampleList().add(exeSample);
 
             // get sample heartrate
             exeSample.setHeartRate((short) sdata(hrsec, i));
@@ -590,25 +583,22 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
      * @return the filled HeartRateLimit object
      */
     private HeartRateLimit decodeHeartRateLimit(int offsetLimits, int offsetTimes) throws EVException {
-        HeartRateLimit hrLimit = new HeartRateLimit();
-        hrLimit.setLowerHeartRate((short) sdata(1, offsetLimits + 0));
-        hrLimit.setUpperHeartRate((short) sdata(1, offsetLimits + 1));
+        short lowerHeartRate = (short) sdata(1, offsetLimits + 0);
+        short upperHeartRate = (short) sdata(1, offsetLimits + 1);
 
         int hrLimitBelowSecs = decodeBCD(sdata(1, offsetTimes + 0));
         hrLimitBelowSecs += decodeBCD(sdata(1, offsetTimes + 1)) * 60;
         hrLimitBelowSecs += decodeBCD(sdata(1, offsetTimes + 2)) * 60 * 60;
-        hrLimit.setTimeBelow(hrLimitBelowSecs);
 
         int hrLimitWithinSecs = decodeBCD(sdata(1, offsetTimes + 3));
         hrLimitWithinSecs += decodeBCD(sdata(1, offsetTimes + 4)) * 60;
         hrLimitWithinSecs += decodeBCD(sdata(1, offsetTimes + 5)) * 60 * 60;
-        hrLimit.setTimeWithin(hrLimitWithinSecs);
 
         int hrLimitAboveSecs = decodeBCD(sdata(1, offsetTimes + 6));
         hrLimitAboveSecs += decodeBCD(sdata(1, offsetTimes + 7)) * 60;
         hrLimitAboveSecs += decodeBCD(sdata(1, offsetTimes + 8)) * 60 * 60;
-        hrLimit.setTimeAbove(hrLimitAboveSecs);
 
-        return hrLimit;
+        return new HeartRateLimit(lowerHeartRate, upperHeartRate,
+                hrLimitBelowSecs, hrLimitWithinSecs, hrLimitAboveSecs, true);
     }
 }
