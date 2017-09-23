@@ -36,7 +36,7 @@ class ExerciseParserFactoryTest {
         parser = ExerciseParserFactory.getParser("C:\\Test 123\\Exercise3.fit")
         assertTrue(parser is GarminFitParser)
 
-        // tests for RS200SD parser (implemented in Groovy)
+        // tests for RS200SD parser (implemented in Kotlin)
         parser = ExerciseParserFactory.getParser("exercises/exercise1.xml")
         assertEquals("de.saring.exerciseviewer.parser.impl.PolarRS200SDParser", parser.javaClass.name)
 
