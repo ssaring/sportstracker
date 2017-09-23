@@ -3,7 +3,6 @@ SportsTracker-TODO
 
 ST-ExerciseViewer Kotlin port:
 - Diagram panel does not work (tested with a FIT file)
-- port AbstractExerciseParser to Kotlin
 - port DiagramPanelController to Kotlin
   - make sure that Diagram panel does not throws NPE when exercise samples have no heartrate value (e.g. for 06.09.2017)
 - port Parser interface, abstract class and factory to Kotlin

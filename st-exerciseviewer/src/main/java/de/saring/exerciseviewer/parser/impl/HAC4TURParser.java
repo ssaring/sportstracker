@@ -1,19 +1,29 @@
 package de.saring.exerciseviewer.parser.impl;
 
-import de.saring.exerciseviewer.core.EVException;
-import de.saring.exerciseviewer.data.*;
-import de.saring.exerciseviewer.parser.AbstractExerciseParser;
-import de.saring.exerciseviewer.parser.ExerciseParserInfo;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.saring.exerciseviewer.core.EVException;
+import de.saring.exerciseviewer.data.EVExercise;
+import de.saring.exerciseviewer.data.ExerciseAltitude;
+import de.saring.exerciseviewer.data.ExerciseCadence;
+import de.saring.exerciseviewer.data.ExerciseSample;
+import de.saring.exerciseviewer.data.ExerciseSpeed;
+import de.saring.exerciseviewer.data.ExerciseTemperature;
+import de.saring.exerciseviewer.data.HeartRateLimit;
+import de.saring.exerciseviewer.data.Lap;
+import de.saring.exerciseviewer.data.LapAltitude;
+import de.saring.exerciseviewer.data.LapSpeed;
+import de.saring.exerciseviewer.data.LapTemperature;
+import de.saring.exerciseviewer.data.RecordingMode;
+import de.saring.exerciseviewer.parser.AbstractExerciseParser;
+import de.saring.exerciseviewer.parser.ExerciseParserInfo;
+
 /**
- * This class implements a parser for the .TUR files which are created with
- * CicloSport HACTronic software.
+ * This class implements a parser for the .TUR files which are created with CicloSport HACTronic software.
  *
  * @author Stefan Saring (the C# version was done by Ilja Booij)
  */
@@ -175,7 +185,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         }
     }
 
-    private String[] fileContents;
+    private List<String> fileContent;
     private int[] fileContentsBytes;
     private int nrOfLinesInNote;
     private int sampleInterval;
@@ -191,14 +201,14 @@ public class HAC4TURParser extends AbstractExerciseParser {
         // read file to array of strings and to array of bytes.
         // we'll need both as the tur file contains both text (header)
         // and binary (samples) information.
-        fileContents = readFileToStringArray(filename);
+        fileContent = readFileToStringList(filename);
         fileContentsBytes = readFileToByteArray(filename);
 
         // Create a new exercise file and give it the right type
         EVExercise exercise = new EVExercise(EVExercise.ExerciseFileType.HAC4TUR);
 
         // check the first line to see if we're really dealing with a HAC4 TUR file
-        String strVersion = fileContents[FilePosition.VERSION_HEADER];
+        String strVersion = fileContent.get(FilePosition.VERSION_HEADER);
         if (strVersion == null || !strVersion.equals(VERSION_HEADER_STRING)) {
             throw new EVException("Failed to read HAC4 TUR File. Can't find correct header in file");
         }
@@ -217,7 +227,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         recMode.setTemperature(true);
 
         // get date and time
-        String strDateAndTime = readLine(FilePosition.START_DATE) + "-" + readLine(FilePosition.START_TIME);
+        String strDateAndTime = fileContent.get(FilePosition.START_DATE) + "-" + fileContent.get(FilePosition.START_TIME);
         try {
             exercise.setDateTime(LocalDateTime.parse(strDateAndTime, DateTimeFormatter.ofPattern("dd.MM.yyy-HH:mm")));
         } catch (Exception e) {
@@ -419,7 +429,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         // find length of all strings to this point
         int lengthUntilSamples = 0;
         for (int i = 0; i < fpBeginSamples; i++)
-            lengthUntilSamples += fileContents[i].length() + 1;
+            lengthUntilSamples += fileContent.get(i).length() + 1;
 
         // start reading samples
         int[] firstSampleBytes = Arrays.copyOfRange(fileContentsBytes, lengthUntilSamples, lengthUntilSamples + 20);
@@ -444,7 +454,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         // find length of all strings to this point
         int lengthUntilSamples = 0;
         for (int i = 0; i < fpBeginSamples; i++) {
-            lengthUntilSamples += fileContents[i].length() + 1;
+            lengthUntilSamples += fileContent.get(i).length() + 1;
         }
 
         // start reading samples
@@ -482,7 +492,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
      */
     private float readFloat(int pos) throws EVException {
         try {
-            return Float.parseFloat(readLine(pos));
+            return Float.parseFloat(fileContent.get(pos));
         } catch (Exception e) {
             throw new EVException("Invalid value for float at position " + pos, e);
         }
@@ -493,16 +503,9 @@ public class HAC4TURParser extends AbstractExerciseParser {
      */
     private int readInteger(int pos) throws EVException {
         try {
-            return Integer.parseInt(readLine(pos));
+            return Integer.parseInt(fileContent.get(pos));
         } catch (Exception e) {
             throw new EVException("Invalid value for integer at position " + pos, e);
         }
-    }
-
-    /**
-     * Read a line from the file contents.
-     */
-    private String readLine(int pos) {
-        return fileContents[pos];
     }
 }
