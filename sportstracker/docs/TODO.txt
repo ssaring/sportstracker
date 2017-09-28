@@ -13,7 +13,7 @@ EV Diagram panel:
   (e.g. in exercise "testdata/gpx/bike-tour-track_only.gpx")
 
 Java 9 migration:
-- Ensure Java 9 compatibility (problems in ControlsFX, ...?)
+- Ensure Java 9 compatibility, update dependencies (ControlsFX 9.0.0, ...)
 - Update to Java 9, make use of these features:
   - JEP 272: Platform-Specific Desktop Features for mac-specific menu items
     http://openjdk.java.net/jeps/272
