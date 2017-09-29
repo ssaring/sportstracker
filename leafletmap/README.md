@@ -20,7 +20,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 * leaflet-color-markers (included, modified)
     * Homepage: https://github.com/pointhi/leaflet-color-markers
     * License: not specified
-* jackson-module-kotlin 2.8.7 (for the demo only, uses Jackson 2.8)
+* jackson-module-kotlin 2.9.1 (for the demo only, uses Jackson 2.8)
     * Homepage: https://github.com/FasterXML/jackson-module-kotlin
     * License: not specified
 

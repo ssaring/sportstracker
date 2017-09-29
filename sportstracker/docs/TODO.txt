@@ -1,14 +1,9 @@
 SportsTracker-TODO
 ==================
 
-ExerciseViewer Diagram panel:
-- Issue #162: ExerciseViewer Diagram panel: display average line for heartrate and other data
-- remove heartrate axis type when no heartrate is available
-- don't display a chart when no data at all available (as done in Track panel)
-  (e.g. in exercise "testdata/gpx/bike-tour-track_only.gpx")
-
 Java 9 migration:
 - Ensure Java 9 compatibility, update dependencies (ControlsFX 9.0.0, ...)
+  - test all features
 - Update to Java 9, make use of these features:
   - JEP 272: Platform-Specific Desktop Features for mac-specific menu items
     http://openjdk.java.net/jeps/272
@@ -20,6 +15,12 @@ Java 9 migration:
     https://docs.oracle.com/javase/9/language/toc.htm#JSLAN-GUID-A920DB06-0FD1-4F9C-8A9A-15FC979D5DA3
   - Use Java Module System?
     Does the JavaFX packager (and the maven plugin) already support modules?
+
+ExerciseViewer Diagram panel:
+- Issue #162: ExerciseViewer Diagram panel: display average line for heartrate and other data
+- remove heartrate axis type when no heartrate is available
+- don't display a chart when no data at all available (as done in Track panel)
+  (e.g. in exercise "testdata/gpx/bike-tour-track_only.gpx")
 
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore
