@@ -53,7 +53,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Changelog
 
-LeafletMap 1.0.1-SNAPSHOT:
+LeafletMap 1.0.1:
 
 * Updated to Kotlin 1.1.50
 * API: added methods for setting the center position and zoom level
