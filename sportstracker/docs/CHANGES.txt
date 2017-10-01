@@ -8,7 +8,7 @@ v7.4.1:
    - removed layout workarounds (JavaFX bugs have been fixed)
  - STApplication: removed Swing Look&Feel workaround (no Swing map anymore)
  - Refactoring: removed resource lookup in entity classes
- - updated Java runtime to Java SE/FX 8u131, contains a bugfix for a memory
+ - updated Java runtime to Java SE/FX 8u144, contains a bugfix for a memory
    leak in the WebView used by LeafletMap
  ExerciseViewer changes:
  - ported all exercise parsers and the unit tests written in Groovy to Kotlin

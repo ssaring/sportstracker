@@ -1,13 +1,8 @@
 SportsTracker-TODO
 ==================
 
-- imminent ST release needed due to parsing problems with newer Garmin devices
-  (e.g. for Garmin Edge 820 or Edge 520 with firmware >= 12.10)
-  -> bugfix is done and tested
-- update ControlsFX to version 8.40.13
+ExerciseViewer Diagram panel:
 - Issue #162: ExerciseViewer Diagram panel: display average line for heartrate and other data
-
-EV Diagram panel:
 - remove heartrate axis type when no heartrate is available
 - don't display a chart when no data at all available (as done in Track panel)
   (e.g. in exercise "testdata/gpx/bike-tour-track_only.gpx")
