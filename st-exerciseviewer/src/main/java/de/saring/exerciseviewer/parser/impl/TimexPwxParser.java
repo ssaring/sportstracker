@@ -3,17 +3,17 @@ package de.saring.exerciseviewer.parser.impl;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import de.saring.exerciseviewer.core.EVException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.data.ExerciseAltitude;
 import de.saring.exerciseviewer.data.ExerciseSample;
@@ -58,7 +58,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
     /**
      * Informations about this parser.
      */
-    private final ExerciseParserInfo info = new ExerciseParserInfo("Timex PWX", Arrays.asList("pwx", "PWX"));
+    private final ExerciseParserInfo info = new ExerciseParserInfo("Timex PWX", List.of("pwx", "PWX"));
 
     private static class MinMaxAvg {
         private float min = 0;
@@ -477,7 +477,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         recMode.setIntervalExercise(false); //
 
         exercise.setRecordingMode(recMode);
-        exercise.getHeartRateLimits().addAll(Arrays.asList(Zones));
+        exercise.getHeartRateLimits().addAll(List.of(Zones));
         return exercise;
     }
 

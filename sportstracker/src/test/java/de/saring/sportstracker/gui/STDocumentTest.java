@@ -1,13 +1,13 @@
 package de.saring.sportstracker.gui;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Unit tests of class STDocument/Impl. All the involved components will be
@@ -40,10 +40,10 @@ public class STDocumentTest {
         assertEquals(defaultDataDirectory, documentImpl.getDataDirectory());
 
         // must not work, the user must use the '=' character
-        document.evaluateCommandLineParameters(Arrays.asList("--datadir", "temp"));
+        document.evaluateCommandLineParameters(List.of("--datadir", "temp"));
         assertEquals(defaultDataDirectory, documentImpl.getDataDirectory());
 
-        document.evaluateCommandLineParameters(Arrays.asList("--foo", "--datadir=temp"));
+        document.evaluateCommandLineParameters(List.of("--foo", "--datadir=temp"));
         assertEquals("temp", documentImpl.getDataDirectory());
     }
 }

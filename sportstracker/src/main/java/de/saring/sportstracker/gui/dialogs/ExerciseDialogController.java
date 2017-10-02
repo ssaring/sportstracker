@@ -3,27 +3,9 @@ package de.saring.sportstracker.gui.dialogs;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.stage.Window;
-import javafx.util.StringConverter;
-import javafx.util.converter.NumberStringConverter;
 
 import javax.inject.Inject;
 
@@ -48,6 +30,23 @@ import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
 import de.saring.util.gui.javafx.TimeToStringConverter;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Control;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.stage.Window;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 /**
  * Controller (MVC) class of the Exercise dialog for editing / adding Exercise entries.
@@ -315,7 +314,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         document.getSportTypeList().forEach(sportType -> cbSportType.getItems().add(sportType));
 
         cbIntensity.setConverter(new IntensityToStringConverter());
-        cbIntensity.getItems().addAll(Arrays.asList(IntensityType.values()));
+        cbIntensity.getItems().addAll(List.of(IntensityType.values()));
 
         // update the sport type dependent choiceboxes on each sport type selection change
         cbSportType.addEventHandler(ActionEvent.ACTION, event -> fillSportTypeDependentChoiceBoxes());

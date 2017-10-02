@@ -5,8 +5,6 @@ Java 9 migration:
 - Update to Java 9, make use of these features:
   - JEP 226: UTF-8 Property Resource Bundles (no conversion for umlauts anymore)
     http://openjdk.java.net/jeps/226
-  - JEP 269: Convenience Factory Methods for Collections
-    http://openjdk.java.net/jeps/269
   - More Concise try-with-resources Statements
     https://docs.oracle.com/javase/9/language/toc.htm#JSLAN-GUID-A920DB06-0FD1-4F9C-8A9A-15FC979D5DA3
   - Use Java Module System?

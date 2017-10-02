@@ -1,16 +1,17 @@
 package de.saring.exerciseviewer.parser.impl.garminfit;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.List;
+
 import com.garmin.fit.Decode;
 import com.garmin.fit.MesgListener;
+
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * This ExerciseParser implementation is for reading Garmin FIT files (binary
@@ -31,7 +32,7 @@ public class GarminFitParser extends AbstractExerciseParser {
     /**
      * Informations about this parser.
      */
-    private final ExerciseParserInfo info = new ExerciseParserInfo("Garmin FIT", Arrays.asList("fit", "FIT"));
+    private final ExerciseParserInfo info = new ExerciseParserInfo("Garmin FIT", List.of("fit", "FIT"));
 
 
     @Override
