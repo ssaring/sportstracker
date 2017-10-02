@@ -2,6 +2,10 @@ Changelog
 ---------
 
 v7.4.2:
+ SportsTracker changes:
+ - Java 9 update
+   - updated Maven plugins
+   - updated all dependencies / libraries to current versions
 
 v7.4.1:
  SportsTracker changes:
@@ -12,9 +16,6 @@ v7.4.1:
  - Refactoring: removed resource lookup in entity classes
  - updated Java runtime to Java SE/FX 8u144, contains a bugfix for a memory
    leak in the WebView used by LeafletMap
- - Java 9 update
-   - updated Maven plugins
-   - updated all dependencies / libraries to current versions
  ExerciseViewer changes:
  - ported all exercise parsers and the unit tests written in Groovy to Kotlin
    - less dependencies, Groovy is not needed anymore (was big)
