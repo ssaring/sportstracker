@@ -6,6 +6,10 @@ v7.4.2:
  - Java 9 update
    - updated Maven plugins
    - updated all dependencies / libraries to current versions
+ - JEP 226 usage: converted all translation files of the resource bundles to
+   UTF-8 encoding and removed all Unicode escape sequences (e.g. \u00c4)
+   - creation or update of translation files is much easier now (see I18N.txt)
+ - fixed encoding problems in dutch translation
 
 v7.4.1:
  SportsTracker changes:

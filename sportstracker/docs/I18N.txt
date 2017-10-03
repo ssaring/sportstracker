@@ -16,11 +16,9 @@ The following steps needs to be done for creating new translations:
 - Create a new file with the language code filename extension and copy the
   content of the default language "SportsTracker.properties" into it.
 - Translate all the contained propeties values.
-- The properties-file must use ASCII encoding, special characters must use
-  Unicode escape sequences (e.g. \u00c4 for the german Ä). This is done 
-  automatically when editing the translation files in NetBeans. Users of other
-  editors need to convert the created properties-file using the command:
-  "native2ascii SportsTracker_de.properties SportsTracker_de.properties"
+- The properties-file must use UTF-8 encoding, special characters must not use
+  Unicode escape sequences (e.g. \u00c4). Since Java 9 this is not required
+  anymore.
 
 For updating an existing translation you should use a diff-tool (e.g. meld on
 Linux) and compare the default language file "SportsTracker.properties" with
@@ -29,16 +27,19 @@ You need to add all the missing properties to your language file and remove
 all the properties which doesn't exists in the default language anymore.
 
 The new or updated translations can be tested after a rebuild on the next 
-application startup (is very simple when using the NetBeans IDE).
+application startup. If you want to test a language other than your current
+locale, you need to pass the language code with the system property
+"user.language" on application startup. Example for french locale:
 
-When the window or dialogs doesn't show the complete GUI for the translated
-language, then you need to delete the session state files with the window
-positions and sizes in the directory $HOME/.sportstracker/ (e.g.
-"st.dlg.about.session.xml").
+  java -Duser.language=fr -jar sportstracker-7.4.1.jar
+
+The IntelliJ IDEA IDE provides a very handy resource bundle editor, it can
+display and edit the translations for all supported languages for each text
+resource in one view.
 
 
 Stefan Saring
-2015/01/24
+2017/10/03
 
 
 History of resource changes for each release
