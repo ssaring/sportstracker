@@ -1,25 +1,22 @@
 SportsTracker-TODO
 ==================
 
+Java 9 migration:
+- completed (no compile errors, no test errors, no usage problems)
+- JavaFX packaging does not work, the Java 9 support of the javafx-maven-plugin is not ready
+  (see https://github.com/javafx-maven-plugin/javafx-maven-plugin/issues/287 )
+- Use of Java Module System / Jigsaw?
+  - the JavaFX packager needs to support modules first
+- use of JEP 272: Platform-Specific Desktop Features for mac-specific menu items
+  (see http://openjdk.java.net/jeps/272)
+  - currently for Swing apps only
+  - JavaFX support might be added in Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
+
 ExerciseViewer Diagram panel:
 - Issue #162: ExerciseViewer Diagram panel: display average line for heartrate and other data
 - remove heartrate axis type when no heartrate is available
 - don't display a chart when no data at all available (as done in Track panel)
   (e.g. in exercise "testdata/gpx/bike-tour-track_only.gpx")
-
-Java 9 migration:
-- Ensure Java 9 compatibility, update dependencies (ControlsFX 9.0.0, ...)
-- Update to Java 9, make use of these features:
-  - JEP 272: Platform-Specific Desktop Features for mac-specific menu items
-    http://openjdk.java.net/jeps/272
-  - JEP 226: UTF-8 Property Resource Bundles (no conversion for umlauts anymore)
-    http://openjdk.java.net/jeps/226
-  - JEP 269: Convenience Factory Methods for Collections
-    http://openjdk.java.net/jeps/269
-  - More Concise try-with-resources Statements
-    https://docs.oracle.com/javase/9/language/toc.htm#JSLAN-GUID-A920DB06-0FD1-4F9C-8A9A-15FC979D5DA3
-  - Use Java Module System?
-    Does the JavaFX packager (and the maven plugin) already support modules?
 
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore
@@ -58,7 +55,7 @@ Java 8 migration status:
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
-  => JDK 9 will provide a new API for macOS specific dock and menu integration
+  => JDK 9/10 will provide a new API for macOS specific dock and menu integration
 - SportsTracker.app and native packages work properly, the name and icons are
   set via JVM parameter there
 

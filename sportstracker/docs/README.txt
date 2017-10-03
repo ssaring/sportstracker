@@ -413,17 +413,17 @@ The SportsTracker project uses the following libraries:
     - License: not specified
   - commons-cli 1.2 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - sqlite-jdbc 3.8.11.2 (https://github.com/xerial/sqlite-jdbc)
+  - sqlite-jdbc 3.20.0 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
   - JUnit 4.12 (http://www.junit.org)
       License: Common Public License v1.0
-  - Mockito 1.10.19 (http://code.google.com/p/mockito/)
+  - Mockito 2.10.0 (http://code.google.com/p/mockito/)
       License: MIT License
   - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 20.33.01
       URL: http://www.thisisant.com/pages/products/fit-sdk
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: https://www.thisisant.com/resources/fit
-  - jfx-testrunner 1.1 (https://github.com/sialcasa/jfx-testrunner)
+  - jfx-testrunner 1.2 (https://github.com/sialcasa/jfx-testrunner)
       License: Apache License v2.0
 
 All dependencies will be downloaded automatically by Maven. JFreeChart and the

@@ -32,7 +32,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
     /**
      * Informations about this parser.
      */
-    private final ExerciseParserInfo info = new ExerciseParserInfo("HACTronic", Arrays.asList("tur", "TUR"));
+    private final ExerciseParserInfo info = new ExerciseParserInfo("HACTronic", List.of("tur", "TUR"));
 
     /**
      * String that's always on top of TUR files.
@@ -416,7 +416,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
 
         lap.setTemperature(new LapTemperature(lastSample.getTemperature()));
 
-        return Arrays.asList(lap);
+        return List.of(lap);
     }
 
     /**

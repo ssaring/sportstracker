@@ -6,13 +6,11 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
-import de.saring.sportstracker.data.EntryFilter;
-import de.saring.sportstracker.data.EntryList;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -34,6 +32,8 @@ import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.TextAnchor;
 
 import de.saring.sportstracker.core.STOptions;
+import de.saring.sportstracker.data.EntryFilter;
+import de.saring.sportstracker.data.EntryList;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportSubType;
@@ -136,13 +136,13 @@ public class OverviewDialogController extends AbstractDialogController {
     private void setupChoiceBoxes() {
 
         // fill choice boxes
-        cbTimeRange.getItems().addAll(Arrays.asList(TimeRangeType.values()));
+        cbTimeRange.getItems().addAll(List.of(TimeRangeType.values()));
         cbTimeRange.getSelectionModel().select(TimeRangeType.LAST_12_MONTHS);
 
-        cbDisplay.getItems().addAll(Arrays.asList(ValueType.values()));
+        cbDisplay.getItems().addAll(List.of(ValueType.values()));
         cbDisplay.getSelectionModel().select(ValueType.DISTANCE);
 
-        cbSportTypeMode.getItems().addAll(Arrays.asList(OverviewType.values()));
+        cbSportTypeMode.getItems().addAll(List.of(OverviewType.values()));
         cbSportTypeMode.getSelectionModel().select(OverviewType.EACH_SPLITTED);
 
         cbSportTypeList.setConverter(new NameableStringConverter<>());
