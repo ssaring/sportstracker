@@ -10,6 +10,9 @@ v7.4.2:
    UTF-8 encoding and removed all Unicode escape sequences (e.g. \u00c4)
    - creation or update of translation files is much easier now (see I18N.txt)
  - fixed encoding problems in dutch translation
+ ExerciseViewer changes:
+ - GarminFitParser: bugfix for handling of missing temperature sample data
+   (GitHub issue #168, occurred with Edge 800 files)
 
 v7.4.1:
  SportsTracker changes:

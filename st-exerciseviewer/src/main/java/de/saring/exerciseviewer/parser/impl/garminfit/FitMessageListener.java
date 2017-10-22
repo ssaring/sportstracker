@@ -402,14 +402,19 @@ class FitMessageListener implements MesgListener {
             short tempMin = Short.MAX_VALUE;
             short tempMax = Short.MIN_VALUE;
             int temperatureSum = 0;
+            int temperatureCount = 0;
 
             for (ExerciseSample sample : exercise.getSampleList()) {
-                tempMin = (short) Math.min(sample.getTemperature(), tempMin);
-                tempMax = (short) Math.max(sample.getTemperature(), tempMax);
-                temperatureSum += sample.getTemperature();
+                // it's possible that just a few samples contain no temperature (e.g. for Edge 800)
+                if (sample.getTemperature() != null) {
+                    tempMin = (short) Math.min(sample.getTemperature(), tempMin);
+                    tempMax = (short) Math.max(sample.getTemperature(), tempMax);
+                    temperatureSum += sample.getTemperature();
+                    temperatureCount++;
+                }
             }
 
-            short tempAvg = (short) (Math.round(temperatureSum / (double) exercise.getSampleList().size()));
+            short tempAvg = (short) (Math.round(temperatureSum / (double) temperatureCount));
             exercise.setTemperature(new ExerciseTemperature(tempMin, tempAvg, tempMax));
         }
     }
