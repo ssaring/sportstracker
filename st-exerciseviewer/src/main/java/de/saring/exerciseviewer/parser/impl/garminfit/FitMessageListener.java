@@ -474,6 +474,7 @@ class FitMessageListener implements MesgListener {
         if (exercise.getSpeed().getSpeedMax() < 0.01) {
 
             exercise.getSampleList().stream() //
+                .filter(sample -> sample.getSpeed() != null) //
                 .mapToDouble(sample -> sample.getSpeed()) //
                 .max() //
                 .ifPresent(maxSpeed -> exercise.getSpeed().setSpeedMax((float) maxSpeed));
@@ -487,6 +488,7 @@ class FitMessageListener implements MesgListener {
 		if (exercise.getHeartRateAVG() == null) {
 
             exercise.getSampleList().stream() //
+                    .filter(sample -> sample.getHeartRate() != null) //
                     .mapToDouble(sample -> sample.getHeartRate()) //
                     .average() //
                     .ifPresent(avgHeartRate -> exercise.setHeartRateAVG((short) Math.round(avgHeartRate)));
@@ -500,6 +502,7 @@ class FitMessageListener implements MesgListener {
         if (exercise.getHeartRateMax() == null) {
 
             exercise.getSampleList().stream() //
+                    .filter(sample -> sample.getHeartRate() != null) //
                     .mapToInt(sample -> sample.getHeartRate()) //
                     .max() //
                     .ifPresent(maxHeartRate -> exercise.setHeartRateMax((short) maxHeartRate));

@@ -11,7 +11,8 @@ v7.4.2:
    - creation or update of translation files is much easier now (see I18N.txt)
  - fixed encoding problems in dutch translation
  ExerciseViewer changes:
- - GarminFitParser: bugfix for handling of missing temperature sample data
+ - GarminFitParser: bugfix for handling of missing sample data,
+   e.g. temperature, heartrate, speed
    (GitHub issue #168, occurred with Edge 800 files)
 
 v7.4.1:
