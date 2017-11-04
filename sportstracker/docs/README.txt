@@ -143,6 +143,14 @@ application data in the SportsTracker installation directory. So you're able
 to put SportsTracker and it's data on an USB stick and use it on any available
 computer.
 
+In case of problems there is often detailed information on the console output.
+The displayed error dialog gives a hint for that. The console output is only
+visible when SportsTracker has been started by using the command line.
+
+Console start example for macOS: Start a Terminal and enter:
+  'cd /Applications/SportsTracker.app/Contents/MacOS'
+  './SportsTracker'
+
 
 Usage
 -----
@@ -506,4 +514,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2017/10/01
+2017/11/04
