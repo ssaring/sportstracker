@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>8.40.12</version>
+            <version>9.0.0</version>
         </dependency>
         <!-- Common test dependencies -->
         <dependency>

@@ -7,8 +7,6 @@ JFreeChart-FX:
 - check fx-demos => better FX API options?
 - see chart issues below or in GitHub issues
 
-Update to ControlsFX 9.0.0
-
 Java 9 migration:
 - completed (no compile errors, no test errors, no usage problems)
 - JavaFX packaging does not work, the Java 9 support of the javafx-maven-plugin is not ready

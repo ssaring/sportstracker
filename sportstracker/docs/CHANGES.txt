@@ -6,6 +6,7 @@ v7.4.2:
  - Java 9 update
    - updated Maven plugins
    - updated all dependencies / libraries to current versions
+   - updated ControlsFX to version 9.0.0
  - JEP 226 usage: converted all translation files of the resource bundles to
    UTF-8 encoding and removed all Unicode escape sequences (e.g. \u00c4)
    - creation or update of translation files is much easier now (see I18N.txt)
