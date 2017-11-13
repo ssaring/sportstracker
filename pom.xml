@@ -52,28 +52,10 @@
             <artifactId>jdom2</artifactId>
             <version>2.0.6</version>
         </dependency>
-        <!-- JavaFX version of JFreeChart is currently not available at Maven Central, using a custom build from saring.de repository -->
         <dependency>
             <groupId>org.jfree</groupId>
             <artifactId>jfreechart-fx</artifactId>
-            <version>1.0.19</version>
-            <exclusions>
-                <!-- Exclude all not needed dependecies -->
-                <exclusion>
-                    <groupId>xml-apis</groupId>
-                    <artifactId>xml-apis</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.lowagie</groupId>
-                    <artifactId>itext</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- TODO remove when using JavaFX version of JFreeChart from Maven Central repository (currently needed for custom build) -->
-        <dependency>
-            <groupId>org.jfree</groupId>
-            <artifactId>jcommon</artifactId>
-            <version>1.0.24</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.controlsfx</groupId>

@@ -26,6 +26,8 @@ import org.jfree.chart.plot.ValueMarker
 import org.jfree.chart.plot.XYPlot
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer
 import org.jfree.chart.renderer.xy.XYItemRenderer
+import org.jfree.chart.ui.RectangleAnchor
+import org.jfree.chart.ui.TextAnchor
 import org.jfree.data.general.Series
 import org.jfree.data.time.Second
 import org.jfree.data.time.TimeSeries
@@ -33,8 +35,6 @@ import org.jfree.data.time.TimeSeriesCollection
 import org.jfree.data.xy.XYDataset
 import org.jfree.data.xy.XYSeries
 import org.jfree.data.xy.XYSeriesCollection
-import org.jfree.ui.RectangleAnchor
-import org.jfree.ui.TextAnchor
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -447,9 +447,9 @@ class DiagramPanelController(
             val timeFormat = SimpleDateFormat("HH:mm")
             // all time values are using timezone GMT, so the formatter needs too
             timeFormat.timeZone = timeZoneGmt
-            renderer.baseToolTipGenerator = StandardXYToolTipGenerator(format, timeFormat, DecimalFormat())
+            renderer.defaultToolTipGenerator = StandardXYToolTipGenerator(format, timeFormat, DecimalFormat())
         } else {
-            renderer.baseToolTipGenerator = StandardXYToolTipGenerator(format, DecimalFormat(), DecimalFormat())
+            renderer.defaultToolTipGenerator = StandardXYToolTipGenerator(format, DecimalFormat(), DecimalFormat())
         }
     }
 

@@ -412,7 +412,7 @@ The SportsTracker project uses the following libraries:
       License: Apache-style open source license
   - ControlsFX 8.40.12 (http://controlsfx.org/)
       License: BSD 3-Clause License
-  - JFreeChart 1.0.19 (http://www.jfree.org/)
+  - JFreeChart 1.5.0 and JFreeChart-FX 1.0.0 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
   - LeafletMap 1.0.0 (https://github.com/ssaring/sportstracker)
       License: Apache License v2.0
@@ -434,9 +434,9 @@ The SportsTracker project uses the following libraries:
   - jfx-testrunner 1.2 (https://github.com/sialcasa/jfx-testrunner)
       License: Apache License v2.0
 
-All dependencies will be downloaded automatically by Maven. JFreeChart and the
-FIT library are missing in the Maven central repository, so I've created my own
-repository for them. It's available at: http://saring.de/st-maven-repo/
+All dependencies will be downloaded automatically by Maven. The Garmin FIT
+library is missing in the Maven central repository, so I've created my own
+repository for it. It's available at: http://saring.de/st-maven-repo/
 
 
 If you're wondering why the complete application has been ported from the .NET

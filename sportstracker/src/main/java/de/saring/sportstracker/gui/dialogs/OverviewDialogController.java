@@ -21,15 +21,15 @@ import org.jfree.chart.labels.StandardXYToolTipGenerator;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.Range;
 import org.jfree.data.time.Month;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.TimeTableXYDataset;
 import org.jfree.data.time.Year;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.TextAnchor;
 
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.EntryFilter;
@@ -213,8 +213,8 @@ public class OverviewDialogController extends AbstractDialogController {
         XYPlot plot = (XYPlot) chart.getPlot();
 
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
-        renderer.setBaseShapesVisible(true);
-        renderer.setBaseShapesFilled(true);
+        renderer.setDefaultShapesVisible(true);
+        renderer.setDefaultShapesFilled(true);
         // set color for sport type series
         for (int i = 0; i < lGraphColors.size(); i++) {
             java.awt.Color tempColor = lGraphColors.get(i);
@@ -254,7 +254,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
         // setup tooltips: must display month, week or year and the value only
         String toolTipFormat = "{1}: {2}";
-        renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(toolTipFormat, new SimpleDateFormat(
+        renderer.setDefaultToolTipGenerator(new StandardXYToolTipGenerator(toolTipFormat, new SimpleDateFormat(
                 dateFormatTooltip), new DecimalFormat()) {
             @Override
             public String generateToolTip(XYDataset dataset, int series, int item) {
@@ -288,7 +288,7 @@ public class OverviewDialogController extends AbstractDialogController {
                 java.awt.Color tempColor = lGraphColors.get(i);
                 stackedRenderer.setSeriesPaint(i, tempColor);
             }
-            stackedRenderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(toolTipFormat, new SimpleDateFormat(
+            stackedRenderer.setDefaultToolTipGenerator(new StandardXYToolTipGenerator(toolTipFormat, new SimpleDateFormat(
                     dateFormatTooltip), new DecimalFormat()) {
                 @Override
                 public String generateToolTip(XYDataset dataset, int series, int item) {
