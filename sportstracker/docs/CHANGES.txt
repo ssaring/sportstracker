@@ -13,6 +13,7 @@ v7.4.2:
  - fixed encoding problems in dutch translation
  - update to JFreeChart 1.5.0, does not need the JCommon library anymore
  - added official JFreeChart-FX 1.0.0 library, custom patch not needed anymore
+ - updated Kotlin to version 1.1.60
  ExerciseViewer changes:
  - GarminFitParser: bugfix for handling of missing sample data,
    e.g. temperature, heartrate, speed

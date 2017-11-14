@@ -2,8 +2,9 @@ SportsTracker-TODO
 ==================
 
 JFreeChart-FX:
-- axis text (values) looks a bit blurry (was not before)
-- text of vertical marker lines (laps, year number) has wrong background color
+- problems (file issues if a JFreeChart problems):
+  - axis text (values) looks a bit blurry (was not before)
+  - text of vertical marker lines (laps, year number) has wrong background color
 - check fx-demos => better FX API options?
 - see chart issues below or in GitHub issues
 
