@@ -322,7 +322,7 @@ public class OverviewDialogController extends AbstractDialogController {
             newYearMarker.setLabel(String.valueOf(firstDayOfYear.getYear()));
             newYearMarker.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
             newYearMarker.setLabelTextAnchor(TextAnchor.TOP_LEFT);
-            newYearMarker.setLabelBackgroundColor(new java.awt.Color(1f, 1f, 1f, 0f));
+            newYearMarker.setLabelBackgroundColor(java.awt.Color.WHITE);
             plot.addDomainMarker(newYearMarker);
         }
 
