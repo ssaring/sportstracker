@@ -349,6 +349,7 @@ class DiagramPanelController(
                 lapMarker.label = context.resources.getString("pv.diagram.lap", i + 1)
                 lapMarker.labelAnchor = RectangleAnchor.TOP_LEFT
                 lapMarker.labelTextAnchor = TextAnchor.TOP_RIGHT
+                lapMarker.setLabelBackgroundColor(java.awt.Color(1f, 1f, 1f, 0f))
                 plot.addDomainMarker(lapMarker)
             }
         }

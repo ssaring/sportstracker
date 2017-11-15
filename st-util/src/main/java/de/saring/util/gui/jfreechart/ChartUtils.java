@@ -1,7 +1,5 @@
 package de.saring.util.gui.jfreechart;
 
-import java.awt.Color;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
 
@@ -25,13 +23,15 @@ public final class ChartUtils {
      */
     public static void customizeChart(JFreeChart chart) {
 
+        java.awt.Color transparent = new java.awt.Color(1.0f, 1.0f, 1.0f, 0f);
+
         // set transparent background paint, so the background color of the parent is used
-        chart.setBackgroundPaint(new Color(1.0f, 1.0f, 1.0f, 0f));
+        chart.setBackgroundPaint(transparent);
 
         XYPlot plot = (XYPlot) chart.getPlot();
-        plot.setBackgroundPaint(Color.WHITE);
-        plot.setDomainGridlinePaint(Color.GRAY);
-        plot.setRangeGridlinePaint(Color.GRAY);
+        plot.setBackgroundPaint(java.awt.Color.WHITE);
+        plot.setDomainGridlinePaint(java.awt.Color.GRAY);
+        plot.setRangeGridlinePaint(java.awt.Color.GRAY);
 
         // get default JavaFX label font and convert it to a AWT font
         javafx.scene.text.Font fxLabelFont = new javafx.scene.control.Label().getFont();
@@ -44,6 +44,7 @@ public final class ChartUtils {
 
         if (chart.getLegend() != null) {
             chart.getLegend().setItemFont(chartFont);
+            chart.getLegend().setBackgroundPaint(transparent);
         }
     }
 }
