@@ -2,8 +2,6 @@ SportsTracker-TODO
 ==================
 
 JFreeChart-FX:
-- problems (file issues if a JFreeChart problems):
-  - axis text (values) looks a bit blurry (was not before)
 - check fx-demos => better FX API options?
 - see chart issues below or in GitHub issues
 
@@ -17,6 +15,8 @@ Java 9 migration:
   (see http://openjdk.java.net/jeps/272)
   - currently for Swing apps only
   - JavaFX support might be added in Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
+
+- Add an update notification when a new SportsTracker version has been released
 
 ExerciseViewer Diagram panel:
 - Issue #162: ExerciseViewer Diagram panel: display average line for heartrate and other data
@@ -36,12 +36,6 @@ JavaFX Migration:
 - ExerciseViewer: Done & tested
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)
-- JFreeChart usage (in Overview Dialog): migration completed and tested, except:
-  - artifact is not available in the Maven Central repo, using custom build from saring.de repository meanwhile
-    -> I've posted a request to the JFree forum: http://www.jfree.org/forum/viewtopic.php?f=3&t=117112
-  - installation of custom build in local repository:
-    mvn install:install-file -Dfile=jfreechart-1.0.19.jar -DgroupId=org.jfree
-      -DartifactId=jfreechart-fx -Dversion=1.0.19 -Dpackaging=jar
 - Print Views: Done for all views
   - Problem in List Views: tables can't be printed completely, the JavaFX API support only the printing
     of one single node at one single page

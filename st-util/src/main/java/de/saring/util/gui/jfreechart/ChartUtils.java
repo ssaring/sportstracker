@@ -14,19 +14,18 @@ public final class ChartUtils {
     }
 
     /**
-     * Customizes the chart for SportsTracker requirements. The chart background is
-     * transparent, so it uses the parent component background. The plot background
-     * is white and the gridlines are grey. The diagram will use the default font for
+     * Customizes the chart for SportsTracker requirements. The chart background will use the default JavaFX background
+     * color. The plot background is white and the gridlines are grey. The diagram will use the default font for
      * JavaFX labels, the default chart fonts are much bigger.
      *
      * @param chart the chart component
      */
     public static void customizeChart(JFreeChart chart) {
 
-        java.awt.Color transparent = new java.awt.Color(1.0f, 1.0f, 1.0f, 0f);
-
-        // set transparent background paint, so the background color of the parent is used
-        chart.setBackgroundPaint(transparent);
+        // unfortunately there is no API to get the default JavaFX backgound color, so it needs to hardcoded
+        // (transparent background with alpha 1.0 also does not work, it causes font rendering problems)
+        java.awt.Color background = new java.awt.Color(244, 244, 244);
+        chart.setBackgroundPaint(background);
 
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setBackgroundPaint(java.awt.Color.WHITE);
@@ -44,7 +43,7 @@ public final class ChartUtils {
 
         if (chart.getLegend() != null) {
             chart.getLegend().setItemFont(chartFont);
-            chart.getLegend().setBackgroundPaint(transparent);
+            chart.getLegend().setBackgroundPaint(background);
         }
     }
 }
