@@ -23,7 +23,9 @@ public final class ChartUtils {
     public static void customizeChart(JFreeChart chart) {
 
         // unfortunately there is no API to get the default JavaFX backgound color, so it needs to hardcoded
-        // (transparent background with alpha 1.0 also does not work, it causes font rendering problems)
+        // (transparent background with alpha 0.0 also does not work, it causes font rendering problems)
+        // => I've filed a bug for JFreeChart-FX -> https://github.com/jfree/jfreechart-fx/issues/2
+        // => use transparent color again, when this bug has been fixed
         java.awt.Color background = new java.awt.Color(244, 244, 244);
         chart.setBackgroundPaint(background);
 
