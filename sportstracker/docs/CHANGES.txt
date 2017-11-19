@@ -18,6 +18,10 @@ v7.4.2:
  - GarminFitParser: bugfix for handling of missing sample data,
    e.g. temperature, heartrate, speed
    (GitHub issue #168, occurred with Edge 800 files)
+ - Diagram Panel improvements:
+   - use of transparent area charts instead of line charts
+   - added crosshair lines when clicking a position in the chart
+   => much better readability and comparability
 
 v7.4.1:
  SportsTracker changes:

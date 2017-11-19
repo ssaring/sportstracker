@@ -1,6 +1,11 @@
 SportsTracker-TODO
 ==================
 
+ExerciseViewer Diagram panel (DiagramPanelController):
+- DONE: use of transparent area charts instead of line charts => much better readability
+- green color for lap markers doesn't look good when the area is filled
+- find a better color for the crosshair lines?
+
 Java 9 migration:
 - completed (no compile errors, no test errors, no usage problems)
 - JavaFX packaging does not work, the Java 9 support of the javafx-maven-plugin is not ready

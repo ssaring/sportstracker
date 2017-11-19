@@ -24,7 +24,7 @@ import org.jfree.chart.plot.IntervalMarker
 import org.jfree.chart.plot.PlotOrientation
 import org.jfree.chart.plot.ValueMarker
 import org.jfree.chart.plot.XYPlot
-import org.jfree.chart.renderer.xy.StandardXYItemRenderer
+import org.jfree.chart.renderer.xy.XYAreaRenderer
 import org.jfree.chart.renderer.xy.XYItemRenderer
 import org.jfree.chart.ui.RectangleAnchor
 import org.jfree.chart.ui.TextAnchor
@@ -54,8 +54,10 @@ class DiagramPanelController(
         document: EVDocument) : AbstractPanelController(context, document) {
 
     // The colors of the chart.
-    private val colorAxisLeft = java.awt.Color.RED
-    private val colorAxisRight = java.awt.Color.BLUE
+    private val colorAxisLeft = java.awt.Color(1f, 0f, 0f)
+    private val colorAxisLeftPlot = java.awt.Color(1f, 0f, 0f, 0.5f)
+    private val colorAxisRight = java.awt.Color(0f, 0f, 1f)
+    private val colorAxisRightPlot = java.awt.Color(0f, 0f, 1f, 0.5f)
     private val colorMarkerLap = java.awt.Color(0f, 0.73f, 0f)
     private val colorMarkerHeartrate = java.awt.Color(0.8f, 0.8f, 0.8f, 0.3f)
 
@@ -271,15 +273,21 @@ class DiagramPanelController(
                     false) // URLs
         }
 
-        // set format of time domain axis (if active)
+        // enable crosshair helper for x and y axis
         val plot = chart.plot as XYPlot
+        plot.isDomainCrosshairVisible = true
+        plot.isRangeCrosshairVisible = true
 
         // setup left axis
         val axisLeft = plot.getRangeAxis(0)
         axisLeft.labelPaint = colorAxisLeft
         axisLeft.tickLabelPaint = colorAxisLeft
-        val rendererLeft = plot.getRenderer(0)
-        rendererLeft.setSeriesPaint(0, colorAxisLeft)
+
+        // set custom area renderer
+        val rendererLeft = XYAreaRenderer()
+        rendererLeft.setSeriesPaint(0, colorAxisLeftPlot)
+
+        plot.setRenderer(0, rendererLeft)
         setTooltipGenerator(rendererLeft, axisTypeBottom, axisTypeLeft)
 
         // setup right axis (when selected)
@@ -297,9 +305,9 @@ class DiagramPanelController(
             plot.setDataset(1, datasetRight)
             plot.mapDatasetToRangeAxis(1, 1)
 
-            // set custom renderer
-            val rendererRight = StandardXYItemRenderer()
-            rendererRight.setSeriesPaint(0, colorAxisRight)
+            // set custom area renderer
+            val rendererRight = XYAreaRenderer()
+            rendererRight.setSeriesPaint(0, colorAxisRightPlot)
             plot.setRenderer(1, rendererRight)
             setTooltipGenerator(rendererRight, axisTypeBottom, axisTypeRight)
         }
