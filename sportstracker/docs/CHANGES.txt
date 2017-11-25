@@ -21,6 +21,7 @@ v7.4.2:
  - Diagram Panel improvements:
    - use of transparent area charts instead of line charts
    - added crosshair lines when clicking a position in the chart
+   - use of suited graph colors
    => much better readability and comparability
 
 v7.4.1:

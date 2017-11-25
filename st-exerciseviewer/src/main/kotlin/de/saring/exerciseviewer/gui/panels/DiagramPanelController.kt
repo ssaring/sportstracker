@@ -54,12 +54,12 @@ class DiagramPanelController(
         document: EVDocument) : AbstractPanelController(context, document) {
 
     // The colors of the chart.
-    private val colorAxisLeft = java.awt.Color(1f, 0f, 0f)
-    private val colorAxisLeftPlot = java.awt.Color(1f, 0f, 0f, 0.5f)
-    private val colorAxisRight = java.awt.Color(0f, 0f, 1f)
-    private val colorAxisRightPlot = java.awt.Color(0f, 0f, 1f, 0.5f)
-    private val colorMarkerLap = java.awt.Color(0f, 0.73f, 0f)
-    private val colorMarkerHeartrate = java.awt.Color(0.8f, 0.8f, 0.8f, 0.3f)
+    private val colorAxisLeft = java.awt.Color(255, 30, 30)
+    private val colorAxisLeftPlot = java.awt.Color(255, 30, 30, 136)
+    private val colorAxisRight = java.awt.Color(20, 75, 255)
+    private val colorAxisRightPlot = java.awt.Color(20, 75, 255, 136)
+    private val colorMarkerLap = java.awt.Color(163, 42, 42)
+    private val colorMarkerHeartrate = java.awt.Color(204, 204, 204, 77)
 
     private val timeZoneGmt = TimeZone.getTimeZone("GMT")
 
