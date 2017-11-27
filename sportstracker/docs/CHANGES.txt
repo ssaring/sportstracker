@@ -22,6 +22,9 @@ v7.4.2:
    - use of transparent area charts instead of line charts
    - added crosshair lines when clicking a position in the chart
    - use of suited graph colors
+   - don't display the diagram chart and axis selection when no diagram data
+     available (an info message is shown instead)
+   - remove heartrate axis with weird values when no heartrate data available
    => much better readability and comparability
 
 v7.4.1:

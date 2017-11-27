@@ -139,17 +139,18 @@ class DiagramPanelController(
         cbBottomAxis.converter = axisTypeStringConverter
 
         // fill axes with all possible types depending on the exercise recording mode
-        cbLeftAxis.items.add(AxisType.HEARTRATE)
-        cbRightAxis.items.addAll(AxisType.NOTHING, AxisType.HEARTRATE)
+        cbRightAxis.items.addAll(AxisType.NOTHING)
         cbBottomAxis.items.add(AxisType.TIME)
 
-        cbLeftAxis.selectionModel.select(0)
-        cbRightAxis.selectionModel.select(0)
-        cbBottomAxis.selectionModel.select(0)
+        // add heartrate items if recorded
+        if (exercise.recordingMode.isHeartRate) {
+            cbLeftAxis.items.add(AxisType.HEARTRATE)
+            cbRightAxis.items.add(AxisType.HEARTRATE)
+        }
 
         // add altitude items if recorded
         if (exercise.recordingMode.isAltitude) {
-            cbLeftAxis.items.addAll(AxisType.ALTITUDE)
+            cbLeftAxis.items.add(AxisType.ALTITUDE)
             cbRightAxis.items.add(AxisType.ALTITUDE)
         }
 
@@ -171,6 +172,11 @@ class DiagramPanelController(
             cbLeftAxis.items.add(AxisType.TEMPERATURE)
             cbRightAxis.items.add(AxisType.TEMPERATURE)
         }
+
+        // select initial axis types
+        cbLeftAxis.selectionModel.select(0)
+        cbRightAxis.selectionModel.select(0)
+        cbBottomAxis.selectionModel.select(0)
 
         // do we need to display initially the second diagram too? (only possible when additional data is available)
         // => first 2 entries are Nothing and Heartrate, which is already displayed

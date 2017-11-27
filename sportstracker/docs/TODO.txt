@@ -1,6 +1,12 @@
 SportsTracker-TODO
 ==================
 
+Bug:
+- for some EVExercice types (e.g. for FIT files) the recordingMode.isHeartRate is not set when
+  heartrate data is available => no heartrate data is shown in the diagram panel
+- check all parser impelementations and enhance the unit tests
+- add the heartrate available information to the Main Panel
+
 Java 9 migration:
 - completed (no compile errors, no test errors, no usage problems)
 - JavaFX packaging does not work, the Java 9 support of the javafx-maven-plugin is not ready
@@ -16,8 +22,6 @@ Java 9 migration:
 
 ExerciseViewer Diagram panel:
 - Issue #162: ExerciseViewer Diagram panel: display average line for heartrate and other data
-- remove heartrate axis type when no heartrate is available
-  (e.g. in exercise "testdata/gpx/bike-tour-gpsies.gpx")
 
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore
