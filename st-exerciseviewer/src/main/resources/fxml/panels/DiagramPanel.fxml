@@ -7,43 +7,52 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="16.0" stylesheets="@../ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.DiagramPanelController">
+<StackPane fx:id="spDiagramPanel" prefHeight="320.0" prefWidth="600.0" stylesheets="@../ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.DiagramPanelController">
     <children>
-        <StackPane fx:id="spDiagram" prefHeight="320.0" prefWidth="600.0" VBox.vgrow="ALWAYS"/>
-        <VBox spacing="12.0">
+        <Label text="%pv.info.no_data_available">
+            <padding>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            </padding>
+        </Label>
+        <VBox fx:id="vbDiagramPanel" spacing="16.0">
             <children>
-                <Label styleClass="label-header" text="%pv.diagram.axis_usage.text"/>
-                <HBox fx:id="hBoxOptions" alignment="CENTER_LEFT" spacing="16.0">
-                    <padding>
-                        <Insets left="24.0"/>
-                    </padding>
+                <StackPane fx:id="spDiagram" prefHeight="320.0" prefWidth="600.0" VBox.vgrow="ALWAYS"/>
+                <VBox spacing="12.0">
                     <children>
-                        <Label text="%pv.diagram.left.text"/>
-                        <ChoiceBox fx:id="cbLeftAxis"/>
-                        <HBox fx:id="hBoxSportTypeMode" alignment="CENTER_LEFT" spacing="16.0">
-                            <children>
-                                <Label text="%pv.diagram.right.text"/>
-                                <ChoiceBox fx:id="cbRightAxis"/>
-                            </children>
+                        <Label styleClass="label-header" text="%pv.diagram.axis_usage.text"/>
+                        <HBox fx:id="hBoxOptions" alignment="CENTER_LEFT" spacing="16.0">
                             <padding>
-                                <Insets left="8.0"/>
+                                <Insets left="24.0"/>
                             </padding>
-                        </HBox>
-                        <HBox fx:id="hBoxSportTypeList" alignment="CENTER_LEFT" spacing="16.0">
                             <children>
-                                <Label text="%pv.diagram.bottom.text"/>
-                                <ChoiceBox fx:id="cbBottomAxis"/>
+                                <Label text="%pv.diagram.left.text"/>
+                                <ChoiceBox fx:id="cbLeftAxis"/>
+                                <HBox fx:id="hBoxSportTypeMode" alignment="CENTER_LEFT" spacing="16.0">
+                                    <children>
+                                        <Label text="%pv.diagram.right.text"/>
+                                        <ChoiceBox fx:id="cbRightAxis"/>
+                                    </children>
+                                    <padding>
+                                        <Insets left="8.0"/>
+                                    </padding>
+                                </HBox>
+                                <HBox fx:id="hBoxSportTypeList" alignment="CENTER_LEFT" spacing="16.0">
+                                    <children>
+                                        <Label text="%pv.diagram.bottom.text"/>
+                                        <ChoiceBox fx:id="cbBottomAxis"/>
+                                    </children>
+                                    <padding>
+                                        <Insets left="8.0"/>
+                                    </padding>
+                                </HBox>
                             </children>
-                            <padding>
-                                <Insets left="8.0"/>
-                            </padding>
                         </HBox>
                     </children>
-                </HBox>
+                </VBox>
             </children>
+            <padding>
+                <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+            </padding>
         </VBox>
     </children>
-    <padding>
-        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
-    </padding>
-</VBox>
+</StackPane>

@@ -12,6 +12,7 @@ import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.ChoiceBox
 import javafx.scene.layout.StackPane
+import javafx.scene.layout.VBox
 import javafx.util.StringConverter
 import org.jfree.chart.ChartFactory
 import org.jfree.chart.JFreeChart
@@ -75,6 +76,12 @@ class DiagramPanelController(
     private var averagedRangeSteps: Int = 0
 
     @FXML
+    private lateinit var spDiagramPanel: StackPane
+
+    @FXML
+    private lateinit var vbDiagramPanel: VBox
+
+    @FXML
     private lateinit var spDiagram: StackPane
 
     @FXML
@@ -101,9 +108,26 @@ class DiagramPanelController(
     }
 
     override fun setupPanel() {
-        setupAxisChoiceBoxes()
-        computeAveragedFilterRange()
-        updateDiagram()
+
+        // setup the diagram if data is available
+        val exercise = document.exercise
+        if (isDiagramDataAvailable()) {
+            setupAxisChoiceBoxes()
+            computeAveragedFilterRange()
+            updateDiagram()
+        } else {
+            // remove the diagram panel VBox, the StackPane now displays the label "No diagram data available")
+            spDiagramPanel.children.remove(vbDiagramPanel)
+        }
+    }
+
+    private fun isDiagramDataAvailable(): Boolean {
+        val recordingMode = document.exercise.recordingMode
+        return recordingMode.isHeartRate
+                || recordingMode.isAltitude
+                || recordingMode.isSpeed
+                || recordingMode.isCadence
+                || recordingMode.isTemperature
     }
 
     private fun setupAxisChoiceBoxes() {
