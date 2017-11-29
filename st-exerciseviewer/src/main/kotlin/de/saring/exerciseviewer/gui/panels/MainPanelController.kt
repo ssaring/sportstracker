@@ -53,6 +53,8 @@ class MainPanelController(
     private lateinit var laTimeAboveValue: Label
 
     @FXML
+    private lateinit var laModeHeartrateValue: Label
+    @FXML
     private lateinit var laModeSpeedValue: Label
     @FXML
     private lateinit var laModeAltitudeValue: Label
@@ -129,6 +131,7 @@ class MainPanelController(
         }
 
         // fill recording mode data
+        laModeHeartrateValue.text = boolean2EnabledString(exercise.recordingMode.isHeartRate)
         laModeSpeedValue.text = boolean2EnabledString(exercise.recordingMode.isSpeed)
         laModeAltitudeValue.text = boolean2EnabledString(exercise.recordingMode.isAltitude)
         laModeCadendeValue.text = boolean2EnabledString(exercise.recordingMode.isCadence)

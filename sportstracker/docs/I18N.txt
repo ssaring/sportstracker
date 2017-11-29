@@ -45,6 +45,10 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 7.4.2:
+
+- pv.main.heartrate.text (new)
+
 SportsTracker 7.4.0:
 
 - st.dlg.options.smoothed_charts.text (new)

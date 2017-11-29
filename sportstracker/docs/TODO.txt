@@ -1,11 +1,7 @@
 SportsTracker-TODO
 ==================
 
-Bug:
-- for some EVExercice types (e.g. for FIT files) the recordingMode.isHeartRate is not set when
-  heartrate data is available => no heartrate data is shown in the diagram panel
-- check all parser impelementations and enhance the unit tests
-- add the heartrate available information to the Main Panel
+- Kotlin 1.2 update
 
 Java 9 migration:
 - completed (no compile errors, no test errors, no usage problems)

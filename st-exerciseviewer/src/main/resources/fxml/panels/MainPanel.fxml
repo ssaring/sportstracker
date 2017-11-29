@@ -133,14 +133,16 @@
                                 <ColumnConstraints />
                             </columnConstraints>
                             <children>
-                                <Label text="%pv.main.speed.text" />
-                                <Label fx:id="laModeSpeedValue" text="%common.disabled" GridPane.columnIndex="1" />
-                                <Label text="%pv.main.altitude.text" GridPane.rowIndex="1" />
-                                <Label fx:id="laModeAltitudeValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Label text="%pv.main.cadence.text" GridPane.rowIndex="2" />
-                                <Label fx:id="laModeCadendeValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <Label text="%pv.main.power.text" GridPane.rowIndex="3" />
-                                <Label fx:id="laModePowerValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <Label text="%pv.main.heartrate.text" />
+                                <Label fx:id="laModeHeartrateValue" text="%common.disabled" GridPane.columnIndex="1" />
+                                <Label text="%pv.main.speed.text" GridPane.rowIndex="1" />
+                                <Label fx:id="laModeSpeedValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label text="%pv.main.altitude.text" GridPane.rowIndex="2" />
+                                <Label fx:id="laModeAltitudeValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label text="%pv.main.cadence.text" GridPane.rowIndex="3" />
+                                <Label fx:id="laModeCadendeValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <Label text="%pv.main.power.text" GridPane.rowIndex="4" />
+                                <Label fx:id="laModePowerValue" text="%common.disabled" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             </children>
                             <VBox.margin>
                                 <Insets left="24.0" />
