@@ -105,6 +105,7 @@ public class PolarF6RawParser extends AbstractExerciseParser {
         // decode recording mode (heartrate is always recorded)
         // (not available in F6/F11 files)
         RecordingMode recMode = new RecordingMode();
+        recMode.setHeartRate(true);
         exercise.setRecordingMode(recMode);
 
         // Note: The HR limits 1, 2 and 3 represent the zones "light", 

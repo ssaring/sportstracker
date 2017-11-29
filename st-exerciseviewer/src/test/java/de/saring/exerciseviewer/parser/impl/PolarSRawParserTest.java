@@ -62,6 +62,7 @@ public class PolarSRawParserTest {
         assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2004, 9, 12, 7, 26, 7), exercise.getDateTime());
         assertEquals(exercise.getType(), "TB2    ");
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertEquals(exercise.getRecordingMode().isAltitude(), false);
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
@@ -169,6 +170,7 @@ public class PolarSRawParserTest {
         assertEquals(LocalDateTime.of(2002, 11, 20, 14, 7, 44), exercise.getDateTime());
         assertEquals("ExeSet1", exercise.getType());
         assertEquals((1 * 60 * 60 * 10) + (13 * 60 * 10) + 34 * 10 + 3, exercise.getDuration().intValue());
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertTrue(exercise.getRecordingMode().isAltitude());
         assertTrue(exercise.getRecordingMode().isSpeed());
         assertFalse(exercise.getRecordingMode().isCadence());
@@ -301,6 +303,7 @@ public class PolarSRawParserTest {
         assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2002, 11, 20, 13, 10, 42), exercise.getDateTime());
         assertEquals(exercise.getType(), "ExeSet1");
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
         assertEquals(exercise.getRecordingMode().isSpeed(), true);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
@@ -434,6 +437,7 @@ public class PolarSRawParserTest {
         assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2002, 12, 25, 10, 21, 4), exercise.getDateTime());
         assertEquals(exercise.getType(), "ExeSet2");
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
@@ -538,6 +542,7 @@ public class PolarSRawParserTest {
         assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2005, 4, 16, 9, 56, 32), exercise.getDateTime());
         assertEquals(exercise.getType(), "ExeSet1");
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
         assertEquals(exercise.getRecordingMode().isSpeed(), true);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
@@ -659,6 +664,7 @@ public class PolarSRawParserTest {
         assertEquals("Polar S6xx/S7xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2005, 4, 17, 8, 59, 3), exercise.getDateTime());
         assertEquals(exercise.getType(), "ExeSet1");
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertEquals(exercise.getRecordingMode().isAltitude(), true);
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);

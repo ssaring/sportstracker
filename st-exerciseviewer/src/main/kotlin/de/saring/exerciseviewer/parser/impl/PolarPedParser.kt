@@ -67,7 +67,7 @@ class PolarPedParser : AbstractExerciseParser() {
         val dateTime = eExercise.getChildText("time", namespace)
         exercise.dateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"))
 
-        exercise.recordingMode = RecordingMode()
+        exercise.recordingMode.isHeartRate = true
         exercise.recordingMode.isSpeed = true
         exercise.recordingMode.isCadence = false
         exercise.recordingMode.isAltitude = false

@@ -213,11 +213,11 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
         boolean fMetricUnits = (sdata(1, 25) & 0x02) == 0x00;
 
         // decode recording mode (heartrate is always recorded)
-        RecordingMode recMode = new RecordingMode();
-        exercise.setRecordingMode(recMode);
 
         boolean fBike2 = (sdata(1, 26) & 0x20) == 0x20;
         boolean fBike1 = (sdata(1, 26) & 0x10) == 0x10;
+        RecordingMode recMode = exercise.getRecordingMode();
+        recMode.setHeartRate(true);
         recMode.setPower(false);
         recMode.setCadence(false);
         recMode.setAltitude(false);

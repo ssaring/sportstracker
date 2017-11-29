@@ -56,6 +56,7 @@ public class HAC4TURParserTest {
         assertEquals("HACtronic - Tour", exercise.getDeviceName());
         assertEquals(20, exercise.getRecordingInterval().intValue());
         // check recording mode
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertTrue(exercise.getRecordingMode().isSpeed());
         assertFalse(exercise.getRecordingMode().isCadence());
         assertTrue(exercise.getRecordingMode().isAltitude());
@@ -117,6 +118,7 @@ public class HAC4TURParserTest {
         assertEquals("HACtronic - Tour", exercise.getDeviceName());
         assertEquals(5, exercise.getRecordingInterval().intValue());
         // check recording mode
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertTrue(exercise.getRecordingMode().isSpeed());
         assertTrue(exercise.getRecordingMode().isCadence());
         assertTrue(exercise.getRecordingMode().isAltitude());

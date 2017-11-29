@@ -82,7 +82,7 @@ class PolarHRMParser : AbstractExerciseParser() {
         // parse recording mode informations
         // (since Polar S720 the length can be 9 instead of 8, althought the HRM version is still 1.06)
         val strSMode = getValueFromBlock(lParamsBlock, "SMode")
-        exercise.recordingMode = RecordingMode()
+        exercise.recordingMode.isHeartRate = true
         exercise.recordingMode.isSpeed = strSMode[0] == '1'
         exercise.recordingMode.isCadence = strSMode[1] == '1'
         exercise.recordingMode.isAltitude = strSMode[2] == '1'

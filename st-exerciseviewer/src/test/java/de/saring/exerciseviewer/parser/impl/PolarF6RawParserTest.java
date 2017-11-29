@@ -60,6 +60,7 @@ public class PolarF6RawParserTest {
         assertEquals("Polar F Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2007, 10, 28, 11, 7, 34), exercise.getDateTime());
         assertEquals("0", exercise.getType());
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertEquals(false, exercise.getRecordingMode().isAltitude());
         assertEquals(false, exercise.getRecordingMode().isSpeed());
         assertEquals(false, exercise.getRecordingMode().isCadence());

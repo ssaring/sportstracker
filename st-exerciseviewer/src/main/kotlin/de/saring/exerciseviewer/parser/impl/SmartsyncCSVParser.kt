@@ -3,7 +3,6 @@ package de.saring.exerciseviewer.parser.impl
 import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.data.ExerciseSample
-import de.saring.exerciseviewer.data.RecordingMode
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
 import java.io.File
@@ -40,7 +39,7 @@ class SmartsyncCSVParser : AbstractExerciseParser() {
         // parse basic exercise data
         val exercise = EVExercise(EVExercise.ExerciseFileType.SSCSV) // FIXME
         exercise.deviceName = "Oregon Scientific Smartsync"
-        exercise.recordingMode = RecordingMode()
+        exercise.recordingMode.isHeartRate = true
 
         val now = LocalDateTime.now()
         var exeYear = now.year

@@ -64,6 +64,7 @@ public class TimexPwxParserTest {
         assertEquals(LocalDateTime.of(2010, 6, 18, 20, 12, 0), exercise.getDateTime());
         assertEquals("Run", exercise.getType());
         assertTrue(exercise.getRecordingMode().isHeartRate());
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertEquals(false, exercise.getRecordingMode().isAltitude());
         assertEquals(false, exercise.getRecordingMode().isSpeed());
         assertEquals(false, exercise.getRecordingMode().isCadence());
@@ -207,6 +208,7 @@ public class TimexPwxParserTest {
         assertEquals(LocalDateTime.of(2010, 9, 9, 17, 53, 21), exercise.getDateTime());
         assertEquals("Bike", exercise.getType());
         assertTrue(exercise.getRecordingMode().isHeartRate());
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertEquals(true, exercise.getRecordingMode().isAltitude());
         assertEquals(true, exercise.getRecordingMode().isSpeed());
         assertEquals(false, exercise.getRecordingMode().isCadence());
@@ -322,6 +324,7 @@ public class TimexPwxParserTest {
         assertEquals("Timex Run Trainer", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2013, 1, 1, 8, 22, 52), exercise.getDateTime());
         assertEquals("Run", exercise.getType());
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertTrue(exercise.getRecordingMode().isHeartRate());
         assertEquals(true, exercise.getRecordingMode().isAltitude());
         assertEquals(true, exercise.getRecordingMode().isSpeed());

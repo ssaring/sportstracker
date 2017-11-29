@@ -123,11 +123,9 @@ class DiagramPanelController(
 
     private fun isDiagramDataAvailable(): Boolean {
         val recordingMode = document.exercise.recordingMode
-        return recordingMode.isHeartRate
-                || recordingMode.isAltitude
-                || recordingMode.isSpeed
-                || recordingMode.isCadence
-                || recordingMode.isTemperature
+        return !document.exercise.sampleList.isEmpty() && (
+                recordingMode.isHeartRate || recordingMode.isAltitude || recordingMode.isSpeed ||
+                        recordingMode.isCadence || recordingMode.isTemperature)
     }
 
     private fun setupAxisChoiceBoxes() {

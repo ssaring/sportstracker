@@ -38,6 +38,7 @@ class PolarPedParserTest {
 
         assertEquals(EVExercise.ExerciseFileType.PED, exercise.fileType)
         assertEquals("Polar PED", exercise.deviceName)
+        assertTrue(exercise.recordingMode.isHeartRate)
         assertEquals(LocalDateTime.of(2010, 4, 2, 19, 19, 0), exercise.dateTime)
         assertEquals(31560, exercise.duration)
         assertEquals(12800, exercise.speed!!.distance)

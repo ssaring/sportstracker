@@ -122,8 +122,8 @@ public class PolarSRawParser extends AbstractExerciseParser {
 
         // decode recording mode (heartrate is always recorded)
         // (not available on S610 files)
-        RecordingMode recMode = new RecordingMode();
-        exercise.setRecordingMode(recMode);
+        RecordingMode recMode = exercise.getRecordingMode();
+        recMode.setHeartRate(true);
 
         if (!fS610) {
             boolean fBike2 = (fileContent[26] & 0x20) == 0x20;

@@ -113,7 +113,7 @@ class GarminTcxParser : AbstractExerciseParser() {
                     evSample.timestamp = tpMillis - exerciseDateTimeMillis - totalTimeGapBetweenLaps
 
                     parseTrackpointPositionData(exercise, evSample, eTrackpoint)
-                    parseTrackpointHeartRateData(evLap, evSample, eTrackpoint)
+                    parseTrackpointHeartRateData(exercise, evLap, evSample, eTrackpoint)
 
                     // get distance data (some trackpoints might not have distance data!)
                     val strDistanceMeters = eTrackpoint.getChildText("DistanceMeters", namespace)
@@ -260,12 +260,13 @@ class GarminTcxParser : AbstractExerciseParser() {
         }
     }
 
-    private fun parseTrackpointHeartRateData(evLap: Lap, evSample: ExerciseSample, tpElement: Element) {
+    private fun parseTrackpointHeartRateData(evExercise: EVExercise, evLap: Lap, evSample: ExerciseSample, tpElement: Element) {
         val eHeartRateBpm = tpElement.getChild("HeartRateBpm", namespace)
         if (eHeartRateBpm != null) {
             val heartRate = eHeartRateBpm.getChildText("Value", namespace).toShort()
             evSample.heartRate = heartRate
             evLap.heartRateSplit = heartRate
+            evExercise.recordingMode.isHeartRate = true
         }
     }
 

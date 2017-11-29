@@ -40,6 +40,7 @@ class SmartsyncCSVParserTest {
         assertEquals(EVExercise.ExerciseFileType.SSCSV, exercise.fileType)
         assertEquals("Oregon Scientific Smartsync", exercise.deviceName)
 
+        assertTrue(exercise.recordingMode.isHeartRate)
         assertFalse(exercise.recordingMode.isAltitude)
         assertFalse(exercise.recordingMode.isSpeed)
         assertFalse(exercise.recordingMode.isCadence)

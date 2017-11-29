@@ -88,13 +88,14 @@ class FitMessageListener implements MesgListener {
         // read time data
         exercise.setDateTime(Date310Utils.dateToLocalDateTime(mesg.getStartTime().getDate()));
         exercise.setDuration(Math.round(mesg.getTotalTimerTime() * 10));
-        exercise.setRecordingMode(new RecordingMode());
 
         // read optional heartrate data
         if (mesg.getAvgHeartRate() != null) {
+            exercise.getRecordingMode().setHeartRate(true);
             exercise.setHeartRateAVG(mesg.getAvgHeartRate());
         }
         if (mesg.getMaxHeartRate() != null) {
+            exercise.getRecordingMode().setHeartRate(true);
             exercise.setHeartRateMax(mesg.getMaxHeartRate());
         }
         if (mesg.getTotalCalories() != null) {
@@ -205,6 +206,7 @@ class FitMessageListener implements MesgListener {
 
         if (mesg.getHeartRate() != null) {
             sample.setHeartRate(mesg.getHeartRate());
+            exercise.getRecordingMode().setHeartRate(true);
         }
         if (mesg.getDistance() != null) {
             sample.setDistance(Math.round(mesg.getDistance()));

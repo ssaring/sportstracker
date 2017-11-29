@@ -39,6 +39,7 @@ class PolarHRMParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.HRM, exercise.fileType)
         assertEquals("Polar HRM", exercise.deviceName)
+        assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isAltitude)
         assertTrue(exercise.recordingMode.isSpeed)
         assertFalse(exercise.recordingMode.isCadence)
@@ -157,6 +158,7 @@ class PolarHRMParserTest {
         // check exercise data
         assertEquals(exercise.fileType, EVExercise.ExerciseFileType.HRM)
         assertEquals("Polar HRM", exercise.deviceName)
+        assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isAltitude)
         assertTrue(exercise.recordingMode.isSpeed)
         assertFalse(exercise.recordingMode.isCadence)
@@ -272,6 +274,7 @@ class PolarHRMParserTest {
         // check exercise data
         assertEquals(exercise.fileType, EVExercise.ExerciseFileType.HRM)
         assertEquals("Polar HRM", exercise.deviceName)
+        assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isAltitude)
         assertFalse(exercise.recordingMode.isSpeed)
         assertFalse(exercise.recordingMode.isCadence)

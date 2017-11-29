@@ -74,6 +74,7 @@ public class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.getFileType());
         assertEquals("Garmin EDGE500", exercise.getDeviceName());
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertTrue(exercise.getRecordingMode().isSpeed());
         assertTrue(exercise.getRecordingMode().isLocation());
         assertTrue(exercise.getRecordingMode().isAltitude());
@@ -189,6 +190,7 @@ public class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.getFileType());
         assertEquals("Garmin FR910XT", exercise.getDeviceName());
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertTrue(exercise.getRecordingMode().isSpeed());
         assertTrue(exercise.getRecordingMode().isLocation());
         assertTrue(exercise.getRecordingMode().isAltitude());
@@ -265,6 +267,7 @@ public class GarminFitParserTest {
 		// check exercise data
 		assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.getFileType());
 		assertEquals("Garmin FENIX2", exercise.getDeviceName());
+        assertTrue(exercise.getRecordingMode().isHeartRate());
 		assertTrue(exercise.getRecordingMode().isSpeed());
 		assertTrue(exercise.getRecordingMode().isLocation());
 		assertTrue(exercise.getRecordingMode().isAltitude());
@@ -346,6 +349,7 @@ public class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.getFileType());
         assertEquals("Garmin EDGE_820", exercise.getDeviceName());
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertTrue(exercise.getRecordingMode().isSpeed());
         assertTrue(exercise.getRecordingMode().isLocation());
         assertTrue(exercise.getRecordingMode().isAltitude());

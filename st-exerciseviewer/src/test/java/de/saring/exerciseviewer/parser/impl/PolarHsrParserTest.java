@@ -63,6 +63,7 @@ public class PolarHsrParserTest {
         assertEquals("Polar S4xx/S5xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2007, 11, 3, 11, 03, 53), exercise.getDateTime());
         assertEquals(exercise.getType(), "BasicUse");
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertEquals(exercise.getRecordingMode().isAltitude(), false);
         assertEquals(exercise.getRecordingMode().isSpeed(), true);
         assertEquals(exercise.getRecordingMode().isCadence(), false);
@@ -174,6 +175,7 @@ public class PolarHsrParserTest {
         assertEquals("Polar S4xx/S5xx Series", exercise.getDeviceName());
         assertEquals(LocalDateTime.of(2007, 8, 20, 21, 10, 11), exercise.getDateTime());
         assertEquals(exercise.getType(), "ExeSet5");
+        assertTrue(exercise.getRecordingMode().isHeartRate());
         assertEquals(exercise.getRecordingMode().isAltitude(), false);
         assertEquals(exercise.getRecordingMode().isSpeed(), false);
         assertEquals(exercise.getRecordingMode().isCadence(), false);

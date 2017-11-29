@@ -6,7 +6,6 @@ import de.saring.exerciseviewer.data.ExerciseSpeed
 import de.saring.exerciseviewer.data.HeartRateLimit
 import de.saring.exerciseviewer.data.Lap
 import de.saring.exerciseviewer.data.LapSpeed
-import de.saring.exerciseviewer.data.RecordingMode
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
 import org.jdom2.Element
@@ -43,7 +42,7 @@ class PolarRS200SDParser : AbstractExerciseParser() {
         // parse basic exercise data
         val exercise = EVExercise(EVExercise.ExerciseFileType.RS200SDRAW)
         exercise.deviceName = "Polar RS200"
-        exercise.recordingMode = RecordingMode()
+        exercise.recordingMode.isHeartRate = true
 
         val eSessionData = eSession.getChild("session_data")
         exercise.dateTime = LocalDateTime.of(

@@ -221,6 +221,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         // speed, cadence, altitude, but not Power.
         RecordingMode recMode = new RecordingMode();
         exercise.setRecordingMode(recMode);
+        recMode.setHeartRate(true);
         recMode.setSpeed(readFloat(FilePosition.AVERAGE_SPEED + nrOfLinesInNote) > 0.0);
         recMode.setAltitude(true);
         recMode.setPower(false);
