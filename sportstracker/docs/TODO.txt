@@ -1,7 +1,8 @@
 SportsTracker-TODO
 ==================
 
-- Kotlin 1.2 update
+- Update jackson-module-kotlin dependency when there is a release for Kotlin 1.2
+  (currently there are warnings for conflicting Kotlin libraries)
 
 Java 9 migration:
 - completed (no compile errors, no test errors, no usage problems)
