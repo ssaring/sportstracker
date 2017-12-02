@@ -382,9 +382,12 @@ class FitMessageListener implements MesgListener {
             int altitudeSum = 0;
 
             for (ExerciseSample sample : exercise.getSampleList()) {
-                altMin = (short) Math.min(sample.getAltitude(), altMin);
-                altMax = (short) Math.max(sample.getAltitude(), altMax);
-                altitudeSum += sample.getAltitude();
+                final Short sampleAltitude = sample.getAltitude();
+                if (null != sampleAltitude) {
+                    altMin = (short) Math.min(sampleAltitude, altMin);
+                    altMax = (short) Math.max(sampleAltitude, altMax);
+                    altitudeSum += sample.getAltitude();
+                }
             }
 
             exercise.getAltitude().setAltitudeMin(altMin);
