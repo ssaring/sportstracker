@@ -654,7 +654,13 @@ public class TimexPwxParser extends AbstractExerciseParser {
                     } else if (childName.equals("torq")) {
                         // Not implemented in ExerciseSample class
                     } else if (childName.equals("cad")) {
-                        sample.setCadence(Short.valueOf(sampleChildren.item(j).getTextContent()));
+                        final Float cadence = Float.valueOf(sampleChildren.item(j).getTextContent());
+                        if (null == cadence) {
+                            sample.setCadence(null);
+                        }
+                        else {
+                            sample.setCadence(cadence.shortValue());
+                        }
                         exercise.getRecordingMode().setCadence(true);
                     } else if (childName.equals("dist")) {
                         double dist = Double.valueOf(sampleChildren.item(j).getTextContent());
@@ -691,14 +697,18 @@ public class TimexPwxParser extends AbstractExerciseParser {
                 exercise.getSampleList().add(sample);
 
                 // update Zone information
-                if (exercise.getHeartRateLimits() != null) {
+                if ((exercise.getHeartRateLimits() != null) && (! exercise.getHeartRateLimits().isEmpty())) {
+
                     for (int j = 0; j < 6; j++) {
-                        if (sample.getHeartRate() > exercise.getHeartRateLimits().get(j).getUpperHeartRate()) {
-                            aboveZone[j] += (currentOffset - lastOffset);
-                        } else if (sample.getHeartRate() < exercise.getHeartRateLimits().get(j).getLowerHeartRate()) {
-                            belowZone[j] += (currentOffset - lastOffset);
-                        } else {
-                            inZone[j] += (currentOffset - lastOffset);
+                        final Short sampleHeartRate = sample.getHeartRate();
+                        if (null != sampleHeartRate) {
+                            if (sampleHeartRate > exercise.getHeartRateLimits().get(j).getUpperHeartRate()) {
+                                aboveZone[j] += (currentOffset - lastOffset);
+                            } else if (sampleHeartRate < exercise.getHeartRateLimits().get(j).getLowerHeartRate()) {
+                                belowZone[j] += (currentOffset - lastOffset);
+                            } else {
+                                inZone[j] += (currentOffset - lastOffset);
+                            }
                         }
                     }
                 }
@@ -707,7 +717,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
         }
 
         // Store Zone Information in the exercise file
-        if (exercise.getHeartRateLimits() != null) {
+        if ((exercise.getHeartRateLimits() != null) && (! exercise.getHeartRateLimits().isEmpty())) {
             for (int i = 0; i < 6; i++) {
                 HeartRateLimit hrLimit = exercise.getHeartRateLimits().get(i);
                 hrLimit.setTimeAbove((int) aboveZone[i]);
