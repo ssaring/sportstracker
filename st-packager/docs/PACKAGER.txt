@@ -1,3 +1,14 @@
+UPDATE FOR JDK 9
+----------------
+
+- The javafx-maven-plugin does not support Java 9 yet, see:
+  https://github.com/javafx-maven-plugin/javafx-maven-plugin/issues/287
+- An Ant build script has been created as a replacement instead, it uses the
+  official Ant javapackager plugin.
+- The Ant script has still issues, but it can generate App bundles for macOS.
+- See the build.xml for current status and TODOs.
+
+
 SportsTracker Packaging
 =======================
 

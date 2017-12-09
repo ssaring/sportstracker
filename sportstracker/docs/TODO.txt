@@ -6,8 +6,7 @@ SportsTracker-TODO
 
 Java 9 migration:
 - completed (no compile errors, no test errors, no usage problems)
-- JavaFX packaging does not work, the Java 9 support of the javafx-maven-plugin is not ready
-  (see https://github.com/javafx-maven-plugin/javafx-maven-plugin/issues/287 )
+- JavaFX packaging does not work yet, see details in the st-packager module
 - Use of Java Module System / Jigsaw?
   - the JavaFX packager needs to support modules first
 - use of JEP 272: Platform-Specific Desktop Features for mac-specific menu items

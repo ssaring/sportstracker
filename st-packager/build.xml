@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+
+STATUS:
+- works on Mac, it creates a launchable SportsTracker.app with the proper icon
+  - fails to create a DMG bundle, see problems below
+  - PKG bundle creation works (nativeBundles="pkg"
+- see all TODO's
+- add support for Windows, Mac and Linux
+- add / modify documentation -> remove the Maven packager?
+
+macOS problems
+- 2 problems on macOS package creation with 10.13 and JDK9 (tested with JDK 9.0.1)
+  - Resources and dependency files in subdirectories will not be copied to the bundle
+    -> https://bugs.openjdk.java.net/browse/JDK-8179033
+    -> fixed in JDK 10, hopefully in next JDK 9 too
+    -> workaround: bundle all libraries and resorce files to the application root directory
+  - javapackager fails on DMG creation because the default filesystem in macOS 10.13 is APFS now
+    - https://bugs.openjdk.java.net/browse/JDK-8190758
+    - fixed in JDK 10 and 8u172, hopefully in next JDK 10 too
+    -> no workaround
+
+Usage:
+- build the SportsTracker application in the SportsTracker root directory:
+  -> mvn clean install
+- goto st-packager directory and launch the Ant build:
+  -> ant
+- the created packages are located in the 'deploy' folder afterwards
+    
+-->
+ 
+<project name="SportsTracker Packager" default="default" basedir="."
+  xmlns:fx="javafx:com.sun.javafx.tools.ant">
+ 
+  <property environment="env"/>
+  <property name="build.app.dir" value="app"/>
+  <property name="build.deploy.dir" value="deploy"/>
+  <property name="sportstracker.app.dir" value="../sportstracker"/>
+ 
+  <!-- Packages the SportsTracker application -->
+  <target name="default" depends="clean">
+ 
+    <mkdir dir="${build.app.dir}"/>
+ 
+    <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+      uri="javafx:com.sun.javafx.tools.ant"
+      classpath="${env.JAVA_HOME}/lib/ant-javafx.jar"/>
+ 
+      <!-- Defines the set of SportsTracker resources and dependencies -->
+      <fx:resources id="appRes">
+        <fx:fileset dir="${build.app.dir}" includes="*.jar"/>
+        <!-- TODO it's not possible to include subdirectories, e.g. "lib/*.jar", they will be missing in the app bundle - why? -->
+        <fx:fileset dir="${sportstracker.app.dir}/target/lib" includes="*.jar"/>
+        <!-- TODO add documentation files when the subdirectory bug has been fixed -->
+        <!-- <fx:fileset dir="${sportstracker.app.dir}" includes="docs/*"/> -->
+      </fx:resources>
+
+      <fx:application id="SportsTracker"
+        name="SportsTracker"
+        mainClass="de.saring.sportstracker.gui.STApplication"
+        version="7.4.2"/>
+ 
+      <!-- Creates the launcher JAR file with all SportsTracker classes and resources -->
+      <fx:jar destfile="${build.app.dir}/sportstracker-launcher.jar">
+        <fx:application refid="SportsTracker"/>
+        <fx:resources refid="appRes"/>
+        <fileset dir="${sportstracker.app.dir}/target/classes"/>
+      </fx:jar>
+ 
+      <!-- Creates the SportsTracker application packages -->
+      <fx:deploy outdir="${build.deploy.dir}" outfile="SportsTracker" nativeBundles="all">
+
+        <fx:application refId="SportsTracker"/>
+        <fx:resources refid="appRes"/>
+
+        <fx:info title="SportsTracker"
+          vendor="Saring.de"
+          copyright="(C) 2017 Stefan Saring"
+          description="Application for tracking your sporting activities."
+          category="Sports;Utility"
+          license="GNU General Public License (GPL), Version 2.0">
+        
+          <!-- TODO Can the icon file definition be made OS independent? 
+               This can also be done by defining an fx:deploy target for each 
+               OS and specify it when launching ANT -->          
+          <fx:icon href="src/main/deploy/package/macosx/SportsTracker.icns"/>
+        </fx:info>
+        
+        <!-- TODO DMG packager needs to show the the license file -->
+        <!-- TODO <fx:bundleArgument arg="licenseFile" value="docs/LICENSE.txt"/> -->
+        
+      </fx:deploy>
+
+  </target>
+
+  <!-- Deletes the packaging working directories -->
+  <target name="clean">
+    <delete dir="${build.app.dir}"/>
+    <delete dir="${build.deploy.dir}"/>
+  </target>
+ 
+</project>
