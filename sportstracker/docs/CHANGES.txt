@@ -26,6 +26,8 @@ v7.4.2:
      available (an info message is shown instead)
    - remove heartrate axis with weird values when no heartrate data available
    => much better readability and comparability
+ - Diagram Panel (Issue #162): display an average line for the left value axis
+   (just for the left axis and without labels to keep the diagram readable)
  - Main Panel improvements:
    - added heartrate availability info to the Recording Mode section
 

@@ -54,13 +54,15 @@ class DiagramPanelController(
         context: EVContext,
         document: EVDocument) : AbstractPanelController(context, document) {
 
-    // The colors of the chart.
+    // the colors and strokes of the chart
     private val colorAxisLeft = java.awt.Color(255, 30, 30)
     private val colorAxisLeftPlot = java.awt.Color(255, 30, 30, 136)
     private val colorAxisRight = java.awt.Color(20, 75, 255)
     private val colorAxisRightPlot = java.awt.Color(20, 75, 255, 136)
-    private val colorMarkerLap = java.awt.Color(163, 42, 42)
+    private val colorMarkerLap = java.awt.Color(110, 110, 120)
     private val colorMarkerHeartrate = java.awt.Color(204, 204, 204, 77)
+    private val colorMarkerAverage = java.awt.Color(190, 75, 55)
+    private val strokeMarker = java.awt.BasicStroke(1.5f)
 
     private val timeZoneGmt = TimeZone.getTimeZone("GMT")
 
@@ -347,15 +349,23 @@ class DiagramPanelController(
         }
 
         // highlight current selected (if set) heartrate range when displayed on left axis
-        if (highlightHeartrateRange != null && axisTypeLeft == AxisType.HEARTRATE) {
+        // (don't highlight percentual ranges (is not possible, the values are absolute and the maximum heartrate is unknown)
+        if (axisTypeLeft == AxisType.HEARTRATE &&
+                highlightHeartrateRange != null && highlightHeartrateRange!!.isAbsoluteRange) {
 
-            // don't highlight percentual ranges (is not possible, the values
-            // are absolute and the maximum heartrate is unknown)
-            if (highlightHeartrateRange!!.isAbsoluteRange) {
-                val hrRangeMarker = IntervalMarker(highlightHeartrateRange!!.lowerHeartRate.toDouble(),
-                        highlightHeartrateRange!!.upperHeartRate.toDouble())
-                hrRangeMarker.paint = colorMarkerHeartrate
-                plot.addRangeMarker(hrRangeMarker)
+            val hrRangeMarker = IntervalMarker(highlightHeartrateRange!!.lowerHeartRate.toDouble(),
+                    highlightHeartrateRange!!.upperHeartRate.toDouble())
+            hrRangeMarker.paint = colorMarkerHeartrate
+            plot.addRangeMarker(hrRangeMarker)
+        }
+        // otherwise draw a horizontal marker line for the average value (if there is one)
+        else {
+            val averageValue: Double? = getAverageValueForAxisType(axisTypeLeft)
+            if (averageValue != null) {
+                val avgMarker = ValueMarker(averageValue)
+                avgMarker.paint = colorMarkerAverage
+                avgMarker.stroke = strokeMarker
+                plot.addRangeMarker(avgMarker)
             }
         }
 
@@ -381,7 +391,7 @@ class DiagramPanelController(
                 // create domain marker
                 val lapMarker = ValueMarker(lapSplitValue)
                 lapMarker.paint = colorMarkerLap
-                lapMarker.stroke = java.awt.BasicStroke(1.5f)
+                lapMarker.stroke = strokeMarker
                 lapMarker.label = context.resources.getString("pv.diagram.lap", i + 1)
                 lapMarker.labelAnchor = RectangleAnchor.TOP_LEFT
                 lapMarker.labelTextAnchor = TextAnchor.TOP_RIGHT
@@ -499,43 +509,12 @@ class DiagramPanelController(
      * @return the requested value
      */
     private fun getConvertedSampleValue(axisType: AxisType, sampleIndex: Int): Number? {
-        val formatUtils = context.formatUtils
-
         if (axisType == AxisType.NOTHING) {
             return null
         }
 
         val sampleValue = getSampleValue(axisType, sampleIndex) ?: return null
-
-        when (axisType) {
-            AxisType.HEARTRATE, AxisType.CADENCE ->
-                return sampleValue
-            AxisType.ALTITUDE ->
-                return if (formatUtils.unitSystem == FormatUtils.UnitSystem.Metric)
-                    sampleValue
-                else
-                    ConvertUtils.convertMeter2Feet(Math.round(sampleValue).toInt())
-            AxisType.SPEED -> {
-                var speedValue = sampleValue
-                if (formatUtils.unitSystem != FormatUtils.UnitSystem.Metric) {
-                    speedValue = ConvertUtils.convertKilometer2Miles(speedValue, false)
-                }
-                if (formatUtils.speedView == FormatUtils.SpeedView.MinutesPerDistance) {
-                    // convert speed to minutes per distance
-                    if (speedValue != 0.0) {
-                        speedValue = 60 / speedValue
-                    }
-                }
-                return speedValue
-            }
-            AxisType.TEMPERATURE ->
-                return if (formatUtils.unitSystem == FormatUtils.UnitSystem.Metric)
-                    sampleValue
-                else
-                    ConvertUtils.convertCelsius2Fahrenheit(Math.round(sampleValue).toShort())
-            else ->
-                throw IllegalArgumentException("Unknown axis type: $axisType!")
-        }
+        return getConvertedValueForAxisType(axisType, sampleValue)
     }
 
     /**
@@ -600,6 +579,51 @@ class DiagramPanelController(
     }
 
     /**
+     * Returns the converted value of the specified value for the axis type. A conversion is not needed for all axis types.
+     *
+     * @param axisType the axis type of the passed value
+     * @param value value to convert
+     * @return the converted value
+     */
+    private fun getConvertedValueForAxisType(axisType: AxisType, value: Double): Number {
+        val formatUtils = context.formatUtils
+
+        when (axisType) {
+            AxisType.HEARTRATE, AxisType.CADENCE ->
+                return value
+            AxisType.ALTITUDE ->
+                return if (formatUtils.unitSystem == FormatUtils.UnitSystem.Metric)
+                    value
+                else
+                    ConvertUtils.convertMeter2Feet(Math.round(value).toInt())
+            AxisType.SPEED -> {
+                return getConvertedSpeedValue(value, formatUtils)
+            }
+            AxisType.TEMPERATURE ->
+                return if (formatUtils.unitSystem == FormatUtils.UnitSystem.Metric)
+                    value
+                else
+                    ConvertUtils.convertCelsius2Fahrenheit(Math.round(value).toShort())
+            else ->
+                throw IllegalArgumentException("Unknown axis type: $axisType!")
+        }
+    }
+
+    private fun getConvertedSpeedValue(speedValue: Double, formatUtils: FormatUtils): Double {
+
+        var speed = speedValue
+        if (formatUtils.unitSystem != FormatUtils.UnitSystem.Metric) {
+            speed = ConvertUtils.convertKilometer2Miles(speed, false)
+        }
+
+        return if (formatUtils.speedView == FormatUtils.SpeedView.MinutesPerDistance && speed != 0.0) {
+            60 / speed
+        } else {
+            speed
+        }
+    }
+
+    /**
      * Returns the value specified by the axis type of the exercise lap. It also converts the value to the current unit
      * system and speed view.
      *
@@ -617,21 +641,40 @@ class DiagramPanelController(
             AxisType.SPEED -> {
                 var speed = lap.speed?.speedAVG
                 if (speed != null) {
-                    if (formatUtils.unitSystem != FormatUtils.UnitSystem.Metric) {
-                        speed = ConvertUtils.convertKilometer2Miles(speed.toDouble(), false).toFloat()
-                    }
-                    if (formatUtils.speedView == FormatUtils.SpeedView.MinutesPerDistance) {
-                        // convert speed to minutes per distance
-                        if (speed != 0f) {
-                            speed = 60 / speed
-                        }
-                    }
+                    speed = getConvertedSpeedValue(speed.toDouble(), formatUtils).toFloat()
                 }
                 return speed
             }
             else ->
                 return null
         }
+    }
+
+    /**
+     * Returns the average value for the specified axis type, if present. The average value is already converted
+     * for the current format options.
+     *
+     * @param axisType axis type
+     * @return average value (can be null if not present)
+     */
+    private fun getAverageValueForAxisType(axisType: AxisType): Double? {
+
+        val averageValue = when (axisType) {
+            AxisType.HEARTRATE ->
+                document.exercise.heartRateAVG?.toDouble()
+            AxisType.ALTITUDE ->
+                document.exercise.altitude?.altitudeAvg?.toDouble()
+            AxisType.SPEED ->
+                document.exercise.speed?.speedAvg?.toDouble()
+            AxisType.CADENCE ->
+                document.exercise.cadence?.cadenceAvg?.toDouble()
+            AxisType.TEMPERATURE ->
+                document.exercise.temperature?.temperatureAvg?.toDouble()
+            else ->
+                null
+        } ?: return null
+
+        return getConvertedValueForAxisType(axisType, averageValue).toDouble()
     }
 
     /**
