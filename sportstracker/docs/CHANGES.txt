@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v7.4.2:
+v7.5.0:
  SportsTracker changes:
  - Java 9 update
    - updated Maven plugins
