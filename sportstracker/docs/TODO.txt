@@ -16,6 +16,8 @@ Java 9 migration:
 
 - Add an update notification when a new SportsTracker version has been released
 
+- Migrate to JUnit 5 -> see https://vocabhunter.github.io/2017/10/17/migrating-to-junit-5.html
+
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore
 - tested on macOS, Windows and Linux (incl. printing, drag & drop)
