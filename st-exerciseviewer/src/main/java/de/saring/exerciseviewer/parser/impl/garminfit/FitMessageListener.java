@@ -332,7 +332,7 @@ class FitMessageListener implements MesgListener {
                 lapDistanceSum += lap.getSpeed().getDistance();
                 lap.getSpeed().setDistance(lapDistanceSum);
 
-                lap.getSpeed().setSpeedEnd(sampleAtLapEnd.getSpeed());
+                lap.getSpeed().setSpeedEnd(sampleAtLapEnd.getSpeed() == null ? 0 : sampleAtLapEnd.getSpeed());
                 lap.getSpeed().setCadence(sampleAtLapEnd.getCadence());
             }
 
@@ -382,9 +382,10 @@ class FitMessageListener implements MesgListener {
             int altitudeSum = 0;
 
             for (ExerciseSample sample : exercise.getSampleList()) {
-                altMin = (short) Math.min(sample.getAltitude(), altMin);
-                altMax = (short) Math.max(sample.getAltitude(), altMax);
-                altitudeSum += sample.getAltitude();
+                short sampleAltitude = sample.getAltitude() == null ? 0 : sample.getAltitude();
+                altMin = (short) Math.min(sampleAltitude, altMin);
+                altMax = (short) Math.max(sampleAltitude, altMax);
+                altitudeSum += sampleAltitude;
             }
 
             exercise.getAltitude().setAltitudeMin(altMin);
