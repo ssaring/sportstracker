@@ -189,15 +189,7 @@ public class OverviewDialogController extends AbstractDialogController {
         java.util.List<java.awt.Color> lGraphColors = new ArrayList<>();
 
         // setup TimeSeries in the diagram (done in different ways for all the value types)
-        if (vType == ValueType.SPORTSUBTYPE) {
-            setupSportSubTypeDiagram(dataset, lGraphColors);
-        } else if (vType == ValueType.EQUIPMENT) {
-            setupEquipmentDiagram(dataset, lGraphColors);
-        } else if (vType == ValueType.WEIGHT) {
-            setupWeightDiagram(dataset, lGraphColors);
-        } else {
-            setupExerciseDiagram(dataset, lGraphColors);
-        }
+        setupTimeSeries(vType, dataset, lGraphColors);
 
         // create chart
         JFreeChart chart = ChartFactory.createTimeSeriesChart( //
@@ -264,7 +256,43 @@ public class OverviewDialogController extends AbstractDialogController {
 
         // special handling for overview type EACH_STACKED, it uses a special renderer
         // (only for exercises based value types, stacked mode can be selected only there)
-        if (cbSportTypeMode.isVisible() && cbSportTypeMode.getValue() == OverviewType.EACH_STACKED) {
+        handleEachStacked(timeType, vType, year, plot, renderer, dateFormatTooltip, toolTipFormat);
+
+        // set date format of time (bottom) axis
+        DateAxis axis = (DateAxis) plot.getDomainAxis();
+        axis.setDateFormatOverride(new SimpleDateFormat(dateFormatAxis));
+        if (dateTickUnit != null) {
+            axis.setTickUnit(dateTickUnit);
+        }
+
+        // set value range from 0 to 10 when there are no values
+        // (otherwise the range is double minimum to double maximum)
+        if (plot.getRangeAxis().getRange().getCentralValue() == 0d) {
+            plot.getRangeAxis().setRange(new Range(0, 10));
+        }
+
+        // add vertical year break marker when displaying the last 12 months
+        addVerticalYearBreak(timeType, plot);
+
+        // display legend next to the diagram on the right side
+        chart.getLegend().setPosition(RectangleEdge.RIGHT);
+
+        ChartUtils.customizeChart(chart);
+
+        // display chart in viewer (chart viewer will be initialized lazily)
+        if (chartViewer == null) {
+            chartViewer = new ChartViewer(chart);
+            spDiagram.getChildren().addAll(chartViewer);
+        } else {
+            chartViewer.setChart(chart);
+        }
+    }
+
+	private void handleEachStacked(TimeRangeType timeType, ValueType vType, int year, XYPlot plot, XYLineAndShapeRenderer renderer,
+			String dateFormatTooltip, String toolTipFormat) {
+		TimeTableXYDataset dataset;
+		java.util.List<java.awt.Color> lGraphColors;
+		if (cbSportTypeMode.isVisible() && cbSportTypeMode.getValue() == OverviewType.EACH_STACKED) {
 
             renderer.setSeriesLinesVisible(0, false);
             renderer.setSeriesShapesVisible(0, false);
@@ -297,22 +325,10 @@ public class OverviewDialogController extends AbstractDialogController {
             });
             plot.setRenderer(1, stackedRenderer);
         }
+	}
 
-        // set date format of time (bottom) axis
-        DateAxis axis = (DateAxis) plot.getDomainAxis();
-        axis.setDateFormatOverride(new SimpleDateFormat(dateFormatAxis));
-        if (dateTickUnit != null) {
-            axis.setTickUnit(dateTickUnit);
-        }
-
-        // set value range from 0 to 10 when there are no values
-        // (otherwise the range is double minimum to double maximum)
-        if (plot.getRangeAxis().getRange().getCentralValue() == 0d) {
-            plot.getRangeAxis().setRange(new Range(0, 10));
-        }
-
-        // add vertical year break marker when displaying the last 12 months
-        if (timeType == TimeRangeType.LAST_12_MONTHS) {
+	private void addVerticalYearBreak(TimeRangeType timeType, XYPlot plot) {
+		if (timeType == TimeRangeType.LAST_12_MONTHS) {
             LocalDate firstDayOfYear = LocalDate.now().with(TemporalAdjusters.firstDayOfYear());
             LocalDate middleOfDecemberOfLastYear = firstDayOfYear.minusDays(15);
             Date dateMiddleOfDecemberOfLastYear = Date310Utils.localDateToDate(middleOfDecemberOfLastYear);
@@ -325,20 +341,20 @@ public class OverviewDialogController extends AbstractDialogController {
             newYearMarker.setLabelBackgroundColor(java.awt.Color.WHITE);
             plot.addDomainMarker(newYearMarker);
         }
+	}
 
-        // display legend next to the diagram on the right side
-        chart.getLegend().setPosition(RectangleEdge.RIGHT);
-
-        ChartUtils.customizeChart(chart);
-
-        // display chart in viewer (chart viewer will be initialized lazily)
-        if (chartViewer == null) {
-            chartViewer = new ChartViewer(chart);
-            spDiagram.getChildren().addAll(chartViewer);
+	private void setupTimeSeries(ValueType vType, TimeTableXYDataset dataset,
+			java.util.List<java.awt.Color> lGraphColors) {
+		if (vType == ValueType.SPORTSUBTYPE) {
+            setupSportSubTypeDiagram(dataset, lGraphColors);
+        } else if (vType == ValueType.EQUIPMENT) {
+            setupEquipmentDiagram(dataset, lGraphColors);
+        } else if (vType == ValueType.WEIGHT) {
+            setupWeightDiagram(dataset, lGraphColors);
         } else {
-            chartViewer.setChart(chart);
+            setupExerciseDiagram(dataset, lGraphColors);
         }
-    }
+	}
 
     private void updateOptionControls() {
         final ValueType selectedValueType = cbDisplay.getValue();
@@ -491,21 +507,26 @@ public class OverviewDialogController extends AbstractDialogController {
                     double averageSpeed = sumDistance / (sumDuration / 3600d);
 
                     // calculate the speed value depending on current speed unit view
-                    if (options.getSpeedView() == FormatUtils.SpeedView.MinutesPerDistance) {
-                        if (averageSpeed == 0) {
-                            dataset.add(timePeriod, 0, seriesName);
-                        } else {
-                            dataset.add(timePeriod, 60 / averageSpeed, seriesName);
-                        }
-                    } else {
-                        dataset.add(timePeriod, averageSpeed, seriesName);
-                    }
+                    calculateSpeedValue(dataset, seriesName, timePeriod, options, averageSpeed);
                     break;
                 default:
                     dataset.add(timePeriod, 0, seriesName);
             }
         }
     }
+
+	private void calculateSpeedValue(TimeTableXYDataset dataset, String seriesName, RegularTimePeriod timePeriod,
+			STOptions options, double averageSpeed) {
+		if (options.getSpeedView() == FormatUtils.SpeedView.MinutesPerDistance) {
+		    if (averageSpeed == 0) {
+		        dataset.add(timePeriod, 0, seriesName);
+		    } else {
+		        dataset.add(timePeriod, 60 / averageSpeed, seriesName);
+		    }
+		} else {
+		    dataset.add(timePeriod, averageSpeed, seriesName);
+		}
+	}
 
     /**
      * Sets up the diagram for sport subtype overview for the selected sport type.
