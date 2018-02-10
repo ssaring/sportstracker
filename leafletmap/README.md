@@ -11,7 +11,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Dependencies and used libraries
 
-* Kotlin 1.2.0
+* Kotlin 1.2.21
 * JavaSE 8 (tested with 8u151 and 9.0.1)
 * Leaflet 1.0.3 (included)
     * Homepage: http://leafletjs.com/
