@@ -5,11 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
+import javafx.stage.Stage;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -19,9 +23,6 @@ import org.junit.jupiter.api.Test;
  *
  * @author Stefan Saring
  */
-// TODO JUnit4 test was executed by @RunWith(JfxRunner.class), does not work in JUnit5 anymore
-// TODO initialize JavaFX toolkit before test execution
-@Disabled
 public class BindingUtilsToggleGroupTest {
 
     private enum Options {
@@ -35,8 +36,20 @@ public class BindingUtilsToggleGroupTest {
 
     private ObjectProperty<Options> optionsProperty;
 
+    /**
+     * Initializes the JavaFX toolkit before test execution. Otherwise the test will fail with
+     * "java.lang.IllegalStateException: Toolkit not initialized".
+     */
+    @BeforeAll
+    static void initJavaFXToolKit() {
+
+        new Thread(() -> {
+            Application.launch(DummyFXApplication.class);
+        }).start();
+    }
+
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         rbOptionA = new RadioButton("Option A");
         rbOptionA.setUserData(Options.OptionA);
 
@@ -83,5 +96,15 @@ public class BindingUtilsToggleGroupTest {
 
         assertThrows(IllegalArgumentException.class, () ->
             BindingUtils.bindToggleGroupToProperty(tgOptions, optionsProperty));
+    }
+
+    /**
+     * Dummy application for initializing the JavaFX toolkit.
+     */
+    public static class DummyFXApplication extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+        }
     }
 }

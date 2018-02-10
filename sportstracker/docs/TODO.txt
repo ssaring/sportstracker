@@ -1,9 +1,6 @@
 SportsTracker-TODO
 ==================
 
-JUnit 5 migration:
-- see TODOs in BindingUtilsToggleGroupTest -> JFXRunner is not working in JUnit 5 anymore
-
 Java 9 migration:
 - completed (no compile errors, no test errors, no usage problems)
 - JavaFX packaging does not work yet, see details in the st-packager module

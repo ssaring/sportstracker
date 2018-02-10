@@ -426,8 +426,6 @@ The SportsTracker project uses the following libraries:
       URL: http://www.thisisant.com/pages/products/fit-sdk
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: https://www.thisisant.com/resources/fit
-  - jfx-testrunner 1.2 (https://github.com/sialcasa/jfx-testrunner)
-      License: Apache License v2.0
 
 All dependencies will be downloaded automatically by Maven. The Garmin FIT
 library is missing in the Maven central repository, so I've created my own
