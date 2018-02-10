@@ -4,19 +4,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.saring.exerciseviewer.core.EVOptions;
+import de.saring.exerciseviewer.gui.EVContext;
+import de.saring.sportstracker.core.STException;
+import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.sportstracker.storage.XMLStorage;
+import de.saring.util.gui.javafx.WindowBoundsPersistence;
+import de.saring.util.unitcalc.FormatUtils;
 import eu.lestard.easydi.EasyDI;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
-import de.saring.exerciseviewer.gui.EVContext;
-import de.saring.sportstracker.core.STException;
-import de.saring.sportstracker.core.STOptions;
-import de.saring.util.gui.javafx.WindowBoundsPersistence;
-import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * This is the main class of SportsTracker which starts the entire application.
