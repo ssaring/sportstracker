@@ -1,13 +1,13 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
 
 import de.saring.sportstracker.data.EntryFilter;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
@@ -23,7 +23,7 @@ public class FilterViewModelTest {
 
     private EntryFilter entryFilter;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         entryFilter = new EntryFilter();
         entryFilter.setDateStart(LocalDate.of(2014, 10, 1));

@@ -18,6 +18,7 @@
         <application.name>SportsTracker</application.name>
         <application.mainClass>de.saring.sportstracker.gui.STApplication</application.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>5.0.3</junit.version>
     </properties>
     
     <modules>
@@ -64,21 +65,15 @@
         </dependency>
         <!-- Common test dependencies -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.10.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.saxsys</groupId>
-            <artifactId>jfx-testrunner</artifactId>
-            <version>1.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -94,6 +89,25 @@
                     <target>9</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
+            </plugin>
+
+            <!-- Surefire setup for proper JUnit 5 test execution (does not work by default yet) -->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <!-- Surefire plugin version 2.20 has a bug, no tests will be executed then -->
+                <version>2.19.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>1.0.3</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>${junit.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

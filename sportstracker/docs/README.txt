@@ -351,14 +351,14 @@ Developer Requirements
 ----------------------
 
 For compilation of the SportsTracker sources you need:
-  - Java SE Development Kit (JDK) 8u40 or greater
+  - Java SE Development Kit (JDK) 9 or greater
     (from http://www.oracle.com/technetwork/java/)
-  - Maven 3.0.3 or greater
+  - Maven 3.5.0 or greater
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
   - IntelliJ IDEA Community Edition (http://www.jetbrains.com/idea/)
-    => preferred IDE, tested with version 2017.2
+    => preferred IDE, tested with version 2017.3
   - NetBeans IDE (from http://www.netbeans.org), Kotlin support not tested
   - Eclipse (from http://eclipse.org), Kotlin support not tested
 
@@ -381,23 +381,18 @@ multi project), so it's not possible to create circular module dependencies.
   - leafletmap:
     Module for the JavaFX wrapper component of the Leaflet map viewer
 
-In NetBeans you can open the project by "Open project", you need to select the
-project root directory and import all required projects.
-In Eclipse you can open the project by "Import -> Existing Maven Projects",
-you need to select the project root directory with all child modules here.
-IntelliJ IDEA users need to import the project by "File -> Import Project...",
-select the SportsTracker root directory and import it as a Maven project.
+The configuration of your IDE (IDEA or Eclipse) is documented in the folder
+'misc/ide-configuration'. It contains instructions how to import the project
+into your IDE and how to setup the code formatter properly.
+It's important to ensure a consistent code format and style all over the
+project. That's why all developers need to use the same configuration for their
+IDE.
 
 SportStracker can be started from the IDE by executing the class
 "de.saring.sportstracker.gui.STApplication".
 It can also be started from command line after execution of "mvn package"
 with the command (inside the project root directory):
   java -jar sportstracker/target/sportstracker-x.y.z.jar
-
-It's important to ensure a consistent code format and style all over the
-project. That's why all developers need to use the same configuration for their
-IDE. This configuration and the documentation can be found in the directory
-'sportstracker/misc/ide-configuration'.
 
 All user interfaces are defined in FXML by using the JavaFX Scene Builder 8.x.
 
@@ -406,7 +401,7 @@ The SportsTracker project uses the following libraries:
   - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
       Includes: javax.inject-1.jar
       License: Apache License v2.0
-  - Kotlin 1.2.0 (http://kotlinlang.org/)
+  - Kotlin 1.2.21 (http://kotlinlang.org/)
       License: Apache License v2.0
   - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
@@ -423,16 +418,14 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - sqlite-jdbc 3.20.0 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
-  - JUnit 4.12 (http://www.junit.org)
-      License: Common Public License v1.0
+  - JUnit 5.0.3 (http://www.junit.org)
+      License: Eclipse Public License v2.0. and Apache License v2.0
   - Mockito 2.10.0 (http://code.google.com/p/mockito/)
       License: MIT License
   - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 20.33.01
       URL: http://www.thisisant.com/pages/products/fit-sdk
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: https://www.thisisant.com/resources/fit
-  - jfx-testrunner 1.2 (https://github.com/sialcasa/jfx-testrunner)
-      License: Apache License v2.0
 
 All dependencies will be downloaded automatically by Maven. The Garmin FIT
 library is missing in the Maven central repository, so I've created my own
@@ -514,4 +507,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2017/11/29
+2018/02/10

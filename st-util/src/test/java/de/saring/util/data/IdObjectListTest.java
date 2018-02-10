@@ -1,11 +1,11 @@
 package de.saring.util.data;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests of class IdObjectList.
@@ -19,7 +19,7 @@ public class IdObjectListTest {
      */
     private IdObjectList<NameObject> list;
 
-    @Before
+    @BeforeEach
     public void setUp() {
 
         // create a new list with some content
@@ -48,11 +48,8 @@ public class IdObjectListTest {
         assertEquals("one", list.getAt(0).getName());
         assertEquals("three", list.getAt(2).getName());
 
-        try {
-            list.getAt(3);
-            fail("Must fail, index is not valid...");
-        } catch (IndexOutOfBoundsException e) {
-        }
+        assertThrows(IndexOutOfBoundsException.class, () ->
+            list.getAt(3));
     }
 
     /**
@@ -92,17 +89,19 @@ public class IdObjectListTest {
     /**
      * Test of set method set() of class IdObjectList: must fail on null.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void setNull() {
-        list.set(null);
+        assertThrows(NullPointerException.class, () ->
+            list.set(null));
     }
 
     /**
      * Test of set method set() of class IdObjectList: must fail when ID = 0.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setIdZero() {
-        list.set(new NameObject(0, "Null"));
+        assertThrows(IllegalArgumentException.class, () ->
+            list.set(new NameObject(0, "Null")));
     }
 
     /**
@@ -125,21 +124,24 @@ public class IdObjectListTest {
     /**
      * Test of method clearAndAddAll(). Must fail when null is passed.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void clearAndAddAllNull() {
-        list.clearAndAddAll(null);
+        assertThrows(NullPointerException.class, () ->
+            list.clearAndAddAll(null));
     }
 
     /**
      * Test of method clearAndAddAll(). Must fail when an entry contain an invalid ID.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void clearAndAddAllInvalidId() {
 
         ArrayList<NameObject> tempEntries = new ArrayList<>();
         tempEntries.add(new NameObject(5, "five"));
         tempEntries.add(new NameObject(-6, "minus six"));
-        list.clearAndAddAll(tempEntries);
+
+        assertThrows(IllegalArgumentException.class, () ->
+            list.clearAndAddAll(tempEntries));
     }
 
     /**

@@ -1,26 +1,28 @@
 package de.saring.util.gui.javafx;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import de.saxsys.javafx.test.JfxRunner;
+import javafx.stage.Stage;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for ToggleGroup related methods in class BindingUtils.
  *
  * @author Stefan Saring
  */
-@RunWith(JfxRunner.class)
 public class BindingUtilsToggleGroupTest {
 
     private enum Options {
@@ -34,8 +36,20 @@ public class BindingUtilsToggleGroupTest {
 
     private ObjectProperty<Options> optionsProperty;
 
-    @Before
-    public void setUp() {
+    /**
+     * Initializes the JavaFX toolkit before test execution. Otherwise the test will fail with
+     * "java.lang.IllegalStateException: Toolkit not initialized".
+     */
+    @BeforeAll
+    static void initJavaFXToolKit() {
+
+        new Thread(() -> {
+            Application.launch(DummyFXApplication.class);
+        }).start();
+    }
+
+    @BeforeEach
+    void setUp() {
         rbOptionA = new RadioButton("Option A");
         rbOptionA.setUserData(Options.OptionA);
 
@@ -75,10 +89,22 @@ public class BindingUtilsToggleGroupTest {
      * Test of bindToggleGroupToProperty(): One radio button has no user data set,
      * the binding must throw an IllegalArgumentException.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testBindToggleGroupToPropertyMissingUserData() {
 
         rbOptionB.setUserData(null);
-        BindingUtils.bindToggleGroupToProperty(tgOptions, optionsProperty);
+
+        assertThrows(IllegalArgumentException.class, () ->
+            BindingUtils.bindToggleGroupToProperty(tgOptions, optionsProperty));
+    }
+
+    /**
+     * Dummy application for initializing the JavaFX toolkit.
+     */
+    public static class DummyFXApplication extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+        }
     }
 }

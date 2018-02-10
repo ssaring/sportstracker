@@ -1,10 +1,10 @@
 package de.saring.sportstracker.data;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * This class contains all unit tests for the EntryFilter class.
@@ -18,7 +18,7 @@ public class EntryFilterTest {
     /**
      * This method initializes the environment for testing.
      */
-    @Before
+    @BeforeEach
     public void setUp() {
 
         // create a sport type list with 2 sport types with 2 sport subtypes in each

@@ -3,8 +3,8 @@ package de.saring.exerciseviewer.parser.impl
 import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 import java.time.LocalDateTime
 
@@ -21,9 +21,11 @@ class PolarRS200SDParserTest {
     /**
      * This method must fail on parsing an exercise file which doesn't exists.
      */
-    @Test(expected = EVException::class)
+    @Test
     fun testParseExerciseMissingFile() {
-        parser.parseExercise("misc/testdata/rs200sd-sample-123.xml")
+        assertThrows(EVException::class.java) {
+            parser.parseExercise("misc/testdata/rs200sd-sample-123.xml")
+        }
     }
 
     /**

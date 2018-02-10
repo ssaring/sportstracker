@@ -1,13 +1,13 @@
 package de.saring.util;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * This class contains all unit tests for the ValidationUtilsTest class.
@@ -21,7 +21,7 @@ public class ValidationUtilsTest {
     /**
      * Set default locale to GERMAN, because the number validation tests are locale dependent.
      */
-    @BeforeClass
+    @BeforeAll
     public static void initLocale() {
         defaultLocale = Locale.getDefault();
         Locale.setDefault(Locale.GERMAN);
@@ -30,7 +30,7 @@ public class ValidationUtilsTest {
     /**
      * Reset default locale to previous value.
      */
-    @AfterClass
+    @AfterAll
     public static void resetLocale() {
         Locale.setDefault(defaultLocale);
     }

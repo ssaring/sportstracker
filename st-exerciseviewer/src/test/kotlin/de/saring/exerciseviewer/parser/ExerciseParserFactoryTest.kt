@@ -5,10 +5,10 @@ import de.saring.exerciseviewer.parser.impl.PolarSRawParser
 import de.saring.exerciseviewer.parser.impl.TimexPwxParser
 import de.saring.exerciseviewer.parser.impl.garminfit.GarminFitParser
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 
 /**
  * This class contains all unit tests for the ExerciseParserFactory class.
@@ -46,11 +46,8 @@ class ExerciseParserFactoryTest {
         parser = ExerciseParserFactory.getParser("exercise1.ped")
         assertEquals("de.saring.exerciseviewer.parser.impl.PolarPedParser", parser.javaClass.name)
 
-        try {
-            // this parser is unknown, must fail
+        assertThrows(EVException::class.java) {
             ExerciseParserFactory.getParser("exercises/exercise1.xyz")
-            fail("Parser for suffix xyz must not be found!")
-        } catch (e: EVException) {
         }
     }
 }

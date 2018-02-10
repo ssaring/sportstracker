@@ -1,11 +1,12 @@
 package de.saring.util.gui.javafx;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests of class TimeToStringConverter.
@@ -42,24 +43,27 @@ public class TimeToStringConverterTest {
     /**
      * Tests of method fromString(): conversion must fail for invalid time values.
      */
-    @Test(expected = DateTimeParseException.class)
+    @Test
     public void testFromStringFailedInvalidTime() {
-        CONVERTER.fromString("24:62");
+        assertThrows(DateTimeParseException.class, () ->
+            CONVERTER.fromString("24:62"));
     }
 
     /**
      * Tests of method fromString(): conversion must fail for no time values.
      */
-    @Test(expected = DateTimeParseException.class)
+    @Test
     public void testFromStringFailedNoTime() {
-        CONVERTER.fromString("foo:bar");
+        assertThrows(DateTimeParseException.class, () ->
+            CONVERTER.fromString("foo:bar"));
     }
 
     /**
      * Tests of method fromString(): conversion must fail when minutes are missing.
      */
-    @Test(expected = DateTimeParseException.class)
+    @Test
     public void testFromStringFailedNoMinutes() {
-        CONVERTER.fromString("10:");
+        assertThrows(DateTimeParseException.class, () ->
+            CONVERTER.fromString("10:"));
     }
 }

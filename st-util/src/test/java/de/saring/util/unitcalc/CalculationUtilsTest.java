@@ -1,8 +1,8 @@
 package de.saring.util.unitcalc;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * This class contains all unit tests for the CalculationUtils class.
@@ -16,7 +16,7 @@ public class CalculationUtilsTest {
      */
     @Test
     public void testCalculateDistance() {
-        assertEquals(0f, CalculationUtils.calculateDistance(0, 0), 0f);
+        assertEquals(0f, CalculationUtils.calculateDistance(0, 0));
         assertEquals(20f, CalculationUtils.calculateDistance(20, 3600), 0.01f);
         assertEquals(49.165054f, CalculationUtils.calculateDistance((float) 35.3, 5014), 0.0001f);
     }
@@ -26,7 +26,7 @@ public class CalculationUtilsTest {
      */
     @Test
     public void testCalculateAvgSpeed() {
-        assertEquals(Float.NaN, CalculationUtils.calculateAvgSpeed(0, 0), 0f);
+        assertEquals(Float.NaN, CalculationUtils.calculateAvgSpeed(0, 0));
         assertEquals(20f, CalculationUtils.calculateAvgSpeed(20, 3600), 0.01f);
         assertEquals(35.3f, CalculationUtils.calculateAvgSpeed((float) 49.165054, 5014), 0.00001f);
     }

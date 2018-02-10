@@ -1,14 +1,14 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
@@ -25,7 +25,7 @@ public class ExerciseViewModelTest {
 
     private Exercise exercise;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         exercise = new Exercise(123);
         exercise.setDateTime(LocalDateTime.of(2014, 10, 20, 7, 30, 0));

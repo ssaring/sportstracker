@@ -4,8 +4,8 @@ import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParser
 
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 import java.time.LocalDateTime
 
@@ -23,9 +23,11 @@ class SmartsyncCSVParserTest {
     /**
      * This method must fail on parsing an exerise file which doesn't exists.
      */
-    @Test(expected = EVException::class)
+    @Test
     fun testParseExerciseMissingFile() {
-        parser.parseExercise("misc/testdata/sample-123.csv")
+        assertThrows(EVException::class.java) {
+            parser.parseExercise("misc/testdata/sample-123.csv")
+        }
     }
 
     /**

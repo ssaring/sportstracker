@@ -1,6 +1,7 @@
 package de.saring.util.unitcalc;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,8 +9,8 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import de.saring.util.XmlBeanStorage;
 
@@ -25,7 +26,7 @@ public class XmlBeanStorageTest {
     /**
      * Removes the test files after test execution.
      */
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         Files.deleteIfExists(Paths.get(BEAN_FILENAME));
     }
@@ -54,19 +55,22 @@ public class XmlBeanStorageTest {
      * Tests the method loadBean(): Loading must fail with a FileNotFoundException because
      * the file does not exists.
      */
-    @Test(expected = FileNotFoundException.class)
+    @Test
     public void testLoadBeanFailedFileNotFound() throws Exception {
-        XmlBeanStorage.loadBean(BEAN_FILENAME);
+        assertThrows(FileNotFoundException.class, () ->
+            XmlBeanStorage.loadBean(BEAN_FILENAME));
     }
 
     /**
      * Tests the method saveBean(): Saving must fail with a IOException because the file
      * can't be created (there's a directory with the same name).
      */
-    @Test(expected = IOException.class)
+    @Test
     public void testSaveBeanFailedCreateFile() throws Exception {
         Files.createDirectory(Paths.get(BEAN_FILENAME));
-        XmlBeanStorage.saveBean(new TestBean(), BEAN_FILENAME);
+
+        assertThrows(IOException.class, () ->
+            XmlBeanStorage.saveBean(new TestBean(), BEAN_FILENAME));
     }
 
     /**

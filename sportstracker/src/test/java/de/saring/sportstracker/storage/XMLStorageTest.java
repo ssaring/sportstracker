@@ -3,14 +3,14 @@ package de.saring.sportstracker.storage;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.*;
 import de.saring.util.gui.javafx.ColorUtils;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This class contains all unit tests for the XMLStorage class.
@@ -30,7 +30,7 @@ public class XMLStorageTest {
     /**
      * This method initializes the environment for testing.
      */
-    @Before
+    @BeforeEach
     public void setUp() {
         storage = new XMLStorage();
     }
@@ -38,7 +38,7 @@ public class XMLStorageTest {
     /**
      * This method removes all temporary files after all tests were done.
      */
-    @AfterClass
+    @AfterAll
     public static void cleanUpFinal() {
         deleteFileIfExists(EXERCISES_WRITETEST_XML);
         deleteFileIfExists(SPORTTYPES_WRITETEST_XML);
@@ -135,11 +135,8 @@ public class XMLStorageTest {
 
         // read invalid sporttype list from XML
         // => an STException needs to be thrown
-        try {
-            storage.readSportTypeList("misc/testdata/sport-types-invalid.xml");
-            fail();
-        } catch (STException se) {
-        }
+        assertThrows(STException.class, () ->
+            storage.readSportTypeList("misc/testdata/sport-types-invalid.xml"));
     }
 
     /**
@@ -299,21 +296,15 @@ public class XMLStorageTest {
 
         // read invalid exercise list from XML
         // => an STException needs to be thrown
-        try {
-            storage.readExerciseList("misc/testdata/exercises-invalid.xml", sportTypeList);
-            fail();
-        } catch (STException se) {
-        }
+        assertThrows(STException.class, () ->
+            storage.readExerciseList("misc/testdata/exercises-invalid.xml", sportTypeList));
 
         // read valid exercise list from XML but remove the referenced equipment
         // from the sport type configuration before
         // => an STException needs to be thrown
         sportTypeList.getByID(1).getEquipmentList().removeByID(2);
-        try {
-            storage.readExerciseList("misc/testdata/exercises-valid.xml", sportTypeList);
-            fail();
-        } catch (STException se) {
-        }
+        assertThrows(STException.class, () ->
+            storage.readExerciseList("misc/testdata/exercises-valid.xml", sportTypeList));
     }
 
     /**
@@ -354,11 +345,8 @@ public class XMLStorageTest {
 
         // read invalid note list from XML
         // => an STException needs to be thrown
-        try {
-            storage.readNoteList("misc/testdata/notes-invalid.xml");
-            fail();
-        } catch (STException se) {
-        }
+        assertThrows(STException.class, () ->
+            storage.readNoteList("misc/testdata/notes-invalid.xml"));
     }
 
     /**
@@ -422,11 +410,8 @@ public class XMLStorageTest {
 
         // read invalid weight list from XML
         // => an STException needs to be thrown
-        try {
-            storage.readWeightList("misc/testdata/weights-invalid.xml");
-            fail();
-        } catch (STException se) {
-        }
+        assertThrows(STException.class, () ->
+            storage.readWeightList("misc/testdata/weights-invalid.xml"));
     }
 
     /**
@@ -455,7 +440,7 @@ public class XMLStorageTest {
      */
     private void checkWeightListContent(WeightList weightList) {
         assertNotNull(weightList);
-        assertEquals(weightList.size(), 3);
+        assertEquals(3, weightList.size());
 
         Weight weight1 = weightList.getByID(1);
         assertEquals(1, weight1.getId());

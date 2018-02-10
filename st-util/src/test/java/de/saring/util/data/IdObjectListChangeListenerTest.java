@@ -1,12 +1,16 @@
 package de.saring.util.data;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for IdObjectListChangeListener usage in IdObjectList. Test for a
@@ -19,7 +23,7 @@ public class IdObjectListChangeListenerTest {
     private IdObjectList<DummyIdObject> idObjectList;
     private IdObjectListChangeListener listenerMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         idObjectList = new IdObjectList<>();
         idObjectList.set(new DummyIdObject(1));

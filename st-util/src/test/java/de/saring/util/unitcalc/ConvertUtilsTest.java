@@ -1,8 +1,8 @@
 package de.saring.util.unitcalc;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * This class contains all unit tests for the ConvertUtils class.
@@ -17,7 +17,7 @@ public class ConvertUtilsTest {
     @Test
     public void testConvertMiles2Kilometer() {
         // test double version
-        assertEquals(ConvertUtils.convertMiles2Kilometer(0.0d), 0.0d, 0d);
+        assertEquals(0d, ConvertUtils.convertMiles2Kilometer(0d));
         assertEquals(ConvertUtils.convertMiles2Kilometer(145.3d), 233.83768320000004d, 0.000001d);
 
         // test int version
@@ -31,8 +31,8 @@ public class ConvertUtilsTest {
     @Test
     public void testConvertKilometer2Miles() {
         // test double version
-        assertEquals(ConvertUtils.convertKilometer2Miles(0d, false), 0d, 0d);
-        assertEquals(ConvertUtils.convertKilometer2Miles(0d, true), 0d, 0d);
+        assertEquals(ConvertUtils.convertKilometer2Miles(0d, false), 0d, 0.001d);
+        assertEquals(ConvertUtils.convertKilometer2Miles(0d, true), 0d, 0.001d);
         assertEquals(ConvertUtils.convertKilometer2Miles(145.3d, false), 90.2852342320846d, 0.00001d);
         assertEquals(ConvertUtils.convertKilometer2Miles(145.3d, true), 90.285d, 0.00001d);
 
@@ -64,7 +64,7 @@ public class ConvertUtilsTest {
      */
     @Test
     public void testConvertMeterPerSecond2KilometerPerHour() {
-        assertEquals(0f, ConvertUtils.convertMeterPerSecond2KilometerPerHour(0f), 0f);
+        assertEquals(0f, ConvertUtils.convertMeterPerSecond2KilometerPerHour(0f));
         assertEquals(3.6f, ConvertUtils.convertMeterPerSecond2KilometerPerHour(1f), 0.001f);
         assertEquals(44.64f, ConvertUtils.convertMeterPerSecond2KilometerPerHour(12.4f), 0.001f);
     }
@@ -74,7 +74,7 @@ public class ConvertUtilsTest {
      */
     @Test
     public void testConvertKilogram2Lbs() {
-        assertEquals(0, ConvertUtils.convertKilogram2Lbs(0), 0.0001d);
+        assertEquals(0, ConvertUtils.convertKilogram2Lbs(0));
         assertEquals(2.2046d, ConvertUtils.convertKilogram2Lbs(1), 0.0001d);
         assertEquals(165.852058d, ConvertUtils.convertKilogram2Lbs(75.23d), 0.0001d);
     }
@@ -84,7 +84,7 @@ public class ConvertUtilsTest {
      */
     @Test
     public void testConvertLbs2Kilogram() {
-        assertEquals(0, ConvertUtils.convertLbs2Kilogram(0), 0.0001d);
+        assertEquals(0, ConvertUtils.convertLbs2Kilogram(0));
         assertEquals(1, ConvertUtils.convertLbs2Kilogram(2.2046d), 0.0001d);
         assertEquals(34.12410d, ConvertUtils.convertLbs2Kilogram(75.23d), 0.0001d);
     }
@@ -94,7 +94,7 @@ public class ConvertUtilsTest {
      */
     @Test
     public void testConvertSemicircle2Degree() {
-        assertEquals(0d, ConvertUtils.convertSemicircle2Degree(0), 0d);
+        assertEquals(0d, ConvertUtils.convertSemicircle2Degree(0), 0.001d);
         assertEquals(51.054392d, ConvertUtils.convertSemicircle2Degree(609102623), 0.0001d);
         assertEquals(-51.054392d, ConvertUtils.convertSemicircle2Degree(-609102623), 0.0001d);
     }
