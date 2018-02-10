@@ -20,40 +20,31 @@ modified source code parts needs to be formatted, not the whole files or
 packages.
 
 
-Eclipse configuration (version 4.4):
-------------------------------------
+IntelliJ IDEA configuration (version 2017.x):
+---------------------------------------------
 
-- Preferences:
-  - General -> Workspace:
-    - Text file encoding: UTF-8
-  - General -> Editors - Text Editors:
-    - (x) Insert spaces for tabs
-  - Java -> Code Style -> Formatter: 
-    - Import file "ST-Formatter.xml" and select active profile "SportsTracker"
-  - Java -> Code Style -> Organize Imports: 
-    - Import file "ST-Imports.importorder"
-    - Number of imports needed for .*: 999
-    - Number of static imports needed for .*: 999
-  - Java -> Editor -> Save Actions: 
-    - (x) Perform the selected actions on save
-        (x) Format source code
-           (x) Format edited lines
-        (x) Organize imports
-  - XML -> XML Files -> Editor:
-    - Line Width: 240
-    - ( ) Split multiple attributes each on a new line
-    - (x) Indent using spaces
-    - Indentation size: 4
+Project import:
 
-    
-IntelliJ IDEA configuration (version 14.x):
--------------------------------------------
+- Import Project in launch screen (or File -> Open)
+- Select the pom.xml file in the SportsTracker root directory
+- Un/Select these options in the import dialog:
+  ( ) Search for projects recursively
+  (x) Import Maven projects automatically
+  (x) Keep project files in: PROJECT_DIRECTORY/.idea
+      (PROJECT_DIRECTORY is your project folder)
+  (x) Create IntelliJ IDEA modules for aggregator projects
+  (x) Create module groups for multi-module Maven projects
+  -> keep all the other options as they are
+  
+
+Code Style configuration:
 
 - File -> Settings:
   - Plugins: 
     - install plugin "Eclipse Code Formatter" (version 15.x) and restart IDEA
   - Eclipse Code Formatter:
     - (x) Use the Eclipse code formatter
+	- Create a Project specific profile
     - Eclipse Java Formatter config file: 
       - select file "ST-Formatter.xml" 
     - Java Formatter Profile:
@@ -76,9 +67,42 @@ IntelliJ IDEA configuration (version 14.x):
         - (x) Align attributes
         
 - Formatter must be used manually on the edited Java and FXML files 
- (Code -> Reformat Code) with the selected options:
-  (x) File '...'
-  (x) Organize imports
+ (Code -> Show Reformat File Dialog) with the selected options:
   (x) Only VCS changed text
+  (x) Organize imports
 - For FXML files make sure that there are no unused and wildcard imports
   (performance brake)
+
+
+Eclipse configuration (version 4.4, recent versions untested):
+--------------------------------------------------------------
+
+Project import:
+
+- open the project by "Import -> Existing Maven Projects"
+- you need to select the project root directory with all child modules here
+
+
+Code Style configuration:
+
+- Preferences:
+  - General -> Workspace:
+    - Text file encoding: UTF-8
+  - General -> Editors - Text Editors:
+    - (x) Insert spaces for tabs
+  - Java -> Code Style -> Formatter: 
+    - Import file "ST-Formatter.xml" and select active profile "SportsTracker"
+  - Java -> Code Style -> Organize Imports: 
+    - Import file "ST-Imports.importorder"
+    - Number of imports needed for .*: 999
+    - Number of static imports needed for .*: 999
+  - Java -> Editor -> Save Actions: 
+    - (x) Perform the selected actions on save
+        (x) Format source code
+           (x) Format edited lines
+        (x) Organize imports
+  - XML -> XML Files -> Editor:
+    - Line Width: 240
+    - ( ) Split multiple attributes each on a new line
+    - (x) Indent using spaces
+    - Indentation size: 4
