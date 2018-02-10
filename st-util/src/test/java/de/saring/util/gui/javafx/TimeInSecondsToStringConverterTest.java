@@ -1,9 +1,9 @@
 package de.saring.util.gui.javafx;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import de.saring.util.unitcalc.FormatUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests of class TimeInSecondsToStringConverter.

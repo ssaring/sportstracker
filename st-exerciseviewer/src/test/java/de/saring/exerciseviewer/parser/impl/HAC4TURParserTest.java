@@ -3,13 +3,13 @@ package de.saring.exerciseviewer.parser.impl;
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * This class contains all unit tests for the HAC4TURParser class.
@@ -26,7 +26,7 @@ public class HAC4TURParserTest {
     /**
      * This method initializes the environment for testing.
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         parser = new HAC4TURParser();
     }
@@ -36,11 +36,8 @@ public class HAC4TURParserTest {
      */
     @Test
     public void testParseExerciseMissingFile() {
-        try {
-            parser.parseExercise("missing-file.tur");
-            fail("Parse of the missing file must fail ...");
-        } catch (EVException e) {
-        }
+        assertThrows(EVException.class, () ->
+            parser.parseExercise("missing-file.tur"));
     }
 
     /**

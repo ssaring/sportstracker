@@ -3,13 +3,13 @@ package de.saring.exerciseviewer.parser.impl;
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * This class contains all unit tests for the TimexPwxParser class.
@@ -32,7 +32,7 @@ public class TimexPwxParserTest {
     /**
      * This method initializes the environment for testing.
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         parser = new TimexPwxParser();
     }
@@ -42,11 +42,8 @@ public class TimexPwxParserTest {
      */
     @Test
     public void testParseExerciseMissingFile() {
-        try {
-            parser.parseExercise("missing-file.srd");
-            fail("Parse of the missing file must fail ...");
-        } catch (EVException e) {
-        }
+        assertThrows(EVException.class, () ->
+                parser.parseExercise("missing-file.srd"));
     }
 
     /**
@@ -129,7 +126,7 @@ public class TimexPwxParserTest {
         assertEquals((0 * 60) + 12, exercise.getHeartRateLimits().get(5).getTimeAbove().intValue());
 
         // check lap data (first, two from middle and last only)
-        float delta = 0;
+        float delta = 0.001f;
         assertEquals(exercise.getLapList().size(), 12);
         assertEquals(exercise.getLapList().get(0).getTimeSplit(), 10 * ((0 * 60 * 60) + (3 * 60) + 45) + 4);
         assertNull(exercise.getLapList().get(0).getHeartRateSplit());

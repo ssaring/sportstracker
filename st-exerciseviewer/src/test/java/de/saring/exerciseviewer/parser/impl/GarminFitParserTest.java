@@ -1,9 +1,10 @@
 package de.saring.exerciseviewer.parser.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -12,8 +13,8 @@ import java.util.TimeZone;
 
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.Lap;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
@@ -34,7 +35,7 @@ public class GarminFitParserTest {
     /**
      * This method initializes the environment for testing.
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         // change locale/timezone to Germany (files recorded there), otherwise the datetime comparision fails
         Locale.setDefault(Locale.GERMANY);
@@ -46,20 +47,23 @@ public class GarminFitParserTest {
     /**
      * This method must fail on parsing an exercise file which doesn't exists.
      */
-    @Test(expected = EVException.class)
+    @Test
     public void testParseExerciseMissingFile() throws EVException {
-        parser.parseExercise("missing-file.fit");
+        assertThrows(EVException.class, () ->
+            parser.parseExercise("missing-file.fit"));
     }
 
     /**
      * This method tests the parser with an FIT file which contains only settings data,
      * no exercise data. An exception needs to be thrown.
      */
-    @Test(expected = EVException.class)
+    @Test
     public void testParseExerciseSettingsFile() throws EVException {
         final String FILENAME = "misc/testdata/garmin-fit/Settings.fit";
         assertTrue(new File(FILENAME).exists());
-        parser.parseExercise(FILENAME);
+
+        assertThrows(EVException.class, () ->
+                parser.parseExercise(FILENAME));
     }
 
     /**

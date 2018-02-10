@@ -1,12 +1,12 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.saring.sportstracker.data.Weight;
 import de.saring.util.unitcalc.FormatUtils;
@@ -20,7 +20,7 @@ public class WeightViewModelTest {
 
     private Weight weight;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         weight = new Weight(123);
         weight.setDateTime(LocalDateTime.of(2014, 10, 20, 7, 30, 0));

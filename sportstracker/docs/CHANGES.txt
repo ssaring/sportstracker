@@ -15,6 +15,8 @@ v7.5.0:
  - added official JFreeChart-FX 1.0.0 library, custom patch not needed anymore
  - updated Kotlin to version 1.2.21
  - updated documentation for project import and IDE setup in IDEA and Eclipse
+ - migrated all unit tests to JUnit 5 (version 5.0.3)
+   - provides better testing of expected exception calls and handling
  ExerciseViewer changes:
  - GarminFitParser: bugfix for handling of missing sample data,
    e.g. temperature, heartrate, speed

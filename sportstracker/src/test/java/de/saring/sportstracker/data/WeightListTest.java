@@ -1,14 +1,14 @@
 package de.saring.sportstracker.data;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.regex.PatternSyntaxException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * This class contains all unit tests for the WeightList class.
@@ -22,7 +22,7 @@ public class WeightListTest {
     /**
      * Setup of test data.
      */
-    @Before
+    @BeforeEach
     public void setUp() {
 
         // create a new list with some test content
@@ -218,25 +218,20 @@ public class WeightListTest {
     }
 
     /**
-     * Tests for getEntriesForFilter(): use of regular expression "ote [0-2" with syntax error => ArgumentException 
+     * Tests for getEntriesForFilter(): use of regular expression "ote [0-2" with syntax error => PatternSyntaxException
      * needs to be thrown.
      */
     @Test
     public void testGetEntriesForFilter11() {
 
-        try {
-            EntryFilter filter = new EntryFilter();
-            filter.setDateStart(LocalDate.of(2003, 1, 1));
-            filter.setDateEnd(LocalDate.of(2003, 12, 31));
-            filter.setEntryType(EntryFilter.EntryType.WEIGHT);
-            filter.setCommentSubString("cise [0-2");
-            filter.setRegularExpressionMode(true);
+        EntryFilter filter = new EntryFilter();
+        filter.setDateStart(LocalDate.of(2003, 1, 1));
+        filter.setDateEnd(LocalDate.of(2003, 12, 31));
+        filter.setEntryType(EntryFilter.EntryType.WEIGHT);
+        filter.setCommentSubString("cise [0-2");
+        filter.setRegularExpressionMode(true);
 
-            list.getEntriesForFilter(filter);
-            fail("The expected System.ArgumentException was not thown!");
-        } catch (PatternSyntaxException pse) {
-        } catch (Exception e) {
-            fail("The expected System.ArgumentException was not thown!");
-        }
+        assertThrows(PatternSyntaxException.class, () ->
+            list.getEntriesForFilter(filter));
     }
 }

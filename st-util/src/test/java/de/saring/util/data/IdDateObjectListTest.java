@@ -1,15 +1,16 @@
 package de.saring.util.data;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests of class IdDateObjectList.
@@ -23,7 +24,7 @@ public class IdDateObjectListTest {
      */
     private IdDateObjectList<DateNameObject> list;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         list = new IdDateObjectList<>();
         list.set(new DateNameObject(1, LocalDateTime.of(2009, 02, 05, 21, 30, 0), "one"));
@@ -94,37 +95,42 @@ public class IdDateObjectListTest {
     /**
      * Test of method clearAndAddAll(). Must fail when null is passed.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void clearAndAddAllNull() {
-        list.clearAndAddAll(null);
+        assertThrows(NullPointerException.class, () ->
+                list.clearAndAddAll(null));
     }
 
     /**
      * Test of method clearAndAddAll(). Must fail when an entry contain an invalid ID.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void clearAndAddAllInvalidId() {
 
         ArrayList<DateNameObject> tempEntries = new ArrayList<>();
         list.set(new DateNameObject(5, LocalDateTime.of(2009, 02, 05, 21, 30, 0), "five"));
-        list.set(new DateNameObject(-6, LocalDateTime.of(2009, 02, 01, 21, 30, 0), "minus six"));
-        list.clearAndAddAll(tempEntries);
+
+
+        assertThrows(IllegalArgumentException.class, () ->
+                list.set(new DateNameObject(-6, LocalDateTime.of(2009, 02, 01, 21, 30, 0), "minus six")));
     }
 
     /**
      * Test of set(): must fail when the entry is null.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetNull() {
-        list.set(null);
+        assertThrows(NullPointerException.class, () ->
+                list.set(null));
     }
 
     /**
      * Test of set(): must fail when date is null.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetDateNull() {
-        list.set(new DateNameObject(4, null, "four"));
+        assertThrows(NullPointerException.class, () ->
+            list.set(new DateNameObject(4, null, "four")));
     }
 
     /**
@@ -158,19 +164,21 @@ public class IdDateObjectListTest {
     /**
      * Test of getEntriesInDateRange(): must fail when one of the dates is null.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testGetEntriesInDateRangeNull() {
-        list.getEntriesInDateRange(LocalDate.now(), null);
+        assertThrows(NullPointerException.class, () ->
+            list.getEntriesInDateRange(LocalDate.now(), null));
     }
 
     /**
      * Test of getEntriesInDateRange(): must fail when the begin date ist after end date.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetEntriesInDateRangeInvalidRange() {
-        list.getEntriesInDateRange(
-                LocalDate.of(2009, 12, 11),
-                LocalDate.of(2009, 11, 11));
+        assertThrows(IllegalArgumentException.class, () ->
+            list.getEntriesInDateRange(
+                    LocalDate.of(2009, 12, 11),
+                    LocalDate.of(2009, 11, 11)));
     }
 
     /**

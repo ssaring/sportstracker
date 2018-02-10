@@ -1,10 +1,10 @@
 package de.saring.sportstracker.data;
 
 import javafx.scene.paint.Color;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This class contains all unit tests for the SportType class.
@@ -18,7 +18,7 @@ public class SportTypeTest {
     /**
      * This method initializes the environment for testing.
      */
-    @Before
+    @BeforeEach
     public void setUp() {
 
         // create a new sport type with some test content

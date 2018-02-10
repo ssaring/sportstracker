@@ -1,6 +1,9 @@
 SportsTracker-TODO
 ==================
 
+JUnit 5 migration:
+- see TODOs in BindingUtilsToggleGroupTest -> JFXRunner is not working in JUnit 5 anymore
+
 - Update jackson-module-kotlin dependency when there is a release for Kotlin 1.2
   (currently there are warnings for conflicting Kotlin libraries)
 

@@ -1,16 +1,16 @@
 package de.saring.exerciseviewer.parser.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 
 import de.saring.exerciseviewer.core.EVException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
@@ -30,7 +30,7 @@ public class PolarSRawParserTest {
     /**
      * This method initializes the environment for testing.
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         parser = new PolarSRawParser();
     }
@@ -40,11 +40,8 @@ public class PolarSRawParserTest {
      */
     @Test
     public void testParseExerciseMissingFile() {
-        try {
-            parser.parseExercise("missing-file.srd");
-            fail("Parse of the missing file must fail ...");
-        } catch (EVException e) {
-        }
+        assertThrows(EVException.class, () ->
+                parser.parseExercise("missing-file.srd"));
     }
 
     /**

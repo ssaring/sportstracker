@@ -1,12 +1,12 @@
 package de.saring.util.unitcalc;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * This class contains all unit tests for the ConvertUtils class.
@@ -16,12 +16,19 @@ import static org.junit.Assert.assertNull;
 public class FormatUtilsTest {
 
     /**
-     * Thes tests needs to use the English locale, results look different for
-     * other.
+     * Thes tests needs to use the English locale, results look different for other.
      */
-    @Before
-    public void setUp() {
+    @BeforeAll
+    static void setUp() {
         Locale.setDefault(Locale.ENGLISH);
+    }
+
+    /**
+     * Restore default Locale afterwards.
+     */
+    @AfterAll
+    static void tearDown() {
+        Locale.setDefault(Locale.getDefault());
     }
 
     /**

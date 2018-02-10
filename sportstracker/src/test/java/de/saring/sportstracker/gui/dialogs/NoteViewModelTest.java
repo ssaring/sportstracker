@@ -1,10 +1,10 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import de.saring.sportstracker.data.Note;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -18,7 +18,7 @@ public class NoteViewModelTest {
 
     private Note note;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         note = new Note(123);
         note.setDateTime(LocalDateTime.of(2014, 10, 20, 7, 30, 0));

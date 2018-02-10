@@ -1,13 +1,13 @@
 package de.saring.sportstracker.gui;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests of class STDocument/Impl. All the involved components will be
@@ -19,7 +19,7 @@ public class STDocumentTest {
 
     private STDocument document;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // STContext needs to be mocked
         STContext contextMock = mock(STContext.class);

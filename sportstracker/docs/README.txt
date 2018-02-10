@@ -418,8 +418,8 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - sqlite-jdbc 3.20.0 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
-  - JUnit 4.12 (http://www.junit.org)
-      License: Common Public License v1.0
+  - JUnit 5.0.3 (http://www.junit.org)
+      License: Eclipse Public License v2.0. and Apache License v2.0
   - Mockito 2.10.0 (http://code.google.com/p/mockito/)
       License: MIT License
   - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 20.33.01

@@ -3,15 +3,15 @@ package de.saring.exerciseviewer.parser.impl;
 import de.saring.exerciseviewer.core.EVException;
 import de.saring.exerciseviewer.data.EVExercise;
 import de.saring.exerciseviewer.parser.AbstractExerciseParser;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * This class contains all unit tests for the PolarF6RawParser class using a F11
@@ -31,7 +31,7 @@ public class PolarF11RawParserTest {
     /**
      * This method initializes the environment for testing.
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         parser = new PolarF6RawParser();
     }
@@ -41,11 +41,8 @@ public class PolarF11RawParserTest {
      */
     @Test
     public void testParseExerciseMissingFile() {
-        try {
-            parser.parseExercise("missing-file.frd");
-            fail("Parse of the missing file must fail ...");
-        } catch (EVException e) {
-        }
+        assertThrows(EVException.class, () ->
+                parser.parseExercise("missing-file.frd"));
     }
 
     /**

@@ -4,11 +4,11 @@ import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import javafx.scene.paint.Color;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit tests of class SportTypeViewModel.
@@ -19,7 +19,7 @@ public class SportTypeViewModelTest {
 
     private SportType sportType;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         sportType = new SportType(123);
         sportType.setName("Foo Bar");

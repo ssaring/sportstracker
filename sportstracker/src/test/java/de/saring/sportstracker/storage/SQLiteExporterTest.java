@@ -1,6 +1,6 @@
 package de.saring.sportstracker.storage;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 import javafx.scene.paint.Color;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Equipment;
@@ -34,7 +34,7 @@ public class SQLiteExporterTest {
     private STDocument document;
     private SQLiteExporter exporter;
 
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
 
         STContext contextMock = mock(STContext.class);
@@ -44,7 +44,7 @@ public class SQLiteExporterTest {
         exporter = new SQLiteExporter(document);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws IOException {
         Files.deleteIfExists(exporter.getDatabasePath());
     }

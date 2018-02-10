@@ -4,12 +4,12 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.util.data.IdObjectList;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * This class contains all unit tests for the StatisticCalculator class.
@@ -24,7 +24,7 @@ public class StatisticCalculatorTest {
     /**
      * This method initializes the environment for testing.
      */
-    @Before
+    @BeforeEach
     public void setUp() {
 
         // create one sport type with one subtype
@@ -106,8 +106,8 @@ public class StatisticCalculatorTest {
         assertEquals(278 / 2, calculator.getAvgHeartRate());
         assertEquals(2340 / 3, calculator.getAvgCalories());
 
-        assertEquals(0f, calculator.getMinDistance(), 0f);
-        assertEquals(0f, calculator.getMinAvgSpeed(), 0f);
+        assertEquals(0f, calculator.getMinDistance(), 0.001f);
+        assertEquals(0f, calculator.getMinAvgSpeed(), 0.001f);
         assertEquals(2634, calculator.getMinDuration());
         assertEquals(0, calculator.getMinAscent());
         assertEquals(138, calculator.getMinAvgHeartRate());

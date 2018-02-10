@@ -1,13 +1,13 @@
 package de.saring.util.gui.javafx;
 
 import de.saring.util.unitcalc.FormatUtils;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit tests of class SpeedToStringConverter.
@@ -21,7 +21,7 @@ public class SpeedToStringConverterTest {
     /**
      * Set default locale to GERMAN, because the number validation tests are locale dependent.
      */
-    @BeforeClass
+    @BeforeAll
     public static void initLocale() {
         defaultLocale = Locale.getDefault();
         Locale.setDefault(Locale.GERMAN);
@@ -30,7 +30,7 @@ public class SpeedToStringConverterTest {
     /**
      * Reset default locale to previous value.
      */
-    @AfterClass
+    @AfterAll
     public static void resetLocale() {
         Locale.setDefault(defaultLocale);
     }
