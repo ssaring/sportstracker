@@ -18,7 +18,7 @@
         <application.name>SportsTracker</application.name>
         <application.mainClass>de.saring.sportstracker.gui.STApplication</application.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.0.3</junit.version>
+        <junit.version>5.1.0</junit.version>
     </properties>
     
     <modules>
@@ -100,7 +100,7 @@
                     <dependency>
                         <groupId>org.junit.platform</groupId>
                         <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.0.3</version>
+                        <version>1.1.0</version>
                     </dependency>
                     <dependency>
                         <groupId>org.junit.jupiter</groupId>
