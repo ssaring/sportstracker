@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture
  *
  * @author Stefan Saring
  */
-class LeafletMapView : StackPane() {
+open class LeafletMapView : StackPane() {
 
     private val webView = WebView()
     private val webEngine: WebEngine = webView.engine
@@ -158,6 +158,15 @@ class LeafletMapView : StackPane() {
     }
 
     /**
+     * Removes the existing marker specified by the variable name.
+     *
+     * @param markerName variable name of the marker
+     */
+    fun removeMarker(markerName: String) {
+        execScript("myMap.removeLayer($markerName);")
+    }
+
+    /**
      * Draws a track path along the specified positions in the color red and zooms the map to fit the track perfectly.
      *
      * @param positions list of track positions
@@ -175,6 +184,13 @@ class LeafletMapView : StackPane() {
 
             |var polyline = L.polyline(latLngs, {color: 'red', weight: 2}).addTo(myMap);
             |myMap.fitBounds(polyline.getBounds());""".trimMargin())
+    }
+
+    /**
+     * Remove all markers and tracks from map.
+     */
+    fun clearMarkerAndPaths() {
+        execScript("clearMarkerAndPaths();")
     }
 
     private fun execScript(script: String) = webEngine.executeScript(script)
