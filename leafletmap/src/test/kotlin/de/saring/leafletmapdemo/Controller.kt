@@ -65,9 +65,24 @@ class Controller {
         setupPositionSliderRange()
     }
 
+    @FXML
+    private fun onClear() {
+        mapView.clearMarkerAndPaths()
+
+        resetPositionSliderRange()
+        positionMarkerName = null
+        positionTooltip.hide()
+    }
+    
     private fun setupPositionSliderRange() {
         slPosition.min = 0.0
         slPosition.max = track.positions.size - 1.0
+        slPosition.value = 0.0
+    }
+
+    private fun resetPositionSliderRange() {
+        slPosition.min = 0.0
+        slPosition.max = 0.0
         slPosition.value = 0.0
     }
 
