@@ -67,7 +67,7 @@ class Controller {
 
     @FXML
     private fun onClear() {
-        mapView.clearMarkerAndPaths()
+        mapView.clearMarkersAndTracks()
 
         resetPositionSliderRange()
         positionMarkerName = null
@@ -81,7 +81,6 @@ class Controller {
     }
 
     private fun resetPositionSliderRange() {
-        slPosition.min = 0.0
         slPosition.max = 0.0
         slPosition.value = 0.0
     }

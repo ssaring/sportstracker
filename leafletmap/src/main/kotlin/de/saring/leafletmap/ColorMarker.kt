@@ -5,7 +5,7 @@ package de.saring.leafletmap
  *
  * @author Stefan Saring
  */
-enum class ColorMarker(val iconName: String) {
+enum class ColorMarker(override val iconName: String) : MarkerInterface {
 
     BLUE_MARKER("blueIcon"),
     RED_MARKER("redIcon"),
