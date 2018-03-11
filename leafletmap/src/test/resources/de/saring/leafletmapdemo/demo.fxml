@@ -20,7 +20,7 @@
                   <Insets left="8.0" />
                </HBox.margin>
             </Label>
-            <Slider fx:id="slPosition" max="0.0" prefHeight="14.0" prefWidth="300.0" HBox.hgrow="ALWAYS" />
+            <Slider fx:id="slPosition" max="0.0" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </children>

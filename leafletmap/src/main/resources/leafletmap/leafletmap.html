@@ -25,24 +25,6 @@
     <script src="leaflet/leaflet.js"></script>
 
     <script src="leaflet-color-markers/leaflet-color-markers.js"></script>
-
-    <!-- helper function to remove all polylines from a map
-    https://stackoverflow.com/questions/14585688/clear-all-polylines-from-leaflet-map/14593494#14593494
-    https://stackoverflow.com/questions/30850344/leaflet-check-if-object-is-path-or-marker/30852790#30852790 -->
-    <script>
-        function clearMarkerAndPaths() {
-            for(i in myMap._layers) {
-                if(myMap._layers[i] instanceof L.Marker || myMap._layers[i] instanceof L.Path) {
-                    try {
-                        myMap.removeLayer(myMap._layers[i]);
-                    }
-                    catch(e) {
-                        console.log("problem with " + e + myMap._layers[i]);
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 <body>
     <div id="map" />
