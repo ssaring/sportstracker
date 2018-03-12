@@ -59,10 +59,6 @@ open class LeafletMapView : StackPane() {
     }
 
     private fun executeMapSetupScripts(mapConfig: MapConfig) {
-        // helper function clearMarkersAndTracks() to remove all polylines from a map
-        // https://stackoverflow.com/questions/14585688/clear-all-polylines-from-leaflet-map/14593494#14593494
-        // https://stackoverflow.com/questions/30850344/leaflet-check-if-object-is-path-or-marker/30852790#30852790
-        addScript("function clearMarkersAndTracks() { for(i in myMap._layers) { if(myMap._layers[i] instanceof L.Marker || myMap._layers[i] instanceof L.Path) { try { myMap.removeLayer(myMap._layers[i]); } catch(e) { console.log('problem with ' + e + myMap._layers[i]); } } } }")
 
         // execute scripts for layer definition
         mapConfig.layers.forEachIndexed { i, layer ->
@@ -191,40 +187,21 @@ open class LeafletMapView : StackPane() {
     }
 
     /**
-     * Remove all markers and tracks from map.
+     * Remove all current markers and tracks from the displayed map.
      */
     fun clearMarkersAndTracks() {
-        execScript("clearMarkersAndTracks();")
+        execScript("""
+            |for (i in myMap._layers) {
+            |   if (myMap._layers[i] instanceof L.Marker || myMap._layers[i] instanceof L.Path) {
+            |       myMap.removeLayer(myMap._layers[i]);
+            |   }
+            |}""".trimMargin())
     }
 
+    /**
+     * Executes the specified JavaScript code inside the WebView browser component.
+     *
+     * @param script JavaScript code
+     */
     protected fun execScript(script: String) = webEngine.executeScript(script)
-    
-    /**
-     * Create and add a javascript tag containing the passed javascript code.
-     *
-     * @param script javascript code to add to leafletmap.html
-     */
-    protected fun addScript(script: String) {
-        val scriptCmd = (
-          "var script = document.createElement('script'); " +
-          "script.type = 'text/javascript'; " +
-          "script.text = \"" + script + "\";" +
-          "document.getElementsByTagName('head')[0].appendChild(script);")
-
-        execScript(scriptCmd)
-    }
-    
-    /**
-     * Create and add a style tag containing the passed style
-     *
-     * @param style style to add to leafletmap.html
-     */
-    protected fun addStyle(style: String) {
-        val scriptCmd = (
-          "var style = document.createElement('style'); " +
-          "style.text = \"" + style + "\";" +
-          "document.getElementsByTagName('head')[0].appendChild(style);")
-
-        execScript(scriptCmd)
-    }
 }
