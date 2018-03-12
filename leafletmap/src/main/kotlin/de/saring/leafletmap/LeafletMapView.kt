@@ -135,11 +135,11 @@ open class LeafletMapView : StackPane() {
      *
      * @param position marker position
      * @param title marker title shown in tooltip (pass empty string when tooltip not needed)
-     * @param marker marker color
+     * @param marker marker to set
      * @param zIndexOffset zIndexOffset (higher number means on top)
      * @return variable name of the created marker
      */
-    fun addMarker(position: LatLong, title: String, marker: ColorMarker, zIndexOffset: Int): String {
+    fun addMarker(position: LatLong, title: String, marker: Marker, zIndexOffset: Int): String {
         val varName = "marker${varNameSuffix++}"
 
         execScript("var $varName = L.marker([${position.latitude}, ${position.longitude}], "

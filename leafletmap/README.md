@@ -60,6 +60,7 @@ LeafletMap 1.0.2:
   (contributed by Thomas Feuster)
 * LeafletMapView can now be extended (it's not final anymore and child classes
   can execute custom scripts)
+* added Marker interface for adding custom marker implementations
 
 LeafletMap 1.0.1:
 

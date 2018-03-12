@@ -3,9 +3,11 @@ package de.saring.leafletmap
 /**
  * Enumeration for all marker colors of the leaflet-color-markers JavaScript library.
  *
+ * @property iconName name of the marker icon
+ *
  * @author Stefan Saring
  */
-enum class ColorMarker(val iconName: String) {
+enum class ColorMarker(override val iconName: String) : Marker {
 
     BLUE_MARKER("blueIcon"),
     RED_MARKER("redIcon"),
