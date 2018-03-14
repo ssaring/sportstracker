@@ -69,7 +69,8 @@ class Controller {
     private fun onClear() {
         mapView.clearMarkersAndTracks()
 
-        resetPositionSliderRange()
+        slPosition.max = 0.0
+        slPosition.value = 0.0
         positionMarkerName = null
         positionTooltip.hide()
     }
@@ -77,11 +78,6 @@ class Controller {
     private fun setupPositionSliderRange() {
         slPosition.min = 0.0
         slPosition.max = track.positions.size - 1.0
-        slPosition.value = 0.0
-    }
-
-    private fun resetPositionSliderRange() {
-        slPosition.max = 0.0
         slPosition.value = 0.0
     }
 
