@@ -202,9 +202,6 @@ open class LeafletMapView : StackPane() {
      * Executes the specified JavaScript code inside the WebView browser component.
      *
      * @param script JavaScript code
-     * @return result object from executeScript
      */
-    protected fun execScript(script: String) : Any {
-        return webEngine.executeScript(script)
-    }
+    protected fun execScript(script: String) = webEngine.executeScript(script)
 }
