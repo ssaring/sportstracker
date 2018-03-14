@@ -401,7 +401,7 @@ The SportsTracker project uses the following libraries:
   - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
       Includes: javax.inject-1.jar
       License: Apache License v2.0
-  - Kotlin 1.2.21 (http://kotlinlang.org/)
+  - Kotlin 1.2.30 (http://kotlinlang.org/)
       License: Apache License v2.0
   - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
@@ -418,7 +418,7 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - sqlite-jdbc 3.20.0 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
-  - JUnit 5.0.3 (http://www.junit.org)
+  - JUnit 5.1.0 (http://www.junit.org)
       License: Eclipse Public License v2.0. and Apache License v2.0
   - Mockito 2.10.0 (http://code.google.com/p/mockito/)
       License: MIT License
