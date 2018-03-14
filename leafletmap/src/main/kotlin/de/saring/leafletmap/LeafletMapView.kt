@@ -135,11 +135,11 @@ open class LeafletMapView : StackPane() {
      *
      * @param position marker position
      * @param title marker title shown in tooltip (pass empty string when tooltip not needed)
-     * @param marker marker color
+     * @param marker marker to set
      * @param zIndexOffset zIndexOffset (higher number means on top)
      * @return variable name of the created marker
      */
-    fun addMarker(position: LatLong, title: String, marker: MarkerInterface, zIndexOffset: Int): String {
+    fun addMarker(position: LatLong, title: String, marker: Marker, zIndexOffset: Int): String {
         val varName = "marker${varNameSuffix++}"
 
         execScript("var $varName = L.marker([${position.latitude}, ${position.longitude}], "
@@ -202,6 +202,9 @@ open class LeafletMapView : StackPane() {
      * Executes the specified JavaScript code inside the WebView browser component.
      *
      * @param script JavaScript code
+     * @return result object from executeScript
      */
-    protected fun execScript(script: String) = webEngine.executeScript(script)
+    protected fun execScript(script: String) : Any {
+        return webEngine.executeScript(script)
+    }
 }
