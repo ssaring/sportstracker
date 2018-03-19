@@ -170,8 +170,10 @@ open class LeafletMapView : StackPane() {
      * Draws a track path along the specified positions in the color red and zooms the map to fit the track perfectly.
      *
      * @param positions list of track positions
+     * @return variable name of the created track
      */
-    fun addTrack(positions: List<LatLong>) {
+    fun addTrack(positions: List<LatLong>): String {
+        val varName = "track${varNameSuffix++}"
 
         val jsPositions = positions
                 .map { "    [${it.latitude}, ${it.longitude}]" }
@@ -182,8 +184,9 @@ open class LeafletMapView : StackPane() {
             |$jsPositions
             |];
 
-            |var polyline = L.polyline(latLngs, {color: 'red', weight: 2}).addTo(myMap);
-            |myMap.fitBounds(polyline.getBounds());""".trimMargin())
+            |var $varName = L.polyline(latLngs, {color: 'red', weight: 2}).addTo(myMap);
+            |myMap.fitBounds($varName.getBounds());""".trimMargin())
+        return varName;
     }
 
     /**
