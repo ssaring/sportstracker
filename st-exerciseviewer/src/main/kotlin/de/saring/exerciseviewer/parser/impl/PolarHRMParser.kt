@@ -75,7 +75,7 @@ class PolarHRMParser : AbstractExerciseParser() {
 
         // check HRM file version
         val strVersion = getValueFromBlock(lParamsBlock, "Version")
-        if (!strVersion.equals("106") && !strVersion.equals("107")) {
+        if (strVersion != "106" && strVersion != "107") {
             throw EVException("Failed to read HRM file, the version needs to be '106' or '107'!")
         }
 

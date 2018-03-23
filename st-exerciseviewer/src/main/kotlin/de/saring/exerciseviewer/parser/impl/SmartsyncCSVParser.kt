@@ -77,7 +77,7 @@ class SmartsyncCSVParser : AbstractExerciseParser() {
                 exeSecond = startTimeSplitted[2].toInt()
             } else if (line.startsWith("SamplingRate,")) {
                 exercise.recordingInterval = line.substring(13).toShort()
-            } else if (line.equals("HeartRate")) {
+            } else if (line == "HeartRate") {
                 // no value
             }
         }
