@@ -55,7 +55,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 LeafletMap 1.0.2:
 
-* Updated to Kotlin 1.2.30
+* Updated to Kotlin 1.2.31
 * added LeafletMapView method for deleting displayed markers and tracks 
   (contributed by Thomas Feuster)
 * LeafletMapView can now be extended (it's not final anymore and child classes
