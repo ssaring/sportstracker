@@ -420,7 +420,7 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - JUnit 5.1.0 (http://www.junit.org)
       License: Eclipse Public License v2.0. and Apache License v2.0
-  - Mockito 2.10.0 (http://code.google.com/p/mockito/)
+  - Mockito 2.16.0 (http://code.google.com/p/mockito/)
       License: MIT License
   - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 20.33.01
       URL: http://www.thisisant.com/pages/products/fit-sdk
@@ -507,4 +507,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2018/02/10
+2018/03/26

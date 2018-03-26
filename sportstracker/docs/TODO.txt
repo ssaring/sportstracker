@@ -1,7 +1,12 @@
 SportsTracker-TODO
 ==================
 
-Java 9 migration:
+Java 10 support:
+- ST application and all tests run fine with Java 10
+- IDEA 2017.3 does not support Java 10 language features (wait for 2018.1)
+- test javafx-maven-plugin packaging
+
+Java 9/10 migration:
 - completed (no compile errors, no test errors, no usage problems)
 - JavaFX packaging does not work yet, see details in the st-packager module
 - Use of Java Module System / Jigsaw?
@@ -9,7 +14,7 @@ Java 9 migration:
 - use of JEP 272: Platform-Specific Desktop Features for mac-specific menu items
   (see http://openjdk.java.net/jeps/272)
   - currently for Swing apps only
-  - JavaFX support might be added in Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
+  - JavaFX support might be added after Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
 
 - Add an update notification when a new SportsTracker version has been released
 

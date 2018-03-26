@@ -3,7 +3,7 @@ Changelog
 
 v7.5.0:
  SportsTracker changes:
- - Java 9 update
+ - Java 9 / 10 update
    - updated Maven plugins
    - updated all dependencies / libraries to current versions
    - updated ControlsFX to version 9.0.0
