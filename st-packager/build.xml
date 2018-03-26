@@ -3,23 +3,11 @@
 <!-- 
 
 STATUS:
-- works on Mac, it creates a launchable SportsTracker.app with the proper icon
-  - fails to create a DMG bundle, see problems below
-  - PKG bundle creation works (nativeBundles="pkg"
-- see all TODO's
-- add support for Windows, Mac and Linux
-- add / modify documentation -> remove the Maven packager?
-
-macOS problems
-- 2 problems on macOS package creation with 10.13 and JDK9 (tested with JDK 9.0.1)
-  - Resources and dependency files in subdirectories will not be copied to the bundle
-    -> https://bugs.openjdk.java.net/browse/JDK-8179033
-    -> fixed in JDK 10, hopefully in next JDK 9 too
-    -> workaround: bundle all libraries and resorce files to the application root directory
-  - javapackager fails on DMG creation because the default filesystem in macOS 10.13 is APFS now
-    - https://bugs.openjdk.java.net/browse/JDK-8190758
-    - fixed in JDK 10 and 8u172, hopefully in next JDK 10 too
-    -> no workaround
+- works on macOS 10.13 with JDK 10 and Ant 1.10.1
+  - it creates a launchable SportsTracker.app with the proper icon
+  - it created DMG and PKG installation packages
+- test support for Windows and Linux
+- add / modify documentation -> remove the Maven packager and resources?
 
 Usage:
 - build the SportsTracker application in the SportsTracker root directory:
@@ -37,7 +25,18 @@ Usage:
   <property name="build.app.dir" value="app"/>
   <property name="build.deploy.dir" value="deploy"/>
   <property name="sportstracker.app.dir" value="../sportstracker"/>
- 
+
+  <!-- Set OS specific icon file property -->
+  <condition property="sportstracker.icon.file" value="src/main/deploy/package/macosx/SportsTracker.icns">
+    <os family="mac"/>
+  </condition>
+  <condition property="sportstracker.icon.file" value="src/main/deploy/package/windows/SportsTracker.ico">
+    <os family="windows"/>
+  </condition>
+  <condition property="sportstracker.icon.file" value="src/main/deploy/package/linux/SportsTracker.png">
+    <os family="unix"/>
+  </condition>
+
   <!-- Packages the SportsTracker application -->
   <target name="default" depends="clean">
  
@@ -50,16 +49,14 @@ Usage:
       <!-- Defines the set of SportsTracker resources and dependencies -->
       <fx:resources id="appRes">
         <fx:fileset dir="${build.app.dir}" includes="*.jar"/>
-        <!-- TODO it's not possible to include subdirectories, e.g. "lib/*.jar", they will be missing in the app bundle - why? -->
-        <fx:fileset dir="${sportstracker.app.dir}/target/lib" includes="*.jar"/>
-        <!-- TODO add documentation files when the subdirectory bug has been fixed -->
-        <!-- <fx:fileset dir="${sportstracker.app.dir}" includes="docs/*"/> -->
+        <fx:fileset dir="${sportstracker.app.dir}/target" includes="lib/*.jar"/>
+        <fx:fileset dir="${sportstracker.app.dir}" includes="docs/*"/>
       </fx:resources>
 
       <fx:application id="SportsTracker"
         name="SportsTracker"
         mainClass="de.saring.sportstracker.gui.STApplication"
-        version="7.4.2"/>
+        version="7.5.0"/>
  
       <!-- Creates the launcher JAR file with all SportsTracker classes and resources -->
       <fx:jar destfile="${build.app.dir}/sportstracker-launcher.jar">
@@ -76,19 +73,16 @@ Usage:
 
         <fx:info title="SportsTracker"
           vendor="Saring.de"
-          copyright="(C) 2017 Stefan Saring"
+          copyright="(C) 2018 Stefan Saring"
           description="Application for tracking your sporting activities."
           category="Sports;Utility"
           license="GNU General Public License (GPL), Version 2.0">
         
-          <!-- TODO Can the icon file definition be made OS independent? 
-               This can also be done by defining an fx:deploy target for each 
-               OS and specify it when launching ANT -->          
-          <fx:icon href="src/main/deploy/package/macosx/SportsTracker.icns"/>
+          <fx:icon href="${sportstracker.icon.file}"/>
         </fx:info>
         
-        <!-- TODO DMG packager needs to show the the license file -->
-        <!-- TODO <fx:bundleArgument arg="licenseFile" value="docs/LICENSE.txt"/> -->
+        <!-- DMG packager needs to show the the license file -->
+        <fx:bundleArgument arg="licenseFile" value="docs/LICENSE.txt"/>
         
       </fx:deploy>
 

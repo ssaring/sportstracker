@@ -4,7 +4,7 @@ SportsTracker-TODO
 Java 10 support:
 - ST application and all tests run fine with Java 10
 - IDEA 2017.3 does not support Java 10 language features (wait for 2018.1)
-- test javafx-maven-plugin packaging
+- test javafx-maven-plugin packaging (Ant javapackager plugin works fine)
 
 Java 9/10 migration:
 - completed (no compile errors, no test errors, no usage problems)
