@@ -114,9 +114,9 @@ http://www.java.com
 If you want to download exercise files from your heartrate monitor you might
 need one of the download tools listed above.
 
-The application was tested on GNU/Linux (e.g. Ubuntu 14.04), Windows (7,
-8, 10), Mac OS X (10.9 - 10.11) and FreeBSD (TrueOS with OpenJDK), although it
-should work on all systems with the required Java Runtime Environment.
+The application was tested on GNU/Linux (e.g. Ubuntu 16.04), Windows (7,
+8, 10) and Mac OS X (10.11 - 10.13), although it should work on all systems
+with the required Java Runtime Environment.
 
 
 Installation and Start
@@ -355,6 +355,8 @@ For compilation of the SportsTracker sources you need:
     (from http://www.oracle.com/technetwork/java/)
   - Maven 3.5.0 or greater
     (from http://maven.apache.org)
+  - Ant 1.10.0 or greater (just for native packaging)
+    (from http://ant.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
   - IntelliJ IDEA Community Edition (http://www.jetbrains.com/idea/)
@@ -377,7 +379,7 @@ multi project), so it's not possible to create circular module dependencies.
   - st-util: 
     Component with common util classes for calculation, UI and more
   - st-packager:
-    Module for creating native application packages for distribution
+    Module for creating native application packages for distribution (uses Ant)
   - leafletmap:
     Module for the JavaFX wrapper component of the Leaflet map viewer
 
@@ -394,7 +396,7 @@ It can also be started from command line after execution of "mvn package"
 with the command (inside the project root directory):
   java -jar sportstracker/target/sportstracker-x.y.z.jar
 
-All user interfaces are defined in FXML by using the JavaFX Scene Builder 8.x.
+All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
 The SportsTracker project uses the following libraries:
 
@@ -507,4 +509,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2018/03/26
+2018/03/29

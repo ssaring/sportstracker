@@ -1,35 +1,25 @@
-UPDATE FOR JDK 9/10
--------------------
-
-- The stable javafx-maven-plugin does not support Java 9 / 10 yet, see:
-  https://github.com/javafx-maven-plugin/javafx-maven-plugin/issues/287
-- An Ant build script has been created as a replacement instead, it uses the
-  official Ant javapackager plugin.
-- The Ant script works perfect on macOS
-  -> Windows and Linux support has to be tested
-- See the build.xml for current status and TODOs.
-
-
 SportsTracker Packaging
 =======================
 
-The project module 'st-packager' contains all the scripts and resources for
-automated creation of native application packages and native installers during
-the Maven build process.
-It uses the JavaFX tool 'javapackager' (part of JDK 8) and the Maven plugin
-'javafx-maven-plugin' (URL: https://github.com/zonski/javafx-maven-plugin).
+The project module 'st-packager' contains the Ant build script and resources
+for automated creation of native application packages and native installers.
+It uses the official JavaFX plugin for Ant, which is included in the JDK.
 
 The application packages always contain the required Java Runtime Environment
 (JRE), so the user does not need to install Java manually before. This also
 ensures that the application always uses the proper JRE version.
 
-The native packages are not created by default, the Maven build must be started
-with the profile 'native-packager'. This profile creates native application
-packages and installers for the system on which the build is executed. The
-created packages are located in the directory 'st-packager/target/jfx-native'.
-Currently it's not possible to create cross-platform builds.
+Usage:
+- go to the project root directory and execute the Maven build:
+  $ mvn clean package
+- go to the 'st-packager' directory and execute the Ant build:
+  $ ant
+- the created packages are located in the 'deploy' folder afterwards
 
-Execution: mvn clean install -Pnative-packager
+Packaging has been successfully tested on:
+- macOS 10.13 with JDK 10 and Ant 1.10.1
+- Ubuntu Linux 16.04 (64 bit) with JDK 9 and Ant 1.10.2
+- Windows 10 64 bit with JDK 10, Ant 1.10.3 and Inno Setup 5.5.9 (u)
 
 
 Windows notes
@@ -37,19 +27,19 @@ Windows notes
 
 Created packages:
 - SportsTracker application
-- SportsTracker-x.y.z.exe (Inno Setup, optional)
+- SportsTracker-x.y.z.exe (with Inno Setup, optional)
 
 - Application packages are using proper name, version and icon.
-- Packages should be created on a 32 bit system, so they run on 32 and 64 bit.
+- Packages can only be created on 64 bit systems.
 
-Native installer by using Inno Setup (tested with version 5.5.5):
+Native installer by using Inno Setup:
 - Setup before build:
   - Download and install Inno Setup from http://www.jrsoftware.org/isinfo.php
   - Add Inno Setup installation path to variable PATH
 - Created Installer does not ask for SportsTracker installation directory, it
   installs always to 'C:\Users\USERNAME\AppData\Local\SportsTracker'.
 - The Installer creates an entry in Start menu (proper name and icon).
-- The Installer EXE is about 18 MB smaller than the zipped application package.
+- The Installer EXE is much smaller than the zipped application package.
 
 
 Mac OS X notes

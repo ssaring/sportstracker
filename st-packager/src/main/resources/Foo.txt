@@ -1,2 +1,0 @@
-﻿Dummy file, needed for javafx-maven-plugin execution. 
-This plugin expects at least a class or a resource files in this module.

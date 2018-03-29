@@ -2,14 +2,13 @@ SportsTracker-TODO
 ==================
 
 Java 10 support:
-- ST application and all tests run fine with Java 10
-- IDEA 2017.3 does not support Java 10 language features (wait for 2018.1)
+- ST application, all tests and packaging runs fine with Java 10
+- IDEA 2017.3 does not support Java 10 language features (test with 2018.1)
 - Travis CI does not provide a oraclejdk10 package yet
 - test javafx-maven-plugin packaging (Ant javapackager plugin works fine)
 
 Java 9/10 migration:
 - completed (no compile errors, no test errors, no usage problems)
-- JavaFX packaging does not work yet, see details in the st-packager module
 - Use of Java Module System / Jigsaw?
   - the JavaFX packager needs to support modules first
 - use of JEP 272: Platform-Specific Desktop Features for mac-specific menu items

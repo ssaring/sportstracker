@@ -1,97 +1,84 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- 
+<!-- See PACKAGER.txt for documentation and usage instructions -->
 
-STATUS:
-- works on macOS 10.13 with JDK 10 and Ant 1.10.1
-  - it creates a launchable SportsTracker.app with the proper icon
-  - it created DMG and PKG installation packages
-- test support for Windows and Linux
-- add / modify documentation -> remove the Maven packager and resources?
-
-Usage:
-- build the SportsTracker application in the SportsTracker root directory:
-  -> mvn clean install
-- goto st-packager directory and launch the Ant build:
-  -> ant
-- the created packages are located in the 'deploy' folder afterwards
-    
--->
- 
 <project name="SportsTracker Packager" default="default" basedir="."
-  xmlns:fx="javafx:com.sun.javafx.tools.ant">
- 
-  <property environment="env"/>
-  <property name="build.app.dir" value="app"/>
-  <property name="build.deploy.dir" value="deploy"/>
-  <property name="sportstracker.app.dir" value="../sportstracker"/>
+         xmlns:fx="javafx:com.sun.javafx.tools.ant">
 
-  <!-- Set OS specific icon file property -->
-  <condition property="sportstracker.icon.file" value="src/main/deploy/package/macosx/SportsTracker.icns">
-    <os family="mac"/>
-  </condition>
-  <condition property="sportstracker.icon.file" value="src/main/deploy/package/windows/SportsTracker.ico">
-    <os family="windows"/>
-  </condition>
-  <condition property="sportstracker.icon.file" value="src/main/deploy/package/linux/SportsTracker.png">
-    <os family="unix"/>
-  </condition>
+<property environment="env"/>
+<property name="build.app.dir" value="app"/>
+<property name="build.deploy.dir" value="deploy"/>
+<property name="sportstracker.app.dir" value="../sportstracker"/>
 
-  <!-- Packages the SportsTracker application -->
-  <target name="default" depends="clean">
- 
-    <mkdir dir="${build.app.dir}"/>
- 
-    <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
-      uri="javafx:com.sun.javafx.tools.ant"
-      classpath="${env.JAVA_HOME}/lib/ant-javafx.jar"/>
- 
-      <!-- Defines the set of SportsTracker resources and dependencies -->
-      <fx:resources id="appRes">
-        <fx:fileset dir="${build.app.dir}" includes="*.jar"/>
-        <fx:fileset dir="${sportstracker.app.dir}/target" includes="lib/*.jar"/>
-        <fx:fileset dir="${sportstracker.app.dir}" includes="docs/*"/>
-      </fx:resources>
+<!-- Set OS specific icon file property -->
+<condition property="sportstracker.icon.file" value="src/main/deploy/package/macosx/SportsTracker.icns">
+  <os family="mac"/>
+</condition>
+<condition property="sportstracker.icon.file" value="src/main/deploy/package/linux/SportsTracker.png">
+  <os family="unix"/>
+</condition>
+<condition property="sportstracker.icon.file" value="src/main/deploy/package/windows/SportsTracker.ico">
+  <os family="windows"/>
+</condition>
 
-      <fx:application id="SportsTracker"
-        name="SportsTracker"
-        mainClass="de.saring.sportstracker.gui.STApplication"
-        version="7.5.0"/>
- 
-      <!-- Creates the launcher JAR file with all SportsTracker classes and resources -->
-      <fx:jar destfile="${build.app.dir}/sportstracker-launcher.jar">
-        <fx:application refid="SportsTracker"/>
-        <fx:resources refid="appRes"/>
-        <fileset dir="${sportstracker.app.dir}/target/classes"/>
-      </fx:jar>
- 
-      <!-- Creates the SportsTracker application packages -->
-      <fx:deploy outdir="${build.deploy.dir}" outfile="SportsTracker" nativeBundles="all">
+<!-- Packages the SportsTracker application -->
+<target name="default" depends="clean">
 
-        <fx:application refId="SportsTracker"/>
-        <fx:resources refid="appRes"/>
+  <mkdir dir="${build.app.dir}"/>
 
-        <fx:info title="SportsTracker"
-          vendor="Saring.de"
-          copyright="(C) 2018 Stefan Saring"
-          description="Application for tracking your sporting activities."
-          category="Sports;Utility"
-          license="GNU General Public License (GPL), Version 2.0">
-        
-          <fx:icon href="${sportstracker.icon.file}"/>
-        </fx:info>
-        
-        <!-- DMG packager needs to show the the license file -->
-        <fx:bundleArgument arg="licenseFile" value="docs/LICENSE.txt"/>
-        
-      </fx:deploy>
+  <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+           uri="javafx:com.sun.javafx.tools.ant"
+           classpath="${env.JAVA_HOME}/lib/ant-javafx.jar"/>
 
-  </target>
+  <!-- Defines the set of SportsTracker resources and dependencies -->
+  <fx:resources id="appRes">
+    <fx:fileset dir="${build.app.dir}" includes="*.jar"/>
+    <fx:fileset dir="${sportstracker.app.dir}/target" includes="lib/*.jar"/>
+    <fx:fileset dir="${sportstracker.app.dir}" includes="docs/*"/>
+    <!-- License file must be located in the resource root directory, otherwise the Inno Setup
+         packager for Windows fails (no problem for all other packagers) -->
+    <fx:fileset dir="${sportstracker.app.dir}/docs" includes="LICENSE.txt"/>
+  </fx:resources>
 
-  <!-- Deletes the packaging working directories -->
-  <target name="clean">
-    <delete dir="${build.app.dir}"/>
-    <delete dir="${build.deploy.dir}"/>
-  </target>
- 
+  <fx:application id="SportsTracker"
+                  name="SportsTracker"
+                  mainClass="de.saring.sportstracker.gui.STApplication"
+                  version="7.5.0"/>
+
+  <!-- Creates the launcher JAR file with all SportsTracker classes and resources -->
+  <fx:jar destfile="${build.app.dir}/sportstracker-launcher.jar">
+    <fx:application refid="SportsTracker"/>
+    <fx:resources refid="appRes"/>
+    <fileset dir="${sportstracker.app.dir}/target/classes"/>
+  </fx:jar>
+
+  <!-- Creates the SportsTracker application packages -->
+  <fx:deploy outdir="${build.deploy.dir}" outfile="SportsTracker" nativeBundles="all">
+
+    <fx:application refId="SportsTracker"/>
+    <fx:resources refid="appRes"/>
+
+    <fx:info title="SportsTracker"
+             vendor="Saring.de"
+             copyright="(C) 2018 Stefan Saring"
+             description="Application for tracking your sporting activities."
+             category="Sports;Utility"
+             license="GNU General Public License (GPL), Version 2.0">
+
+      <fx:icon href="${sportstracker.icon.file}"/>
+    </fx:info>
+
+    <!-- Packages need to show the the license file -->
+    <fx:bundleArgument arg="licenseFile" value="LICENSE.txt"/>
+
+  </fx:deploy>
+
+</target>
+
+<!-- Deletes the packaging working directories -->
+<target name="clean">
+  <delete dir="${build.app.dir}"/>
+  <delete dir="${build.deploy.dir}"/>
+</target>
+
 </project>

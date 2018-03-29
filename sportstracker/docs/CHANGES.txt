@@ -33,6 +33,9 @@ v7.5.0:
    (just for the left axis and without labels to keep the diagram readable)
  - Main Panel improvements:
    - added heartrate availability info to the Recording Mode section
+ - new packaging of native application installers by using Ant and the official
+   JavaFX Ant plugin (the Maven plugin used before is not up to date yet and
+   contains many bugs)
 
 v7.4.1:
  SportsTracker changes:

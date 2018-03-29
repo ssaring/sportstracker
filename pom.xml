@@ -26,7 +26,6 @@
         <module>st-util</module>
         <module>st-exerciseviewer</module>
         <module>sportstracker</module>
-        <module>st-packager</module>
     </modules>
 
     <repositories>
