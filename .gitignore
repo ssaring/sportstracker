@@ -8,7 +8,7 @@ syntax: glob
 .DS_Store
 st-export.sqlite
 
-# ignore Maven build directories and Eclipse, IDEA, Netbeans project files
+# ignore Maven/Ant build directories and Eclipse, IDEA, Netbeans project files
 target
 .classpath
 .project
@@ -18,6 +18,8 @@ target
 *.ipr
 *.iws
 nbactions.xml
+st-packager/app
+st-packager/deploy
 
 # switch to regexp syntax
 syntax: regexp
