@@ -2,6 +2,9 @@ Changelog
 ---------
 
 v7.5.1:
+ SportsTracker changes:
+  - updated Java requirement to Java 10
+    - tested Local Variable Type Inference (JEP 286) in class STApplication
 
 v7.5.0:
  SportsTracker changes:

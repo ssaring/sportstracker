@@ -84,8 +84,8 @@
                 <version>3.7.0</version>
                 <configuration>
                     <verbose>false</verbose>
-                    <source>9</source>
-                    <target>9</target>
+                    <source>10</source>
+                    <target>10</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>

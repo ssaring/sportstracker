@@ -36,7 +36,7 @@ public class STApplication extends Application {
     public void init() throws Exception {
 
         // setup EasyDI for dependency injection
-        final EasyDI easyDI = new EasyDI();
+        var easyDI = new EasyDI();
         easyDI.bindInstance(STApplication.class, this);
         easyDI.bindInterface(IStorage.class, XMLStorage.class);
         easyDI.bindInterface(STContext.class, STContextImpl.class);
@@ -49,7 +49,7 @@ public class STApplication extends Application {
         document.evaluateCommandLineParameters(getParameters().getRaw());
         document.loadOptions();
 
-        final STOptions options = document.getOptions();
+        var options = document.getOptions();
         easyDI.bindInstance(EVOptions.class, options);
 
         // initialize the context (set format utils for current configuration)
