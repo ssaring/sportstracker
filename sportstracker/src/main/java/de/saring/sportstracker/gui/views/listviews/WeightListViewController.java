@@ -100,6 +100,7 @@ public class WeightListViewController extends AbstractListViewController<Weight>
                 value == null ? null : getContext().getFormatUtils().weightToString(value.floatValue(), 2)));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void setupDefaultSorting() {
         // default sort order is by date descending

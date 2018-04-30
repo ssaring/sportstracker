@@ -93,6 +93,7 @@ public class NoteListViewController extends AbstractListViewController<Note> {
         tcDate.setCellFactory(new LocalDateCellFactory<>());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void setupDefaultSorting() {
         // default sort order is by date descending
