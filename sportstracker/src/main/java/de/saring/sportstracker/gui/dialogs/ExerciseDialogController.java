@@ -420,8 +420,7 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         final String hrmFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.getValue());
         if (hrmFile != null) {
-            dialogProvider.prExerciseViewer.get().showExercise(
-                    hrmFile, document.getOptions(), context.getPrimaryStage(), true);
+            dialogProvider.prExerciseViewer.get().showExercise(hrmFile, context.getPrimaryStage(), true);
         }
     }
 

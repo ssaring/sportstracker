@@ -142,7 +142,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
                 StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 
         // setup custom factories for displaying cells
-        tcDate.setCellFactory(new LocalDateCellFactory());
+        tcDate.setCellFactory(new LocalDateCellFactory<>());
         tcDuration.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().seconds2TimeString(value.intValue())));
         tcIntensity.setCellFactory(new IntensityCellFactory());
@@ -166,6 +166,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         tcComment.setVisible(options.isListViewShowComment());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void setupDefaultSorting() {
         // default sort order is by date descending

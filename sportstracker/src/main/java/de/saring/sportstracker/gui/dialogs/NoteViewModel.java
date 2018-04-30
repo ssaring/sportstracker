@@ -31,8 +31,8 @@ public class NoteViewModel {
      */
     public NoteViewModel(final Note note) {
         this.id = note.getId();
-        this.date = new SimpleObjectProperty(note.getDateTime().toLocalDate());
-        this.time = new SimpleObjectProperty(note.getDateTime().toLocalTime());
+        this.date = new SimpleObjectProperty<>(note.getDateTime().toLocalDate());
+        this.time = new SimpleObjectProperty<>(note.getDateTime().toLocalTime());
         this.comment = new SimpleStringProperty(note.getComment());
     }
 

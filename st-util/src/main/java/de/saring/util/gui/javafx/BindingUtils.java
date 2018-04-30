@@ -29,6 +29,7 @@ public final class BindingUtils {
      * @param property the object property to be bound
      * @param <T> type of the object property to be bound
      */
+    @SuppressWarnings("unchecked")
     public static <T> void bindToggleGroupToProperty(final ToggleGroup toggleGroup, final ObjectProperty<T> property) {
 
         // check all toggles for required user data
