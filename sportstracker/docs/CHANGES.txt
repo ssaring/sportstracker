@@ -4,6 +4,7 @@ Changelog
 v7.5.1:
  SportsTracker changes:
  - updated Kotlin to version 1.2.41
+ - fixed all reasoned Kotlin compiler warnings
 
 v7.5.0:
  SportsTracker changes:

@@ -111,5 +111,6 @@ class EVController(
      * Action handler for closing the dialog.
      */
     @FXML
+    @Suppress("UNUSED_PARAMETER")
     private fun onClose(event: ActionEvent) = stage.close()
 }
