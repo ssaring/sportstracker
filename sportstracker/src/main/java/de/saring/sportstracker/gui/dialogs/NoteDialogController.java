@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.dialogs;
 
 import java.time.LocalTime;
 
+import de.saring.util.gui.javafx.FxWorkarounds;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -79,6 +80,8 @@ public class NoteDialogController extends AbstractDialogController {
         tfTime.setTextFormatter(timeTextFormatter);
 
         taText.textProperty().bindBidirectional(noteViewModel.comment);
+
+        FxWorkarounds.fixDatePickerTextEntry(dpDate);
 
         // setup validation of the UI controls
         // => due to a ControlsFX bug the validation setup must be executed after the dialog has been shown

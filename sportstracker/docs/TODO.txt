@@ -39,6 +39,10 @@ JavaFX Migration:
     (the I18N properties for list printing on multiple pages are present, see st.???view.print.???)
 - Spinner in Overview Dialog: remove mouse wheel workaround when added to JavaFX by default
   - I've filed a tweak request: https://javafx-jira.kenai.com/browse/RT-40269
+- JavaFX bug in DatePicker: text editor entries are always ignored
+  - https://bugs.openjdk.java.net/browse/JDK-8136838
+  - although this bug is closed, it still exists in JDK 10
+  - temporary workaround in FxWorkarounds.fixDatePickerTextEntry() => remove when fixed in JavaFX
 
 Java 8 migration status:
 - full use of Lambdas and the new Java Date API (JSR 310) in all modules

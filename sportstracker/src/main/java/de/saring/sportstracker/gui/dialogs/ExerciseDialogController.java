@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
+import de.saring.util.gui.javafx.FxWorkarounds;
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 
@@ -197,6 +198,8 @@ public class ExerciseDialogController extends AbstractDialogController {
         setupBinding();
         setupValidation();
         setupAutoCalculation();
+
+        FxWorkarounds.fixDatePickerTextEntry(dpDate);
 
         // enable View and Import HRM buttons only when an HRM file is specified
         btViewHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
