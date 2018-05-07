@@ -65,15 +65,15 @@ public class ExerciseViewModel {
      */
     public ExerciseViewModel(final Exercise exercise, final FormatUtils.UnitSystem unitSystem) {
         this.id = exercise.getId();
-        this.date = new SimpleObjectProperty(exercise.getDateTime().toLocalDate());
-        this.time = new SimpleObjectProperty(exercise.getDateTime().toLocalTime());
-        this.sportType = new SimpleObjectProperty(exercise.getSportType());
-        this.sportSubType = new SimpleObjectProperty(exercise.getSportSubType());
-        this.intensity = new SimpleObjectProperty(exercise.getIntensity());
+        this.date = new SimpleObjectProperty<>(exercise.getDateTime().toLocalDate());
+        this.time = new SimpleObjectProperty<>(exercise.getDateTime().toLocalTime());
+        this.sportType = new SimpleObjectProperty<>(exercise.getSportType());
+        this.sportSubType = new SimpleObjectProperty<>(exercise.getSportSubType());
+        this.intensity = new SimpleObjectProperty<>(exercise.getIntensity());
         this.distance = new SimpleFloatProperty(exercise.getDistance());
         this.avgSpeed = new SimpleFloatProperty(exercise.getAvgSpeed());
         this.duration = new SimpleIntegerProperty(exercise.getDuration());
-        this.equipment = new SimpleObjectProperty(exercise.getEquipment());
+        this.equipment = new SimpleObjectProperty<>(exercise.getEquipment());
         this.avgHeartRate = new SimpleIntegerProperty(exercise.getAvgHeartRate());
         this.ascent = new SimpleIntegerProperty(exercise.getAscent());
         this.calories = new SimpleIntegerProperty(exercise.getCalories());

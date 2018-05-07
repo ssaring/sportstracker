@@ -37,11 +37,10 @@ class EVMain @Inject constructor(
      * Displays the exercise specified by the filename in the ExerciseViewer dialog.
      *
      * @param exerciseFilename exercise file to display
-     * @param options the options to be used in ExerciseViewer
      * @param parent parent stage/window of this dialog
      * @param modal pass true when the dialog must be modal
      */
-    fun showExercise(exerciseFilename: String, options: EVOptions, parent: Stage, modal: Boolean) {
+    fun showExercise(exerciseFilename: String, parent: Stage, modal: Boolean) {
 
         // load exercise file
         try {

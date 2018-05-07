@@ -11,8 +11,8 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Dependencies and used libraries
 
-* Kotlin 1.2.30
-* JavaSE 8 (tested with 8u151 and 9.0.1)
+* Kotlin 1.2.41
+* JavaSE 8 (tested with 8.0.172 and 10.0.1)
 * Leaflet 1.0.3 (included)
     * Homepage: http://leafletjs.com/
     * License: BSD 2-Clause License
@@ -20,7 +20,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 * leaflet-color-markers (included, modified)
     * Homepage: https://github.com/pointhi/leaflet-color-markers
     * License: not specified
-* jackson-module-kotlin 2.9.4.1 (for the demo only, uses Jackson 2.8)
+* jackson-module-kotlin 2.9.5 (for the demo only, uses Jackson 2.8)
     * Homepage: https://github.com/FasterXML/jackson-module-kotlin
     * License: not specified
 
@@ -54,6 +54,8 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 #### Changelog
 
 LeafletMap 1.0.3:
+
+* Updated to Kotlin 1.2.41
 
 LeafletMap 1.0.2:
 

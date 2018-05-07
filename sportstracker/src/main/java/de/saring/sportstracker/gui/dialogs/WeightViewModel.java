@@ -40,8 +40,8 @@ public class WeightViewModel {
      */
     public WeightViewModel(final Weight weight, final FormatUtils.UnitSystem unitSystem) {
         this.id = weight.getId();
-        this.date = new SimpleObjectProperty(weight.getDateTime().toLocalDate());
-        this.time = new SimpleObjectProperty(weight.getDateTime().toLocalTime());
+        this.date = new SimpleObjectProperty<>(weight.getDateTime().toLocalDate());
+        this.time = new SimpleObjectProperty<>(weight.getDateTime().toLocalTime());
         this.value = new SimpleFloatProperty(weight.getValue());
         this.comment = new SimpleStringProperty(StringUtils.getTextOrEmptyString(weight.getComment()));
 

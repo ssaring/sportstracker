@@ -112,7 +112,6 @@ class DiagramPanelController(
     override fun setupPanel() {
 
         // setup the diagram if data is available
-        val exercise = document.exercise
         if (isDiagramDataAvailable()) {
             setupAxisChoiceBoxes()
             computeAveragedFilterRange()
@@ -185,9 +184,9 @@ class DiagramPanelController(
         }
 
         // set listeners for updating the diagram on selection changes
-        cbLeftAxis.addEventHandler(ActionEvent.ACTION) { event -> updateDiagram() }
-        cbRightAxis.addEventHandler(ActionEvent.ACTION) { event -> updateDiagram() }
-        cbBottomAxis.addEventHandler(ActionEvent.ACTION) { event -> updateDiagram() }
+        cbLeftAxis.addEventHandler(ActionEvent.ACTION) { updateDiagram() }
+        cbRightAxis.addEventHandler(ActionEvent.ACTION) { updateDiagram() }
+        cbBottomAxis.addEventHandler(ActionEvent.ACTION) { updateDiagram() }
     }
 
     /**
@@ -710,8 +709,6 @@ class DiagramPanelController(
                 appResources.getString("pv.diagram.axis.time")
             AxisType.DISTANCE ->
                 appResources.getString("pv.diagram.axis.distance", formatUtils.distanceUnitName)
-            else ->
-                throw IllegalArgumentException("Invalid AxisType: '$axisType'!")
         }
 
         override fun fromString(string: String): AxisType =

@@ -258,7 +258,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
 
             // start ExerciseViewer
             LOGGER.info("Opening HRM file '" + selectedFile + "' in ExerciseViewer...");
-            dialogProvider.prExerciseViewer.get().showExercise(selectedFile.getAbsolutePath(), document.getOptions(),
+            dialogProvider.prExerciseViewer.get().showExercise(selectedFile.getAbsolutePath(),
                     context.getPrimaryStage(), false);
         }
     }
@@ -390,8 +390,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
         final String hrmFile = document.getExerciseList().getByID(exerciseID).getHrmFile();
 
         LOGGER.info("Opening HRM file '" + hrmFile + "' in ExerciseViewer...");
-        dialogProvider.prExerciseViewer.get().showExercise(
-                hrmFile, document.getOptions(), context.getPrimaryStage(), false);
+        dialogProvider.prExerciseViewer.get().showExercise(hrmFile, context.getPrimaryStage(), false);
     }
 
     @Override

@@ -154,7 +154,7 @@ public abstract class AbstractDialogController {
     }
 
     private Dialog<ButtonType> createDialog(final Window parent, final String title, final Parent root) {
-        final Dialog<ButtonType> dlg = new Dialog();
+        final Dialog<ButtonType> dlg = new Dialog<>();
         dlg.initOwner(parent);
 
         dlg.setTitle(title);
