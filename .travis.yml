@@ -10,9 +10,15 @@ before_install:
   # get latest install-jdk.sh script
   - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
 
-# Java 10 "Oracle JDK" (not yet provided by Travis CI)
+# install and setup "Oracle JDK 10" (not yet provided by Travis CI)
 matrix:
   include:
     - env: oraclejdk10
       env: JDK_RELEASE='Oracle JDK 10'
       install: . ./install-jdk.sh -F 10 -L BCL
+
+# custom execution script for printing the used Java version
+script:
+  - echo JAVA_HOME = ${JAVA_HOME}
+  - java -version
+  - mvn test -B
