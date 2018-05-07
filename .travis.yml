@@ -16,9 +16,3 @@ matrix:
     - env: oraclejdk10
       env: JDK_RELEASE='Oracle JDK 10'
       install: . ./install-jdk.sh -F 10 -L BCL
-
-# print environment setup
-script:
-  - echo PATH = ${PATH}
-  - echo JAVA_HOME = ${JAVA_HOME}
-  - java -version
