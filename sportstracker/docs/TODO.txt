@@ -1,20 +1,18 @@
 SportsTracker-TODO
 ==================
 
-Java 10 support:
-- ST application, all tests and packaging runs fine with Java 10
-- IDEA 2017.3 does not support Java 10 language features (test with 2018.1)
-- Travis CI does not provide a oraclejdk10 package yet
-- test javafx-maven-plugin packaging (Ant javapackager plugin works fine)
-
 Java 9/10 migration:
-- completed (no compile errors, no test errors, no usage problems)
+- works fine with JDK 10 (no build or test errors and no execution problems)
 - Use of Java Module System / Jigsaw?
   - the JavaFX packager needs to support modules first
 - use of JEP 272: Platform-Specific Desktop Features for mac-specific menu items
   (see http://openjdk.java.net/jeps/272)
   - currently for Swing apps only
   - JavaFX support might be added after Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
+- Travis CI does not provide Oracle JDK 10 by default yet (in progress),
+  see https://github.com/travis-ci/travis-build/pull/1347
+  - JDK 10 is installed by the install-jdk script meanwhile (works fine)
+  -> remove the custom installation in .travis.yml when JDK 10 is supported
 
 - Add an update notification when a new SportsTracker version has been released
 

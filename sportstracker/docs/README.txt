@@ -351,7 +351,7 @@ Developer Requirements
 ----------------------
 
 For compilation of the SportsTracker sources you need:
-  - Java SE Development Kit (JDK) 9 or greater
+  - Java SE Development Kit (JDK) 10 or greater
     (from http://www.oracle.com/technetwork/java/)
   - Maven 3.5.0 or greater
     (from http://maven.apache.org)
@@ -360,7 +360,7 @@ For compilation of the SportsTracker sources you need:
 
 Tested IDE's (should work an any IDE with Maven support)
   - IntelliJ IDEA Community Edition (http://www.jetbrains.com/idea/)
-    => preferred IDE, tested with version 2017.3
+    => preferred IDE, tested with version 2018.1
   - NetBeans IDE (from http://www.netbeans.org), Kotlin support not tested
   - Eclipse (from http://eclipse.org), Kotlin support not tested
 

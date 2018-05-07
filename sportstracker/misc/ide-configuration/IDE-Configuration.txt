@@ -20,7 +20,7 @@ modified source code parts needs to be formatted, not the whole files or
 packages.
 
 
-IntelliJ IDEA configuration (version 2017.x):
+IntelliJ IDEA configuration (version 2018.x):
 ---------------------------------------------
 
 Project import:
