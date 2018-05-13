@@ -11,6 +11,8 @@ v7.5.1:
  - updated Java requirement to Java 10
    - tested Local Variable Type Inference (JEP 286) in class STApplication
    - added custom JDK 10 installation to Travis CI build script
+ ExerciseViewer changes:
+ - GarminFitParser: ported to Kotlin (incl. tests)
 
 v7.5.0:
  SportsTracker changes:
