@@ -9,10 +9,6 @@ Java 9/10 migration:
   (see http://openjdk.java.net/jeps/272)
   - currently for Swing apps only
   - JavaFX support might be added after Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
-- Travis CI does not provide Oracle JDK 10 by default yet (in progress),
-  see https://github.com/travis-ci/travis-build/pull/1347
-  - JDK 10 is installed by the install-jdk script meanwhile (works fine)
-  -> remove the custom installation in .travis.yml when JDK 10 is supported
 
 - Add an update notification when a new SportsTracker version has been released
 

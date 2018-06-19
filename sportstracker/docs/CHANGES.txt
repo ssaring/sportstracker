@@ -10,7 +10,6 @@ v7.5.1:
    the textfield, the new date is not ignored anymore
  - updated Java requirement to Java 10
    - tested Local Variable Type Inference (JEP 286) in class STApplication
-   - added custom JDK 10 installation to Travis CI build script
  ExerciseViewer changes:
  - GarminFitParser: ported to Kotlin (incl. tests)
 
