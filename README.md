@@ -20,7 +20,7 @@ ExerciseViewer application.
 
 ## Links
 
-* SportsTracker website: http://www.saring.de/sportstracker/
+* SportsTracker website: https://www.saring.de/sportstracker/
 * SourceForge project site: https://sourceforge.net/projects/sportstracker/
     * provides package downloads and a forum for discussions
 * GitHub project site: https://github.com/ssaring/sportstracker/

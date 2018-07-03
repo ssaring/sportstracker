@@ -11,7 +11,7 @@
 
     <organization>
         <name>Saring</name>
-        <url>http://www.saring.de</url>
+        <url>https://www.saring.de</url>
     </organization>
 
     <properties>
@@ -32,7 +32,7 @@
         <!-- Own repository for libraries missing in Maven central repo (e.g. Garmin FIT) --> 
         <repository>
             <id>SportsTracker repository</id>
-            <url>http://saring.de/st-maven-repo/</url>
+            <url>https://saring.de/st-maven-repo/</url>
         </repository>
     </repositories>
 

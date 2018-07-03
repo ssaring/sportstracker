@@ -473,7 +473,7 @@ Contact
 -------
 
 The website of SportsTracker can be found at:
-http://www.saring.de/sportstracker
+https://www.saring.de/sportstracker
 
 Download packages are available at the SourceForge project site
 (https://sourceforge.net/projects/sportstracker/), the discussion forum is
@@ -509,4 +509,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2018/04/30
+2018/07/03
