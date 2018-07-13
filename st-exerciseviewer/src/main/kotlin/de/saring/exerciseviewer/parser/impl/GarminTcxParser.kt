@@ -152,7 +152,8 @@ class GarminTcxParser : AbstractExerciseParser() {
                                     altitudeMin = Short.MAX_VALUE,
                                     altitudeAvg = Math.round(altitudeMetersTotal / trackpointCount).toShort(),
                                     altitudeMax = Short.MIN_VALUE,
-                                    ascent = 0)
+                                    ascent = 0,
+                                    descent =0)
                         }
 
                         lapAltitude = Math.round(tpAltitude).toShort()

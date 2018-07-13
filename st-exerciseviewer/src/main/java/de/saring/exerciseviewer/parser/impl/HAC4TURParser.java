@@ -297,7 +297,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         }
 
         short altitudeAVG = (short) (total / exercise.getSampleList().size());
-        return new ExerciseAltitude((short) min, altitudeAVG, (short) max, ascent);
+        return new ExerciseAltitude((short) min, altitudeAVG, (short) max, ascent, ascent);
     }
 
     /**

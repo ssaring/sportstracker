@@ -274,7 +274,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
                 ascent = (short) ConvertUtils.convertFeet2Meter(ascent);
             }
 
-            exercise.setAltitude(new ExerciseAltitude(altitudeMin, altitudeAvg, altitudeMax, ascent));
+            exercise.setAltitude(new ExerciseAltitude(altitudeMin, altitudeAvg, altitudeMax, ascent, ascent));
 
             // get temperature data of exercise (only available, when altitude recorded)
             short temperatureMin = decodeTemperature(fileContent[98], fMetricUnits);

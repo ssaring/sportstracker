@@ -103,6 +103,8 @@
                                 <Label fx:id="laAltitudeMaxValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                                 <Label text="%pv.opt.ascent.text" GridPane.rowIndex="3"/>
                                 <Label fx:id="laAscentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                <Label text="%pv.opt.descent.text" GridPane.rowIndex="4"/>
+                                <Label fx:id="laDescentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
                             </children>
                             <VBox.margin>
                                 <Insets left="24.0"/>
