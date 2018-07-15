@@ -212,7 +212,7 @@ class PolarHRMParser : AbstractExerciseParser() {
                 }
 
                 // lap ascent can't be read from HRM files
-                lap.altitude = LapAltitude(lapAltitude.toShort(), 0)
+                lap.altitude = LapAltitude(lapAltitude.toShort(), 0, 0)
             }
 
             // the 3. lap line can be ignored completely

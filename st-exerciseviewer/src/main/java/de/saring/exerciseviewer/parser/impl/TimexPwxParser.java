@@ -575,7 +575,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
                         if (segmentSummary.getAltitude() != null) {
                             short lapAltitude = (short) segmentSummary.getAltitude().getMax();
                             int lapAscent = (int) (segmentSummary.getAltitude().getMax() - segmentSummary.getAltitude().getMin());
-                            lap.setAltitude(new LapAltitude(lapAltitude, lapAscent));
+                            lap.setAltitude(new LapAltitude(lapAltitude, lapAscent, lapAscent));
                         }
                     }
                 }

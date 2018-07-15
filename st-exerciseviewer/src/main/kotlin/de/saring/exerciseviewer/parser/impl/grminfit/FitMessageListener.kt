@@ -135,7 +135,7 @@ internal class FitMessageListener : MesgListener {
         }
 
         // read optional ascent data
-        mesg.totalAscent?.let { lap.altitude = LapAltitude(0.toShort(), it) }
+        mesg.totalAscent?.let { lap.altitude = LapAltitude(0.toShort(), it, mesg.totalDescent) }
 
         // read optional position data
         if (mesg.endPositionLat != null && mesg.endPositionLong != null) {

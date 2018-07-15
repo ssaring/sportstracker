@@ -153,7 +153,7 @@ class GarminTcxParser : AbstractExerciseParser() {
                                     altitudeAvg = Math.round(altitudeMetersTotal / trackpointCount).toShort(),
                                     altitudeMax = Short.MIN_VALUE,
                                     ascent = 0,
-                                    descent =0)
+                                    descent = 0)
                         }
 
                         lapAltitude = Math.round(tpAltitude).toShort()
@@ -193,7 +193,7 @@ class GarminTcxParser : AbstractExerciseParser() {
             }
 
             if (lapAltitude != null) {
-                evLap.altitude = LapAltitude(lapAltitude, Math.round(lapAscentMeters).toInt())
+                evLap.altitude = LapAltitude(lapAltitude, Math.round(lapAscentMeters).toInt(), 0)
             }
 
             // store position of last sample as lap split position

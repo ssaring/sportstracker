@@ -407,7 +407,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         lap.setHeartRateMax(exercise.getHeartRateMax());
         lap.setHeartRateAVG(exercise.getHeartRateAVG());
 
-        lap.setAltitude(new LapAltitude(lastSample.getAltitude(), exercise.getAltitude().getAscent()));
+        lap.setAltitude(new LapAltitude(lastSample.getAltitude(), exercise.getAltitude().getAscent(), exercise.getAltitude().getAscent()));
 
         lap.setSpeed(new LapSpeed(
                 lastSample.getSpeed(),

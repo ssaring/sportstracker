@@ -53,6 +53,8 @@ class LapPanelController(
     @FXML
     private lateinit var tcAscent: TableColumn<LapRow, Number>
     @FXML
+    private lateinit var tcDescent: TableColumn<LapRow, Number>
+    @FXML
     private lateinit var tcTemperature: TableColumn<LapRow, Number>
 
     override val fxmlFilename: String = "/fxml/panels/LapPanel.fxml"
@@ -72,6 +74,7 @@ class LapPanelController(
         tcCadence.cellValueFactory = PropertyValueFactory("cadence")
         tcAltitude.cellValueFactory = PropertyValueFactory("altitude")
         tcAscent.cellValueFactory = PropertyValueFactory("ascent")
+        tcDescent.cellValueFactory = PropertyValueFactory("descent")
         tcTemperature.cellValueFactory = PropertyValueFactory("temperature")
 
         // setup custom number cell factories for all table columns
@@ -107,6 +110,9 @@ class LapPanelController(
             if (it == null) null else context.formatUtils.heightToString(it.toInt())
         }
         tcAscent.cellFactory = FormattedNumberCellFactory {
+            if (it == null) null else context.formatUtils.heightToString(it.toInt())
+        }
+        tcDescent.cellFactory = FormattedNumberCellFactory {
             if (it == null) null else context.formatUtils.heightToString(it.toInt())
         }
         tcTemperature.cellFactory = FormattedNumberCellFactory {
@@ -148,6 +154,7 @@ class LapPanelController(
                     cadence = lap.speed?.cadence?.toInt(),
                     altitude = lap.altitude?.altitude?.toInt(),
                     ascent = lap.altitude?.ascent,
+                    descent = lap.altitude?.descent,
                     temperature = lap.temperature?.temperature?.toInt()))
 
             previousLapSplitTime = lap.timeSplit
@@ -173,6 +180,7 @@ class LapPanelController(
      * @property cadence cadence at lap end
      * @property altitude altitude at lap end
      * @property ascent ascent in lap
+     * @property descent descent in lap
      * @property temperature temperature at lap end
      */
     class LapRow(
@@ -188,5 +196,6 @@ class LapPanelController(
             val cadence: Int?,
             val altitude: Int?,
             val ascent: Int?,
+            val descent: Int?,
             val temperature: Int?)
 }

@@ -350,7 +350,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
                     lapAscent = ConvertUtils.convertFeet2Meter(lapAscent);
                 }
 
-                lap.setAltitude(new LapAltitude(lapEndAltitude, lapAscent));
+                lap.setAltitude(new LapAltitude(lapEndAltitude, lapAscent, lapAscent));
 
 
                 // get temperature at end of the lap
