@@ -37,6 +37,7 @@ public class PreferencesViewModel {
 
     public final BooleanProperty listViewShowAvgHeartrate;
     public final BooleanProperty listViewShowAscent;
+    public final BooleanProperty listViewShowDescent;
     public final BooleanProperty listViewShowEnergy;
     public final BooleanProperty listViewShowEquipment;
     public final BooleanProperty listViewShowComment;
@@ -61,6 +62,7 @@ public class PreferencesViewModel {
 
         this.listViewShowAvgHeartrate = new SimpleBooleanProperty(options.isListViewShowAvgHeartrate());
         this.listViewShowAscent = new SimpleBooleanProperty(options.isListViewShowAscent());
+        this.listViewShowDescent = new SimpleBooleanProperty(options.isListViewShowDescent());
         this.listViewShowEnergy = new SimpleBooleanProperty(options.isListViewShowEnergy());
         this.listViewShowEquipment = new SimpleBooleanProperty(options.isListViewShowEquipment());
         this.listViewShowComment = new SimpleBooleanProperty(options.isListViewShowComment());
@@ -86,6 +88,7 @@ public class PreferencesViewModel {
 
         options.setListViewShowAvgHeartrate(listViewShowAvgHeartrate.get());
         options.setListViewShowAscent(listViewShowAscent.get());
+        options.setListViewShowDescent(listViewShowDescent.get());
         options.setListViewShowEnergy(listViewShowEnergy.get());
         options.setListViewShowEquipment(listViewShowEquipment.get());
         options.setListViewShowComment(listViewShowComment.get());

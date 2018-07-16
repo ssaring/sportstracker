@@ -133,6 +133,11 @@ public class XMLExerciseList {
             exercise.setAscent(Integer.parseInt(strAscent));
         }
 
+        String strDescent = eExercise.getChildText("descent");
+        if (strDescent != null) {
+            exercise.setDescent(Integer.parseInt(strDescent));
+        }
+
         String strCalories = eExercise.getChildText("calories");
         if (strCalories != null) {
             exercise.setCalories(Integer.parseInt(strCalories));
@@ -205,6 +210,9 @@ public class XMLExerciseList {
             }
             if (exercise.getAscent() != 0) {
                 XMLUtils.addElement(eExercise, "ascent", String.valueOf(exercise.getAscent()));
+            }
+            if (exercise.getDescent() != 0) {
+                XMLUtils.addElement(eExercise, "descent", String.valueOf(exercise.getDescent()));
             }
             if (exercise.getCalories() != 0) {
                 XMLUtils.addElement(eExercise, "calories", String.valueOf(exercise.getCalories()));

@@ -101,6 +101,9 @@ public class ExerciseDialogController extends AbstractDialogController {
     private TextField tfAscent;
 
     @FXML
+    private TextField tfDescent;
+
+    @FXML
     private TextField tfAvgHeartrate;
 
     @FXML
@@ -120,6 +123,9 @@ public class ExerciseDialogController extends AbstractDialogController {
 
     @FXML
     private Label laAscent;
+
+    @FXML
+    private Label laDescent;
 
     @FXML
     private Button btViewHrmFile;
@@ -191,6 +197,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         laDistance.setText(String.format(laDistance.getText(), context.getFormatUtils().getDistanceUnitName()));
         laAvgSpeed.setText(String.format(laAvgSpeed.getText(), context.getFormatUtils().getSpeedUnitName()));
         laAscent.setText(String.format(laAscent.getText(), context.getFormatUtils().getAltitudeUnitName()));
+        laDescent.setText(String.format(laDescent.getText(), context.getFormatUtils().getAltitudeUnitName()));
 
         setupChoiceBoxes();
         fillSportTypeDependentChoiceBoxes();
@@ -208,6 +215,9 @@ public class ExerciseDialogController extends AbstractDialogController {
         // don't display value '0' for optional inputs when no data available
         if (exerciseViewModel.ascent.get() == 0) {
             tfAscent.setText("");
+        }
+        if (exerciseViewModel.descent.get() == 0) {
+            tfDescent.setText("");
         }
         if (exerciseViewModel.avgHeartRate.get() == 0) {
             tfAvgHeartrate.setText("");
@@ -258,6 +268,7 @@ public class ExerciseDialogController extends AbstractDialogController {
                 new TimeInSecondsToStringConverter(context.getFormatUtils()));
 
         tfAscent.textProperty().bindBidirectional(exerciseViewModel.ascent, new NumberStringConverter());
+        tfDescent.textProperty().bindBidirectional(exerciseViewModel.descent, new NumberStringConverter());
         tfAvgHeartrate.textProperty().bindBidirectional(exerciseViewModel.avgHeartRate, new NumberStringConverter());
         tfCalories.textProperty().bindBidirectional(exerciseViewModel.calories, new NumberStringConverter());
         cbEquipment.valueProperty().bindBidirectional(exerciseViewModel.equipment);
@@ -295,6 +306,9 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         validationSupport.registerValidator(tfAscent, false, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfAscent, context.getResources().getString("st.dlg.exercise.error.ascent"),
+                        !ValidationUtils.isOptionalValueIntegerBetween(newValue, 0, Integer.MAX_VALUE)));
+        validationSupport.registerValidator(tfDescent, false, (Control control, String newValue) ->
+                ValidationResult.fromErrorIf(tfDescent, context.getResources().getString("st.dlg.exercise.error.descent"),
                         !ValidationUtils.isOptionalValueIntegerBetween(newValue, 0, Integer.MAX_VALUE)));
         validationSupport.registerValidator(tfAvgHeartrate, false, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfAvgHeartrate, context.getResources().getString("st.dlg.exercise.error.avg_heartrate"),
@@ -488,6 +502,15 @@ public class ExerciseDialogController extends AbstractDialogController {
 
             if (document.getOptions().getUnitSystem() == FormatUtils.UnitSystem.English) {
                 exerciseViewModel.ascent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.ascent.get()));
+            }
+        }
+
+        // fill descent-related values
+        if (evExercise.getAltitude() != null) {
+            exerciseViewModel.descent.set(evExercise.getAltitude().getDescent());
+
+            if (document.getOptions().getUnitSystem() == FormatUtils.UnitSystem.English) {
+                exerciseViewModel.descent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.descent.get()));
             }
         }
     }

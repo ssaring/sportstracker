@@ -106,11 +106,13 @@
                                     </rowConstraints>
                                     <children>
                                         <Label fx:id="laAscent" text="%st.dlg.exercise.ascent.text"/>
-                                        <Label text="%st.dlg.exercise.avg_heartrate.text" GridPane.rowIndex="1"/>
-                                        <Label text="%st.dlg.exercise.calories.text" GridPane.rowIndex="2"/>
+                                        <Label fx:id="laDescent" text="%st.dlg.exercise.descent.text" GridPane.rowIndex="1"/>
+                                        <Label text="%st.dlg.exercise.avg_heartrate.text" GridPane.rowIndex="2"/>
+                                        <Label text="%st.dlg.exercise.calories.text" GridPane.rowIndex="3"/>
                                         <TextField fx:id="tfAscent" GridPane.columnIndex="1"/>
-                                        <TextField fx:id="tfAvgHeartrate" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                        <TextField fx:id="tfCalories" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                        <TextField fx:id="tfDescent" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <TextField fx:id="tfAvgHeartrate" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                        <TextField fx:id="tfCalories" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                                     </children>
                                 </GridPane>
                                 <GridPane hgap="12.0" vgap="12.0">

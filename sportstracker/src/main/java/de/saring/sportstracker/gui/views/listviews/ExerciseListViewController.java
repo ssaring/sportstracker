@@ -62,6 +62,8 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     @FXML
     private TableColumn<Exercise, Number> tcAscent;
     @FXML
+    private TableColumn<Exercise, Number> tcDescent;
+    @FXML
     private TableColumn<Exercise, Number> tcEnergy;
     @FXML
     private TableColumn<Exercise, Object> tcEquipment;
@@ -131,6 +133,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         tcAvgSpeed.setCellValueFactory(new PropertyValueFactory<>("avgSpeed"));
         tcAvgHeartrate.setCellValueFactory(new PropertyValueFactory<>("avgHeartRate"));
         tcAscent.setCellValueFactory(new PropertyValueFactory<>("ascent"));
+        tcDescent.setCellValueFactory(new PropertyValueFactory<>("descent"));
         tcEnergy.setCellValueFactory(new PropertyValueFactory<>("calories"));
         tcEquipment.setCellValueFactory(cellData -> {
             final Equipment equipment = cellData.getValue().getEquipment();
@@ -154,6 +157,8 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
                 value == null ? null : getContext().getFormatUtils().heartRateToString(value.intValue())));
         tcAscent.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().heightToString(value.intValue())));
+        tcDescent.setCellFactory(new FormattedNumberCellFactory<>(value -> //
+                value == null ? null : getContext().getFormatUtils().heightToString(value.intValue())));
         tcEnergy.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().caloriesToString(value.intValue())));
 
@@ -161,6 +166,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         final STOptions options = getDocument().getOptions();
         tcAvgHeartrate.setVisible(options.isListViewShowAvgHeartrate());
         tcAscent.setVisible(options.isListViewShowAscent());
+        tcDescent.setVisible(options.isListViewShowDescent());
         tcEnergy.setVisible(options.isListViewShowEnergy());
         tcEquipment.setVisible(options.isListViewShowEquipment());
         tcComment.setVisible(options.isListViewShowComment());

@@ -32,6 +32,11 @@ public class StatisticCalculator {
     private int totalAscent = 0;
 
     /**
+     * Total descent of the exercises in meters.
+     */
+    private int totalDescent = 0;
+
+    /**
      * Total calorie consumption in kCal.
      */
     private int totalCalories = 0;
@@ -55,6 +60,11 @@ public class StatisticCalculator {
      * Average ascent of the exercises in meters.
      */
     private int avgAscent = 0;
+
+    /**
+     * Average descent of the exercises in meters.
+     */
+    private int avgDescent = 0;
 
     /**
      * Average heartrate of the exercises in beats per minute.
@@ -87,6 +97,11 @@ public class StatisticCalculator {
     private int minAscent = 0;
 
     /**
+     * Minimum descent of the exercises in meters.
+     */
+    private int minDescent = 0;
+
+    /**
      * Minimum average heartrate of the exercises in beats per minute.
      */
     private int minAvgHeartRate = 0;
@@ -115,6 +130,11 @@ public class StatisticCalculator {
      * Maximum ascent of the exercises in meters.
      */
     private int maxAscent = 0;
+
+    /**
+     * Maximum descent of the exercises in meters.
+     */
+    private int maxDescent = 0;
 
     /**
      * Maximum average heartrate of the exercises in beats per minute.
@@ -154,6 +174,7 @@ public class StatisticCalculator {
         minAvgSpeed = firstExercise.getAvgSpeed();
         minDuration = firstExercise.getDuration();
         minAscent = firstExercise.getAscent();
+        minDescent = firstExercise.getDescent();
         minAvgHeartRate = firstExercise.getAvgHeartRate();
 
         // process all exercises
@@ -170,6 +191,7 @@ public class StatisticCalculator {
             totalAvgSpeed += currExercise.getAvgSpeed();
             totalDuration += currExercise.getDuration();
             totalAscent += currExercise.getAscent();
+            totalDescent += currExercise.getDescent();
 
             // include heartrate in statistic only when specified
             if (currExercise.getAvgHeartRate() > 0) {
@@ -198,6 +220,10 @@ public class StatisticCalculator {
 
             if (currExercise.getAscent() < minAscent) {
                 minAscent = currExercise.getAscent();
+            }
+
+            if (currExercise.getDescent() < minDescent) {
+                minDescent = currExercise.getDescent();
             }
 
             // avg heartrate value '0' needs to be ignored, it's not entered by user
@@ -231,6 +257,10 @@ public class StatisticCalculator {
                 maxAscent = currExercise.getAscent();
             }
 
+            if (currExercise.getDescent() > maxDescent) {
+                maxDescent = currExercise.getDescent();
+            }
+
             if (currExercise.getAvgHeartRate() > maxAvgHeartRate) {
                 maxAvgHeartRate = currExercise.getAvgHeartRate();
             }
@@ -249,9 +279,10 @@ public class StatisticCalculator {
             avgSpeed = 0;
         }
 
-        // compute AVG duration and ascent
+        // compute AVG duration and ascent and descent
         avgDuration = totalDuration / exerciseCount;
         avgAscent = totalAscent / exerciseCount;
+        avgDescent = totalDescent / exerciseCount;
 
         // compute AVG heartrate only when it was specified in at least one exercise
         if (numberOfExercisesWithHeartRate > 0) {
@@ -270,6 +301,14 @@ public class StatisticCalculator {
 
     public void setAvgAscent(int avgAscent) {
         this.avgAscent = avgAscent;
+    }
+
+    public int getAvgDescent() {
+        return avgDescent;
+    }
+
+    public void setAvgDescent(int avgDescent) {
+        this.avgDescent = avgDescent;
     }
 
     public int getAvgCalories() {
@@ -328,6 +367,14 @@ public class StatisticCalculator {
         this.maxAscent = maxAscent;
     }
 
+    public int getMaxDescent() {
+        return maxDescent;
+    }
+
+    public void setMaxDescent(int maxDescent) {
+        this.maxDescent = maxDescent;
+    }
+
     public int getMaxAvgHeartRate() {
         return maxAvgHeartRate;
     }
@@ -376,6 +423,14 @@ public class StatisticCalculator {
         this.minAscent = minAscent;
     }
 
+    public int getMinDescent() {
+        return minDescent;
+    }
+
+    public void setMinDescent(int minDescent) {
+        this.minDescent = minDescent;
+    }
+
     public int getMinAvgHeartRate() {
         return minAvgHeartRate;
     }
@@ -422,6 +477,14 @@ public class StatisticCalculator {
 
     public void setTotalAscent(int totalAscent) {
         this.totalAscent = totalAscent;
+    }
+
+    public int getTotalDescent() {
+        return totalDescent;
+    }
+
+    public void setTotalDescent(int totalDescent) {
+        this.totalDescent = totalDescent;
     }
 
     public int getTotalCalories() {

@@ -72,6 +72,11 @@
 									<xs:documentation>The ascent (climbed height) of the exercise in meters (optional).</xs:documentation>
 								</xs:annotation>
 							</xs:element>
+							<xs:element name="descent" type="xs:int" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>The descent (descended height) of the exercise in meters (optional).</xs:documentation>
+								</xs:annotation>
+							</xs:element>
 							<xs:element name="calories" type="xs:int" minOccurs="0">
 								<xs:annotation>
 									<xs:documentation>The calories consumed by the exercise (optional).</xs:documentation>

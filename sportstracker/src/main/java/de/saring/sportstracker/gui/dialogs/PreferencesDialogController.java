@@ -65,6 +65,8 @@ public class PreferencesDialogController extends AbstractDialogController {
     @FXML
     private CheckBox cbOptionalAscent;
     @FXML
+    private CheckBox cbOptionalDescent;
+    @FXML
     private CheckBox cbOptionalEnergy;
     @FXML
     private CheckBox cbOptionalEquipment;
@@ -121,6 +123,7 @@ public class PreferencesDialogController extends AbstractDialogController {
 
         cbOptionalAvgHeartrate.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowAvgHeartrate);
         cbOptionalAscent.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowAscent);
+        cbOptionalDescent.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowDescent);
         cbOptionalEnergy.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowEnergy);
         cbOptionalEquipment.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowEquipment);
         cbOptionalComment.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowComment);

@@ -47,6 +47,7 @@ public class ExerciseViewModel {
     public final IntegerProperty duration;
     public final IntegerProperty avgHeartRate;
     public final IntegerProperty ascent;
+    public final IntegerProperty descent;
     public final IntegerProperty calories;
     public final ObjectProperty<Equipment> equipment;
     public final StringProperty hrmFile;
@@ -76,6 +77,7 @@ public class ExerciseViewModel {
         this.equipment = new SimpleObjectProperty<>(exercise.getEquipment());
         this.avgHeartRate = new SimpleIntegerProperty(exercise.getAvgHeartRate());
         this.ascent = new SimpleIntegerProperty(exercise.getAscent());
+        this.descent = new SimpleIntegerProperty(exercise.getDescent());
         this.calories = new SimpleIntegerProperty(exercise.getCalories());
         this.hrmFile = new SimpleStringProperty(StringUtils.getTextOrEmptyString(exercise.getHrmFile()));
         this.comment = new SimpleStringProperty(StringUtils.getTextOrEmptyString(exercise.getComment()));
@@ -86,6 +88,7 @@ public class ExerciseViewModel {
             this.distance.set((float) ConvertUtils.convertKilometer2Miles(exercise.getDistance(), false));
             this.avgSpeed.set((float) ConvertUtils.convertKilometer2Miles(exercise.getAvgSpeed(), false));
             this.ascent.set(ConvertUtils.convertMeter2Feet(exercise.getAscent()));
+            this.descent.set(ConvertUtils.convertMeter2Feet(exercise.getDescent()));
         }
 
         setupSportTypeRecordDistance();
@@ -108,6 +111,7 @@ public class ExerciseViewModel {
         exercise.setDuration(duration.getValue());
         exercise.setAvgHeartRate(avgHeartRate.getValue());
         exercise.setAscent(ascent.getValue());
+        exercise.setDescent(descent.getValue());
         exercise.setCalories(calories.getValue());
         exercise.setEquipment(equipment.getValue());
         // ignore empty comment for optional inputs
@@ -119,6 +123,7 @@ public class ExerciseViewModel {
             exercise.setDistance((float) ConvertUtils.convertMiles2Kilometer(exercise.getDistance()));
             exercise.setAvgSpeed((float) ConvertUtils.convertMiles2Kilometer(exercise.getAvgSpeed()));
             exercise.setAscent(ConvertUtils.convertFeet2Meter(exercise.getAscent()));
+            exercise.setDescent(ConvertUtils.convertFeet2Meter(exercise.getDescent()));
         }
         return exercise;
     }
