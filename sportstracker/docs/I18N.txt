@@ -45,6 +45,20 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 7.5.1:
+
+- st.exerciselistview.descent (new)
+- st.dlg.exercise.descent.text
+- st.dlg.exercise.error.descent
+- st.dlg.statistic_results.total_descent.text
+- st.dlg.statistic_results.descent.text
+- st.dlg.overview.display.descent_sum.text
+- st.dlg.overview.value_type.descent_sum
+- st.dlg.options.show_descent.text
+- st.dlg.about.authors.text
+- pv.opt.descent.text
+- pv.laps.descent
+
 SportsTracker 7.5.0:
 
 - pv.main.heartrate.text (new)

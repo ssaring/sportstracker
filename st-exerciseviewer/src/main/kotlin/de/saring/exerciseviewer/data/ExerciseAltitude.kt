@@ -7,7 +7,7 @@ package de.saring.exerciseviewer.data
  * @property altitudeAvg Average altitude of exercise.
  * @property altitudeMax Maximum altitude of exercise.
  * @property ascent Ascent of exercise (climbed height meters).
- * @property descent Descent data of exercise.
+ * @property descent Descent data of exercise (height meters).
  *
  * @author Stefan Saring
  */

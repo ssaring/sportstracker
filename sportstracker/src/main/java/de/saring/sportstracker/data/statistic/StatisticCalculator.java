@@ -279,7 +279,7 @@ public class StatisticCalculator {
             avgSpeed = 0;
         }
 
-        // compute AVG duration and ascent and descent
+        // compute AVG duration, ascent and descent
         avgDuration = totalDuration / exerciseCount;
         avgAscent = totalAscent / exerciseCount;
         avgDescent = totalDescent / exerciseCount;

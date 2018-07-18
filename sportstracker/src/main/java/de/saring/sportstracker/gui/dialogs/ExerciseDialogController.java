@@ -496,20 +496,13 @@ public class ExerciseDialogController extends AbstractDialogController {
             exerciseViewModel.duration.set(0);
         }
 
-        // fill ascent-related values
+        // fill ascent- and descent-related values
         if (evExercise.getAltitude() != null) {
             exerciseViewModel.ascent.set(evExercise.getAltitude().getAscent());
-
-            if (document.getOptions().getUnitSystem() == FormatUtils.UnitSystem.English) {
-                exerciseViewModel.ascent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.ascent.get()));
-            }
-        }
-
-        // fill descent-related values
-        if (evExercise.getAltitude() != null) {
             exerciseViewModel.descent.set(evExercise.getAltitude().getDescent());
 
             if (document.getOptions().getUnitSystem() == FormatUtils.UnitSystem.English) {
+                exerciseViewModel.ascent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.ascent.get()));
                 exerciseViewModel.descent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.descent.get()));
             }
         }

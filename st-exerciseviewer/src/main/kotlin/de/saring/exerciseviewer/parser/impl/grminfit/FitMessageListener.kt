@@ -104,7 +104,8 @@ internal class FitMessageListener : MesgListener {
         // read optional ascent and descent data
         mesg.totalAscent?.let {
             exercise.recordingMode.isAltitude = true
-            exercise.altitude = ExerciseAltitude(0.toShort(), 0.toShort(), 0.toShort(), it, mesg.totalDescent)
+            val totalDescent = mesg.totalDescent ?: it
+            exercise.altitude = ExerciseAltitude(0.toShort(), 0.toShort(), 0.toShort(), it, totalDescent)
         }
 
         // read optional cadence data
@@ -135,7 +136,10 @@ internal class FitMessageListener : MesgListener {
         }
 
         // read optional ascent data
-        mesg.totalAscent?.let { lap.altitude = LapAltitude(0.toShort(), it, mesg.totalDescent) }
+        mesg.totalAscent?.let {
+            val totalDescent = mesg.totalDescent ?: it
+            lap.altitude = LapAltitude(0.toShort(), it, totalDescent)
+        }
 
         // read optional position data
         if (mesg.endPositionLat != null && mesg.endPositionLong != null) {

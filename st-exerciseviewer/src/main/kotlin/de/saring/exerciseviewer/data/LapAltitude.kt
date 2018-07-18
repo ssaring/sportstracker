@@ -5,7 +5,7 @@ package de.saring.exerciseviewer.data
  *
  * @property altitude Altitude at lap end.
  * @property ascent Ascent (climbed height meters) of lap.
- * @property descent Descent data of exercis
+ * @property descent Descent (height meters) of lap.
  *
  * @author Stefan Saring
  */

@@ -96,7 +96,7 @@ public class STOptions implements EVOptions, Serializable {
         this.weekStartSunday = false;
         this.listViewShowAvgHeartrate = true;
         this.listViewShowAscent = true;
-        this.listViewShowDescent = true;
+        this.listViewShowDescent = false;
         this.listViewShowEnergy = false;
         this.listViewShowEquipment = false;
         this.listViewShowComment = false;
