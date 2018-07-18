@@ -397,7 +397,7 @@ public class OverviewDialogController extends AbstractDialogController {
     }
 
     /**
-     * This method calculates the specified exercise values (distance, duration, ascent,
+     * This method calculates the specified exercise values (distance, duration, ascent, descent
      * avarage speed or calories concumption) and adds them to a TimeTableXYDataset.
      * The calculation can be done for the exercises of all sport types (sum) or for a
      * single sport type.
@@ -439,12 +439,14 @@ public class OverviewDialogController extends AbstractDialogController {
             double sumDistance = 0d;
             double sumDuration = 0d;
             double sumAscent = 0d;
+            double sumDescent = 0d;
             double sumCalories = 0d;
 
             for (Exercise tempExercise : lExercises) {
                 sumDistance += tempExercise.getDistance();
                 sumDuration += tempExercise.getDuration();
                 sumAscent += tempExercise.getAscent();
+                sumDescent += tempExercise.getDescent();
                 sumCalories += tempExercise.getCalories();
             }
 
@@ -470,6 +472,13 @@ public class OverviewDialogController extends AbstractDialogController {
                         sumAscent = ConvertUtils.convertMeter2Feet((int) sumAscent);
                     }
                     dataset.add(timePeriod, sumAscent, seriesName);
+                    break;
+
+                case DESCENT:
+                    if (options.getUnitSystem() != FormatUtils.UnitSystem.Metric) {
+                        sumDescent = ConvertUtils.convertMeter2Feet((int) sumDescent);
+                    }
+                    dataset.add(timePeriod, sumDescent, seriesName);
                     break;
 
                 case CALORIES:
@@ -983,6 +992,7 @@ public class OverviewDialogController extends AbstractDialogController {
         DISTANCE("st.dlg.overview.display.distance_sum.text"), //
         DURATION("st.dlg.overview.display.duration_sum.text"), //
         ASCENT("st.dlg.overview.display.ascent_sum.text"), //
+        DESCENT("st.dlg.overview.display.descent_sum.text"), //
         CALORIES("st.dlg.overview.display.calorie_sum.text"), //
         EXERCISES("st.dlg.overview.display.exercise_count.text"), //
         AVG_SPEED("st.dlg.overview.display.avg_speed.text"), //
@@ -1017,6 +1027,9 @@ public class OverviewDialogController extends AbstractDialogController {
                     return appResources.getString("st.dlg.overview.value_type.duration_sum");
                 case ASCENT:
                     return appResources.getString("st.dlg.overview.value_type.ascent_sum",
+                            formatUtils.getAltitudeUnitName());
+                case DESCENT:
+                    return appResources.getString("st.dlg.overview.value_type.descent_sum",
                             formatUtils.getAltitudeUnitName());
                 case CALORIES:
                     return appResources.getString("st.dlg.overview.value_type.calories_sum");

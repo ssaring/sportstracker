@@ -143,6 +143,7 @@
                                             <children>
                                                 <CheckBox fx:id="cbOptionalAvgHeartrate" mnemonicParsing="false" text="%st.dlg.options.show_avg_heartrate.text"/>
                                                 <CheckBox fx:id="cbOptionalAscent" mnemonicParsing="false" text="%st.dlg.options.show_ascent.text"/>
+                                                <CheckBox fx:id="cbOptionalDescent" mnemonicParsing="false" text="%st.dlg.options.show_descent.text"/>
                                                 <CheckBox fx:id="cbOptionalEnergy" mnemonicParsing="false" text="%st.dlg.options.show_energy.text"/>
                                                 <CheckBox fx:id="cbOptionalEquipment" mnemonicParsing="false" text="%st.dlg.options.show_equipment.text"/>
                                                 <CheckBox fx:id="cbOptionalComment" mnemonicParsing="false" text="%st.dlg.options.show_comment.text"/>

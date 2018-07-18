@@ -20,6 +20,7 @@
                 <TableColumn fx:id="tcAvgSpeed" prefWidth="90.0" text="%st.exerciselistview.avg_speed"/>
                 <TableColumn fx:id="tcAvgHeartrate" prefWidth="90.0" text="%st.exerciselistview.avg_heartrate"/>
                 <TableColumn fx:id="tcAscent" prefWidth="90.0" text="%st.exerciselistview.ascent"/>
+                <TableColumn fx:id="tcDescent" prefWidth="90.0" text="%st.exerciselistview.descent"/>
                 <TableColumn fx:id="tcEnergy" prefWidth="90.0" text="%st.exerciselistview.energy"/>
                 <TableColumn fx:id="tcEquipment" prefWidth="90.0" text="%st.exerciselistview.equipment"/>
                 <TableColumn fx:id="tcComment" prefWidth="500.0" text="%st.exerciselistview.comment"/>

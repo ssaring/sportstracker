@@ -41,6 +41,8 @@ import javafx.scene.control.Label
     private lateinit var laAltitudeMaxValue: Label
     @FXML
     private lateinit var laAscentValue: Label
+    @FXML
+    private lateinit var laDescentValue: Label
 
     @FXML
     private lateinit var laTemperatureMinValue: Label
@@ -80,6 +82,7 @@ import javafx.scene.control.Label
             laAltitudeAvgValue.text = formatUtils.heightToString(it.altitudeAvg.toInt())
             laAltitudeMaxValue.text = formatUtils.heightToString(it.altitudeMax.toInt())
             laAscentValue.text = formatUtils.heightToString(it.ascent)
+            laDescentValue.text = formatUtils.heightToString(it.descent)
         }
 
         // fill temperature data

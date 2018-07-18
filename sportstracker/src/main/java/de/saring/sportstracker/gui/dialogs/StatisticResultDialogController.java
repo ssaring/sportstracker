@@ -26,6 +26,8 @@ public class StatisticResultDialogController extends AbstractDialogController {
     @FXML
     private Label laTotalAscentValue;
     @FXML
+    private Label laTotalDescentValue;
+    @FXML
     private Label laTotalEnergyValue;
 
     @FXML
@@ -36,6 +38,8 @@ public class StatisticResultDialogController extends AbstractDialogController {
     private Label laAvgDurationValue;
     @FXML
     private Label laAvgAscentValue;
+    @FXML
+    private Label laAvgDescentValue;
     @FXML
     private Label laAvgAvgHeartrateValue;
     @FXML
@@ -50,6 +54,8 @@ public class StatisticResultDialogController extends AbstractDialogController {
     @FXML
     private Label laMinAscentValue;
     @FXML
+    private Label laMinDescentValue;
+    @FXML
     private Label laMinAvgHeartrateValue;
     @FXML
     private Label laMinEnergyValue;
@@ -62,6 +68,8 @@ public class StatisticResultDialogController extends AbstractDialogController {
     private Label laMaxDurationValue;
     @FXML
     private Label laMaxAscentValue;
+    @FXML
+    private Label laMaxDescentValue;
     @FXML
     private Label laMaxAvgHeartrateValue;
     @FXML
@@ -109,6 +117,7 @@ public class StatisticResultDialogController extends AbstractDialogController {
         laTotalDistanceValue.setText(formatUtils.distanceToString(statisticResult.getTotalDistance(), 2));
         laTotalDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getTotalDuration()) + " (hh:mm:ss)");
         laTotalAscentValue.setText(formatUtils.heightToString(statisticResult.getTotalAscent()));
+        laTotalDescentValue.setText(formatUtils.heightToString(statisticResult.getTotalDescent()));
         laTotalEnergyValue.setText(statisticResult.getTotalCalories() > 0 ?
                 formatUtils.caloriesToString(statisticResult.getTotalCalories()) : empty);
 
@@ -117,6 +126,7 @@ public class StatisticResultDialogController extends AbstractDialogController {
         laAvgAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getAvgSpeed(), 2));
         laAvgDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getAvgDuration()) + " (hh:mm:ss)");
         laAvgAscentValue.setText(formatUtils.heightToString(statisticResult.getAvgAscent()));
+        laAvgDescentValue.setText(formatUtils.heightToString(statisticResult.getAvgDescent()));
         laAvgAvgHeartrateValue.setText(statisticResult.getAvgHeartRate() > 0 ?
                 formatUtils.heartRateToString(statisticResult.getAvgHeartRate()) : empty);
         laAvgEnergyValue.setText(statisticResult.getAvgCalories() > 0 ?
@@ -127,6 +137,7 @@ public class StatisticResultDialogController extends AbstractDialogController {
         laMinAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getMinAvgSpeed(), 2));
         laMinDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getMinDuration()) + " (hh:mm:ss)");
         laMinAscentValue.setText(formatUtils.heightToString(statisticResult.getMinAscent()));
+        laMinDescentValue.setText(formatUtils.heightToString(statisticResult.getMinDescent()));
         laMinAvgHeartrateValue.setText(statisticResult.getMinAvgHeartRate() > 0 ?
                 formatUtils.heartRateToString(statisticResult.getMinAvgHeartRate()) : empty);
         laMinEnergyValue.setText(statisticResult.getMinCalories() > 0 ?
@@ -137,6 +148,7 @@ public class StatisticResultDialogController extends AbstractDialogController {
         laMaxAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getMaxAvgSpeed(), 2));
         laMaxDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getMaxDuration()) + " (hh:mm:ss)");
         laMaxAscentValue.setText(formatUtils.heightToString(statisticResult.getMaxAscent()));
+        laMaxDescentValue.setText(formatUtils.heightToString(statisticResult.getMaxDescent()));
         laMaxAvgHeartrateValue.setText(statisticResult.getMaxAvgHeartRate() > 0 ?
                 formatUtils.heartRateToString(statisticResult.getMaxAvgHeartRate()) : empty);
         laMaxEnergyValue.setText(statisticResult.getMaxCalories() > 0 ?

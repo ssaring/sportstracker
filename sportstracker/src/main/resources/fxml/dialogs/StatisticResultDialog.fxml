@@ -47,8 +47,10 @@
                         <Label fx:id="laTotalDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                         <Label text="%st.dlg.statistic_results.total_ascent.text" GridPane.rowIndex="3"/>
                         <Label fx:id="laTotalAscentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="4"/>
-                        <Label fx:id="laTotalEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                        <Label text="%st.dlg.statistic_results.total_descent.text" GridPane.rowIndex="4"/>
+                        <Label fx:id="laTotalDescentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="5"/>
+                        <Label fx:id="laTotalEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
                     </children>
                     <VBox.margin>
                         <Insets left="24.0"/>
@@ -85,10 +87,12 @@
                         <Label fx:id="laAvgDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                         <Label text="%st.dlg.statistic_results.ascent.text" GridPane.rowIndex="3"/>
                         <Label fx:id="laAvgAscentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                        <Label text="%st.dlg.statistic_results.avg_heartrate.text" GridPane.rowIndex="4"/>
-                        <Label fx:id="laAvgAvgHeartrateValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="5"/>
-                        <Label fx:id="laAvgEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                        <Label text="%st.dlg.statistic_results.descent.text" GridPane.rowIndex="4"/>
+                        <Label fx:id="laAvgDescentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                        <Label text="%st.dlg.statistic_results.avg_heartrate.text" GridPane.rowIndex="5"/>
+                        <Label fx:id="laAvgAvgHeartrateValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="6"/>
+                        <Label fx:id="laAvgEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
                     </children>
                     <VBox.margin>
                         <Insets left="24.0"/>
@@ -125,10 +129,12 @@
                         <Label fx:id="laMinDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                         <Label text="%st.dlg.statistic_results.ascent.text" GridPane.rowIndex="3"/>
                         <Label fx:id="laMinAscentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                        <Label text="%st.dlg.statistic_results.avg_heartrate.text" GridPane.rowIndex="4"/>
-                        <Label fx:id="laMinAvgHeartrateValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="5"/>
-                        <Label fx:id="laMinEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                        <Label text="%st.dlg.statistic_results.descent.text" GridPane.rowIndex="4"/>
+                        <Label fx:id="laMinDescentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                        <Label text="%st.dlg.statistic_results.avg_heartrate.text" GridPane.rowIndex="5"/>
+                        <Label fx:id="laMinAvgHeartrateValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="6"/>
+                        <Label fx:id="laMinEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
                     </children>
                     <VBox.margin>
                         <Insets left="24.0"/>
@@ -165,10 +171,12 @@
                         <Label fx:id="laMaxDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                         <Label text="%st.dlg.statistic_results.ascent.text" GridPane.rowIndex="3"/>
                         <Label fx:id="laMaxAscentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                        <Label text="%st.dlg.statistic_results.avg_heartrate.text" GridPane.rowIndex="4"/>
-                        <Label fx:id="laMaxAvgHeartrateValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="5"/>
-                        <Label fx:id="laMaxEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                        <Label text="%st.dlg.statistic_results.descent.text" GridPane.rowIndex="4"/>
+                        <Label fx:id="laMaxDescentValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                        <Label text="%st.dlg.statistic_results.avg_heartrate.text" GridPane.rowIndex="5"/>
+                        <Label fx:id="laMaxAvgHeartrateValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                        <Label text="%st.dlg.statistic_results.calories.text" GridPane.rowIndex="6"/>
+                        <Label fx:id="laMaxEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
                     </children>
                     <VBox.margin>
                         <Insets left="24.0"/>

@@ -64,6 +64,9 @@ public class STOptions implements EVOptions, Serializable {
     /** The list view shows the ascent when this flag is true. */
     private boolean listViewShowAscent;
 
+    /** The list view shows the descent when this flag is true. */
+    private boolean listViewShowDescent;
+
     /** The list view shows the consumed energy when this flag is true. */
     private boolean listViewShowEnergy;
 
@@ -93,6 +96,7 @@ public class STOptions implements EVOptions, Serializable {
         this.weekStartSunday = false;
         this.listViewShowAvgHeartrate = true;
         this.listViewShowAscent = true;
+        this.listViewShowDescent = true;
         this.listViewShowEnergy = false;
         this.listViewShowEquipment = false;
         this.listViewShowComment = false;
@@ -181,6 +185,14 @@ public class STOptions implements EVOptions, Serializable {
 
     public void setListViewShowAscent(boolean listViewShowAscent) {
         this.listViewShowAscent = listViewShowAscent;
+    }
+
+    public boolean isListViewShowDescent() {
+        return listViewShowDescent;
+    }
+
+    public void setListViewShowDescent(boolean listViewShowDescent) {
+        this.listViewShowDescent = listViewShowDescent;
     }
 
     public boolean isListViewShowEnergy() {

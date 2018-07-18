@@ -49,6 +49,11 @@ public final class Exercise extends Entry implements Cloneable {
     private int ascent;
 
     /**
+     * Descent (height meters) of exercise in meters (optional).
+     */
+    private int descent;
+
+    /**
      * Amount of calories consumed (optional).
      */
     private int calories;
@@ -173,6 +178,14 @@ public final class Exercise extends Entry implements Cloneable {
         this.ascent = ascent;
     }
 
+    public int getDescent() {
+        return descent;
+    }
+
+    public void setDescent(int descent) {
+        this.descent = descent;
+    }
+
     public int getCalories() {
         return calories;
     }
@@ -215,6 +228,7 @@ public final class Exercise extends Entry implements Cloneable {
         clone.setAvgSpeed(this.getAvgSpeed());
         clone.setAvgHeartRate(this.getAvgHeartRate());
         clone.setAscent(this.getAscent());
+        clone.setDescent(this.getDescent());
         clone.setCalories(this.getCalories());
         clone.setHrmFile(this.getHrmFile());
         clone.setEquipment(this.getEquipment());
@@ -237,6 +251,7 @@ public final class Exercise extends Entry implements Cloneable {
         sBuilder.append("  avgSpeed=").append(this.avgSpeed).append("\n");
         sBuilder.append("  avgHeartRate=").append(this.avgHeartRate).append("\n");
         sBuilder.append("  ascent=").append(this.ascent).append("\n");
+        sBuilder.append("  descent=").append(this.descent).append("\n");
         sBuilder.append("  calories=").append(this.calories).append("\n");
         sBuilder.append("  hrmFile=").append(this.hrmFile).append("\n");
         sBuilder.append("  equipment=").append(this.equipment).append("\n");

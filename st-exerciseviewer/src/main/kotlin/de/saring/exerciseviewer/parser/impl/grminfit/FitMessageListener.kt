@@ -93,7 +93,7 @@ internal class FitMessageListener : MesgListener {
 
             val distance = Math.round(totalDistance)
             // AVG speed might be missing in Garmin Forerunner 910XT exercises, will be calculated afterwards
-            val avgSpeed = mesg.avgSpeed?.let { ConvertUtils.convertMeterPerSecond2KilometerPerHour(it) } ?: 0f
+            val avgSpeed = mesg.avgSpeed?.let {ConvertUtils.convertMeterPerSecond2KilometerPerHour(it) } ?: 0f
             val maxSpeed = mesg.maxSpeed?.let {ConvertUtils.convertMeterPerSecond2KilometerPerHour(it) } ?: 0f
             exercise.speed = ExerciseSpeed(avgSpeed, maxSpeed, distance)
         }
@@ -101,10 +101,10 @@ internal class FitMessageListener : MesgListener {
         // check for location data
         mesg.startPositionLat?.let {exercise.recordingMode.isLocation = true }
 
-        // read optional ascent data
+        // read optional ascent and descent data
         mesg.totalAscent?.let {
             exercise.recordingMode.isAltitude = true
-            exercise.altitude = ExerciseAltitude(0.toShort(), 0.toShort(), 0.toShort(), it)
+            exercise.altitude = ExerciseAltitude(0.toShort(), 0.toShort(), 0.toShort(), it, mesg.totalDescent)
         }
 
         // read optional cadence data
@@ -135,7 +135,7 @@ internal class FitMessageListener : MesgListener {
         }
 
         // read optional ascent data
-        mesg.totalAscent?.let { lap.altitude = LapAltitude(0.toShort(), it) }
+        mesg.totalAscent?.let { lap.altitude = LapAltitude(0.toShort(), it, mesg.totalDescent) }
 
         // read optional position data
         if (mesg.endPositionLat != null && mesg.endPositionLong != null) {

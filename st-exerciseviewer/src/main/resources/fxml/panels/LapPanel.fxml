@@ -23,6 +23,7 @@
                 <TableColumn fx:id="tcCadence" prefWidth="90.0" text="%pv.laps.cadence"/>
                 <TableColumn fx:id="tcAltitude" prefWidth="90.0" text="%pv.laps.altitude"/>
                 <TableColumn fx:id="tcAscent" prefWidth="90.0" text="%pv.laps.ascent"/>
+                <TableColumn fx:id="tcDescent" prefWidth="90.0" text="%pv.laps.descent"/>
                 <TableColumn fx:id="tcTemperature" prefWidth="90.0" text="%pv.laps.temperature"/>
             </columns>
         </TableView>

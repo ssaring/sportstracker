@@ -5,10 +5,12 @@ package de.saring.exerciseviewer.data
  *
  * @property altitude Altitude at lap end.
  * @property ascent Ascent (climbed height meters) of lap.
+ * @property descent Descent data of exercis
  *
  * @author Stefan Saring
  */
 data class LapAltitude(
 
         var altitude: Short,
-        var ascent: Int)
+        var ascent: Int,
+        var descent: Int)

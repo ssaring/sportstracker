@@ -170,8 +170,8 @@ public class SQLiteExporter {
 
         final PreparedStatement statement = connection.prepareStatement( //
                 "INSERT INTO EXERCISE (ID, DATE_TIME, SPORT_TYPE_ID, SPORT_SUBTYPE_ID, INTENSITY, DURATION, DISTANCE, " +
-                        "AVG_SPEED, AVG_HEARTRATE, ASCENT, CALORIES, HRM_FILE, EQUIPMENT_ID, COMMENT) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        "AVG_SPEED, AVG_HEARTRATE, ASCENT, DESCENT, CALORIES, HRM_FILE, EQUIPMENT_ID, COMMENT) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         for (Exercise exercise : document.getExerciseList()) {
             statement.clearParameters();
@@ -186,15 +186,16 @@ public class SQLiteExporter {
             statement.setFloat(8, exercise.getAvgSpeed());
             statement.setInt(9, exercise.getAvgHeartRate());
             statement.setInt(10, exercise.getAscent());
-            statement.setInt(11, exercise.getCalories());
+            statement.setInt(11, exercise.getDescent());
+            statement.setInt(12, exercise.getCalories());
             if (!StringUtils.isNullOrEmpty(exercise.getHrmFile())) {
-                statement.setString(12, exercise.getHrmFile());
+                statement.setString(13, exercise.getHrmFile());
             }
             if (exercise.getEquipment() != null) {
-                statement.setInt(13, exercise.getEquipment().getId());
+                statement.setInt(14, exercise.getEquipment().getId());
             }
             if (!StringUtils.isNullOrEmpty(exercise.getComment())) {
-                statement.setString(14, exercise.getComment());
+                statement.setString(15, exercise.getComment());
             }
             statement.executeUpdate();
         }

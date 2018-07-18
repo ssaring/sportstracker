@@ -51,6 +51,8 @@ CREATE TABLE EXERCISE (
     AVG_HEARTRATE INTEGER,
     -- ascent (height meters) of exercise in meters
     ASCENT INTEGER,
+    -- descent (height meters) of exercise in meters
+    DESCENT INTEGER,
     -- amount of calories consumed
     CALORIES INTEGER,
     HRM_FILE TEXT,
