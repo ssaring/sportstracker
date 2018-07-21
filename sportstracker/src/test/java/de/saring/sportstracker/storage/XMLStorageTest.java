@@ -180,6 +180,7 @@ public class XMLStorageTest {
         assertEquals(exe1.getAvgSpeed(), 26.3f, 0.01f);
         assertEquals(exe1.getAvgHeartRate(), 132);
         assertEquals(exe1.getAscent(), 670);
+        assertEquals(exe1.getDescent(), 665);
         assertEquals(exe1.getCalories(), 1280);
         assertEquals(exe1.getHrmFile(), "20030724082345.srd");
         assertEquals(exe1.getEquipment().getId(), 2);
@@ -198,6 +199,7 @@ public class XMLStorageTest {
         assertEquals(exe2.getAvgSpeed(), 8.5f, 0.01f);
         assertEquals(exe2.getAvgHeartRate(), 143);
         assertEquals(exe2.getAscent(), 70);
+        assertEquals(exe2.getDescent(), 75);
         assertEquals(exe2.getCalories(), 943);
         assertEquals(exe2.getHrmFile(), "20030726141322.srd");
         assertNull(exe2.getEquipment());

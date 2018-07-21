@@ -44,6 +44,7 @@ public class StatisticCalculatorTest {
         tempExercise.setAvgSpeed(20);
         tempExercise.setDuration(3600);
         tempExercise.setAscent(350);
+        tempExercise.setDescent(330);
         tempExercise.setAvgHeartRate(138);
         lExercises.set(tempExercise);
 
@@ -68,6 +69,7 @@ public class StatisticCalculatorTest {
         tempExercise.setAvgSpeed(19);
         tempExercise.setDuration(5873);
         tempExercise.setAscent(310);
+        tempExercise.setDescent(320);
         tempExercise.setCalories(620);
         lExercises.set(tempExercise);
 
@@ -80,6 +82,7 @@ public class StatisticCalculatorTest {
         tempExercise.setAvgSpeed(0);
         tempExercise.setDuration(7200);
         tempExercise.setAscent(0);
+        tempExercise.setDescent(0);
         tempExercise.setCalories(830);
         lExercises.set(tempExercise);
     }
@@ -103,6 +106,7 @@ public class StatisticCalculatorTest {
         assertEquals(47.2f / 3, calculator.getAvgSpeed(), 0.01f);
         assertEquals(19307 / 4, calculator.getAvgDuration());
         assertEquals(660 / 4, calculator.getAvgAscent());
+        assertEquals(650 / 4, calculator.getAvgDescent());
         assertEquals(278 / 2, calculator.getAvgHeartRate());
         assertEquals(2340 / 3, calculator.getAvgCalories());
 
@@ -110,6 +114,7 @@ public class StatisticCalculatorTest {
         assertEquals(0f, calculator.getMinAvgSpeed(), 0.001f);
         assertEquals(2634, calculator.getMinDuration());
         assertEquals(0, calculator.getMinAscent());
+        assertEquals(0, calculator.getMinDescent());
         assertEquals(138, calculator.getMinAvgHeartRate());
         assertEquals(620, calculator.getMinCalories());
 
@@ -117,6 +122,7 @@ public class StatisticCalculatorTest {
         assertEquals(20f, calculator.getMaxAvgSpeed(), 0.01f);
         assertEquals(7200, calculator.getMaxDuration());
         assertEquals(350, calculator.getMaxAscent());
+        assertEquals(330, calculator.getMaxDescent());
         assertEquals(140, calculator.getMaxAvgHeartRate());
         assertEquals(890, calculator.getMaxCalories());
     }

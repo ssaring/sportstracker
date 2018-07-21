@@ -11,6 +11,7 @@
 		<avg-speed>26.3</avg-speed>
 		<avg-heartrate>132</avg-heartrate>
 		<ascent>670</ascent>
+		<descent>665</descent>
 		<calories>1280</calories>
 		<hrm-file>20030724082345.srd</hrm-file>
         <equipment-id>2</equipment-id>
@@ -27,6 +28,7 @@
 		<avg-speed>8.5</avg-speed>
 		<avg-heartrate>143</avg-heartrate>
 		<ascent>70</ascent>
+		<descent>75</descent>
 		<calories>943</calories>
 		<hrm-file>20030726141322.srd</hrm-file>
 		<comment>Laufen in der Heide.</comment>

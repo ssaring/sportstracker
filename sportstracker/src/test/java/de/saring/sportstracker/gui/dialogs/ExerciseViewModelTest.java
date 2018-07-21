@@ -37,6 +37,7 @@ public class ExerciseViewModelTest {
         exercise.setAvgSpeed(28.5f);
         exercise.setAvgHeartRate(128);
         exercise.setAscent(1240);
+        exercise.setDescent(1230);
         exercise.setCalories(1950);
         exercise.setHrmFile("foo.hrm");
         exercise.setEquipment(new Equipment(456));
@@ -67,6 +68,7 @@ public class ExerciseViewModelTest {
         assertEquals(exercise.getAvgSpeed(), unmodifiedExercise.getAvgSpeed(), 0.0001f);
         assertEquals(exercise.getAvgHeartRate(), unmodifiedExercise.getAvgHeartRate());
         assertEquals(exercise.getAscent(), unmodifiedExercise.getAscent());
+        assertEquals(exercise.getDescent(), unmodifiedExercise.getDescent());
         assertEquals(exercise.getCalories(), unmodifiedExercise.getCalories());
         assertEquals(exercise.getHrmFile(), unmodifiedExercise.getHrmFile());
         assertEquals(exercise.getEquipment(), unmodifiedExercise.getEquipment());

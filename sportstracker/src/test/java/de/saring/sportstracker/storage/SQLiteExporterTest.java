@@ -86,6 +86,7 @@ public class SQLiteExporterTest {
         exercise.setAvgSpeed(20);
         exercise.setDuration(7600);
         exercise.setAscent(321);
+        exercise.setDescent(333);
         exercise.setHrmFile("FooBar.fit");
         exercise.setComment("Foo Bar");
 
