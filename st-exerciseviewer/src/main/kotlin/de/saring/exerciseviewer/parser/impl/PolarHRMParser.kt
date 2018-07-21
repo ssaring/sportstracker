@@ -358,7 +358,7 @@ class PolarHRMParser : AbstractExerciseParser() {
                     altitudeMax = ConvertUtils.convertFeet2Meter(altitudeMax)
                 }
 
-                exercise.altitude = ExerciseAltitude(0, altitudeAvg.toShort(), altitudeMax.toShort(), ascent, ascent)
+                exercise.altitude = ExerciseAltitude(0, altitudeAvg.toShort(), altitudeMax.toShort(), ascent, 0)
             }
 
             // parse odometer value

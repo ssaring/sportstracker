@@ -241,7 +241,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
                 altitudeAvg = Math.round(altitudeSum / exercise.sampleList.size.toDouble()).toShort(),
                 altitudeMax = altitudeMax.toShort(),
                 ascent = ascent,
-                descent = ascent)
+                descent = 0)
     }
 
     /**

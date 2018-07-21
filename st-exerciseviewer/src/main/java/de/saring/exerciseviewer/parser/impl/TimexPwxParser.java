@@ -575,7 +575,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
                         if (segmentSummary.getAltitude() != null) {
                             short lapAltitude = (short) segmentSummary.getAltitude().getMax();
                             int lapAscent = (int) (segmentSummary.getAltitude().getMax() - segmentSummary.getAltitude().getMin());
-                            lap.setAltitude(new LapAltitude(lapAltitude, lapAscent, lapAscent));
+                            lap.setAltitude(new LapAltitude(lapAltitude, lapAscent, 0));
                         }
                     }
                 }
@@ -832,7 +832,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
             }
 
             short altitudeAvg = (short) Math.round(sumAltitude / (double) exercise.getSampleList().size());
-            exercise.setAltitude(new ExerciseAltitude(altitudeMin, altitudeAvg, altitudeMax, ascent, ascent));
+            exercise.setAltitude(new ExerciseAltitude(altitudeMin, altitudeAvg, altitudeMax, ascent, 0));
         }
     }
 

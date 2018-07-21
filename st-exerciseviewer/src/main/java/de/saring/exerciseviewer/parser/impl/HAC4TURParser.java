@@ -297,7 +297,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         }
 
         short altitudeAVG = (short) (total / exercise.getSampleList().size());
-        return new ExerciseAltitude((short) min, altitudeAVG, (short) max, ascent, ascent);
+        return new ExerciseAltitude((short) min, altitudeAVG, (short) max, ascent, 0);
     }
 
     /**
@@ -407,7 +407,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         lap.setHeartRateMax(exercise.getHeartRateMax());
         lap.setHeartRateAVG(exercise.getHeartRateAVG());
 
-        lap.setAltitude(new LapAltitude(lastSample.getAltitude(), exercise.getAltitude().getAscent(), exercise.getAltitude().getAscent()));
+        lap.setAltitude(new LapAltitude(lastSample.getAltitude(), exercise.getAltitude().getAscent(), 0));
 
         lap.setSpeed(new LapSpeed(
                 lastSample.getSpeed(),
