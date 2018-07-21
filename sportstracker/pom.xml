@@ -6,7 +6,7 @@
     <name>sportstracker</name>
     <version>7.5.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <url>http://www.saring.de/sportstracker</url>
+    <url>https://www.saring.de/sportstracker</url>
 
     <parent>
         <groupId>de.saring</groupId>

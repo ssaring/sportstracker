@@ -67,7 +67,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
 
     private static final Logger LOGGER = Logger.getLogger(STControllerImpl.class.getName());
 
-    private static final String URL_PROJECT_WEBSITE = "http://www.saring.de/sportstracker";
+    private static final String URL_PROJECT_WEBSITE = "https://www.saring.de/sportstracker";
 
     private final STContext context;
     private final STDocument document;
