@@ -233,8 +233,8 @@ the statistic calculation.
 
 The user can create overview diagrams for the last 12 months, for all months
 or weeks of a selected year or for a selectable time range of 10 years. 
-The diagram will display the summary distance, duration, ascent and average 
-speed for the sum of all sport types or splitted for each sport type. 
+The diagram will display the summary distance, duration, ascent, descent and
+average speed for the sum of all sport types or splitted for each sport type.
 For sport subtype or equipment usage overview the diagram can also display the
 distance per sport subtype or equipment for a selected sport type.
 And finally it can also display the history of your body weight in the 
@@ -509,4 +509,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2018/07/03
+2018/07/21

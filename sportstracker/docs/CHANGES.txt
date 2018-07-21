@@ -10,6 +10,11 @@ v7.5.1:
    the textfield, the new date is not ignored anymore
  - updated Java requirement to Java 10
    - tested Local Variable Type Inference (JEP 286) in class STApplication
+ - support for descent data in exercises (GitHub PR #190)
+   - descent is an optional Exercise attribute, shown also in Overview Diagram
+     and Statistic Calculation
+   - ExerciseViewer reads and displays descent data (for Garmin FIT files only)
+   - contributed by Alex Jarosch, completed by Stefan Saring
  ExerciseViewer changes:
  - GarminFitParser: ported to Kotlin (incl. tests)
 
