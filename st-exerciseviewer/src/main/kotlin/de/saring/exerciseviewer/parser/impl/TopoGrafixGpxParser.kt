@@ -219,11 +219,12 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
         var altitudeMin = Int.MAX_VALUE
         var altitudeMax = Int.MIN_VALUE
         var ascent = 0
-
         var altitudeSum = 0L
-        var previousAltitude:Short = exercise.sampleList[0].altitude!!
 
-        for (sample in exercise.sampleList) {
+        val samplesWithAltitude = exercise.sampleList.filter { it.altitude != null }.toList()
+        var previousAltitude:Short = samplesWithAltitude[0].altitude!!
+
+        for (sample in samplesWithAltitude) {
             val sampleAltitude = sample.altitude!!
 
             altitudeMin = Math.min(sampleAltitude.toInt(), altitudeMin)
@@ -238,7 +239,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
 
         exercise.altitude = ExerciseAltitude(
                 altitudeMin = altitudeMin.toShort(),
-                altitudeAvg = Math.round(altitudeSum / exercise.sampleList.size.toDouble()).toShort(),
+                altitudeAvg = Math.round(altitudeSum / samplesWithAltitude.size.toDouble()).toShort(),
                 altitudeMax = altitudeMax.toShort(),
                 ascent = ascent,
                 descent = 0)
