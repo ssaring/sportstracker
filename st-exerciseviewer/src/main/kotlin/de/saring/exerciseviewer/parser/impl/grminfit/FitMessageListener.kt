@@ -112,8 +112,8 @@ internal class FitMessageListener : MesgListener {
         mesg.avgCadence?.let {
             exercise.recordingMode.isCadence = true
             val maxCadence = mesg.maxCadence ?: it
-            val totalCycles = mesg.maxCadence ?: it
-            exercise.cadence = ExerciseCadence(it, maxCadence, totalCycles)
+            val totalCycles = mesg.totalCycles ?: it
+            exercise.cadence = ExerciseCadence(it, maxCadence, totalCycles.toString().toShort())
         }
     }
 
