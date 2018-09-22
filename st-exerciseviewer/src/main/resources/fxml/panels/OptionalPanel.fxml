@@ -67,6 +67,8 @@
                                 <Label fx:id="laCadenceAvgValue" text="%common.n_a_" GridPane.columnIndex="1"/>
                                 <Label text="%pv.opt.maximum.text" GridPane.rowIndex="1"/>
                                 <Label fx:id="laCadenceMaxValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="%pv.opt.total.text" GridPane.rowIndex="2"/>
+                                <Label fx:id="laCyclesTotalValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                             </children>
                             <VBox.margin>
                                 <Insets left="24.0"/>

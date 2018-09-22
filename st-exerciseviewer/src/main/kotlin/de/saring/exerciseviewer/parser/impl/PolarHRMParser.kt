@@ -470,6 +470,7 @@ class PolarHRMParser : AbstractExerciseParser() {
             var avgCadenceSamples = 0
             var cadenceAvg: Short = 0
             var cadenceMax: Short = 0
+            var cadenceTotal: Short = 0
 
             for (sample in exercise.sampleList) {
                 sample.cadence?.let { sampleCadence ->
@@ -484,7 +485,7 @@ class PolarHRMParser : AbstractExerciseParser() {
                 cadenceAvg = Math.round(avgCadenceSum / avgCadenceSamples.toDouble()).toShort()
             }
 
-            exercise.cadence = ExerciseCadence(cadenceAvg, cadenceMax)
+            exercise.cadence = ExerciseCadence(cadenceAvg, cadenceMax, cadenceTotal)
         }
 
         // repair distance values of samples
