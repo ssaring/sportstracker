@@ -452,7 +452,18 @@ public class FormatUtils {
      */
     public String cadenceToString(int cadence) {
         numberFormat.setMaximumFractionDigits(0);
-        return numberFormat.format(cadence) + " rpm";
+        return numberFormat.format(cadence) + " rpm/spm";
+    }
+
+    /**
+     * Converts the total cycles to a String.
+     *
+     * @param cycles total amount
+     * @return a String representation of the total cycles incl. unit name
+     */
+    public String totcyclesToString(int cycles) {
+        numberFormat.setMaximumFractionDigits(0);
+        return numberFormat.format(cycles) + " rotations/steps/strokes";
     }
 
     /**

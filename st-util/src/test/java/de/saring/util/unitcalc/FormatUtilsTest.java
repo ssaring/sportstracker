@@ -294,9 +294,9 @@ public class FormatUtilsTest {
      */
     @Test
     public void testCadenceToString() {
-        assertEquals("0 rpm", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).cadenceToString(0));
-        assertEquals("90 rpm", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).cadenceToString(90));
-        assertEquals("1,234 rpm", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).cadenceToString(1234));
+        assertEquals("0 rpm/spm", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).cadenceToString(0));
+        assertEquals("90 rpm/spm", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).cadenceToString(90));
+        assertEquals("1,234 rpm/spm", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).cadenceToString(1234));
     }
 
     /**
