@@ -452,7 +452,7 @@ public class FormatUtils {
      */
     public String cadenceToString(int cadence) {
         numberFormat.setMaximumFractionDigits(0);
-        return numberFormat.format(cadence) + " rpm/spm";
+        return numberFormat.format(cadence) + " r|spm";
     }
 
     /**
@@ -463,7 +463,7 @@ public class FormatUtils {
      */
     public String totcyclesToString(int cycles) {
         numberFormat.setMaximumFractionDigits(0);
-        return numberFormat.format(cycles) + " rotations/steps/strokes";
+        return numberFormat.format(cycles) + " rot.|st.";
     }
 
     /**
