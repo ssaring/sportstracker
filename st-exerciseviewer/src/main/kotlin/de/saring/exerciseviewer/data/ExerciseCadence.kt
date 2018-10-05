@@ -13,4 +13,4 @@ data class ExerciseCadence(
 
     var cadenceAvg: Short,
     var cadenceMax: Short,
-    var cyclesTotal: Short)
+    var cyclesTotal: Short? = null)

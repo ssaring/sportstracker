@@ -76,7 +76,11 @@ import javafx.scene.control.Label
         exercise.cadence?.let {
             laCadenceAvgValue.text = formatUtils.cadenceToString(it.cadenceAvg.toInt())
             laCadenceMaxValue.text = formatUtils.cadenceToString(it.cadenceMax.toInt())
-            laCyclesTotalValue.text = formatUtils.totcyclesToString(it.cyclesTotal.toInt())
+        }
+
+        // fill total cycles data
+        exercise.cadence?.cyclesTotal?.let {
+            laCyclesTotalValue.text = formatUtils.totcyclesToString(it.toInt())
         }
 
         // fill altitude data
