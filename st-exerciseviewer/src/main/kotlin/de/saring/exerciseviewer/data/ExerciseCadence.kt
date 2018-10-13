@@ -3,9 +3,9 @@ package de.saring.exerciseviewer.data
 /**
  * This class stores the cadence summary of a recorded exercise.
  *
- * @property cadenceAvg Average cadence of exercise (rpm).
- * @property cadenceMax Maximum cadence of exercise (rpm).
- * @property cadenceTotal Total cycles of exercise recorded.
+ * @property cadenceAvg Average cadence of exercise (rpm)
+ * @property cadenceMax Maximum cadence of exercise (rpm)
+ * @property cadenceTotal Total cycles of exercise recorded (optional).
  *
  * @author Stefan Saring
  */
@@ -13,4 +13,4 @@ data class ExerciseCadence(
 
     var cadenceAvg: Short,
     var cadenceMax: Short,
-    var cyclesTotal: Short? = null)
+    var cyclesTotal: Long? = null)

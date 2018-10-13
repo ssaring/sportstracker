@@ -304,9 +304,9 @@ public class FormatUtilsTest {
      */
     @Test
     public void totcyclesToString() {
-        assertEquals("0 rot. / st.", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).totcyclesToString(0));
-        assertEquals("90 rot. / st.", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).totcyclesToString(90));
-        assertEquals("1,234 rot. / st.", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).totcyclesToString(1234));
+        assertEquals("0 rotations / steps", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).cyclesToString(0));
+        assertEquals("90 rotations / steps", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).cyclesToString(90));
+        assertEquals("1,234 rotations / steps", new FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour).cyclesToString(1234));
     }
 
     /**

@@ -14,7 +14,10 @@ v7.5.1:
    - descent is an optional Exercise attribute, shown also in Overview Diagram
      and Statistic Calculation
    - ExerciseViewer reads and displays descent data (for Garmin FIT files only)
-   - contributed by Alex Jarosch, completed by Stefan Saring
+     (contributed by Alex Jarosch, completed by Stefan Saring)
+   - ExerciseViewer reads and displays total cycles of cadence data, e.g.
+     rotations for cycling or steps for running (for Garmin FIT files only)
+     (contributed by Alex Jarosch, completed by Stefan Saring)
  ExerciseViewer changes:
  - GarminFitParser: ported to Kotlin (incl. tests)
  - TopoGrafixGpxParser: added support for parsing GPX files with partial

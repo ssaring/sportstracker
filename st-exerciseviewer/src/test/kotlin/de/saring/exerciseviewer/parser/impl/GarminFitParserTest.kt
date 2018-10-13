@@ -116,6 +116,7 @@ class GarminFitParserTest {
 
         assertEquals(84, exercise.cadence?.cadenceAvg?.toInt())
         assertEquals(119, exercise.cadence?.cadenceMax?.toInt())
+        assertNull(exercise.cadence?.cyclesTotal)
 
         assertEquals(19, exercise.temperature?.temperatureMin?.toInt())
         assertEquals(24, exercise.temperature?.temperatureAvg?.toInt())
@@ -402,6 +403,7 @@ class GarminFitParserTest {
 
         assertEquals(78, exercise.cadence!!.cadenceAvg.toInt())
         assertEquals(98, exercise.cadence!!.cadenceMax.toInt())
+        assertEquals(8069L, exercise.cadence!!.cyclesTotal)
 
 
         assertEquals(16, exercise.temperature!!.temperatureMin.toInt())

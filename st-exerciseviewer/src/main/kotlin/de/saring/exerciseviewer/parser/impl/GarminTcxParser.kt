@@ -178,7 +178,7 @@ class GarminTcxParser : AbstractExerciseParser() {
 
                         // create cadence object for exercise if not done yet
                         if (exercise.cadence == null) {
-                            exercise.cadence = ExerciseCadence(0, 0, 0)
+                            exercise.cadence = ExerciseCadence(0, 0)
                             exercise.recordingMode.isCadence = true
                         }
 

@@ -48,16 +48,17 @@ History of resource changes for each release
 SportsTracker 7.5.1:
 
 - st.exerciselistview.descent (new)
-- st.dlg.exercise.descent.text
-- st.dlg.exercise.error.descent
-- st.dlg.statistic_results.total_descent.text
-- st.dlg.statistic_results.descent.text
-- st.dlg.overview.display.descent_sum.text
-- st.dlg.overview.value_type.descent_sum
-- st.dlg.options.show_descent.text
-- st.dlg.about.authors.text
-- pv.opt.descent.text
-- pv.laps.descent
+- st.dlg.exercise.descent.text (new)
+- st.dlg.exercise.error.descent (new)
+- st.dlg.statistic_results.total_descent.text (new)
+- st.dlg.statistic_results.descent.text (new)
+- st.dlg.overview.display.descent_sum.text (new)
+- st.dlg.overview.value_type.descent_sum (new)
+- st.dlg.options.show_descent.text (new)
+- st.dlg.about.authors.text (new)
+- pv.opt.descent.text (new)
+- pv.laps.descent (new)
+- pv.opt.total.text (new)
 
 SportsTracker 7.5.0:
 

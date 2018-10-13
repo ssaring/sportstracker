@@ -314,8 +314,7 @@ public class HAC4TURParser extends AbstractExerciseParser {
         }
 
         short cadenceAvg = (short) (total / exercise.getSampleList().size());
-        short cyclesTotal = 0;
-        return new ExerciseCadence(cadenceAvg, (short) cadenceMax, cyclesTotal);
+        return new ExerciseCadence(cadenceAvg, (short) cadenceMax, null);
     }
 
     /**

@@ -80,7 +80,7 @@ import javafx.scene.control.Label
 
         // fill total cycles data
         exercise.cadence?.cyclesTotal?.let {
-            laCyclesTotalValue.text = formatUtils.totcyclesToString(it.toInt())
+            laCyclesTotalValue.text = formatUtils.cyclesToString(it)
         }
 
         // fill altitude data

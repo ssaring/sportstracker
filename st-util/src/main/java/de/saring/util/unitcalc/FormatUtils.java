@@ -456,14 +456,14 @@ public class FormatUtils {
     }
 
     /**
-     * Converts the total cycles to a String.
+     * Converts the amount of cycles (e.g. rotations or steps) to a String.
      *
-     * @param cycles total amount
+     * @param cycles number of cycles
      * @return a String representation of the total cycles incl. unit name
      */
-    public String totcyclesToString(int cycles) {
+    public String cyclesToString(long cycles) {
         numberFormat.setMaximumFractionDigits(0);
-        return numberFormat.format(cycles) + " rot. / st.";
+        return numberFormat.format(cycles) + " rotations / steps";
     }
 
     /**
