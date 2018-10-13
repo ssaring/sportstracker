@@ -3,7 +3,7 @@ Changelog
 
 v7.5.1:
  SportsTracker changes:
- - updated Kotlin to version 1.2.51
+ - updated Kotlin to version 1.2.71
  - fixed all reasoned Kotlin compiler warnings
  - fixed all reasoned Java compiler warnings, suppressed the others (generics)
  - GitHub issue #186: Exercise/Note/Weight Dialog: bugfix for date entries in
