@@ -257,7 +257,8 @@ public class PolarSRawParser extends AbstractExerciseParser {
         if (recMode.isCadence()) {
             short cadenceAvg = (short) fileContent[90];
             short cadenceMax = (short) fileContent[91];
-            exercise.setCadence(new ExerciseCadence(cadenceAvg, cadenceMax));
+            short cyclesTotal = 0;
+            exercise.setCadence(new ExerciseCadence(cadenceAvg, cadenceMax, cyclesTotal));
         }
 
         // get altitude data of exercise (if recorded)
