@@ -5,9 +5,9 @@ Java 11 migration:
 - Status:
   - JavaFX dependencies were added
   - Maven build and IDEA build works
+  - all unit tests are green
   - SportsTracker works without problems
 - Open issues:
-  - fix test execution errors (Mockito problems)
   - is JDK 11 available for Travis CI?
   - update README, ChangeLog (also in LeafletMap)
   - how can packaging be done with JDK 11
