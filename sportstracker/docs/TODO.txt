@@ -1,6 +1,17 @@
 SportsTracker-TODO
 ==================
 
+Java 11 migration:
+- Status:
+  - JavaFX dependencies were added
+  - Maven build and IDEA build works
+  - SportsTracker works without problems
+- Open issues:
+  - fix test execution errors (Mockito problems)
+  - is JDK 11 available for Travis CI?
+  - update README, ChangeLog (also in LeafletMap)
+  - how can packaging be done with JDK 11
+
 Java 9/10 migration:
 - works fine with JDK 10 (no build or test errors and no execution problems)
 - Use of Java Module System / Jigsaw?
