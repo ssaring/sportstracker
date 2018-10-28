@@ -6,9 +6,9 @@ Java 11 migration:
   - JavaFX dependencies were added
   - Maven build and IDEA build works
   - all unit tests are green
+  - Travis build works
   - SportsTracker works without problems
 - Open issues:
-  - is JDK 11 available for Travis CI?
   - update README, ChangeLog (also in LeafletMap)
   - how can packaging be done with JDK 11
 
