@@ -2,15 +2,11 @@ SportsTracker-TODO
 ==================
 
 Java 11 migration:
-- Status:
-  - JavaFX dependencies were added
-  - Maven build and IDEA build works
-  - all unit tests are green
-  - Travis build works
-  - SportsTracker works without problems
-- Open issues:
-  - update README, ChangeLog (also in LeafletMap)
-  - how can packaging be done with JDK 11
+- Done: Build and tests are green. SportsTracker is running without problems.
+- Open issue: JDK 11 does not provide the javapackager tool aynmore
+  - currently it's not possible to build native packages
+  - wait for JEP 343: Packaging Tool, see https://openjdk.java.net/jeps/343
+    (could be shipped with JDK 12)
 
 Java 9/10 migration:
 - works fine with JDK 10 (no build or test errors and no execution problems)

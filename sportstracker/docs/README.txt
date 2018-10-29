@@ -103,19 +103,19 @@ Requirements
 ------------
 
 SportsTracker is an application for the Java platform written in Java and
-Kotlin. It was developed and tested with the Oracle JVM, other JVM
-implementations will probably work too.
+Kotlin. It was developed and tested with the OpenJDK JVM, other JVM
+implementations will probably work too (e.g. Oracle JDK).
 
 The SportsTracker installer packages contain an embedded Java SE Runtime
 Environment (JRE), a Java installation is not needed. Users of binary packages
-need to install the JRE before, the Oracle JRE can be downloaded from:
-http://www.java.com
+need to install a suited JDK before.
+The OpenJDK can be downloaded from: http://jdk.java.net/
 
 If you want to download exercise files from your heartrate monitor you might
 need one of the download tools listed above.
 
-The application was tested on GNU/Linux (e.g. Ubuntu 16.04), Windows (7,
-8, 10) and Mac OS X (10.11 - 10.13), although it should work on all systems
+The application was tested on GNU/Linux (e.g. Ubuntu 18.04), Windows (e.g. 10)
+and macOS (10.13 and 10.14), although it should work on all systems
 with the required Java Runtime Environment.
 
 
@@ -222,8 +222,8 @@ one single HRM file from the systems file manager and drop it to a day cell in
 the calendar view. If there is an exercise entry under the mouse cursor then 
 the HRM file will be assigned to this exercise. Otherwise a new exercise will
 be created and the data will be imported from the HRM file.
-Drag & drop has been successfully tested on Linux (Gnome 2.24 and KDE 4.1),
-Windows (XP and 7) and Mac OS X (10.9).
+Drag & drop has been successfully tested on Linux (Gnome and KDE), Windows and
+macOS.
 
 For the creation of statistics the user needs to specify at least the 
 calculation filter for the time range, e.g. the current month. It's also 
@@ -351,8 +351,8 @@ Developer Requirements
 ----------------------
 
 For compilation of the SportsTracker sources you need:
-  - Java SE Development Kit (JDK) 10 or greater
-    (from http://www.oracle.com/technetwork/java/)
+  - Java SE Development Kit (JDK) 11 or greater
+    (from http://jdk.java.net or https://adoptopenjdk.net)
   - Maven 3.5.0 or greater
     (from http://maven.apache.org)
   - Ant 1.10.0 or greater (just for native packaging)
@@ -360,7 +360,7 @@ For compilation of the SportsTracker sources you need:
 
 Tested IDE's (should work an any IDE with Maven support)
   - IntelliJ IDEA Community Edition (http://www.jetbrains.com/idea/)
-    => preferred IDE, tested with version 2018.1
+    => preferred IDE, tested with version 2018.2
   - NetBeans IDE (from http://www.netbeans.org), Kotlin support not tested
   - Eclipse (from http://eclipse.org), Kotlin support not tested
 
@@ -391,7 +391,7 @@ project. That's why all developers need to use the same configuration for their
 IDE.
 
 SportStracker can be started from the IDE by executing the class
-"de.saring.sportstracker.gui.STApplication".
+"de.saring.sportstracker.STMain".
 It can also be started from command line after execution of "mvn package"
 with the command (inside the project root directory):
   java -jar sportstracker/target/sportstracker-x.y.z.jar
@@ -509,4 +509,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2018/10/13
+2018/10/29

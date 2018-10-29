@@ -3,6 +3,8 @@ Changelog
 
 v7.5.1:
  SportsTracker changes:
+ - updated to JDK 11 (JDK 9 and JDK 10 are not supported by Oracle anymore)
+   - JavaFX has been added as dependencies, not part of the JDK anymore
  - updated Kotlin to version 1.2.71
  - fixed all reasoned Kotlin compiler warnings
  - fixed all reasoned Java compiler warnings, suppressed the others (generics)

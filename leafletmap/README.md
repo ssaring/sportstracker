@@ -11,8 +11,8 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Dependencies and used libraries
 
+* Java SE 11 (tested with OpenJDK 11)
 * Kotlin 1.2.71
-* JavaSE 8 (tested with 8.0.172 and 10.0.2)
 * Leaflet 1.0.3 (included)
     * Homepage: http://leafletjs.com/
     * License: BSD 2-Clause License
@@ -55,7 +55,9 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 LeafletMap 1.0.3:
 
-* Updated to Kotlin 1.2.41
+* Updated to JDK 11 (JDK 9 and JDK 10 are not supported by Oracle anymore)
+  * JavaFX has been added as dependencies, not part of the JDK anymore
+* Updated to Kotlin 1.2.71
 
 LeafletMap 1.0.2:
 
