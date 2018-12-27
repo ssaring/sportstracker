@@ -107,7 +107,9 @@ public class STApplication extends Application {
     }
 
     /**
-     * Starts the SportsTracker application.
+     * Starts the SportsTracker application.<br/>
+     * Since JDK 11 the application can't be started directly with this class aynmore. Use the class
+     * {@link de.saring.sportstracker.STMain} instead.
      *
      * @param args command line parameters
      */
