@@ -1,6 +1,19 @@
 SportsTracker-TODO
 ==================
 
+Issue #197: Sport type specific speed unit views (feature request)
+- rename the preference "Speed Unit View" to "Preferred Speed Unit View"
+- configure for each sport type whether the speed should be handled as speed
+  (e.g. km/h) or pace (e.g. min/km)
+- use the sport type specific speed handling when acting on a single exercise
+  - in the Edit dialog (switch on sport type selection changes)
+  - in the Calendar view (tooltip)
+  - in the Exercise Viewer
+  - in the Overview Dialog (when displaying execises of a single sport type only)
+  - in the Statistic Dialog (when displaying execises of a single sport type only)
+- when displaying exercises of mixed sport types (e.g. in the Exercise List), use
+  configured prefered speed unit for all of them
+
 Bug om macOS 10.14 or newer:
 - Problem: SportsTracker application crashes when displaying a dialog window
 - Cause: it's a JDK / JavaFX bug, occurs only on macOS 10.14 or newer
