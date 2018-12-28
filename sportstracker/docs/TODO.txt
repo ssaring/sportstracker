@@ -4,6 +4,12 @@ SportsTracker-TODO
 Issue #197: Sport type specific speed unit views (feature request)
 - requirement details: https://github.com/ssaring/sportstracker/issues/197
 - branch: speed_pace
+- Wording in english:
+  - Setting: (Preferred) Speed Measurement
+  - Variants: Speed (e.g. km/h) / Pace (e.g. min/km)
+- Wording in german:
+  - Setting: (Bevorzugte) Geschwindigkeitsmessung
+  - Variants: Geschwindigkeit (z.B. km/h) / Pace (z.B. min/km)
 
 Bug on macOS 10.14 or newer:
 - Problem: SportsTracker application crashes when displaying a dialog window
