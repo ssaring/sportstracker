@@ -24,9 +24,21 @@ public class FormatUtils {
      * This is the list of possible speed unit views. Distance per hour (e.g.
      * km/h) is mostly used for all kind of sports, but minutes per distance
      * (e.g. m/km) is very common for runners.
+     *
+     * @deprecated use {@link SpeedMode} instead
      */
+    @Deprecated
     public enum SpeedView {
         DistancePerHour, MinutesPerDistance
+    }
+
+    /**
+     * Enumeration of supported speed display or measurement modes. Speed means distance per hour (e.g. km/h), pace
+     * means minutes per distance (e.g. min/km). The use of pace is very common for running activities, most other
+     * sport types are using the speed.
+     */
+    public enum SpeedMode {
+        Speed, Pace
     }
 
     /**

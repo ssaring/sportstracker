@@ -1,15 +1,29 @@
 SportsTracker-TODO
 ==================
 
-Issue #197: Sport type specific speed unit views (feature request)
+Issue #197: Sport type specific speed modes (feature request)
 - requirement details: https://github.com/ssaring/sportstracker/issues/197
 - branch: speed_pace
 - Wording in english:
-  - Setting: (Preferred) Speed Measurement
+  - Setting: (Preferred) Speed Mode
   - Variants: Speed (e.g. km/h) / Pace (e.g. min/km)
 - Wording in german:
-  - Setting: (Bevorzugte) Geschwindigkeitsmessung
+  - Setting: (Bevorzugter) Geschwindigkeitsmodus
   - Variants: Geschwindigkeit (z.B. km/h) / Pace (z.B. min/km)
+- Remove deprecated code:
+  - de.saring.util.unitcalc.FormatUtils.SpeedView
+  - de.saring.sportstracker.core.STOptions.speedView
+  - de.saring.exerciseviewer.core.EVOptions.getSpeedView
+- Status:
+  - STOptions: option "preferredSpeedMode" has been added
+  - Preferences Dialog: configuration of Preferred Speed Mode has been added
+- Next:
+  - add property "speedMode" to SportType, has to be configurable
+    (use preferredSpeedMode as default for new sport types)
+  - use of SportType.speedMode in Exercise List view
+  - pass speed mode to be used to ExerciseViewer
+    (use from appropriate SportType or preferredSpeedMode when no SportType is defined)
+  - ...
 
 Bug on macOS 10.14 or newer:
 - Problem: SportsTracker application crashes when displaying a dialog window

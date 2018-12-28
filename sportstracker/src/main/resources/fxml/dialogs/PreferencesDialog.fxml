@@ -91,16 +91,16 @@
                                 </VBox>
                                 <VBox spacing="12.0">
                                     <children>
-                                        <Label styleClass="label-header" text="%st.dlg.options.speed_unit.text"/>
-                                        <RadioButton fx:id="rbSpeedUnitDistance" mnemonicParsing="false" selected="true" text="%st.dlg.options.distance_hour.text">
+                                        <Label styleClass="label-header" text="%st.dlg.options.preferred_speed_mode.text"/>
+                                        <RadioButton fx:id="rbSpeedModeSpeed" mnemonicParsing="false" selected="true" text="%st.dlg.options.speed_mode_speed.text">
                                             <padding>
                                                 <Insets left="24.0"/>
                                             </padding>
                                             <toggleGroup>
-                                                <ToggleGroup fx:id="tgSpeedView"/>
+                                                <ToggleGroup fx:id="tgSpeedMode"/>
                                             </toggleGroup>
                                         </RadioButton>
-                                        <RadioButton fx:id="rbSpeedUnitMinutes" mnemonicParsing="false" text="%st.dlg.options.minutes_distance.text" toggleGroup="$tgSpeedView">
+                                        <RadioButton fx:id="rbSpeedModePace" mnemonicParsing="false" text="%st.dlg.options.speed_mode_pace.text" toggleGroup="$tgSpeedMode">
                                             <VBox.margin>
                                                 <Insets left="24.0"/>
                                             </VBox.margin>

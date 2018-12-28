@@ -1,6 +1,7 @@
 package de.saring.sportstracker.core;
 
 import de.saring.exerciseviewer.core.EVOptions;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import de.saring.util.unitcalc.FormatUtils.SpeedView;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 
@@ -33,8 +34,18 @@ public class STOptions implements EVOptions, Serializable {
     /** This is the unit system used in GUI. */
     private UnitSystem unitSystem;
 
-    /** This is the speed view system used in GUI. */
+    /**
+     * This is the speed view system used in GUI.
+     *
+     * @deprecated use {@link #preferredSpeedMode} instead
+     */
     private SpeedView speedView;
+
+    /**
+     * This is the preferred speed display mode used in GUI (speed or pace).
+     * It's being used when the speed display of a specific sport type can't be used.
+     */
+    private SpeedMode preferredSpeedMode;
 
     /** This is the value which will be calculated automatically by default. */
     private AutoCalculation defaultAutoCalcuation;
@@ -89,6 +100,7 @@ public class STOptions implements EVOptions, Serializable {
         this.initialView = View.Calendar;
         this.unitSystem = UnitSystem.Metric;
         this.speedView = SpeedView.DistancePerHour;
+        this.preferredSpeedMode = SpeedMode.Speed;
         this.defaultAutoCalcuation = AutoCalculation.Duration;
         this.saveOnExit = false;
         this.displaySecondChart = false;
@@ -119,12 +131,22 @@ public class STOptions implements EVOptions, Serializable {
         this.unitSystem = unitSystem;
     }
 
+    @Deprecated
     public SpeedView getSpeedView() {
         return speedView;
     }
 
+    @Deprecated
     public void setSpeedView(SpeedView speedView) {
         this.speedView = speedView;
+    }
+
+    public SpeedMode getPreferredSpeedMode() {
+        return preferredSpeedMode;
+    }
+
+    public void setPreferredSpeedMode(SpeedMode preferredSpeedMode) {
+        this.preferredSpeedMode = preferredSpeedMode;
     }
 
     public AutoCalculation getDefaultAutoCalcuation() {

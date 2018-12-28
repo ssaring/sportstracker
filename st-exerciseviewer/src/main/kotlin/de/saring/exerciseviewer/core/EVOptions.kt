@@ -19,6 +19,7 @@ interface EVOptions {
     /**
      * The speed view system to be used in GUI.
      */
+    @Deprecated("Use SpeedMode of the sport type instead, needs to be passed")
     val speedView: SpeedView
 
     /**
