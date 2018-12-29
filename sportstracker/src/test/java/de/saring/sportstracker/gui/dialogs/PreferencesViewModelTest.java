@@ -24,7 +24,7 @@ public class PreferencesViewModelTest {
         options = new STOptions();
         options.setInitialView(STOptions.View.List);
         options.setUnitSystem(FormatUtils.UnitSystem.English);
-        options.setPreferredSpeedMode(FormatUtils.SpeedMode.Speed);
+        options.setPreferredSpeedMode(FormatUtils.SpeedMode.SPEED);
         options.setDefaultAutoCalcuation(STOptions.AutoCalculation.AvgSpeed);
         options.setSaveOnExit(true);
         options.setDisplaySecondChart(false);
@@ -49,7 +49,7 @@ public class PreferencesViewModelTest {
         viewModel.storeInOptions(options);
         assertEquals(STOptions.View.List, options.getInitialView());
         assertEquals(FormatUtils.UnitSystem.English, options.getUnitSystem());
-        assertEquals(FormatUtils.SpeedMode.Speed, options.getPreferredSpeedMode());
+        assertEquals(FormatUtils.SpeedMode.SPEED, options.getPreferredSpeedMode());
         assertEquals(STOptions.AutoCalculation.AvgSpeed, options.getDefaultAutoCalcuation());
         assertTrue(options.isSaveOnExit());
         assertFalse(options.isDisplaySecondChart());
@@ -65,7 +65,7 @@ public class PreferencesViewModelTest {
         // test after modifications
         viewModel.initialView.set(STOptions.View.Calendar);
         viewModel.unitSystem.set(FormatUtils.UnitSystem.Metric);
-        viewModel.preferredSpeedMode.set(FormatUtils.SpeedMode.Pace);
+        viewModel.preferredSpeedMode.set(FormatUtils.SpeedMode.PACE);
         viewModel.weekStart.set(PreferencesViewModel.WeekStart.MONDAY);
         viewModel.defaultAutoCalculation.set(STOptions.AutoCalculation.Duration);
         viewModel.saveOnExit.set(false);
@@ -73,7 +73,7 @@ public class PreferencesViewModelTest {
         viewModel.storeInOptions(options);
         assertEquals(STOptions.View.Calendar, options.getInitialView());
         assertEquals(FormatUtils.UnitSystem.Metric, options.getUnitSystem());
-        assertEquals(FormatUtils.SpeedMode.Pace, options.getPreferredSpeedMode());
+        assertEquals(FormatUtils.SpeedMode.PACE, options.getPreferredSpeedMode());
         assertEquals(STOptions.AutoCalculation.Duration, options.getDefaultAutoCalcuation());
         assertFalse(options.isSaveOnExit());
     }

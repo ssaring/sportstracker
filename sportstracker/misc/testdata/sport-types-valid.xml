@@ -3,6 +3,7 @@
 	<sport-type>
 		<id>1</id>
 		<name>Cycling</name>
+		<speed-mode>SPEED</speed-mode>
 		<icon>cycling.png</icon>
 		<color red="30" green="50" blue="180" />
 		<sport-subtype-list>
@@ -37,6 +38,7 @@
 	<sport-type record-distance="false">
 		<id>2</id>
 		<name>Running</name>
+		<speed-mode>PACE</speed-mode>
 		<icon>running.png</icon>
 		<color red="210" green="60" blue="0" />
 		<sport-subtype-list>

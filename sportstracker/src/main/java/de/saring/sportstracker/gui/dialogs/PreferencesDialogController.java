@@ -150,8 +150,8 @@ public class PreferencesDialogController extends AbstractDialogController {
         rbUnitsMetric.setUserData(FormatUtils.UnitSystem.Metric);
         rbUnitsEnglish.setUserData(FormatUtils.UnitSystem.English);
 
-        rbSpeedModeSpeed.setUserData(FormatUtils.SpeedMode.Speed);
-        rbSpeedModePace.setUserData(FormatUtils.SpeedMode.Pace);
+        rbSpeedModeSpeed.setUserData(FormatUtils.SpeedMode.SPEED);
+        rbSpeedModePace.setUserData(FormatUtils.SpeedMode.PACE);
 
         rbWeekStartMonday.setUserData(PreferencesViewModel.WeekStart.MONDAY);
         rbWeekStartSunday.setUserData(PreferencesViewModel.WeekStart.SUNDAY);

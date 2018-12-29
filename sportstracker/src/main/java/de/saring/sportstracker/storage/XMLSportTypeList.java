@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import de.saring.sportstracker.data.Exercise;
+import de.saring.util.unitcalc.FormatUtils;
 import javafx.scene.paint.Color;
 
 import org.jdom2.Attribute;
@@ -80,6 +82,17 @@ public class XMLSportTypeList {
         SportType sportType = new SportType(Integer.parseInt(eSportType.getChildText("id")));
         sportType.setName(eSportType.getChildText("name"));
         sportType.setIcon(eSportType.getChildText("icon"));
+
+        // get and parse speed mode
+        String strSpeedMode = eSportType.getChildText("speed-mode");
+        if (strSpeedMode != null) {
+            try {
+                sportType.setSpeedMode(FormatUtils.SpeedMode.valueOf(strSpeedMode));
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Failed to parse sport type with ID '" + sportType.getId() +
+                        "', the speed mode '" + strSpeedMode + "' is not valid!");
+            }
+        }
 
         try {
             Element eColor = eSportType.getChild("color");
@@ -162,6 +175,7 @@ public class XMLSportTypeList {
             eSportType.setAttribute("record-distance", String.valueOf(sportType.isRecordDistance()));
             XMLUtils.addElement(eSportType, "id", String.valueOf(sportType.getId()));
             XMLUtils.addElement(eSportType, "name", sportType.getName());
+            XMLUtils.addElement(eSportType, "speed-mode", String.valueOf(sportType.getSpeedMode()));
             XMLUtils.addElement(eSportType, "icon", sportType.getIcon());
 
             Element eColor = new Element("color");

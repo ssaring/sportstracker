@@ -38,7 +38,7 @@ public class FormatUtils {
      * sport types are using the speed.
      */
     public enum SpeedMode {
-        Speed, Pace
+        SPEED, PACE
     }
 
     /**

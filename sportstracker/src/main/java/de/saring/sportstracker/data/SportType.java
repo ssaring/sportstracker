@@ -3,6 +3,7 @@ package de.saring.sportstracker.data;
 import de.saring.util.data.IdObject;
 import de.saring.util.data.IdObjectList;
 import de.saring.util.data.Nameable;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 
 import javafx.scene.paint.Color;
 
@@ -23,6 +24,12 @@ public final class SportType extends IdObject implements Nameable, Cloneable {
      * Flag is true, when the distance needs to be recorded for this sport type.
      */
     private boolean recordDistance = true;
+
+    /**
+     * Speed mode to be used for this sport type. It can be speed (distance per hour, e.g. for cycling) or pace
+     * (minutes per distance, e.g. for running).
+     */
+    private SpeedMode speedMode = SpeedMode.SPEED;
 
     /**
      * Filename of sport type icon.
@@ -71,6 +78,14 @@ public final class SportType extends IdObject implements Nameable, Cloneable {
         this.recordDistance = recordDistance;
     }
 
+    public SpeedMode getSpeedMode() {
+        return speedMode;
+    }
+
+    public void setSpeedMode(SpeedMode speedMode) {
+        this.speedMode = speedMode;
+    }
+
     public String getIcon() {
         return icon;
     }
@@ -110,13 +125,13 @@ public final class SportType extends IdObject implements Nameable, Cloneable {
             if (this.sportSubTypeList != null) {
                 clone.sportSubTypeList = new IdObjectList<>();
                 this.sportSubTypeList.forEach(subType ->
-                    clone.sportSubTypeList.set((SportSubType) subType.clone()));
+                    clone.sportSubTypeList.set(subType.clone()));
             }
 
             if (this.equipmentList != null) {
                 clone.equipmentList = new IdObjectList<>();
                 this.equipmentList.forEach(equipment ->
-                    clone.equipmentList.set((Equipment) equipment.clone()));
+                    clone.equipmentList.set(equipment.clone()));
             }
 
             return clone;
@@ -133,6 +148,7 @@ public final class SportType extends IdObject implements Nameable, Cloneable {
         sBuilder.append(" [id=").append(this.getId()).append("\n");
         sBuilder.append("  name=").append(this.name).append("\n");
         sBuilder.append("  recordDistance=").append(this.recordDistance).append("\n");
+        sBuilder.append("  speedMode=").append(this.speedMode).append("\n");
         sBuilder.append("  icon=").append(this.icon).append("\n");
         sBuilder.append("  color=").append(this.color).append("]\n");
 

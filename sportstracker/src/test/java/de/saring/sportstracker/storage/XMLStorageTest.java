@@ -3,6 +3,7 @@ package de.saring.sportstracker.storage;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.*;
 import de.saring.util.gui.javafx.ColorUtils;
+import de.saring.util.unitcalc.FormatUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,6 +66,7 @@ public class XMLStorageTest {
         SportType type1 = sportTypes.getByID(1);
         assertEquals(type1.getId(), 1);
         assertEquals(type1.getName(), "Cycling");
+        assertEquals(FormatUtils.SpeedMode.SPEED, type1.getSpeedMode());
         assertTrue(type1.isRecordDistance());
         assertEquals(type1.getIcon(), "cycling.png");
         java.awt.Color type1AwtColor = ColorUtils.toAwtColor(type1.getColor());
@@ -100,6 +102,7 @@ public class XMLStorageTest {
         SportType type2 = sportTypes.getByID(2);
         assertEquals(type2.getId(), 2);
         assertEquals(type2.getName(), "Running");
+        assertEquals(FormatUtils.SpeedMode.PACE, type2.getSpeedMode());
         assertFalse(type2.isRecordDistance());
         assertEquals(type2.getIcon(), "running.png");
         java.awt.Color type2AwtColor = ColorUtils.toAwtColor(type2.getColor());
@@ -236,6 +239,7 @@ public class XMLStorageTest {
         // create cycling sport type
         SportType sportType = new SportType(1);
         sportType.setName("Cycling");
+        sportType.setSpeedMode(FormatUtils.SpeedMode.SPEED);
         sportTypeList.set(sportType);
 
         SportSubType subType = new SportSubType(1);
@@ -265,6 +269,7 @@ public class XMLStorageTest {
         // create running sport type
         sportType = new SportType(2);
         sportType.setName("Running");
+        sportType.setSpeedMode(FormatUtils.SpeedMode.PACE);
         sportTypeList.set(sportType);
 
         subType = new SportSubType(1);

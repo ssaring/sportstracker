@@ -1,5 +1,6 @@
 package de.saring.sportstracker.data;
 
+import de.saring.util.unitcalc.FormatUtils;
 import javafx.scene.paint.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ public class SportTypeTest {
         // create a new sport type with some test content
         type = new SportType(1);
         type.setName("Cycling");
+        type.setSpeedMode(FormatUtils.SpeedMode.SPEED);
         type.setIcon("cycling.png");
         type.setColor(Color.RED);
         type.setRecordDistance(true);
@@ -61,6 +63,7 @@ public class SportTypeTest {
         assertFalse(type == clone);
         assertEquals(type.getId(), clone.getId());
         assertEquals(type.getName(), clone.getName());
+        assertEquals(type.getSpeedMode(), clone.getSpeedMode());
         assertEquals(type.getIcon(), clone.getIcon());
         assertEquals(type.getColor(), clone.getColor());
         assertEquals(type.isRecordDistance(), clone.isRecordDistance());
@@ -70,6 +73,7 @@ public class SportTypeTest {
 
         // modify original object only
         type.setName("Stuff");
+        type.setSpeedMode(FormatUtils.SpeedMode.PACE);
         type.setIcon("noicon.png");
         type.setColor(Color.PINK);
 
@@ -81,6 +85,7 @@ public class SportTypeTest {
 
         // compare original and cloned object => needs to be different
         assertFalse(type.getName().equals(clone.getName()));
+        assertFalse(type.getSpeedMode().equals(clone.getSpeedMode()));
         assertFalse(type.getIcon().equals(clone.getIcon()));
         assertFalse(type.getColor().equals(clone.getColor()));
 
