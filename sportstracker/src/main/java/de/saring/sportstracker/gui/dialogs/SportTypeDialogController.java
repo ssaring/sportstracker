@@ -3,7 +3,10 @@ package de.saring.sportstracker.gui.dialogs;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import de.saring.util.AppResources;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
@@ -15,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
@@ -46,6 +50,9 @@ public class SportTypeDialogController extends AbstractDialogController {
 
     @FXML
     private CheckBox cbRecordDistance;
+
+    @FXML
+    private ComboBox<SpeedModeItem> cbSpeedMode;
 
     @FXML
     private ColorPicker cpColor;
@@ -80,6 +87,7 @@ public class SportTypeDialogController extends AbstractDialogController {
     public SportTypeDialogController(final STContext context, final STDocument document) {
         super(context);
         this.document = document;
+        SpeedModeItem.appResources = context.getResources();
     }
 
     /**
@@ -103,6 +111,7 @@ public class SportTypeDialogController extends AbstractDialogController {
 
     @Override
     protected void setupDialogControls() {
+        cbSpeedMode.getItems().addAll(List.of(SpeedModeItem.values()));
         liSportSubtypes.setCellFactory(list -> new NameableListCell<>());
         liEquipments.setCellFactory(list -> new NameableListCell<>());
 
@@ -133,6 +142,7 @@ public class SportTypeDialogController extends AbstractDialogController {
     private void setupBinding() {
         tfName.textProperty().bindBidirectional(sportTypeViewModel.name);
         cbRecordDistance.selectedProperty().bindBidirectional(sportTypeViewModel.recordDistance);
+        cbSpeedMode.valueProperty().bindBidirectional(sportTypeViewModel.speedMode);
         cpColor.valueProperty().bindBidirectional(sportTypeViewModel.color);
 
         // the record distance mode can only be changed, when no exercises exists for
@@ -437,6 +447,47 @@ public class SportTypeDialogController extends AbstractDialogController {
                     return;
                 }
             }
+        }
+    }
+
+    /**
+     * This is the list of possible speed modes of a sport type.
+     * This enum also provides the localized displayed enum names.
+     */
+    enum SpeedModeItem {
+        SPEED(SpeedMode.SPEED, "st.dlg.sporttype.speed_mode_speed.text"), //
+        PACE(SpeedMode.PACE, "st.dlg.sporttype.speed_mode_pace.text");
+
+        private static AppResources appResources;
+
+        private SpeedMode speedMode;
+        private String resourceKey;
+
+        SpeedModeItem(final SpeedMode speedMode, final String resourceKey) {
+            this.speedMode = speedMode;
+            this.resourceKey = resourceKey;
+        }
+
+        public SpeedMode getSpeedMode() {
+            return speedMode;
+        }
+
+        @Override
+        public String toString() {
+            return appResources.getString(resourceKey);
+        }
+
+        /**
+         * Returns the appropriate SpeedModeItem for the specified SpeedMode enum value.
+         *
+         * @param speedMode speed mode
+         * @return SpeedModeItem
+         */
+        public static SpeedModeItem findBySpeedMode(SpeedMode speedMode) {
+            return Stream.of(SpeedModeItem.values())
+                    .filter(speedModeItem -> speedMode == speedModeItem.getSpeedMode())
+                    .findAny()
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid speedMode '" + speedMode + "'!"));
         }
     }
 }
