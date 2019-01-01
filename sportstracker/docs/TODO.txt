@@ -1,6 +1,13 @@
 SportsTracker-TODO
 ==================
 
+SportsTracker crashes often, e.g.
+- after D&D of exercise files to the Calendar View
+- when showing the Overview Dialog and switching applications
+- ...
+-> try a newer/beta JDK or JavaFX (11.0.1 or latest 12beta)
+   -> file a bug report if still present
+
 Issue #197: Sport type specific speed modes (feature request)
 - requirement details: https://github.com/ssaring/sportstracker/issues/197
 - branch: speed_pace
