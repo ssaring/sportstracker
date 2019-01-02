@@ -20,6 +20,15 @@ v7.5.1:
    - ExerciseViewer reads and displays total cycles of cadence data, e.g.
      rotations for cycling or steps for running (for Garmin FIT files only)
      (contributed by Alex Jarosch, completed by Stefan Saring)
+ - support for sport type specific speed modes (Issue #197):
+   - the user can define for each sport type whether speed has to be handled as
+     speed (e.g. km/h for cycling) or pace (e.g. min/km for running)
+   - the user can define a preferred speed mode in the Preferences Dialog, this
+     is being used for new sport types or when multiple sport types are shown
+   - the speed mode of a sport type is used for entering and displaying exercise
+     speed data and in the Exercise Viewer when showing HRM files
+   - when speed mode has not been set for a sport type yet, then the preferred
+     speed mode will be used
  ExerciseViewer changes:
  - GarminFitParser: ported to Kotlin (incl. tests)
  - TopoGrafixGpxParser: added support for parsing GPX files with partial
