@@ -273,7 +273,8 @@ public class STDocumentImpl implements STDocument {
     public void readApplicationData() throws STException {
         try {
             // read application data from XML files
-            sportTypeList = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST);
+            sportTypeList = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
+                    options.getPreferredSpeedMode());
             exerciseList = storage.readExerciseList(dataDirectory + "/" + FILENAME_EXERCISE_LIST, sportTypeList);
             noteList = storage.readNoteList(dataDirectory + "/" + FILENAME_NOTE_LIST);
             weightList = storage.readWeightList(dataDirectory + "/" + FILENAME_WEIGHT_LIST);

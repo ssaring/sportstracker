@@ -3,7 +3,7 @@ package de.saring.sportstracker.storage;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.*;
 import de.saring.util.gui.javafx.ColorUtils;
-import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +24,7 @@ public class XMLStorageTest {
     private static final String SPORTTYPES_WRITETEST_XML = "misc/testdata/sport-types-writetest.xml";
     private static final String NOTES_WRITETEST_XML = "misc/testdata/notes-writetest.xml";
     private static final String WEIGHTS_WRITETEST_XML = "misc/testdata/weights-writetest.xml";
+    private static final SpeedMode SPEED_MODE = SpeedMode.SPEED;
 
     // the class instance to be tested
     private XMLStorage storage;
@@ -66,7 +67,7 @@ public class XMLStorageTest {
         SportType type1 = sportTypes.getByID(1);
         assertEquals(type1.getId(), 1);
         assertEquals(type1.getName(), "Cycling");
-        assertEquals(FormatUtils.SpeedMode.SPEED, type1.getSpeedMode());
+        assertEquals(SpeedMode.SPEED, type1.getSpeedMode());
         assertTrue(type1.isRecordDistance());
         assertEquals(type1.getIcon(), "cycling.png");
         java.awt.Color type1AwtColor = ColorUtils.toAwtColor(type1.getColor());
@@ -102,7 +103,7 @@ public class XMLStorageTest {
         SportType type2 = sportTypes.getByID(2);
         assertEquals(type2.getId(), 2);
         assertEquals(type2.getName(), "Running");
-        assertEquals(FormatUtils.SpeedMode.PACE, type2.getSpeedMode());
+        assertEquals(SpeedMode.PACE, type2.getSpeedMode());
         assertFalse(type2.isRecordDistance());
         assertEquals(type2.getIcon(), "running.png");
         java.awt.Color type2AwtColor = ColorUtils.toAwtColor(type2.getColor());
@@ -128,18 +129,18 @@ public class XMLStorageTest {
     public void testReadSportTypeList() throws STException {
 
         // read valid sporttype list from XML and check content
-        SportTypeList sportTypes = storage.readSportTypeList("misc/testdata/sport-types-valid.xml");
+        SportTypeList sportTypes = storage.readSportTypeList("misc/testdata/sport-types-valid.xml", SPEED_MODE);
         checkSportTypeListContent(sportTypes);
 
         // read sporttype list from not existing XML 
         // => an empty List must be returned (same as first application startup)
-        SportTypeList sportTypesEmpty = storage.readSportTypeList("misc/testdata/sport-types-xyz.xml");
+        SportTypeList sportTypesEmpty = storage.readSportTypeList("misc/testdata/sport-types-xyz.xml", SPEED_MODE);
         assertEquals(0, sportTypesEmpty.size());
 
         // read invalid sporttype list from XML
         // => an STException needs to be thrown
         assertThrows(STException.class, () ->
-            storage.readSportTypeList("misc/testdata/sport-types-invalid.xml"));
+            storage.readSportTypeList("misc/testdata/sport-types-invalid.xml", SPEED_MODE));
     }
 
     /**
@@ -149,14 +150,14 @@ public class XMLStorageTest {
     public void testStoreSportTypeList() throws STException {
 
         // read valid sporttype list from XML (has been checked in previous test)
-        SportTypeList sportTypes = storage.readSportTypeList("misc/testdata/sport-types-valid.xml");
+        SportTypeList sportTypes = storage.readSportTypeList("misc/testdata/sport-types-valid.xml", SPEED_MODE);
 
         // store the read sport type list to a new file
         storage.storeSportTypeList(sportTypes, SPORTTYPES_WRITETEST_XML);
 
         // read the list from the created file again
         // => compare the content, needs to be same
-        SportTypeList sportTypesNew = storage.readSportTypeList(SPORTTYPES_WRITETEST_XML);
+        SportTypeList sportTypesNew = storage.readSportTypeList(SPORTTYPES_WRITETEST_XML, SPEED_MODE);
         checkSportTypeListContent(sportTypesNew);
     }
 
@@ -239,7 +240,7 @@ public class XMLStorageTest {
         // create cycling sport type
         SportType sportType = new SportType(1);
         sportType.setName("Cycling");
-        sportType.setSpeedMode(FormatUtils.SpeedMode.SPEED);
+        sportType.setSpeedMode(SpeedMode.SPEED);
         sportTypeList.set(sportType);
 
         SportSubType subType = new SportSubType(1);
@@ -269,7 +270,7 @@ public class XMLStorageTest {
         // create running sport type
         sportType = new SportType(2);
         sportType.setName("Running");
-        sportType.setSpeedMode(FormatUtils.SpeedMode.PACE);
+        sportType.setSpeedMode(SpeedMode.PACE);
         sportTypeList.set(sportType);
 
         subType = new SportSubType(1);

@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import de.saring.sportstracker.data.Exercise;
-import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import javafx.scene.paint.Color;
 
 import org.jdom2.Attribute;
@@ -40,10 +39,11 @@ public class XMLSportTypeList {
      * Returns an empty list when the file doesn't exists yet.
      *
      * @param source name of the XML file to read from
+     * @param defaultSpeedMode default speed mode to be set when not specified in the XML file
      * @return the created SportTypeList
      * @throws STException thrown on read problems
      */
-    public SportTypeList readSportTypeList(String source) throws STException {
+    public SportTypeList readSportTypeList(String source, SpeedMode defaultSpeedMode) throws STException {
 
         try {
             // return an empty list if the file doesn't exists yet
@@ -59,7 +59,7 @@ public class XMLSportTypeList {
             // get root element and read all the contained sport types
             Element eSportTypeList = document.getRootElement();
             eSportTypeList.getChildren("sport-type").forEach(eSportType ->
-                    tempSportTypes.add(readSportType(eSportType)));
+                    tempSportTypes.add(readSportType(eSportType, defaultSpeedMode)));
 
             SportTypeList sportTypeList = new SportTypeList();
             sportTypeList.clearAndAddAll(tempSportTypes);
@@ -75,11 +75,13 @@ public class XMLSportTypeList {
      * SportType object.
      *
      * @param eSportType sport-type JDOM element
+     * @param defaultSpeedMode default speed mode to be set when not specified in the XML file
      * @return the created SportType object
      */
-    private SportType readSportType(Element eSportType) {
+    private SportType readSportType(Element eSportType, SpeedMode defaultSpeedMode) {
 
         SportType sportType = new SportType(Integer.parseInt(eSportType.getChildText("id")));
+        sportType.setSpeedMode(defaultSpeedMode);
         sportType.setName(eSportType.getChildText("name"));
         sportType.setIcon(eSportType.getChildText("icon"));
 
@@ -87,7 +89,7 @@ public class XMLSportTypeList {
         String strSpeedMode = eSportType.getChildText("speed-mode");
         if (strSpeedMode != null) {
             try {
-                sportType.setSpeedMode(FormatUtils.SpeedMode.valueOf(strSpeedMode));
+                sportType.setSpeedMode(SpeedMode.valueOf(strSpeedMode));
             } catch (Exception e) {
                 throw new IllegalArgumentException("Failed to parse sport type with ID '" + sportType.getId() +
                         "', the speed mode '" + strSpeedMode + "' is not valid!");
