@@ -19,9 +19,10 @@ Issue #197: Sport type specific speed modes (feature request)
   - Preferences Dialog: configuration of Preferred Speed Mode has been added
   - SportType class: property speedMode has been added
   - SportType Dialog: property speedMode can be configured by the user
+  - Preferred speed mode is being used when adding new sport types or when
+    loading sport types where speed mode has not been set yet
 - Next:
   - SportType Dialog:
-    - use configured preferred speedMode when creating new sport types
     - speedMode can only be configured when distance is recorded
   - use of SportType.speedMode in Exercise List view
   - pass speed mode to be used to ExerciseViewer
