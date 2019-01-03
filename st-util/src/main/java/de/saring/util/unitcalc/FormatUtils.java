@@ -48,7 +48,9 @@ public class FormatUtils {
 
     /**
      * The current speed view used by the formater.
+     * @deprecated will be removed, SpeedMode needs to be passed to the format methods
      */
+    @Deprecated
     private final SpeedView speedView;
 
     /**
@@ -61,7 +63,9 @@ public class FormatUtils {
      *
      * @param unitSystem the unit system to be used
      * @param speedView the speed view to be used
+     * @deprecated SpeedView will be removed, pass SpeedMode to the format methods instead
      */
+    @Deprecated
     public FormatUtils(UnitSystem unitSystem, SpeedView speedView) {
         this.unitSystem = unitSystem;
         this.speedView = speedView;
@@ -81,7 +85,9 @@ public class FormatUtils {
      * Returns the current speed view.
      *
      * @return the current speed view
+     * @deprecated SpeedView will be removed, pass SpeedMode to the format methods instead
      */
+    @Deprecated
     public SpeedView getSpeedView() {
         return speedView;
     }
@@ -105,7 +111,9 @@ public class FormatUtils {
      * Returns the String representation of the current speed unit.
      *
      * @return the current speed unit name
+     * @deprecated use {@link #getSpeedUnitName(SpeedMode)} instead
      */
+    @Deprecated
     public String getSpeedUnitName() {
         switch (this.unitSystem) {
             case English:
@@ -125,6 +133,22 @@ public class FormatUtils {
                     default:
                         return "km/h";
                 }
+        }
+    }
+
+    /**
+     * Returns the String representation of the current speed unit for the specified speed mode.
+     *
+     * @param speedMode speed mode
+     * @return the current speed unit name
+     */
+    public String getSpeedUnitName(SpeedMode speedMode) {
+        switch (this.unitSystem) {
+            case English:
+                return speedMode == SpeedMode.SPEED ? "mph" : "min/m";
+            case Metric:
+            default:
+                return speedMode == SpeedMode.SPEED ? "km/h" : "min/km";
         }
     }
 
@@ -380,7 +404,9 @@ public class FormatUtils {
      * @param speed speed in km/h
      * @param decimals the number of decimals (fraction digits) to show
      * @return a String representation of the speed
+     * @deprecated use {@link #speedToStringWithoutUnitName(float, int, SpeedMode)} instead
      */
+    @Deprecated
     public String speedToStringWithoutUnitName(float speed, int decimals) {
         numberFormat.setMaximumFractionDigits(decimals);
         switch (this.unitSystem) {
@@ -412,17 +438,75 @@ public class FormatUtils {
 
     /**
      * Converts the speed to a String in the correct unit depending on what unit
+     * options and speed view are currently chosen. The unit name is not
+     * included in the String.
+     *
+     * @param speed speed in km/h
+     * @param decimals the number of decimals (fraction digits) to show
+     * @param speedMode speed mode
+     * @return a String representation of the speed
+     */
+    public String speedToStringWithoutUnitName(float speed, int decimals, SpeedMode speedMode) {
+        numberFormat.setMaximumFractionDigits(decimals);
+        switch (this.unitSystem) {
+            case English:
+                switch (speedMode) {
+                    case PACE:
+                        if (speed == 0) {
+                            return "N/A";
+                        }
+                        return seconds2MinuteTimeString((int) (3600 / ConvertUtils.convertKilometer2Miles(speed, false)));
+                    case SPEED:
+                    default:
+                        return numberFormat.format(ConvertUtils.convertKilometer2Miles(speed, false));
+                }
+            case Metric:
+            default:
+                switch (speedMode) {
+                    case PACE:
+                        if (speed == 0) {
+                            return "N/A";
+                        }
+                        return seconds2MinuteTimeString((int) (3600 / speed));
+                    case SPEED:
+                    default:
+                        return numberFormat.format(speed);
+                }
+        }
+    }
+
+    /**
+     * Converts the speed to a String in the correct unit depending on what unit
      * options and speed view are currently chosen.
      *
      * @param speed speed in km/h
      * @param decimals the number of decimals (fraction digits) to show
      * @return a String representation of the speed
+     * @deprecated use {@link #speedToString(float, int, SpeedMode)} instead
      */
+    @Deprecated
     public String speedToString(float speed, int decimals) {
         if (speed == 0) {
             return speedToStringWithoutUnitName(speed, decimals);
         } else {
             return speedToStringWithoutUnitName(speed, decimals) + " " + getSpeedUnitName();
+        }
+    }
+
+    /**
+     * Converts the speed to a String in the correct unit depending on what unit
+     * options and speed view are currently chosen.
+     *
+     * @param speed speed in km/h
+     * @param decimals the number of decimals (fraction digits) to show
+     * @param speedMode speed mode
+     * @return a String representation of the speed
+     */
+    public String speedToString(float speed, int decimals, SpeedMode speedMode) {
+        if (speed == 0) {
+            return speedToStringWithoutUnitName(speed, decimals, speedMode);
+        } else {
+            return speedToStringWithoutUnitName(speed, decimals, speedMode) + " " + getSpeedUnitName(speedMode);
         }
     }
 
