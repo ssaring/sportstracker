@@ -152,6 +152,9 @@ public class SportTypeDialogController extends AbstractDialogController {
                 .findFirst();
         cbRecordDistance.setDisable(oExercise.isPresent());
 
+        // speed mode can only be configured when distance is being recorded
+        cbSpeedMode.disableProperty().bind(cbRecordDistance.selectedProperty().not());
+
         // Edit and Delete buttons must be disabled when there is no selection in the appropriate list
         final BooleanBinding sportSubtypeSelected = Bindings.isNull(
                 liSportSubtypes.getSelectionModel().selectedItemProperty());
