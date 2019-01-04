@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.saring.sportstracker.gui.views.ViewPrinter;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
@@ -56,7 +57,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     @FXML
     private TableColumn<Exercise, Number> tcDistance;
     @FXML
-    private TableColumn<Exercise, Number> tcAvgSpeed;
+    private TableColumn<Exercise, SpeedInfo> tcAvgSpeed;
     @FXML
     private TableColumn<Exercise, Number> tcAvgHeartrate;
     @FXML
@@ -130,7 +131,11 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         tcDuration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         tcIntensity.setCellValueFactory(new PropertyValueFactory<>("intensity"));
         tcDistance.setCellValueFactory(new PropertyValueFactory<>("distance"));
-        tcAvgSpeed.setCellValueFactory(new PropertyValueFactory<>("avgSpeed"));
+        tcAvgSpeed.setCellValueFactory(cellData -> {
+            final Exercise exercise = cellData.getValue();
+            return new SimpleObjectProperty<>(exercise == null ? null : new SpeedInfo(
+                    exercise.getAvgSpeed(), exercise.getSportType().getSpeedMode()));
+        });
         tcAvgHeartrate.setCellValueFactory(new PropertyValueFactory<>("avgHeartRate"));
         tcAscent.setCellValueFactory(new PropertyValueFactory<>("ascent"));
         tcDescent.setCellValueFactory(new PropertyValueFactory<>("descent"));
@@ -151,8 +156,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         tcIntensity.setCellFactory(new IntensityCellFactory());
         tcDistance.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().distanceToString(value.doubleValue(), 3)));
-        tcAvgSpeed.setCellFactory(new FormattedNumberCellFactory<>(value -> //
-                value == null ? null : getContext().getFormatUtils().speedToString(value.floatValue(), 2)));
+        tcAvgSpeed.setCellFactory(new SpeedCellFactory());
         tcAvgHeartrate.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().heartRateToString(value.intValue())));
         tcAscent.setCellFactory(new FormattedNumberCellFactory<>(value -> //
@@ -202,11 +206,11 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
      * TableColumn cell factory implementation for displaying the exercise intensity name as localized text inside
      * table cells.
      */
-    public class IntensityCellFactory implements Callback<TableColumn<Exercise, IntensityType>, TableCell<Exercise, IntensityType>> {
+    private class IntensityCellFactory implements Callback<TableColumn<Exercise, IntensityType>, TableCell<Exercise, IntensityType>> {
 
         @Override
         public TableCell<Exercise, IntensityType> call(final TableColumn<Exercise, IntensityType> column) {
-            return new TableCell<Exercise, IntensityType>() {
+            return new TableCell<>() {
 
                 @Override
                 protected void updateItem(final IntensityType value, final boolean empty) {
@@ -216,6 +220,45 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
                     setText(text);
                 }
             };
+        }
+    }
+
+    /**
+     * TableColumn cell factory implementation for displaying the speed values by using the appropriate speed modes.
+     */
+    private class SpeedCellFactory implements Callback<TableColumn<Exercise, SpeedInfo>, TableCell<Exercise, SpeedInfo>> {
+
+        @Override
+        public TableCell<Exercise, SpeedInfo> call(final TableColumn<Exercise, SpeedInfo> column) {
+            return new TableCell<>() {
+
+                @Override
+                protected void updateItem(final SpeedInfo speedInfo, final boolean empty) {
+                    super.updateItem(speedInfo, empty);
+
+                    String text = empty || speedInfo == null ? null : getContext().getFormatUtils().speedToString(
+                            speedInfo.speedValue, 2, speedInfo.speedMode);
+                    setText(text);
+                }
+            };
+        }
+    }
+
+    /**
+     * Container class for storing both the speed value and the speed mode (for displaying) in one table column.
+     */
+    private static class SpeedInfo implements Comparable<SpeedInfo> {
+        final float speedValue;
+        final SpeedMode speedMode;
+
+        public SpeedInfo(float speedValue, SpeedMode speedMode) {
+            this.speedValue = speedValue;
+            this.speedMode = speedMode;
+        }
+
+        @Override
+        public int compareTo(SpeedInfo other) {
+            return Float.compare(this.speedValue, other.speedValue);
         }
     }
 }
