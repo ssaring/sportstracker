@@ -2,6 +2,7 @@ package de.saring.exerciseviewer.gui
 
 import de.saring.exerciseviewer.core.EVOptions
 import de.saring.util.gui.javafx.WindowBoundsPersistence
+import de.saring.util.unitcalc.FormatUtils.SpeedMode
 import javafx.scene.control.Alert
 import javafx.stage.Modality
 import javafx.stage.Stage
@@ -14,7 +15,7 @@ import javax.inject.Inject
  * It creates all the components via Guice dependency injection and starts the ExerciseViewer for the passed exercise.
  *
  * @constructor constructor for dependency injection
- * @param context the ExerciseViewer UI context
+ * @property context the ExerciseViewer UI context
  * @param options the options to be used in ExerciseViewer
  *
  * @author Stefan Saring
@@ -39,12 +40,13 @@ class EVMain @Inject constructor(
      * @param exerciseFilename exercise file to display
      * @param parent parent stage/window of this dialog
      * @param modal pass true when the dialog must be modal
+     * @param speedMode the speed mode to be used for showing speed values
      */
-    fun showExercise(exerciseFilename: String, parent: Stage, modal: Boolean) {
+    fun showExercise(exerciseFilename: String, parent: Stage, modal: Boolean, speedMode: SpeedMode) {
 
         // load exercise file
         try {
-            document.openExerciseFile(exerciseFilename)
+            document.openExerciseFile(exerciseFilename, speedMode)
         } catch (e: Exception) {
             logger.log(Level.SEVERE, "Failed to open exercise file $exerciseFilename!", e)
             context.showMessageDialog(parent, Alert.AlertType.ERROR, //

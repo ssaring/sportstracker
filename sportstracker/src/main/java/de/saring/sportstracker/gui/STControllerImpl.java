@@ -56,6 +56,7 @@ import de.saring.util.SystemUtils;
 import de.saring.util.gui.javafx.FxmlLoader;
 import de.saring.util.gui.mac.PlatformUtils;
 import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 
 /**
  * This class provides all controller (MVC)functionality of the SportsTracker main application window.
@@ -258,8 +259,9 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
 
             // start ExerciseViewer
             LOGGER.info("Opening HRM file '" + selectedFile + "' in ExerciseViewer...");
+            final SpeedMode speedMode = document.getOptions().getPreferredSpeedMode();
             dialogProvider.prExerciseViewer.get().showExercise(selectedFile.getAbsolutePath(),
-                    context.getPrimaryStage(), false);
+                    context.getPrimaryStage(), false, speedMode);
         }
     }
 
@@ -387,10 +389,12 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
         // get selected exercise and start ExerciseViewer for it's HRM file
         // (special checks not needed here, done by action status property)
         final int exerciseID = currentViewController.getSelectedExerciseIDs()[0];
-        final String hrmFile = document.getExerciseList().getByID(exerciseID).getHrmFile();
+        final Exercise exercise = document.getExerciseList().getByID(exerciseID);
+        final String hrmFile = exercise.getHrmFile();
+        final SpeedMode speedMode = exercise.getSportType().getSpeedMode();
 
         LOGGER.info("Opening HRM file '" + hrmFile + "' in ExerciseViewer...");
-        dialogProvider.prExerciseViewer.get().showExercise(hrmFile, context.getPrimaryStage(), false);
+        dialogProvider.prExerciseViewer.get().showExercise(hrmFile, context.getPrimaryStage(), false, speedMode);
     }
 
     @Override

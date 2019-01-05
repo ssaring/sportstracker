@@ -31,6 +31,7 @@ import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
 import de.saring.util.gui.javafx.TimeToStringConverter;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -437,7 +438,11 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         final String hrmFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.getValue());
         if (hrmFile != null) {
-            dialogProvider.prExerciseViewer.get().showExercise(hrmFile, context.getPrimaryStage(), true);
+
+            final SportType selectedSportType = exerciseViewModel.sportType.get();
+            final SpeedMode speedMode = selectedSportType == null ?
+                    document.getOptions().getPreferredSpeedMode() : selectedSportType.getSpeedMode();
+            dialogProvider.prExerciseViewer.get().showExercise(hrmFile, context.getPrimaryStage(), true, speedMode);
         }
     }
 

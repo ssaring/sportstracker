@@ -24,8 +24,9 @@ Issue #197: Sport type specific speed modes (feature request)
   - Exercise List View displays speed dependent on speed mode of sport type
   - Speed mode is used in the status bar
 - Next:
-  - pass speed mode to be used to ExerciseViewer
+  - pass speed mode to be used to ExerciseViewer (Done)
     (use from appropriate SportType or preferredSpeedMode when no SportType is defined)
+  - use passed speed mode in ExerciseViewer
   - use speed mode in Exercise Dialog
   - use speed mode in Statistic and OverviewDialog
   - update user documentation
