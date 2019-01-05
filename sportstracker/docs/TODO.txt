@@ -22,11 +22,13 @@ Issue #197: Sport type specific speed modes (feature request)
   - Preferred speed mode is being used when adding new sport types or when
     loading sport types where speed mode has not been set yet
   - Exercise List View displays speed dependent on speed mode of sport type
+  - Speed mode is used in the status bar
 - Next:
-  - use of SportType.speedMode in Exercise List view
   - pass speed mode to be used to ExerciseViewer
     (use from appropriate SportType or preferredSpeedMode when no SportType is defined)
-  - ...
+  - use speed mode in Exercise Dialog
+  - use speed mode in Statistic and OverviewDialog
+  - update user documentation
 
 Bug on macOS 10.14 or newer:
 - Problem: SportsTracker application crashes when displaying a dialog window

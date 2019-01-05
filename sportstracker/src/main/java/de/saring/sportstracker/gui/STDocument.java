@@ -14,6 +14,7 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.util.data.IdObjectListChangeListener;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 
 /**
  * This interface provides all document (MVC) related data and functionality of the
@@ -134,4 +135,14 @@ public interface STDocument extends IdObjectListChangeListener {
      * @param listener the IdObjectListChangeListener to register
      */
     void registerListChangeListener(IdObjectListChangeListener listener);
+
+    /**
+     * Returns the speed mode of the specified exercises which has to be used for displaying the speed for them (e.g.
+     * for a bunch of selected exercises). When there are multiple exercises with multiple speed modes, then the
+     * preferred speed mode will be used.
+     *
+     * @param exerciseIds IDs of exercises to check
+     * @return speed mode to use for them
+     */
+    SpeedMode getSpeedModeForExercises(final int[] exerciseIds);
 }
