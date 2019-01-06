@@ -1,6 +1,7 @@
 package de.saring.util.gui.javafx;
 
 import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import javafx.util.StringConverter;
 
 import java.text.NumberFormat;
@@ -21,16 +22,18 @@ public class SpeedToStringConverter extends StringConverter<Number> {
     private static final String ZERO_SPEED_TIME = "00:00";
 
     private final FormatUtils formatUtils;
+    private final SpeedMode speedMode;
     private final NumberFormat numberFormat;
 
     /**
      * Standard c'tor.
      *
      * @param formatUtils FormatUtils to use for conversion
+     * @param speedMode speed mode to use
      */
-    public SpeedToStringConverter(final FormatUtils formatUtils) {
+    public SpeedToStringConverter(final FormatUtils formatUtils, final SpeedMode speedMode) {
         this.formatUtils = formatUtils;
-
+        this.speedMode = speedMode;
         this.numberFormat = NumberFormat.getInstance();
         this.numberFormat.setMaximumFractionDigits(3);
     }
@@ -43,16 +46,16 @@ public class SpeedToStringConverter extends StringConverter<Number> {
 
         final float speed = nValue.floatValue();
 
-        switch (formatUtils.getSpeedView()) {
-            case DistancePerHour:
+        switch (speedMode) {
+            case SPEED:
                 return numberFormat.format(nValue.floatValue());
-            case MinutesPerDistance:
+            case PACE:
                 if (speed == 0) {
                     return ZERO_SPEED_TIME;
                 }
                 return formatUtils.seconds2MinuteTimeString((int) (3600 / speed));
             default:
-                throw new IllegalArgumentException("Invalid SpeedView " + formatUtils.getSpeedView() + "!");
+                throw new IllegalArgumentException("Invalid SpeedMode" + speedMode + "!");
         }
     }
 
@@ -61,17 +64,17 @@ public class SpeedToStringConverter extends StringConverter<Number> {
         try {
             final String strValueTrimmed = strValue.trim();
 
-            switch (formatUtils.getSpeedView()) {
-                case DistancePerHour:
+            switch (speedMode) {
+                case SPEED:
                     return NumberFormat.getInstance().parse(strValueTrimmed).floatValue();
-                case MinutesPerDistance:
+                case PACE:
                     if (ZERO_SPEED_TIME.equals(strValueTrimmed)) {
                         return 0f;
                     }
                     final LocalTime time = LocalTime.parse("00:" + strValueTrimmed, DateTimeFormatter.ISO_LOCAL_TIME);
                     return 3600 / (float) (time.getMinute() * 60 + time.getSecond());
                 default:
-                    throw new IllegalArgumentException("Invalid SpeedView " + formatUtils.getSpeedView() + "!");
+                    throw new IllegalArgumentException("Invalid SpeedMode " + speedMode + "!");
             }
         } catch (Exception e) {
             return -1;

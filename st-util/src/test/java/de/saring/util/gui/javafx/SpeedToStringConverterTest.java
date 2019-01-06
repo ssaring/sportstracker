@@ -1,6 +1,7 @@
 package de.saring.util.gui.javafx;
 
 import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -42,7 +43,7 @@ public class SpeedToStringConverterTest {
     public void testToStringDistancePerHour() {
 
         final SpeedToStringConverter CONVERTER =
-                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.DistancePerHour));
+                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.DistancePerHour), SpeedMode.SPEED);
 
         assertEquals("", CONVERTER.toString(null));
         assertEquals("0", CONVERTER.toString(0));
@@ -57,7 +58,7 @@ public class SpeedToStringConverterTest {
     public void testToStringMinutesPerDistance() {
 
         final SpeedToStringConverter CONVERTER =
-                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.MinutesPerDistance));
+                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.MinutesPerDistance), SpeedMode.PACE);
 
         assertEquals("", CONVERTER.toString(null));
         assertEquals("00:00", CONVERTER.toString(0));
@@ -73,7 +74,7 @@ public class SpeedToStringConverterTest {
     public void testFromStringDistancePerHour() {
 
         final SpeedToStringConverter CONVERTER =
-                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.DistancePerHour));
+                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.DistancePerHour), SpeedMode.SPEED);
 
         assertEquals(-1f, CONVERTER.fromString(null).floatValue(), 0.0001f);
         assertEquals(-1f, CONVERTER.fromString("").floatValue(), 0.0001f);
@@ -91,7 +92,7 @@ public class SpeedToStringConverterTest {
     public void testFromStringMinutesPerDistance() {
 
         final SpeedToStringConverter CONVERTER =
-                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.MinutesPerDistance));
+                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.MinutesPerDistance), SpeedMode.PACE);
 
         assertEquals(-1f, CONVERTER.fromString(null).floatValue(), 0.0001f);
         assertEquals(-1f, CONVERTER.fromString("").floatValue(), 0.0001f);

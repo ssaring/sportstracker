@@ -196,7 +196,8 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         // insert unit names in input labels with placeholders
         laDistance.setText(String.format(laDistance.getText(), context.getFormatUtils().getDistanceUnitName()));
-        laAvgSpeed.setText(String.format(laAvgSpeed.getText(), context.getFormatUtils().getSpeedUnitName()));
+        laAvgSpeed.setText(String.format(laAvgSpeed.getText(),
+                context.getFormatUtils().getSpeedUnitName(document.getOptions().getPreferredSpeedMode())));
         laAscent.setText(String.format(laAscent.getText(), context.getFormatUtils().getAltitudeUnitName()));
         laDescent.setText(String.format(laDescent.getText(), context.getFormatUtils().getAltitudeUnitName()));
 
@@ -264,7 +265,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         cbIntensity.valueProperty().bindBidirectional(exerciseViewModel.intensity);
         tfDistance.textProperty().bindBidirectional(exerciseViewModel.distance, new NumberStringConverter());
         tfAvgSpeed.textProperty().bindBidirectional(exerciseViewModel.avgSpeed,
-                new SpeedToStringConverter(context.getFormatUtils()));
+                new SpeedToStringConverter(context.getFormatUtils(), document.getOptions().getPreferredSpeedMode()));
         tfDuration.textProperty().bindBidirectional(exerciseViewModel.duration,
                 new TimeInSecondsToStringConverter(context.getFormatUtils()));
 

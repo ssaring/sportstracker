@@ -27,7 +27,7 @@ Issue #197: Sport type specific speed modes (feature request)
   - Statistic Dialog: results are using the speed mode of the calculated exercises
   - Overview Dialog: results are using the preferred speed mode
 - Next:
-  - use speed mode in Exercise Dialog (currently doesn't support pace mode at all)
+  - use speed mode in Exercise Dialog (currently uses the preferred speed mode)
   - update user documentation
 
 Bug on macOS 10.14 or newer:
