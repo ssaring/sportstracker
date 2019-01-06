@@ -166,6 +166,8 @@ For sport types which are not endurance related (e.g. "tennis") you need to
 specify that distance will not be recorded for such exercises. The distance
 record mode can only be changed for new sport types or when no exercises for
 this sport type exist.
+For every sport type you need to define whether speed data will be handled as
+speed (e.g. in km/h) or pace values (e.g. in min/km).
 By assigning a custom color for each sport type the list of exercises looks
 much more clear.
 For each sport type you need to create at least one subtype. Subtype examples
@@ -239,6 +241,10 @@ For sport subtype or equipment usage overview the diagram can also display the
 distance per sport subtype or equipment for a selected sport type.
 And finally it can also display the history of your body weight in the 
 selected time range.
+
+Whenever SportsTracker displays multiple exercises, which are using sport types
+with different speed modes, then the preferred speed mode will be used. This
+can be defined in the Preferences Dialog.
 
 If the heartrate monitor has an integrated GPS receiver and stores the 
 location data in the exercise file (e.g. in TCX files from the Garmin Edge 
@@ -509,4 +515,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2019/01/02
+2019/01/06

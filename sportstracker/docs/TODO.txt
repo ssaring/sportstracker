@@ -23,9 +23,8 @@ Issue #197: Sport type specific speed modes (feature request)
   - Statistic Dialog: results are using the speed mode of the calculated exercises
   - Overview Dialog: results are using the preferred speed mode
   - all deprecated SpeedView code has been removed
-- Next:
+- Open issues:
   - use speed mode in Exercise Dialog (currently uses the preferred speed mode)
-  - update user documentation
 
 Bug on macOS 10.14 or newer:
 - Problem: SportsTracker application crashes when displaying a dialog window
