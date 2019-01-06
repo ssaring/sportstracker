@@ -2,9 +2,12 @@ package de.saring.sportstracker.gui.dialogs;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import de.saring.sportstracker.data.EntryFilter;
 import de.saring.sportstracker.data.EntryList;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -187,8 +190,25 @@ public class StatisticDialogController extends AbstractDialogController {
 
         // calculate statistic
         final StatisticCalculator statistic = new StatisticCalculator(lFoundExercises);
+        SpeedMode speedMode = getSpeedModeForCalculatedExercises(lFoundExercises);
+
 
         // finally display results in dialog
-        prStatisticResultDialogController.get().show(getWindow(laTimespanValue), statistic);
+        prStatisticResultDialogController.get().show(getWindow(laTimespanValue), statistic, speedMode);
+    }
+
+    /**
+     * Returns the speed mode to be used for displaying the results of the calculated exercises.
+     *
+     * @param exercises exercises for calculation
+     * @return speed mode for results
+     */
+    private SpeedMode getSpeedModeForCalculatedExercises(EntryList<Exercise> exercises) {
+
+        int[] exerciseIds = new int[exercises.size()];
+        for (int i = 0; i < exerciseIds.length; i++) {
+            exerciseIds[i] = exercises.getAt(i).getId();
+        }
+        return document.getSpeedModeForExercises(exerciseIds);
     }
 }
