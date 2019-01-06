@@ -49,6 +49,7 @@ import de.saring.util.gui.jfreechart.ChartUtils;
 import de.saring.util.gui.jfreechart.StackedRenderer;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -181,7 +182,8 @@ public class OverviewDialogController extends AbstractDialogController {
         // get selected time range and value type and its name to display
         TimeRangeType timeType = cbTimeRange.getValue();
         ValueType vType = cbDisplay.getValue();
-        String valueTypeNameWithUnits = vType.getNameWithUnitSystem(context.getFormatUtils());
+        String valueTypeNameWithUnits = vType.getNameWithUnitSystem(
+                context.getFormatUtils(), document.getOptions().getPreferredSpeedMode());
         int year = spYear.getValue();
 
         // create a table of all time series (graphs) and the appropriate colors
@@ -499,8 +501,9 @@ public class OverviewDialogController extends AbstractDialogController {
 
                     double averageSpeed = sumDistance / (sumDuration / 3600d);
 
-                    // calculate the speed value depending on current speed unit view
-                    if (options.getSpeedView() == FormatUtils.SpeedView.MinutesPerDistance) {
+                    // calculate the speed value depending on preferred speed mode
+                    // (the speed mode of the particular sport types can't be used, they are displayed all ot once)
+                    if (options.getPreferredSpeedMode() == SpeedMode.PACE) {
                         if (averageSpeed == 0) {
                             dataset.add(timePeriod, 0, seriesName);
                         } else {
@@ -1016,9 +1019,11 @@ public class OverviewDialogController extends AbstractDialogController {
         /**
          * Returns the name of the value type including the current unit system, e.g. for displaying as axis name.
          *
+         * @param formatUtils configured format utils
+         * @param speedMode speed mode to be used
          * @return name and unit system
          */
-        private String getNameWithUnitSystem(final FormatUtils formatUtils) {
+        private String getNameWithUnitSystem(final FormatUtils formatUtils, final SpeedMode speedMode) {
             switch (this) {
                 case DISTANCE:
                     return appResources.getString("st.dlg.overview.value_type.distance_sum",
@@ -1037,7 +1042,7 @@ public class OverviewDialogController extends AbstractDialogController {
                     return appResources.getString("st.dlg.overview.value_type.exercise_count");
                 case AVG_SPEED:
                     return appResources.getString("st.dlg.overview.value_type.avg_speed",
-                            formatUtils.getSpeedUnitName());
+                             formatUtils.getSpeedUnitName(speedMode));
                 case SPORTSUBTYPE:
                     return appResources.getString("st.dlg.overview.value_type.sportsubtype_distance",
                             formatUtils.getDistanceUnitName());

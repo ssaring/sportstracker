@@ -25,9 +25,9 @@ Issue #197: Sport type specific speed modes (feature request)
   - Speed mode is used in the status bar
   - Exercise Viewer: is using the specified speed mode from the exercises sport type
   - Statistic Dialog: results are using the speed mode of the calculated exercises
+  - Overview Dialog: results are using the preferred speed mode
 - Next:
   - use speed mode in Exercise Dialog (currently doesn't support pace mode at all)
-  - use speed mode in OverviewDialog
   - update user documentation
 
 Bug on macOS 10.14 or newer:
