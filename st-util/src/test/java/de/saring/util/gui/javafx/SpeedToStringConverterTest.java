@@ -43,7 +43,7 @@ public class SpeedToStringConverterTest {
     public void testToStringDistancePerHour() {
 
         final SpeedToStringConverter CONVERTER =
-                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.DistancePerHour), SpeedMode.SPEED);
+                new SpeedToStringConverter(new FormatUtils(null), SpeedMode.SPEED);
 
         assertEquals("", CONVERTER.toString(null));
         assertEquals("0", CONVERTER.toString(0));
@@ -58,7 +58,7 @@ public class SpeedToStringConverterTest {
     public void testToStringMinutesPerDistance() {
 
         final SpeedToStringConverter CONVERTER =
-                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.MinutesPerDistance), SpeedMode.PACE);
+                new SpeedToStringConverter(new FormatUtils(null), SpeedMode.PACE);
 
         assertEquals("", CONVERTER.toString(null));
         assertEquals("00:00", CONVERTER.toString(0));
@@ -74,7 +74,7 @@ public class SpeedToStringConverterTest {
     public void testFromStringDistancePerHour() {
 
         final SpeedToStringConverter CONVERTER =
-                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.DistancePerHour), SpeedMode.SPEED);
+                new SpeedToStringConverter(new FormatUtils(null), SpeedMode.SPEED);
 
         assertEquals(-1f, CONVERTER.fromString(null).floatValue(), 0.0001f);
         assertEquals(-1f, CONVERTER.fromString("").floatValue(), 0.0001f);
@@ -92,7 +92,7 @@ public class SpeedToStringConverterTest {
     public void testFromStringMinutesPerDistance() {
 
         final SpeedToStringConverter CONVERTER =
-                new SpeedToStringConverter(new FormatUtils(null, FormatUtils.SpeedView.MinutesPerDistance), SpeedMode.PACE);
+                new SpeedToStringConverter(new FormatUtils(null), SpeedMode.PACE);
 
         assertEquals(-1f, CONVERTER.fromString(null).floatValue(), 0.0001f);
         assertEquals(-1f, CONVERTER.fromString("").floatValue(), 0.0001f);

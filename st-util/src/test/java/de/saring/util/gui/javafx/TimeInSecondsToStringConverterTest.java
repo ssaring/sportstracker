@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class TimeInSecondsToStringConverterTest {
 
     private static final TimeInSecondsToStringConverter CONVERTER =
-            new TimeInSecondsToStringConverter(new FormatUtils(null, null));
+            new TimeInSecondsToStringConverter(new FormatUtils(null));
 
     /**
      * Tests of method toString().

@@ -21,18 +21,6 @@ public class FormatUtils {
     }
 
     /**
-     * This is the list of possible speed unit views. Distance per hour (e.g.
-     * km/h) is mostly used for all kind of sports, but minutes per distance
-     * (e.g. m/km) is very common for runners.
-     *
-     * @deprecated use {@link SpeedMode} instead
-     */
-    @Deprecated
-    public enum SpeedView {
-        DistancePerHour, MinutesPerDistance
-    }
-
-    /**
      * Enumeration of supported speed display or measurement modes. Speed means distance per hour (e.g. km/h), pace
      * means minutes per distance (e.g. min/km). The use of pace is very common for running activities, most other
      * sport types are using the speed.
@@ -47,13 +35,6 @@ public class FormatUtils {
     private final UnitSystem unitSystem;
 
     /**
-     * The current speed view used by the formater.
-     * @deprecated will be removed, SpeedMode needs to be passed to the format methods
-     */
-    @Deprecated
-    private final SpeedView speedView;
-
-    /**
      * The number format instance.
      */
     private final NumberFormat numberFormat;
@@ -62,13 +43,9 @@ public class FormatUtils {
      * Creates a new FormatUtils instance for the specified unit system.
      *
      * @param unitSystem the unit system to be used
-     * @param speedView the speed view to be used
-     * @deprecated SpeedView will be removed, pass SpeedMode to the format methods instead
      */
-    @Deprecated
-    public FormatUtils(UnitSystem unitSystem, SpeedView speedView) {
+    public FormatUtils(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
-        this.speedView = speedView;
         this.numberFormat = NumberFormat.getInstance();
     }
 
@@ -79,17 +56,6 @@ public class FormatUtils {
      */
     public UnitSystem getUnitSystem() {
         return unitSystem;
-    }
-
-    /**
-     * Returns the current speed view.
-     *
-     * @return the current speed view
-     * @deprecated SpeedView will be removed, pass SpeedMode to the format methods instead
-     */
-    @Deprecated
-    public SpeedView getSpeedView() {
-        return speedView;
     }
 
     /**
@@ -104,35 +70,6 @@ public class FormatUtils {
             case Metric:
             default:
                 return "km";
-        }
-    }
-
-    /**
-     * Returns the String representation of the current speed unit.
-     *
-     * @return the current speed unit name
-     * @deprecated use {@link #getSpeedUnitName(SpeedMode)} instead
-     */
-    @Deprecated
-    public String getSpeedUnitName() {
-        switch (this.unitSystem) {
-            case English:
-                switch (this.speedView) {
-                    case MinutesPerDistance:
-                        return "min/m";
-                    case DistancePerHour:
-                    default:
-                        return "mph";
-                }
-            case Metric:
-            default:
-                switch (this.speedView) {
-                    case MinutesPerDistance:
-                        return "min/km";
-                    case DistancePerHour:
-                    default:
-                        return "km/h";
-                }
         }
     }
 
@@ -403,46 +340,6 @@ public class FormatUtils {
      *
      * @param speed speed in km/h
      * @param decimals the number of decimals (fraction digits) to show
-     * @return a String representation of the speed
-     * @deprecated use {@link #speedToStringWithoutUnitName(float, int, SpeedMode)} instead
-     */
-    @Deprecated
-    public String speedToStringWithoutUnitName(float speed, int decimals) {
-        numberFormat.setMaximumFractionDigits(decimals);
-        switch (this.unitSystem) {
-            case English:
-                switch (this.speedView) {
-                    case MinutesPerDistance:
-                        if (speed == 0) {
-                            return "N/A";
-                        }
-                        return seconds2MinuteTimeString((int) (3600 / ConvertUtils.convertKilometer2Miles(speed, false)));
-                    case DistancePerHour:
-                    default:
-                        return numberFormat.format(ConvertUtils.convertKilometer2Miles(speed, false));
-                }
-            case Metric:
-            default:
-                switch (this.speedView) {
-                    case MinutesPerDistance:
-                        if (speed == 0) {
-                            return "N/A";
-                        }
-                        return seconds2MinuteTimeString((int) (3600 / speed));
-                    case DistancePerHour:
-                    default:
-                        return numberFormat.format(speed);
-                }
-        }
-    }
-
-    /**
-     * Converts the speed to a String in the correct unit depending on what unit
-     * options and speed view are currently chosen. The unit name is not
-     * included in the String.
-     *
-     * @param speed speed in km/h
-     * @param decimals the number of decimals (fraction digits) to show
      * @param speedMode speed mode
      * @return a String representation of the speed
      */
@@ -472,24 +369,6 @@ public class FormatUtils {
                     default:
                         return numberFormat.format(speed);
                 }
-        }
-    }
-
-    /**
-     * Converts the speed to a String in the correct unit depending on what unit
-     * options and speed view are currently chosen.
-     *
-     * @param speed speed in km/h
-     * @param decimals the number of decimals (fraction digits) to show
-     * @return a String representation of the speed
-     * @deprecated use {@link #speedToString(float, int, SpeedMode)} instead
-     */
-    @Deprecated
-    public String speedToString(float speed, int decimals) {
-        if (speed == 0) {
-            return speedToStringWithoutUnitName(speed, decimals);
-        } else {
-            return speedToStringWithoutUnitName(speed, decimals) + " " + getSpeedUnitName();
         }
     }
 

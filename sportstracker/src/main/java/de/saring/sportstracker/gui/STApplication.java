@@ -54,7 +54,7 @@ public class STApplication extends Application {
 
         // initialize the context (set format utils for current configuration)
         context = easyDI.getInstance(STContext.class);
-        context.setFormatUtils(new FormatUtils(options.getUnitSystem(), options.getSpeedView()));
+        context.setFormatUtils(new FormatUtils(options.getUnitSystem()));
 
         controller = easyDI.getInstance(STController.class);
     }

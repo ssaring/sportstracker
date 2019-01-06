@@ -74,7 +74,7 @@ public final class ValidationUtils {
      * @return true when it's an valid time in seconds value and in the specified range
      */
     public static boolean isValueTimeInSecondsBetween(final String value, final int minValue, final int maxValue) {
-        final int seconds = new FormatUtils(null, null).timeString2TotalSeconds(value);
+        final int seconds = new FormatUtils(null).timeString2TotalSeconds(value);
         return seconds >= minValue && seconds <= maxValue;
     }
 }

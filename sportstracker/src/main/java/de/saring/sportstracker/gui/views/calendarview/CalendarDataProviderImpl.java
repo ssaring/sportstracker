@@ -136,7 +136,9 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
                     .append(" ").append(formatUtils.distanceToString(exercise.getDistance(), 2)).append("\n");
 
             sbToolTip.append(resources.getString("st.calview.exe_tooltip.avg_speed")) //
-                    .append(" ").append(formatUtils.speedToString(exercise.getAvgSpeed(), 2)).append("\n");
+                    .append(" ")
+                    .append(formatUtils.speedToString(exercise.getAvgSpeed(), 2, exercise.getSportType().getSpeedMode()))
+                    .append("\n");
         }
 
         sbToolTip.append(resources.getString("st.calview.exe_tooltip.duration")) //

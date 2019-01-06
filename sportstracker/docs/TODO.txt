@@ -10,10 +10,6 @@ Issue #197: Sport type specific speed modes (feature request)
 - Wording in german:
   - Setting: (Bevorzugter) Geschwindigkeitsmodus
   - Variants: Geschwindigkeit (z.B. km/h) / Pace (z.B. min/km)
-- Remove deprecated code:
-  - de.saring.util.unitcalc.FormatUtils.SpeedView
-  - de.saring.sportstracker.core.STOptions.speedView
-  - de.saring.exerciseviewer.core.EVOptions.getSpeedView
 - Status:
   - STOptions: option "preferredSpeedMode" has been added
   - Preferences Dialog: configuration of Preferred Speed Mode has been added
@@ -26,6 +22,7 @@ Issue #197: Sport type specific speed modes (feature request)
   - Exercise Viewer: is using the specified speed mode from the exercises sport type
   - Statistic Dialog: results are using the speed mode of the calculated exercises
   - Overview Dialog: results are using the preferred speed mode
+  - all deprecated SpeedView code has been removed
 - Next:
   - use speed mode in Exercise Dialog (currently uses the preferred speed mode)
   - update user documentation

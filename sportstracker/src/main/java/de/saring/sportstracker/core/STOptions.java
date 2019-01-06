@@ -2,7 +2,6 @@ package de.saring.sportstracker.core;
 
 import de.saring.exerciseviewer.core.EVOptions;
 import de.saring.util.unitcalc.FormatUtils.SpeedMode;
-import de.saring.util.unitcalc.FormatUtils.SpeedView;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 
 import java.io.Serializable;
@@ -33,13 +32,6 @@ public class STOptions implements EVOptions, Serializable {
 
     /** This is the unit system used in GUI. */
     private UnitSystem unitSystem;
-
-    /**
-     * This is the speed view system used in GUI.
-     *
-     * @deprecated use {@link #preferredSpeedMode} instead
-     */
-    private SpeedView speedView;
 
     /**
      * This is the preferred speed display mode used in GUI (speed or pace).
@@ -99,7 +91,6 @@ public class STOptions implements EVOptions, Serializable {
     public STOptions() {
         this.initialView = View.Calendar;
         this.unitSystem = UnitSystem.Metric;
-        this.speedView = SpeedView.DistancePerHour;
         this.preferredSpeedMode = SpeedMode.SPEED;
         this.defaultAutoCalcuation = AutoCalculation.Duration;
         this.saveOnExit = false;
@@ -129,16 +120,6 @@ public class STOptions implements EVOptions, Serializable {
 
     public void setUnitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
-    }
-
-    @Deprecated
-    public SpeedView getSpeedView() {
-        return speedView;
-    }
-
-    @Deprecated
-    public void setSpeedView(SpeedView speedView) {
-        this.speedView = speedView;
     }
 
     public SpeedMode getPreferredSpeedMode() {
