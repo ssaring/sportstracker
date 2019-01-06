@@ -95,13 +95,16 @@ class LapPanelController(
             if (it == null) null else context.formatUtils.heartRateToString(it.toInt())
         }
         tcEndSpeed.cellFactory = FormattedNumberCellFactory {
-            if (it == null) null else context.formatUtils.speedToString(it.toFloat(), 2)
+            if (it == null) null
+            else context.formatUtils.speedToString(it.toFloat(), 2, document.speedMode)
         }
         tcAvgSpeed.cellFactory = FormattedNumberCellFactory {
-            if (it == null) null else context.formatUtils.speedToString(it.toFloat(), 2)
+            if (it == null) null
+            else context.formatUtils.speedToString(it.toFloat(), 2, document.speedMode)
         }
         tcDistance.cellFactory = FormattedNumberCellFactory {
-            if (it == null) null else context.formatUtils.distanceToString(it.toInt() / 1000.0, 3)
+            if (it == null) null
+            else context.formatUtils.distanceToString(it.toInt() / 1000.0, 3)
         }
         tcCadence.cellFactory = FormattedNumberCellFactory {
             if (it == null) null else context.formatUtils.cadenceToString(it.toInt())

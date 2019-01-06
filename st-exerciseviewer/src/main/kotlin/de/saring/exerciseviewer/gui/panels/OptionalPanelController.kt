@@ -63,8 +63,8 @@ import javafx.scene.control.Label
 
         // fill speed data
         exercise.speed?.let {
-            laSpeedAvgValue.text = formatUtils.speedToString(it.speedAvg, 2)
-            laSpeedMaxValue.text = formatUtils.speedToString(it.speedMax, 2)
+            laSpeedAvgValue.text = formatUtils.speedToString(it.speedAvg, 2, document.speedMode)
+            laSpeedMaxValue.text = formatUtils.speedToString(it.speedMax, 2, document.speedMode)
             laDistanceValue.text = formatUtils.distanceToString((it.distance / 1000f).toDouble(), 2)
         }
 

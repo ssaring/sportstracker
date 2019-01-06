@@ -17,10 +17,10 @@
                 <TableColumn fx:id="tcHeartrate" text="%pv.laps.heartrate"/>
                 <TableColumn fx:id="tcAvgHeartrate" text="%pv.laps.avg_heartrate"/>
                 <TableColumn fx:id="tcMaxHeartrate" text="%pv.laps.max_heartrate"/>
-                <TableColumn fx:id="tcEndSpeed" prefWidth="100.0" text="%pv.laps.end_speed"/>
-                <TableColumn fx:id="tcAvgSpeed" prefWidth="100.0" text="%pv.laps.avg_speed"/>
+                <TableColumn fx:id="tcEndSpeed" prefWidth="110.0" text="%pv.laps.end_speed"/>
+                <TableColumn fx:id="tcAvgSpeed" prefWidth="110.0" text="%pv.laps.avg_speed"/>
                 <TableColumn fx:id="tcDistance" prefWidth="100.0" text="%pv.laps.distance"/>
-                <TableColumn fx:id="tcCadence" prefWidth="90.0" text="%pv.laps.cadence"/>
+                <TableColumn fx:id="tcCadence" prefWidth="110.0" text="%pv.laps.cadence"/>
                 <TableColumn fx:id="tcAltitude" prefWidth="90.0" text="%pv.laps.altitude"/>
                 <TableColumn fx:id="tcAscent" prefWidth="90.0" text="%pv.laps.ascent"/>
                 <TableColumn fx:id="tcDescent" prefWidth="90.0" text="%pv.laps.descent"/>

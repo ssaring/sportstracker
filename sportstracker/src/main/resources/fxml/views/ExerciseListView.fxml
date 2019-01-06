@@ -12,17 +12,17 @@
         <TableView fx:id="tvExercises" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="tcDate" prefWidth="90.0" text="%st.exerciselistview.date"/>
-                <TableColumn fx:id="tcSportType" prefWidth="100.0" text="%st.exerciselistview.type"/>
-                <TableColumn fx:id="tcSportSubtype" prefWidth="100.0" text="%st.exerciselistview.subtype"/>
+                <TableColumn fx:id="tcSportType" prefWidth="110.0" text="%st.exerciselistview.type"/>
+                <TableColumn fx:id="tcSportSubtype" prefWidth="110.0" text="%st.exerciselistview.subtype"/>
                 <TableColumn fx:id="tcDuration" prefWidth="80.0" text="%st.exerciselistview.duration"/>
                 <TableColumn fx:id="tcIntensity" prefWidth="90.0" text="%st.exerciselistview.intensity"/>
                 <TableColumn fx:id="tcDistance" prefWidth="90.0" text="%st.exerciselistview.distance"/>
-                <TableColumn fx:id="tcAvgSpeed" prefWidth="90.0" text="%st.exerciselistview.avg_speed"/>
+                <TableColumn fx:id="tcAvgSpeed" prefWidth="110.0" text="%st.exerciselistview.avg_speed"/>
                 <TableColumn fx:id="tcAvgHeartrate" prefWidth="90.0" text="%st.exerciselistview.avg_heartrate"/>
                 <TableColumn fx:id="tcAscent" prefWidth="90.0" text="%st.exerciselistview.ascent"/>
                 <TableColumn fx:id="tcDescent" prefWidth="90.0" text="%st.exerciselistview.descent"/>
                 <TableColumn fx:id="tcEnergy" prefWidth="90.0" text="%st.exerciselistview.energy"/>
-                <TableColumn fx:id="tcEquipment" prefWidth="90.0" text="%st.exerciselistview.equipment"/>
+                <TableColumn fx:id="tcEquipment" prefWidth="120.0" text="%st.exerciselistview.equipment"/>
                 <TableColumn fx:id="tcComment" prefWidth="500.0" text="%st.exerciselistview.comment"/>
             </columns>
             <placeholder>

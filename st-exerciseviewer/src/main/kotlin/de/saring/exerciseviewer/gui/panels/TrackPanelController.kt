@@ -229,7 +229,7 @@ class TrackPanelController(
             appendToolTipLine(sb, "pv.track.tooltip.heartrate", formatUtils.heartRateToString(it.toInt()))
         }
         sample.speed?.let {
-            appendToolTipLine(sb, "pv.track.tooltip.speed", formatUtils.speedToString(it, 2))
+            appendToolTipLine(sb, "pv.track.tooltip.speed", formatUtils.speedToString(it, 2, document.speedMode))
         }
         sample.temperature?.let {
             appendToolTipLine(sb, "pv.track.tooltip.temperature", formatUtils.temperatureToString(it))

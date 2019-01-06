@@ -8,6 +8,7 @@ import de.saring.util.AppResources
 import de.saring.util.gui.jfreechart.ChartUtils
 import de.saring.util.unitcalc.ConvertUtils
 import de.saring.util.unitcalc.FormatUtils
+import de.saring.util.unitcalc.FormatUtils.SpeedMode
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.ChoiceBox
@@ -66,7 +67,7 @@ class DiagramPanelController(
 
     private val timeZoneGmt = TimeZone.getTimeZone("GMT")
 
-    private val axisTypeStringConverter = AxisTypeStringConverter(context.resources, context.formatUtils)
+    private lateinit var axisTypeStringConverter: AxisTypeStringConverter
 
     /** The viewer for the chart.  */
     private var chartViewer: ChartViewer? = null
@@ -133,6 +134,7 @@ class DiagramPanelController(
         val exercise = document.exercise
 
         // setup axis type name converter
+        axisTypeStringConverter = AxisTypeStringConverter(context.resources, context.formatUtils, document.speedMode)
         cbLeftAxis.converter = axisTypeStringConverter
         cbRightAxis.converter = axisTypeStringConverter
         cbBottomAxis.converter = axisTypeStringConverter
@@ -615,7 +617,7 @@ class DiagramPanelController(
             speed = ConvertUtils.convertKilometer2Miles(speed, false)
         }
 
-        return if (formatUtils.speedView == FormatUtils.SpeedView.MinutesPerDistance && speed != 0.0) {
+        return if (document.speedMode == SpeedMode.PACE && speed != 0.0) {
             60 / speed
         } else {
             speed
@@ -690,7 +692,8 @@ class DiagramPanelController(
      */
     private class AxisTypeStringConverter(
             private val appResources: AppResources,
-            private val formatUtils: FormatUtils) : StringConverter<AxisType>() {
+            private val formatUtils: FormatUtils,
+            private val speedMode: SpeedMode) : StringConverter<AxisType>() {
 
         override fun toString(axisType: AxisType): String = when (axisType) {
             AxisType.NOTHING ->
@@ -700,7 +703,7 @@ class DiagramPanelController(
             AxisType.ALTITUDE ->
                 appResources.getString("pv.diagram.axis.altitude", formatUtils.altitudeUnitName)
             AxisType.SPEED ->
-                appResources.getString("pv.diagram.axis.speed", formatUtils.speedUnitName)
+                appResources.getString("pv.diagram.axis.speed", formatUtils.getSpeedUnitName(speedMode))
             AxisType.CADENCE ->
                 appResources.getString("pv.diagram.axis.cadence")
             AxisType.TEMPERATURE ->
