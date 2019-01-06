@@ -623,11 +623,11 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private void addInitialSportTypesIfMissing() {
         if (document.getSportTypeList().size() == 0) {
 
-            addInitialSportType("st.initial_sporttypes.cycling", Color.DARKBLUE, //
+            addInitialSportType("st.initial_sporttypes.cycling", SpeedMode.SPEED, Color.DARKBLUE, //
                     "st.initial_sporttypes.cycling.mtb_tour", "st.initial_sporttypes.cycling.mtb_race", //
                     "st.initial_sporttypes.cycling.road_tour", "st.initial_sporttypes.cycling.road_race");
 
-            addInitialSportType("st.initial_sporttypes.running", Color.FIREBRICK, //
+            addInitialSportType("st.initial_sporttypes.running", SpeedMode.PACE, Color.FIREBRICK, //
                     "st.initial_sporttypes.running.street_run", "st.initial_sporttypes.running.street_race", //
                     "st.initial_sporttypes.running.trail_run", "st.initial_sporttypes.running.trail_race");
 
@@ -640,12 +640,15 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * Creates the specified sport type and stores it in the document list.
      *
      * @param nameKey key of the sport type name
+     * @param speedMode speed mode
      * @param color sport type color
      * @param subtypeNameKeys list of keys for the sport subtype names
      */
-    private void addInitialSportType(final String nameKey, final Color color, final String... subtypeNameKeys) {
+    private void addInitialSportType(final String nameKey, final SpeedMode speedMode, final Color color,
+                                     final String... subtypeNameKeys) {
         final SportType sportType = new SportType(document.getSportTypeList().getNewID());
         sportType.setName(context.getResources().getString(nameKey));
+        sportType.setSpeedMode(speedMode);
         sportType.setColor(color);
 
         for (String subtypeNameKey : subtypeNameKeys) {
