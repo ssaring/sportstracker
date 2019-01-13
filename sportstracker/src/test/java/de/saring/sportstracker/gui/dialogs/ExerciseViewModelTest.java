@@ -73,7 +73,7 @@ public class ExerciseViewModelTest {
     @Test
     public void testGetExerciseWithMetricUnits() {
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
 
         // test that metric units are not converted
         assertEquals(exercise.getDistance(), viewModel.distance.get(), 0.0001f);
@@ -115,7 +115,7 @@ public class ExerciseViewModelTest {
     @Test
     public void testGetExerciseWithEnglishUnits() {
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.English), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.ENGLISH), SpeedMode.SPEED);
 
         // test that metric units are converted to english units
         assertEquals(71.4577, viewModel.distance.get(), 0.0001f);
@@ -137,7 +137,7 @@ public class ExerciseViewModelTest {
     public void testGetExerciseWithEnglishUnitsAndSpeedModePace() {
         exercise.getSportType().setSpeedMode(SpeedMode.PACE);
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.English), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.ENGLISH), SpeedMode.SPEED);
 
         // test that metric units are converted to english units
         assertEquals(71.4577, viewModel.distance.get(), 0.0001f);
@@ -157,7 +157,7 @@ public class ExerciseViewModelTest {
     @Test
     public void testSportTypeListener() {
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
 
         // test with sport type where the distance is recorded
         SportType stWithDistance = new SportType(100);
@@ -192,7 +192,7 @@ public class ExerciseViewModelTest {
         exercise.setDuration(4 * 3600);
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
         viewModel.autoCalcDistance.set(true);
         viewModel.autoCalcAvgSpeed.set(false);
         viewModel.autoCalcDuration.set(false);
@@ -221,7 +221,7 @@ public class ExerciseViewModelTest {
         exercise.getSportType().setSpeedMode(SpeedMode.PACE);
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
         viewModel.autoCalcDistance.set(true);
         viewModel.autoCalcAvgSpeed.set(false);
         viewModel.autoCalcDuration.set(false);
@@ -249,7 +249,7 @@ public class ExerciseViewModelTest {
         exercise.setDuration(4 * 3600);
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
         viewModel.autoCalcDistance.set(false);
         viewModel.autoCalcAvgSpeed.set(true);
         viewModel.autoCalcDuration.set(false);
@@ -278,7 +278,7 @@ public class ExerciseViewModelTest {
         exercise.getSportType().setSpeedMode(SpeedMode.PACE);
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
         viewModel.autoCalcDistance.set(false);
         viewModel.autoCalcAvgSpeed.set(true);
         viewModel.autoCalcDuration.set(false);
@@ -305,7 +305,7 @@ public class ExerciseViewModelTest {
         exercise.setDuration(4 * 3600);
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
         viewModel.autoCalcDistance.set(false);
         viewModel.autoCalcAvgSpeed.set(false);
         viewModel.autoCalcDuration.set(true);
@@ -332,7 +332,7 @@ public class ExerciseViewModelTest {
         exercise.setDuration(4 * 3600);
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
         viewModel.autoCalcDistance.set(true);
         viewModel.autoCalcAvgSpeed.set(false);
         viewModel.autoCalcDuration.set(false);
@@ -356,7 +356,7 @@ public class ExerciseViewModelTest {
         exercise.setDuration(4 * 3600);
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
         viewModel.autoCalcDistance.set(false);
         viewModel.autoCalcAvgSpeed.set(true);
         viewModel.autoCalcDuration.set(false);
@@ -380,7 +380,7 @@ public class ExerciseViewModelTest {
         exercise.setDuration(4 * 3600);
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
         viewModel.autoCalcDistance.set(false);
         viewModel.autoCalcAvgSpeed.set(false);
         viewModel.autoCalcDuration.set(true);
@@ -405,7 +405,7 @@ public class ExerciseViewModelTest {
         exercise.setDuration(4 * 3600);
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.English), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.ENGLISH), SpeedMode.SPEED);
         viewModel.autoCalcDistance.set(false);
         viewModel.autoCalcAvgSpeed.set(false);
         viewModel.autoCalcDuration.set(true);
@@ -427,7 +427,7 @@ public class ExerciseViewModelTest {
     public void testSetAvgSpeedFloatValueMetricSpeed() {
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
 
         viewModel.setAvgSpeedFloatValue(21.3f);
         assertEquals("21.3", viewModel.avgSpeed.get());
@@ -442,7 +442,7 @@ public class ExerciseViewModelTest {
 
         exercise.getSportType().setSpeedMode(SpeedMode.PACE);
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.English), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.ENGLISH), SpeedMode.SPEED);
 
         viewModel.setAvgSpeedFloatValue(21.3f);
         assertEquals("04:32", viewModel.avgSpeed.get());
@@ -457,7 +457,7 @@ public class ExerciseViewModelTest {
 
         exercise.getSportType().setSpeedMode(SpeedMode.PACE);
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.English), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.ENGLISH), SpeedMode.SPEED);
 
         viewModel.setAvgSpeedFloatValue(0f);
         assertEquals("00:00", viewModel.avgSpeed.get());
@@ -472,7 +472,7 @@ public class ExerciseViewModelTest {
     public void testAvgSpeedConversionOnSpeedModeChangesSame() {
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
         assertEquals("28.5", viewModel.avgSpeed.get());
 
         viewModel.sportType.set(createSportType(432, SpeedMode.SPEED));
@@ -488,7 +488,7 @@ public class ExerciseViewModelTest {
     public void testAvgSpeedConversionOnSpeedModeChangesOther() {
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
         assertEquals("28.5", viewModel.avgSpeed.get());
 
         viewModel.sportType.set(createSportType(432, SpeedMode.PACE));
@@ -505,7 +505,7 @@ public class ExerciseViewModelTest {
 
         exercise.setAvgSpeed(0f);
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.Metric), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.METRIC), SpeedMode.SPEED);
         assertEquals("0", viewModel.avgSpeed.get());
 
         viewModel.sportType.set(createSportType(432, SpeedMode.PACE));
@@ -521,7 +521,7 @@ public class ExerciseViewModelTest {
     public void testAvgSpeedConversionOnSpeedModeChangesEnglish() {
 
         ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
-                new FormatUtils(FormatUtils.UnitSystem.English), SpeedMode.SPEED);
+                new FormatUtils(FormatUtils.UnitSystem.ENGLISH), SpeedMode.SPEED);
         assertEquals("17.709", viewModel.avgSpeed.get());
 
         viewModel.sportType.set(createSportType(432, SpeedMode.PACE));

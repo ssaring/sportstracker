@@ -33,7 +33,7 @@ public class WeightViewModelTest {
      */
     @Test
     public void testGetWeightWithMetricUnits() {
-        WeightViewModel viewModel = new WeightViewModel(weight, FormatUtils.UnitSystem.Metric);
+        WeightViewModel viewModel = new WeightViewModel(weight, FormatUtils.UnitSystem.METRIC);
 
         // test that metric unit is not converted
         assertEquals(weight.getValue(), viewModel.value.get(), 0.0001f);
@@ -61,7 +61,7 @@ public class WeightViewModelTest {
      */
     @Test
     public void testGetWeightWithEnglishUnits() {
-        WeightViewModel viewModel = new WeightViewModel(weight, FormatUtils.UnitSystem.English);
+        WeightViewModel viewModel = new WeightViewModel(weight, FormatUtils.UnitSystem.ENGLISH);
 
         // test that metric unit is converted to english unit
         assertEquals(144.8422, viewModel.value.get(), 0.0001f);

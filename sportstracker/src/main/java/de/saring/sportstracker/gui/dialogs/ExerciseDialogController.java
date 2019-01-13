@@ -505,7 +505,7 @@ public class ExerciseDialogController extends AbstractDialogController {
             exerciseViewModel.ascent.set(evExercise.getAltitude().getAscent());
             exerciseViewModel.descent.set(evExercise.getAltitude().getDescent());
 
-            if (document.getOptions().getUnitSystem() == FormatUtils.UnitSystem.English) {
+            if (document.getOptions().getUnitSystem() == FormatUtils.UnitSystem.ENGLISH) {
                 exerciseViewModel.ascent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.ascent.get()));
                 exerciseViewModel.descent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.descent.get()));
             }

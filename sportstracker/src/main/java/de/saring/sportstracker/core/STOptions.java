@@ -90,7 +90,7 @@ public class STOptions implements EVOptions, Serializable {
      */
     public STOptions() {
         this.initialView = View.Calendar;
-        this.unitSystem = UnitSystem.Metric;
+        this.unitSystem = UnitSystem.METRIC;
         this.preferredSpeedMode = SpeedMode.SPEED;
         this.defaultAutoCalcuation = AutoCalculation.Duration;
         this.saveOnExit = false;

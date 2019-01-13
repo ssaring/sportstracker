@@ -24,7 +24,7 @@ import java.time.format.DateTimeFormatter
  */
 class PolarPedParser : AbstractExerciseParser() {
 
-    private val formatUtils = FormatUtils(FormatUtils.UnitSystem.Metric)
+    private val formatUtils = FormatUtils(FormatUtils.UnitSystem.METRIC)
 
     private val namespace = Namespace.getNamespace("http://www.polarpersonaltrainer.com")
 

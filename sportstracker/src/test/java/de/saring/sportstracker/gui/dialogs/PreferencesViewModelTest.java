@@ -23,7 +23,7 @@ public class PreferencesViewModelTest {
     public void setUp() {
         options = new STOptions();
         options.setInitialView(STOptions.View.List);
-        options.setUnitSystem(FormatUtils.UnitSystem.English);
+        options.setUnitSystem(FormatUtils.UnitSystem.ENGLISH);
         options.setPreferredSpeedMode(FormatUtils.SpeedMode.SPEED);
         options.setDefaultAutoCalcuation(STOptions.AutoCalculation.AvgSpeed);
         options.setSaveOnExit(true);
@@ -48,7 +48,7 @@ public class PreferencesViewModelTest {
         // test without modifications
         viewModel.storeInOptions(options);
         assertEquals(STOptions.View.List, options.getInitialView());
-        assertEquals(FormatUtils.UnitSystem.English, options.getUnitSystem());
+        assertEquals(FormatUtils.UnitSystem.ENGLISH, options.getUnitSystem());
         assertEquals(FormatUtils.SpeedMode.SPEED, options.getPreferredSpeedMode());
         assertEquals(STOptions.AutoCalculation.AvgSpeed, options.getDefaultAutoCalcuation());
         assertTrue(options.isSaveOnExit());
@@ -64,7 +64,7 @@ public class PreferencesViewModelTest {
 
         // test after modifications
         viewModel.initialView.set(STOptions.View.Calendar);
-        viewModel.unitSystem.set(FormatUtils.UnitSystem.Metric);
+        viewModel.unitSystem.set(FormatUtils.UnitSystem.METRIC);
         viewModel.preferredSpeedMode.set(FormatUtils.SpeedMode.PACE);
         viewModel.weekStart.set(PreferencesViewModel.WeekStart.MONDAY);
         viewModel.defaultAutoCalculation.set(STOptions.AutoCalculation.Duration);
@@ -72,7 +72,7 @@ public class PreferencesViewModelTest {
 
         viewModel.storeInOptions(options);
         assertEquals(STOptions.View.Calendar, options.getInitialView());
-        assertEquals(FormatUtils.UnitSystem.Metric, options.getUnitSystem());
+        assertEquals(FormatUtils.UnitSystem.METRIC, options.getUnitSystem());
         assertEquals(FormatUtils.SpeedMode.PACE, options.getPreferredSpeedMode());
         assertEquals(STOptions.AutoCalculation.Duration, options.getDefaultAutoCalcuation());
         assertFalse(options.isSaveOnExit());

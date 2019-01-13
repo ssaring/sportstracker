@@ -243,7 +243,7 @@ class DiagramPanelController(
                     // get current distance of this sample
                     sample.distance?.let { distance ->
                         var fDistance = (distance / 1000f).toDouble()
-                        if (context.formatUtils.unitSystem != FormatUtils.UnitSystem.Metric) {
+                        if (context.formatUtils.unitSystem != FormatUtils.UnitSystem.METRIC) {
                             fDistance = ConvertUtils.convertKilometer2Miles(fDistance, false)
                         }
                         fillDataInXYSeries(sLeft as XYSeries, sRight as XYSeries?, fDistance, valueLeft, valueRight)
@@ -274,7 +274,7 @@ class DiagramPanelController(
                 } else {
                     // get current distance of this sample
                     var fDistance = (lap.speed!!.distance / 1000f).toDouble()
-                    if (context.formatUtils.unitSystem != FormatUtils.UnitSystem.Metric) {
+                    if (context.formatUtils.unitSystem != FormatUtils.UnitSystem.METRIC) {
                         fDistance = ConvertUtils.convertKilometer2Miles(fDistance, false)
                     }
                     fillDataInXYSeries(sLeft as XYSeries, sRight as XYSeries?, fDistance, valueLeft, valueRight)
@@ -384,7 +384,7 @@ class DiagramPanelController(
                     lapSplitValue = createJFreeChartSecond(lapSplitSeconds).firstMillisecond.toDouble()
                 } else {
                     lapSplitValue = lap.speed!!.distance / 1000.0
-                    if (context.formatUtils.unitSystem == FormatUtils.UnitSystem.English) {
+                    if (context.formatUtils.unitSystem == FormatUtils.UnitSystem.ENGLISH) {
                         lapSplitValue = ConvertUtils.convertKilometer2Miles(lapSplitValue, false)
                     }
                 }
@@ -593,7 +593,7 @@ class DiagramPanelController(
             AxisType.HEARTRATE, AxisType.CADENCE ->
                 return value
             AxisType.ALTITUDE ->
-                return if (formatUtils.unitSystem == FormatUtils.UnitSystem.Metric)
+                return if (formatUtils.unitSystem == FormatUtils.UnitSystem.METRIC)
                     value
                 else
                     ConvertUtils.convertMeter2Feet(Math.round(value).toInt())
@@ -601,7 +601,7 @@ class DiagramPanelController(
                 return getConvertedSpeedValue(value, formatUtils)
             }
             AxisType.TEMPERATURE ->
-                return if (formatUtils.unitSystem == FormatUtils.UnitSystem.Metric)
+                return if (formatUtils.unitSystem == FormatUtils.UnitSystem.METRIC)
                     value
                 else
                     ConvertUtils.convertCelsius2Fahrenheit(Math.round(value).toShort())
@@ -613,7 +613,7 @@ class DiagramPanelController(
     private fun getConvertedSpeedValue(speedValue: Double, formatUtils: FormatUtils): Double {
 
         var speed = speedValue
-        if (formatUtils.unitSystem != FormatUtils.UnitSystem.Metric) {
+        if (formatUtils.unitSystem != FormatUtils.UnitSystem.METRIC) {
             speed = ConvertUtils.convertKilometer2Miles(speed, false)
         }
 

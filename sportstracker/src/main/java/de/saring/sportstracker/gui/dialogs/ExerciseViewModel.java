@@ -98,7 +98,7 @@ public class ExerciseViewModel {
 
         // convert exercise values when english unit system is enabled
         float fAvgSpeed = exercise.getAvgSpeed();
-        if (formatUtils.getUnitSystem() == FormatUtils.UnitSystem.English) {
+        if (formatUtils.getUnitSystem() == FormatUtils.UnitSystem.ENGLISH) {
             this.distance.set((float) ConvertUtils.convertKilometer2Miles(exercise.getDistance(), false));
             fAvgSpeed = (float) ConvertUtils.convertKilometer2Miles(fAvgSpeed, false);
             this.ascent.set(ConvertUtils.convertMeter2Feet(exercise.getAscent()));
@@ -140,7 +140,7 @@ public class ExerciseViewModel {
         exercise.setComment(StringUtils.getTrimmedTextOrNull(comment.getValue()));
 
         // convert weight value when english unit system is enabled
-        if (this.formatUtils.getUnitSystem() == FormatUtils.UnitSystem.English) {
+        if (this.formatUtils.getUnitSystem() == FormatUtils.UnitSystem.ENGLISH) {
             exercise.setDistance((float) ConvertUtils.convertMiles2Kilometer(exercise.getDistance()));
             exercise.setAvgSpeed((float) ConvertUtils.convertMiles2Kilometer(exercise.getAvgSpeed()));
             exercise.setAscent(ConvertUtils.convertFeet2Meter(exercise.getAscent()));
@@ -169,7 +169,7 @@ public class ExerciseViewModel {
     public void setAutoCalcFields(final float newDistance, final float newAvgSpeed, final int newDuration) {
 
         if (!autoCalcDistance.get()) {
-            if (this.formatUtils.getUnitSystem() == FormatUtils.UnitSystem.English) {
+            if (this.formatUtils.getUnitSystem() == FormatUtils.UnitSystem.ENGLISH) {
                 this.distance.set((float) ConvertUtils.convertKilometer2Miles(newDistance, false));
             } else {
                 this.distance.set(newDistance);
@@ -191,7 +191,7 @@ public class ExerciseViewModel {
      */
     public void setAvgSpeedFloatValue(float fAvgSpeedMetric) {
         float fAvgSpeedCurrentUnit = fAvgSpeedMetric;
-        if (this.formatUtils.getUnitSystem() == FormatUtils.UnitSystem.English) {
+        if (this.formatUtils.getUnitSystem() == FormatUtils.UnitSystem.ENGLISH) {
             fAvgSpeedCurrentUnit = (float) ConvertUtils.convertKilometer2Miles(fAvgSpeedMetric, false);
         }
         this.avgSpeed.set(speedConverter.floatSpeedtoString(fAvgSpeedCurrentUnit));

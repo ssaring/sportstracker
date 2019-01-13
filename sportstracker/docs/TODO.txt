@@ -24,8 +24,6 @@ Issue #197: Sport type specific speed modes (feature request)
   - Overview Dialog: results are using the preferred speed mode
   - all deprecated SpeedView code has been removed
 
-- Refactoring: make FormatUtils.UnitSystem enum values uppercase
-
 Bug on macOS 10.14 or newer:
 - Problem: SportsTracker application crashes when displaying a dialog window
 - Cause: it's a JavaFX bug, occurs only on macOS 10.14 or newer

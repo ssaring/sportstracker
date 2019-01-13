@@ -147,8 +147,8 @@ public class PreferencesDialogController extends AbstractDialogController {
         rbInitialViewCalendar.setUserData(STOptions.View.Calendar);
         rbInitialViewExerciseList.setUserData(STOptions.View.List);
 
-        rbUnitsMetric.setUserData(FormatUtils.UnitSystem.Metric);
-        rbUnitsEnglish.setUserData(FormatUtils.UnitSystem.English);
+        rbUnitsMetric.setUserData(FormatUtils.UnitSystem.METRIC);
+        rbUnitsEnglish.setUserData(FormatUtils.UnitSystem.ENGLISH);
 
         rbSpeedModeSpeed.setUserData(FormatUtils.SpeedMode.SPEED);
         rbSpeedModePace.setUserData(FormatUtils.SpeedMode.PACE);

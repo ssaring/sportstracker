@@ -80,7 +80,7 @@ class TrackPanelController(
         mapView = LeafletMapView()
         spMapViewer.children.add(mapView)
 
-        val metric = document.options.unitSystem == FormatUtils.UnitSystem.Metric
+        val metric = document.options.unitSystem == FormatUtils.UnitSystem.METRIC
 
         mapConfig = MapConfig(
                 listOf(MapLayer.OPENSTREETMAP, MapLayer.OPENCYCLEMAP, MapLayer.HIKE_BIKE_MAP, MapLayer.MTB_MAP),

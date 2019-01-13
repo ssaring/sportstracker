@@ -12,12 +12,11 @@ import java.text.NumberFormat;
 public class FormatUtils {
 
     /**
-     * This is the list of possible unit systems. Metric units are e.g.
-     * kilometers for distance or celcius for temperature. English units are
-     * e.g. miles for distance and fahrenheit for temperature.
+     * This is the list of possible unit systems. Metric units are e.g. kilometers for distance or celcius for
+     * temperature. English units are e.g. miles for distance and fahrenheit for temperature.
      */
     public enum UnitSystem {
-        Metric, English
+        METRIC, ENGLISH
     }
 
     /**
@@ -65,9 +64,9 @@ public class FormatUtils {
      */
     public String getDistanceUnitName() {
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return "m";
-            case Metric:
+            case METRIC:
             default:
                 return "km";
         }
@@ -81,9 +80,9 @@ public class FormatUtils {
      */
     public String getSpeedUnitName(SpeedMode speedMode) {
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return speedMode == SpeedMode.SPEED ? "mph" : "min/m";
-            case Metric:
+            case METRIC:
             default:
                 return speedMode == SpeedMode.SPEED ? "km/h" : "min/km";
         }
@@ -96,9 +95,9 @@ public class FormatUtils {
      */
     public String getTemperatureUnitName() {
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return "F";
-            case Metric:
+            case METRIC:
             default:
                 return "C";
         }
@@ -111,9 +110,9 @@ public class FormatUtils {
      */
     public String getAltitudeUnitName() {
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return "ft";
-            case Metric:
+            case METRIC:
             default:
                 return "m";
         }
@@ -126,9 +125,9 @@ public class FormatUtils {
      */
     public String getWeightUnitName() {
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return "lbs";
-            case Metric:
+            case METRIC:
             default:
                 return "kg";
         }
@@ -292,10 +291,10 @@ public class FormatUtils {
     public String temperatureToString(short temperature) {
         numberFormat.setMaximumFractionDigits(0);
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return numberFormat.format(ConvertUtils.convertCelsius2Fahrenheit(
                         temperature)) + " " + getTemperatureUnitName();
-            case Metric:
+            case METRIC:
             default:
                 return numberFormat.format(temperature) + " " + getTemperatureUnitName();
         }
@@ -313,9 +312,9 @@ public class FormatUtils {
     public String distanceToStringWithoutUnitName(double distance, int decimals) {
         numberFormat.setMaximumFractionDigits(decimals);
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return numberFormat.format(ConvertUtils.convertKilometer2Miles(distance, false));
-            case Metric:
+            case METRIC:
             default:
                 return numberFormat.format(distance);
         }
@@ -346,7 +345,7 @@ public class FormatUtils {
     public String speedToStringWithoutUnitName(float speed, int decimals, SpeedMode speedMode) {
         numberFormat.setMaximumFractionDigits(decimals);
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 switch (speedMode) {
                     case PACE:
                         if (speed == 0) {
@@ -357,7 +356,7 @@ public class FormatUtils {
                     default:
                         return numberFormat.format(ConvertUtils.convertKilometer2Miles(speed, false));
                 }
-            case Metric:
+            case METRIC:
             default:
                 switch (speedMode) {
                     case PACE:
@@ -400,9 +399,9 @@ public class FormatUtils {
     public String heightToStringWithoutUnitName(int height) {
         numberFormat.setMaximumFractionDigits(0);
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return numberFormat.format(ConvertUtils.convertMeter2Feet(height));
-            case Metric:
+            case METRIC:
             default:
                 return numberFormat.format(height);
         }
@@ -466,9 +465,9 @@ public class FormatUtils {
     public String weightToStringWithoutUnitName(float weight, int maxFractionDigits) {
         numberFormat.setMaximumFractionDigits(maxFractionDigits);
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return numberFormat.format(ConvertUtils.convertKilogram2Lbs(weight));
-            case Metric:
+            case METRIC:
             default:
                 return numberFormat.format(weight);
         }
