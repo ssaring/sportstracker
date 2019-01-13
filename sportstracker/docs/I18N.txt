@@ -55,7 +55,21 @@ SportsTracker 7.5.1:
 - st.dlg.overview.display.descent_sum.text (new)
 - st.dlg.overview.value_type.descent_sum (new)
 - st.dlg.options.show_descent.text (new)
+
+- st.dlg.sporttype.speed_mode.text
+- st.dlg.sporttype.speed_mode_speed.text
+- st.dlg.sporttype.speed_mode_pace.text
+
+- st.dlg.options.preferred_speed_mode.text (new)
+- st.dlg.options.speed_mode_speed.text (new)
+- st.dlg.options.speed_mode_pace.text (new)
+
+- st.dlg.options.speed_unit.text (removed)
+- st.dlg.options.distance_hour.text (removed)
+- st.dlg.options.minutes_distance.text (removed)
+
 - st.dlg.about.authors.text (new)
+
 - pv.opt.descent.text (new)
 - pv.laps.descent (new)
 - pv.opt.total.text (new)

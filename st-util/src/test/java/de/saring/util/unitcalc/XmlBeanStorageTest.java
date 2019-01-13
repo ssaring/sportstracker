@@ -39,7 +39,7 @@ public class XmlBeanStorageTest {
     public void testSaveAndLoadBeanSuccess() throws Exception {
 
         final TestBean testBean = new TestBean();
-        testBean.unitSystem = FormatUtils.UnitSystem.English;
+        testBean.unitSystem = FormatUtils.UnitSystem.ENGLISH;
         testBean.message = "Bar";
         testBean.number = 123;
 
@@ -79,7 +79,7 @@ public class XmlBeanStorageTest {
     public static class TestBean implements Serializable {
         private static final long serialVersionUID = 0L;
 
-        private FormatUtils.UnitSystem unitSystem = FormatUtils.UnitSystem.Metric;
+        private FormatUtils.UnitSystem unitSystem = FormatUtils.UnitSystem.METRIC;
         private String message = "Foo";
         private Integer number = 42;
 

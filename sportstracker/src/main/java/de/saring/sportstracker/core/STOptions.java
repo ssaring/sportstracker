@@ -1,7 +1,7 @@
 package de.saring.sportstracker.core;
 
 import de.saring.exerciseviewer.core.EVOptions;
-import de.saring.util.unitcalc.FormatUtils.SpeedView;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import de.saring.util.unitcalc.FormatUtils.UnitSystem;
 
 import java.io.Serializable;
@@ -33,8 +33,11 @@ public class STOptions implements EVOptions, Serializable {
     /** This is the unit system used in GUI. */
     private UnitSystem unitSystem;
 
-    /** This is the speed view system used in GUI. */
-    private SpeedView speedView;
+    /**
+     * This is the preferred speed display mode used in GUI (speed or pace).
+     * It's being used when the speed display of a specific sport type can't be used.
+     */
+    private SpeedMode preferredSpeedMode;
 
     /** This is the value which will be calculated automatically by default. */
     private AutoCalculation defaultAutoCalcuation;
@@ -87,8 +90,8 @@ public class STOptions implements EVOptions, Serializable {
      */
     public STOptions() {
         this.initialView = View.Calendar;
-        this.unitSystem = UnitSystem.Metric;
-        this.speedView = SpeedView.DistancePerHour;
+        this.unitSystem = UnitSystem.METRIC;
+        this.preferredSpeedMode = SpeedMode.SPEED;
         this.defaultAutoCalcuation = AutoCalculation.Duration;
         this.saveOnExit = false;
         this.displaySecondChart = false;
@@ -119,12 +122,12 @@ public class STOptions implements EVOptions, Serializable {
         this.unitSystem = unitSystem;
     }
 
-    public SpeedView getSpeedView() {
-        return speedView;
+    public SpeedMode getPreferredSpeedMode() {
+        return preferredSpeedMode;
     }
 
-    public void setSpeedView(SpeedView speedView) {
-        this.speedView = speedView;
+    public void setPreferredSpeedMode(SpeedMode preferredSpeedMode) {
+        this.preferredSpeedMode = preferredSpeedMode;
     }
 
     public AutoCalculation getDefaultAutoCalcuation() {

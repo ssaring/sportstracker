@@ -47,7 +47,7 @@ public class WeightViewModel {
 
         // convert weight value when english unit system is enabled
         this.unitSystem = unitSystem;
-        if (unitSystem == FormatUtils.UnitSystem.English) {
+        if (unitSystem == FormatUtils.UnitSystem.ENGLISH) {
             this.value.set((float) ConvertUtils.convertKilogram2Lbs(weight.getValue()));
         }
     }
@@ -65,7 +65,7 @@ public class WeightViewModel {
         weight.setComment(StringUtils.getTrimmedTextOrNull(comment.getValue()));
 
         // convert weight value when english unit system is enabled
-        if (unitSystem == FormatUtils.UnitSystem.English) {
+        if (unitSystem == FormatUtils.UnitSystem.ENGLISH) {
             weight.setValue((float) ConvertUtils.convertLbs2Kilogram(weight.getValue()));
         }
         return weight;

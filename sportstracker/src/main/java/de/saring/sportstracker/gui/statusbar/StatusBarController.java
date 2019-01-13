@@ -1,5 +1,7 @@
 package de.saring.sportstracker.gui.statusbar;
 
+import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import javafx.scene.control.Label;
 
 import javax.inject.Inject;
@@ -9,6 +11,7 @@ import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.unitcalc.CalculationUtils;
+
 
 /**
  * Controller (MVC)of the status bar of the SportsTracker application window.
@@ -73,9 +76,10 @@ public class StatusBarController {
 
             // build status bar text
             final String strCount = String.valueOf(selectedExerciseIds.length);
+            final SpeedMode speedMode = document.getSpeedModeForExercises(selectedExerciseIds);
             final String strDistance = context.getFormatUtils().distanceToString(sumDistance, 3);
-            final String strAVGSpeed = context.getFormatUtils().speedToString(sumAvgSpeed, 3);
-            final String strDuration = context.getFormatUtils().seconds2TimeString(sumDuration);
+            final String strAVGSpeed = context.getFormatUtils().speedToString(sumAvgSpeed, 3, speedMode);
+            final String strDuration = FormatUtils.seconds2TimeString(sumDuration);
             statusText = context.getResources().getString("st.view.statusbar", //
                     strCount, strDistance, strAVGSpeed, strDuration);
         }

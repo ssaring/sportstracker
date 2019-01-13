@@ -32,7 +32,7 @@ public class PreferencesViewModel {
     public final BooleanProperty saveOnExit;
 
     public final ObjectProperty<FormatUtils.UnitSystem> unitSystem;
-    public final ObjectProperty<FormatUtils.SpeedView> speedView;
+    public final ObjectProperty<FormatUtils.SpeedMode> preferredSpeedMode;
     public final ObjectProperty<WeekStart> weekStart;
 
     public final BooleanProperty listViewShowAvgHeartrate;
@@ -57,7 +57,7 @@ public class PreferencesViewModel {
         this.saveOnExit = new SimpleBooleanProperty(options.isSaveOnExit());
 
         this.unitSystem = new SimpleObjectProperty<>(options.getUnitSystem());
-        this.speedView = new SimpleObjectProperty<>(options.getSpeedView());
+        this.preferredSpeedMode = new SimpleObjectProperty<>(options.getPreferredSpeedMode());
         this.weekStart = new SimpleObjectProperty<>(options.isWeekStartSunday() ? WeekStart.SUNDAY : WeekStart.MONDAY);
 
         this.listViewShowAvgHeartrate = new SimpleBooleanProperty(options.isListViewShowAvgHeartrate());
@@ -83,7 +83,7 @@ public class PreferencesViewModel {
         options.setSaveOnExit(saveOnExit.get());
 
         options.setUnitSystem(unitSystem.get());
-        options.setSpeedView(speedView.get());
+        options.setPreferredSpeedMode(preferredSpeedMode.get());
         options.setWeekStartSunday(weekStart.get() == WeekStart.SUNDAY);
 
         options.setListViewShowAvgHeartrate(listViewShowAvgHeartrate.get());

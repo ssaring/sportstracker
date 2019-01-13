@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,6 +28,7 @@ import de.saring.sportstracker.storage.IStorage;
 import de.saring.util.XmlBeanStorage;
 import de.saring.util.data.IdObject;
 import de.saring.util.data.IdObjectListChangeListener;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 
 /**
  * This class contains all document (MVC) related data and functionality of the
@@ -273,7 +275,8 @@ public class STDocumentImpl implements STDocument {
     public void readApplicationData() throws STException {
         try {
             // read application data from XML files
-            sportTypeList = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST);
+            sportTypeList = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
+                    options.getPreferredSpeedMode());
             exerciseList = storage.readExerciseList(dataDirectory + "/" + FILENAME_EXERCISE_LIST, sportTypeList);
             noteList = storage.readNoteList(dataDirectory + "/" + FILENAME_NOTE_LIST);
             weightList = storage.readWeightList(dataDirectory + "/" + FILENAME_WEIGHT_LIST);
@@ -314,5 +317,21 @@ public class STDocumentImpl implements STDocument {
         exerciseList.addListChangeListener(listener);
         noteList.addListChangeListener(listener);
         weightList.addListChangeListener(listener);
+    }
+
+    @Override
+    public SpeedMode getSpeedModeForExercises(final int[] exerciseIds) {
+
+        if (exerciseIds == null || exerciseIds.length == 0) {
+            throw new IllegalArgumentException("Empty exerciseIds!");
+        }
+
+        final List<SpeedMode> speedModes = IntStream.of(exerciseIds)
+                .mapToObj(exerciseId -> getExerciseList().getByID(exerciseId))
+                .map(exercise -> exercise.getSportType().getSpeedMode())
+                .distinct()
+                .collect(Collectors.toList());
+
+        return speedModes.size() == 1 ? speedModes.get(0) : getOptions().getPreferredSpeedMode();
     }
 }

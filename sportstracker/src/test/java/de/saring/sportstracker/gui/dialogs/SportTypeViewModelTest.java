@@ -3,6 +3,8 @@ package de.saring.sportstracker.gui.dialogs;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.gui.dialogs.SportTypeDialogController.SpeedModeItem;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import javafx.scene.paint.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,7 @@ public class SportTypeViewModelTest {
         sportType = new SportType(123);
         sportType.setName("Foo Bar");
         sportType.setRecordDistance(false);
+        sportType.setSpeedMode(SpeedMode.PACE);
         sportType.setColor(Color.color(0.8d, 0.7d, 0.6d));
         sportType.setIcon("fooBar.png");
 
@@ -45,6 +48,7 @@ public class SportTypeViewModelTest {
         assertEquals(sportType.getId(), unmodifiedSportType.getId());
         assertEquals(sportType.getName(), unmodifiedSportType.getName());
         assertEquals(sportType.isRecordDistance(), unmodifiedSportType.isRecordDistance());
+        assertEquals(sportType.getSpeedMode(), unmodifiedSportType.getSpeedMode());
         assertEquals(sportType.getColor(), unmodifiedSportType.getColor());
         assertEquals(sportType.getIcon(), unmodifiedSportType.getIcon());
 
@@ -66,6 +70,7 @@ public class SportTypeViewModelTest {
 
         viewModel.name.set("  Bar Foo  ");
         viewModel.recordDistance.set(true);
+        viewModel.speedMode.set(SpeedModeItem.SPEED.SPEED);
         viewModel.color.set(Color.color(1.0d, 0.5d, 0d));
 
         viewModel.sportSubtypes.removeByID(200);
@@ -74,6 +79,7 @@ public class SportTypeViewModelTest {
         SportType modifiedSportType = viewModel.getSportType();
         assertEquals("Bar Foo", modifiedSportType.getName());
         assertTrue(modifiedSportType.isRecordDistance());
+        assertEquals(SpeedMode.SPEED, modifiedSportType.getSpeedMode());
         assertEquals(Color.color(1.0d, 0.5d, 0d), modifiedSportType.getColor());
 
         assertEquals(1, modifiedSportType.getSportSubTypeList().size());

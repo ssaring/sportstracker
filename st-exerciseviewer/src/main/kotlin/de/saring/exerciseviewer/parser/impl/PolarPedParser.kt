@@ -3,7 +3,6 @@ package de.saring.exerciseviewer.parser.impl
 import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.data.ExerciseSpeed
-import de.saring.exerciseviewer.data.RecordingMode
 import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
 import de.saring.util.unitcalc.CalculationUtils
@@ -25,7 +24,7 @@ import java.time.format.DateTimeFormatter
  */
 class PolarPedParser : AbstractExerciseParser() {
 
-    private val formatUtils = FormatUtils(FormatUtils.UnitSystem.Metric, FormatUtils.SpeedView.DistancePerHour)
+    private val formatUtils = FormatUtils(FormatUtils.UnitSystem.METRIC)
 
     private val namespace = Namespace.getNamespace("http://www.polarpersonaltrainer.com")
 
@@ -75,7 +74,7 @@ class PolarPedParser : AbstractExerciseParser() {
 
         // Exercise Duration
         val duration = formatDuration(eResult.getChildText("duration", namespace))
-        val exerciseDuration = formatUtils.timeString2TotalSeconds(duration)
+        val exerciseDuration = FormatUtils.timeString2TotalSeconds(duration)
         exercise.duration = exerciseDuration * 10
 
         // Distance

@@ -12,32 +12,26 @@ import java.text.NumberFormat;
 public class FormatUtils {
 
     /**
-     * This is the list of possible unit systems. Metric units are e.g.
-     * kilometers for distance or celcius for temperature. English units are
-     * e.g. miles for distance and fahrenheit for temperature.
+     * This is the list of possible unit systems. Metric units are e.g. kilometers for distance or celcius for
+     * temperature. English units are e.g. miles for distance and fahrenheit for temperature.
      */
     public enum UnitSystem {
-        Metric, English
+        METRIC, ENGLISH
     }
 
     /**
-     * This is the list of possible speed unit views. Distance per hour (e.g.
-     * km/h) is mostly used for all kind of sports, but minutes per distance
-     * (e.g. m/km) is very common for runners.
+     * Enumeration of supported speed display or measurement modes. Speed means distance per hour (e.g. km/h), pace
+     * means minutes per distance (e.g. min/km). The use of pace is very common for running activities, most other
+     * sport types are using the speed.
      */
-    public enum SpeedView {
-        DistancePerHour, MinutesPerDistance
+    public enum SpeedMode {
+        SPEED, PACE
     }
 
     /**
      * The current unit system used by the formater.
      */
     private final UnitSystem unitSystem;
-
-    /**
-     * The current speed view used by the formater.
-     */
-    private final SpeedView speedView;
 
     /**
      * The number format instance.
@@ -48,11 +42,9 @@ public class FormatUtils {
      * Creates a new FormatUtils instance for the specified unit system.
      *
      * @param unitSystem the unit system to be used
-     * @param speedView the speed view to be used
      */
-    public FormatUtils(UnitSystem unitSystem, SpeedView speedView) {
+    public FormatUtils(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
-        this.speedView = speedView;
         this.numberFormat = NumberFormat.getInstance();
     }
 
@@ -66,53 +58,33 @@ public class FormatUtils {
     }
 
     /**
-     * Returns the current speed view.
-     *
-     * @return the current speed view
-     */
-    public SpeedView getSpeedView() {
-        return speedView;
-    }
-
-    /**
      * Returns the String representation of the current distance unit.
      *
      * @return the current distance unit name
      */
     public String getDistanceUnitName() {
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return "m";
-            case Metric:
+            case METRIC:
             default:
                 return "km";
         }
     }
 
     /**
-     * Returns the String representation of the current speed unit.
+     * Returns the String representation of the current speed unit for the specified speed mode.
      *
+     * @param speedMode speed mode
      * @return the current speed unit name
      */
-    public String getSpeedUnitName() {
+    public String getSpeedUnitName(SpeedMode speedMode) {
         switch (this.unitSystem) {
-            case English:
-                switch (this.speedView) {
-                    case MinutesPerDistance:
-                        return "min/m";
-                    case DistancePerHour:
-                    default:
-                        return "mph";
-                }
-            case Metric:
+            case ENGLISH:
+                return speedMode == SpeedMode.SPEED ? "mph" : "min/m";
+            case METRIC:
             default:
-                switch (this.speedView) {
-                    case MinutesPerDistance:
-                        return "min/km";
-                    case DistancePerHour:
-                    default:
-                        return "km/h";
-                }
+                return speedMode == SpeedMode.SPEED ? "km/h" : "min/km";
         }
     }
 
@@ -123,9 +95,9 @@ public class FormatUtils {
      */
     public String getTemperatureUnitName() {
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return "F";
-            case Metric:
+            case METRIC:
             default:
                 return "C";
         }
@@ -138,9 +110,9 @@ public class FormatUtils {
      */
     public String getAltitudeUnitName() {
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return "ft";
-            case Metric:
+            case METRIC:
             default:
                 return "m";
         }
@@ -153,9 +125,9 @@ public class FormatUtils {
      */
     public String getWeightUnitName() {
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return "lbs";
-            case Metric:
+            case METRIC:
             default:
                 return "kg";
         }
@@ -167,7 +139,7 @@ public class FormatUtils {
      * @param minutes minutes to convert
      * @return the created time String
      */
-    public String minutes2TimeString(int minutes) {
+    public static String minutes2TimeString(int minutes) {
         int hourPart = minutes / 60;
         int minutePart = minutes % 60;
 
@@ -191,7 +163,7 @@ public class FormatUtils {
      * @param seconds seconds to convert
      * @return the created time String
      */
-    public String seconds2TimeString(int seconds) {
+    public static String seconds2TimeString(int seconds) {
         int secondPart = seconds % 60;
 
         StringBuilder sBuilder = new StringBuilder();
@@ -211,7 +183,7 @@ public class FormatUtils {
      * @param seconds seconds to convert
      * @return the created time String
      */
-    public String seconds2MinuteTimeString(int seconds) {
+    public static String seconds2MinuteTimeString(int seconds) {
         int secondPart = seconds % 60;
         int minutePart = seconds / 60;
 
@@ -239,7 +211,7 @@ public class FormatUtils {
      * @param tenthSeconds 1/10 seconds to convert
      * @return the created time String
      */
-    public String tenthSeconds2TimeString(int tenthSeconds) {
+    public static String tenthSeconds2TimeString(int tenthSeconds) {
         int tenthSecondPart = tenthSeconds % 10;
 
         StringBuilder sBuilder = new StringBuilder();
@@ -260,7 +232,7 @@ public class FormatUtils {
      * @return the number of seconds represented by the time String or -1 on
      *         errors
      */
-    public int timeString2TotalSeconds(String time) {
+    public static int timeString2TotalSeconds(String time) {
         if ((time == null) || (time.length() == 0)) {
             return -1;
         }
@@ -319,10 +291,10 @@ public class FormatUtils {
     public String temperatureToString(short temperature) {
         numberFormat.setMaximumFractionDigits(0);
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return numberFormat.format(ConvertUtils.convertCelsius2Fahrenheit(
                         temperature)) + " " + getTemperatureUnitName();
-            case Metric:
+            case METRIC:
             default:
                 return numberFormat.format(temperature) + " " + getTemperatureUnitName();
         }
@@ -340,9 +312,9 @@ public class FormatUtils {
     public String distanceToStringWithoutUnitName(double distance, int decimals) {
         numberFormat.setMaximumFractionDigits(decimals);
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return numberFormat.format(ConvertUtils.convertKilometer2Miles(distance, false));
-            case Metric:
+            case METRIC:
             default:
                 return numberFormat.format(distance);
         }
@@ -367,31 +339,32 @@ public class FormatUtils {
      *
      * @param speed speed in km/h
      * @param decimals the number of decimals (fraction digits) to show
+     * @param speedMode speed mode
      * @return a String representation of the speed
      */
-    public String speedToStringWithoutUnitName(float speed, int decimals) {
+    public String speedToStringWithoutUnitName(float speed, int decimals, SpeedMode speedMode) {
         numberFormat.setMaximumFractionDigits(decimals);
         switch (this.unitSystem) {
-            case English:
-                switch (this.speedView) {
-                    case MinutesPerDistance:
+            case ENGLISH:
+                switch (speedMode) {
+                    case PACE:
                         if (speed == 0) {
                             return "N/A";
                         }
                         return seconds2MinuteTimeString((int) (3600 / ConvertUtils.convertKilometer2Miles(speed, false)));
-                    case DistancePerHour:
+                    case SPEED:
                     default:
                         return numberFormat.format(ConvertUtils.convertKilometer2Miles(speed, false));
                 }
-            case Metric:
+            case METRIC:
             default:
-                switch (this.speedView) {
-                    case MinutesPerDistance:
+                switch (speedMode) {
+                    case PACE:
                         if (speed == 0) {
                             return "N/A";
                         }
                         return seconds2MinuteTimeString((int) (3600 / speed));
-                    case DistancePerHour:
+                    case SPEED:
                     default:
                         return numberFormat.format(speed);
                 }
@@ -404,13 +377,14 @@ public class FormatUtils {
      *
      * @param speed speed in km/h
      * @param decimals the number of decimals (fraction digits) to show
+     * @param speedMode speed mode
      * @return a String representation of the speed
      */
-    public String speedToString(float speed, int decimals) {
+    public String speedToString(float speed, int decimals, SpeedMode speedMode) {
         if (speed == 0) {
-            return speedToStringWithoutUnitName(speed, decimals);
+            return speedToStringWithoutUnitName(speed, decimals, speedMode);
         } else {
-            return speedToStringWithoutUnitName(speed, decimals) + " " + getSpeedUnitName();
+            return speedToStringWithoutUnitName(speed, decimals, speedMode) + " " + getSpeedUnitName(speedMode);
         }
     }
 
@@ -425,9 +399,9 @@ public class FormatUtils {
     public String heightToStringWithoutUnitName(int height) {
         numberFormat.setMaximumFractionDigits(0);
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return numberFormat.format(ConvertUtils.convertMeter2Feet(height));
-            case Metric:
+            case METRIC:
             default:
                 return numberFormat.format(height);
         }
@@ -491,9 +465,9 @@ public class FormatUtils {
     public String weightToStringWithoutUnitName(float weight, int maxFractionDigits) {
         numberFormat.setMaximumFractionDigits(maxFractionDigits);
         switch (this.unitSystem) {
-            case English:
+            case ENGLISH:
                 return numberFormat.format(ConvertUtils.convertKilogram2Lbs(weight));
-            case Metric:
+            case METRIC:
             default:
                 return numberFormat.format(weight);
         }

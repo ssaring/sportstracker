@@ -5,6 +5,7 @@ import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.WeightList;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 
 import javax.inject.Singleton;
 
@@ -37,8 +38,8 @@ public class XMLStorage implements IStorage {
     }
 
     @Override
-    public SportTypeList readSportTypeList(String source) throws STException {
-        return xmlSportTypeList.readSportTypeList(source);
+    public SportTypeList readSportTypeList(String source, SpeedMode defaultSpeedMode) throws STException {
+        return xmlSportTypeList.readSportTypeList(source, defaultSpeedMode);
     }
 
     @Override

@@ -104,6 +104,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
 
         // start SportType dialog for a new created SportType object
         final SportType newSportType = new SportType(document.getSportTypeList().getNewID());
+        newSportType.setSpeedMode(document.getOptions().getPreferredSpeedMode());
         prSportTypeDialogController.get().show(getWindow(liSportTypes), newSportType);
         updateSportTypeList();
     }

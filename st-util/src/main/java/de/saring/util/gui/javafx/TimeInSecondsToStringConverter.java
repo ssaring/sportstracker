@@ -11,23 +11,12 @@ import javafx.util.StringConverter;
  */
 public class TimeInSecondsToStringConverter extends StringConverter<Number> {
 
-    private final FormatUtils formatUtils;
-
-    /**
-     * Standard c'tor.
-     *
-     * @param formatUtils FormatUtils to use for conversion
-     */
-    public TimeInSecondsToStringConverter (final FormatUtils formatUtils) {
-        this.formatUtils = formatUtils;
-    }
-
     @Override
     public String toString(final Number nValue) {
         if (nValue == null) {
             return "";
         }
-        return formatUtils.seconds2TimeString(nValue.intValue());
+        return FormatUtils.seconds2TimeString(nValue.intValue());
     }
 
     @Override
@@ -35,6 +24,6 @@ public class TimeInSecondsToStringConverter extends StringConverter<Number> {
         if (strValue == null) {
             return -1;
         }
-        return formatUtils.timeString2TotalSeconds(strValue.trim());
+        return FormatUtils.timeString2TotalSeconds(strValue.trim());
     }
 }

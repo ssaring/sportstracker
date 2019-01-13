@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.gui.dialogs.SportTypeDialogController.SpeedModeItem;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObjectList;
 
@@ -25,6 +26,7 @@ public class SportTypeViewModel {
     public final int id;
     public final StringProperty name;
     public final BooleanProperty recordDistance;
+    public final ObjectProperty<SpeedModeItem> speedMode;
     public final StringProperty icon;
     public final ObjectProperty<Color> color;
 
@@ -41,6 +43,7 @@ public class SportTypeViewModel {
         this.id = sportType.getId();
         this.name = new SimpleStringProperty(sportType.getName());
         this.recordDistance = new SimpleBooleanProperty(sportType.isRecordDistance());
+        this.speedMode = new SimpleObjectProperty<>(SpeedModeItem.findBySpeedMode(sportType.getSpeedMode()));
         this.icon = new SimpleStringProperty(sportType.getIcon());
         this.color = new SimpleObjectProperty<>(sportType.getColor() == null ? Color.BLACK : sportType.getColor());
 
@@ -57,6 +60,7 @@ public class SportTypeViewModel {
         final SportType sportType = new SportType(id);
         sportType.setName(name.getValue().trim());
         sportType.setRecordDistance(recordDistance.getValue());
+        sportType.setSpeedMode(speedMode.getValue().getSpeedMode());
         sportType.setIcon(StringUtils.getTrimmedTextOrNull(icon.getValue()));
         sportType.setColor(color.getValue());
 

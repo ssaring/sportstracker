@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 
 /**
  * Controller (MVC) class of the dialog for displaying the results for the calculated exercise statistics.
@@ -75,8 +76,8 @@ public class StatisticResultDialogController extends AbstractDialogController {
     @FXML
     private Label laMaxEnergyValue;
 
-    /** The calculated statistic results to be displayed. */
     private StatisticCalculator statisticResult;
+    private SpeedMode speedMode;
 
 
     /**
@@ -94,9 +95,11 @@ public class StatisticResultDialogController extends AbstractDialogController {
      *
      * @param parent parent window of the dialog
      * @param statisticResult statistic results to display
+     * @param speedMode speed mode for showing the results
      */
-    public void show(final Window parent, final StatisticCalculator statisticResult) {
+    public void show(final Window parent, final StatisticCalculator statisticResult, SpeedMode speedMode) {
         this.statisticResult = statisticResult;
+        this.speedMode = speedMode;
 
         showInfoDialog("/fxml/dialogs/StatisticResultDialog.fxml", parent,
                 context.getResources().getString("st.dlg.statistic_results.title"));
@@ -115,7 +118,7 @@ public class StatisticResultDialogController extends AbstractDialogController {
         // display total values
         laTotalExercisesValue.setText(String.valueOf(statisticResult.getExerciseCount()));
         laTotalDistanceValue.setText(formatUtils.distanceToString(statisticResult.getTotalDistance(), 2));
-        laTotalDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getTotalDuration()) + " (hh:mm:ss)");
+        laTotalDurationValue.setText(FormatUtils.seconds2TimeString(statisticResult.getTotalDuration()) + " (hh:mm:ss)");
         laTotalAscentValue.setText(formatUtils.heightToString(statisticResult.getTotalAscent()));
         laTotalDescentValue.setText(formatUtils.heightToString(statisticResult.getTotalDescent()));
         laTotalEnergyValue.setText(statisticResult.getTotalCalories() > 0 ?
@@ -123,8 +126,8 @@ public class StatisticResultDialogController extends AbstractDialogController {
 
         // display average values
         laAvgDistanceValue.setText(formatUtils.distanceToString(statisticResult.getAvgDistance(), 2));
-        laAvgAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getAvgSpeed(), 2));
-        laAvgDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getAvgDuration()) + " (hh:mm:ss)");
+        laAvgAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getAvgSpeed(), 2, speedMode));
+        laAvgDurationValue.setText(FormatUtils.seconds2TimeString(statisticResult.getAvgDuration()) + " (hh:mm:ss)");
         laAvgAscentValue.setText(formatUtils.heightToString(statisticResult.getAvgAscent()));
         laAvgDescentValue.setText(formatUtils.heightToString(statisticResult.getAvgDescent()));
         laAvgAvgHeartrateValue.setText(statisticResult.getAvgHeartRate() > 0 ?
@@ -134,8 +137,8 @@ public class StatisticResultDialogController extends AbstractDialogController {
 
         // display minimum values
         laMinDistanceValue.setText(formatUtils.distanceToString(statisticResult.getMinDistance(), 2));
-        laMinAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getMinAvgSpeed(), 2));
-        laMinDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getMinDuration()) + " (hh:mm:ss)");
+        laMinAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getMinAvgSpeed(), 2, speedMode));
+        laMinDurationValue.setText(FormatUtils.seconds2TimeString(statisticResult.getMinDuration()) + " (hh:mm:ss)");
         laMinAscentValue.setText(formatUtils.heightToString(statisticResult.getMinAscent()));
         laMinDescentValue.setText(formatUtils.heightToString(statisticResult.getMinDescent()));
         laMinAvgHeartrateValue.setText(statisticResult.getMinAvgHeartRate() > 0 ?
@@ -145,8 +148,8 @@ public class StatisticResultDialogController extends AbstractDialogController {
 
         // display maximum values
         laMaxDistanceValue.setText(formatUtils.distanceToString(statisticResult.getMaxDistance(), 2));
-        laMaxAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getMaxAvgSpeed(), 2));
-        laMaxDurationValue.setText(formatUtils.seconds2TimeString(statisticResult.getMaxDuration()) + " (hh:mm:ss)");
+        laMaxAvgSpeedValue.setText(formatUtils.speedToString(statisticResult.getMaxAvgSpeed(), 2, speedMode));
+        laMaxDurationValue.setText(FormatUtils.seconds2TimeString(statisticResult.getMaxDuration()) + " (hh:mm:ss)");
         laMaxAscentValue.setText(formatUtils.heightToString(statisticResult.getMaxAscent()));
         laMaxDescentValue.setText(formatUtils.heightToString(statisticResult.getMaxDescent()));
         laMaxAvgHeartrateValue.setText(statisticResult.getMaxAvgHeartRate() > 0 ?

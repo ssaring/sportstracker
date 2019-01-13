@@ -47,11 +47,11 @@ public class PreferencesDialogController extends AbstractDialogController {
     @FXML
     private ToggleGroup tgUnitSystem;
     @FXML
-    private RadioButton rbSpeedUnitDistance;
+    private RadioButton rbSpeedModeSpeed;
     @FXML
-    private RadioButton rbSpeedUnitMinutes;
+    private RadioButton rbSpeedModePace;
     @FXML
-    private ToggleGroup tgSpeedView;
+    private ToggleGroup tgSpeedMode;
     @FXML
     private RadioButton rbWeekStartMonday;
     @FXML
@@ -118,7 +118,7 @@ public class PreferencesDialogController extends AbstractDialogController {
         cbSaveOnExit.selectedProperty().bindBidirectional(preferencesViewModel.saveOnExit);
 
         BindingUtils.bindToggleGroupToProperty(tgUnitSystem, preferencesViewModel.unitSystem);
-        BindingUtils.bindToggleGroupToProperty(tgSpeedView, preferencesViewModel.speedView);
+        BindingUtils.bindToggleGroupToProperty(tgSpeedMode, preferencesViewModel.preferredSpeedMode);
         BindingUtils.bindToggleGroupToProperty(tgWeekStart, preferencesViewModel.weekStart);
 
         cbOptionalAvgHeartrate.selectedProperty().bindBidirectional(preferencesViewModel.listViewShowAvgHeartrate);
@@ -147,11 +147,11 @@ public class PreferencesDialogController extends AbstractDialogController {
         rbInitialViewCalendar.setUserData(STOptions.View.Calendar);
         rbInitialViewExerciseList.setUserData(STOptions.View.List);
 
-        rbUnitsMetric.setUserData(FormatUtils.UnitSystem.Metric);
-        rbUnitsEnglish.setUserData(FormatUtils.UnitSystem.English);
+        rbUnitsMetric.setUserData(FormatUtils.UnitSystem.METRIC);
+        rbUnitsEnglish.setUserData(FormatUtils.UnitSystem.ENGLISH);
 
-        rbSpeedUnitDistance.setUserData(FormatUtils.SpeedView.DistancePerHour);
-        rbSpeedUnitMinutes.setUserData(FormatUtils.SpeedView.MinutesPerDistance);
+        rbSpeedModeSpeed.setUserData(FormatUtils.SpeedMode.SPEED);
+        rbSpeedModePace.setUserData(FormatUtils.SpeedMode.PACE);
 
         rbWeekStartMonday.setUserData(PreferencesViewModel.WeekStart.MONDAY);
         rbWeekStartSunday.setUserData(PreferencesViewModel.WeekStart.SUNDAY);

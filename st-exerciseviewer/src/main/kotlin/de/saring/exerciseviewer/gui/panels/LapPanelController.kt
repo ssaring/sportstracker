@@ -5,6 +5,7 @@ import de.saring.exerciseviewer.gui.EVContext
 import de.saring.exerciseviewer.gui.EVDocument
 import de.saring.util.gui.javafx.FormattedNumberCellFactory
 import de.saring.util.gui.javafx.NumberCellFactory
+import de.saring.util.unitcalc.FormatUtils
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control.Label
@@ -80,10 +81,10 @@ class LapPanelController(
         // setup custom number cell factories for all table columns
         tcLap.cellFactory = NumberCellFactory()
         tcLapTime.cellFactory = FormattedNumberCellFactory {
-            if (it == null) null else context.formatUtils.tenthSeconds2TimeString(it.toInt())
+            if (it == null) null else FormatUtils.tenthSeconds2TimeString(it.toInt())
         }
         tcSplitTime.cellFactory = FormattedNumberCellFactory {
-            if (it == null) null else context.formatUtils.tenthSeconds2TimeString(it.toInt())
+            if (it == null) null else FormatUtils.tenthSeconds2TimeString(it.toInt())
         }
         tcHeartrate.cellFactory = FormattedNumberCellFactory {
             if (it == null) null else context.formatUtils.heartRateToString(it.toInt())
@@ -95,13 +96,16 @@ class LapPanelController(
             if (it == null) null else context.formatUtils.heartRateToString(it.toInt())
         }
         tcEndSpeed.cellFactory = FormattedNumberCellFactory {
-            if (it == null) null else context.formatUtils.speedToString(it.toFloat(), 2)
+            if (it == null) null
+            else context.formatUtils.speedToString(it.toFloat(), 2, document.speedMode)
         }
         tcAvgSpeed.cellFactory = FormattedNumberCellFactory {
-            if (it == null) null else context.formatUtils.speedToString(it.toFloat(), 2)
+            if (it == null) null
+            else context.formatUtils.speedToString(it.toFloat(), 2, document.speedMode)
         }
         tcDistance.cellFactory = FormattedNumberCellFactory {
-            if (it == null) null else context.formatUtils.distanceToString(it.toInt() / 1000.0, 3)
+            if (it == null) null
+            else context.formatUtils.distanceToString(it.toInt() / 1000.0, 3)
         }
         tcCadence.cellFactory = FormattedNumberCellFactory {
             if (it == null) null else context.formatUtils.cadenceToString(it.toInt())

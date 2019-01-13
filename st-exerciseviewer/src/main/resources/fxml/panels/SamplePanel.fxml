@@ -14,9 +14,9 @@
                 <TableColumn fx:id="tcTime" prefWidth="90.0" text="%pv.samples.time"/>
                 <TableColumn fx:id="tcHeartrate" prefWidth="90.0" text="%pv.samples.heartrate"/>
                 <TableColumn fx:id="tcAltitude" prefWidth="90.0" text="%pv.samples.altitude"/>
-                <TableColumn fx:id="tcSpeed" prefWidth="100.0" text="%pv.samples.speed"/>
+                <TableColumn fx:id="tcSpeed" prefWidth="110.0" text="%pv.samples.speed"/>
                 <TableColumn fx:id="tcDistance" prefWidth="100.0" text="%pv.samples.distance"/>
-                <TableColumn fx:id="tcCadence" prefWidth="90" text="%pv.samples.cadence"/>
+                <TableColumn fx:id="tcCadence" prefWidth="110" text="%pv.samples.cadence"/>
                 <TableColumn fx:id="tcTemperature" prefWidth="90" text="%pv.samples.temperature"/>
             </columns>
         </TableView>

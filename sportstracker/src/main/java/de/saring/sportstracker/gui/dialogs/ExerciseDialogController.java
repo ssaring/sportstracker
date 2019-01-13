@@ -26,11 +26,11 @@ import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.StringUtils;
 import de.saring.util.ValidationUtils;
 import de.saring.util.gui.javafx.NameableStringConverter;
-import de.saring.util.gui.javafx.SpeedToStringConverter;
 import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
 import de.saring.util.gui.javafx.TimeToStringConverter;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -175,7 +175,8 @@ public class ExerciseDialogController extends AbstractDialogController {
      *                             (e.g. when dropping exercise files to main window)
      */
     public void show(final Window parent, final Exercise exercise, boolean importHrmFileOnStart) {
-        this.exerciseViewModel = new ExerciseViewModel(exercise, document.getOptions().getUnitSystem());
+        this.exerciseViewModel = new ExerciseViewModel(
+                exercise, context.getFormatUtils(), document.getOptions().getPreferredSpeedMode());
         this.importHrmFileOnStart = importHrmFileOnStart;
 
         // if no equipment is specified for exercise => use dummy equipment "none"
@@ -195,7 +196,8 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         // insert unit names in input labels with placeholders
         laDistance.setText(String.format(laDistance.getText(), context.getFormatUtils().getDistanceUnitName()));
-        laAvgSpeed.setText(String.format(laAvgSpeed.getText(), context.getFormatUtils().getSpeedUnitName()));
+        laAvgSpeed.setText(String.format(laAvgSpeed.getText(),
+                context.getFormatUtils().getSpeedUnitName(document.getOptions().getPreferredSpeedMode())));
         laAscent.setText(String.format(laAscent.getText(), context.getFormatUtils().getAltitudeUnitName()));
         laDescent.setText(String.format(laDescent.getText(), context.getFormatUtils().getAltitudeUnitName()));
 
@@ -262,10 +264,8 @@ public class ExerciseDialogController extends AbstractDialogController {
         cbSportSubtype.valueProperty().bindBidirectional(exerciseViewModel.sportSubType);
         cbIntensity.valueProperty().bindBidirectional(exerciseViewModel.intensity);
         tfDistance.textProperty().bindBidirectional(exerciseViewModel.distance, new NumberStringConverter());
-        tfAvgSpeed.textProperty().bindBidirectional(exerciseViewModel.avgSpeed,
-                new SpeedToStringConverter(context.getFormatUtils()));
-        tfDuration.textProperty().bindBidirectional(exerciseViewModel.duration,
-                new TimeInSecondsToStringConverter(context.getFormatUtils()));
+        tfAvgSpeed.textProperty().bindBidirectional(exerciseViewModel.avgSpeed);
+        tfDuration.textProperty().bindBidirectional(exerciseViewModel.duration, new TimeInSecondsToStringConverter());
 
         tfAscent.textProperty().bindBidirectional(exerciseViewModel.ascent, new NumberStringConverter());
         tfDescent.textProperty().bindBidirectional(exerciseViewModel.descent, new NumberStringConverter());
@@ -298,8 +298,8 @@ public class ExerciseDialogController extends AbstractDialogController {
                                 exerciseViewModel.sportTypeRecordDistance.get() ? 0.001f : 0, Float.MAX_VALUE)));
         validationSupport.registerValidator(tfAvgSpeed, true, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfAvgSpeed, context.getResources().getString("st.dlg.exercise.error.avg_speed"),
-                        !ValidationUtils.isValueDoubleBetween(newValue,
-                                exerciseViewModel.sportTypeRecordDistance.get() ? 0.001f : 0, Float.MAX_VALUE)));
+                        !ValidationUtils.isValueSpeed(newValue, exerciseViewModel.getSpeedConverter(),
+                                exerciseViewModel.sportTypeRecordDistance.get())));
         validationSupport.registerValidator(tfDuration, true, (Control control, String newValue) ->
                 ValidationResult.fromErrorIf(tfDuration, context.getResources().getString("st.dlg.exercise.error.duration"),
                         !ValidationUtils.isValueTimeInSecondsBetween(newValue, 1, Integer.MAX_VALUE)));
@@ -437,7 +437,11 @@ public class ExerciseDialogController extends AbstractDialogController {
 
         final String hrmFile = StringUtils.getTrimmedTextOrNull(exerciseViewModel.hrmFile.getValue());
         if (hrmFile != null) {
-            dialogProvider.prExerciseViewer.get().showExercise(hrmFile, context.getPrimaryStage(), true);
+
+            final SportType selectedSportType = exerciseViewModel.sportType.get();
+            final SpeedMode speedMode = selectedSportType == null ?
+                    document.getOptions().getPreferredSpeedMode() : selectedSportType.getSpeedMode();
+            dialogProvider.prExerciseViewer.get().showExercise(hrmFile, context.getPrimaryStage(), true, speedMode);
         }
     }
 
@@ -486,13 +490,13 @@ public class ExerciseDialogController extends AbstractDialogController {
                         importedDuration);
             } else {
                 exerciseViewModel.distance.set(0f);
-                exerciseViewModel.avgSpeed.set(0f);
+                exerciseViewModel.setAvgSpeedFloatValue(0f);
                 exerciseViewModel.duration.set(importedDuration);
             }
         }
         else {
             exerciseViewModel.distance.set(0f);
-            exerciseViewModel.avgSpeed.set(0f);
+            exerciseViewModel.setAvgSpeedFloatValue(0f);
             exerciseViewModel.duration.set(0);
         }
 
@@ -501,7 +505,7 @@ public class ExerciseDialogController extends AbstractDialogController {
             exerciseViewModel.ascent.set(evExercise.getAltitude().getAscent());
             exerciseViewModel.descent.set(evExercise.getAltitude().getDescent());
 
-            if (document.getOptions().getUnitSystem() == FormatUtils.UnitSystem.English) {
+            if (document.getOptions().getUnitSystem() == FormatUtils.UnitSystem.ENGLISH) {
                 exerciseViewModel.ascent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.ascent.get()));
                 exerciseViewModel.descent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.descent.get()));
             }

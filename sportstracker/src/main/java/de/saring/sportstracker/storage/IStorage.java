@@ -5,6 +5,7 @@ import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.WeightList;
+import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 
 /**
  * This interface defines methods for reading / storing of the application
@@ -19,10 +20,11 @@ public interface IStorage {
      * Reads the sport type list from the data source.
      *
      * @param source name of data source
+     * @param defaultSpeedMode default speed mode to be set when not specified in the data source
      * @return the created SportTypeList
      * @throws STException thrown on read problems
      */
-    SportTypeList readSportTypeList(String source) throws STException;
+    SportTypeList readSportTypeList(String source, SpeedMode defaultSpeedMode) throws STException;
 
     /**
      * Writes the sport type list to the data destination.

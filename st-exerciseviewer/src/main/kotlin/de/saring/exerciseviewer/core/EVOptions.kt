@@ -1,6 +1,5 @@
 package de.saring.exerciseviewer.core
 
-import de.saring.util.unitcalc.FormatUtils.SpeedView
 import de.saring.util.unitcalc.FormatUtils.UnitSystem
 
 /**
@@ -15,11 +14,6 @@ interface EVOptions {
      * The unit system to be used in the GUI.
      */
     val unitSystem: UnitSystem
-
-    /**
-     * The speed view system to be used in GUI.
-     */
-    val speedView: SpeedView
 
     /**
      * This flag is true, when the second chart should always be displayed in the diagram panel (data must be available).

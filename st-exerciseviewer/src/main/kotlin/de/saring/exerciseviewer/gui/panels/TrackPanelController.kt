@@ -80,7 +80,7 @@ class TrackPanelController(
         mapView = LeafletMapView()
         spMapViewer.children.add(mapView)
 
-        val metric = document.options.unitSystem == FormatUtils.UnitSystem.Metric
+        val metric = document.options.unitSystem == FormatUtils.UnitSystem.METRIC
 
         mapConfig = MapConfig(
                 listOf(MapLayer.OPENSTREETMAP, MapLayer.OPENCYCLEMAP, MapLayer.HIKE_BIKE_MAP, MapLayer.MTB_MAP),
@@ -217,7 +217,7 @@ class TrackPanelController(
         appendToolTipLine(sb, "pv.track.tooltip.trackpoint", (sampleIndex + 1).toString())
 
         sample.timestamp?.let {
-            appendToolTipLine(sb, "pv.track.tooltip.time", formatUtils.seconds2TimeString((it / 1000).toInt()))
+            appendToolTipLine(sb, "pv.track.tooltip.time", FormatUtils.seconds2TimeString((it / 1000).toInt()))
         }
         sample.distance?.let {
             appendToolTipLine(sb, "pv.track.tooltip.distance", formatUtils.distanceToString((it / 1000f).toDouble(), 3))
@@ -229,7 +229,7 @@ class TrackPanelController(
             appendToolTipLine(sb, "pv.track.tooltip.heartrate", formatUtils.heartRateToString(it.toInt()))
         }
         sample.speed?.let {
-            appendToolTipLine(sb, "pv.track.tooltip.speed", formatUtils.speedToString(it, 2))
+            appendToolTipLine(sb, "pv.track.tooltip.speed", formatUtils.speedToString(it, 2, document.speedMode))
         }
         sample.temperature?.let {
             appendToolTipLine(sb, "pv.track.tooltip.temperature", formatUtils.temperatureToString(it))
