@@ -217,7 +217,7 @@ class TrackPanelController(
         appendToolTipLine(sb, "pv.track.tooltip.trackpoint", (sampleIndex + 1).toString())
 
         sample.timestamp?.let {
-            appendToolTipLine(sb, "pv.track.tooltip.time", formatUtils.seconds2TimeString((it / 1000).toInt()))
+            appendToolTipLine(sb, "pv.track.tooltip.time", FormatUtils.seconds2TimeString((it / 1000).toInt()))
         }
         sample.distance?.let {
             appendToolTipLine(sb, "pv.track.tooltip.distance", formatUtils.distanceToString((it / 1000f).toDouble(), 3))

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.saring.sportstracker.gui.views.ViewPrinter;
+import de.saring.util.unitcalc.FormatUtils;
 import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -152,7 +153,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         // setup custom factories for displaying cells
         tcDate.setCellFactory(new LocalDateCellFactory<>());
         tcDuration.setCellFactory(new FormattedNumberCellFactory<>(value -> //
-                value == null ? null : getContext().getFormatUtils().seconds2TimeString(value.intValue())));
+                value == null ? null : FormatUtils.seconds2TimeString(value.intValue())));
         tcIntensity.setCellFactory(new IntensityCellFactory());
         tcDistance.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().distanceToString(value.doubleValue(), 3)));

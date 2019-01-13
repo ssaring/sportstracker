@@ -140,7 +140,7 @@ public class FormatUtils {
      * @param minutes minutes to convert
      * @return the created time String
      */
-    public String minutes2TimeString(int minutes) {
+    public static String minutes2TimeString(int minutes) {
         int hourPart = minutes / 60;
         int minutePart = minutes % 60;
 
@@ -164,7 +164,7 @@ public class FormatUtils {
      * @param seconds seconds to convert
      * @return the created time String
      */
-    public String seconds2TimeString(int seconds) {
+    public static String seconds2TimeString(int seconds) {
         int secondPart = seconds % 60;
 
         StringBuilder sBuilder = new StringBuilder();
@@ -184,7 +184,7 @@ public class FormatUtils {
      * @param seconds seconds to convert
      * @return the created time String
      */
-    public String seconds2MinuteTimeString(int seconds) {
+    public static String seconds2MinuteTimeString(int seconds) {
         int secondPart = seconds % 60;
         int minutePart = seconds / 60;
 
@@ -212,7 +212,7 @@ public class FormatUtils {
      * @param tenthSeconds 1/10 seconds to convert
      * @return the created time String
      */
-    public String tenthSeconds2TimeString(int tenthSeconds) {
+    public static String tenthSeconds2TimeString(int tenthSeconds) {
         int tenthSecondPart = tenthSeconds % 10;
 
         StringBuilder sBuilder = new StringBuilder();
@@ -233,7 +233,7 @@ public class FormatUtils {
      * @return the number of seconds represented by the time String or -1 on
      *         errors
      */
-    public int timeString2TotalSeconds(String time) {
+    public static int timeString2TotalSeconds(String time) {
         if ((time == null) || (time.length() == 0)) {
             return -1;
         }

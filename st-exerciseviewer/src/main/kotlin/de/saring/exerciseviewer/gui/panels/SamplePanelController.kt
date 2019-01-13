@@ -4,6 +4,7 @@ import de.saring.exerciseviewer.data.ExerciseSample
 import de.saring.exerciseviewer.gui.EVContext
 import de.saring.exerciseviewer.gui.EVDocument
 import de.saring.util.gui.javafx.FormattedNumberCellFactory
+import de.saring.util.unitcalc.FormatUtils
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control.Label
@@ -58,7 +59,7 @@ class SamplePanelController(
         // setup custom number cell factories for all table columns
 
         tcTime.cellFactory = FormattedNumberCellFactory {
-            if (it != null) context.formatUtils.seconds2TimeString(it.toInt() / 1000) else null
+            if (it != null) FormatUtils.seconds2TimeString(it.toInt() / 1000) else null
         }
 
         tcHeartrate.cellFactory = FormattedNumberCellFactory {

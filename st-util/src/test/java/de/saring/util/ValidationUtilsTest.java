@@ -1,5 +1,7 @@
 package de.saring.util;
 
+import de.saring.util.unitcalc.SpeedToStringConverter;
+import de.saring.util.unitcalc.FormatUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -136,5 +138,44 @@ public class ValidationUtilsTest {
         assertFalse(ValidationUtils.isValueTimeInSecondsBetween("0a:10:10", 0, 3600));
         assertFalse(ValidationUtils.isValueTimeInSecondsBetween("0:1a:10", 0, 3600));
         assertFalse(ValidationUtils.isValueTimeInSecondsBetween("0::10", 0, 3600));
+    }
+
+    /**
+     * Tests the method isValueSpeed() for success conditions.
+     */
+    @Test
+    public void testIsValueSpeedSuccess() {
+
+        SpeedToStringConverter speedConverterSpeed = new SpeedToStringConverter(FormatUtils.SpeedMode.SPEED);
+        assertTrue(ValidationUtils.isValueSpeed("0", speedConverterSpeed, false));
+        assertTrue(ValidationUtils.isValueSpeed("12", speedConverterSpeed, true));
+        assertTrue(ValidationUtils.isValueSpeed("12.234", speedConverterSpeed, true));
+
+        SpeedToStringConverter speedConverterPace = new SpeedToStringConverter(FormatUtils.SpeedMode.PACE);
+        assertTrue(ValidationUtils.isValueSpeed("00:00", speedConverterPace, false));
+        assertTrue(ValidationUtils.isValueSpeed("00:01", speedConverterPace, true));
+        assertTrue(ValidationUtils.isValueSpeed("05:30", speedConverterPace, true));
+        assertTrue(ValidationUtils.isValueSpeed("05", speedConverterPace, true));
+    }
+
+    /**
+     * Tests the method isValueSpeed() for failure conditions.
+     */
+    @Test
+    public void testIsValueSpeedFailed() {
+
+        SpeedToStringConverter speedConverterSpeed = new SpeedToStringConverter(FormatUtils.SpeedMode.SPEED);
+        assertFalse(ValidationUtils.isValueSpeed("12", speedConverterSpeed, false));
+        assertFalse(ValidationUtils.isValueSpeed("0", speedConverterSpeed, true));
+        assertFalse(ValidationUtils.isValueSpeed(null, speedConverterSpeed, true));
+        assertFalse(ValidationUtils.isValueSpeed("", speedConverterSpeed, true));
+        assertFalse(ValidationUtils.isValueSpeed("-1", speedConverterSpeed, true));
+
+        SpeedToStringConverter speedConverterPace = new SpeedToStringConverter(FormatUtils.SpeedMode.PACE);
+        assertFalse(ValidationUtils.isValueSpeed("05:30", speedConverterPace, false));
+        assertFalse(ValidationUtils.isValueSpeed("00:00", speedConverterPace, true));
+        assertFalse(ValidationUtils.isValueSpeed("5", speedConverterPace, true));
+        assertFalse(ValidationUtils.isValueSpeed("-05:30", speedConverterPace, true));
+        assertFalse(ValidationUtils.isValueSpeed("05 30", speedConverterPace, true));
     }
 }

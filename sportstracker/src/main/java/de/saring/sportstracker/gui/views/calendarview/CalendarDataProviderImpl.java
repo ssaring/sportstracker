@@ -84,7 +84,7 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
             // add formatted distance and duration strings
             final FormatUtils formatUtils = context.getFormatUtils();
             summaryLines.add(formatUtils.distanceToString(summaryDistance, 2));
-            summaryLines.add(formatUtils.seconds2TimeString(summaryDuration));
+            summaryLines.add(FormatUtils.seconds2TimeString(summaryDuration));
         }
 
         return summaryLines;
@@ -124,7 +124,7 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
         if (exercise.getSportType().isRecordDistance()) {
             sbText.append(formatUtils.distanceToString(exercise.getDistance(), 2)).append(", ");
         }
-        sbText.append(formatUtils.minutes2TimeString(exercise.getDuration() / 60));
+        sbText.append(FormatUtils.minutes2TimeString(exercise.getDuration() / 60));
 
         final StringBuilder sbToolTip = new StringBuilder();
         sbToolTip.append(resources.getString("st.calview.exe_tooltip.sport_type")) //
@@ -142,7 +142,7 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
         }
 
         sbToolTip.append(resources.getString("st.calview.exe_tooltip.duration")) //
-                .append(" ").append(formatUtils.seconds2TimeString(exercise.getDuration()));
+                .append(" ").append(FormatUtils.seconds2TimeString(exercise.getDuration()));
 
         return new CalendarEntry(exercise, sbText.toString(), sbToolTip.toString(), exercise.getSportType().getColor());
     }

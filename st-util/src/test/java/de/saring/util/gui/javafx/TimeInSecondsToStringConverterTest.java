@@ -2,7 +2,6 @@ package de.saring.util.gui.javafx;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import de.saring.util.unitcalc.FormatUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -12,8 +11,7 @@ import org.junit.jupiter.api.Test;
  */
 public class TimeInSecondsToStringConverterTest {
 
-    private static final TimeInSecondsToStringConverter CONVERTER =
-            new TimeInSecondsToStringConverter(new FormatUtils(null));
+    private static final TimeInSecondsToStringConverter CONVERTER = new TimeInSecondsToStringConverter();
 
     /**
      * Tests of method toString().
