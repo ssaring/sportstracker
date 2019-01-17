@@ -1,18 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Bug on macOS 10.14 or newer:
-- Problem: SportsTracker application crashes when displaying a dialog window
-- Cause: it's a JavaFX bug, occurs only on macOS 10.14 or newer
-- Bug report: https://bugs.openjdk.java.net/browse/JDK-8211304
-- Bugfix available for OpenJFX 12 EA, has been backported to OpenJFX 11.0.2 (not released yet)
-- Temporary solution: updated JavaFX to version 12-ea+6 (pre-release)
-  -> tests were positive, no crashes anymore & 12-ea+6 seems to be quite stable
-- Alternative manual workaround for macOS 10.14 users:
-  - Open "System Preferences" and select "Security > Privacy > Accessibility"
-  - Add the installed SportsTracker application to the list
-- TODO: SWITCH BACK TO OPENJFX 11.0.2 WHEN IT HAS BEEN RELEASED!
-
 Java 11 migration:
 - Done: Build and tests are green. SportsTracker is running without problems.
 - Open issue: JDK 11 does not provide the javapackager tool aynmore
