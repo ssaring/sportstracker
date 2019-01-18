@@ -6,10 +6,11 @@ Java 11 migration:
 - Open issue: JDK 11 does not provide the javapackager tool aynmore
   - currently it's not possible to build native packages
   - wait for JEP 343: Packaging Tool, see https://openjdk.java.net/jeps/343
-    (could be shipped with JDK 12)
+    (could be shipped with JDK 13)
   - backport / prerelease of jpackager for JDK 11 is available from Gluon,
     it's usable with workarounds, contains minor bugs - see
     https://medium.com/@adam_carroll/java-packager-with-jdk11-31b3d620f4a8
+  - workaround: use my packager scripts from ST-Packaging (uses the backport)
 
 Java 9/10 migration:
 - works fine with JDK 10 (no build or test errors and no execution problems)
