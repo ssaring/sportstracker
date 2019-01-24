@@ -31,7 +31,9 @@ v7.5.1:
    - when speed mode has not been set for a sport type yet, then the preferred
      speed mode will be used
  ExerciseViewer changes:
- - GarminFitParser: ported to Kotlin (incl. tests)
+ - GarminFitParser:
+   - ported to Kotlin (incl. tests)
+   - added basic support for swimming exercices
  - TopoGrafixGpxParser: added support for parsing GPX files with partial
    altitude data (GitHub issue #191)
  - updated Garmin FIT SDK library to version 20.80.00

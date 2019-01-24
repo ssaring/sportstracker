@@ -191,20 +191,23 @@ internal class FitMessageListener : MesgListener {
 
     /**
      * Special handling for Garmin Forerunner 910XT exercise files: Length messages are stored mostly in swimming
-     * exercises, they contain informations for a "length". For some reason the previous read Record message does
-     * not contain any timing informations, these are contained in the Length messages. So the end timestamp must
+     * exercises, they contain information for a "length". For some reason the previous read Record message does
+     * not contain any timing information, these are contained in the Length messages. So the end timestamp must
      * be read and assigned to the last read sample record here.
      *
      * @param mesg Length message
      */
     private fun readLengthMessage(mesg: LengthMesg) {
+        // swimming exercises of Garmin Forerunner 645 don't contain any samples
+        if (lSamples.isNotEmpty()) {
 
-        val startTimestamp = mesg.startTime.date.time
-        val totalElapsedTime = Math.round(mesg.totalElapsedTime.toDouble() * 1000.0)
-        val endTimestamp = startTimestamp + totalElapsedTime
+            val startTimestamp = mesg.startTime.date.time
+            val totalElapsedTime = Math.round(mesg.totalElapsedTime.toDouble() * 1000.0)
+            val endTimestamp = startTimestamp + totalElapsedTime
 
-        val lastSample = lSamples[lSamples.size - 1]
-        lastSample.timestamp = endTimestamp
+            val lastSample = lSamples[lSamples.size - 1]
+            lastSample.timestamp = endTimestamp
+        }
     }
 
     /**
