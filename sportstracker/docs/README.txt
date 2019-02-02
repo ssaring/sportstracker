@@ -385,7 +385,7 @@ multi project), so it's not possible to create circular module dependencies.
   - st-util: 
     Component with common util classes for calculation, UI and more
   - st-packager:
-    Module for creating native application packages for distribution (uses Ant)
+    Module for creating native application packages for distribution
   - leafletmap:
     Module for the JavaFX wrapper component of the Leaflet map viewer
 
@@ -517,4 +517,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2019/01/24
+2019/02/02

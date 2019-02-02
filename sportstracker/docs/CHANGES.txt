@@ -30,6 +30,11 @@ v7.5.1:
      speed data and in the Exercise Viewer when showing HRM files
    - when speed mode has not been set for a sport type yet, then the preferred
      speed mode will be used
+ - implemented new automatic SportsTracker package and installer creation for
+   macOS, Linux and Windows
+   - old Ant-based packaging doesn't work anymore, has been removed from JDK 11
+   - new packaging uses a backport of the upcoming jpackager tool (JEP 343)
+   - see directory st-packager for further details
  ExerciseViewer changes:
  - GarminFitParser:
    - ported to Kotlin (incl. tests)
