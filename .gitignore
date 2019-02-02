@@ -18,8 +18,8 @@ target
 *.ipr
 *.iws
 nbactions.xml
-st-packager/app
-st-packager/deploy
+st-packager/build
+st-packager/package
 
 # switch to regexp syntax
 syntax: regexp

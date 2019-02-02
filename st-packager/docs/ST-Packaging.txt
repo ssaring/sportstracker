@@ -9,7 +9,6 @@ TODO before release
   * copy the files to build and doc files automatically in the scripts
 * update this doc, reuse PACKAGER-OLD
 * remove PACKAGER-OLD
-* ignore the directories build and package for commits (.gitignore)
 * close branch
 * remove local ST-Packaging project / backups
 
