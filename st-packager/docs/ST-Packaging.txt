@@ -4,11 +4,9 @@ SportsTracker packaging (macOS, Linux, Windows)
 TODO before release
 -------------------
 
-* all scripts (done for macOS):
-  * use a constant for the version
-  * copy the files to build and doc files automatically in the scripts
 * update this doc, reuse PACKAGER-OLD
 * remove PACKAGER-OLD
+* add to changelog
 * close branch
 * remove local ST-Packaging project / backups
 
