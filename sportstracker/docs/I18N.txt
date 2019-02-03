@@ -45,7 +45,7 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
-SportsTracker 7.5.1:
+SportsTracker 7.6.0:
 
 - st.exerciselistview.descent (new)
 - st.dlg.exercise.descent.text (new)
