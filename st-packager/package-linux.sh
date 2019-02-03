@@ -5,7 +5,7 @@ JPACKAGER_DIR=./jdk.packager-linux
 BUILD_DIR=./build
 PACKAGE_DIR=./package
 
-ST_VERSION=7.5.1-SNAPSHOT
+ST_VERSION=7.6.0
 
 # cleanup
 rm -fr $BUILD_DIR
