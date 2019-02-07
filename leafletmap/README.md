@@ -56,6 +56,8 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Changelog
 
+LeafletMap 1.0.4:
+
 LeafletMap 1.0.3:
 
 * Updated to JDK 11 (JDK 9 and JDK 10 are not supported by Oracle anymore)
