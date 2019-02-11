@@ -2,6 +2,8 @@ Changelog
 ---------
 
 v7.6.1:
+ SportsTracker changes:
+ - updated JUnit 5 to version 5.4.0
 
 v7.6.0:
  SportsTracker changes:

@@ -19,7 +19,7 @@
         <application.mainClass>de.saring.sportstracker.STMain</application.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javafx.version>11.0.2</javafx.version>
-        <junit.version>5.1.0</junit.version>
+        <junit.version>5.4.0</junit.version>
     </properties>
     
     <modules>
@@ -76,6 +76,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.23.0</version>
@@ -96,23 +102,14 @@
                 </configuration>
             </plugin>
 
-            <!-- Surefire setup for proper JUnit 5 test execution (does not work by default yet) -->
+            <!-- Surefire and Failsafe plugins are needed for proper JUnit 5 test execution -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <!-- Surefire plugin version 2.20 has a bug, no tests will be executed then -->
-                <version>2.19.1</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.platform</groupId>
-                        <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.1.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.junit.jupiter</groupId>
-                        <artifactId>junit-jupiter-engine</artifactId>
-                        <version>${junit.version}</version>
-                    </dependency>
-                </dependencies>
+                <version>2.22.0</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.0</version>
             </plugin>
         </plugins>
     </build>
