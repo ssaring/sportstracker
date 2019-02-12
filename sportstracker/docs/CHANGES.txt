@@ -4,6 +4,9 @@ Changelog
 v7.6.1:
  SportsTracker changes:
  - updated JUnit 5 to version 5.4.0
+ - Kotlin language can now be used in all SportsTracker Maven modules
+   (was limited to st-exerciseviewer before)
+ - updated Kotlin to version 1.3.21
 
 v7.6.0:
  SportsTracker changes:
