@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 class SemanticVersionTest {
 
     /**
-     * Tests of method compareTo() where both versions are equal.
+     * Tests of method compareTo(): both versions are equal.
      */
     @Test
     fun testCompareToEquals() {
@@ -56,6 +56,16 @@ class SemanticVersionTest {
                 SemanticVersion(1, 0, 0).compareTo(SemanticVersion(0, 9, 9)))
         assertEquals(1,
                 SemanticVersion(14, 13, 12).compareTo(SemanticVersion(12, 13, 14)))
+    }
+
+    /**
+     * Tests of method toString().
+     */
+    @Test
+    fun testToString() {
+
+        assertEquals("0.0.1", SemanticVersion(0, 0, 1).toString())
+        assertEquals("123.456.789", SemanticVersion(123, 456, 789).toString())
     }
 
     /**

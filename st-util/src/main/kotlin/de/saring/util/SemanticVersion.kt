@@ -31,6 +31,8 @@ data class SemanticVersion(
         return this.patch.compareTo(other.patch)
     }
 
+    override fun toString() = "$major.$minor.$patch"
+
     companion object {
 
         /**

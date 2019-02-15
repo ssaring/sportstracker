@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import de.saring.exerciseviewer.core.EVOptions;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.sportstracker.core.STException;
-import de.saring.sportstracker.core.STOptions;
+import de.saring.sportstracker.gui.update.STUpdateChecker;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.sportstracker.storage.XMLStorage;
 import de.saring.util.gui.javafx.WindowBoundsPersistence;
@@ -29,6 +29,7 @@ public class STApplication extends Application {
     private STDocument document;
     private STContext context;
     private STController controller;
+    private STUpdateChecker updateChecker;
 
     private Stage primaryStage;
 
@@ -57,6 +58,7 @@ public class STApplication extends Application {
         context.setFormatUtils(new FormatUtils(options.getUnitSystem()));
 
         controller = easyDI.getInstance(STController.class);
+        updateChecker = easyDI.getInstance(STUpdateChecker.class);
     }
 
     @Override
@@ -104,6 +106,28 @@ public class STApplication extends Application {
 
         // load application data (executed in background)
         controller.loadApplicationData();
+
+        triggerUpdateCheck();
+    }
+
+    /**
+     * Triggers the check for SportsTracker application updates. The check is executed in background and waits a while
+     * to avoid startup delays and user bothering.
+     */
+    private void triggerUpdateCheck() {
+
+        final Thread updateCheckThread = new Thread(() -> {
+            try {
+                Thread.sleep(30 * 1000);
+                updateChecker.checkForUpdates();
+            }
+            catch (InterruptedException ie) {
+                LOGGER.log(Level.SEVERE, "Failed to sleep until executing update check!", ie);
+            }
+        });
+
+        updateCheckThread.setDaemon(true);
+        updateCheckThread.start();
     }
 
     /**
