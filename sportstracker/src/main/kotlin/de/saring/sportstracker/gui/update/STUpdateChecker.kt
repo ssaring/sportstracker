@@ -2,6 +2,8 @@ package de.saring.sportstracker.gui.update
 
 import de.saring.sportstracker.gui.STContext
 import de.saring.util.SemanticVersion
+import javafx.application.Platform
+import javafx.scene.control.Alert
 import java.util.logging.Logger
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,8 +21,12 @@ class STUpdateChecker @Inject constructor(
         val latestVersion = getLatestVersion()
 
         if (installedVersion < latestVersion) {
-            LOGGER.info("Update available, latest version is: $latestVersion")
-            // TODO context.showMessageDialog(...)
+            LOGGER.info("An update of SportsTracker is available, latest version is: $latestVersion")
+            Platform.runLater {
+                context.showMessageDialog(context.primaryStage, Alert.AlertType.INFORMATION,
+                        "common.info", "st.main.info.update_available",
+                        installedVersion, latestVersion)
+            }
         }
     }
 
