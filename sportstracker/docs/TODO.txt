@@ -3,10 +3,8 @@ SportsTracker-TODO
 
 - Update notification when a new SportsTracker version has been released:
 - Status (branch update_check)
-  - done, works properly
-- TODO
-  - add unit test for STUpdateChecker?
-  - pull request, close dev branch
+  - done, works properly, tests are available
+- TODO: pull request, close dev branch
 
 Java 9/10/11 migration:
 - works fine with JDK 10 (no build or test errors and no execution problems)

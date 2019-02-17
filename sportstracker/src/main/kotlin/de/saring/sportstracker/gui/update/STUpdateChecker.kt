@@ -22,7 +22,7 @@ import javax.inject.Singleton
  * @author Stefan Saring
  */
 @Singleton
-class STUpdateChecker @Inject constructor(
+open class STUpdateChecker @Inject constructor(
         private val context: STContext) {
 
     /**
@@ -37,11 +37,7 @@ class STUpdateChecker @Inject constructor(
 
         if (installedVersion < latestVersion) {
             LOGGER.info("An update of SportsTracker is available, latest version is: $latestVersion")
-            Platform.runLater {
-                context.showMessageDialog(context.primaryStage, Alert.AlertType.INFORMATION,
-                        "common.info", "st.main.info.update_available",
-                        installedVersion, latestVersion)
-            }
+            displayUpdateInformation(installedVersion, latestVersion)
         }
     }
 
@@ -51,7 +47,7 @@ class STUpdateChecker @Inject constructor(
      *
      * @return the latest version number or version 0.0.0 in case of errors
      */
-    private fun getLatestVersion(): SemanticVersion {
+    internal open fun getLatestVersion(): SemanticVersion {
         val client = HttpClient.newHttpClient()
 
         try {
@@ -74,6 +70,14 @@ class STUpdateChecker @Inject constructor(
         }
 
         return SemanticVersion(0, 0, 0)
+    }
+
+    internal open fun displayUpdateInformation(installedVersion: SemanticVersion, latestVersion: SemanticVersion) {
+        Platform.runLater {
+            context.showMessageDialog(context.primaryStage, Alert.AlertType.INFORMATION,
+                    "common.info", "st.main.info.update_available",
+                    installedVersion, latestVersion)
+        }
     }
 
     companion object {
