@@ -10,8 +10,6 @@ Java 9/10/11 migration:
   - currently for Swing apps only
   - JavaFX support might be added after Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
 
-- Add an update notification when a new SportsTracker version has been released
-
 SportsTracker packaging:
 - JDK 11 does not provide the javapackager tool aynmore, so packaging has been
   rewritten by using the upcoming jpackager tool (JEP 343)

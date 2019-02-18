@@ -45,6 +45,10 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 7.6.1:
+
+- st.main.info.update_available (new)
+
 SportsTracker 7.6.0:
 
 - st.exerciselistview.descent (new)
