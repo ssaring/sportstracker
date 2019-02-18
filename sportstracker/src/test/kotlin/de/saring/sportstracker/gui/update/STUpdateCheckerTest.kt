@@ -1,11 +1,11 @@
 package de.saring.sportstracker.gui.update
 
 import de.saring.sportstracker.gui.STContext
+import de.saring.sportstracker.util.MockitoKotlin.any
 import de.saring.util.AppResources
 import de.saring.util.SemanticVersion
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.doNothing
 import org.mockito.Mockito.doReturn
@@ -68,10 +68,4 @@ class STUpdateCheckerTest {
 
         verify(updateCheckerSpy, never()).displayUpdateInformation(any(), any())
     }
-
-    /**
-     * Workaround for Mockito problems in Kotlin: returns Mockito.any() as nullable type to avoid
-     * java.lang.IllegalStateException when null is returned.
-     */
-    private fun <T> any(): T = Mockito.any<T>()
 }
