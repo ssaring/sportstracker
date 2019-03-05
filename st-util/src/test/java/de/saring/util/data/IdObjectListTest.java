@@ -87,24 +87,6 @@ public class IdObjectListTest {
     }
 
     /**
-     * Test of set method set() of class IdObjectList: must fail on null.
-     */
-    @Test
-    public void setNull() {
-        assertThrows(NullPointerException.class, () ->
-            list.set(null));
-    }
-
-    /**
-     * Test of set method set() of class IdObjectList: must fail when ID = 0.
-     */
-    @Test
-    public void setIdZero() {
-        assertThrows(IllegalArgumentException.class, () ->
-            list.set(new NameObject(0, "Null")));
-    }
-
-    /**
      * Test of method clearAndAddAll(). The previous list content must be removed, the
      * list must contain only the new entries.
      */
@@ -119,29 +101,6 @@ public class IdObjectListTest {
         assertEquals(2, list.size());
         assertEquals("five", list.getAt(0).getName());
         assertEquals("six", list.getAt(1).getName());
-    }
-
-    /**
-     * Test of method clearAndAddAll(). Must fail when null is passed.
-     */
-    @Test
-    public void clearAndAddAllNull() {
-        assertThrows(NullPointerException.class, () ->
-            list.clearAndAddAll(null));
-    }
-
-    /**
-     * Test of method clearAndAddAll(). Must fail when an entry contain an invalid ID.
-     */
-    @Test
-    public void clearAndAddAllInvalidId() {
-
-        ArrayList<NameObject> tempEntries = new ArrayList<>();
-        tempEntries.add(new NameObject(5, "five"));
-        tempEntries.add(new NameObject(-6, "minus six"));
-
-        assertThrows(IllegalArgumentException.class, () ->
-            list.clearAndAddAll(tempEntries));
     }
 
     /**
@@ -167,16 +126,16 @@ public class IdObjectListTest {
     public void getNewID() {
 
         // ID's 1-3 in use => next needs to be 4
-        assertEquals(list.getNewID(), 4);
+        assertEquals(list.getNewId(), 4);
 
         // add ID's 4 and 6 to list => next needs to be 5
         list.set(new NameObject(4, "four"));
         list.set(new NameObject(6, "six"));
-        assertEquals(5, list.getNewID());
+        assertEquals(5, list.getNewId());
 
         // remove ID 2 from list => next needs to be 2
         list.removeByID(2);
-        assertEquals(2, list.getNewID());
+        assertEquals(2, list.getNewId());
     }
 
     /**

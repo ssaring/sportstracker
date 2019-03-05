@@ -92,9 +92,9 @@ public class STDocumentTest {
     }
 
     private int appendExerciseWithSpeedMode(SpeedMode speedMode) {
-        final Exercise exercise = new Exercise(document.getExerciseList().getNewID());
+        final Exercise exercise = new Exercise(document.getExerciseList().getNewId());
         exercise.setDateTime(LocalDateTime.now());
-        final SportType sportType = new SportType(document.getSportTypeList().getNewID());
+        final SportType sportType = new SportType(document.getSportTypeList().getNewId());
         sportType.setSpeedMode(speedMode);
         exercise.setSportType(sportType);
         document.getExerciseList().set(exercise);

@@ -226,7 +226,7 @@ public class SportTypeDialogController extends AbstractDialogController {
     private void onAddSportSubtype(final ActionEvent event) {
 
         // create a new SportSubType object and display in the edit dialog
-        final SportSubType newSubType = new SportSubType(sportTypeViewModel.sportSubtypes.getNewID());
+        final SportSubType newSubType = new SportSubType(sportTypeViewModel.sportSubtypes.getNewId());
         editSportSubType(newSubType);
     }
 
@@ -343,7 +343,7 @@ public class SportTypeDialogController extends AbstractDialogController {
     private void onAddEquipment(final ActionEvent event) {
 
         // create a new Equipment object and display in the edit dialog
-        Equipment newEquipment = new Equipment(sportTypeViewModel.equipments.getNewID());
+        Equipment newEquipment = new Equipment(sportTypeViewModel.equipments.getNewId());
         editEquipment(newEquipment);
     }
 

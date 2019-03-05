@@ -128,7 +128,7 @@ public class IdObjectListChangeListenerTest {
         assertEquals(2, idObjectList.getAt(1).getId());
         assertEquals(2, idObjectList.getByID(2).getId());
         assertEquals(2, idObjectList.indexOf(idObjectList.getAt(2)));
-        assertEquals(4, idObjectList.getNewID());
+        assertEquals(4, idObjectList.getNewId());
         assertEquals(3, idObjectList.size());
         assertEquals(1, idObjectList.iterator().next().getId());
 

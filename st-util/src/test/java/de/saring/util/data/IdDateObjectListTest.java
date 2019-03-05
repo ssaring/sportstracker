@@ -93,47 +93,6 @@ public class IdDateObjectListTest {
     }
 
     /**
-     * Test of method clearAndAddAll(). Must fail when null is passed.
-     */
-    @Test
-    public void clearAndAddAllNull() {
-        assertThrows(NullPointerException.class, () ->
-                list.clearAndAddAll(null));
-    }
-
-    /**
-     * Test of method clearAndAddAll(). Must fail when an entry contain an invalid ID.
-     */
-    @Test
-    public void clearAndAddAllInvalidId() {
-
-        ArrayList<DateNameObject> tempEntries = new ArrayList<>();
-        list.set(new DateNameObject(5, LocalDateTime.of(2009, 02, 05, 21, 30, 0), "five"));
-
-
-        assertThrows(IllegalArgumentException.class, () ->
-                list.set(new DateNameObject(-6, LocalDateTime.of(2009, 02, 01, 21, 30, 0), "minus six")));
-    }
-
-    /**
-     * Test of set(): must fail when the entry is null.
-     */
-    @Test
-    public void testSetNull() {
-        assertThrows(NullPointerException.class, () ->
-                list.set(null));
-    }
-
-    /**
-     * Test of set(): must fail when date is null.
-     */
-    @Test
-    public void testSetDateNull() {
-        assertThrows(NullPointerException.class, () ->
-            list.set(new DateNameObject(4, null, "four")));
-    }
-
-    /**
      * Test of getEntriesInDateRange(): must find all entries, the date range
      * includes the earliest and latest entry.
      */
@@ -159,15 +118,6 @@ public class IdDateObjectListTest {
 
         assertEquals(1, lFound.size());
         assertEquals("one", lFound.get(0).getName());
-    }
-
-    /**
-     * Test of getEntriesInDateRange(): must fail when one of the dates is null.
-     */
-    @Test
-    public void testGetEntriesInDateRangeNull() {
-        assertThrows(NullPointerException.class, () ->
-            list.getEntriesInDateRange(LocalDate.now(), null));
     }
 
     /**

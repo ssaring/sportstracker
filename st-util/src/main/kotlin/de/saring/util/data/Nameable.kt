@@ -1,16 +1,16 @@
-package de.saring.util.data;
+package de.saring.util.data
 
 /**
  * Interface for objects which have a name.
  *
  * @author Stefan Saring
  */
-public interface Nameable {
+interface Nameable {
 
     /**
      * Returns the name of the instance.
      *
      * @return name
      */
-    String getName();
+    fun getName(): String
 }
