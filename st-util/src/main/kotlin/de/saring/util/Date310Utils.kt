@@ -1,24 +1,20 @@
-package de.saring.util;
+package de.saring.util
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.temporal.WeekFields;
-import java.util.Date;
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.temporal.WeekFields
+import java.util.Date
 
 /**
  * This util class contains several methods for date and time conversion related to new JSR 310 DateTime API.
  *
  * @author Stefan Saring
- * @version 1.0
  */
-public final class Date310Utils {
-
-    private Date310Utils() {
-    }
+object Date310Utils {
 
     /**
      * Converts the specified Date object to LocalDateTime.
@@ -26,9 +22,10 @@ public final class Date310Utils {
      * @param date Date object containing the date and time
      * @return the created LocalDateTime (JSR 310)
      */
-    public static LocalDateTime dateToLocalDateTime(final Date date) {
-        final Instant instant = Instant.ofEpochMilli(date.getTime());
-        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+    @JvmStatic
+    fun dateToLocalDateTime(date: Date): LocalDateTime {
+        val instant = Instant.ofEpochMilli(date.time)
+        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
     }
 
     /**
@@ -37,9 +34,10 @@ public final class Date310Utils {
      * @param dateTime LocalDateTime object containing the date and time (JSR 310)
      * @return the created Date
      */
-    public static Date localDateTimeToDate(final LocalDateTime dateTime) {
-        final Instant instant = dateTime.atZone(ZoneId.systemDefault()).toInstant();
-        return Date.from(instant);
+    @JvmStatic
+    fun localDateTimeToDate(dateTime: LocalDateTime): Date {
+        val instant = dateTime.atZone(ZoneId.systemDefault()).toInstant()
+        return Date.from(instant)
     }
 
     /**
@@ -48,8 +46,9 @@ public final class Date310Utils {
      * @param date Date object containing the date
      * @return the created LocalDate (JSR 310)
      */
-    public static LocalDate dateToLocalDate(final Date date) {
-        return dateToLocalDateTime(date).toLocalDate();
+    @JvmStatic
+    fun dateToLocalDate(date: Date): LocalDate {
+        return dateToLocalDateTime(date).toLocalDate()
     }
 
     /**
@@ -58,8 +57,9 @@ public final class Date310Utils {
      * @param date LocalDate object containing the date (JSR 310)
      * @return the created Date with time fraction of 00:00:00
      */
-    public static Date localDateToDate(final LocalDate date) {
-        return localDateTimeToDate(date.atStartOfDay());
+    @JvmStatic
+    fun localDateToDate(date: LocalDate): Date {
+        return localDateTimeToDate(date.atStartOfDay())
     }
 
     /**
@@ -69,9 +69,10 @@ public final class Date310Utils {
      * @param weekStartsSunday flag whether the week starts on sunday or monday
      * @return week number (1 to 53)
      */
-    public static int getWeekNumber(final LocalDate date, final boolean weekStartsSunday) {
-        final WeekFields weekField = weekStartsSunday ? WeekFields.SUNDAY_START : WeekFields.ISO;
-        return date.get(weekField.weekOfWeekBasedYear());
+    @JvmStatic
+    fun getWeekNumber(date: LocalDate, weekStartsSunday: Boolean): Int {
+        val weekField = if (weekStartsSunday) WeekFields.SUNDAY_START else WeekFields.ISO
+        return date.get(weekField.weekOfWeekBasedYear())
     }
 
     /**
@@ -80,8 +81,9 @@ public final class Date310Utils {
      *
      * @return  the number of milliseconds
      */
-    public static long getMilliseconds(final LocalDateTime dateTime) {
-        return localDateTimeToDate(dateTime).getTime();
+    @JvmStatic
+    fun getMilliseconds(dateTime: LocalDateTime): Long {
+        return localDateTimeToDate(dateTime).time
     }
 
     /**
@@ -91,9 +93,10 @@ public final class Date310Utils {
      * @param date contains the date to be used (optional)
      * @return the created LocalDateTime
      */
-    public static LocalDateTime getNoonDateTimeForDate(final LocalDate date) {
-        final LocalDate tempDate = date == null ? LocalDate.now() : date;
-        return LocalDateTime.of(tempDate, LocalTime.of(12, 0));
+    @JvmStatic
+    fun getNoonDateTimeForDate(date: LocalDate?): LocalDateTime {
+        val tempDate = date ?: LocalDate.now()
+        return LocalDateTime.of(tempDate, LocalTime.of(12, 0))
     }
 
     /**
@@ -102,7 +105,8 @@ public final class Date310Utils {
      * @param dateTime LocalDateTime object containing the date and time (JSR 310)
      * @return Unix time
      */
-    public static long localDateTimeToUnixTime(final LocalDateTime dateTime) {
-        return dateTime.toInstant(ZoneOffset.UTC).getEpochSecond();
+    @JvmStatic
+    fun localDateTimeToUnixTime(dateTime: LocalDateTime): Long {
+        return dateTime.toInstant(ZoneOffset.UTC).epochSecond
     }
 }
