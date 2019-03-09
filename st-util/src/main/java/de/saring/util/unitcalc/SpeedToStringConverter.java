@@ -1,7 +1,5 @@
 package de.saring.util.unitcalc;
 
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
-
 import java.text.NumberFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

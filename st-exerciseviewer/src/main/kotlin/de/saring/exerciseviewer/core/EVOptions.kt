@@ -1,6 +1,6 @@
 package de.saring.exerciseviewer.core
 
-import de.saring.util.unitcalc.FormatUtils.UnitSystem
+import de.saring.util.unitcalc.UnitSystem
 
 /**
  * This interface defines all required options by the ExerciseViewer application.

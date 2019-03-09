@@ -2,6 +2,8 @@ package de.saring.sportstracker.gui.dialogs;
 
 import java.util.stream.Stream;
 
+import de.saring.util.unitcalc.SpeedMode;
+import de.saring.util.unitcalc.UnitSystem;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -16,7 +18,6 @@ import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.gui.javafx.BindingUtils;
-import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * Controller (MVC) class of the Preferences dialog for editing the application preferences / options.
@@ -147,11 +148,11 @@ public class PreferencesDialogController extends AbstractDialogController {
         rbInitialViewCalendar.setUserData(STOptions.View.Calendar);
         rbInitialViewExerciseList.setUserData(STOptions.View.List);
 
-        rbUnitsMetric.setUserData(FormatUtils.UnitSystem.METRIC);
-        rbUnitsEnglish.setUserData(FormatUtils.UnitSystem.ENGLISH);
+        rbUnitsMetric.setUserData(UnitSystem.METRIC);
+        rbUnitsEnglish.setUserData(UnitSystem.ENGLISH);
 
-        rbSpeedModeSpeed.setUserData(FormatUtils.SpeedMode.SPEED);
-        rbSpeedModePace.setUserData(FormatUtils.SpeedMode.PACE);
+        rbSpeedModeSpeed.setUserData(SpeedMode.SPEED);
+        rbSpeedModePace.setUserData(SpeedMode.PACE);
 
         rbWeekStartMonday.setUserData(PreferencesViewModel.WeekStart.MONDAY);
         rbWeekStartSunday.setUserData(PreferencesViewModel.WeekStart.SUNDAY);

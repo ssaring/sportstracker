@@ -1,6 +1,6 @@
 package de.saring.util
 
-import de.saring.util.unitcalc.FormatUtils
+import de.saring.util.unitcalc.SpeedMode
 import de.saring.util.unitcalc.SpeedToStringConverter
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -146,12 +146,12 @@ class ValidationUtilsTest {
     @Test
     fun testIsValueSpeedSuccess() {
 
-        val speedConverterSpeed = SpeedToStringConverter(FormatUtils.SpeedMode.SPEED)
+        val speedConverterSpeed = SpeedToStringConverter(SpeedMode.SPEED)
         assertTrue(ValidationUtils.isValueSpeed("0", speedConverterSpeed, false))
         assertTrue(ValidationUtils.isValueSpeed("12", speedConverterSpeed, true))
         assertTrue(ValidationUtils.isValueSpeed("12.234", speedConverterSpeed, true))
 
-        val speedConverterPace = SpeedToStringConverter(FormatUtils.SpeedMode.PACE)
+        val speedConverterPace = SpeedToStringConverter(SpeedMode.PACE)
         assertTrue(ValidationUtils.isValueSpeed("00:00", speedConverterPace, false))
         assertTrue(ValidationUtils.isValueSpeed("00:01", speedConverterPace, true))
         assertTrue(ValidationUtils.isValueSpeed("05:30", speedConverterPace, true))
@@ -164,14 +164,14 @@ class ValidationUtilsTest {
     @Test
     fun testIsValueSpeedFailed() {
 
-        val speedConverterSpeed = SpeedToStringConverter(FormatUtils.SpeedMode.SPEED)
+        val speedConverterSpeed = SpeedToStringConverter(SpeedMode.SPEED)
         assertFalse(ValidationUtils.isValueSpeed("12", speedConverterSpeed, false))
         assertFalse(ValidationUtils.isValueSpeed("0", speedConverterSpeed, true))
         assertFalse(ValidationUtils.isValueSpeed(null, speedConverterSpeed, true))
         assertFalse(ValidationUtils.isValueSpeed("", speedConverterSpeed, true))
         assertFalse(ValidationUtils.isValueSpeed("-1", speedConverterSpeed, true))
 
-        val speedConverterPace = SpeedToStringConverter(FormatUtils.SpeedMode.PACE)
+        val speedConverterPace = SpeedToStringConverter(SpeedMode.PACE)
         assertFalse(ValidationUtils.isValueSpeed("05:30", speedConverterPace, false))
         assertFalse(ValidationUtils.isValueSpeed("00:00", speedConverterPace, true))
         assertFalse(ValidationUtils.isValueSpeed("5", speedConverterPace, true))

@@ -1,7 +1,7 @@
 package de.saring.sportstracker.gui.statusbar;
 
 import de.saring.util.unitcalc.FormatUtils;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 import javafx.scene.control.Label;
 
 import javax.inject.Inject;

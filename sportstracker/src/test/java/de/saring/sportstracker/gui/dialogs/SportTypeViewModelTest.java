@@ -4,7 +4,7 @@ import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.dialogs.SportTypeDialogController.SpeedModeItem;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 import javafx.scene.paint.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

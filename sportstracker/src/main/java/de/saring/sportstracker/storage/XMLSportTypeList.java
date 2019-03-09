@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 import javafx.scene.paint.Color;
 
 import org.jdom2.Attribute;

@@ -10,7 +10,7 @@ import java.util.List;
 
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportType;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

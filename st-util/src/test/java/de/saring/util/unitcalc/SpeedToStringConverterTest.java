@@ -1,6 +1,5 @@
 package de.saring.util.unitcalc;
 
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

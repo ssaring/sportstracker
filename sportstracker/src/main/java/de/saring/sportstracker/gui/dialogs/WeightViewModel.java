@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import de.saring.util.unitcalc.UnitSystem;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleFloatProperty;
@@ -14,7 +15,6 @@ import javafx.beans.property.StringProperty;
 import de.saring.sportstracker.data.Weight;
 import de.saring.util.StringUtils;
 import de.saring.util.unitcalc.ConvertUtils;
-import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * This ViewModel class provides JavaFX properties of all Weight attributes to be edited in the dialog.
@@ -25,7 +25,7 @@ import de.saring.util.unitcalc.FormatUtils;
 public class WeightViewModel {
 
     private final int id;
-    private final FormatUtils.UnitSystem unitSystem;
+    private final UnitSystem unitSystem;
 
     public final ObjectProperty<LocalDate> date;
     public final ObjectProperty<LocalTime> time;
@@ -38,7 +38,7 @@ public class WeightViewModel {
      * @param weight Weight to be edited
      * @param unitSystem the unit system currently used in the UI
      */
-    public WeightViewModel(final Weight weight, final FormatUtils.UnitSystem unitSystem) {
+    public WeightViewModel(final Weight weight, final UnitSystem unitSystem) {
         this.id = weight.getId();
         this.date = new SimpleObjectProperty<>(weight.getDateTime().toLocalDate());
         this.time = new SimpleObjectProperty<>(weight.getDateTime().toLocalTime());
@@ -47,7 +47,7 @@ public class WeightViewModel {
 
         // convert weight value when english unit system is enabled
         this.unitSystem = unitSystem;
-        if (unitSystem == FormatUtils.UnitSystem.ENGLISH) {
+        if (unitSystem == UnitSystem.ENGLISH) {
             this.value.set((float) ConvertUtils.convertKilogram2Lbs(weight.getValue()));
         }
     }
@@ -65,7 +65,7 @@ public class WeightViewModel {
         weight.setComment(StringUtils.getTrimmedTextOrNull(comment.getValue()));
 
         // convert weight value when english unit system is enabled
-        if (unitSystem == FormatUtils.UnitSystem.ENGLISH) {
+        if (unitSystem == UnitSystem.ENGLISH) {
             weight.setValue((float) ConvertUtils.convertLbs2Kilogram(weight.getValue()));
         }
         return weight;

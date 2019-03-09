@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.util.unitcalc.FormatUtils;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 
 /**
  * Controller (MVC) class of the dialog for displaying the results for the calculated exercise statistics.

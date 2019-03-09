@@ -56,7 +56,7 @@ import de.saring.util.SystemUtils;
 import de.saring.util.gui.javafx.FxmlLoader;
 import de.saring.util.gui.mac.PlatformUtils;
 import de.saring.util.unitcalc.FormatUtils;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 
 /**
  * This class provides all controller (MVC)functionality of the SportsTracker main application window.

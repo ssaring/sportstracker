@@ -5,7 +5,7 @@ import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.WeightList;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 
 /**
  * This interface defines methods for reading / storing of the application

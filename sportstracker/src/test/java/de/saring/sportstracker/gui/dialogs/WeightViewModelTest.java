@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import de.saring.util.unitcalc.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import de.saring.sportstracker.data.Weight;
-import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * Unit tests of class ExerciseViewModel.
@@ -33,7 +33,7 @@ public class WeightViewModelTest {
      */
     @Test
     public void testGetWeightWithMetricUnits() {
-        WeightViewModel viewModel = new WeightViewModel(weight, FormatUtils.UnitSystem.METRIC);
+        WeightViewModel viewModel = new WeightViewModel(weight, UnitSystem.METRIC);
 
         // test that metric unit is not converted
         assertEquals(weight.getValue(), viewModel.value.get(), 0.0001f);
@@ -61,7 +61,7 @@ public class WeightViewModelTest {
      */
     @Test
     public void testGetWeightWithEnglishUnits() {
-        WeightViewModel viewModel = new WeightViewModel(weight, FormatUtils.UnitSystem.ENGLISH);
+        WeightViewModel viewModel = new WeightViewModel(weight, UnitSystem.ENGLISH);
 
         // test that metric unit is converted to english unit
         assertEquals(144.8422, viewModel.value.get(), 0.0001f);

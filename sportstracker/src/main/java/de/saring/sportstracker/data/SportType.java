@@ -3,7 +3,7 @@ package de.saring.sportstracker.data;
 import de.saring.util.data.IdObject;
 import de.saring.util.data.IdObjectList;
 import de.saring.util.data.Nameable;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 
 import javafx.scene.paint.Color;
 

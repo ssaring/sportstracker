@@ -3,7 +3,7 @@ package de.saring.sportstracker.storage;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.*;
 import de.saring.util.gui.javafx.ColorUtils;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

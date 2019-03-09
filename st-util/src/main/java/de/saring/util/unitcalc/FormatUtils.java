@@ -12,23 +12,6 @@ import java.text.NumberFormat;
 public class FormatUtils {
 
     /**
-     * This is the list of possible unit systems. Metric units are e.g. kilometers for distance or celcius for
-     * temperature. English units are e.g. miles for distance and fahrenheit for temperature.
-     */
-    public enum UnitSystem {
-        METRIC, ENGLISH
-    }
-
-    /**
-     * Enumeration of supported speed display or measurement modes. Speed means distance per hour (e.g. km/h), pace
-     * means minutes per distance (e.g. min/km). The use of pace is very common for running activities, most other
-     * sport types are using the speed.
-     */
-    public enum SpeedMode {
-        SPEED, PACE
-    }
-
-    /**
      * The current unit system used by the formater.
      */
     private final UnitSystem unitSystem;

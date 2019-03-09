@@ -12,6 +12,7 @@ import de.saring.leafletmap.MapLayer
 import de.saring.leafletmap.ScaleControlConfig
 import de.saring.leafletmap.ZoomControlConfig
 import de.saring.util.unitcalc.FormatUtils
+import de.saring.util.unitcalc.UnitSystem
 import javafx.concurrent.Worker
 import javafx.fxml.FXML
 import javafx.geometry.Point2D
@@ -80,7 +81,7 @@ class TrackPanelController(
         mapView = LeafletMapView()
         spMapViewer.children.add(mapView)
 
-        val metric = document.options.unitSystem == FormatUtils.UnitSystem.METRIC
+        val metric = document.options.unitSystem == UnitSystem.METRIC
 
         mapConfig = MapConfig(
                 listOf(MapLayer.OPENSTREETMAP, MapLayer.OPENCYCLEMAP, MapLayer.HIKE_BIKE_MAP, MapLayer.MTB_MAP),

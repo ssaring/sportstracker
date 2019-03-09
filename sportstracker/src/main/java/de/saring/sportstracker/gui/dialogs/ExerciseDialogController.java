@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 
 import de.saring.util.gui.javafx.FxWorkarounds;
+import de.saring.util.unitcalc.UnitSystem;
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 
@@ -29,8 +30,7 @@ import de.saring.util.gui.javafx.NameableStringConverter;
 import de.saring.util.gui.javafx.TimeInSecondsToStringConverter;
 import de.saring.util.gui.javafx.TimeToStringConverter;
 import de.saring.util.unitcalc.ConvertUtils;
-import de.saring.util.unitcalc.FormatUtils;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -505,7 +505,7 @@ public class ExerciseDialogController extends AbstractDialogController {
             exerciseViewModel.ascent.set(evExercise.getAltitude().getAscent());
             exerciseViewModel.descent.set(evExercise.getAltitude().getDescent());
 
-            if (document.getOptions().getUnitSystem() == FormatUtils.UnitSystem.ENGLISH) {
+            if (document.getOptions().getUnitSystem() == UnitSystem.ENGLISH) {
                 exerciseViewModel.ascent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.ascent.get()));
                 exerciseViewModel.descent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.descent.get()));
             }

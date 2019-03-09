@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import de.saring.sportstracker.gui.views.ViewPrinter;
 import de.saring.util.unitcalc.FormatUtils;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;

@@ -2,12 +2,10 @@ package de.saring.sportstracker.gui.dialogs;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import de.saring.sportstracker.data.EntryFilter;
 import de.saring.sportstracker.data.EntryList;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
