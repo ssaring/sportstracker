@@ -19,6 +19,7 @@ object SystemUtils {
      * immediately, the garbage collection is executed in a new thread. Before GC execution this thread waits a short
      * while (400 msec). When e.g. a dialog has been closed, the UI can be updated asynchronously before.
      */
+    @JvmStatic
     fun triggerGC() {
 
         Thread {

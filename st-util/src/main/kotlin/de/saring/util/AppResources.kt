@@ -10,7 +10,7 @@ import java.util.logging.Logger
  *
  * @author Stefan Saring
  */
-class AppResources(resourceBundleName: String) {
+open class AppResources(resourceBundleName: String) {
 
     /**
      * The loaded ResourceBundle.
@@ -24,7 +24,7 @@ class AppResources(resourceBundleName: String) {
      * @param arguments list of objects which needs to be inserted in the message text (optional)
      * @return String resource value
      */
-    fun getString(key: String, vararg arguments: Any): String {
+    open fun getString(key: String, vararg arguments: Any): String {
 
         try {
             // replace placeholders in message with arguments if specified

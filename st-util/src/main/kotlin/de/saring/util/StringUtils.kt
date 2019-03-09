@@ -14,6 +14,7 @@ object StringUtils {
      * @param text text to trim
      * @return trimmed text or null
      */
+    @JvmStatic
     fun getTrimmedTextOrNull(text: String?): String? {
 
         return text?.trim()?.let { trimmed ->
@@ -27,6 +28,7 @@ object StringUtils {
      * @param text the text to check
      * @return the passed text or an empty string
      */
+    @JvmStatic
     fun getTextOrEmptyString(text: String?): String = text ?: ""
 
     /**
@@ -35,6 +37,7 @@ object StringUtils {
      * @param text the text to fit
      * @return the first line of text or null when text was null
      */
+    @JvmStatic
     fun getFirstLineOfText(text: String?): String? {
 
         return text?.let {
@@ -49,5 +52,6 @@ object StringUtils {
      * @param text text to check
      * @return when null or empty
      */
+    @JvmStatic
     fun isNullOrEmpty(text: String?): Boolean = text == null || text.trim().isEmpty()
 }
