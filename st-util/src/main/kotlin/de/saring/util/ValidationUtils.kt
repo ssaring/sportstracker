@@ -1,19 +1,16 @@
-package de.saring.util;
+package de.saring.util
 
-import de.saring.util.unitcalc.SpeedToStringConverter;
-import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.SpeedToStringConverter
+import de.saring.util.unitcalc.FormatUtils
 
-import java.text.NumberFormat;
+import java.text.NumberFormat
 
 /**
  * Helper class which contains several utility methods for validation purposes.
  *
  * @author Stefan Saring
  */
-public final class ValidationUtils {
-
-    private ValidationUtils() {
-    }
+object ValidationUtils {
 
     /**
      * Checks the specified String value whether this is an integer value in the specified range.
@@ -23,12 +20,14 @@ public final class ValidationUtils {
      * @param maxValue maximum value
      * @return true when it's an integer and in the specified range
      */
-    public static boolean isValueIntegerBetween(final String value, final int minValue, final int maxValue) {
-        try {
-            final int intValue = NumberFormat.getIntegerInstance().parse(value).intValue();
-            return intValue >= minValue && intValue <= maxValue;
-        } catch (Exception e) {
-            return false;
+    @JvmStatic
+    fun isValueIntegerBetween(value: String?, minValue: Int, maxValue: Int): Boolean {
+
+        return try {
+            val intValue = NumberFormat.getIntegerInstance().parse(value).toInt()
+            intValue in minValue .. maxValue
+        } catch (e: Exception) {
+            false
         }
     }
 
@@ -41,11 +40,13 @@ public final class ValidationUtils {
      * @param maxValue maximum value
      * @return true when it's an integer and in the specified range or when the string value is empty
      */
-    public static boolean isOptionalValueIntegerBetween(final String value, final int minValue, final int maxValue) {
+    @JvmStatic
+    fun isOptionalValueIntegerBetween(value: String?, minValue: Int, maxValue: Int): Boolean {
+
         if (value == null || value.trim().isEmpty()) {
-            return true;
+            return true
         }
-        return isValueIntegerBetween(value, minValue, maxValue);
+        return isValueIntegerBetween(value, minValue, maxValue)
     }
 
     /**
@@ -56,13 +57,16 @@ public final class ValidationUtils {
      * @param maxValue maximum value
      * @return true when it's an double and in the specified range
      */
-    public static boolean isValueDoubleBetween(final String value, final double minValue, final double maxValue) {
-        try {
-            final double doubleValue = NumberFormat.getInstance().parse(value).doubleValue();
-            return doubleValue >= minValue && doubleValue <= maxValue;
-        } catch (Exception e) {
-            return false;
+    @JvmStatic
+    fun isValueDoubleBetween(value: String?, minValue: Double, maxValue: Double): Boolean {
+
+        return try {
+            val doubleValue = NumberFormat.getInstance().parse(value).toDouble()
+            doubleValue in minValue .. maxValue
+        } catch (e: Exception) {
+            false
         }
+
     }
 
     /**
@@ -74,9 +78,10 @@ public final class ValidationUtils {
      * @param maxValue maximum value
      * @return true when it's an valid time in seconds value and in the specified range
      */
-    public static boolean isValueTimeInSecondsBetween(final String value, final int minValue, final int maxValue) {
-        final int seconds = FormatUtils.timeString2TotalSeconds(value);
-        return seconds >= minValue && seconds <= maxValue;
+    @JvmStatic
+    fun isValueTimeInSecondsBetween(value: String?, minValue: Int, maxValue: Int): Boolean {
+        val seconds = FormatUtils.timeString2TotalSeconds(value)
+        return seconds in minValue .. maxValue
     }
 
     /**
@@ -88,12 +93,13 @@ public final class ValidationUtils {
      * @param required whether a valid speed value > 0 is required or it has to be 0
      * @return true when it's an valid speed value
      */
-    public static boolean isValueSpeed(final String value, final SpeedToStringConverter speedConverter, final boolean required) {
+    @JvmStatic
+    fun isValueSpeed(value: String?, speedConverter: SpeedToStringConverter, required: Boolean): Boolean {
 
-        final Float fSpeedValue = speedConverter.stringSpeedToFloat(value);
+        val fSpeedValue = speedConverter.stringSpeedToFloat(value)
         if (required) {
-            return fSpeedValue != null && fSpeedValue > 0f;
+            return fSpeedValue != null && fSpeedValue > 0f
         }
-        return fSpeedValue != null && fSpeedValue == 0f;
+        return fSpeedValue != null && fSpeedValue == 0f
     }
 }

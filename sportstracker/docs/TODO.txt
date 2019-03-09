@@ -2,7 +2,7 @@ SportsTracker-TODO
 ==================
 
 Port of st-util classes to Kotlin:
-- port of data classes and tests is done
+- port of data and util classes incl. tests are done
 - port other st-util classes too?
 - add to changelog: less code, null safe, fewer tests needed
 
