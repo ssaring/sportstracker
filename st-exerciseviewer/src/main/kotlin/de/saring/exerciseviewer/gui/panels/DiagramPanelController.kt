@@ -702,17 +702,17 @@ class DiagramPanelController(
             AxisType.HEARTRATE ->
                 appResources.getString("pv.diagram.axis.heartrate")
             AxisType.ALTITUDE ->
-                appResources.getString("pv.diagram.axis.altitude", formatUtils.altitudeUnitName)
+                appResources.getString("pv.diagram.axis.altitude", formatUtils.getAltitudeUnitName())
             AxisType.SPEED ->
                 appResources.getString("pv.diagram.axis.speed", formatUtils.getSpeedUnitName(speedMode))
             AxisType.CADENCE ->
                 appResources.getString("pv.diagram.axis.cadence")
             AxisType.TEMPERATURE ->
-                appResources.getString("pv.diagram.axis.temperature", formatUtils.temperatureUnitName)
+                appResources.getString("pv.diagram.axis.temperature", formatUtils.getTemperatureUnitName())
             AxisType.TIME ->
                 appResources.getString("pv.diagram.axis.time")
             AxisType.DISTANCE ->
-                appResources.getString("pv.diagram.axis.distance", formatUtils.distanceUnitName)
+                appResources.getString("pv.diagram.axis.distance", formatUtils.getDistanceUnitName())
         }
 
         override fun fromString(string: String): AxisType =
