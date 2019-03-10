@@ -4,7 +4,7 @@ import de.saring.exerciseviewer.data.HeartRateLimit
 import de.saring.exerciseviewer.gui.EVContext
 import de.saring.exerciseviewer.gui.EVDocument
 import de.saring.util.StringUtils
-import de.saring.util.unitcalc.FormatUtils
+import de.saring.util.unitcalc.TimeUtils
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.ChoiceBox
@@ -92,11 +92,11 @@ class MainPanelController(
 
         // fill statistics data
         exercise.sumExerciseTime?.let {
-            laTotalExerciseTimeValue.text = FormatUtils.minutes2TimeString(it)
+            laTotalExerciseTimeValue.text = TimeUtils.minutes2TimeString(it)
         }
         // fill total riding time (available only in S710 exercises)
         exercise.sumRideTime?.let {
-            laTotalRidingTimeValue.text = FormatUtils.minutes2TimeString(it)
+            laTotalRidingTimeValue.text = TimeUtils.minutes2TimeString(it)
         }
         exercise.energyTotal?.let {
             laTotalEnergyValue.text = formatUtils.caloriesToString(it)
@@ -120,7 +120,7 @@ class MainPanelController(
         }
 
         exercise.duration?.let {
-            laDurationValue.text = FormatUtils.tenthSeconds2TimeString(it)
+            laDurationValue.text = TimeUtils.tenthSeconds2TimeString(it)
         }
 
         // fill heartrate data
@@ -188,7 +188,7 @@ class MainPanelController(
 
         if (time != null) {
             val percents = Math.round(time / duration.toDouble() * 10.0 * 100.0).toInt()
-            label.text = FormatUtils.seconds2TimeString(time) + "   ($percents %)"
+            label.text = TimeUtils.seconds2TimeString(time) + "   ($percents %)"
         } else {
             label.text = context.resources.getString("common.n_a_")
         }

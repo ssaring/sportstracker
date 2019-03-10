@@ -1,8 +1,7 @@
 package de.saring.util
 
 import de.saring.util.unitcalc.SpeedToStringConverter
-import de.saring.util.unitcalc.FormatUtils
-
+import de.saring.util.unitcalc.TimeUtils
 import java.text.NumberFormat
 
 /**
@@ -80,7 +79,7 @@ object ValidationUtils {
      */
     @JvmStatic
     fun isValueTimeInSecondsBetween(value: String?, minValue: Int, maxValue: Int): Boolean {
-        val seconds = FormatUtils.timeString2TotalSeconds(value)
+        val seconds = TimeUtils.timeString2TotalSeconds(value)
         return seconds in minValue .. maxValue
     }
 

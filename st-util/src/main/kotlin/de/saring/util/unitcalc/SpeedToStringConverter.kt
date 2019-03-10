@@ -35,7 +35,7 @@ class SpeedToStringConverter(
             if (floatSpeed == 0f) {
                 ZERO_SPEED_TIME
             } else {
-                FormatUtils.seconds2MinuteTimeString((3600 / floatSpeed).toInt())
+                TimeUtils.seconds2MinuteTimeString((3600 / floatSpeed).toInt())
             }
         }
     }

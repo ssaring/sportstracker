@@ -1,6 +1,6 @@
 package de.saring.util.gui.javafx;
 
-import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.TimeUtils;
 import javafx.util.StringConverter;
 
 /**
@@ -16,7 +16,7 @@ public class TimeInSecondsToStringConverter extends StringConverter<Number> {
         if (nValue == null) {
             return "";
         }
-        return FormatUtils.seconds2TimeString(nValue.intValue());
+        return TimeUtils.seconds2TimeString(nValue.intValue());
     }
 
     @Override
@@ -24,6 +24,6 @@ public class TimeInSecondsToStringConverter extends StringConverter<Number> {
         if (strValue == null) {
             return -1;
         }
-        return FormatUtils.timeString2TotalSeconds(strValue.trim());
+        return TimeUtils.timeString2TotalSeconds(strValue.trim());
     }
 }

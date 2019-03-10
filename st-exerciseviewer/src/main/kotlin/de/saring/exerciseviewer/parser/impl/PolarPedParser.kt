@@ -7,6 +7,7 @@ import de.saring.exerciseviewer.parser.AbstractExerciseParser
 import de.saring.exerciseviewer.parser.ExerciseParserInfo
 import de.saring.util.unitcalc.CalculationUtils
 import de.saring.util.unitcalc.FormatUtils
+import de.saring.util.unitcalc.TimeUtils
 import de.saring.util.unitcalc.UnitSystem
 import org.jdom2.Element
 import org.jdom2.Namespace
@@ -75,7 +76,7 @@ class PolarPedParser : AbstractExerciseParser() {
 
         // Exercise Duration
         val duration = formatDuration(eResult.getChildText("duration", namespace))
-        val exerciseDuration = FormatUtils.timeString2TotalSeconds(duration)
+        val exerciseDuration = TimeUtils.timeString2TotalSeconds(duration)
         exercise.duration = exerciseDuration * 10
 
         // Distance

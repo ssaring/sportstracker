@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 /**
  * This class contains all unit tests for the ConvertUtils class.
  *
- * @author Stefan Saring, Jacob Ilsoe Christensen (parts of C# version)
+ * @author Stefan Saring
  */
 class ConvertUtilsTest {
 
