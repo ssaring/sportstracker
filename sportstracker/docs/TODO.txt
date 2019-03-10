@@ -2,9 +2,7 @@ SportsTracker-TODO
 ==================
 
 Port of st-util classes to Kotlin:
-- port of data and util classes incl. tests are done
-- port other st-util classes too?
-- add to changelog: less code, null safe, fewer tests needed
+- port all other classes too, except StackedRenderer
 
 Java 9/10/11 migration:
 - works fine with JDK 10 (no build or test errors and no execution problems)

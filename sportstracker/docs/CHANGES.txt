@@ -10,6 +10,11 @@ v7.6.1:
  - automatic check for SportsTracker application updates, the latest version
    number is downloaded from the SportsTracker website
    (checked on each application start after 30 seconds)
+- Module st-util:
+  - ported almost all classes and unit tests from Java to Kotlin,
+    so there is less code, it's null safe, and fewer tests are needed
+  - refactoring: moded all time-related functions from class FormatUtils to
+    new class TimeUtils
 
 v7.6.0:
  SportsTracker changes:
