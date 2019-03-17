@@ -64,7 +64,8 @@ class GarminTcxParser : AbstractExerciseParser() {
         exercise.energy = 0
 
         val eActivity = eExercise.getChild("Activities", namespace).getChild("Activity", namespace)
-        exercise.dateTime = parseDateTime(eActivity.getChildText("Id", namespace))
+        val exerciseDateTime = parseDateTime(eActivity.getChildText("Id", namespace))
+        exercise.dateTime = exerciseDateTime
 
         var trackpointCount: Int = 0
         var altitudeMetersTotal: Double = 0.0
@@ -93,7 +94,7 @@ class GarminTcxParser : AbstractExerciseParser() {
             var previousTrackpointTimestamp = Long.MIN_VALUE
             var previousTrackpointDistanceMeters = Double.MIN_VALUE
             var previousTrackpointAltitudeMeters = Double.MIN_VALUE
-            val exerciseDateTimeMillis = Date310Utils.getMilliseconds(exercise.dateTime)
+            val exerciseDateTimeMillis = Date310Utils.getMilliseconds(exerciseDateTime)
 
             // parse all Track elements
             for (eTrack in eLap.getChildren("Track", namespace)) {

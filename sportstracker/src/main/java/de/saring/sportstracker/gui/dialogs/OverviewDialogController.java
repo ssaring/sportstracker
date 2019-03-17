@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import de.saring.util.unitcalc.UnitSystem;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -49,7 +50,7 @@ import de.saring.util.gui.jfreechart.ChartUtils;
 import de.saring.util.gui.jfreechart.StackedRenderer;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -458,7 +459,7 @@ public class OverviewDialogController extends AbstractDialogController {
             switch (valueType) {
 
                 case DISTANCE:
-                    if (options.getUnitSystem() != FormatUtils.UnitSystem.METRIC) {
+                    if (options.getUnitSystem() != UnitSystem.METRIC) {
                         sumDistance = ConvertUtils.convertKilometer2Miles(sumDistance, false);
                     }
                     dataset.add(timePeriod, sumDistance, seriesName);
@@ -470,14 +471,14 @@ public class OverviewDialogController extends AbstractDialogController {
                     break;
 
                 case ASCENT:
-                    if (options.getUnitSystem() != FormatUtils.UnitSystem.METRIC) {
+                    if (options.getUnitSystem() != UnitSystem.METRIC) {
                         sumAscent = ConvertUtils.convertMeter2Feet((int) sumAscent);
                     }
                     dataset.add(timePeriod, sumAscent, seriesName);
                     break;
 
                 case DESCENT:
-                    if (options.getUnitSystem() != FormatUtils.UnitSystem.METRIC) {
+                    if (options.getUnitSystem() != UnitSystem.METRIC) {
                         sumDescent = ConvertUtils.convertMeter2Feet((int) sumDescent);
                     }
                     dataset.add(timePeriod, sumDescent, seriesName);
@@ -495,7 +496,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
                 case AVG_SPEED:
                     // calculate AVG speed of all exercises of time step
-                    if (options.getUnitSystem() != FormatUtils.UnitSystem.METRIC) {
+                    if (options.getUnitSystem() != UnitSystem.METRIC) {
                         sumDistance = ConvertUtils.convertKilometer2Miles(sumDistance, false);
                     }
 
@@ -584,7 +585,7 @@ public class OverviewDialogController extends AbstractDialogController {
             }
 
             // convert to english unit mode when enabled
-            if (document.getOptions().getUnitSystem() != FormatUtils.UnitSystem.METRIC) {
+            if (document.getOptions().getUnitSystem() != UnitSystem.METRIC) {
                 sumDistance = ConvertUtils.convertKilometer2Miles(sumDistance, false);
             }
 
@@ -661,7 +662,7 @@ public class OverviewDialogController extends AbstractDialogController {
             }
 
             // convert to english unit mode when enabled
-            if (document.getOptions().getUnitSystem() != FormatUtils.UnitSystem.METRIC) {
+            if (document.getOptions().getUnitSystem() != UnitSystem.METRIC) {
                 sumDistance = ConvertUtils.convertKilometer2Miles(sumDistance, false);
             }
 
@@ -712,7 +713,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
             // get average weight for the time range of this step
             double avgWeight = getAverageWeightInTimeRange(filter);
-            if (document.getOptions().getUnitSystem() != FormatUtils.UnitSystem.METRIC) {
+            if (document.getOptions().getUnitSystem() != UnitSystem.METRIC) {
                 avgWeight = ConvertUtils.convertKilogram2Lbs(avgWeight);
             }
 

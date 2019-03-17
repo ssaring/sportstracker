@@ -12,9 +12,10 @@ import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
 import de.saring.util.AppResources;
 import de.saring.util.StringUtils;
-import de.saring.util.gui.javafx.control.calendar.CalendarEntry;
 import de.saring.util.gui.javafx.control.calendar.CalendarDataProvider;
+import de.saring.util.gui.javafx.control.calendar.CalendarEntry;
 import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.TimeUtils;
 
 /**
  * Provides the note, weight and exercise entries to be shown in the calendar.
@@ -84,7 +85,7 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
             // add formatted distance and duration strings
             final FormatUtils formatUtils = context.getFormatUtils();
             summaryLines.add(formatUtils.distanceToString(summaryDistance, 2));
-            summaryLines.add(FormatUtils.seconds2TimeString(summaryDuration));
+            summaryLines.add(TimeUtils.seconds2TimeString(summaryDuration));
         }
 
         return summaryLines;
@@ -124,7 +125,7 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
         if (exercise.getSportType().isRecordDistance()) {
             sbText.append(formatUtils.distanceToString(exercise.getDistance(), 2)).append(", ");
         }
-        sbText.append(FormatUtils.minutes2TimeString(exercise.getDuration() / 60));
+        sbText.append(TimeUtils.minutes2TimeString(exercise.getDuration() / 60));
 
         final StringBuilder sbToolTip = new StringBuilder();
         sbToolTip.append(resources.getString("st.calview.exe_tooltip.sport_type")) //
@@ -142,7 +143,7 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
         }
 
         sbToolTip.append(resources.getString("st.calview.exe_tooltip.duration")) //
-                .append(" ").append(FormatUtils.seconds2TimeString(exercise.getDuration()));
+                .append(" ").append(TimeUtils.seconds2TimeString(exercise.getDuration()));
 
         return new CalendarEntry(exercise, sbText.toString(), sbToolTip.toString(), exercise.getSportType().getColor());
     }

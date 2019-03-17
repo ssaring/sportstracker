@@ -259,7 +259,7 @@ internal class FitMessageListener : MesgListener {
      * offset from the start time.
      */
     private fun storeSamples() {
-        val startTime = Date310Utils.getMilliseconds(exercise.dateTime)
+        val startTime = Date310Utils.getMilliseconds(exercise.dateTime!!)
         for (sample in lSamples) {
             sample.timestamp?.let { sample.timestamp = it - startTime }
         }
@@ -274,7 +274,7 @@ internal class FitMessageListener : MesgListener {
 
         // convert FitLap to Lap objects
         val lLaps = LinkedList<Lap>()
-        val startTime = Date310Utils.getMilliseconds(exercise.dateTime)
+        val startTime = Date310Utils.getMilliseconds(exercise.dateTime!!)
 
         for (fitLap in lFitLaps) {
             val lap = fitLap.lap

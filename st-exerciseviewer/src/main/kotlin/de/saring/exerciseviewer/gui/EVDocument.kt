@@ -4,7 +4,7 @@ import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.core.EVOptions
 import de.saring.exerciseviewer.data.EVExercise
 import de.saring.exerciseviewer.parser.ExerciseParserFactory
-import de.saring.util.unitcalc.FormatUtils.SpeedMode
+import de.saring.util.unitcalc.SpeedMode
 
 /**
  * This class contains all model / document (MVC) related data and functionality of the ExerciseViewer application.

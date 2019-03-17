@@ -1,6 +1,6 @@
 package de.saring.sportstracker.data;
 
-import de.saring.util.unitcalc.FormatUtils;
+import de.saring.util.unitcalc.SpeedMode;
 import javafx.scene.paint.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class SportTypeTest {
         // create a new sport type with some test content
         type = new SportType(1);
         type.setName("Cycling");
-        type.setSpeedMode(FormatUtils.SpeedMode.SPEED);
+        type.setSpeedMode(SpeedMode.SPEED);
         type.setIcon("cycling.png");
         type.setColor(Color.RED);
         type.setRecordDistance(true);
@@ -73,7 +73,7 @@ public class SportTypeTest {
 
         // modify original object only
         type.setName("Stuff");
-        type.setSpeedMode(FormatUtils.SpeedMode.PACE);
+        type.setSpeedMode(SpeedMode.PACE);
         type.setIcon("noicon.png");
         type.setColor(Color.PINK);
 

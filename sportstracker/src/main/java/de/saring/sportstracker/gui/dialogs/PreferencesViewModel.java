@@ -1,12 +1,13 @@
 package de.saring.sportstracker.gui.dialogs;
 
+import de.saring.util.unitcalc.SpeedMode;
+import de.saring.util.unitcalc.UnitSystem;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 import de.saring.sportstracker.core.STOptions;
-import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * This ViewModel class provides JavaFX properties of all STOptions attributes to be edited in the dialog.
@@ -31,8 +32,8 @@ public class PreferencesViewModel {
     public final ObjectProperty<STOptions.AutoCalculation> defaultAutoCalculation;
     public final BooleanProperty saveOnExit;
 
-    public final ObjectProperty<FormatUtils.UnitSystem> unitSystem;
-    public final ObjectProperty<FormatUtils.SpeedMode> preferredSpeedMode;
+    public final ObjectProperty<UnitSystem> unitSystem;
+    public final ObjectProperty<SpeedMode> preferredSpeedMode;
     public final ObjectProperty<WeekStart> weekStart;
 
     public final BooleanProperty listViewShowAvgHeartrate;

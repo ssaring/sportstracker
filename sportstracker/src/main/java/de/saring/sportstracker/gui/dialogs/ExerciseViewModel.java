@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import de.saring.util.unitcalc.SpeedToStringConverter;
+import de.saring.util.unitcalc.UnitSystem;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
@@ -24,7 +25,7 @@ import de.saring.util.StringUtils;
 import de.saring.util.unitcalc.CalculationUtils;
 import de.saring.util.unitcalc.ConvertUtils;
 import de.saring.util.unitcalc.FormatUtils;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 
 /**
  * This ViewModel class provides JavaFX properties of all Exercise attributes to be edited in the Exercise Dialog.
@@ -98,7 +99,7 @@ public class ExerciseViewModel {
 
         // convert exercise values when english unit system is enabled
         float fAvgSpeed = exercise.getAvgSpeed();
-        if (formatUtils.getUnitSystem() == FormatUtils.UnitSystem.ENGLISH) {
+        if (formatUtils.getUnitSystem() == UnitSystem.ENGLISH) {
             this.distance.set((float) ConvertUtils.convertKilometer2Miles(exercise.getDistance(), false));
             fAvgSpeed = (float) ConvertUtils.convertKilometer2Miles(fAvgSpeed, false);
             this.ascent.set(ConvertUtils.convertMeter2Feet(exercise.getAscent()));
@@ -140,7 +141,7 @@ public class ExerciseViewModel {
         exercise.setComment(StringUtils.getTrimmedTextOrNull(comment.getValue()));
 
         // convert weight value when english unit system is enabled
-        if (this.formatUtils.getUnitSystem() == FormatUtils.UnitSystem.ENGLISH) {
+        if (this.formatUtils.getUnitSystem() == UnitSystem.ENGLISH) {
             exercise.setDistance((float) ConvertUtils.convertMiles2Kilometer(exercise.getDistance()));
             exercise.setAvgSpeed((float) ConvertUtils.convertMiles2Kilometer(exercise.getAvgSpeed()));
             exercise.setAscent(ConvertUtils.convertFeet2Meter(exercise.getAscent()));
@@ -169,7 +170,7 @@ public class ExerciseViewModel {
     public void setAutoCalcFields(final float newDistance, final float newAvgSpeed, final int newDuration) {
 
         if (!autoCalcDistance.get()) {
-            if (this.formatUtils.getUnitSystem() == FormatUtils.UnitSystem.ENGLISH) {
+            if (this.formatUtils.getUnitSystem() == UnitSystem.ENGLISH) {
                 this.distance.set((float) ConvertUtils.convertKilometer2Miles(newDistance, false));
             } else {
                 this.distance.set(newDistance);
@@ -191,7 +192,7 @@ public class ExerciseViewModel {
      */
     public void setAvgSpeedFloatValue(float fAvgSpeedMetric) {
         float fAvgSpeedCurrentUnit = fAvgSpeedMetric;
-        if (this.formatUtils.getUnitSystem() == FormatUtils.UnitSystem.ENGLISH) {
+        if (this.formatUtils.getUnitSystem() == UnitSystem.ENGLISH) {
             fAvgSpeedCurrentUnit = (float) ConvertUtils.convertKilometer2Miles(fAvgSpeedMetric, false);
         }
         this.avgSpeed.set(speedConverter.floatSpeedtoString(fAvgSpeedCurrentUnit));

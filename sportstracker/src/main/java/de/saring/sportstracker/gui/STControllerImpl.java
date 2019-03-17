@@ -54,9 +54,9 @@ import de.saring.util.Date310Utils;
 import de.saring.util.StringUtils;
 import de.saring.util.SystemUtils;
 import de.saring.util.gui.javafx.FxmlLoader;
-import de.saring.util.gui.mac.PlatformUtils;
+import de.saring.util.PlatformUtils;
 import de.saring.util.unitcalc.FormatUtils;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 
 /**
  * This class provides all controller (MVC)functionality of the SportsTracker main application window.
@@ -301,7 +301,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     @Override
     public void onAddNote(final ActionEvent event) {
         // start Note dialog for a new created Note
-        final Note newNote = new Note(document.getNoteList().getNewID());
+        final Note newNote = new Note(document.getNoteList().getNewId());
         newNote.setDateTime(Date310Utils.getNoonDateTimeForDate(dateForNewEntries));
 
         dialogProvider.prNoteDialogController.get().show(context.getPrimaryStage(), newNote);
@@ -310,7 +310,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     @Override
     public void onAddWeight(final ActionEvent event) {
         // start Weight dialog for a new created Weight
-        final Weight newWeight = new Weight(document.getWeightList().getNewID());
+        final Weight newWeight = new Weight(document.getWeightList().getNewId());
         newWeight.setDateTime(Date310Utils.getNoonDateTimeForDate(dateForNewEntries));
 
         // initialize with the weight value of previous entry (if there is some)
@@ -575,7 +575,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     }
 
     private void setupMacSpecificUI() {
-        if (PlatformUtils.isMacOSX()) {
+        if (PlatformUtils.isMacOS()) {
             // remove File->Quit command from file menu (already displayed in the application menu)›
             miQuit.setVisible(false);
             // About and Preferences commands can't be move to the application menu in JavaFX
@@ -646,13 +646,13 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      */
     private void addInitialSportType(final String nameKey, final SpeedMode speedMode, final Color color,
                                      final String... subtypeNameKeys) {
-        final SportType sportType = new SportType(document.getSportTypeList().getNewID());
+        final SportType sportType = new SportType(document.getSportTypeList().getNewId());
         sportType.setName(context.getResources().getString(nameKey));
         sportType.setSpeedMode(speedMode);
         sportType.setColor(color);
 
         for (String subtypeNameKey : subtypeNameKeys) {
-            final SportSubType sportSubtype = new SportSubType(sportType.getSportSubTypeList().getNewID());
+            final SportSubType sportSubtype = new SportSubType(sportType.getSportSubTypeList().getNewId());
             sportSubtype.setName(context.getResources().getString(subtypeNameKey));
             sportType.getSportSubTypeList().set(sportSubtype);
         }
@@ -756,7 +756,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @return the created Exercise
      */
     private Exercise createNewExercise(final LocalDate date) {
-        final Exercise exercise = new Exercise(document.getExerciseList().getNewID());
+        final Exercise exercise = new Exercise(document.getExerciseList().getNewId());
         exercise.setDateTime(Date310Utils.getNoonDateTimeForDate(date));
         exercise.setIntensity(Exercise.IntensityType.NORMAL);
 
@@ -812,7 +812,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private void copyExercise(final int exerciseID) {
         final Exercise selectedExercise = document.getExerciseList().getByID(exerciseID);
 
-        final Exercise copiedExercise = selectedExercise.clone(document.getExerciseList().getNewID());
+        final Exercise copiedExercise = selectedExercise.clone(document.getExerciseList().getNewId());
         copiedExercise.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
         copiedExercise.setHrmFile(null);
 
@@ -828,7 +828,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private void copyNote(final int noteID) {
         final Note selectedNote = document.getNoteList().getByID(noteID);
 
-        final Note copiedNote = selectedNote.clone(document.getNoteList().getNewID());
+        final Note copiedNote = selectedNote.clone(document.getNoteList().getNewId());
         copiedNote.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
 
         // start note dialog for the copied note
@@ -843,7 +843,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private void copyWeight(final int weightID) {
         final Weight selectedWeight = document.getWeightList().getByID(weightID);
 
-        final Weight copiedWeight = selectedWeight.clone(document.getWeightList().getNewID());
+        final Weight copiedWeight = selectedWeight.clone(document.getWeightList().getNewId());
         copiedWeight.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
 
         // start weight dialog for the copied weight

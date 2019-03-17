@@ -28,7 +28,7 @@ import de.saring.sportstracker.storage.IStorage;
 import de.saring.util.XmlBeanStorage;
 import de.saring.util.data.IdObject;
 import de.saring.util.data.IdObjectListChangeListener;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 
 /**
  * This class contains all document (MVC) related data and functionality of the

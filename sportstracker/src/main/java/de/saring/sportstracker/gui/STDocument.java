@@ -14,7 +14,7 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.util.data.IdObjectListChangeListener;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
+import de.saring.util.unitcalc.SpeedMode;
 
 /**
  * This interface provides all document (MVC) related data and functionality of the

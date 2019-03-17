@@ -4,11 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import de.saring.util.unitcalc.SpeedMode;
+import de.saring.util.unitcalc.UnitSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import de.saring.sportstracker.core.STOptions;
-import de.saring.util.unitcalc.FormatUtils;
 
 /**
  * Unit tests of class PreferencesViewModel.
@@ -23,8 +24,8 @@ public class PreferencesViewModelTest {
     public void setUp() {
         options = new STOptions();
         options.setInitialView(STOptions.View.List);
-        options.setUnitSystem(FormatUtils.UnitSystem.ENGLISH);
-        options.setPreferredSpeedMode(FormatUtils.SpeedMode.SPEED);
+        options.setUnitSystem(UnitSystem.ENGLISH);
+        options.setPreferredSpeedMode(SpeedMode.SPEED);
         options.setDefaultAutoCalcuation(STOptions.AutoCalculation.AvgSpeed);
         options.setSaveOnExit(true);
         options.setDisplaySecondChart(false);
@@ -48,8 +49,8 @@ public class PreferencesViewModelTest {
         // test without modifications
         viewModel.storeInOptions(options);
         assertEquals(STOptions.View.List, options.getInitialView());
-        assertEquals(FormatUtils.UnitSystem.ENGLISH, options.getUnitSystem());
-        assertEquals(FormatUtils.SpeedMode.SPEED, options.getPreferredSpeedMode());
+        assertEquals(UnitSystem.ENGLISH, options.getUnitSystem());
+        assertEquals(SpeedMode.SPEED, options.getPreferredSpeedMode());
         assertEquals(STOptions.AutoCalculation.AvgSpeed, options.getDefaultAutoCalcuation());
         assertTrue(options.isSaveOnExit());
         assertFalse(options.isDisplaySecondChart());
@@ -64,16 +65,16 @@ public class PreferencesViewModelTest {
 
         // test after modifications
         viewModel.initialView.set(STOptions.View.Calendar);
-        viewModel.unitSystem.set(FormatUtils.UnitSystem.METRIC);
-        viewModel.preferredSpeedMode.set(FormatUtils.SpeedMode.PACE);
+        viewModel.unitSystem.set(UnitSystem.METRIC);
+        viewModel.preferredSpeedMode.set(SpeedMode.PACE);
         viewModel.weekStart.set(PreferencesViewModel.WeekStart.MONDAY);
         viewModel.defaultAutoCalculation.set(STOptions.AutoCalculation.Duration);
         viewModel.saveOnExit.set(false);
 
         viewModel.storeInOptions(options);
         assertEquals(STOptions.View.Calendar, options.getInitialView());
-        assertEquals(FormatUtils.UnitSystem.METRIC, options.getUnitSystem());
-        assertEquals(FormatUtils.SpeedMode.PACE, options.getPreferredSpeedMode());
+        assertEquals(UnitSystem.METRIC, options.getUnitSystem());
+        assertEquals(SpeedMode.PACE, options.getPreferredSpeedMode());
         assertEquals(STOptions.AutoCalculation.Duration, options.getDefaultAutoCalcuation());
         assertFalse(options.isSaveOnExit());
     }

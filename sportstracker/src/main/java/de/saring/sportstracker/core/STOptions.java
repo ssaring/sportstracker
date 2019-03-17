@@ -1,8 +1,8 @@
 package de.saring.sportstracker.core;
 
 import de.saring.exerciseviewer.core.EVOptions;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
-import de.saring.util.unitcalc.FormatUtils.UnitSystem;
+import de.saring.util.unitcalc.SpeedMode;
+import de.saring.util.unitcalc.UnitSystem;
 
 import java.io.Serializable;
 

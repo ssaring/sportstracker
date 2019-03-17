@@ -4,17 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.saring.sportstracker.gui.views.ViewPrinter;
-import de.saring.util.unitcalc.FormatUtils;
-import de.saring.util.unitcalc.FormatUtils.SpeedMode;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -26,11 +15,21 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.sportstracker.gui.views.ViewPrinter;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObject;
 import de.saring.util.gui.javafx.ColorUtils;
 import de.saring.util.gui.javafx.FormattedNumberCellFactory;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
+import de.saring.util.unitcalc.SpeedMode;
+import de.saring.util.unitcalc.TimeUtils;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 /**
@@ -153,7 +152,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         // setup custom factories for displaying cells
         tcDate.setCellFactory(new LocalDateCellFactory<>());
         tcDuration.setCellFactory(new FormattedNumberCellFactory<>(value -> //
-                value == null ? null : FormatUtils.seconds2TimeString(value.intValue())));
+                value == null ? null : TimeUtils.seconds2TimeString(value.intValue())));
         tcIntensity.setCellFactory(new IntensityCellFactory());
         tcDistance.setCellFactory(new FormattedNumberCellFactory<>(value -> //
                 value == null ? null : getContext().getFormatUtils().distanceToString(value.doubleValue(), 3)));

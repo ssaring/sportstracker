@@ -130,7 +130,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
                             exercise.dateTime = timestampSample
                         }
                         sample.timestamp = Date310Utils.getMilliseconds(timestampSample) -
-                                Date310Utils.getMilliseconds(exercise.dateTime)
+                                Date310Utils.getMilliseconds(exercise.dateTime!!)
                     }
 
                     // try to get heartrate in Garmin Oregon format if present

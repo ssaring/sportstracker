@@ -2,7 +2,7 @@ package de.saring.exerciseviewer.gui
 
 import de.saring.exerciseviewer.core.EVOptions
 import de.saring.util.gui.javafx.WindowBoundsPersistence
-import de.saring.util.unitcalc.FormatUtils.SpeedMode
+import de.saring.util.unitcalc.SpeedMode
 import javafx.scene.control.Alert
 import javafx.stage.Modality
 import javafx.stage.Stage
