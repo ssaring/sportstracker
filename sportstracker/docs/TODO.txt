@@ -1,9 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Port of st-util classes to Kotlin:
-- port all other classes too, except StackedRenderer
-
 Java 9/10/11 migration:
 - works fine with JDK 10 (no build or test errors and no execution problems)
 - Use of Java Module System / Jigsaw?
