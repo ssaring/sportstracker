@@ -1,7 +1,29 @@
 SportsTracker-TODO
 ==================
 
-Java 9/10/11 migration:
+Reminder for Notes:
+- useful for planning events or tasks (e.g. for training or maintenance)
+- Add row to Note Dialog below the date and time:
+  - Label "Reminder:"
+  - Selection ComboBox with values:
+    - No
+    - Remind me at this day
+    - Remind me before that day
+  - For option 3 show this input next to selection:
+    - Spinner with values 1 (default) to 1000
+    - Label "days before"
+- On SportsTracker start:
+  - Check for notes with reminders where reminder day has been reached
+    (also for noted in the past if the reminder has been missing)
+  - If there are Notes to remind, show a reminder dialog:
+    - it shows a table of all notes to remind
+      (first column date, second column shortened text)
+    - the user can:
+      - open each displayed note directly
+      - remove the reminder of each note
+      - close the dialog
+
+Java 9/10/11/12 migration:
 - works fine with JDK 10 (no build or test errors and no execution problems)
 - Use of Java Module System / Jigsaw?
   - the JavaFX packager needs to support modules first
@@ -9,6 +31,7 @@ Java 9/10/11 migration:
   (see http://openjdk.java.net/jeps/272)
   - currently for Swing apps only
   - JavaFX support might be added after Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
+- migration to JDK 12 is done, language features (e.g. switch) can't be used before IDEA 2019.1
 
 SportsTracker packaging:
 - JDK 11 does not provide the javapackager tool aynmore, so packaging has been
