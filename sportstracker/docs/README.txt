@@ -357,7 +357,7 @@ Developer Requirements
 ----------------------
 
 For compilation of the SportsTracker sources you need:
-  - Java SE Development Kit (JDK) 11 or greater
+  - Java SE Development Kit (JDK) 12 or greater
     (from http://jdk.java.net or https://adoptopenjdk.net)
   - Maven 3.5.0 or greater
     (from http://maven.apache.org)
@@ -406,7 +406,7 @@ All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
 The SportsTracker project uses the following libraries:
 
-  - OpenJFX 11.0.2 (https://openjfx.io/)
+  - OpenJFX 12 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
   - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
       Includes: javax.inject-1.jar

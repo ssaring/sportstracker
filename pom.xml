@@ -19,7 +19,7 @@
         <application.mainClass>de.saring.sportstracker.STMain</application.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.3.21</kotlin.version>
-        <javafx.version>11.0.2</javafx.version>
+        <javafx.version>12</javafx.version>
         <junit.version>5.4.0</junit.version>
     </properties>
     
@@ -131,8 +131,8 @@
                 <version>3.8.0</version>
                 <configuration>
                     <verbose>false</verbose>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>12</source>
+                    <target>12</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
                 <executions>

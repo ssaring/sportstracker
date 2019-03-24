@@ -23,7 +23,7 @@ Reminder for Notes:
       - remove the reminder of each note
       - close the dialog
 
-Java 9/10/11 migration:
+Java 9/10/11/12 migration:
 - works fine with JDK 10 (no build or test errors and no execution problems)
 - Use of Java Module System / Jigsaw?
   - the JavaFX packager needs to support modules first
@@ -31,6 +31,7 @@ Java 9/10/11 migration:
   (see http://openjdk.java.net/jeps/272)
   - currently for Swing apps only
   - JavaFX support might be added after Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
+- migration to JDK 12 is done, language features (e.g. switch) can't be used before IDEA 2019.1
 
 SportsTracker packaging:
 - JDK 11 does not provide the javapackager tool aynmore, so packaging has been
