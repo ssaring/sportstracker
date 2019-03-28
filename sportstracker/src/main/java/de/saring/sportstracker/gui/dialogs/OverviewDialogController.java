@@ -1025,36 +1025,26 @@ public class OverviewDialogController extends AbstractDialogController {
          * @return name and unit system
          */
         private String getNameWithUnitSystem(final FormatUtils formatUtils, final SpeedMode speedMode) {
-            switch (this) {
-                case DISTANCE:
-                    return appResources.getString("st.dlg.overview.value_type.distance_sum",
+            return switch (this) {
+                case DISTANCE -> appResources.getString("st.dlg.overview.value_type.distance_sum",
                             formatUtils.getDistanceUnitName());
-                case DURATION:
-                    return appResources.getString("st.dlg.overview.value_type.duration_sum");
-                case ASCENT:
-                    return appResources.getString("st.dlg.overview.value_type.ascent_sum",
+                case DURATION -> appResources.getString("st.dlg.overview.value_type.duration_sum");
+                case ASCENT -> appResources.getString("st.dlg.overview.value_type.ascent_sum",
                             formatUtils.getAltitudeUnitName());
-                case DESCENT:
-                    return appResources.getString("st.dlg.overview.value_type.descent_sum",
+                case DESCENT -> appResources.getString("st.dlg.overview.value_type.descent_sum",
                             formatUtils.getAltitudeUnitName());
-                case CALORIES:
-                    return appResources.getString("st.dlg.overview.value_type.calories_sum");
-                case EXERCISES:
-                    return appResources.getString("st.dlg.overview.value_type.exercise_count");
-                case AVG_SPEED:
-                    return appResources.getString("st.dlg.overview.value_type.avg_speed",
+                case CALORIES -> appResources.getString("st.dlg.overview.value_type.calories_sum");
+                case EXERCISES -> appResources.getString("st.dlg.overview.value_type.exercise_count");
+                case AVG_SPEED -> appResources.getString("st.dlg.overview.value_type.avg_speed",
                              formatUtils.getSpeedUnitName(speedMode));
-                case SPORTSUBTYPE:
-                    return appResources.getString("st.dlg.overview.value_type.sportsubtype_distance",
+                case SPORTSUBTYPE -> appResources.getString("st.dlg.overview.value_type.sportsubtype_distance",
                             formatUtils.getDistanceUnitName());
-                case EQUIPMENT:
-                    return appResources.getString("st.dlg.overview.value_type.equipment_distance",
+                case EQUIPMENT -> appResources.getString("st.dlg.overview.value_type.equipment_distance",
                             formatUtils.getDistanceUnitName());
-                case WEIGHT:
-                    return appResources.getString("st.dlg.overview.value_type.weight", formatUtils.getWeightUnitName());
-                default:
-                    throw new IllegalArgumentException("Invalid value type!");
-            }
+                case WEIGHT -> appResources.getString("st.dlg.overview.value_type.weight",
+                        formatUtils.getWeightUnitName());
+                default -> throw new IllegalArgumentException("Invalid value type!");
+            };
         }
 
     }

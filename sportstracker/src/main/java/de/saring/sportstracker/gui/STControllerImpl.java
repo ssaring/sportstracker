@@ -722,22 +722,13 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private void switchToView(final EntryViewController.ViewType viewType) {
 
         // determine controller of specified view
-        switch (viewType) {
-            case CALENDAR:
-                currentViewController = calendarViewController;
-                break;
-            case EXERCISE_LIST:
-                currentViewController = exerciseListViewController;
-                break;
-            case NOTE_LIST:
-                currentViewController = noteListViewController;
-                break;
-            case WEIGHT_LIST:
-                currentViewController = weightListViewController;
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid ViewType " + viewType + "!");
-        }
+        currentViewController = switch (viewType) {
+            case CALENDAR -> calendarViewController;
+            case EXERCISE_LIST -> exerciseListViewController;
+            case NOTE_LIST -> noteListViewController;
+            case WEIGHT_LIST -> weightListViewController;
+            default -> throw new IllegalArgumentException("Invalid ViewType " + viewType + "!");
+        };
 
         // update and display the new view
         currentViewController.removeSelection();

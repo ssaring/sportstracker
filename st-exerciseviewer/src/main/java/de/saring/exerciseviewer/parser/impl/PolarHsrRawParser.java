@@ -452,115 +452,25 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
      * @return normal character value of Polar character value
      */
     private char decodeChar(int value) {
-        char cDecoded = '?';
 
-        switch (value) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-                cDecoded = (char) ('0' + value);
-                break;
-            case 10:
-                cDecoded = ' ';
-                break;
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-            case 16:
-            case 17:
-            case 18:
-            case 19:
-            case 20:
-            case 21:
-            case 22:
-            case 23:
-            case 24:
-            case 25:
-            case 26:
-            case 27:
-            case 28:
-            case 29:
-            case 30:
-            case 31:
-            case 32:
-            case 33:
-            case 34:
-            case 35:
-            case 36:
-                cDecoded = (char) ('A' + value - 11);
-                break;
-            case 37:
-            case 38:
-            case 39:
-            case 40:
-            case 41:
-            case 42:
-            case 43:
-            case 44:
-            case 45:
-            case 46:
-            case 47:
-            case 48:
-            case 49:
-            case 50:
-            case 51:
-            case 52:
-            case 53:
-            case 54:
-            case 55:
-            case 56:
-            case 57:
-            case 58:
-            case 59:
-            case 60:
-            case 61:
-            case 62:
-                cDecoded = (char) ('a' + value - 37);
-                break;
-            case 63:
-                cDecoded = '-';
-                break;
-            case 64:
-                cDecoded = '%';
-                break;
-            case 65:
-                cDecoded = '/';
-                break;
-            case 66:
-                cDecoded = '(';
-                break;
-            case 67:
-                cDecoded = ')';
-                break;
-            case 68:
-                cDecoded = '*';
-                break;
-            case 69:
-                cDecoded = '+';
-                break;
-            case 70:
-                cDecoded = '.';
-                break;
-            case 71:
-                cDecoded = ':';
-                break;
-            case 72:
-                cDecoded = '?';
-                break;
-            default:
-                break;
-        }
-
-        return cDecoded;
+        return (char) switch (value) {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 -> '0' + value;
+            case 10 -> ' ';
+            case 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36
+                    -> 'A' + value - 11;
+            case 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62
+                    -> 'a' + value - 37;
+            case 63 -> '-';
+            case 64 -> '%';
+            case 65 -> '/';
+            case 66 -> '(';
+            case 67 -> ')';
+            case 68 -> '*';
+            case 69 -> '+';
+            case 70 -> '.';
+            case 71 -> ':';
+            default -> '?';
+        };
     }
 
     /**
