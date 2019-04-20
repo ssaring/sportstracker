@@ -9,7 +9,7 @@ v7.6.1:
  - updated JUnit 5 to version 5.4.0
  - Kotlin language can now be used in all SportsTracker Maven modules
    (was limited to st-exerciseviewer before)
- - updated Kotlin to version 1.3.21
+ - updated Kotlin to version 1.3.30
  - automatic check for SportsTracker application updates, the latest version
    number is downloaded from the SportsTracker website
    (checked on each application start after 30 seconds)

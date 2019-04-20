@@ -411,7 +411,7 @@ The SportsTracker project uses the following libraries:
   - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
       Includes: javax.inject-1.jar
       License: Apache License v2.0
-  - Kotlin 1.3.21 (http://kotlinlang.org/)
+  - Kotlin 1.3.30 (http://kotlinlang.org/)
       License: Apache License v2.0
   - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
@@ -517,4 +517,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2019/03/03
+2019/04/20
