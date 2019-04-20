@@ -18,6 +18,9 @@ v7.6.1:
     code, it's null safe, and fewer tests are needed
   - refactoring: moved all time-related functions from class FormatUtils to
     new class TimeUtils
+ ExerciseViewer changes:
+ - TopoGrafixGpxParser: bugfix for issue #188, GPX import failed if there are
+   samples without heartrate data
 
 v7.6.0:
  SportsTracker changes:

@@ -16,6 +16,7 @@ import org.jdom2.Namespace
 import org.jdom2.input.SAXBuilder
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 /**
  * ExerciseParser implementation for reading TopoGrafix GPX v1.1 exercise files (XML-based). Documentation about the
@@ -282,18 +283,14 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
      * Calculates heart rate summary data of the exercise (only when samples contain heart rate data).
      */
     private fun calculateHeartRateSummary(exercise: EVExercise) {
-        var heartRateSum = 0L
-        exercise.heartRateMax = Short.MIN_VALUE
 
-        for (sample in exercise.sampleList) {
-            val sampleHeartRate = sample.heartRate!!
-            heartRateSum += sampleHeartRate
-            if (sampleHeartRate > exercise.heartRateMax ?: 0) {
-            exercise.heartRateMax = sampleHeartRate
-            }
+        val sampleHeartrates:List<Short> = exercise.sampleList
+                .mapNotNull { it.heartRate }
+
+        if (!sampleHeartrates.isEmpty()) {
+            exercise.heartRateAVG = sampleHeartrates.average().roundToInt().toShort()
+            exercise.heartRateMax = sampleHeartrates.max()
         }
-
-        exercise.heartRateAVG = Math.round(heartRateSum / exercise.sampleList.size.toDouble()).toShort()
     }
 
     /**
