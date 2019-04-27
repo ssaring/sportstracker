@@ -202,7 +202,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         laDescent.setText(String.format(laDescent.getText(), context.getFormatUtils().getAltitudeUnitName()));
 
         setupChoiceBoxes();
-        fillSportTypeDependentChoiceBoxes();
+        fillSportTypeDependentControls();
 
         setupBinding();
         setupValidation();
@@ -333,27 +333,32 @@ public class ExerciseDialogController extends AbstractDialogController {
         cbIntensity.setConverter(new IntensityToStringConverter());
         cbIntensity.getItems().addAll(List.of(IntensityType.values()));
 
-        // update the sport type dependent choiceboxes on each sport type selection change
-        cbSportType.addEventHandler(ActionEvent.ACTION, event -> fillSportTypeDependentChoiceBoxes());
+        // update the sport type dependent controls on each sport type selection change
+        cbSportType.addEventHandler(ActionEvent.ACTION, event -> fillSportTypeDependentControls());
 
         // reset the previous exercise index for copying the comment on sport type / subtype changes
         cbSportSubtype.addEventHandler(ActionEvent.ACTION, event -> previousExerciseIndex = null);
     }
 
     /**
-     * Fills all ChoiceBoxes with values dependent on the selected sport type.
+     * Fills all controls (choice boxes and labels) with values dependent on the selected sport type.
      */
-    private void fillSportTypeDependentChoiceBoxes() {
+    private void fillSportTypeDependentControls() {
         cbSportSubtype.getItems().clear();
         cbEquipment.getItems().clear();
         cbEquipment.getItems().add(equipmentNone);
 
         final SportType selectedSportType = cbSportType.getValue();
         if (selectedSportType != null) {
+
             selectedSportType.getSportSubTypeList().forEach(sportSubType ->
                     cbSportSubtype.getItems().add(sportSubType));
             selectedSportType.getEquipmentList().forEach(equipment ->
                     cbEquipment.getItems().add(equipment));
+
+            // label for average speed needs to show the unit for the sport types speed mode
+            laAvgSpeed.setText(context.getResources().getString("st.dlg.exercise.avg_speed.text",
+                    context.getFormatUtils().getSpeedUnitName(selectedSportType.getSpeedMode())));
         }
 
         // select equipment "none" when exercise contains no equipment
@@ -361,7 +366,7 @@ public class ExerciseDialogController extends AbstractDialogController {
             exerciseViewModel.equipment.set(equipmentNone);
         }
 
-        // disable equipment ChoiceBox when no sport type selected
+        // disable equipment choice box when no sport type selected
         cbEquipment.setDisable(selectedSportType == null);
     }
 

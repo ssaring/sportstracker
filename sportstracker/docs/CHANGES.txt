@@ -13,6 +13,8 @@ v7.6.1:
  - automatic check for SportsTracker application updates, the latest version
    number is downloaded from the SportsTracker website
    (checked on each application start after 30 seconds)
+ - Exercise Dialog: bugfix for issue #206, the average speed input now displays
+   the proper unit for the speed mode of the selected sport type
 - Module st-util:
   - ported most classes and unit tests from Java to Kotlin, so there is less
     code, it's null safe, and fewer tests are needed
