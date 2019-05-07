@@ -319,36 +319,10 @@ class DiagramPanelController(
         axisLeft.labelPaint = colorAxisLeft
         axisLeft.tickLabelPaint = colorAxisLeft
         
-        var renderersIndex = 1
         // For altitude vs distance, color graph with slope
         if(axisTypeLeft==AxisType.ALTITUDE && !fDomainAxisTime){
-            var rendererLeft = XYLineAndShapeRenderer()
-            rendererLeft.setSeriesPaint(0, java.awt.Color(colorAxisLeftPlot.getRed(), colorAxisLeftPlot.getGreen(), colorAxisLeftPlot.getBlue(), 255) )
-            rendererLeft.setSeriesLinesVisible(0, true);
-            rendererLeft.setSeriesShapesVisible(0, false);
-            plot.setRenderer(0, rendererLeft)
-            setTooltipGenerator(rendererLeft, axisTypeBottom, axisTypeLeft)
-            val slopes = arrayOf(   doubleArrayOf(0.0,3.0),
-                                    doubleArrayOf(3.0,6.0),
-                                    doubleArrayOf(6.0,9.0),
-                                    doubleArrayOf(9.0,12.0),
-                                    doubleArrayOf(12.0,15.0),
-                                    doubleArrayOf(15.0,Double.POSITIVE_INFINITY))
-            var lighter_yellow_component = 225
-            var subsampleIds = getXYSeriesSubsampleIds(100,sLeft)
-            for(i in 0 until slopes.size){
-                var it=slopes[i]
-                var dataset = createDataSet(fDomainAxisTime, getSeriesFilteredBySlope(it[0], it[1], sLeft, subsampleIds))
-                if(dataset.getItemCount(0)>2){ // two points is not valid as its a vertical line
-                    plot.setDataset(renderersIndex, dataset)
-                    var color = java.awt.Color(255, lighter_yellow_component, 30, 130)
-                    val slopeRenderer = XYDifferenceRenderer(color,java.awt.Color(0, 0, 255, 160), false)
-                    slopeRenderer.setSeriesPaint(0, java.awt.Color(0, 0, 0, 0))
-                    plot.setRenderer(renderersIndex, slopeRenderer)
-                    renderersIndex++
-                }
-                lighter_yellow_component-=200/(slopes.size-1)
-            }
+            plotAltitudeSlopes(sLeft, plot, colorAxisLeftPlot)
+            setTooltipGenerator(plot.getRenderer(0), axisTypeBottom, axisTypeLeft)
         }
         else{
             // set custom area renderer
@@ -361,7 +335,6 @@ class DiagramPanelController(
 
         // setup right axis (when selected)
         if (sRight != null) {
-
             val axisRight = NumberAxis(axisTypeStringConverter.toString(axisTypeRight))
             axisRight.autoRangeIncludesZero = false
             plot.setRangeAxis(1, axisRight)
@@ -371,14 +344,24 @@ class DiagramPanelController(
 
             // create dataset for right axis
             val datasetRight = createDataSet(fDomainAxisTime, sRight)
-            plot.setDataset(renderersIndex, datasetRight)
-            plot.mapDatasetToRangeAxis(renderersIndex, 1)
+            plot.setDataset(plot.getRendererCount(), datasetRight)
+            plot.mapDatasetToRangeAxis(plot.getRendererCount(), 1)
 
-            // set custom area renderer
-            val rendererRight = XYAreaRenderer()
-            rendererRight.setSeriesPaint(0, colorAxisRightPlot)
-            plot.setRenderer(renderersIndex, rendererRight)
-            setTooltipGenerator(rendererRight, axisTypeBottom, axisTypeRight)
+            if(axisTypeRight==AxisType.ALTITUDE && !fDomainAxisTime){
+                val rendererCount = plot.getRendererCount()
+                plotAltitudeSlopes(sRight, plot, colorAxisRightPlot)
+                setTooltipGenerator(plot.getRenderer(plot.getRendererCount()-1), axisTypeBottom, axisTypeRight)
+                for(i in rendererCount until plot.getRendererCount()){
+                    plot.mapDatasetToRangeAxis(i, 1)
+                }
+            }
+            else{
+                // set custom area renderer
+                val rendererRight = XYAreaRenderer()
+                rendererRight.setSeriesPaint(0, colorAxisRightPlot)
+                plot.setRenderer(plot.getRendererCount(), rendererRight)
+                setTooltipGenerator(rendererRight, axisTypeBottom, axisTypeRight)
+            }
         }
 
         // use TimeZone GMT on the time axis, because all Date value are GMT based
@@ -793,6 +776,40 @@ class DiagramPanelController(
         return series
     }
 
+    /**
+     * Add the renderer for altitude (single line), and add to the plot the slope information
+     * (area below the altitude plot is coloured)
+     * @param data Series complete input XY data series
+     * @param plot XYPlot to draw graphs
+     * @param baseColor the main color to be used (! yellow ignored)
+     */
+    private fun plotAltitudeSlopes(dataSeries: Series, plot: XYPlot, baseColor: java.awt.Color){
+        var renderer = XYLineAndShapeRenderer()
+        renderer.setSeriesPaint(0, java.awt.Color(baseColor.getRed(), baseColor.getGreen(), baseColor.getBlue(), 255) )
+        renderer.setSeriesLinesVisible(0, true);
+        renderer.setSeriesShapesVisible(0, false);
+        plot.setRenderer(plot.getRendererCount(), renderer)
+        val slopes = arrayOf(   doubleArrayOf(0.0,3.0),
+                                doubleArrayOf(3.0,6.0),
+                                doubleArrayOf(6.0,9.0),
+                                doubleArrayOf(9.0,12.0),
+                                doubleArrayOf(12.0,15.0),
+                                doubleArrayOf(15.0,Double.POSITIVE_INFINITY))
+        var yellow_component = 225
+        var subsampleIds = getXYSeriesSubsampleIds(100,dataSeries)
+        for(i in 0 until slopes.size){
+            var it=slopes[i]
+            var dataset = createDataSet(false, getSeriesFilteredBySlope(it[0], it[1], dataSeries, subsampleIds))
+            if(dataset.getItemCount(0)>2){ // two points is not valid as its a vertical line
+                plot.setDataset(plot.getRendererCount(), dataset)
+                var color = java.awt.Color(baseColor.getRed(), yellow_component, baseColor.getBlue(), baseColor.getAlpha())
+                var slopeRenderer = XYDifferenceRenderer(color,java.awt.Color(0, 0, 0, 0), false)
+                slopeRenderer.setSeriesPaint(0, java.awt.Color(0, 0, 0, 0))
+                plot.setRenderer(plot.getRendererCount(), slopeRenderer)
+            }
+            yellow_component-=225/(slopes.size-1)
+        }
+    }
     /**
      * The list of possible value types to be shown on the diagram axes. This enum also provides the the localized
      * displayed enum names.
