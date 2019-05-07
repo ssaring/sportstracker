@@ -29,6 +29,8 @@ import org.jfree.chart.plot.ValueMarker
 import org.jfree.chart.plot.XYPlot
 import org.jfree.chart.renderer.xy.XYAreaRenderer
 import org.jfree.chart.renderer.xy.XYItemRenderer
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer
+import org.jfree.chart.renderer.xy.XYDifferenceRenderer
 import org.jfree.chart.ui.RectangleAnchor
 import org.jfree.chart.ui.TextAnchor
 import org.jfree.data.general.Series
@@ -41,6 +43,8 @@ import org.jfree.data.xy.XYSeriesCollection
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.abs
+import kotlin.Double
 
 /**
  * Controller (MVC) class of the "Samples" panel, which displays the exercise graphically (heartrate, altitude, speed
@@ -58,7 +62,7 @@ class DiagramPanelController(
 
     // the colors and strokes of the chart
     private val colorAxisLeft = java.awt.Color(255, 30, 30)
-    private val colorAxisLeftPlot = java.awt.Color(255, 30, 30, 136)
+    private val colorAxisLeftPlot = java.awt.Color(255, 30, 30, 130)
     private val colorAxisRight = java.awt.Color(20, 75, 255)
     private val colorAxisRightPlot = java.awt.Color(20, 75, 255, 136)
     private val colorMarkerLap = java.awt.Color(110, 110, 120)
@@ -314,13 +318,46 @@ class DiagramPanelController(
         val axisLeft = plot.getRangeAxis(0)
         axisLeft.labelPaint = colorAxisLeft
         axisLeft.tickLabelPaint = colorAxisLeft
+        
+        var renderersIndex = 1
+        // For altitude vs distance, color graph with slope
+        if(axisTypeLeft==AxisType.ALTITUDE && !fDomainAxisTime){
+            var rendererLeft = XYLineAndShapeRenderer()
+            rendererLeft.setSeriesPaint(0, java.awt.Color(colorAxisLeftPlot.getRed(), colorAxisLeftPlot.getGreen(), colorAxisLeftPlot.getBlue(), 255) )
+            rendererLeft.setSeriesLinesVisible(0, true);
+            rendererLeft.setSeriesShapesVisible(0, false);
+            plot.setRenderer(0, rendererLeft)
+            setTooltipGenerator(rendererLeft, axisTypeBottom, axisTypeLeft)
+            val slopes = arrayOf(   doubleArrayOf(0.0,3.0),
+                                    doubleArrayOf(3.0,6.0),
+                                    doubleArrayOf(6.0,9.0),
+                                    doubleArrayOf(9.0,12.0),
+                                    doubleArrayOf(12.0,15.0),
+                                    doubleArrayOf(15.0,Double.POSITIVE_INFINITY))
+            var lighter_yellow_component = 225
+            var subsampleIds = getXYSeriesSubsampleIds(100,sLeft)
+            for(i in 0 until slopes.size){
+                var it=slopes[i]
+                var dataset = createDataSet(fDomainAxisTime, getSeriesFilteredBySlope(it[0], it[1], sLeft, subsampleIds))
+                if(dataset.getItemCount(0)>2){ // two points is not valid as its a vertical line
+                    plot.setDataset(renderersIndex, dataset)
+                    var color = java.awt.Color(255, lighter_yellow_component, 30, 130)
+                    val slopeRenderer = XYDifferenceRenderer(color,java.awt.Color(0, 0, 255, 160), false)
+                    slopeRenderer.setSeriesPaint(0, java.awt.Color(0, 0, 0, 0))
+                    plot.setRenderer(renderersIndex, slopeRenderer)
+                    renderersIndex++
+                }
+                lighter_yellow_component-=200/(slopes.size-1)
+            }
+        }
+        else{
+            // set custom area renderer
+            var rendererLeft = XYAreaRenderer()
+            rendererLeft.setSeriesPaint(0, colorAxisLeftPlot)
+            plot.setRenderer(0, rendererLeft)
+            setTooltipGenerator(rendererLeft, axisTypeBottom, axisTypeLeft)
+        }
 
-        // set custom area renderer
-        val rendererLeft = XYAreaRenderer()
-        rendererLeft.setSeriesPaint(0, colorAxisLeftPlot)
-
-        plot.setRenderer(0, rendererLeft)
-        setTooltipGenerator(rendererLeft, axisTypeBottom, axisTypeLeft)
 
         // setup right axis (when selected)
         if (sRight != null) {
@@ -334,13 +371,13 @@ class DiagramPanelController(
 
             // create dataset for right axis
             val datasetRight = createDataSet(fDomainAxisTime, sRight)
-            plot.setDataset(1, datasetRight)
-            plot.mapDatasetToRangeAxis(1, 1)
+            plot.setDataset(renderersIndex, datasetRight)
+            plot.mapDatasetToRangeAxis(renderersIndex, 1)
 
             // set custom area renderer
             val rendererRight = XYAreaRenderer()
             rendererRight.setSeriesPaint(0, colorAxisRightPlot)
-            plot.setRenderer(1, rendererRight)
+            plot.setRenderer(renderersIndex, rendererRight)
             setTooltipGenerator(rendererRight, axisTypeBottom, axisTypeRight)
         }
 
@@ -677,6 +714,83 @@ class DiagramPanelController(
         } ?: return null
 
         return getConvertedValueForAxisType(axisType, averageValue).toDouble()
+    }
+
+    /**
+     * Returns the list of ids that resamples (subsample) the data series at the (minimal) interval sampleDist along X.
+     * Picking output ids from the input series will thus give a series whose data spacing is as small as possible but
+     * greater than sampleDist. Resulting data may not be evenly spaced.
+     * The output ids list will necessarily contain the first ID (0) and the last ID of the series to preseve data length,
+     * consequently the last sampling interval may be < sampleDist.
+     * 
+     * @param sampleDist desired output sample interval in meters
+     * @param series input series to resample, X in kilometers
+     * @return list of ids to resample the series
+     */
+    private fun getXYSeriesSubsampleIds(sampleDist: Int, series: Series): List<Int>{
+        var outputIds = mutableListOf(0)
+        if(series is TimeSeries){
+            return outputIds
+        }
+        else if(series is XYSeries){
+            for (index in 1 until series.getItemCount()-1){
+                if(series.getDataItem(index).getX().toDouble()-sampleDist.toDouble()/1000.0>series.getDataItem(outputIds.last()).getX().toDouble()){
+                    outputIds.add(index)
+                }
+            }
+            outputIds.add(series.getItemCount()-1)
+        }
+        return(outputIds)
+    }
+    
+    /**
+     * Returns a newly created series based on the input series, from which some data points are [removed/set to 0]
+     * (=filtered) regarding the data slope. All data from the input series that doesnt have a slope between slopeMin
+     * and slopeMax are removed or set to 0. The slope is computed from the series at subsampleIds positions only,
+     * which means that each "no-data-zone" or "data-zone" length will be at least the sampling interval used to create
+     * subsampleIds. In addition, both ends of the "no-data-zones" and "data-zones" are vertical to produce vertical
+     * lines when plotted: there are two points at each "zone" end with the same X.
+     * 
+     * @param slopeMin minimal slope to keep data
+     * @param slopeMax maximal slope to keep data
+     * @param series input series
+     * @param subsampleIds ids list from the input series used to evaluate the slope
+     * @return new series, based on the input series, 
+     */
+    private fun getSeriesFilteredBySlope(slopeMin: Double, slopeMax: Double, series: Series, subsampleIds: List<Int>): Series{
+        if(series is TimeSeries){
+            return series
+        }
+        else if(series is XYSeries){
+            var outputSeries = XYSeries("%.2f".format(slopeMin)+" - "+"%.2f".format(slopeMax), false, true)
+            var previousPointFiltered = false
+            for (i in 0 until subsampleIds.size-1){
+                var dataItem = series.getDataItem(subsampleIds[i])
+                var nextDataItem = series.getDataItem(subsampleIds[i+1])
+                var slope = abs( (nextDataItem.getY().toDouble()-dataItem.getY().toDouble())/(nextDataItem.getX().toDouble()-dataItem.getX().toDouble())/10.0 )
+                if(slope<slopeMin || slope>slopeMax){ //filter data
+                    if(!previousPointFiltered){       //first point of a filtered sequence -> make a vertical "decreasing" line
+                        outputSeries.add(dataItem)
+                        outputSeries.add(dataItem.getX(),0.0)
+                    }
+                    previousPointFiltered = true
+                }
+                else{ //don't filter (=keep) data
+                    if(previousPointFiltered){ //first point of an unfiltered sequence -> make a vertical "increasing" line...
+                        outputSeries.add(dataItem.getX(),0.0)
+                    }
+                    for(j in subsampleIds[i] until subsampleIds[i+1]){ //... then add all altitude points to the output until the next subsample id.
+                        outputSeries.add(series.getDataItem(j))
+                    }
+                    if(i==subsampleIds.size-2){ // for the last element
+                        outputSeries.add(nextDataItem)
+                    }
+                    previousPointFiltered=false
+                }
+            }
+            return(outputSeries)
+        }
+        return series
     }
 
     /**
