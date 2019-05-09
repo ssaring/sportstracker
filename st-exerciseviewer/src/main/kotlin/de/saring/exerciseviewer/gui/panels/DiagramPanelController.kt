@@ -173,7 +173,7 @@ class DiagramPanelController(
         if (exercise.recordingMode.isSpeed) {
             cbLeftAxis.items.add(AxisType.SPEED)
             cbRightAxis.items.add(AxisType.SPEED)
-            cbBottomAxis.items.add(AxisType.DISTANCE)
+            cbBottomAxis.items.add(0, AxisType.DISTANCE)
         }
 
         // add cadence items if recorded

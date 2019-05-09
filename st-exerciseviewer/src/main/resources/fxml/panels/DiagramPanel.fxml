@@ -16,8 +16,6 @@
         </Label>
         <VBox fx:id="vbDiagramPanel" spacing="16.0">
             <children>
-                <HBox fx:id="slopesLegendPanel" alignment="CENTER" spacing="5.0" prefHeight="20.0">
-                </HBox>
                 <StackPane fx:id="spDiagram" prefHeight="320.0" prefWidth="600.0" VBox.vgrow="ALWAYS"/>
                 <VBox spacing="12.0">
                     <children>
@@ -55,6 +53,10 @@
             <padding>
                 <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
             </padding>
-        </VBox>
+        </VBox> 
+        <!-- pickOnBounds=false below allows to interact with the graph (on the bottom layer) even though an HBox is hanging over. -->
+        <HBox fx:id="slopesLegendPanel" pickOnBounds="false" alignment="BASELINE_CENTER" spacing="5.0" prefHeight="20.0">
+            <padding><Insets top="25"/></padding>
+        </HBox>
     </children>
 </StackPane>
