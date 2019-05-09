@@ -15,6 +15,7 @@ import javafx.fxml.FXML
 import javafx.scene.control.ChoiceBox
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
+import javafx.scene.layout.HBox
 import javafx.util.StringConverter
 import org.jfree.chart.ChartFactory
 import org.jfree.chart.JFreeChart
@@ -40,11 +41,16 @@ import org.jfree.data.time.TimeSeriesCollection
 import org.jfree.data.xy.XYDataset
 import org.jfree.data.xy.XYSeries
 import org.jfree.data.xy.XYSeriesCollection
+import org.jfree.chart.title.LegendTitle
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
-import kotlin.Double
+import kotlin.Int
+
+import javafx.scene.shape.Rectangle
+import javafx.scene.text.Text
+import javafx.scene.paint.Color
 
 /**
  * Controller (MVC) class of the "Samples" panel, which displays the exercise graphically (heartrate, altitude, speed
@@ -88,6 +94,9 @@ class DiagramPanelController(
 
     @FXML
     private lateinit var vbDiagramPanel: VBox
+
+    @FXML
+    private lateinit var slopesLegendPanel: HBox
 
     @FXML
     private lateinit var spDiagram: StackPane
@@ -209,6 +218,20 @@ class DiagramPanelController(
             averagedRangeSteps = 0
         }
     }
+    
+    private fun clearSlopesLegend() {
+        slopesLegendPanel.getChildren().clear()
+    }
+
+    private fun addSlopeLegend(name: String, fillColor:Color, borderColor:Color) {
+        var sp = StackPane()
+        var rect = Rectangle(55.0,20.0)
+        rect.setFill(fillColor)
+        rect.setStroke(Color.BLACK)
+        var txt = Text(name)
+        sp.getChildren().addAll(rect,txt)
+        slopesLegendPanel.getChildren().add(sp)
+    }
 
     /**
      * Draws the diagram according to the current axis type selection and configuration settings.
@@ -220,6 +243,8 @@ class DiagramPanelController(
         val axisTypeRight = cbRightAxis.value
         val axisTypeBottom = cbBottomAxis.value
         val fDomainAxisTime = axisTypeBottom == AxisType.TIME
+        
+        clearSlopesLegend() // remove slope legend, they will be added later if needed
 
         // create and fill data series according to axis type
         // (right axis only when user selected a different axis type)
@@ -740,12 +765,19 @@ class DiagramPanelController(
      * @param subsampleIds ids list from the input series used to evaluate the slope
      * @return new series, based on the input series, 
      */
-    private fun getSeriesFilteredBySlope(slopeMin: Double, slopeMax: Double, series: Series, subsampleIds: List<Int>): Series{
+    private fun getSeriesFilteredBySlope(slopeMin: Int, slopeMax: Int, series: Series, subsampleIds: List<Int>): Series{
         if(series is TimeSeries){
             return series
         }
         else if(series is XYSeries){
-            var outputSeries = XYSeries("%.2f".format(slopeMin)+" - "+"%.2f".format(slopeMax), false, true)
+            var name = ""
+            if(slopeMax==Int.MAX_VALUE){
+                name = "> "+slopeMin.toString()+"%"
+            }
+            else{
+                name = "< "+slopeMax.toString()+"%"
+            }
+            var outputSeries = XYSeries(name, false, true)
             var previousPointFiltered = false
             for (i in 0 until subsampleIds.size-1){
                 var dataItem = series.getDataItem(subsampleIds[i])
@@ -781,7 +813,7 @@ class DiagramPanelController(
      * (area below the altitude plot is coloured)
      * @param data Series complete input XY data series
      * @param plot XYPlot to draw graphs
-     * @param baseColor the main color to be used (! yellow ignored)
+     * @param baseColor the main color to be used (! green ignored)
      */
     private fun plotAltitudeSlopes(dataSeries: Series, plot: XYPlot, baseColor: java.awt.Color){
         var renderer = XYLineAndShapeRenderer()
@@ -789,25 +821,30 @@ class DiagramPanelController(
         renderer.setSeriesLinesVisible(0, true);
         renderer.setSeriesShapesVisible(0, false);
         plot.setRenderer(plot.getRendererCount(), renderer)
-        val slopes = arrayOf(   doubleArrayOf(0.0,3.0),
-                                doubleArrayOf(3.0,6.0),
-                                doubleArrayOf(6.0,9.0),
-                                doubleArrayOf(9.0,12.0),
-                                doubleArrayOf(12.0,15.0),
-                                doubleArrayOf(15.0,Double.POSITIVE_INFINITY))
-        var yellow_component = 225
+        val slopes = arrayOf(   intArrayOf(0,5),
+                                intArrayOf(5,7),
+                                intArrayOf(7,10),
+                                intArrayOf(10,15),
+                                intArrayOf(15,Int.MAX_VALUE))
+        var green_component = 225
         var subsampleIds = getXYSeriesSubsampleIds(100,dataSeries)
         for(i in 0 until slopes.size){
             var it=slopes[i]
-            var dataset = createDataSet(false, getSeriesFilteredBySlope(it[0], it[1], dataSeries, subsampleIds))
+            val series = getSeriesFilteredBySlope(it[0], it[1], dataSeries, subsampleIds)
+            val name = series.getKey().toString()
+            var dataset = createDataSet(false, series)
             if(dataset.getItemCount(0)>2){ // two points is not valid as its a vertical line
                 plot.setDataset(plot.getRendererCount(), dataset)
-                var color = java.awt.Color(baseColor.getRed(), yellow_component, baseColor.getBlue(), baseColor.getAlpha())
+                var color = java.awt.Color(baseColor.getRed(), green_component, baseColor.getBlue(), baseColor.getAlpha())
                 var slopeRenderer = XYDifferenceRenderer(color,java.awt.Color(0, 0, 0, 0), false)
                 slopeRenderer.setSeriesPaint(0, java.awt.Color(0, 0, 0, 0))
                 plot.setRenderer(plot.getRendererCount(), slopeRenderer)
+                //FIXME: is it possible to avoid this color conversion between java.awt.Color and javafx one ?
+                addSlopeLegend(name,
+                               Color(color.getRed()/255.0, color.getGreen()/255.0, color.getBlue()/255.0, color.getAlpha()/255.0),
+                               Color(baseColor.getRed()/255.0, baseColor.getGreen()/255.0, baseColor.getBlue()/255.0, 1.0))
             }
-            yellow_component-=225/(slopes.size-1)
+            green_component-=225/(slopes.size-1)
         }
     }
     /**
