@@ -6,6 +6,7 @@ v7.6.1:
  - updated to JDK 12 (tested with AdoptOpenJDK 12)
    - use of new switch expression features (less code)
  - updated to JavaFX 12 (OpenJFX)
+ - updated ControlsFX to version 11.0.0
  - updated JUnit 5 to version 5.4.0
  - Kotlin language can now be used in all SportsTracker Maven modules
    (was limited to st-exerciseviewer before)

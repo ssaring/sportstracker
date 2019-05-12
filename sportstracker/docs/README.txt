@@ -415,7 +415,7 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
-  - ControlsFX 9.0.0 (http://controlsfx.org/)
+  - ControlsFX 11.0.0 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - JFreeChart 1.5.0 and JFreeChart-FX 1.0.1 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
@@ -517,4 +517,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2019/04/20
+2019/05/12
