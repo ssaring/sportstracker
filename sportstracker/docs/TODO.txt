@@ -1,6 +1,21 @@
 SportsTracker-TODO
 ==================
 
+Deactivated Equipment:
+- Goal: deactivate equipment which is not in use anymore (e.g. worn-out-shoes)
+  - it's not available for selection in Exercise dialog anymore (except it has been set)
+  - still shown in the Filter or Overview dialogs
+- TODOs
+  - create branch
+  - add attribute Equipment#notInUse (default = false) (DONE)
+  - add attribute to XML schema and test files (DONE)
+  - extend XML storage and unit test (DONE)
+  - extend Sport Type dialog, user can select whether an Equipment is not in use (add editable table column?)
+  - extend Exercise dialog
+    - don't display Equipments with notInUse=true in selection combobox,
+      except for existing exercises where such a Equipment has been selected before
+
+
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)
 - Add row to Note Dialog below the date and time:

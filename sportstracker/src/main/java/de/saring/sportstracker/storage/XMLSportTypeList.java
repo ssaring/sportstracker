@@ -133,6 +133,7 @@ public class XMLSportTypeList {
             eEquipmentList.getChildren("equipment").forEach(eEquipment -> {
                 Equipment equipment = new Equipment(Integer.parseInt(eEquipment.getChildText("id")));
                 equipment.setName(eEquipment.getChildText("name"));
+                equipment.setNotInUse(Boolean.valueOf(eEquipment.getChildText("not-in-use")));
                 sportType.getEquipmentList().set(equipment);
             });
         }
@@ -207,6 +208,7 @@ public class XMLSportTypeList {
                 eEquipmentList.addContent(eEquipment);
                 XMLUtils.addElement(eEquipment, "id", String.valueOf(equipment.getId()));
                 XMLUtils.addElement(eEquipment, "name", equipment.getName());
+                XMLUtils.addElement(eEquipment, "not-in-use", String.valueOf(equipment.isNotInUse()));
             });
         });
 
