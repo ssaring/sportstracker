@@ -406,7 +406,7 @@ All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
 The SportsTracker project uses the following libraries:
 
-  - OpenJFX 12 (https://openjfx.io/)
+  - OpenJFX 12.0.1 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
   - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
       Includes: javax.inject-1.jar

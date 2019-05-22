@@ -1,6 +1,8 @@
 SportsTracker-TODO
 ==================
 
+Unexpected application crashes when switching between SportsTracker/ExerciseViewer and other apps!
+
 Deactivated Equipment:
 - Goal: deactivate equipment which is not in use anymore (e.g. worn-out-shoes)
   - it's not available for selection in Exercise dialog anymore (except it has been set)
@@ -10,10 +12,11 @@ Deactivated Equipment:
   - add attribute Equipment#notInUse (default = false) (DONE)
   - add attribute to XML schema and test files (DONE)
   - extend XML storage and unit test (DONE)
-  - extend Sport Type dialog, user can select whether an Equipment is not in use (add editable table column?)
   - extend Exercise dialog
-    - don't display Equipments with notInUse=true in selection combobox,
+    - don't display Equipments with notInUse=true in selection combobox (DONE),
       except for existing exercises where such a Equipment has been selected before
+      => Implemented, but does not work as expected!!!
+  - extend Sport Type dialog, user can select whether an Equipment is not in use (add editable table column?)
 
 
 Reminder for Notes:
