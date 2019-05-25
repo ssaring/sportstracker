@@ -32,6 +32,7 @@
             <equipment>
 				<id>2</id>
 				<name>Cannondale R800</name>
+				<not-in-use>true</not-in-use>
             </equipment>
         </equipment-list>
 	</sport-type>

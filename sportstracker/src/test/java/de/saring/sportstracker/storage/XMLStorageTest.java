@@ -95,9 +95,11 @@ public class XMLStorageTest {
         Equipment equipment1_1 = type1.getEquipmentList().getByID(1);
         assertEquals(equipment1_1.getId(), 1);
         assertEquals(equipment1_1.getName(), "Cannondale Jekyll");
+        assertFalse(equipment1_1.isNotInUse());
         Equipment equipment1_2 = type1.getEquipmentList().getByID(2);
         assertEquals(equipment1_2.getId(), 2);
         assertEquals(equipment1_2.getName(), "Cannondale R800");
+        assertTrue(equipment1_2.isNotInUse());
 
         // check sporttype 2
         SportType type2 = sportTypes.getByID(2);

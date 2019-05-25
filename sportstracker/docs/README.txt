@@ -174,7 +174,8 @@ For each sport type you need to create at least one subtype. Subtype examples
 for cycling are "MTB tour", "MTB race", "Road tour" and so on. If subtypes
 do not make sense for your sport type just create a subtype called "default".
 You can also define a list of equipment for a sport type (optional), e.g.
-specific bikes for cycling or shoes for running.
+specific bikes for cycling or shoes for running. Worn and outdated equipment
+can be set to 'not in use' state, then it can't be selected anymore.
 
 After that it's possible to add and edit exercises. In the exercise dialog
 you need to specify the date, the sport type, the subtype and the intensity.
@@ -406,7 +407,7 @@ All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
 The SportsTracker project uses the following libraries:
 
-  - OpenJFX 12 (https://openjfx.io/)
+  - OpenJFX 12.0.1 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
   - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
       Includes: javax.inject-1.jar

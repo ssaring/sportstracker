@@ -98,6 +98,11 @@
 															<xs:documentation>The name of this equipment.</xs:documentation>
 														</xs:annotation>
 													</xs:element>
+													<xs:element name="not-in-use" type="xs:boolean" default="false" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Flag whether this equipment is not in use anymore.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>

@@ -5,7 +5,7 @@ v7.6.1:
  SportsTracker changes:
  - updated to JDK 12 (tested with AdoptOpenJDK 12)
    - use of new switch expression features (less code)
- - updated to JavaFX 12 (OpenJFX)
+ - updated to JavaFX / OpenJFX 12.0.1
  - updated ControlsFX to version 11.0.0
  - updated JUnit 5 to version 5.4.0
  - Kotlin language can now be used in all SportsTracker Maven modules
@@ -16,6 +16,13 @@ v7.6.1:
    (checked on each application start after 30 seconds)
  - Exercise Dialog: bugfix for issue #206, the average speed input now displays
    the proper unit for the speed mode of the selected sport type
+ - Equipment of sport types can now be set to 'not in use', e.g. for worn shoes
+   - the Exercise dialog does not display the outdated equipment for selection
+     anymore => the user must not search in long lists anymore
+   - Sport Type Dialog: the user can toggle the 'not in use' state for each
+     equipment
+   - the outdated equipment is still present in older Exercise entries, Filter
+     and Statistic dialogs
 - Module st-util:
   - ported most classes and unit tests from Java to Kotlin, so there is less
     code, it's null safe, and fewer tests are needed

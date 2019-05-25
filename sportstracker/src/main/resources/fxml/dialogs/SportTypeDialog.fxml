@@ -82,6 +82,7 @@
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddEquipment" text="%st.dlg.sporttype.add_equipment.Action.text" />
                                 <Button fx:id="btEquipmentEdit" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEditEquipment" text="%st.dlg.sporttype.edit_equipment.Action.text" />
                                 <Button fx:id="btEquipmentDelete" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDeleteEquipment" text="%st.dlg.sporttype.delete_equipment.Action.text" />
+                                <Button fx:id="btEquipmentToggleUse" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onToggleEquipmentUse" text="%st.dlg.sporttype.toggle_equipment_use.Action.text" />
                             </children>
                         </VBox>
                     </children>

@@ -18,6 +18,11 @@ public final class Equipment extends IdObject implements Nameable, Cloneable {
     private String name;
 
     /**
+     * Flag whether this equipment is not in use anymore (e.g. worn out shoes).
+     */
+    private boolean notInUse = false;
+
+    /**
      * Standard c'tor.
      *
      * @param id the ID of the object
@@ -35,12 +40,21 @@ public final class Equipment extends IdObject implements Nameable, Cloneable {
         this.name = name;
     }
 
+    public boolean isNotInUse() {
+        return notInUse;
+    }
+
+    public void setNotInUse(boolean notInUse) {
+        this.notInUse = notInUse;
+    }
+
     @Override
     public String toString() {
         StringBuilder sBuilder = new StringBuilder();
         sBuilder.append(this.getClass().getName()).append(":\n");
         sBuilder.append(" [id=").append(this.getId()).append("\n");
-        sBuilder.append("  name=").append(this.name).append("]\n");
+        sBuilder.append("  name=").append(this.name).append("\n");
+        sBuilder.append("  notInUse=").append(this.notInUse).append("]\n");
         return sBuilder.toString();
     }
 
