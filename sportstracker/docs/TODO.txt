@@ -1,10 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Unexpected application crashes when switching between SportsTracker/ExerciseViewer with opened dialog and other apps!
-- Crashes occur with OpenJFX 12.0.1, 13-ea+8 and 11.0.2, seems to be a new issue after updating to JDK 12
-- I've created an bug issue on OpenJFX GitHub page: https://github.com/javafxports/openjdk-jfx/issues/480
-
 Deactivated Equipment:
 - Goal: deactivate equipment which is not in use anymore (e.g. worn-out-shoes)
   - it's not available for selection in Exercise dialog anymore (except it has been set)
