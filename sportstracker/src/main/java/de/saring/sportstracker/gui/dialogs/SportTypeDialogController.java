@@ -19,6 +19,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
@@ -72,6 +73,8 @@ public class SportTypeDialogController extends AbstractDialogController {
     private Button btEquipmentEdit;
     @FXML
     private Button btEquipmentDelete;
+    @FXML
+    private Button btEquipmentToggleUse;
 
 
     /** ViewModel of the edited SportType. */
@@ -111,9 +114,11 @@ public class SportTypeDialogController extends AbstractDialogController {
 
     @Override
     protected void setupDialogControls() {
+
         cbSpeedMode.getItems().addAll(List.of(SpeedModeItem.values()));
         liSportSubtypes.setCellFactory(list -> new NameableListCell<>());
-        liEquipments.setCellFactory(list -> new NameableListCell<>());
+        final String notInUseSuffix = context.getResources().getString("st.dlg.sporttype.equipment_not_in_use.suffix");
+        liEquipments.setCellFactory(list -> new EquipmentListCell(notInUseSuffix));
 
         setupBinding();
         setupValidation();
@@ -165,6 +170,7 @@ public class SportTypeDialogController extends AbstractDialogController {
                 liEquipments.getSelectionModel().selectedItemProperty());
         btEquipmentEdit.disableProperty().bind(equipmentSelected);
         btEquipmentDelete.disableProperty().bind(equipmentSelected);
+        btEquipmentToggleUse.disableProperty().bind(equipmentSelected);
     }
 
     /**
@@ -402,6 +408,16 @@ public class SportTypeDialogController extends AbstractDialogController {
     }
 
     /**
+     * Action for toggling the "Not in use" state of the selected equipment.
+     */
+    @FXML
+    private void onToggleEquipmentUse(final ActionEvent event) {
+        final Equipment selectedEquipment = liEquipments.getSelectionModel().getSelectedItem();
+        selectedEquipment.setNotInUse(!selectedEquipment.isNotInUse());
+        updateEquipmentList();
+    }
+
+    /**
      * Displays the add/edit dialog for the specified equipment name (includes
      * error checking and dialog redisplay). The modified equipment will be
      * stored in the sport type.
@@ -491,6 +507,32 @@ public class SportTypeDialogController extends AbstractDialogController {
                     .filter(speedModeItem -> speedMode == speedModeItem.getSpeedMode())
                     .findAny()
                     .orElseThrow(() -> new IllegalArgumentException("Invalid speedMode '" + speedMode + "'!"));
+        }
+    }
+
+    /**
+     * ListCell for the JavaFX ListView control which displays the Equipment items with their 'not in use' state.
+     */
+    private static class EquipmentListCell extends ListCell<Equipment> {
+
+        private final String notInUseSuffix;
+
+        public EquipmentListCell(String notInUseSuffix) {
+            this.notInUseSuffix = notInUseSuffix;
+        }
+
+        @Override
+        protected void updateItem(final Equipment equipment, final boolean empty) {
+            super.updateItem(equipment, empty);
+
+            String cellText = null;
+            if (equipment != null) {
+                cellText = equipment.getName();
+                if (equipment.isNotInUse()) {
+                    cellText += " " + notInUseSuffix;
+                }
+            }
+            setText(cellText);
         }
     }
 }
