@@ -54,7 +54,7 @@ public final class Equipment extends IdObject implements Nameable, Cloneable {
         sBuilder.append(this.getClass().getName()).append(":\n");
         sBuilder.append(" [id=").append(this.getId()).append("\n");
         sBuilder.append("  name=").append(this.name).append("\n");
-        sBuilder.append("  notInUse=").append(this.name).append("]\n");
+        sBuilder.append("  notInUse=").append(this.notInUse).append("]\n");
         return sBuilder.toString();
     }
 

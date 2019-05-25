@@ -12,10 +12,9 @@ Deactivated Equipment:
   - extend XML storage and unit test (DONE)
   - extend Exercise dialog
     - don't display Equipments with notInUse=true in selection combobox (DONE),
-      except for existing exercises where such a Equipment has been selected before
-      => Implemented, but does not work as expected!!!
+      except for existing exercises where such a Equipment has been selected before (DONE)
   - extend Sport Type dialog, user can select whether an Equipment is not in use (add editable table column?)
-
+  - add to ChangeLog + doc?
 
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)
