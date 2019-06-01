@@ -7,16 +7,17 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="spTrackPanel" prefHeight="200.0" prefWidth="300.0" stylesheets="@../ExerciseViewer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.TrackPanelController">
+<StackPane fx:id="spTrackPanel" prefHeight="300.0" prefWidth="400.0" stylesheets="@../ExerciseViewer.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.exerciseviewer.gui.panels.TrackPanelController">
     <children>
         <Label text="%pv.track.no_track_data.text">
             <padding>
                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
             </padding>
         </Label>
-        <VBox fx:id="vbTrackViewer" spacing="12.0">
+        <VBox fx:id="vbTrackViewer" prefHeight="308.0" prefWidth="426.0" spacing="12.0">
             <children>
                 <StackPane fx:id="spMapViewer" VBox.vgrow="ALWAYS" />
+                <StackPane fx:id="spDiagram" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" VBox.vgrow="NEVER" />
                 <HBox alignment="CENTER_LEFT" spacing="12.0">
                     <children>
                         <Label text="%pv.track.position.text" />

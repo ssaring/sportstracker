@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox
 import java.util.logging.Level
 import java.util.logging.Logger
 
+
 /**
  * Controller (MVC) class of the "Track" panel, which displays the recorded location data of the exercise (if
  * available) in a map.<br/>
@@ -50,6 +51,9 @@ class TrackPanelController(
     private lateinit var spMapViewer: StackPane
 
     @FXML
+    private lateinit var spDiagram: StackPane
+
+    @FXML
     private lateinit var slPosition: Slider
 
     private var mapView: LeafletMapView? = null
@@ -68,6 +72,7 @@ class TrackPanelController(
         // setup the map viewer if track data is available
         val exercise = document.exercise
         if (exercise.recordingMode.isLocation) {
+            setupAltitudeChart()
             setupMapView()
             setupMapViewerTooltip()
             setupTrackPositionSlider()
@@ -92,6 +97,22 @@ class TrackPanelController(
     private fun setupMapViewerTooltip() {
         spMapViewerTooltip = Tooltip()
         spMapViewerTooltip!!.isAutoHide = true
+    }
+
+    private fun setupAltitudeChart() {
+
+        if (document.exercise.recordingMode.isAltitude) {
+
+
+//            document.exercise.sampleList.forEach { sample ->
+//                dsAltitude.data.add(XYChart.Data(sample.distance ?: 0, sample.altitude ?: 0))
+//            }
+
+        }
+        else {
+            // hide diagram pane when no altitude data present
+            vbTrackViewer.children.remove(spDiagram)
+        }
     }
 
     private fun setupTrackPositionSlider() {
