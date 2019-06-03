@@ -48,6 +48,9 @@ SportsTracker packaging:
   rewritten by using the upcoming jpackager tool (JEP 343)
 - it uses a jpackager-backport for JDK 11, provided by Gluon
 => update the packaging scripts when jpackager is contained in the JDK
+- Alternative: Gluon Client Plugin (bundles GrailVM, OpenJDK an OpenJFX)
+  - currently in beta and for macOS only
+  - https://docs.gluonhq.com/client/
 
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore
