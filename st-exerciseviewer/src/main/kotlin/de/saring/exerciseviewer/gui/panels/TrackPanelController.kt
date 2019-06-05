@@ -11,6 +11,7 @@ import de.saring.leafletmap.MapConfig
 import de.saring.leafletmap.MapLayer
 import de.saring.leafletmap.ScaleControlConfig
 import de.saring.leafletmap.ZoomControlConfig
+import de.saring.util.gui.jfreechart.ChartUtils
 import de.saring.util.unitcalc.TimeUtils
 import de.saring.util.unitcalc.UnitSystem
 import javafx.concurrent.Worker
@@ -20,6 +21,11 @@ import javafx.scene.control.Slider
 import javafx.scene.control.Tooltip
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
+import org.jfree.chart.ChartFactory
+import org.jfree.chart.fx.ChartViewer
+import org.jfree.chart.plot.PlotOrientation
+import org.jfree.data.xy.XYSeries
+import org.jfree.data.xy.XYSeriesCollection
 import java.util.logging.Level
 import java.util.logging.Logger
 
@@ -103,11 +109,29 @@ class TrackPanelController(
 
         if (document.exercise.recordingMode.isAltitude) {
 
+            val sAltitude = XYSeries("altitude")
+            val dsAltitude = XYSeriesCollection(sAltitude)
+            document.exercise.sampleList.forEach { sample ->
+                sAltitude.add(sample.distance ?: 0, sample.altitude ?: 0)
+            }
 
-//            document.exercise.sampleList.forEach { sample ->
-//                dsAltitude.data.add(XYChart.Data(sample.distance ?: 0, sample.altitude ?: 0))
-//            }
+            // TODO display km distance values instead of meters (or english)
+            // TODO support english units too
+            // TODO I18N for column names
+            // TODO altitude axis has not to start with 0
+            // TODO display marker line for position slider
+            val chartAltitude = ChartFactory.createXYLineChart(null, // Title
+                    null, // Y-axis label
+                    "Altitude", // X-axis label
+                    dsAltitude, // primary dataset
+                    PlotOrientation.VERTICAL, // plot orientation
+                    false, // display legend
+                    false, // display tooltips
+                    false) // URLs
 
+            ChartUtils.customizeChart(chartAltitude)
+            val chartViewer = ChartViewer(chartAltitude)
+            spDiagram.children.addAll(chartViewer)
         }
         else {
             // hide diagram pane when no altitude data present
