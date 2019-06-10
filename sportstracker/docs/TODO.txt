@@ -7,7 +7,7 @@ ExerciseViewer Track panel: display altitude graph below the track
     insufficient styling options etc.
   - use of JFreeChart provides also a consistent UI with the Diagram panel
 - Status:
-  - Diagram Panel with fix height already in TrackPanel (spDiagram)
+  - TrackPanel already displays altitude chart properly (incl. unit conversion and I18N)
   - Diagram Panel is removed when no altitude data available
 - see TODOs in TrackPanelController
 
