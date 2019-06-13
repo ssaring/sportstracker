@@ -1,6 +1,10 @@
 SportsTracker-TODO
 ==================
 
+Switch back to JDK 11
+- jpackage JEP-343 will not be available before JDK 14
+  -> a working packaging method is needed before, otherwise no release possible
+
 ExerciseViewer Track panel: display altitude graph below the track
 - JFreeChart has to be used due to problems with JavaFX LineChart
   - JavaFX LineChart makes dialog start quite slow, does not support marker lines,
@@ -9,6 +13,7 @@ ExerciseViewer Track panel: display altitude graph below the track
 - Status:
   - TrackPanel already displays altitude chart properly (incl. unit conversion and I18N)
   - Diagram Panel is removed when no altitude data available
+  - Track position is also displayed in altitude graph, refactoring needed
 - see TODOs in TrackPanelController
 
 Reminder for Notes:

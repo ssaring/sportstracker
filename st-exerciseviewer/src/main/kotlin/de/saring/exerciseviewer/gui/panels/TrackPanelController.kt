@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox
 import org.jfree.chart.ChartFactory
 import org.jfree.chart.fx.ChartViewer
 import org.jfree.chart.plot.PlotOrientation
+import org.jfree.chart.plot.ValueMarker
 import org.jfree.chart.plot.XYPlot
 import org.jfree.data.xy.XYSeries
 import org.jfree.data.xy.XYSeriesCollection
@@ -72,6 +73,11 @@ class TrackPanelController(
 
     /** Flag whether the exercise track has already been shown.  */
     private var showTrackExecuted = false
+
+    // TODO better names?
+    private lateinit var trackPositionMarker: ValueMarker
+    private val colorMarkerLap = java.awt.Color(110, 110, 120)
+    private val strokeMarker = java.awt.BasicStroke(1.5f)
 
     override val fxmlFilename: String = "/fxml/panels/TrackPanel.fxml"
 
@@ -144,10 +150,20 @@ class TrackPanelController(
 
             // set ranges to avoid altitude to start with 0 and to avoid empty space on end of the distance axis
             // TODO after zooming and restore the ranges are reset, how to avoid? (altitude starts with 0 and empty space for distance)
-            // TODO use the same range settings in DiagramPanel when xAxis = Distance (then theres no empty space on right end)
+            // => solution: https://stackoverflow.com/questions/8551604/restoring-manual-domain-axis-range-after-zooming-out-in-jfreechart
+            // TODO use the same range settings in DiagramPanel when xA xis = Distance (then theres no empty space on right end)
             val plotAltitude = chartAltitude.plot as XYPlot
             plotAltitude.rangeAxis.setRangeWithMargins(sAltitude.minY, sAltitude.maxY)
             plotAltitude.domainAxis.setRange(0.0, sAltitude.maxX)
+
+            plotAltitude.rangeAxis.defaultAutoRange = plotAltitude.rangeAxis.range
+            plotAltitude.domainAxis.defaultAutoRange = plotAltitude.domainAxis.range
+
+            // add marker for track position
+            trackPositionMarker = ValueMarker(0.0)
+            trackPositionMarker.paint = colorMarkerLap
+            trackPositionMarker.stroke = strokeMarker
+            plotAltitude.addDomainMarker(trackPositionMarker)
 
             ChartUtils.customizeChart(chartAltitude)
             val chartViewer = ChartViewer(chartAltitude)
@@ -189,6 +205,19 @@ class TrackPanelController(
             var tooltipPos = spMapViewer.localToScene(8.0, 8.0)
             tooltipPos = tooltipPos.add(getMapViewerScreenPosition())
             spMapViewerTooltip!!.show(spMapViewer, tooltipPos.x, tooltipPos.y)
+        }
+
+        // TODO split handler to two methods, one for map marker and one for altitude graph marker
+        // create domain marker for track position in altitude graph
+        if (document.exercise.recordingMode.isAltitude) {
+
+            document.exercise.sampleList[positionIndex].distance?.let { sampleDistanceInMeters ->
+
+                val isEnglishUnitSystem = document.options.unitSystem == UnitSystem.ENGLISH
+                val sampleDistanceInCurrentUnit = if (isEnglishUnitSystem)
+                    ConvertUtils.convertKilometer2Miles(sampleDistanceInMeters) else sampleDistanceInMeters
+                trackPositionMarker.value = sampleDistanceInCurrentUnit / 1000.0
+            }
         }
     }
 
