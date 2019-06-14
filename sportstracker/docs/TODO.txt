@@ -14,7 +14,13 @@ ExerciseViewer Track panel: display altitude graph below the track
   - TrackPanel already displays altitude chart properly (incl. unit conversion and I18N)
   - Diagram Panel is removed when no altitude data available
   - Track position is also displayed in altitude graph, refactoring needed
-- see TODOs in TrackPanelController
+- TODOs
+  - Fill the area below the altitude graph with a light color (as in Diagram Panel)
+  - add to ChangeLog
+
+Exercise Viewer Diagram Panel:
+- use same or no margin for bottom axis when displayed "by distance" as for "by time"
+  => see solution in altitude chart in Track Panel
 
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)
@@ -142,10 +148,6 @@ Training route/lap support:
 
 ExerciseViewer-TODO
 ===================
-
-Diagram panel:
-- there's no space at the left side when the bottom axis displays "by distance"
-  (between left axis and graph start)
 
 ExerciseParsers:
 - GarminTcxParser:

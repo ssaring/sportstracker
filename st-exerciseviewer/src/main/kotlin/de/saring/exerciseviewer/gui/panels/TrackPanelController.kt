@@ -24,10 +24,12 @@ import javafx.scene.control.Tooltip
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 import org.jfree.chart.ChartFactory
+import org.jfree.chart.axis.NumberAxis
 import org.jfree.chart.fx.ChartViewer
 import org.jfree.chart.plot.PlotOrientation
 import org.jfree.chart.plot.ValueMarker
 import org.jfree.chart.plot.XYPlot
+import org.jfree.data.Range
 import org.jfree.data.xy.XYSeries
 import org.jfree.data.xy.XYSeriesCollection
 import java.util.logging.Level
@@ -119,28 +121,22 @@ class TrackPanelController(
             val sAltitude = createAltitudeXYSeries()
             val dsAltitude = XYSeriesCollection(sAltitude)
 
-            val altitudeAxisTitle = context.resources.getString(
-                    "pv.track.axis.altitude", context.formatUtils.getAltitudeUnitName())
-
             val chartAltitude = ChartFactory.createXYLineChart(null, // Title
                     null, // Y-axis label
-                    altitudeAxisTitle, // X-axis label
+                    null, // X-axis label will be set later
                     dsAltitude, // primary dataset
                     PlotOrientation.VERTICAL, // plot orientation
                     false, // display legend
                     false, // display tooltips
                     false) // URLs
 
-            // set ranges to avoid altitude to start with 0 and to avoid empty space on end of the distance axis
-            // TODO after zooming and restore the ranges are reset, how to avoid? (altitude starts with 0 and empty space for distance)
-            // => solution: https://stackoverflow.com/questions/8551604/restoring-manual-domain-axis-range-after-zooming-out-in-jfreechart
-            // TODO use the same range settings in DiagramPanel when xA xis = Distance (then theres no empty space on right end)
             val plotAltitude = chartAltitude.plot as XYPlot
-            plotAltitude.rangeAxis.setRangeWithMargins(sAltitude.minY, sAltitude.maxY)
-            plotAltitude.domainAxis.setRange(0.0, sAltitude.maxX)
 
-            plotAltitude.rangeAxis.defaultAutoRange = plotAltitude.rangeAxis.range
-            plotAltitude.domainAxis.defaultAutoRange = plotAltitude.domainAxis.range
+            // use custom axis (both) with fixed ranges to avoid altitude to start with 0 and to avoid empty space on end of the distance axis
+            plotAltitude.rangeAxis = FixedRangeNumberAxis(
+                    getAltitudeAxisTitle(), Range(sAltitude.minY, sAltitude.maxY), true)
+            plotAltitude.domainAxis = FixedRangeNumberAxis(
+                    null, Range(0.0, sAltitude.maxX), false)
 
             addAltitudeGraphMarker(plotAltitude)
 
@@ -153,6 +149,9 @@ class TrackPanelController(
             vbTrackViewer.children.remove(spDiagram)
         }
     }
+
+    private fun getAltitudeAxisTitle() = context.resources.getString(
+            "pv.track.axis.altitude", context.formatUtils.getAltitudeUnitName())
 
     private fun setupTrackPositionSlider() {
         // on position slider changes: update position marker in the map viewer and display tooltip with details
@@ -339,4 +338,29 @@ class TrackPanelController(
 
     private fun appendToolTipLine(sb: StringBuilder, resourceKey: String, value: String) =
             sb.append("${context.resources.getString(resourceKey)}: $value\n")
+
+}
+
+/**
+ * Extended JFreeChart NumberAxis which displays a fixed range. This can e.g. be used for a altitude chart to avoid
+ * that the axis starts with 0, it can display only the range where altitude data is present. It also makes sure that
+ * this fixed range is displayed again, when the user zooms into the chart and out again.
+ * Source: https://stackoverflow.com/questions/8551604/restoring-manual-domain-axis-range-after-zooming-out-in-jfreechart
+ *
+ * @property label of the axis (optional)
+ * @property fixedRange range to be displayed
+ * @property rangeWithMargins flag whether the range should be extended with a margin
+ */
+class FixedRangeNumberAxis(
+        label: String?,
+        private val fixedRange: Range,
+        private val rangeWithMargins: Boolean) : NumberAxis(label) {
+
+    override fun autoAdjustRange() {
+        if (rangeWithMargins) {
+            setRangeWithMargins(fixedRange, false, false)
+        } else {
+            setRange(fixedRange, false, false)
+        }
+    }
 }
