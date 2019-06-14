@@ -1,6 +1,7 @@
 package de.saring.exerciseviewer.gui.panels
 
 import de.saring.exerciseviewer.data.EVExercise
+import de.saring.exerciseviewer.data.ExerciseSample
 import de.saring.exerciseviewer.gui.EVContext
 import de.saring.exerciseviewer.gui.EVDocument
 import de.saring.leafletmap.ColorMarker
@@ -71,13 +72,12 @@ class TrackPanelController(
     private var spMapViewerTooltip: Tooltip? = null
     private var positionMarkerName: String? = null
 
+    private var altitudeGraphMarker: ValueMarker? = null
+    private val colorAltitudeGraphMarker = java.awt.Color(110, 110, 120)
+    private val strokeAltitudeGraphMarker = java.awt.BasicStroke(1.5f)
+
     /** Flag whether the exercise track has already been shown.  */
     private var showTrackExecuted = false
-
-    // TODO better names?
-    private lateinit var trackPositionMarker: ValueMarker
-    private val colorMarkerLap = java.awt.Color(110, 110, 120)
-    private val strokeMarker = java.awt.BasicStroke(1.5f)
 
     override val fxmlFilename: String = "/fxml/panels/TrackPanel.fxml"
 
@@ -114,30 +114,13 @@ class TrackPanelController(
     }
 
     private fun setupAltitudeChart() {
-
-        // TODO refactor: extract methods?
         if (document.exercise.recordingMode.isAltitude) {
-            val isEnglishUnitSystem = document.options.unitSystem == UnitSystem.ENGLISH
 
-            val sAltitude = XYSeries("altitude")
+            val sAltitude = createAltitudeXYSeries()
             val dsAltitude = XYSeriesCollection(sAltitude)
-            document.exercise.sampleList.forEach { sample ->
-
-                val altitudeInMeters = sample.altitude?.toInt() ?: 0
-                val altitudeInCurrentUnit = if (isEnglishUnitSystem)
-                    ConvertUtils.convertMeter2Feet(altitudeInMeters) else altitudeInMeters
-
-                val distanceInMeters = sample.distance ?: 0
-                val distanceInCurrentUnit = if (isEnglishUnitSystem)
-                    ConvertUtils.convertKilometer2Miles(distanceInMeters) else distanceInMeters
-
-                sAltitude.add(distanceInCurrentUnit / 1000.0, altitudeInCurrentUnit)
-            }
-
-            // TODO display marker line for position slider
 
             val altitudeAxisTitle = context.resources.getString(
-                    "pv.diagram.axis.altitude", context.formatUtils.getAltitudeUnitName())
+                    "pv.track.axis.altitude", context.formatUtils.getAltitudeUnitName())
 
             val chartAltitude = ChartFactory.createXYLineChart(null, // Title
                     null, // Y-axis label
@@ -159,11 +142,7 @@ class TrackPanelController(
             plotAltitude.rangeAxis.defaultAutoRange = plotAltitude.rangeAxis.range
             plotAltitude.domainAxis.defaultAutoRange = plotAltitude.domainAxis.range
 
-            // add marker for track position
-            trackPositionMarker = ValueMarker(0.0)
-            trackPositionMarker.paint = colorMarkerLap
-            trackPositionMarker.stroke = strokeMarker
-            plotAltitude.addDomainMarker(trackPositionMarker)
+            addAltitudeGraphMarker(plotAltitude)
 
             ChartUtils.customizeChart(chartAltitude)
             val chartViewer = ChartViewer(chartAltitude)
@@ -183,6 +162,38 @@ class TrackPanelController(
                 movePositionMarker(newValue.toInt())
             }
         }
+    }
+
+    private fun getConvertedDistanceForAltitudeGraph(sample: ExerciseSample): Double? {
+        return sample.distance?.let { sampleDistanceInMeters ->
+            val isEnglishUnitSystem = document.options.unitSystem == UnitSystem.ENGLISH
+            val sampleDistanceInCurrentUnit = if (isEnglishUnitSystem)
+                ConvertUtils.convertKilometer2Miles(sampleDistanceInMeters) else sampleDistanceInMeters
+            return sampleDistanceInCurrentUnit / 1000.0
+        }
+    }
+
+    private fun createAltitudeXYSeries(): XYSeries {
+        val isEnglishUnitSystem = document.options.unitSystem == UnitSystem.ENGLISH
+        val sAltitude = XYSeries("altitude")
+
+        document.exercise.sampleList.forEach { sample ->
+            val altitudeInMeters = sample.altitude?.toInt() ?: 0
+            val altitudeInCurrentUnit = if (isEnglishUnitSystem)
+                ConvertUtils.convertMeter2Feet(altitudeInMeters) else altitudeInMeters
+            val distanceInCurrentUnit = getConvertedDistanceForAltitudeGraph(sample) ?: 0.0
+
+            sAltitude.add(distanceInCurrentUnit, altitudeInCurrentUnit)
+        }
+        return sAltitude
+    }
+
+    private fun addAltitudeGraphMarker(plotAltitude: XYPlot) {
+        altitudeGraphMarker = ValueMarker(0.0).apply {
+            paint = colorAltitudeGraphMarker
+            stroke = strokeAltitudeGraphMarker
+        }
+        plotAltitude.addDomainMarker(altitudeGraphMarker)
     }
 
     private fun movePositionMarker(positionIndex: Int) {
@@ -207,16 +218,10 @@ class TrackPanelController(
             spMapViewerTooltip!!.show(spMapViewer, tooltipPos.x, tooltipPos.y)
         }
 
-        // TODO split handler to two methods, one for map marker and one for altitude graph marker
-        // create domain marker for track position in altitude graph
-        if (document.exercise.recordingMode.isAltitude) {
-
-            document.exercise.sampleList[positionIndex].distance?.let { sampleDistanceInMeters ->
-
-                val isEnglishUnitSystem = document.options.unitSystem == UnitSystem.ENGLISH
-                val sampleDistanceInCurrentUnit = if (isEnglishUnitSystem)
-                    ConvertUtils.convertKilometer2Miles(sampleDistanceInMeters) else sampleDistanceInMeters
-                trackPositionMarker.value = sampleDistanceInCurrentUnit / 1000.0
+        // move the vertical position marker in the altitude graph to the new track position
+        altitudeGraphMarker?.let { marker ->
+            getConvertedDistanceForAltitudeGraph(document.exercise.sampleList[positionIndex])?.let { distance ->
+                marker.value = distance
             }
         }
     }
