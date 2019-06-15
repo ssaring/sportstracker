@@ -51,6 +51,8 @@ SportsTracker 7.6.1:
 - st.dlg.sporttype.toggle_equipment_use.Action.text (new)
 - st.dlg.sporttype.equipment_not_in_use.suffix (new)
 
+- pv.track.axis.altitude (new)
+
 SportsTracker 7.6.0:
 
 - st.exerciselistview.descent (new)

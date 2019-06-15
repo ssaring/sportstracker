@@ -1,6 +1,7 @@
 package de.saring.exerciseviewer.gui.panels
 
 import de.saring.exerciseviewer.data.EVExercise
+import de.saring.exerciseviewer.data.ExerciseSample
 import de.saring.exerciseviewer.gui.EVContext
 import de.saring.exerciseviewer.gui.EVDocument
 import de.saring.leafletmap.ColorMarker
@@ -11,6 +12,8 @@ import de.saring.leafletmap.MapConfig
 import de.saring.leafletmap.MapLayer
 import de.saring.leafletmap.ScaleControlConfig
 import de.saring.leafletmap.ZoomControlConfig
+import de.saring.util.gui.jfreechart.ChartUtils
+import de.saring.util.unitcalc.ConvertUtils
 import de.saring.util.unitcalc.TimeUtils
 import de.saring.util.unitcalc.UnitSystem
 import javafx.concurrent.Worker
@@ -20,8 +23,19 @@ import javafx.scene.control.Slider
 import javafx.scene.control.Tooltip
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
+import org.jfree.chart.ChartFactory
+import org.jfree.chart.axis.NumberAxis
+import org.jfree.chart.fx.ChartViewer
+import org.jfree.chart.plot.PlotOrientation
+import org.jfree.chart.plot.ValueMarker
+import org.jfree.chart.plot.XYPlot
+import org.jfree.chart.renderer.xy.XYAreaRenderer
+import org.jfree.data.Range
+import org.jfree.data.xy.XYSeries
+import org.jfree.data.xy.XYSeriesCollection
 import java.util.logging.Level
 import java.util.logging.Logger
+
 
 /**
  * Controller (MVC) class of the "Track" panel, which displays the recorded location data of the exercise (if
@@ -50,6 +64,9 @@ class TrackPanelController(
     private lateinit var spMapViewer: StackPane
 
     @FXML
+    private lateinit var spDiagram: StackPane
+
+    @FXML
     private lateinit var slPosition: Slider
 
     private var mapView: LeafletMapView? = null
@@ -57,6 +74,13 @@ class TrackPanelController(
 
     private var spMapViewerTooltip: Tooltip? = null
     private var positionMarkerName: String? = null
+
+    private val colorAltitudeAxis = java.awt.Color(255, 30, 30)
+    private val colorAltitudePlot = java.awt.Color(255, 30, 30, 128)
+
+    private var altitudeGraphMarker: ValueMarker? = null
+    private val colorAltitudeGraphMarker = java.awt.Color(110, 110, 120)
+    private val strokeAltitudeGraphMarker = java.awt.BasicStroke(1.5f)
 
     /** Flag whether the exercise track has already been shown.  */
     private var showTrackExecuted = false
@@ -68,6 +92,7 @@ class TrackPanelController(
         // setup the map viewer if track data is available
         val exercise = document.exercise
         if (exercise.recordingMode.isLocation) {
+            setupAltitudeChart()
             setupMapView()
             setupMapViewerTooltip()
             setupTrackPositionSlider()
@@ -94,6 +119,53 @@ class TrackPanelController(
         spMapViewerTooltip!!.isAutoHide = true
     }
 
+    private fun setupAltitudeChart() {
+        if (document.exercise.recordingMode.isAltitude) {
+
+            val sAltitude = createAltitudeXYSeries()
+            val dsAltitude = XYSeriesCollection(sAltitude)
+
+            val chartAltitude = ChartFactory.createXYLineChart(null, // Title
+                    null, // Y-axis label
+                    null, // X-axis label will be set later
+                    dsAltitude, // primary dataset
+                    PlotOrientation.VERTICAL, // plot orientation
+                    false, // display legend
+                    false, // display tooltips
+                    false) // URLs
+
+            val plotAltitude = chartAltitude.plot as XYPlot
+
+            // use custom axis (both) with fixed ranges to avoid altitude to start with 0 and to avoid empty space on end of the distance axis
+            val axisAltitude = FixedRangeNumberAxis(
+                    getAltitudeAxisTitle(), Range(sAltitude.minY, sAltitude.maxY), true)
+            plotAltitude.rangeAxis = axisAltitude
+            plotAltitude.domainAxis = FixedRangeNumberAxis(
+                    null, Range(0.0, sAltitude.maxX), false)
+
+            // setup altitude axis and custom area renderer
+            axisAltitude.labelPaint = colorAltitudeAxis
+            axisAltitude.tickLabelPaint = colorAltitudeAxis
+
+            plotAltitude.setRenderer(0, XYAreaRenderer().apply {
+                setSeriesPaint(0, colorAltitudePlot)
+            })
+
+            addAltitudeGraphMarker(plotAltitude)
+
+            ChartUtils.customizeChart(chartAltitude)
+            val chartViewer = ChartViewer(chartAltitude)
+            spDiagram.children.addAll(chartViewer)
+        }
+        else {
+            // hide diagram pane when no altitude data present
+            vbTrackViewer.children.remove(spDiagram)
+        }
+    }
+
+    private fun getAltitudeAxisTitle() = context.resources.getString(
+            "pv.track.axis.altitude", context.formatUtils.getAltitudeUnitName())
+
     private fun setupTrackPositionSlider() {
         // on position slider changes: update position marker in the map viewer and display tooltip with details
         // (slider uses a double value, make sure the int value has changed)
@@ -102,6 +174,38 @@ class TrackPanelController(
                 movePositionMarker(newValue.toInt())
             }
         }
+    }
+
+    private fun getConvertedDistanceForAltitudeGraph(sample: ExerciseSample): Double? {
+        return sample.distance?.let { sampleDistanceInMeters ->
+            val isEnglishUnitSystem = document.options.unitSystem == UnitSystem.ENGLISH
+            val sampleDistanceInCurrentUnit = if (isEnglishUnitSystem)
+                ConvertUtils.convertKilometer2Miles(sampleDistanceInMeters) else sampleDistanceInMeters
+            return sampleDistanceInCurrentUnit / 1000.0
+        }
+    }
+
+    private fun createAltitudeXYSeries(): XYSeries {
+        val isEnglishUnitSystem = document.options.unitSystem == UnitSystem.ENGLISH
+        val sAltitude = XYSeries("altitude")
+
+        document.exercise.sampleList.forEach { sample ->
+            val altitudeInMeters = sample.altitude?.toInt() ?: 0
+            val altitudeInCurrentUnit = if (isEnglishUnitSystem)
+                ConvertUtils.convertMeter2Feet(altitudeInMeters) else altitudeInMeters
+            val distanceInCurrentUnit = getConvertedDistanceForAltitudeGraph(sample) ?: 0.0
+
+            sAltitude.add(distanceInCurrentUnit, altitudeInCurrentUnit)
+        }
+        return sAltitude
+    }
+
+    private fun addAltitudeGraphMarker(plotAltitude: XYPlot) {
+        altitudeGraphMarker = ValueMarker(0.0).apply {
+            paint = colorAltitudeGraphMarker
+            stroke = strokeAltitudeGraphMarker
+        }
+        plotAltitude.addDomainMarker(altitudeGraphMarker)
     }
 
     private fun movePositionMarker(positionIndex: Int) {
@@ -124,6 +228,13 @@ class TrackPanelController(
             var tooltipPos = spMapViewer.localToScene(8.0, 8.0)
             tooltipPos = tooltipPos.add(getMapViewerScreenPosition())
             spMapViewerTooltip!!.show(spMapViewer, tooltipPos.x, tooltipPos.y)
+        }
+
+        // move the vertical position marker in the altitude graph to the new track position
+        altitudeGraphMarker?.let { marker ->
+            getConvertedDistanceForAltitudeGraph(document.exercise.sampleList[positionIndex])?.let { distance ->
+                marker.value = distance
+            }
         }
     }
 
@@ -240,4 +351,29 @@ class TrackPanelController(
 
     private fun appendToolTipLine(sb: StringBuilder, resourceKey: String, value: String) =
             sb.append("${context.resources.getString(resourceKey)}: $value\n")
+
+}
+
+/**
+ * Extended JFreeChart NumberAxis which displays a fixed range. This can e.g. be used for a altitude chart to avoid
+ * that the axis starts with 0, it can display only the range where altitude data is present. It also makes sure that
+ * this fixed range is displayed again, when the user zooms into the chart and out again.
+ * Source: https://stackoverflow.com/questions/8551604/restoring-manual-domain-axis-range-after-zooming-out-in-jfreechart
+ *
+ * @property label of the axis (optional)
+ * @property fixedRange range to be displayed
+ * @property rangeWithMargins flag whether the range should be extended with a margin
+ */
+class FixedRangeNumberAxis(
+        label: String?,
+        private val fixedRange: Range,
+        private val rangeWithMargins: Boolean) : NumberAxis(label) {
+
+    override fun autoAdjustRange() {
+        if (rangeWithMargins) {
+            setRangeWithMargins(fixedRange, false, false)
+        } else {
+            setRange(fixedRange, false, false)
+        }
+    }
 }
