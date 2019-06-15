@@ -3,9 +3,7 @@ Changelog
 
 v7.6.1:
  SportsTracker changes:
- - updated to JDK 12 (tested with AdoptOpenJDK 12)
-   - use of new switch expression features (less code)
- - updated to JavaFX / OpenJFX 12.0.1
+ - updated to JavaFX / OpenJFX 11.0.2
  - updated ControlsFX to version 11.0.0
  - updated JUnit 5 to version 5.4.0
  - Kotlin language can now be used in all SportsTracker Maven modules

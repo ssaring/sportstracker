@@ -138,9 +138,7 @@
                 <version>3.8.0</version>
                 <configuration>
                     <verbose>false</verbose>
-                    <release>12</release>
-                    <!-- needed just for Java 12 switch expressions -->
-                    <compilerArgs>--enable-preview</compilerArgs>
+                    <release>11</release>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
                 <executions>
@@ -171,10 +169,6 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.0</version>
-                <configuration>
-                    <!-- needed just for Java 12 switch expressions -->
-                    <argLine>--enable-preview</argLine>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>

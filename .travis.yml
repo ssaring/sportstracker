@@ -10,4 +10,4 @@ before_install:
 language: java
 
 jdk:
-  - openjdk12
+  - openjdk11

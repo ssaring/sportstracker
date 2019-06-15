@@ -4,6 +4,7 @@ SportsTracker-TODO
 Switch back to JDK 11
 - jpackage JEP-343 will not be available before JDK 14
   -> a working packaging method is needed before, otherwise no release possible
+- switch back to OpenJFX 11.0.2
 
 Exercise Viewer Diagram Panel:
 - use same or no margin for bottom axis when displayed "by distance" as for "by time"
@@ -39,7 +40,10 @@ Java 9/10/11/12 migration:
   (see http://openjdk.java.net/jeps/272)
   - currently for Swing apps only
   - JavaFX support might be added after Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
-- migration to JDK 12 is done, using new switch expression features
+- migration to JDK 12 is not done
+  - the new switch expression feature is still in preview mode
+  - there is no working packaging solution for JDK 12, JEP 343/ jpackage will
+    not be available before JDK 14
 
 SportsTracker packaging:
 - JDK 11 does not provide the javapackager tool aynmore, so packaging has been
