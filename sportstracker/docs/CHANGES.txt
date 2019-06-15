@@ -29,6 +29,9 @@ v7.6.1:
   - refactoring: moved all time-related functions from class FormatUtils to
     new class TimeUtils
  ExerciseViewer changes:
+ - Track Panel:
+   - display altitude chart below the track map, if altitude is present
+   - display marker in altitude chart for current track position
  - TopoGrafixGpxParser: bugfix for issue #188, GPX import failed if there are
    samples without heartrate data
 

@@ -29,6 +29,7 @@ import org.jfree.chart.fx.ChartViewer
 import org.jfree.chart.plot.PlotOrientation
 import org.jfree.chart.plot.ValueMarker
 import org.jfree.chart.plot.XYPlot
+import org.jfree.chart.renderer.xy.XYAreaRenderer
 import org.jfree.data.Range
 import org.jfree.data.xy.XYSeries
 import org.jfree.data.xy.XYSeriesCollection
@@ -73,6 +74,9 @@ class TrackPanelController(
 
     private var spMapViewerTooltip: Tooltip? = null
     private var positionMarkerName: String? = null
+
+    private val colorAltitudeAxis = java.awt.Color(255, 30, 30)
+    private val colorAltitudePlot = java.awt.Color(255, 30, 30, 128)
 
     private var altitudeGraphMarker: ValueMarker? = null
     private val colorAltitudeGraphMarker = java.awt.Color(110, 110, 120)
@@ -133,10 +137,19 @@ class TrackPanelController(
             val plotAltitude = chartAltitude.plot as XYPlot
 
             // use custom axis (both) with fixed ranges to avoid altitude to start with 0 and to avoid empty space on end of the distance axis
-            plotAltitude.rangeAxis = FixedRangeNumberAxis(
+            val axisAltitude = FixedRangeNumberAxis(
                     getAltitudeAxisTitle(), Range(sAltitude.minY, sAltitude.maxY), true)
+            plotAltitude.rangeAxis = axisAltitude
             plotAltitude.domainAxis = FixedRangeNumberAxis(
                     null, Range(0.0, sAltitude.maxX), false)
+
+            // setup altitude axis and custom area renderer
+            axisAltitude.labelPaint = colorAltitudeAxis
+            axisAltitude.tickLabelPaint = colorAltitudeAxis
+
+            plotAltitude.setRenderer(0, XYAreaRenderer().apply {
+                setSeriesPaint(0, colorAltitudePlot)
+            })
 
             addAltitudeGraphMarker(plotAltitude)
 

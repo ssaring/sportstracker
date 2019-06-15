@@ -5,19 +5,6 @@ Switch back to JDK 11
 - jpackage JEP-343 will not be available before JDK 14
   -> a working packaging method is needed before, otherwise no release possible
 
-ExerciseViewer Track panel: display altitude graph below the track
-- JFreeChart has to be used due to problems with JavaFX LineChart
-  - JavaFX LineChart makes dialog start quite slow, does not support marker lines,
-    insufficient styling options etc.
-  - use of JFreeChart provides also a consistent UI with the Diagram panel
-- Status:
-  - TrackPanel already displays altitude chart properly (incl. unit conversion and I18N)
-  - Diagram Panel is removed when no altitude data available
-  - Track position is also displayed in altitude graph, refactoring needed
-- TODOs
-  - Fill the area below the altitude graph with a light color (as in Diagram Panel)
-  - add to ChangeLog
-
 Exercise Viewer Diagram Panel:
 - use same or no margin for bottom axis when displayed "by distance" as for "by time"
   => see solution in altitude chart in Track Panel
