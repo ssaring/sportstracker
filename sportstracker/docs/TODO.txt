@@ -1,9 +1,14 @@
 SportsTracker-TODO
 ==================
 
-Exercise Viewer Diagram Panel:
-- use same or no margin for bottom axis when displayed "by distance" as for "by time"
-  => see solution in altitude chart in Track Panel
+Review PR #208: Exercise viewer: add colored slopes
+- https://github.com/ssaring/sportstracker/pull/208
+- already merged to origin/master
+- found issues:
+  - avoid empty space on right end when domain axis is distance
+  - avoid empty space above the diagram when legend is not shown
+  - don't use colored slopes when altitude and another graph is shown,
+    the colors are modified and can't be recognized anymore
 
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)
