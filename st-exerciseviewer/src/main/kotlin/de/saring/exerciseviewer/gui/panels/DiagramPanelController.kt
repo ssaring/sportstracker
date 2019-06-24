@@ -15,6 +15,7 @@ import javafx.fxml.FXML
 import javafx.scene.control.ChoiceBox
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
+import javafx.scene.layout.HBox
 import javafx.util.StringConverter
 import org.jfree.chart.ChartFactory
 import org.jfree.chart.JFreeChart
@@ -29,6 +30,8 @@ import org.jfree.chart.plot.ValueMarker
 import org.jfree.chart.plot.XYPlot
 import org.jfree.chart.renderer.xy.XYAreaRenderer
 import org.jfree.chart.renderer.xy.XYItemRenderer
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer
+import org.jfree.chart.renderer.xy.XYDifferenceRenderer
 import org.jfree.chart.ui.RectangleAnchor
 import org.jfree.chart.ui.TextAnchor
 import org.jfree.data.general.Series
@@ -38,9 +41,16 @@ import org.jfree.data.time.TimeSeriesCollection
 import org.jfree.data.xy.XYDataset
 import org.jfree.data.xy.XYSeries
 import org.jfree.data.xy.XYSeriesCollection
+import org.jfree.chart.title.LegendTitle
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.abs
+import kotlin.Int
+
+import javafx.scene.shape.Rectangle
+import javafx.scene.text.Text
+import javafx.scene.paint.Color
 
 /**
  * Controller (MVC) class of the "Samples" panel, which displays the exercise graphically (heartrate, altitude, speed
@@ -58,7 +68,7 @@ class DiagramPanelController(
 
     // the colors and strokes of the chart
     private val colorAxisLeft = java.awt.Color(255, 30, 30)
-    private val colorAxisLeftPlot = java.awt.Color(255, 30, 30, 136)
+    private val colorAxisLeftPlot = java.awt.Color(255, 30, 30, 130)
     private val colorAxisRight = java.awt.Color(20, 75, 255)
     private val colorAxisRightPlot = java.awt.Color(20, 75, 255, 136)
     private val colorMarkerLap = java.awt.Color(110, 110, 120)
@@ -84,6 +94,9 @@ class DiagramPanelController(
 
     @FXML
     private lateinit var vbDiagramPanel: VBox
+
+    @FXML
+    private lateinit var slopesLegendPanel: HBox
 
     @FXML
     private lateinit var spDiagram: StackPane
@@ -160,7 +173,7 @@ class DiagramPanelController(
         if (exercise.recordingMode.isSpeed) {
             cbLeftAxis.items.add(AxisType.SPEED)
             cbRightAxis.items.add(AxisType.SPEED)
-            cbBottomAxis.items.add(AxisType.DISTANCE)
+            cbBottomAxis.items.add(0, AxisType.DISTANCE)
         }
 
         // add cadence items if recorded
@@ -205,6 +218,20 @@ class DiagramPanelController(
             averagedRangeSteps = 0
         }
     }
+    
+    private fun clearSlopesLegend() {
+        slopesLegendPanel.getChildren().clear()
+    }
+
+    private fun addSlopeLegend(name: String, fillColor:Color, borderColor:Color) {
+        var sp = StackPane()
+        var rect = Rectangle(55.0,20.0)
+        rect.setFill(fillColor)
+        rect.setStroke(Color.BLACK)
+        var txt = Text(name)
+        sp.getChildren().addAll(rect,txt)
+        slopesLegendPanel.getChildren().add(sp)
+    }
 
     /**
      * Draws the diagram according to the current axis type selection and configuration settings.
@@ -216,6 +243,8 @@ class DiagramPanelController(
         val axisTypeRight = cbRightAxis.value
         val axisTypeBottom = cbBottomAxis.value
         val fDomainAxisTime = axisTypeBottom == AxisType.TIME
+        
+        clearSlopesLegend() // remove slope legend, they will be added later if needed
 
         // create and fill data series according to axis type
         // (right axis only when user selected a different axis type)
@@ -314,17 +343,23 @@ class DiagramPanelController(
         val axisLeft = plot.getRangeAxis(0)
         axisLeft.labelPaint = colorAxisLeft
         axisLeft.tickLabelPaint = colorAxisLeft
+        
+        // For altitude vs distance, color graph with slope
+        if(axisTypeLeft==AxisType.ALTITUDE && !fDomainAxisTime){
+            plotAltitudeSlopes(sLeft, plot, colorAxisLeftPlot)
+            setTooltipGenerator(plot.getRenderer(0), axisTypeBottom, axisTypeLeft)
+        }
+        else{
+            // set custom area renderer
+            var rendererLeft = XYAreaRenderer()
+            rendererLeft.setSeriesPaint(0, colorAxisLeftPlot)
+            plot.setRenderer(0, rendererLeft)
+            setTooltipGenerator(rendererLeft, axisTypeBottom, axisTypeLeft)
+        }
 
-        // set custom area renderer
-        val rendererLeft = XYAreaRenderer()
-        rendererLeft.setSeriesPaint(0, colorAxisLeftPlot)
-
-        plot.setRenderer(0, rendererLeft)
-        setTooltipGenerator(rendererLeft, axisTypeBottom, axisTypeLeft)
 
         // setup right axis (when selected)
         if (sRight != null) {
-
             val axisRight = NumberAxis(axisTypeStringConverter.toString(axisTypeRight))
             axisRight.autoRangeIncludesZero = false
             plot.setRangeAxis(1, axisRight)
@@ -334,14 +369,24 @@ class DiagramPanelController(
 
             // create dataset for right axis
             val datasetRight = createDataSet(fDomainAxisTime, sRight)
-            plot.setDataset(1, datasetRight)
-            plot.mapDatasetToRangeAxis(1, 1)
+            plot.setDataset(plot.getRendererCount(), datasetRight)
+            plot.mapDatasetToRangeAxis(plot.getRendererCount(), 1)
 
-            // set custom area renderer
-            val rendererRight = XYAreaRenderer()
-            rendererRight.setSeriesPaint(0, colorAxisRightPlot)
-            plot.setRenderer(1, rendererRight)
-            setTooltipGenerator(rendererRight, axisTypeBottom, axisTypeRight)
+            if(axisTypeRight==AxisType.ALTITUDE && !fDomainAxisTime){
+                val rendererCount = plot.getRendererCount()
+                plotAltitudeSlopes(sRight, plot, colorAxisRightPlot)
+                setTooltipGenerator(plot.getRenderer(plot.getRendererCount()-1), axisTypeBottom, axisTypeRight)
+                for(i in rendererCount until plot.getRendererCount()){
+                    plot.mapDatasetToRangeAxis(i, 1)
+                }
+            }
+            else{
+                // set custom area renderer
+                val rendererRight = XYAreaRenderer()
+                rendererRight.setSeriesPaint(0, colorAxisRightPlot)
+                plot.setRenderer(plot.getRendererCount(), rendererRight)
+                setTooltipGenerator(rendererRight, axisTypeBottom, axisTypeRight)
+            }
         }
 
         // use TimeZone GMT on the time axis, because all Date value are GMT based
@@ -679,6 +724,129 @@ class DiagramPanelController(
         return getConvertedValueForAxisType(axisType, averageValue).toDouble()
     }
 
+    /**
+     * Returns the list of ids that resamples (subsample) the data series at the (minimal) interval sampleDist along X.
+     * Picking output ids from the input series will thus give a series whose data spacing is as small as possible but
+     * greater than sampleDist. Resulting data may not be evenly spaced.
+     * The output ids list will necessarily contain the first ID (0) and the last ID of the series to preseve data length,
+     * consequently the last sampling interval may be < sampleDist.
+     * 
+     * @param sampleDist desired output sample interval in meters
+     * @param series input series to resample, X in kilometers
+     * @return list of ids to resample the series
+     */
+    private fun getXYSeriesSubsampleIds(sampleDist: Int, series: Series): List<Int>{
+        var outputIds = mutableListOf(0)
+        if(series is TimeSeries){
+            return outputIds
+        }
+        else if(series is XYSeries){
+            for (index in 1 until series.getItemCount()-1){
+                if(series.getDataItem(index).getX().toDouble()-sampleDist.toDouble()/1000.0>series.getDataItem(outputIds.last()).getX().toDouble()){
+                    outputIds.add(index)
+                }
+            }
+            outputIds.add(series.getItemCount()-1)
+        }
+        return(outputIds)
+    }
+    
+    /**
+     * Returns a newly created series based on the input series, from which some data points are [removed/set to 0]
+     * (=filtered) regarding the data slope. All data from the input series that doesnt have a slope between slopeMin
+     * and slopeMax are removed or set to 0. The slope is computed from the series at subsampleIds positions only,
+     * which means that each "no-data-zone" or "data-zone" length will be at least the sampling interval used to create
+     * subsampleIds. In addition, both ends of the "no-data-zones" and "data-zones" are vertical to produce vertical
+     * lines when plotted: there are two points at each "zone" end with the same X.
+     * 
+     * @param slopeMin minimal slope to keep data
+     * @param slopeMax maximal slope to keep data
+     * @param series input series
+     * @param subsampleIds ids list from the input series used to evaluate the slope
+     * @return new series, based on the input series, 
+     */
+    private fun getSeriesFilteredBySlope(slopeMin: Int, slopeMax: Int, series: Series, subsampleIds: List<Int>): Series{
+        if(series is TimeSeries){
+            return series
+        }
+        else if(series is XYSeries){
+            var name = ""
+            if(slopeMax==Int.MAX_VALUE){
+                name = "> "+slopeMin.toString()+"%"
+            }
+            else{
+                name = "< "+slopeMax.toString()+"%"
+            }
+            var outputSeries = XYSeries(name, false, true)
+            var previousPointFiltered = false
+            for (i in 0 until subsampleIds.size-1){
+                var dataItem = series.getDataItem(subsampleIds[i])
+                var nextDataItem = series.getDataItem(subsampleIds[i+1])
+                var slope = abs( (nextDataItem.getY().toDouble()-dataItem.getY().toDouble())/(nextDataItem.getX().toDouble()-dataItem.getX().toDouble())/10.0 )
+                if(slope<slopeMin || slope>slopeMax){ //filter data
+                    if(!previousPointFiltered){       //first point of a filtered sequence -> make a vertical "decreasing" line
+                        outputSeries.add(dataItem)
+                        outputSeries.add(dataItem.getX(),0.0)
+                    }
+                    previousPointFiltered = true
+                }
+                else{ //don't filter (=keep) data
+                    if(previousPointFiltered){ //first point of an unfiltered sequence -> make a vertical "increasing" line...
+                        outputSeries.add(dataItem.getX(),0.0)
+                    }
+                    for(j in subsampleIds[i] until subsampleIds[i+1]){ //... then add all altitude points to the output until the next subsample id.
+                        outputSeries.add(series.getDataItem(j))
+                    }
+                    if(i==subsampleIds.size-2){ // for the last element
+                        outputSeries.add(nextDataItem)
+                    }
+                    previousPointFiltered=false
+                }
+            }
+            return(outputSeries)
+        }
+        return series
+    }
+
+    /**
+     * Add the renderer for altitude (single line), and add to the plot the slope information
+     * (area below the altitude plot is coloured)
+     * @param data Series complete input XY data series
+     * @param plot XYPlot to draw graphs
+     * @param baseColor the main color to be used (! green ignored)
+     */
+    private fun plotAltitudeSlopes(dataSeries: Series, plot: XYPlot, baseColor: java.awt.Color){
+        var renderer = XYLineAndShapeRenderer()
+        renderer.setSeriesPaint(0, java.awt.Color(baseColor.getRed(), baseColor.getGreen(), baseColor.getBlue(), 255) )
+        renderer.setSeriesLinesVisible(0, true);
+        renderer.setSeriesShapesVisible(0, false);
+        plot.setRenderer(plot.getRendererCount(), renderer)
+        val slopes = arrayOf(   intArrayOf(0,5),
+                                intArrayOf(5,7),
+                                intArrayOf(7,10),
+                                intArrayOf(10,15),
+                                intArrayOf(15,Int.MAX_VALUE))
+        var green_component = 225
+        var subsampleIds = getXYSeriesSubsampleIds(100,dataSeries)
+        for(i in 0 until slopes.size){
+            var it=slopes[i]
+            val series = getSeriesFilteredBySlope(it[0], it[1], dataSeries, subsampleIds)
+            val name = series.getKey().toString()
+            var dataset = createDataSet(false, series)
+            var color = java.awt.Color(baseColor.getRed(), green_component, baseColor.getBlue(), baseColor.getAlpha())
+            //FIXME: is it possible to avoid this color conversion between java.awt.Color and javafx one ?
+            addSlopeLegend(name,
+                        Color(color.getRed()/255.0, color.getGreen()/255.0, color.getBlue()/255.0, color.getAlpha()/255.0),
+                        Color(baseColor.getRed()/255.0, baseColor.getGreen()/255.0, baseColor.getBlue()/255.0, 1.0))
+            if(dataset.getItemCount(0)>2){ // two points is not valid as its a vertical line
+                plot.setDataset(plot.getRendererCount(), dataset)
+                var slopeRenderer = XYDifferenceRenderer(color,java.awt.Color(0, 0, 0, 0), false)
+                slopeRenderer.setSeriesPaint(0, java.awt.Color(0, 0, 0, 0))
+                plot.setRenderer(plot.getRendererCount(), slopeRenderer)
+            }
+            green_component-=225/(slopes.size-1)
+        }
+    }
     /**
      * The list of possible value types to be shown on the diagram axes. This enum also provides the the localized
      * displayed enum names.
