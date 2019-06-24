@@ -834,10 +834,10 @@ class DiagramPanelController(
             val name = series.getKey().toString()
             var dataset = createDataSet(false, series)
             var color = java.awt.Color(baseColor.getRed(), green_component, baseColor.getBlue(), baseColor.getAlpha())
-			//FIXME: is it possible to avoid this color conversion between java.awt.Color and javafx one ?
-			addSlopeLegend(name,
-							Color(color.getRed()/255.0, color.getGreen()/255.0, color.getBlue()/255.0, color.getAlpha()/255.0),
-							Color(baseColor.getRed()/255.0, baseColor.getGreen()/255.0, baseColor.getBlue()/255.0, 1.0))
+            //FIXME: is it possible to avoid this color conversion between java.awt.Color and javafx one ?
+            addSlopeLegend(name,
+                        Color(color.getRed()/255.0, color.getGreen()/255.0, color.getBlue()/255.0, color.getAlpha()/255.0),
+                        Color(baseColor.getRed()/255.0, baseColor.getGreen()/255.0, baseColor.getBlue()/255.0, 1.0))
             if(dataset.getItemCount(0)>2){ // two points is not valid as its a vertical line
                 plot.setDataset(plot.getRendererCount(), dataset)
                 var slopeRenderer = XYDifferenceRenderer(color,java.awt.Color(0, 0, 0, 0), false)
