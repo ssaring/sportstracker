@@ -833,16 +833,16 @@ class DiagramPanelController(
             val series = getSeriesFilteredBySlope(it[0], it[1], dataSeries, subsampleIds)
             val name = series.getKey().toString()
             var dataset = createDataSet(false, series)
+            var color = java.awt.Color(baseColor.getRed(), green_component, baseColor.getBlue(), baseColor.getAlpha())
+			//FIXME: is it possible to avoid this color conversion between java.awt.Color and javafx one ?
+			addSlopeLegend(name,
+							Color(color.getRed()/255.0, color.getGreen()/255.0, color.getBlue()/255.0, color.getAlpha()/255.0),
+							Color(baseColor.getRed()/255.0, baseColor.getGreen()/255.0, baseColor.getBlue()/255.0, 1.0))
             if(dataset.getItemCount(0)>2){ // two points is not valid as its a vertical line
                 plot.setDataset(plot.getRendererCount(), dataset)
-                var color = java.awt.Color(baseColor.getRed(), green_component, baseColor.getBlue(), baseColor.getAlpha())
                 var slopeRenderer = XYDifferenceRenderer(color,java.awt.Color(0, 0, 0, 0), false)
                 slopeRenderer.setSeriesPaint(0, java.awt.Color(0, 0, 0, 0))
                 plot.setRenderer(plot.getRendererCount(), slopeRenderer)
-                //FIXME: is it possible to avoid this color conversion between java.awt.Color and javafx one ?
-                addSlopeLegend(name,
-                               Color(color.getRed()/255.0, color.getGreen()/255.0, color.getBlue()/255.0, color.getAlpha()/255.0),
-                               Color(baseColor.getRed()/255.0, baseColor.getGreen()/255.0, baseColor.getBlue()/255.0, 1.0))
             }
             green_component-=225/(slopes.size-1)
         }
