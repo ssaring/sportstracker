@@ -5,10 +5,10 @@ Review PR #208: Exercise viewer: add colored slopes
 - https://github.com/ssaring/sportstracker/pull/208
 - already merged to origin/master
 - found issues:
+  - use Kotlin language features and guidelines in modified code
   - avoid empty space on right end when domain axis is distance
   - avoid empty space above the diagram when legend is not shown
-  - don't use colored slopes when altitude and another graph is shown,
-    the colors are modified and can't be recognized anymore
+- add to ChangeLog, Authors
 
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)

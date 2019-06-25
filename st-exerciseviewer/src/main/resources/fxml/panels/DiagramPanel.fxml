@@ -16,8 +16,7 @@
         </Label>
         <VBox fx:id="vbDiagramPanel" spacing="16.0">
             <children>
-               <HBox fx:id="slopesLegendPanel" alignment="CENTER" spacing="5.0" prefHeight="20.0">
-               </HBox>
+                <HBox fx:id="hbSlopesLegendPanel" alignment="CENTER" spacing="8.0" prefHeight="24.0"/>
                 <StackPane fx:id="spDiagram" prefHeight="320.0" prefWidth="600.0" VBox.vgrow="ALWAYS"/>
                 <VBox spacing="12.0">
                     <children>
