@@ -220,7 +220,7 @@ class DiagramPanelController(
     private fun computeAveragedFilterRange() {
         if (document.options.isDisplaySmoothedCharts) {
             val sampleListLength = document.exercise.sampleList.size
-            // results seem to be best when sample count is devided by 800 (tested with many exercises)
+            // results seem to be best when sample count is divided by 800 (tested with many exercises)
             averagedRangeSteps = Math.max(1, Math.round(sampleListLength / 800f))
         } else {
             averagedRangeSteps = 0
@@ -347,7 +347,7 @@ class DiagramPanelController(
         }
         else{
             // set custom area renderer
-            var rendererLeft = XYAreaRenderer()
+            val rendererLeft = XYAreaRenderer()
             rendererLeft.setSeriesPaint(0, colorAxisLeftPlot)
             plot.setRenderer(0, rendererLeft)
             setTooltipGenerator(rendererLeft, axisTypeBottom, axisTypeLeft)
@@ -731,8 +731,8 @@ class DiagramPanelController(
      * @param series input series to resample, X in kilometers
      * @return list of ids to resample the series
      */
-    private fun getXYSeriesSubsampleIds(sampleDist: Int, series: Series): List<Int> {
-        var outputIds = mutableListOf(0)
+    private fun getXYSeriesSubSampleIds(sampleDist: Int, series: Series): List<Int> {
+        val outputIds = mutableListOf(0)
         if (series is TimeSeries){
             return outputIds
         }
@@ -768,12 +768,12 @@ class DiagramPanelController(
         }
         else if(series is XYSeries){
             val name = if (slopeMax == Int.MAX_VALUE) "> $slopeMin%" else "< $slopeMax%"
-            var outputSeries = XYSeries(name, false, true)
+            val outputSeries = XYSeries(name, false, true)
             var previousPointFiltered = false
             for (i in 0 until subsampleIds.size - 1){
-                var dataItem = series.getDataItem(subsampleIds[i])
-                var nextDataItem = series.getDataItem(subsampleIds[i + 1])
-                var slope = abs( (nextDataItem.y.toDouble() - dataItem.y.toDouble()) / (nextDataItem.x.toDouble() - dataItem.x.toDouble()) / 10.0)
+                val dataItem = series.getDataItem(subsampleIds[i])
+                val nextDataItem = series.getDataItem(subsampleIds[i + 1])
+                val slope = abs( (nextDataItem.y.toDouble() - dataItem.y.toDouble()) / (nextDataItem.x.toDouble() - dataItem.x.toDouble()) / 10.0)
 
                 // filter data
                 if (slope < slopeMin || slope > slopeMax) {
@@ -808,7 +808,7 @@ class DiagramPanelController(
     /**
      * Add the renderer for altitude (single line), and add to the plot the slope information
      * (area below the altitude plot is coloured)
-     * @param data Series complete input XY data series
+     * @param dataSeries Series complete input XY data series
      * @param plot XYPlot to draw graphs
      * @param baseColor the main color to be used (! green ignored)
      */
@@ -816,15 +816,15 @@ class DiagramPanelController(
 
         val renderer = XYLineAndShapeRenderer()
         renderer.setSeriesPaint(0, java.awt.Color(baseColor.red, baseColor.green, baseColor.blue, 255) )
-        renderer.setSeriesLinesVisible(0, true);
-        renderer.setSeriesShapesVisible(0, false);
+        renderer.setSeriesLinesVisible(0, true)
+        renderer.setSeriesShapesVisible(0, false)
         plot.setRenderer(plot.rendererCount, renderer)
         var greenComponent = 225
-        val subsampleIds = getXYSeriesSubsampleIds(100, dataSeries)
+        val subSampleIds = getXYSeriesSubSampleIds(100, dataSeries)
 
         for (i in 0 until altitudeSlopeRanges.size) {
             val it = altitudeSlopeRanges[i]
-            val series = getSeriesFilteredBySlope(it.minSlope, it.maxSlope, dataSeries, subsampleIds)
+            val series = getSeriesFilteredBySlope(it.minSlope, it.maxSlope, dataSeries, subSampleIds)
             val name = series.key.toString()
             val dataset = createDataSet(false, series)
             val color = java.awt.Color(baseColor.red, greenComponent, baseColor.blue, baseColor.alpha)
@@ -835,7 +835,7 @@ class DiagramPanelController(
             // two points is not valid as its a vertical line
             if(dataset.getItemCount(0) > 2){
                 plot.setDataset(plot.rendererCount, dataset)
-                var slopeRenderer = XYDifferenceRenderer(color,java.awt.Color(0, 0, 0, 0), false)
+                val slopeRenderer = XYDifferenceRenderer(color,java.awt.Color(0, 0, 0, 0), false)
                 slopeRenderer.setSeriesPaint(0, java.awt.Color(0, 0, 0, 0))
                 plot.setRenderer(plot.rendererCount, slopeRenderer)
             }
