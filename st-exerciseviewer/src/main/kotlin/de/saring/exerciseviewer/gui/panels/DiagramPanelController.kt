@@ -342,7 +342,7 @@ class DiagramPanelController(
         // for altitude vs. distance, color graph with slope
         // (don't do when the right axis displays another value, the colors are modified and can't be mapped anymore)
         if (!fDomainAxisTime && axisTypeLeft == AxisType.ALTITUDE && sRight == null) {
-            plotAltitudeSlopes(sLeft, plot, colorAxisLeftPlot)
+            plotAltitudeSlopes(sLeft as XYSeries, plot, colorAxisLeftPlot)
             setTooltipGenerator(plot.getRenderer(0), axisTypeBottom, axisTypeLeft)
         }
         else{
@@ -353,9 +353,9 @@ class DiagramPanelController(
             setTooltipGenerator(rendererLeft, axisTypeBottom, axisTypeLeft)
         }
 
-
         // setup right axis (when selected)
         if (sRight != null) {
+
             val axisRight = NumberAxis(axisTypeStringConverter.toString(axisTypeRight))
             axisRight.autoRangeIncludesZero = false
             plot.setRangeAxis(1, axisRight)
@@ -365,24 +365,14 @@ class DiagramPanelController(
 
             // create dataset for right axis
             val datasetRight = createDataSet(fDomainAxisTime, sRight)
-            plot.setDataset(plot.getRendererCount(), datasetRight)
-            plot.mapDatasetToRangeAxis(plot.getRendererCount(), 1)
+            plot.setDataset(1, datasetRight)
+            plot.mapDatasetToRangeAxis(1, 1)
 
-            if(axisTypeRight == AxisType.ALTITUDE && !fDomainAxisTime){
-                val rendererCount = plot.rendererCount
-                plotAltitudeSlopes(sRight, plot, colorAxisRightPlot)
-                setTooltipGenerator(plot.getRenderer(plot.rendererCount - 1), axisTypeBottom, axisTypeRight)
-                for(i in rendererCount until plot.rendererCount){
-                    plot.mapDatasetToRangeAxis(i, 1)
-                }
-            }
-            else{
-                // set custom area renderer
-                val rendererRight = XYAreaRenderer()
-                rendererRight.setSeriesPaint(0, colorAxisRightPlot)
-                plot.setRenderer(plot.getRendererCount(), rendererRight)
-                setTooltipGenerator(rendererRight, axisTypeBottom, axisTypeRight)
-            }
+            // set custom area renderer
+            val rendererRight = XYAreaRenderer()
+            rendererRight.setSeriesPaint(0, colorAxisRightPlot)
+            plot.setRenderer(1, rendererRight)
+            setTooltipGenerator(rendererRight, axisTypeBottom, axisTypeRight)
         }
 
         // use TimeZone GMT on the time axis, because all Date value are GMT based
@@ -731,78 +721,69 @@ class DiagramPanelController(
      * @param series input series to resample, X in kilometers
      * @return list of ids to resample the series
      */
-    private fun getXYSeriesSubSampleIds(sampleDist: Int, series: Series): List<Int> {
+    private fun getXYSeriesSubSampleIds(sampleDist: Int, series: XYSeries): List<Int> {
         val outputIds = mutableListOf(0)
-        if (series is TimeSeries){
-            return outputIds
-        }
-        else if (series is XYSeries){
-            for (index in 1 until series.itemCount - 1){
-                if(series.getDataItem(index).x.toDouble() - sampleDist.toDouble() / 1000.0 > series.getDataItem(outputIds.last()).x.toDouble()){
-                    outputIds.add(index)
-                }
+        for (index in 1 until series.itemCount - 1){
+            if (series.getDataItem(index).x.toDouble() - sampleDist.toDouble() /
+                    1000.0 > series.getDataItem(outputIds.last()).x.toDouble()) {
+                outputIds.add(index)
             }
-            outputIds.add(series.itemCount - 1)
         }
+        outputIds.add(series.itemCount - 1)
         return outputIds
     }
     
     /**
      * Returns a newly created series based on the input series, from which some data points are [removed/set to 0]
-     * (=filtered) regarding the data slope. All data from the input series that doesnt have a slope between slopeMin
-     * and slopeMax are removed or set to 0. The slope is computed from the series at subsampleIds positions only,
+     * (=filtered) regarding the data slope. All data from the input series that doesn't have a slope between slopeMin
+     * and slopeMax are removed or set to 0. The slope is computed from the series at subSampleIds positions only,
      * which means that each "no-data-zone" or "data-zone" length will be at least the sampling interval used to create
-     * subsampleIds. In addition, both ends of the "no-data-zones" and "data-zones" are vertical to produce vertical
+     * subSampleIds. In addition, both ends of the "no-data-zones" and "data-zones" are vertical to produce vertical
      * lines when plotted: there are two points at each "zone" end with the same X.
      * 
      * @param slopeMin minimal slope to keep data
      * @param slopeMax maximal slope to keep data
      * @param series input series
-     * @param subsampleIds ids list from the input series used to evaluate the slope
+     * @param subSampleIds ids list from the input series used to evaluate the slope
      * @return new series, based on the input series, 
      */
-    private fun getSeriesFilteredBySlope(slopeMin: Int, slopeMax: Int, series: Series, subsampleIds: List<Int>): Series{
+    private fun getSeriesFilteredBySlope(slopeMin: Int, slopeMax: Int, series: XYSeries, subSampleIds: List<Int>): Series {
 
-        if(series is TimeSeries){
-            return series
-        }
-        else if(series is XYSeries){
-            val name = if (slopeMax == Int.MAX_VALUE) "> $slopeMin%" else "< $slopeMax%"
-            val outputSeries = XYSeries(name, false, true)
-            var previousPointFiltered = false
-            for (i in 0 until subsampleIds.size - 1){
-                val dataItem = series.getDataItem(subsampleIds[i])
-                val nextDataItem = series.getDataItem(subsampleIds[i + 1])
-                val slope = abs( (nextDataItem.y.toDouble() - dataItem.y.toDouble()) / (nextDataItem.x.toDouble() - dataItem.x.toDouble()) / 10.0)
+        val name = if (slopeMax == Int.MAX_VALUE) "> $slopeMin%" else "< $slopeMax%"
+        val outputSeries = XYSeries(name, false, true)
+        var previousPointFiltered = false
+        for (i in 0 until subSampleIds.size - 1){
+            val dataItem = series.getDataItem(subSampleIds[i])
+            val nextDataItem = series.getDataItem(subSampleIds[i + 1])
+            val slope = abs( (nextDataItem.y.toDouble() - dataItem.y.toDouble()) /
+                    (nextDataItem.x.toDouble() - dataItem.x.toDouble()) / 10.0)
 
-                // filter data
-                if (slope < slopeMin || slope > slopeMax) {
-                    // first point of a filtered sequence -> make a vertical "decreasing" line
-                    if (!previousPointFiltered){
-                        outputSeries.add(dataItem)
-                        outputSeries.add(dataItem.x,0.0)
-                    }
-                    previousPointFiltered = true
+            // filter data
+            if (slope < slopeMin || slope > slopeMax) {
+                // first point of a filtered sequence -> make a vertical "decreasing" line
+                if (!previousPointFiltered){
+                    outputSeries.add(dataItem)
+                    outputSeries.add(dataItem.x,0.0)
                 }
-                else{
-                    // don't filter, keep the data
-                    if (previousPointFiltered) {
-                        // first point of an unfiltered sequence -> make a vertical "increasing" line...
-                        outputSeries.add(dataItem.x,0.0)
-                    }
-                    for (j in subsampleIds[i] until subsampleIds[i + 1]){
-                        // ...then add all altitude points to the output until the next subsample id
-                        outputSeries.add(series.getDataItem(j))
-                    }
-                    if (i == subsampleIds.size - 2){ // for the last element
-                        outputSeries.add(nextDataItem)
-                    }
-                    previousPointFiltered = false
-                }
+                previousPointFiltered = true
             }
-            return outputSeries
+            else{
+                // don't filter, keep the data
+                if (previousPointFiltered) {
+                    // first point of an unfiltered sequence -> make a vertical "increasing" line...
+                    outputSeries.add(dataItem.x,0.0)
+                }
+                for (j in subSampleIds[i] until subSampleIds[i + 1]) {
+                    // ...then add all altitude points to the output until the next subsample id
+                    outputSeries.add(series.getDataItem(j))
+                }
+                if (i == subSampleIds.size - 2){ // for the last element
+                    outputSeries.add(nextDataItem)
+                }
+                previousPointFiltered = false
+            }
         }
-        return series
+        return outputSeries
     }
 
     /**
@@ -812,7 +793,7 @@ class DiagramPanelController(
      * @param plot XYPlot to draw graphs
      * @param baseColor the main color to be used (! green ignored)
      */
-    private fun plotAltitudeSlopes(dataSeries: Series, plot: XYPlot, baseColor: java.awt.Color) {
+    private fun plotAltitudeSlopes(dataSeries: XYSeries, plot: XYPlot, baseColor: java.awt.Color) {
 
         val renderer = XYLineAndShapeRenderer()
         renderer.setSeriesPaint(0, java.awt.Color(baseColor.red, baseColor.green, baseColor.blue, 255) )
@@ -833,7 +814,7 @@ class DiagramPanelController(
                         Color(color.red / 255.0, color.green / 255.0, color.blue / 255.0, color.alpha / 255.0))
 
             // two points is not valid as its a vertical line
-            if(dataset.getItemCount(0) > 2){
+            if (dataset.getItemCount(0) > 2){
                 plot.setDataset(plot.rendererCount, dataset)
                 val slopeRenderer = XYDifferenceRenderer(color,java.awt.Color(0, 0, 0, 0), false)
                 slopeRenderer.setSeriesPaint(0, java.awt.Color(0, 0, 0, 0))

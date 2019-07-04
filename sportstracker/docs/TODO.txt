@@ -5,7 +5,6 @@ Review PR #208: Exercise viewer: add colored slopes
 - https://github.com/ssaring/sportstracker/pull/208
 - already merged to origin/master
 - found issues:
-  - use Kotlin language features and guidelines in modified code
   - avoid empty space on right end when domain axis is distance
   - avoid empty space above the diagram when legend is not shown
 - add to ChangeLog, Authors
