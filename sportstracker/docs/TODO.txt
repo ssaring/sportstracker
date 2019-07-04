@@ -4,9 +4,9 @@ SportsTracker-TODO
 Review PR #208: Exercise viewer: add colored slopes
 - https://github.com/ssaring/sportstracker/pull/208
 - already merged to origin/master
+- test colored slopes on known routes (e.g. ÖRM)
 - found issues:
   - avoid empty space on right end when domain axis is distance
-  - avoid empty space above the diagram when legend is not shown
 - add to ChangeLog, Authors
 
 Reminder for Notes:

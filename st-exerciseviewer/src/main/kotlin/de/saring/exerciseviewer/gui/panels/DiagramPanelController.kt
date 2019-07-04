@@ -239,7 +239,7 @@ class DiagramPanelController(
         val fDomainAxisTime = axisTypeBottom == AxisType.TIME
 
         // remove slope legend, they will be added later if needed
-        clearSlopesLegend()
+        hideSlopesLegend()
 
         // create and fill data series according to axis type
         // (right axis only when user selected a different axis type)
@@ -824,14 +824,20 @@ class DiagramPanelController(
         }
     }
 
-    private fun clearSlopesLegend() {
+    private fun hideSlopesLegend() {
+        vbDiagramPanel.children.remove(hbSlopesLegendPanel)
         hbSlopesLegendPanel.children.clear()
     }
 
-    private fun addSlopeLegendItem(name: String, fillColor:Color) {
+    private fun addSlopeLegendItem(name: String, fillColor: Color) {
+
+        // re-add slopes legend if it has been removed
+        if (!vbDiagramPanel.children.contains(hbSlopesLegendPanel)) {
+            vbDiagramPanel.children.add(0, hbSlopesLegendPanel)
+        }
 
         val textLegendItem = Text(name)
-        val rectLegendItem = Rectangle(55.0, 24.0).apply {
+        val rectLegendItem = Rectangle(56.0, 24.0).apply {
             fill = fillColor
             stroke = Color.BLACK
         }
