@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>st-util</artifactId>
     <name>st-util</name>
-    <version>7.6.1-SNAPSHOT</version>
+    <version>7.7.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <parent>

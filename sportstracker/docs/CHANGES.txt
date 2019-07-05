@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v7.6.1:
+v7.7.0:
  SportsTracker changes:
  - updated to JavaFX / OpenJFX 11.0.2
  - updated ControlsFX to version 11.0.0

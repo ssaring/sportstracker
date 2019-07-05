@@ -5,7 +5,7 @@ SET PACKAGE_DIR=.\package
 SET WINDOWS_SYSTEM32=C:\Windows\System32
 SET PATH=%PATH%;"C:\Program Files (x86)\InnoSetup-5\"
 
-SET ST_VERSION=7.6.0
+SET ST_VERSION=7.7.0
 
 # cleanup
 RMDIR /S/Q %BUILD_DIR%

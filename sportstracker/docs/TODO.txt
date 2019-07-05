@@ -1,14 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Review PR #208: Exercise viewer: add colored slopes
-- https://github.com/ssaring/sportstracker/pull/208
-- already merged to origin/master
-- test colored slopes on known routes (e.g. ÖRM)
-- found issues:
-  - avoid empty space on right end when domain axis is distance
-- add to ChangeLog, Authors
-
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)
 - Add row to Note Dialog below the date and time:
