@@ -13,6 +13,7 @@ import de.saring.leafletmap.MapLayer
 import de.saring.leafletmap.ScaleControlConfig
 import de.saring.leafletmap.ZoomControlConfig
 import de.saring.util.gui.jfreechart.ChartUtils
+import de.saring.util.gui.jfreechart.FixedRangeNumberAxis
 import de.saring.util.unitcalc.ConvertUtils
 import de.saring.util.unitcalc.TimeUtils
 import de.saring.util.unitcalc.UnitSystem
@@ -24,7 +25,6 @@ import javafx.scene.control.Tooltip
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 import org.jfree.chart.ChartFactory
-import org.jfree.chart.axis.NumberAxis
 import org.jfree.chart.fx.ChartViewer
 import org.jfree.chart.plot.PlotOrientation
 import org.jfree.chart.plot.ValueMarker
@@ -140,8 +140,7 @@ class TrackPanelController(
             val axisAltitude = FixedRangeNumberAxis(
                     getAltitudeAxisTitle(), Range(sAltitude.minY, sAltitude.maxY), true)
             plotAltitude.rangeAxis = axisAltitude
-            plotAltitude.domainAxis = FixedRangeNumberAxis(
-                    null, Range(0.0, sAltitude.maxX), false)
+            plotAltitude.domainAxis = FixedRangeNumberAxis(null, Range(0.0, sAltitude.maxX), false)
 
             // setup altitude axis and custom area renderer
             axisAltitude.labelPaint = colorAltitudeAxis
@@ -352,28 +351,4 @@ class TrackPanelController(
     private fun appendToolTipLine(sb: StringBuilder, resourceKey: String, value: String) =
             sb.append("${context.resources.getString(resourceKey)}: $value\n")
 
-}
-
-/**
- * Extended JFreeChart NumberAxis which displays a fixed range. This can e.g. be used for a altitude chart to avoid
- * that the axis starts with 0, it can display only the range where altitude data is present. It also makes sure that
- * this fixed range is displayed again, when the user zooms into the chart and out again.
- * Source: https://stackoverflow.com/questions/8551604/restoring-manual-domain-axis-range-after-zooming-out-in-jfreechart
- *
- * @property label of the axis (optional)
- * @property fixedRange range to be displayed
- * @property rangeWithMargins flag whether the range should be extended with a margin
- */
-class FixedRangeNumberAxis(
-        label: String?,
-        private val fixedRange: Range,
-        private val rangeWithMargins: Boolean) : NumberAxis(label) {
-
-    override fun autoAdjustRange() {
-        if (rangeWithMargins) {
-            setRangeWithMargins(fixedRange, false, false)
-        } else {
-            setRange(fixedRange, false, false)
-        }
-    }
 }
