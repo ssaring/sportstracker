@@ -23,13 +23,13 @@ public final class ColorUtils {
     }
 
     /**
-     * Converts the specified AWT/Swing Color object to a JavaFX Color object.
+     * Converts the specified AWT/Swing Color object to a JavaFX Color object (incl. alpha value).
      *
      * @param awtColor AWT/Swing Color object
      * @return the JavaFX Color object
      */
     public static Color toFxColor(final java.awt.Color awtColor) {
-        return Color.rgb(awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue(), 1);
+        return Color.rgb(awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue(), awtColor.getAlpha() / 255d);
     }
 
     /**

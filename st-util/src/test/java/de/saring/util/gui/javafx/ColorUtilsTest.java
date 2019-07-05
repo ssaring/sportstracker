@@ -26,9 +26,9 @@ public class ColorUtilsTest {
      */
     @Test
     public void testToFxColor() {
-        java.awt.Color awtColor = new java.awt.Color(255, 128, 0);
+        java.awt.Color awtColor = new java.awt.Color(255, 128, 0, 128);
         // compare String representations, not double values
-        assertEquals("0xff8000ff", ColorUtils.toFxColor(awtColor).toString());
+        assertEquals("0xff800080", ColorUtils.toFxColor(awtColor).toString());
     }
 
     /**

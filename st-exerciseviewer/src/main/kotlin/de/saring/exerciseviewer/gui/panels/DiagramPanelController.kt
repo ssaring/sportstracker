@@ -5,6 +5,7 @@ import de.saring.exerciseviewer.data.Lap
 import de.saring.exerciseviewer.gui.EVContext
 import de.saring.exerciseviewer.gui.EVDocument
 import de.saring.util.AppResources
+import de.saring.util.gui.javafx.ColorUtils
 import de.saring.util.gui.jfreechart.ChartUtils
 import de.saring.util.gui.jfreechart.FixedRangeNumberAxis
 import de.saring.util.unitcalc.ConvertUtils
@@ -815,7 +816,7 @@ class DiagramPanelController(
         renderer.setSeriesLinesVisible(0, true)
         renderer.setSeriesShapesVisible(0, false)
         plot.setRenderer(plot.rendererCount, renderer)
-        var greenComponent = 225
+        var greenComponent = 240
         val subSampleIds = getXYSeriesSubSampleIds(100, dataSeries)
 
         for (i in 0 until altitudeSlopeRanges.size) {
@@ -824,18 +825,16 @@ class DiagramPanelController(
             val name = series.key.toString()
             val dataset = createDataSet(false, series)
             val color = java.awt.Color(baseColor.red, greenComponent, baseColor.blue, baseColor.alpha)
-            // TODO: is it possible to avoid this color conversion between java.awt.Color and javafx one ?
-            addSlopeLegendItem(name,
-                        Color(color.red / 255.0, color.green / 255.0, color.blue / 255.0, color.alpha / 255.0))
+            addSlopeLegendItem(name, ColorUtils.toFxColor(color))
 
             // two points is not valid as its a vertical line
             if (dataset.getItemCount(0) > 2){
                 plot.setDataset(plot.rendererCount, dataset)
-                val slopeRenderer = XYDifferenceRenderer(color,java.awt.Color(0, 0, 0, 0), false)
+                val slopeRenderer = XYDifferenceRenderer(color, java.awt.Color(0, 0, 0, 0), false)
                 slopeRenderer.setSeriesPaint(0, java.awt.Color(0, 0, 0, 0))
                 plot.setRenderer(plot.rendererCount, slopeRenderer)
             }
-            greenComponent -= 225 / (altitudeSlopeRanges.size - 1)
+            greenComponent -= 240 / (altitudeSlopeRanges.size - 1)
         }
     }
 
