@@ -6,6 +6,7 @@ import de.saring.exerciseviewer.gui.EVContext
 import de.saring.exerciseviewer.gui.EVDocument
 import de.saring.util.AppResources
 import de.saring.util.gui.jfreechart.ChartUtils
+import de.saring.util.gui.jfreechart.FixedRangeNumberAxis
 import de.saring.util.unitcalc.ConvertUtils
 import de.saring.util.unitcalc.FormatUtils
 import de.saring.util.unitcalc.SpeedMode
@@ -50,6 +51,7 @@ import kotlin.Int
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
 import javafx.scene.paint.Color
+import org.jfree.data.Range
 
 /**
  * Controller (MVC) class of the "Samples" panel, which displays the exercise graphically (heartrate, altitude, speed
@@ -333,6 +335,19 @@ class DiagramPanelController(
         val plot = chart.plot as XYPlot
         plot.isDomainCrosshairVisible = true
         plot.isRangeCrosshairVisible = true
+
+        // setup axis ranges in case of X axis displays the distance (XYSeries), not needed for TimeSeries
+        if (!fDomainAxisTime && sLeft is XYSeries) {
+
+            /// use custom Y axis with fixed ranges to avoid e.g. altitude to start with 0
+            // (don't do that when the minimum value is 0 (e.g. for speed), then there will be a useless margin below 0)
+            if (sLeft.minY != 0.0) {
+                plot.rangeAxis = FixedRangeNumberAxis(plot.rangeAxis.label, Range(sLeft.minY, sLeft.maxY), true)
+            }
+
+            /// use custom X axis with fixed ranges to avoid empty space on end of the distance axis
+            plot.domainAxis = FixedRangeNumberAxis(plot.domainAxis.label, Range(0.0, sLeft.maxX), false)
+        }
 
         // setup left axis
         val axisLeft = plot.getRangeAxis(0)
