@@ -53,6 +53,7 @@ import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
 import javafx.scene.paint.Color
 import org.jfree.data.Range
+import kotlin.math.sqrt
 
 /**
  * Controller (MVC) class of the "Samples" panel, which displays the exercise graphically (heartrate, altitude, speed
@@ -771,8 +772,11 @@ class DiagramPanelController(
         for (i in 0 until subSampleIds.size - 1){
             val dataItem = series.getDataItem(subSampleIds[i])
             val nextDataItem = series.getDataItem(subSampleIds[i + 1])
-            val slope = abs( (nextDataItem.y.toDouble() - dataItem.y.toDouble()) /
-                    (nextDataItem.x.toDouble() - dataItem.x.toDouble()) / 10.0)
+
+            val dD = (nextDataItem.x.toDouble() - dataItem.x.toDouble()) * 1000 // meters
+            val dY = nextDataItem.y.toDouble() - dataItem.y.toDouble() // already meters
+            val dX = sqrt(dD * dD - dY * dY)
+            val slope = abs(dY / dX) * 100
 
             // filter data
             if (slope < slopeMin || slope > slopeMax) {
