@@ -1,5 +1,7 @@
 package de.saring.util.unitcalc
 
+import kotlin.math.round
+
 /**
  * This class contains several static methods for converting data in different formats and units.
  *
@@ -31,7 +33,7 @@ object ConvertUtils {
      */
     @JvmStatic
     fun convertMiles2Kilometer(miles: Int): Int =
-            Math.round(convertMiles2Kilometer(miles.toDouble())).toInt()
+            round(convertMiles2Kilometer(miles.toDouble())).toInt()
 
     /**
      * Converts the length value from kilometers to miles. The round is very useful for displaying values in english
@@ -46,7 +48,7 @@ object ConvertUtils {
     fun convertKilometer2Miles(kilometers: Double, fRound: Boolean): Double {
         val dResult = kilometers / KILOMETER_2_MILES
         return if (fRound) {
-            Math.round(1000 * dResult) / 1000.0
+            round(1000 * dResult) / 1000.0
         } else {
             dResult
         }
@@ -60,7 +62,7 @@ object ConvertUtils {
      */
     @JvmStatic
     fun convertKilometer2Miles(kilometers: Int): Int =
-        Math.round(convertKilometer2Miles(kilometers.toDouble(), false)).toInt()
+            round(convertKilometer2Miles(kilometers.toDouble(), false)).toInt()
 
     /**
      * Converts the length value from feet to meter.
@@ -72,6 +74,15 @@ object ConvertUtils {
     fun convertFeet2Meter(feet: Int): Int = Math.round(feet * METER_2_FEET)
 
     /**
+     * Converts the length value from feet to meter.
+     *
+     * @param feet value in feet
+     * @return value in meters
+     */
+    @JvmStatic
+    fun convertFeet2Meter(feet: Double): Double = feet * METER_2_FEET
+
+    /**
      * Converts the length value from meter to feet.
      *
      * @param meters value in meters
@@ -79,6 +90,15 @@ object ConvertUtils {
      */
     @JvmStatic
     fun convertMeter2Feet(meters: Int): Int = Math.round(meters / METER_2_FEET)
+
+    /**
+     * Converts the length value from meter to feet.
+     *
+     * @param meters value in meters
+     * @return value in feets
+     */
+    @JvmStatic
+    fun convertMeter2Feet(meters: Double): Double = meters / METER_2_FEET
 
     /**
      * Converts the speed value from m/s to km/h.
@@ -97,7 +117,7 @@ object ConvertUtils {
      */
     @JvmStatic
     fun convertFahrenheit2Celsius(fahrenheit: Short): Short =
-            Math.round((fahrenheit - FAHRENHEIT_OFFSET) * CELSIUS_2_FAHRENHEIT).toShort()
+            round((fahrenheit - FAHRENHEIT_OFFSET) * CELSIUS_2_FAHRENHEIT).toShort()
 
     /**
      * Converts the temperature value from celsius to fahrenheit..
@@ -107,7 +127,7 @@ object ConvertUtils {
      */
     @JvmStatic
     fun convertCelsius2Fahrenheit(celsius: Short): Short =
-            (Math.round(celsius / CELSIUS_2_FAHRENHEIT) + FAHRENHEIT_OFFSET).toShort()
+            (round(celsius / CELSIUS_2_FAHRENHEIT) + FAHRENHEIT_OFFSET).toShort()
 
     /**
      * Converts the weight value from kilogram to pounds (lbs).

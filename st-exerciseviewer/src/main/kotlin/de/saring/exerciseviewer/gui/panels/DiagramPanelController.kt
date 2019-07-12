@@ -230,7 +230,7 @@ class DiagramPanelController(
             averagedRangeSteps = 0
         }
     }
-    
+
     /**
      * Draws the diagram according to the current axis type selection and configuration settings.
      */
@@ -355,7 +355,7 @@ class DiagramPanelController(
         val axisLeft = plot.getRangeAxis(0)
         axisLeft.labelPaint = colorAxisLeft
         axisLeft.tickLabelPaint = colorAxisLeft
-        
+
         // for altitude vs. distance, color graph with slope
         // (don't do when the right axis displays another value, the colors are modified and can't be mapped anymore)
         if (!fDomainAxisTime && axisTypeLeft == AxisType.ALTITUDE && sRight == null) {
@@ -600,7 +600,7 @@ class DiagramPanelController(
 
                 // ignore range values of null for the average, use the specified index instead (or 0 if also missing)
                 val valueAtIndex = getRawSampleValue(axisType, valueIndex) ?:
-                        getRawSampleValue(axisType, sampleIndex) ?: 0.0
+                getRawSampleValue(axisType, sampleIndex) ?: 0.0
 
                 valueSum += valueAtIndex
             }
@@ -645,7 +645,7 @@ class DiagramPanelController(
                 return if (formatUtils.unitSystem == UnitSystem.METRIC)
                     value
                 else
-                    ConvertUtils.convertMeter2Feet(Math.round(value).toInt())
+                    ConvertUtils.convertMeter2Feet(value)
             AxisType.SPEED -> {
                 return getConvertedSpeedValue(value, formatUtils)
             }
@@ -733,7 +733,7 @@ class DiagramPanelController(
      * greater than sampleDist. Resulting data may not be evenly spaced.
      * The output ids list will necessarily contain the first ID (0) and the last ID of the series to preseve data length,
      * consequently the last sampling interval may be < sampleDist.
-     * 
+     *
      * @param sampleDist desired output sample interval in meters
      * @param series input series to resample, X in kilometers
      * @return list of ids to resample the series
@@ -749,7 +749,7 @@ class DiagramPanelController(
         outputIds.add(series.itemCount - 1)
         return outputIds
     }
-    
+
     /**
      * Returns a newly created series based on the input series, from which some data points are [removed/set to 0]
      * (=filtered) regarding the data slope. All data from the input series that doesn't have a slope between slopeMin
@@ -757,12 +757,12 @@ class DiagramPanelController(
      * which means that each "no-data-zone" or "data-zone" length will be at least the sampling interval used to create
      * subSampleIds. In addition, both ends of the "no-data-zones" and "data-zones" are vertical to produce vertical
      * lines when plotted: there are two points at each "zone" end with the same X.
-     * 
+     *
      * @param slopeMin minimal slope to keep data
      * @param slopeMax maximal slope to keep data
      * @param series input series
      * @param subSampleIds ids list from the input series used to evaluate the slope
-     * @return new series, based on the input series, 
+     * @return new series, based on the input series,
      */
     private fun getSeriesFilteredBySlope(slopeMin: Int, slopeMax: Int, series: XYSeries, subSampleIds: List<Int>): Series {
 
@@ -773,10 +773,18 @@ class DiagramPanelController(
             val dataItem = series.getDataItem(subSampleIds[i])
             val nextDataItem = series.getDataItem(subSampleIds[i + 1])
 
-            val dD = (nextDataItem.x.toDouble() - dataItem.x.toDouble()) * 1000 // meters
-            val dY = nextDataItem.y.toDouble() - dataItem.y.toDouble() // already meters
-            val dX = sqrt(dD * dD - dY * dY)
-            val slope = abs(dY / dX) * 100
+            var deltaD = nextDataItem.x.toDouble() - dataItem.x.toDouble() // distance delta in km or miles
+            var deltaY = nextDataItem.y.toDouble() - dataItem.y.toDouble() // altitude delta in meters or feet
+
+            if (document.options.unitSystem == UnitSystem.ENGLISH) {
+                // convert to metric units for calculation
+                deltaD = ConvertUtils.convertMiles2Kilometer(deltaD)
+                deltaY = ConvertUtils.convertFeet2Meter(deltaY)
+            }
+            deltaD *= 1000.0 // convert distance to meters (altitude is already in meters)
+
+            val dX = sqrt(deltaD * deltaD - deltaY * deltaY)
+            val slope = abs(deltaY / dX) * 100
 
             // filter data
             if (slope < slopeMin || slope > slopeMax) {
