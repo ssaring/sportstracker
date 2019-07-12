@@ -86,7 +86,7 @@ open class LeafletMapView : StackPane() {
         if (mapConfig.layers.size > 1) {
             execScript("""
                     |var overlayMaps = {};
-                    |L.control.layers(baseMaps, overlayMaps).addTo(myMap);""".trimMargin())
+                    |var controlLayer = L.control.layers(baseMaps, overlayMaps).addTo(myMap);""".trimMargin())
 
         }
 

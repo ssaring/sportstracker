@@ -36,5 +36,12 @@ enum class MapLayer(val displayName: String, val javaScriptCode: String) {
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
             id: 'mapbox.streets',
             attribution: 'Map data &copy; OpenStreetMap contributors, Imagery &copy; Mapbox'
-        })""")
+        })"""),
+
+        /** Sattelite view (esri). */
+    SATELITTE("Satelitte", """
+        L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '&copy; <a href=\"http://www.esri.com/\">Esri</a>',
+        })"""),
+
 }
