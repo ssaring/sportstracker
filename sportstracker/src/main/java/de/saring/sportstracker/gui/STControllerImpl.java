@@ -59,7 +59,7 @@ import de.saring.util.unitcalc.FormatUtils;
 import de.saring.util.unitcalc.SpeedMode;
 
 /**
- * This class provides all controller (MVC)functionality of the SportsTracker main application window.
+ * This class provides all controller (MVC) functionality of the SportsTracker main application window.
  *
  * @author Stefan Saring
  */
