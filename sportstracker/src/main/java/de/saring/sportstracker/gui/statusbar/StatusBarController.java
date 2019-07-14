@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 
 
 /**
- * Controller (MVC)of the status bar of the SportsTracker application window.
+ * Controller (MVC) of the status bar of the SportsTracker application window.
  *
  * @author Stefan Saring
  */
