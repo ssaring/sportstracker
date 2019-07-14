@@ -56,6 +56,9 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Changelog
 
+LeafletMap 1.0.5:
+* added map layer "Satellite Esri" (contributed by Thomas Feuster, PR #211)
+
 LeafletMap 1.0.4:
 
 * Updated to Kotlin 1.3.41

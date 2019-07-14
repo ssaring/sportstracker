@@ -46,7 +46,7 @@ class ConvertUtilsTest {
      * Tests the appropriate method.
      */
     @Test
-    fun testConvertFeet2Meter() {
+    fun testConvertFeet2MeterInt() {
 
         assertEquals(ConvertUtils.convertFeet2Meter(0), 0)
         assertEquals(ConvertUtils.convertFeet2Meter(2540), 774)
@@ -56,10 +56,30 @@ class ConvertUtilsTest {
      * Tests the appropriate method.
      */
     @Test
-    fun testConvertMeter2Feet() {
+    fun testConvertFeet2MeterDouble() {
+
+        assertEquals(ConvertUtils.convertFeet2Meter(0.0), 0.0)
+        assertEquals(ConvertUtils.convertFeet2Meter(2545.5), 775.84292, 0.001)
+    }
+
+    /**
+     * Tests the appropriate method.
+     */
+    @Test
+    fun testConvertMeter2FeetInt() {
 
         assertEquals(ConvertUtils.convertMeter2Feet(0), 0)
         assertEquals(ConvertUtils.convertMeter2Feet(2540), 8334)
+    }
+
+    /**
+     * Tests the appropriate method.
+     */
+    @Test
+    fun testConvertMeter2FeetDouble() {
+
+        assertEquals(ConvertUtils.convertMeter2Feet(0.0), 0.0)
+        assertEquals(ConvertUtils.convertMeter2Feet(2545.5), 8351.65222, 0.001)
     }
 
     /**

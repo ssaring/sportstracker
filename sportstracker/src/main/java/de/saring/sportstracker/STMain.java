@@ -3,7 +3,7 @@ package de.saring.sportstracker;
 import de.saring.sportstracker.gui.STApplication;
 
 /**
- * Launcher class for the SportsTracker application. It just redirects to the STApplication class for staring the
+ * Launcher class for the SportsTracker application. It just redirects to the STApplication class to start the
  * application. This is a needed workaround since JDK 11, because JavaFX is not part of the JDK anymore.<br/>
  * The reason is that the Java 11 runtime will check if the main class extends javafx.application.Application, and if
  * that is the case, it requires the JavaFX platform to be available as a module. When the main class does not extend

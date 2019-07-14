@@ -2,8 +2,7 @@ SportsTracker-TODO
 ==================
 
 ExerciseViewer Diagram Panel:
-- Bug: slope percentage works only for metric unit system properly, wrong
-  percentages when switches to english unit system
+- use of new map layer "Satellite Esri"? => legal problems?
 
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)
