@@ -1,6 +1,9 @@
 SportsTracker-TODO
 ==================
 
+ExerciseViewer Diagram Panel:
+- use of new map layer "Satellite Esri"? => legal problems?
+
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)
 - Add row to Note Dialog below the date and time:
