@@ -41,6 +41,6 @@ enum class MapLayer(val displayName: String, val javaScriptCode: String) {
         /** Sattelite view (esri). */
     SATELITTE("Satellite Esri", """
         L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: '&copy; Esri'
+            attribution: '&copy; Esri, DigitalGlobe, GeoEye, i-cubed, USDA FSA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo and the GIS User Community'
         })""")
 }
