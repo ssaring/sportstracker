@@ -43,7 +43,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - CicloSport HAC4    (tested)
   - CicloSport HAC4Pro (tested)
   - CicloSport HAC5    (tested)
-  - Garmin Edge        (tested with Edge 500, 520, 705, 820, FIT and TCX files)
+  - Garmin Edge        (tested with Edge 500, 520, 530, 705, 820, FIT and TCX files)
   - Garmin Forerunner  (tested with Forerunner 35, 305, 910XT, 645, FIT and TCX files)
   - Garmin Oregon      (tested with Oregon 450, GPX files)
   - Garmin Fenix       (tested with Fenix 2, FIT files)
@@ -516,4 +516,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2019/06/01
+2019/08/18
