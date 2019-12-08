@@ -74,7 +74,6 @@ open class LeafletMapView : StackPane() {
         execScript("""
                 |var myMap = L.map('map', {
                 |    center: new L.LatLng(${mapConfig.initialCenter.latitude}, ${mapConfig.initialCenter.longitude}),
-                |    ${mapConfig.mapOptions}
                 |    zoom: 8,
                 |    zoomControl: false,
                 |    layers: [layer1]
