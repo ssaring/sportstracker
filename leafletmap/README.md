@@ -60,6 +60,7 @@ LeafletMap 1.0.5:
 * added map layer "Satellite Esri" (contributed by Thomas Feuster, PR #211)
 * updated Leaflet to version 1.6.0, provides various fixes and performance
   improvements (contributed by Thomas Feuster, PR #219)
+* Updated to Kotlin 1.3.61
 
 LeafletMap 1.0.4:
 
