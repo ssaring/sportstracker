@@ -299,7 +299,9 @@ internal class FitMessageListener : MesgListener {
                 }
 
                 lap.altitude?.let {
-                    lap.altitude = it.copy(altitude = sampleAtLapEnd.altitude as Short, ascent = lap.altitude!!.ascent)
+                    if (sampleAtLapEnd.altitude != null) {
+                        lap.altitude = it.copy(altitude = sampleAtLapEnd.altitude as Short, ascent = lap.altitude!!.ascent)
+                    }
                 }
 
                 if (temperatureAvailable) {

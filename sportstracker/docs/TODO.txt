@@ -1,6 +1,20 @@
 SportsTracker-TODO
 ==================
 
+Issue #220: Failed to parse excersisce file on new Garmin device
+- it seems that the read altitude and speed data in the exercise samples is always
+  null for Fenix 6 FIT files (and for Fenix 5 with newer firmware)
+- is altitude and speed stored in another way in these files?
+
+macOS Catalina problem:
+- when using a non-hidpi display (e.g. a 24" 1920x1200) the text rendering looks broken
+  - the antialiased text in labels, menus and text fields looks like vertical character
+    lines are missing
+- looks perfect when using a hidpi display, e.g. the laptop screen of a MacBook Pro
+- Tests with the most recent JDK:
+  -> same problem with AdoptOpenJDK 13.0.1 and OpenJDK 11.0.4 bundled with IntelliJ IDEA
+-> search for a similar bug report at OpenJFX or file a new one
+
 ExerciseViewer Diagram Panel:
 - use of new map layer "Satellite Esri"? => legal problems?
 
