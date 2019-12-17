@@ -2,9 +2,15 @@ SportsTracker-TODO
 ==================
 
 Issue #220: Failed to parse excersisce file on new Garmin device
-- it seems that the read altitude and speed data in the exercise samples is always
-  null for Fenix 6 FIT files (and for Fenix 5 with newer firmware)
-- is altitude and speed stored in another way in these files?
+- on newer high-end Garmin devices (e.g. Fenix 6 or 5) the speed and altitude is stored
+  in the enhancedSpeed or enhancedAltitude attributes, it's now read from there
+- all existing unit tests are still green
+- example files from Winfried are looking fine now, but they can't be used for unit tests
+  - can crrodger provide an example FIT file?
+- the altitude graph from Winfrieds sample files looks a bit strange
+  -> does the enhanced* attributes need to be interpreted in a special way?
+  - is there some documentation for them in the ANT / FIT spec?
+- add Fenix 5/6 to list of supported devices
 
 macOS Catalina problem:
 - when using a non-hidpi display (e.g. a 24" 1920x1200) the text rendering looks broken

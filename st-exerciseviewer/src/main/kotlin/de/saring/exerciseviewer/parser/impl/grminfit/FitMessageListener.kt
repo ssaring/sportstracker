@@ -173,9 +173,19 @@ internal class FitMessageListener : MesgListener {
         }
 
         mesg.distance?.let { sample.distance = Math.round(it) }
-        mesg.speed?.let { sample.speed = ConvertUtils.convertMeterPerSecond2KilometerPerHour(it) }
-        mesg.altitude?.let { sample.altitude = Math.round(it).toShort() }
         mesg.cadence?.let { sample.cadence = it }
+
+        // on newer high-end Garmin devices (e.g. Fenix 6 or 5) the speed and altitude is stored in the
+        // enhancedSpeed or enhancedAltitude attributes => get it from there
+        val mesgSpeed: Float? = if (mesg.enhancedSpeed != null) mesg.enhancedSpeed else mesg.speed
+        mesgSpeed?.let {
+            sample.speed = ConvertUtils.convertMeterPerSecond2KilometerPerHour(it)
+        }
+
+        val mesgAltitude: Float? = if (mesg.enhancedAltitude != null) mesg.enhancedAltitude else mesg.altitude
+        mesgAltitude?.let {
+            sample.altitude = Math.round(it).toShort()
+        }
 
         mesg.temperature?.let {
             temperatureAvailable = true
