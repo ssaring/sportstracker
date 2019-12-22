@@ -6,6 +6,8 @@ v7.7.1:
  - updated Garmin FIT SDK library to version 20.96.00
  - updated Leaflet to version 1.6.0, provides various fixes and performance
    improvements (contributed by Thomas Feuster, PR #219)
+- Bugfix for reading exercise files from Garmin Fenix 6 and 5X devices
+  (Issue #220: Failed to parse exercise file on new Garmin device)
 
 v7.7.0:
  SportsTracker changes:
