@@ -6,12 +6,12 @@ macOS Catalina problem:
   - the antialiased text in labels, menus and text fields looks like vertical pixel
     lines are missing
 - looks perfect when using a hidpi display, e.g. the laptop screen of a MacBook Pro
-- Tests with the most recent JDK:
-  -> same problem with AdoptOpenJDK 13.0.1 and OpenJDK 11.0.4 bundled with IntelliJ IDEA
--> search for a similar bug report at OpenJFX or file a new one
-
-ExerciseViewer Diagram Panel:
-- use of new map layer "Satellite Esri"? => legal problems?
+- tested with:
+  - AdaptOpenJDK 11.0.5, OpenJDK 14 EA Build 28 (2019/12/18), OpenJDK 11.0.4 bundled with IntelliJ IDEA
+  - openjfx 11.0.2 and OpenJFX 14-ea+6
+  -> same problem in all combinations
+- there are no similar bug reports in the OpenJDK JavaFX bug system
+  -> new bugs can be reported by OpenJDK project members only - ???
 
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)

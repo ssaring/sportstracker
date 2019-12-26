@@ -1,17 +1,7 @@
 package de.saring.exerciseviewer.parser.impl.garminfit
 
-import java.lang.reflect.Modifier
+import com.garmin.fit.*
 import java.util.LinkedList
-
-import com.garmin.fit.DeviceInfoMesg
-import com.garmin.fit.GarminProduct
-import com.garmin.fit.LapMesg
-import com.garmin.fit.LengthMesg
-import com.garmin.fit.Mesg
-import com.garmin.fit.MesgListener
-import com.garmin.fit.MesgNum
-import com.garmin.fit.RecordMesg
-import com.garmin.fit.SessionMesg
 
 import de.saring.exerciseviewer.core.EVException
 import de.saring.exerciseviewer.data.EVExercise
@@ -227,11 +217,25 @@ internal class FitMessageListener : MesgListener {
      */
     private fun readDeviceInfoMessage(mesg: DeviceInfoMesg) {
 
-        val garminProductId = mesg.garminProduct
-        if (garminProductId != null && garminProductId.toInt() > 100) {
-            val productName = getGarminProductConstantName(garminProductId)
-            if (productName != null) {
-                exercise.deviceName = "Garmin $productName"
+        // get the device name from the first DeviceInfo message, it's for the device itself
+        // (the next messages are for sensors etc.)
+        if (exercise.deviceName == null) {
+
+            if (mesg.manufacturer != null && mesg.product != null) {
+                var deviceName = Manufacturer.getStringFromValue(mesg.manufacturer)
+
+                // the product name might be missing in the FIT SDK for newer device models
+                val productName = GarminProduct.getStringFromValue(mesg.product)
+                if (productName?.isNotEmpty() == true) {
+                    deviceName += " $productName"
+                }
+
+                // append software version, if present
+                if (mesg.softwareVersion != null) {
+                    deviceName += " (SW ${mesg.softwareVersion})"
+                }
+
+                exercise.deviceName = deviceName
             }
         }
     }
@@ -344,30 +348,6 @@ internal class FitMessageListener : MesgListener {
             }
         }
         return closestSample
-    }
-
-    /**
-     * Gets the name of the Garmin product ID constant from class GarminProduct for the specified product ID
-     * (done via Reflection).
-     *
-     * @param constantValue Garmin product ID
-     * @return constant / device name or null if not found
-     */
-    private fun getGarminProductConstantName(constantValue: Int?): String? {
-
-        for (field in GarminProduct::class.java.declaredFields) {
-            val modifiers = field.modifiers
-            if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers) && Modifier.isFinal(modifiers)) {
-                try {
-                    if (constantValue == field.get(null)) {
-                        return field.name
-                    }
-                } catch (e: IllegalAccessException) {
-                    e.printStackTrace()
-                }
-            }
-        }
-        return null
     }
 
     /**

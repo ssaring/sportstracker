@@ -89,7 +89,7 @@ class GarminFitParserTest {
 
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
-        assertEquals("Garmin EDGE500", exercise.deviceName)
+        assertEquals("GARMIN EDGE500 (SW 2.3)", exercise.deviceName)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
@@ -211,7 +211,7 @@ class GarminFitParserTest {
 
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
-        assertEquals("Garmin FR910XT", exercise.deviceName)
+        assertEquals("GARMIN FR910XT (SW 2.5)", exercise.deviceName)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
@@ -291,7 +291,7 @@ class GarminFitParserTest {
 
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
-        assertEquals("Garmin FENIX2", exercise.deviceName)
+        assertEquals("GARMIN FENIX2 (SW 4.4)", exercise.deviceName)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
@@ -376,7 +376,7 @@ class GarminFitParserTest {
 
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
-        assertEquals("Garmin EDGE_820", exercise.deviceName)
+        assertEquals("GARMIN EDGE_820 (SW 7.0)", exercise.deviceName)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
@@ -462,7 +462,7 @@ class GarminFitParserTest {
 
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
-        // TODO can't be read -> assertEquals("Garmin Fenix6", exercise.deviceName)
+        assertEquals("GARMIN (SW 5.0)", exercise.deviceName) // Fenix 6 model name is still missing in the GarminProduct class (FIT SDK)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
