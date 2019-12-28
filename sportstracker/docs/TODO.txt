@@ -11,7 +11,7 @@ macOS Catalina problem:
   - openjfx 11.0.2 and OpenJFX 14-ea+6
   -> same problem in all combinations
 - there are no similar bug reports in the OpenJDK JavaFX bug system
-  -> new bugs can be reported by OpenJDK project members only - ???
+- submitted a bug report to OpenJDK / JavaFX (2019/12/28 - https://bugreport.java.com/bugreport/)
 
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)
