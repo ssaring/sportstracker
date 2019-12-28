@@ -82,6 +82,7 @@
                                 <MenuItem mnemonicParsing="true" onAction="#onSportTypeEditor" styleClass="menuBarItem" text="%st.view.sporttype_editor.Action.text"/>
                                 <MenuItem mnemonicParsing="true" onAction="#onStatistics" styleClass="menuBarItem" text="%st.view.statistics.Action.text"/>
                                 <MenuItem mnemonicParsing="true" onAction="#onOverviewDiagram" styleClass="menuBarItem" text="%st.view.overview_diagram.Action.text"/>
+                                <MenuItem mnemonicParsing="true" onAction="#onEquipmentUsage" styleClass="menuBarItem" text="%st.view.equipment_usage.Action.text"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="true" text="%st.view.help.text">

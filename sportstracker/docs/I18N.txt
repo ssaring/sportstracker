@@ -45,6 +45,17 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 7.7.1:
+
+- st.dlg.equipment_usage.title (new)
+- st.dlg.equipment_usage.sport_type.text (new)
+- st.dlg.equipment_usage.columns.name (new)
+- st.dlg.equipment_usage.columns.distance (new)
+- st.dlg.equipment_usage.columns.duration (new)
+- st.dlg.equipment_usage.columns.first_usage (new)
+- st.dlg.equipment_usage.columns.last_usage (new)
+- st.dlg.equipment_usage.empty (new)
+
 SportsTracker 7.6.1:
 
 - st.main.info.update_available (new)

@@ -475,6 +475,15 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     }
 
     @Override
+    public void onEquipmentUsage(final ActionEvent event) {
+        if (!checkForExistingExercises()) {
+            return;
+        }
+
+        dialogProvider.prEquipmentUsageDialogController.get().show(context.getPrimaryStage());
+    }
+
+    @Override
     public void onWebsite(final ActionEvent event) {
         context.getHostServices().showDocument(URL_PROJECT_WEBSITE);
     }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="16.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogs.EquipmentUsageDialogController">
+    <children>
+      <HBox alignment="CENTER_LEFT" spacing="16.0">
+         <children>
+            <Label text="%st.dlg.equipment_usage.sport_type.text" />
+            <ChoiceBox fx:id="cbSportType" minWidth="160.0" />
+         </children>
+      </HBox>
+        <TableView fx:id="tvEquipmentUsages" prefHeight="320.0" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="tcName" prefWidth="200.0" text="%st.dlg.equipment_usage.columns.name" />
+                <TableColumn fx:id="tcDistance" prefWidth="90.0" text="%st.dlg.equipment_usage.columns.distance" />
+                <TableColumn fx:id="tcDuration" prefWidth="90.0" text="%st.dlg.equipment_usage.columns.duration" />
+                <TableColumn fx:id="tcFirstUsage" prefWidth="90.0" text="%st.dlg.equipment_usage.columns.first_usage" />
+                <TableColumn fx:id="tcLastUsage" prefWidth="90.0" text="%st.dlg.equipment_usage.columns.last_usage" />
+            </columns>
+            <placeholder>
+                <Label text="%st.dlg.equipment_usage.empty" />
+            </placeholder>
+        </TableView>
+    </children>
+</VBox>

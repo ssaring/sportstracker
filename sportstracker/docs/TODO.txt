@@ -1,6 +1,13 @@
 SportsTracker-TODO
 ==================
 
+Equipment Usage:
+- see TODOs
+- german translation (also in menubar, check shortcut)
+- Exercise Dialog: add Warning message when user stores an exercise without
+  an selected equipment (if there is one for the current sport type)
+- add to ReadMe, Changelog
+
 macOS Catalina problem:
 - when using a non-hidpi display (e.g. a 24" 1920x1200) the text rendering looks broken
   - the antialiased text in labels, menus and text fields looks like vertical pixel

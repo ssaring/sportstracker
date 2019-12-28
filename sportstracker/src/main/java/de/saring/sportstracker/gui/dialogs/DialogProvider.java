@@ -35,10 +35,13 @@ public class DialogProvider {
     
     /** Provider for the StatisticDialogController */
     public Provider<StatisticDialogController> prStatisticDialogController;
-    
+
     /** Provider for the OverviewDialogController */
     public Provider<OverviewDialogController> prOverviewDialogController;
-    
+
+    /** Provider for the EquipmentUsageDialogController */
+    public Provider<EquipmentUsageDialogController> prEquipmentUsageDialogController;
+
     /** Provider for the PreferencesDialogController */
     public Provider<PreferencesDialogController> prPreferencesDialogController;
     
@@ -59,6 +62,7 @@ public class DialogProvider {
      * @param prSportTypeListDialogController provider for the SportTypeListDialogController
      * @param prStatisticDialogController provider for the StatisticDialogController
      * @param prOverviewDialogController provider for the OverviewDialogController
+     * @param prEquipmentUsageDialogController provider for the EquipmentUsageDialogController
      * @param prPreferencesDialogController provider for the PreferencesDialogController
      * @param prFilterDialogController provider for the FilterDialogController
      * @param prAboutDialogController provider for the AboutDialogController
@@ -72,6 +76,7 @@ public class DialogProvider {
                           Provider<SportTypeListDialogController> prSportTypeListDialogController,
                           Provider<StatisticDialogController> prStatisticDialogController,
                           Provider<OverviewDialogController> prOverviewDialogController,
+                          Provider<EquipmentUsageDialogController> prEquipmentUsageDialogController,
                           Provider<PreferencesDialogController> prPreferencesDialogController,
                           Provider<FilterDialogController> prFilterDialogController,
                           Provider<AboutDialogController> prAboutDialogController) {
@@ -83,6 +88,7 @@ public class DialogProvider {
         this.prSportTypeListDialogController = prSportTypeListDialogController;
         this.prStatisticDialogController = prStatisticDialogController;
         this.prOverviewDialogController = prOverviewDialogController;
+        this.prEquipmentUsageDialogController = prEquipmentUsageDialogController;
         this.prPreferencesDialogController = prPreferencesDialogController;
         this.prFilterDialogController = prFilterDialogController;
         this.prAboutDialogController = prAboutDialogController;
