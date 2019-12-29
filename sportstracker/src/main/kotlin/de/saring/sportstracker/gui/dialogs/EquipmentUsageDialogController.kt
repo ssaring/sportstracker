@@ -1,6 +1,8 @@
 package de.saring.sportstracker.gui.dialogs
 
 import de.saring.sportstracker.data.SportType
+import de.saring.sportstracker.data.statistic.EquipmentUsageCalculator
+import de.saring.sportstracker.data.statistic.EquipmentUsages
 import de.saring.sportstracker.gui.STContext
 import de.saring.sportstracker.gui.STDocument
 import de.saring.util.gui.javafx.NameableStringConverter
@@ -24,6 +26,8 @@ class EquipmentUsageDialogController(
     @FXML
     private lateinit var cbSportType: ChoiceBox<SportType>
 
+    private lateinit var equipmentUsages: EquipmentUsages
+
     /**
      * Displays the Equipment Usage dialog.
      *
@@ -36,11 +40,11 @@ class EquipmentUsageDialogController(
 
     override fun setupDialogControls() {
 
+        equipmentUsages = EquipmentUsageCalculator.calculateEquipmentUsage(document.exerciseList, document.sportTypeList)
+
         // fill sport type choice box
         cbSportType.converter = NameableStringConverter()
         document.sportTypeList.forEach { cbSportType.items.add(it) }
         cbSportType.value = document.sportTypeList.first()
-
-        // TODO
     }
 }
