@@ -15,13 +15,15 @@
             <ChoiceBox fx:id="cbSportType" minWidth="160.0" />
          </children>
       </HBox>
-        <TableView fx:id="tvEquipmentUsages" prefHeight="320.0" VBox.vgrow="ALWAYS">
+        <!-- set preferred table width to width of all columns + 20 pixels
+             => so there's enough space for the vertical scrollbar without showing the horizontal scrollbar -->
+        <TableView fx:id="tvEquipmentUsages" prefWidth="640.0" prefHeight="320.0" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="tcName" prefWidth="200.0" text="%st.dlg.equipment_usage.columns.name" />
-                <TableColumn fx:id="tcDistance" prefWidth="90.0" text="%st.dlg.equipment_usage.columns.distance" />
-                <TableColumn fx:id="tcDuration" prefWidth="90.0" text="%st.dlg.equipment_usage.columns.duration" />
-                <TableColumn fx:id="tcFirstUsage" prefWidth="90.0" text="%st.dlg.equipment_usage.columns.first_usage" />
-                <TableColumn fx:id="tcLastUsage" prefWidth="90.0" text="%st.dlg.equipment_usage.columns.last_usage" />
+                <TableColumn fx:id="tcName" prefWidth="220.0" text="%st.dlg.equipment_usage.columns.name" />
+                <TableColumn fx:id="tcDistance" prefWidth="100.0" text="%st.dlg.equipment_usage.columns.distance" />
+                <TableColumn fx:id="tcDuration" prefWidth="100.0" text="%st.dlg.equipment_usage.columns.duration" />
+                <TableColumn fx:id="tcFirstUsage" prefWidth="100.0" text="%st.dlg.equipment_usage.columns.first_usage" />
+                <TableColumn fx:id="tcLastUsage" prefWidth="100.0" text="%st.dlg.equipment_usage.columns.last_usage" />
             </columns>
             <placeholder>
                 <Label text="%st.dlg.equipment_usage.empty" />

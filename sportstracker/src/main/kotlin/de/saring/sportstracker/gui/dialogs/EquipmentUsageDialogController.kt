@@ -11,7 +11,6 @@ import de.saring.util.gui.javafx.LocalDateCellFactory
 import de.saring.util.gui.javafx.NameableStringConverter
 import de.saring.util.unitcalc.TimeUtils
 import javafx.beans.property.SimpleObjectProperty
-import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.ChoiceBox
@@ -55,9 +54,6 @@ class EquipmentUsageDialogController(
     private lateinit var tcLastUsage: TableColumn<EquipmentUsage, LocalDateTime>
 
     private lateinit var equipmentUsages: EquipmentUsages
-
-    // TODO dialog width is too small when scrollbars are shown
-    // TODO keep sort order when sport type selection changes
 
     /**
      * Displays the Equipment Usage dialog.
@@ -118,7 +114,8 @@ class EquipmentUsageDialogController(
         val equipmentUsage = this.equipmentUsages.sportTypeMap[selectedSportType]
                 ?: error("Not found for SportType with ID ${selectedSportType.id}!")
 
-        tvEquipmentUsages.items = FXCollections.observableArrayList(equipmentUsage.equipmentMap.values)
+        tvEquipmentUsages.items.setAll(equipmentUsage.equipmentMap.values)
+        tvEquipmentUsages.sort()
     }
 
     private fun getDateTimeForDate(date: LocalDate?): LocalDateTime? {
