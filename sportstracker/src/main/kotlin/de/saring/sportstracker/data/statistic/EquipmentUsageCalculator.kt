@@ -28,8 +28,10 @@ object EquipmentUsageCalculator {
         exerciseList.forEach { exercise ->
             exercise.equipment?.let { equipment ->
 
-                val eqUsagesInSportType = equipmentUsages.sportTypeMap[exercise.sportType] ?: error("Not found for SportType!")
-                val equipmentUsage: EquipmentUsage = eqUsagesInSportType.equipmentMap[equipment] ?: error("Not found for Equipment!")
+                val eqUsagesInSportType = equipmentUsages.sportTypeMap[exercise.sportType]
+                        ?: error("Not found for SportType with ID ${exercise.sportType.id}!")
+                val equipmentUsage: EquipmentUsage = eqUsagesInSportType.equipmentMap[equipment]
+                        ?: error("Not found for Equipment with ID ${equipment.id}!")
 
                 equipmentUsage.distance += exercise.distance
                 equipmentUsage.duration += exercise.duration

@@ -1,14 +1,28 @@
 package de.saring.sportstracker.gui.dialogs
 
 import de.saring.sportstracker.data.SportType
+import de.saring.sportstracker.data.statistic.EquipmentUsage
 import de.saring.sportstracker.data.statistic.EquipmentUsageCalculator
 import de.saring.sportstracker.data.statistic.EquipmentUsages
 import de.saring.sportstracker.gui.STContext
 import de.saring.sportstracker.gui.STDocument
+import de.saring.util.gui.javafx.FormattedNumberCellFactory
+import de.saring.util.gui.javafx.LocalDateCellFactory
 import de.saring.util.gui.javafx.NameableStringConverter
+import de.saring.util.unitcalc.TimeUtils
+import javafx.beans.property.SimpleObjectProperty
+import javafx.collections.FXCollections
+import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.ChoiceBox
+import javafx.scene.control.TableColumn
+import javafx.scene.control.TableView
+import javafx.scene.control.cell.PropertyValueFactory
 import javafx.stage.Window
+import javafx.util.Callback
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 /**
  * Controller (MVC) class of the Equipment Usage dialog (statistics) of the SportsTracker application.
@@ -26,7 +40,24 @@ class EquipmentUsageDialogController(
     @FXML
     private lateinit var cbSportType: ChoiceBox<SportType>
 
+    @FXML
+    private lateinit var tvEquipmentUsages: TableView<EquipmentUsage>
+
+    @FXML
+    private lateinit var tcName: TableColumn<EquipmentUsage, String>
+    @FXML
+    private lateinit var tcDistance: TableColumn<EquipmentUsage, Number>
+    @FXML
+    private lateinit var tcDuration: TableColumn<EquipmentUsage, Number>
+    @FXML
+    private lateinit var tcFirstUsage: TableColumn<EquipmentUsage, LocalDateTime>
+    @FXML
+    private lateinit var tcLastUsage: TableColumn<EquipmentUsage, LocalDateTime>
+
     private lateinit var equipmentUsages: EquipmentUsages
+
+    // TODO dialog width is too small when scrollbars are shown
+    // TODO keep sort order when sport type selection changes
 
     /**
      * Displays the Equipment Usage dialog.
@@ -39,12 +70,59 @@ class EquipmentUsageDialogController(
     }
 
     override fun setupDialogControls() {
+        this.equipmentUsages = EquipmentUsageCalculator.calculateEquipmentUsage(
+                document.exerciseList, document.sportTypeList)
 
-        equipmentUsages = EquipmentUsageCalculator.calculateEquipmentUsage(document.exerciseList, document.sportTypeList)
+        setupSportTypeSelection()
+        setupEquipmentUsagesTable()
+    }
 
-        // fill sport type choice box
+    private fun setupSportTypeSelection() {
+        // add all sport types for selection
         cbSportType.converter = NameableStringConverter()
         document.sportTypeList.forEach { cbSportType.items.add(it) }
-        cbSportType.value = document.sportTypeList.first()
+
+        // update the usages table when sport type selection changes
+        cbSportType.addEventHandler(ActionEvent.ACTION) { updateUsageTable() }
+        cbSportType.selectionModel.select(0)
+    }
+
+    private fun setupEquipmentUsagesTable() {
+        // setup custom factories for getting the cell values
+        tcName.cellValueFactory = Callback { SimpleObjectProperty(it.value.equipment.getName()) }
+        tcDistance.cellValueFactory = PropertyValueFactory("distance")
+        tcDuration.cellValueFactory = PropertyValueFactory("duration")
+        // convert LocalDate to LocalDateTime objects, so the  LocalDateCellFactory can be reused
+        tcFirstUsage.cellValueFactory = Callback { SimpleObjectProperty(getDateTimeForDate(it.value.firstUsage)) }
+        tcLastUsage.cellValueFactory = Callback { SimpleObjectProperty(getDateTimeForDate(it.value.lastUsage)) }
+
+        // setup custom factories for displaying the cell values
+        tcDistance.cellFactory = FormattedNumberCellFactory {
+            context.formatUtils.distanceToString(it.toDouble(), 1)
+        }
+        tcDuration.cellFactory = FormattedNumberCellFactory {
+            TimeUtils.seconds2TimeString(it.toInt())
+        }
+        tcFirstUsage.cellFactory = LocalDateCellFactory<EquipmentUsage>()
+        tcLastUsage.cellFactory = LocalDateCellFactory<EquipmentUsage>()
+
+        // sort rows by the equipment name column initially
+        tvEquipmentUsages.sortOrder.add(tcName)
+    }
+
+    /**
+     * Updates the equipment usage table for the selected sport type.
+     */
+    private fun updateUsageTable() {
+        val selectedSportType = cbSportType.value
+        val equipmentUsage = this.equipmentUsages.sportTypeMap[selectedSportType]
+                ?: error("Not found for SportType with ID ${selectedSportType.id}!")
+
+        tvEquipmentUsages.items = FXCollections.observableArrayList(equipmentUsage.equipmentMap.values)
+    }
+
+    private fun getDateTimeForDate(date: LocalDate?): LocalDateTime? {
+        return if (date == null) return null
+        else LocalDateTime.of(date, LocalTime.of(0, 0))
     }
 }
