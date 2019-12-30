@@ -2,7 +2,7 @@ SportsTracker-TODO
 ==================
 
 Equipment Usage:
-- see TODOs
+- manual testing of computed statistics
 - german translation (also in menubar, check shortcut)
 - Exercise Dialog: add Warning message when user stores an exercise without
   an selected equipment (if there is one for the current sport type)
