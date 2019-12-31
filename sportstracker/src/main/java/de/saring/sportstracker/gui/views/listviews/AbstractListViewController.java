@@ -145,27 +145,27 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
             final TableRow<T> tableRow = new TableRow<>();
 
             // update table row color when the item value, the selection or the focus has been changed
-                tableRow.itemProperty().addListener((observable, oldValue, newValue) -> updateTableRowColor(tableRow));
-                tableRow.selectedProperty().addListener( //
-                        (observable, oldValue, newValue) -> updateTableRowColor(tableRow));
-                getTableView().focusedProperty().addListener( //
-                        (observable, oldValue, newValue) -> updateTableRowColor(tableRow));
+            tableRow.itemProperty().addListener((observable, oldValue, newValue) -> updateTableRowColor(tableRow));
+            tableRow.selectedProperty().addListener( //
+                    (observable, oldValue, newValue) -> updateTableRowColor(tableRow));
+            getTableView().focusedProperty().addListener( //
+                    (observable, oldValue, newValue) -> updateTableRowColor(tableRow));
 
-                // bind context menu to row, but only when the row is not empty
-                tableRow.contextMenuProperty().bind( //
-                        Bindings.when(tableRow.emptyProperty()) //
-                                .then((ContextMenu) null) //
-                                .otherwise(contextMenu));
+            // bind context menu to row, but only when the row is not empty
+            tableRow.contextMenuProperty().bind( //
+                    Bindings.when(tableRow.emptyProperty()) //
+                            .then((ContextMenu) null) //
+                            .otherwise(contextMenu));
 
-                // add listener for double clicks for editing the selected entry (ignore in empty rows)
-                tableRow.setOnMouseClicked(event -> {
-                    if (event.getClickCount() > 1 && getSelectedEntryCount() == 1 && !tableRow.isEmpty()) {
-                        getEventHandler().onEditEntry(null);
-                    }
-                });
-
-                return tableRow;
+            // add listener for double clicks for editing the selected entry (ignore in empty rows)
+            tableRow.setOnMouseClicked(event -> {
+                if (event.getClickCount() > 1 && getSelectedEntryCount() == 1 && !tableRow.isEmpty()) {
+                    getEventHandler().onEditEntry(null);
+                }
             });
+
+            return tableRow;
+        });
     }
 
     /**

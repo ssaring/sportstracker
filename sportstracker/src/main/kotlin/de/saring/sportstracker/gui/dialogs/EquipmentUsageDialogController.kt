@@ -15,6 +15,7 @@ import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.ChoiceBox
 import javafx.scene.control.TableColumn
+import javafx.scene.control.TableRow
 import javafx.scene.control.TableView
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.stage.Window
@@ -102,8 +103,39 @@ class EquipmentUsageDialogController(
         tcFirstUsage.cellFactory = LocalDateCellFactory<EquipmentUsage>()
         tcLastUsage.cellFactory = LocalDateCellFactory<EquipmentUsage>()
 
+        setupTableRowFactory()
+
         // sort rows by the equipment name column initially
         tvEquipmentUsages.sortOrder.add(tcName)
+    }
+
+    /**
+     * Initializes the table rows coloring: equipment which is not in use anymore has to be shown in a gray color.
+     */
+    private fun setupTableRowFactory() {
+        tvEquipmentUsages.rowFactory = Callback {
+            val tableRow = TableRow<EquipmentUsage?>()
+
+            // update table row color whenever the item value, the selection or the focus has been changed
+            tableRow.itemProperty().addListener { _ -> updateTableRowColor(tableRow) }
+            tableRow.selectedProperty().addListener { _ -> updateTableRowColor(tableRow) }
+            tvEquipmentUsages.focusedProperty().addListener { _ -> updateTableRowColor(tableRow) }
+            tableRow
+        }
+    }
+
+    private fun updateTableRowColor(tableRow: TableRow<EquipmentUsage?>) {
+        // display rows for equipment not in use in gray color, otherwise in default color
+        // => use white when the row is selected and the table is focused (default)
+        // => tableRow.setTextFill() does not work here, color must be set by a CSS style
+        tableRow.item?.let {equipmentUsage ->
+
+            val useDefaultColor = tableRow.isSelected && tvEquipmentUsages.isFocused
+            val color = if (useDefaultColor) ROW_COLOR_SELECTED_FOCUSED else {
+                if (equipmentUsage.equipment.isNotInUse) ROW_COLOR_NOT_IN_USE else ROW_COLOR_DEFAULT
+            }
+            tableRow.style = "-fx-text-background-color: $color;"
+        }
     }
 
     /**
@@ -121,5 +153,11 @@ class EquipmentUsageDialogController(
     private fun getDateTimeForDate(date: LocalDate?): LocalDateTime? {
         return if (date == null) return null
         else LocalDateTime.of(date, LocalTime.of(0, 0))
+    }
+
+    companion object {
+        const val ROW_COLOR_SELECTED_FOCUSED = "#ffffff"
+        const val ROW_COLOR_DEFAULT = "#333333"
+        const val ROW_COLOR_NOT_IN_USE = "#909090"
     }
 }
