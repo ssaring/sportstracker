@@ -47,6 +47,9 @@ History of resource changes for each release
 
 SportsTracker 7.7.1:
 
+- st.view.equipment_usage.Action.text=Equipment (new)
+- st.view.equipment_usage.Action.shortDescription (new)
+
 - st.dlg.equipment_usage.title (new)
 - st.dlg.equipment_usage.sport_type.text (new)
 - st.dlg.equipment_usage.columns.name (new)
