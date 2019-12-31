@@ -2,6 +2,12 @@ Changelog
 ---------
 
 v7.7.1:
+ SportsTracker changes:
+ - Equipment Usage: added a new dialog which displays the usages of each
+   equipment for a selected sport type
+   - the usage contains the total distance, duration and dates of first and
+     last usage
+   - Dialog can be started from the Tools menu
  ExerciseViewer changes:
  - updated Garmin FIT SDK library to version 21.20.00, provides bugfixes
    and support for newer Garmin devices
