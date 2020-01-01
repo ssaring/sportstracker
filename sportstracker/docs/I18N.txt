@@ -39,7 +39,7 @@ resource in one view.
 
 
 Stefan Saring
-2017/10/03
+2020/01/01
 
 
 History of resource changes for each release
@@ -58,6 +58,8 @@ SportsTracker 7.7.1:
 - st.dlg.equipment_usage.columns.first_usage (new)
 - st.dlg.equipment_usage.columns.last_usage (new)
 - st.dlg.equipment_usage.empty (new)
+
+- st.dlg.exercise.info.no_equipment (new)
 
 SportsTracker 7.6.1:
 

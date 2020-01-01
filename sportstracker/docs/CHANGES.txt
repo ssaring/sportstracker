@@ -8,6 +8,9 @@ v7.7.1:
    - the usage contains the total distance, duration and dates of first and
      last usage
    - Dialog can be started from the Tools menu
+ - Exercise Dialog: an info message is shown when the user wants to store an
+   exercise without a selected equipment (is often forgotten)
+   - not shown when there is no equipment list for the selected sport type
  ExerciseViewer changes:
  - updated Garmin FIT SDK library to version 21.20.00, provides bugfixes
    and support for newer Garmin devices
