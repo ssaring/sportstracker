@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 
 import de.saring.util.gui.javafx.FxWorkarounds;
 import de.saring.util.unitcalc.UnitSystem;
+import javafx.scene.control.*;
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 
@@ -36,16 +38,6 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
@@ -239,13 +231,30 @@ public class ExerciseDialogController extends AbstractDialogController {
     protected boolean validateAndStore() {
         final Exercise newExercise = exerciseViewModel.getExercise();
 
-        // if selected equipment is "none" -> remove this dummy selection
-        if (equipmentNone.equals(newExercise.getEquipment())) {
-            newExercise.setEquipment(null);
+        if (!checkForNoEquipmentSelection(newExercise)) {
+            return false;
         }
 
         // store the new Exercise, no further validation needed
         document.getExerciseList().set(newExercise);
+        return true;
+    }
+
+    private boolean checkForNoEquipmentSelection(Exercise exercise) {
+        if (equipmentNone.equals(exercise.getEquipment())) {
+
+            // when there are equipments for the selected sport type => ask user whether he wants to store without
+            if (exercise.getSportType().getEquipmentList().size() > 0) {
+                final Optional<ButtonType> resultNoEquipment = context.showConfirmationDialog(getWindow(cbEquipment),
+                        "common.info", "st.dlg.exercise.info.no_equipment");
+                if (!resultNoEquipment.isPresent() || resultNoEquipment.get() != ButtonType.OK) {
+                    return false;
+                }
+            }
+
+            // remove the "none" dummy selection when the user wants to store without equipment
+            exercise.setEquipment(null);
+        }
         return true;
     }
 

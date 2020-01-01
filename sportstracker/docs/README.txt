@@ -243,6 +243,11 @@ distance per sport subtype or equipment for a selected sport type.
 And finally it can also display the history of your body weight in the 
 selected time range.
 
+The Equipment Usage dialog can be used for showing usage statistics of each
+equipment for a selected sport type. The usage contains the total distance,
+duration and dates of first and last usage. So it's very easy to identify
+worn and outdated equipment or just to get interesting usage details.
+
 Whenever SportsTracker displays multiple exercises, which are using sport types
 with different speed modes, then the preferred speed mode will be used. This
 can be defined in the Preferences Dialog.

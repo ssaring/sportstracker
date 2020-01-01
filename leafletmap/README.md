@@ -91,7 +91,7 @@ LeafletMap 1.0.1:
 
 #### License
 
-(C) 2019 Stefan Saring
+(C) 2020 Stefan Saring
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

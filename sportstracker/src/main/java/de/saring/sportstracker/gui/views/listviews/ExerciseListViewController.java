@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import de.saring.sportstracker.core.STOptions;
-import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Exercise.IntensityType;
 import de.saring.sportstracker.data.SportSubType;
@@ -140,10 +139,6 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
         tcAscent.setCellValueFactory(new PropertyValueFactory<>("ascent"));
         tcDescent.setCellValueFactory(new PropertyValueFactory<>("descent"));
         tcEnergy.setCellValueFactory(new PropertyValueFactory<>("calories"));
-        tcEquipment.setCellValueFactory(cellData -> {
-            final Equipment equipment = cellData.getValue().getEquipment();
-            return new SimpleObjectProperty<>(equipment == null ? null : equipment.getName());
-        });
         tcEquipment.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
                 cellData.getValue().getEquipment() == null ? null : cellData.getValue().getEquipment().getName()));
         tcComment.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //

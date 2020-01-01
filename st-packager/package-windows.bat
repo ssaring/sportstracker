@@ -35,7 +35,7 @@ REM use create-image or create-installer depending on the needed package type
     --name SportsTracker ^
     --version %ST_VERSION% ^
     --vendor Saring.de ^
-    --copyright "(C) 2019 Stefan Saring" ^
+    --copyright "(C) 2020 Stefan Saring" ^
     --description "Application for tracking your sporting activities." ^
     --category "Sports;Utility" ^
     --icon ./icons/windows/SportsTracker.ico ^

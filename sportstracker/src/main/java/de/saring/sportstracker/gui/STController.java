@@ -107,6 +107,11 @@ public interface STController extends EntryViewEventHandler {
     void onOverviewDiagram(ActionEvent event);
 
     /**
+     * Event handler for action "Equipment Usage".
+     */
+    void onEquipmentUsage(ActionEvent event);
+
+    /**
      * Event handler for action "Project Website".
      */
     void onWebsite(ActionEvent event);
