@@ -54,7 +54,7 @@ public final class Exercise extends Entry implements Cloneable {
     private int descent;
 
     /**
-     * Amount of calories consumed (optional).
+     * Amount of kCalories consumed (optional).
      */
     private int calories;
 
