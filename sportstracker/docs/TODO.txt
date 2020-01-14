@@ -1,7 +1,7 @@
 SportsTracker-TODO
 ==================
 
-macOS Catalina problem:
+macOS Catalina text rendering problem:
 - when using a non-hidpi display (e.g. a 24" 1920x1200) the text rendering looks broken
   - the antialiased text in labels, menus and text fields looks like vertical pixel
     lines are missing
@@ -10,8 +10,9 @@ macOS Catalina problem:
   - AdaptOpenJDK 11.0.5, OpenJDK 14 EA Build 28 (2019/12/18), OpenJDK 11.0.4 bundled with IntelliJ IDEA
   - openjfx 11.0.2 and OpenJFX 14-ea+6
   -> same problem in all combinations
-- there are no similar bug reports in the OpenJDK JavaFX bug system
-- submitted a bug report to OpenJDK / JavaFX (2019/12/28 - https://bugreport.java.com/bugreport/)
+- bug has been reported (and accepted) in the OpenJDK JavaFX bug system:
+  - https://bugs.openjdk.java.net/browse/JDK-8236689
+  - bugfix is targeted for OpenJFX 15
 
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)
