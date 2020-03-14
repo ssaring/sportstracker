@@ -115,7 +115,7 @@ If you want to download exercise files from your heartrate monitor you might
 need one of the download tools listed above.
 
 The application was tested on GNU/Linux (e.g. Ubuntu 18.04), Windows (e.g. 10)
-and macOS (10.13 and 10.14), although it should work on all systems
+and macOS (10.13 - 10.15), although it should work on all systems
 with the required Java Runtime Environment.
 
 
@@ -410,12 +410,12 @@ All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
 The SportsTracker project uses the following libraries:
 
-  - OpenJFX 11.0.2 (https://openjfx.io/)
+  - OpenJFX 14 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
   - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
       Includes: javax.inject-1.jar
       License: Apache License v2.0
-  - Kotlin 1.3.61 (http://kotlinlang.org/)
+  - Kotlin 1.3.70 (http://kotlinlang.org/)
       License: Apache License v2.0
   - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
@@ -521,4 +521,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2019/12/26
+2020/03/14

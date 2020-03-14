@@ -1,6 +1,11 @@
 SportsTracker-TODO
 ==================
 
+JavaFX 14 update
+- fix CSS warning when opening the Exercise dialog
+Kotlin update
+- fix Test compilation warnings
+
 macOS Catalina text rendering problem:
 - when using a non-hidpi display (e.g. a 24" 1920x1200) the text rendering looks broken
   - the antialiased text in labels, menus and text fields looks like vertical pixel
