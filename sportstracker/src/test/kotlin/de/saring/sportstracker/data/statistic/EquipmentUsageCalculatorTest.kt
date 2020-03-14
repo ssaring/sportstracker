@@ -69,17 +69,17 @@ class EquipmentUsageCalculatorTest {
         // check cycling usage
         val euCycling = usages.sportTypeMap[stCycling]
         assertEquals(2, euCycling!!.equipmentMap.size)
-        val euRoadBike = euCycling!!.equipmentMap[eqRoadBike]
+        val euRoadBike = euCycling.equipmentMap[eqRoadBike]
         assertUsage(euRoadBike!!, eqRoadBike, 0.0, 0, null, null)
-        val euMTB = euCycling!!.equipmentMap[eqMTB]
+        val euMTB = euCycling.equipmentMap[eqMTB]
         assertUsage(euMTB!!, eqMTB,0.0, 0, null, null)
 
         // check running usage
         val euRunning = usages.sportTypeMap[stRunning]
         assertEquals(2, euRunning!!.equipmentMap.size)
-        val euRoadShoes = euRunning!!.equipmentMap[eqRoadShoes]
+        val euRoadShoes = euRunning.equipmentMap[eqRoadShoes]
         assertUsage(euRoadShoes!!, eqRoadShoes, 0.0, 0, null, null)
-        val euTrailShoes = euRunning!!.equipmentMap[eqTrailShoes]
+        val euTrailShoes = euRunning.equipmentMap[eqTrailShoes]
         assertUsage(euTrailShoes!!, eqTrailShoes,0.0, 0, null, null)
 
         // check swimming usage
@@ -153,11 +153,11 @@ class EquipmentUsageCalculatorTest {
         // check cycling usage
         val euCycling = usages.sportTypeMap[stCycling]
         assertEquals(2, euCycling!!.equipmentMap.size)
-        val euRoadBike = euCycling!!.equipmentMap[eqRoadBike]
+        val euRoadBike = euCycling.equipmentMap[eqRoadBike]
         assertUsage(euRoadBike!!, eqRoadBike, 65.0, (2.5 * 3600).toLong(),
                 LocalDate.of(2019, 3, 20),
                 LocalDate.of(2019, 5, 15))
-        val euMTB = euCycling!!.equipmentMap[eqMTB]
+        val euMTB = euCycling.equipmentMap[eqMTB]
         assertUsage(euMTB!!, eqMTB, 44.0, (2 * 3600).toLong(),
                 LocalDate.of(2019, 7, 18),
                 LocalDate.of(2019, 7, 18))
@@ -165,9 +165,9 @@ class EquipmentUsageCalculatorTest {
         // check running usage
         val euRunning = usages.sportTypeMap[stRunning]
         assertEquals(2, euRunning!!.equipmentMap.size)
-        val euRoadShoes = euRunning!!.equipmentMap[eqRoadShoes]
+        val euRoadShoes = euRunning.equipmentMap[eqRoadShoes]
         assertUsage(euRoadShoes!!, eqRoadShoes, 0.0, 0, null, null)
-        val euTrailShoes = euRunning!!.equipmentMap[eqTrailShoes]
+        val euTrailShoes = euRunning.equipmentMap[eqTrailShoes]
         assertUsage(euTrailShoes!!, eqTrailShoes, 29.0, (2.7 * 3600).toLong(),
                 LocalDate.of(2019, 6, 20),
                 LocalDate.of(2019, 7, 15))
