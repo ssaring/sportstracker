@@ -18,7 +18,7 @@ cp -R $ST_PROJECT_DIR/target/lib $BUILD_DIR
 cp -R $ST_PROJECT_DIR/docs $BUILD_DIR
 
 # use create-image or create-installer depending on the needed package type
-$JPACKAGER_DIR/jpackager create-installer \
+$JPACKAGER_DIR/jpackager \
     --verbose \
     --echo-mode \
     --input $BUILD_DIR \
@@ -27,11 +27,11 @@ $JPACKAGER_DIR/jpackager create-installer \
     --output $PACKAGE_DIR \
     --identifier de.saring.sportstracker \
     --name SportsTracker \
-    --version $ST_VERSION \
-    --vendor Saring.de \
+    --app-version ${ST_VERSION%-*} \
+    --vendor "Saring.de" \
     --copyright "(C) 2020 Stefan Saring" \
     --description "Application for tracking your sporting activities." \
-    --category "Sports;Utility" \
+    --linux-app-category "Sports;Utility" \
     --icon ./icons/linux/SportsTracker.png \
     --license-file docs/LICENSE.txt \
     --module-path $JAVA_HOME/jmods \

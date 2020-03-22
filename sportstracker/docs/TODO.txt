@@ -1,6 +1,32 @@
 SportsTracker-TODO
 ==================
 
+SportsTracker packaging:
+- JDK 11 does not provide the javapackager tool aynmore, so packaging has been
+  rewritten by using the upcoming jpackager tool (JEP 343)
+- it uses a jpackager-backport for JDK 11, provided by Gluon
+=> update the packaging scripts when jpackager is contained in the JDK
+=> JEP 343 will not be available before JDK 14, so we need to stay with JDK 11
+- Alternative: Gluon Client Plugin (bundles GrailVM, OpenJDK an OpenJFX)
+  - currently in beta and for macOS only
+  - https://docs.gluonhq.com/client/
+
+JDK 14 jpackage:
+- Status:
+  - packages and starts on macOS
+- TODOs:
+  - macOS:
+    - maps are not shown in ExerciseViewer -> is a package missing?
+      - the created .app is also 15 MB smaller than previous packages
+      - map view works when removing the options --module-path and --module-path
+      - Exception when starting map:
+        Exception in thread "JavaFX Application Thread" java.lang.NoClassDefFoundError: java/net/http/HttpResponse$BodySubscriber
+  - remove jdk-packager-* backport directories
+  - implement and test JDK14-jpackage solution for Windows and Linux
+    - always remove the optional -SNAPSHOT from the version
+    - add missing module for map web view
+  - update packaging documentation and Changelog
+
 OpenJFX 14 update:
 - a lot of CSS warning when opening the Exercise Dialog (looks and works still properly)
   => seems to be an issue with TabPane CSS definition in OpenJFX, retry with next update
@@ -52,16 +78,6 @@ Java 9/10/11/12 migration:
   - the new switch expression feature is still in preview mode
   - there is no working packaging solution for JDK 12, JEP 343/ jpackage will
     not be available before JDK 14
-
-SportsTracker packaging:
-- JDK 11 does not provide the javapackager tool aynmore, so packaging has been
-  rewritten by using the upcoming jpackager tool (JEP 343)
-- it uses a jpackager-backport for JDK 11, provided by Gluon
-=> update the packaging scripts when jpackager is contained in the JDK
-=> JEP 343 will not be available before JDK 14, so we need to stay with JDK 11
-- Alternative: Gluon Client Plugin (bundles GrailVM, OpenJDK an OpenJFX)
-  - currently in beta and for macOS only
-  - https://docs.gluonhq.com/client/
 
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore

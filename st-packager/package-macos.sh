@@ -1,11 +1,10 @@
 #!/bin/sh
 
 ST_PROJECT_DIR=../sportstracker
-JPACKAGER_DIR=./jdk.packager-osx
 BUILD_DIR=./build
 PACKAGE_DIR=./package
 
-ST_VERSION=7.7.0
+ST_VERSION=7.7.1-SNAPSHOT
 
 # cleanup
 rm -fr $BUILD_DIR
@@ -17,26 +16,22 @@ cp $ST_PROJECT_DIR/target/sportstracker-$ST_VERSION.jar $BUILD_DIR
 cp -R $ST_PROJECT_DIR/target/lib $BUILD_DIR
 cp -R $ST_PROJECT_DIR/docs $BUILD_DIR
 
-# use create-image or create-installer depending on the needed package type
-$JPACKAGER_DIR/jpackager create-image \
+# use type app-image, dmg or pkg depending on the needed package type
+$JAVA_HOME/bin/jpackage \
     --verbose \
-    --echo-mode \
+    --type dmg \
     --input $BUILD_DIR \
-    --main-jar ./sportstracker-$ST_VERSION.jar \
-    --class de.saring.sportstracker.STMain \
-    --output $PACKAGE_DIR \
-    --identifier de.saring.sportstracker \
+    --main-jar sportstracker-$ST_VERSION.jar \
+    --dest $PACKAGE_DIR \
     --name SportsTracker \
-    --version $ST_VERSION \
-    --vendor Saring.de \
+    --app-version ${ST_VERSION%-*} \
+    --vendor "Saring.de" \
     --copyright "(C) 2020 Stefan Saring" \
     --description "Application for tracking your sporting activities." \
-    --category "Sports;Utility" \
     --icon ./icons/macosx/SportsTracker.icns \
-    --license-file docs/LICENSE.txt \
+    --license-file $BUILD_DIR/docs/LICENSE.txt \
     --module-path $JAVA_HOME/jmods \
-    --add-modules java.base,java.desktop,java.logging,java.scripting,java.sql,java.xml,jdk.localedata,jdk.jsobject,jdk.unsupported \
-    --strip-native-commands
+    --add-modules java.base,java.desktop,java.logging,java.scripting,java.sql,java.xml,jdk.localedata,jdk.jsobject,jdk.unsupported
 
 # delete temporary build directory
 rm -fr $BUILD_DIR
