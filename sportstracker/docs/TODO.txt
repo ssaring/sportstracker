@@ -13,14 +13,14 @@ SportsTracker packaging:
 
 JDK 14 jpackage:
 - Status:
-  - packages and starts on macOS
+  - packages and works on macOS
 - TODOs:
   - macOS:
-    - maps are not shown in ExerciseViewer -> is a package missing?
-      - the created .app is also 15 MB smaller than previous packages
-      - map view works when removing the options --module-path and --module-path
-      - Exception when starting map:
-        Exception in thread "JavaFX Application Thread" java.lang.NoClassDefFoundError: java/net/http/HttpResponse$BodySubscriber
+   - exception while checking for updates (occurs in the packaged application only)
+    - de.saring.sportstracker.gui.update.STUpdateChecker getLatestVersion$sportstracker Failed to download latest SportsTracker version number! Error: javax.net.ssl.SSLHandshakeException: Received fatal alert: handshake_failure
+    - is a package missing?
+      - the created .app is also 11 MB smaller than previous packages
+      - does it work when removing the options --module-path and --add-modules ?
   - remove jdk-packager-* backport directories
   - implement and test JDK14-jpackage solution for Windows and Linux
     - always remove the optional -SNAPSHOT from the version
