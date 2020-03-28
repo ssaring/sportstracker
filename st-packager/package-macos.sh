@@ -31,7 +31,7 @@ $JAVA_HOME/bin/jpackage \
     --icon ./icons/macosx/SportsTracker.icns \
     --license-file $BUILD_DIR/docs/LICENSE.txt \
     --module-path $JAVA_HOME/jmods \
-    --add-modules java.base,java.desktop,java.logging,java.net.http,java.scripting,java.sql,java.xml,jdk.localedata,jdk.jsobject,jdk.unsupported
+    --add-modules java.base,java.desktop,java.logging,java.net.http,java.scripting,java.sql,java.xml,jdk.crypto.ec,jdk.localedata,jdk.jsobject,jdk.unsupported
 
 # delete temporary build directory
 rm -fr $BUILD_DIR

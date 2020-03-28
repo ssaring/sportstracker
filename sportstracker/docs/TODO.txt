@@ -1,30 +1,16 @@
 SportsTracker-TODO
 ==================
 
-SportsTracker packaging:
-- JDK 11 does not provide the javapackager tool aynmore, so packaging has been
-  rewritten by using the upcoming jpackager tool (JEP 343)
-- it uses a jpackager-backport for JDK 11, provided by Gluon
-=> update the packaging scripts when jpackager is contained in the JDK
-=> JEP 343 will not be available before JDK 14, so we need to stay with JDK 11
-- Alternative: Gluon Client Plugin (bundles GrailVM, OpenJDK an OpenJFX)
-  - currently in beta and for macOS only
-  - https://docs.gluonhq.com/client/
-
 JDK 14 jpackage:
 - Status:
-  - packages and works on macOS
+  - packages and works without problems on macOS 10.15
+    - ST-Packaging.txt has been updated for macOS
+    - app-package is also 11 MB smaller than the packaged before
 - TODOs:
-  - macOS:
-   - exception while checking for updates (occurs in the packaged application only)
-    - de.saring.sportstracker.gui.update.STUpdateChecker getLatestVersion$sportstracker Failed to download latest SportsTracker version number! Error: javax.net.ssl.SSLHandshakeException: Received fatal alert: handshake_failure
-    - is a package missing?
-      - the created .app is also 11 MB smaller than previous packages
-      - does it work when removing the options --module-path and --add-modules ?
   - remove jdk-packager-* backport directories
   - implement and test JDK14-jpackage solution for Windows and Linux
     - always remove the optional -SNAPSHOT from the version
-    - add missing module for map web view
+    - add missing modules for map web view and crypto
   - update packaging documentation and Changelog
 
 OpenJFX 14 update:
