@@ -4,37 +4,28 @@ SportsTracker packaging (macOS, Linux, Windows)
 Info
 ----
 
-* the 'javapackager' command has been removed from JDK 11
-  * a newer tool called 'jpackager' is planned for JDK 13 (JEP 343)
-  * an ANT plugin will not be available anymore, it's just the command
-  * until then a workaround solution is needed
-* Gluon has backported the jpackager to Java 11, a prerelease is available:
-  https://mail.openjdk.java.net/pipermail/openjfx-dev/2018-September/022500.html
-  * backport is located in directory 'jdk.packager-osx'
-
-* this directory contains the scripts for automatic SportsTracker packaging
+* the tool 'jpackage' is used for creating native application packages for
+  macOS, Windows and Linux
+  * jpackage has been introduced with JDK 14
+    (JEP 343, http://openjdk.java.net/jeps/343)
+  * so at least JDK 14 is needed for packaging
+  * jpackage is the replacement for the JavaFX packager which has been removed
+    from the JDK, there is also no ANT plugin available anymore
 * the created packages contain the required Java Runtime Environment (JRE)
-* has been tested with AdoptOpenJDK 11.0.2 on:
-  * macOS 10.14, Ubuntu Linux 18.04 and Windows 10
+* has been tested with AdoptOpenJDK 14 on:
+  * macOS 10.15.4, Ubuntu Linux 18.04 and Windows 10
   * the packaged app and the installers are running perfectly without problems
 
+* this directory contains the scripts for automatic SportsTracker packaging
+* each os-specific package scripts creates an installer package
+  (e.g. SportsTracker-7.x.x.dmg on macOS)
 * only the following java modules (jmod) are needed:
-  java.base,java.desktop,java.logging,java.scripting,java.sql,java.xml,
-  jdk.localedata,jdk.jsobject,jdk.unsupported
-* the package scripts can create an image package (e.g. SportsTracker.app on
-  macOS) or an installer package (e.g. SportsTracker-7.x.x.pkg on macOS)
-  * for an image use the jpackager command 'create-image'
-  * for an installer use the jpackager command 'create-installer TYPE' 
-    (TYPE can be 'dmg' or 'pkg' on macOS)
-* the created packages are much smaller, probably caused by jmod usage
+  java.base,java.desktop,java.logging,java.net.http,java.scripting,java.sql,
+  java.xml,jdk.crypto.ec,jdk.localedata,jdk.jsobject,jdk.unsupported
+* the created app packages are much smaller, also caused by jmod usage
   * Example for macOS:
     * SportsTracker.app 7.5.1 built with JDK 10: 220 MB
-    * SportsTracker.app 7.5.1 built with JDK 11: 150 MB
-
-* further informations for using jpackager:
-  * http://openjdk.java.net/jeps/343
-  * https://medium.com/@adam_carroll/java-packager-with-jdk11-31b3d620f4a8
-  * https://github.com/skymatic/javafx11-test
+    * SportsTracker.app 7.7.1 built with JDK 14: 140 MB
 
 
 HowTo package
@@ -48,7 +39,7 @@ Then on macOS:
 
 * check the app settings and path variables in 'package-macos.sh'
 * run 'package-macos.sh'
-* the created macOS SportsTracker.app package is located in directory 'package'
+* the created SportsTracker-x.y.z.dmg package is located in directory 'package'
 
 Then on Linux (Ubuntu):
 
@@ -58,9 +49,8 @@ Then on Linux (Ubuntu):
 
 Then on Windows:
 
-* make sure the Microsoft DLL files were installed, see Windows Packaging Notes
 * make sure InnoSetup is installed, has been tested with 5.5.9u
-* check the app settings and path variables in 'package-windows.bat'
+* check the app settings and variables in 'package-windows.bat'
 * run 'package-windows.bat'
 * the created SportsTracker app package is located in directory 'package'
 * open the InnoSetup project by opening the file 'SportsTracker.iss'
@@ -72,8 +62,7 @@ Then on Windows:
 macOS Packaging Notes
 ---------------------
 
-* created DMG installer images on macOS don't work, they just contain an PKG
-  (seems to be a jpackager bug)
+* nothing special here
 
 
 Linux Packaging Notes
@@ -90,16 +79,8 @@ Linux Packaging Notes
 Windows Packaging Notes
 -----------------------
 
-* On Windows 10 (other versions unknown) the jpackager tool is missing the
-  files MSVCP140.dll and VCRUNTIME140.dll. These need to be downloaded and
-  installed from Microsoft before packaging:
-  https://www.microsoft.com/en-us/download/confirmation.aspx?id=48145
-* After installation these two files are located in C:\Windows\System32.
-  They are also needed for SportsTracker app execution, that's why they are
-  being copied into the created package.
-  
 * The InnoSetup installer creation is not executed by the jpackager, it seems
-  to support the WiX installer tool only. Besides that, the creation can't be
-  executed directly, because the missing Windows DLL files needs to be added 
-  to the package before.
+  to support the WiX installer tool only. 
+  The current WiX version requires an outdated .NET SDK, that's why the use of
+  InnoSetup is preferred (lightweight and runs without problems).
 * Therefore the installer creation has to be done manually after packaging.
