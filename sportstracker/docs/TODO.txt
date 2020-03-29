@@ -1,15 +1,6 @@
 SportsTracker-TODO
 ==================
 
-JDK 14 jpackage:
-- Status:
-  - packages and works without problems on macOS 10.15, Windows 10 and Ubuntu 18.04
-    - ST-Packaging.txt has been updated for macOS, Windows and Linux
-    - app-package is also 11 MB smaller than the packaged before
-- TODOs:
-  - remove jdk-packager-* backport directories
-  - update packaging documentation and Changelog
-
 OpenJFX 14 update:
 - a lot of CSS warning when opening the Exercise Dialog (looks and works still properly)
   => seems to be an issue with TabPane CSS definition in OpenJFX, retry with next update
@@ -49,18 +40,15 @@ Reminder for Notes:
       - remove the reminder of each note
       - close the dialog
 
-Java 9/10/11/12 migration:
-- works fine with JDK 10 (no build or test errors and no execution problems)
+JDK 9-14 migration:
+- works fine with up to JDK 14 (no build or test errors and no execution problems)
 - Use of Java Module System / Jigsaw?
-  - the JavaFX packager needs to support modules first
 - use of JEP 272: Platform-Specific Desktop Features for mac-specific menu items
   (see http://openjdk.java.net/jeps/272)
   - currently for Swing apps only
   - JavaFX support might be added after Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
-- migration to JDK 12 is not done
-  - the new switch expression feature is still in preview mode
-  - there is no working packaging solution for JDK 12, JEP 343/ jpackage will
-    not be available before JDK 14
+- migration to language features of JDK 12-14 is not done yet
+  (new switch expression, pattern matching, multiline strings etc.)
 
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore
