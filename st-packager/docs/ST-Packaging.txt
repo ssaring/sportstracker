@@ -25,7 +25,7 @@ Info
 * the created app packages are much smaller, also caused by jmod usage
   * Example for macOS:
     * SportsTracker.app 7.5.1 built with JDK 10: 220 MB
-    * SportsTracker.app 7.7.1 built with JDK 11: 140 MB
+    * SportsTracker.app 7.7.1 built with JDK 14: 140 MB
 
 
 HowTo package
@@ -49,9 +49,8 @@ Then on Linux (Ubuntu):
 
 Then on Windows:
 
-* make sure the Microsoft DLL files were installed, see Windows Packaging Notes
 * make sure InnoSetup is installed, has been tested with 5.5.9u
-* check the app settings and path variables in 'package-windows.bat'
+* check the app settings and variables in 'package-windows.bat'
 * run 'package-windows.bat'
 * the created SportsTracker app package is located in directory 'package'
 * open the InnoSetup project by opening the file 'SportsTracker.iss'
@@ -80,16 +79,8 @@ Linux Packaging Notes
 Windows Packaging Notes
 -----------------------
 
-* On Windows 10 (other versions unknown) the jpackager tool is missing the
-  files MSVCP140.dll and VCRUNTIME140.dll. These need to be downloaded and
-  installed from Microsoft before packaging:
-  https://www.microsoft.com/en-us/download/confirmation.aspx?id=48145
-* After installation these two files are located in C:\Windows\System32.
-  They are also needed for SportsTracker app execution, that's why they are
-  being copied into the created package.
-  
 * The InnoSetup installer creation is not executed by the jpackager, it seems
-  to support the WiX installer tool only. Besides that, the creation can't be
-  executed directly, because the missing Windows DLL files needs to be added 
-  to the package before.
+  to support the WiX installer tool only. 
+  The current WiX version requires an outdated .NET SDK, that's why the use of
+  InnoSetup is preferred (lightweight and runs without problems).
 * Therefore the installer creation has to be done manually after packaging.

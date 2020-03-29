@@ -3,12 +3,12 @@ SportsTracker-TODO
 
 JDK 14 jpackage:
 - Status:
-  - packages and works without problems on macOS 10.15
-    - ST-Packaging.txt has been updated for macOS
+  - packages and works without problems on macOS 10.15 and Windows 10
+    - ST-Packaging.txt has been updated for macOS and Windows
     - app-package is also 11 MB smaller than the packaged before
 - TODOs:
   - remove jdk-packager-* backport directories
-  - implement and test JDK14-jpackage solution for Windows and Linux
+  - implement and test JDK14-jpackage solution for Linux
     - always remove the optional -SNAPSHOT from the version
     - add missing modules for map web view and crypto
   - update packaging documentation and Changelog
