@@ -15,7 +15,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 * OpenJFX 14
     * Homepage: https://openjfx.io/
     * License: GPL v2 + Classpath Exception
-* Kotlin 1.3.70
+* Kotlin 1.4.0
 * Leaflet 1.6.0 (included)
     * Homepage: http://leafletjs.com/
     * License: BSD 2-Clause License
@@ -23,7 +23,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 * leaflet-color-markers (included, modified)
     * Homepage: https://github.com/pointhi/leaflet-color-markers
     * License: not specified
-* jackson-module-kotlin 2.10.3 (for the demo only, uses Jackson 2.10)
+* jackson-module-kotlin 2.11.2 (for the demo only)
     * Homepage: https://github.com/FasterXML/jackson-module-kotlin
     * License: not specified
 
@@ -60,7 +60,7 @@ LeafletMap 1.0.5:
 * added map layer "Satellite Esri" (contributed by Thomas Feuster, PR #211)
 * updated Leaflet to version 1.6.0, provides various fixes and performance
   improvements (contributed by Thomas Feuster, PR #219)
-* Updated to Kotlin 1.3.61
+* Updated to Kotlin 1.4.0
 
 LeafletMap 1.0.4:
 
