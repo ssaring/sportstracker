@@ -15,7 +15,7 @@ v7.7.1:
    the previous type Text has caused problems in queries (e.g. sorting)
  - updated to JavaFX / OpenJFX 14
    - provides improved macOS 10.15 support and several bufixes
- - updated Kotlin to version 1.3.70
+ - updated Kotlin to version 1.4.0
  - updated packaging of native installer creation for macOS, Windows and Linux
    - now uses jpackage introduced with JDK 14 (JEP 343)
    - jpackager-backports and workarounds are not needed anymore

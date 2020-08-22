@@ -434,7 +434,7 @@ internal class FitMessageListener : MesgListener {
 
                 exercise.sampleList
                         .map { it.speed ?: 0f }
-                        .max()
+                        .maxOrNull()
                         ?.let { exerciseSpeed.speedMax = it }
             }
         }
@@ -462,7 +462,7 @@ internal class FitMessageListener : MesgListener {
 
             exercise.sampleList
                     .map { it.heartRate ?: 0 }
-                    .max()
+                    .maxOrNull()
                     ?.let { exercise.heartRateMax = it }
         }
     }

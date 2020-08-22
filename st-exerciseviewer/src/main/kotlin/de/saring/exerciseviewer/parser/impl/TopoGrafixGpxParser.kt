@@ -268,7 +268,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
 
             val speedMax = exercise.sampleList
                     .map { it.speed!! }
-                    .max()!!
+                    .maxOrNull()!!
 
             val lastSample = exercise.sampleList[exercise.sampleList.size - 1]
             val distance = lastSample.distance!!
@@ -289,7 +289,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
 
         if (!sampleHeartrates.isEmpty()) {
             exercise.heartRateAVG = sampleHeartrates.average().roundToInt().toShort()
-            exercise.heartRateMax = sampleHeartrates.max()
+            exercise.heartRateMax = sampleHeartrates.maxOrNull()
         }
     }
 

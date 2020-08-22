@@ -1,6 +1,7 @@
 package de.saring.util.unitcalc
 
 import kotlin.math.round
+import kotlin.math.roundToInt
 
 /**
  * This class contains several static methods for converting data in different formats and units.
@@ -71,7 +72,7 @@ object ConvertUtils {
      * @return value in meters
      */
     @JvmStatic
-    fun convertFeet2Meter(feet: Int): Int = Math.round(feet * METER_2_FEET)
+    fun convertFeet2Meter(feet: Int): Int = (feet * METER_2_FEET).roundToInt()
 
     /**
      * Converts the length value from feet to meter.
@@ -89,7 +90,7 @@ object ConvertUtils {
      * @return value in feets
      */
     @JvmStatic
-    fun convertMeter2Feet(meters: Int): Int = Math.round(meters / METER_2_FEET)
+    fun convertMeter2Feet(meters: Int): Int = (meters / METER_2_FEET).roundToInt()
 
     /**
      * Converts the length value from meter to feet.
@@ -117,7 +118,7 @@ object ConvertUtils {
      */
     @JvmStatic
     fun convertFahrenheit2Celsius(fahrenheit: Short): Short =
-            round((fahrenheit - FAHRENHEIT_OFFSET) * CELSIUS_2_FAHRENHEIT).toShort()
+            round((fahrenheit - FAHRENHEIT_OFFSET) * CELSIUS_2_FAHRENHEIT).toInt().toShort()
 
     /**
      * Converts the temperature value from celsius to fahrenheit..
@@ -127,7 +128,7 @@ object ConvertUtils {
      */
     @JvmStatic
     fun convertCelsius2Fahrenheit(celsius: Short): Short =
-            (round(celsius / CELSIUS_2_FAHRENHEIT) + FAHRENHEIT_OFFSET).toShort()
+            (round(celsius / CELSIUS_2_FAHRENHEIT) + FAHRENHEIT_OFFSET).toInt().toShort()
 
     /**
      * Converts the weight value from kilogram to pounds (lbs).

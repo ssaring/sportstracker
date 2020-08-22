@@ -93,7 +93,7 @@ class SmartsyncCSVParser : AbstractExerciseParser() {
 
         exercise.heartRateMax = exercise.sampleList
                 .map { it.heartRate ?: 0}
-                .max() ?: 0
+                .maxOrNull() ?: 0
 
         // compute timestamps for all recorded exercise samples
         for (i in 0..exercise.sampleList.size - 1) {
