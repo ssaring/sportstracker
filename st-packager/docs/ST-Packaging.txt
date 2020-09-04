@@ -33,6 +33,8 @@ HowTo package
 
 First on all platforms:
 
+* make sure that the proper JDK and Maven are installed
+* make sure that environment variable JAVA_HOME is set
 * build SportsTracker via 'mvn clean package'
 
 Then on macOS:
