@@ -61,6 +61,15 @@ SportsTracker 7.7.1:
 
 - st.dlg.exercise.info.no_equipment (new)
 
+- st.dlg.statistic_results.totals.text (new)
+- st.dlg.statistic_results.minimums.text (new)
+- st.dlg.statistic_results.averages.text (new)
+- st.dlg.statistic_results.maximums.text (new)
+- st.dlg.statistic_results.total.text (removed)
+- st.dlg.statistic_results.minimum.text (removed)
+- st.dlg.statistic_results.average.text (removed)
+- st.dlg.statistic_results.maximum.text (removed)
+
 SportsTracker 7.6.1:
 
 - st.main.info.update_available (new)
