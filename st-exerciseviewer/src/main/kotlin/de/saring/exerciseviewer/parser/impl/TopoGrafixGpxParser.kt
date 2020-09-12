@@ -140,6 +140,10 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
                     if (strHeartrate == null) {
                         strHeartrate = eTrkPt.getChild("extensions", namespace)?.getChildText("bpm", namespace)
                     }
+                    // if not present, try to get heartrate in GatdetBridge format if present (Android Bridge App)
+                    if (strHeartrate == null) {
+                        strHeartrate = eTrkPt.getChild("extensions", namespace)?.getChildText("hr", namespace)
+                    }
 
                     if (strHeartrate != null) {
                         exercise.recordingMode.isHeartRate = true

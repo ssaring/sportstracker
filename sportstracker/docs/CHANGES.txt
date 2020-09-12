@@ -27,10 +27,13 @@ v7.7.1:
    and support for newer Garmin devices
  - updated Leaflet to version 1.6.0, provides various fixes and performance
    improvements (contributed by Thomas Feuster, PR #219)
-- Bugfix for reading exercise files from Garmin Fenix 6 and 5X devices
-  (Issue #220: Failed to parse exercise file on new Garmin device)
-- Garmin FIT parser: improved lookup of the device / product name
-  - added the firmware software version to the device name
+ - Bugfix for reading exercise files from Garmin Fenix 6 and 5X devices
+   (Issue #220: Failed to parse exercise file on new Garmin device)
+ - Garmin FIT parser: improved lookup of the device / product name
+   - added the firmware software version to the device name
+ - TopoGrafixGpxParser: bugfix for issue #233
+   - added support for heartrate data in GPX files from GatdetBridge
+     (Android Bridge App, https://gadgetbridge.org/ )
 
 v7.7.0:
  SportsTracker changes:
