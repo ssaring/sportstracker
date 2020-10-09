@@ -53,5 +53,5 @@ object StringUtils {
      * @return when null or empty
      */
     @JvmStatic
-    fun isNullOrEmpty(text: String?): Boolean = text == null || text.trim().isEmpty()
+    fun isNullOrEmpty(text: String?): Boolean = text == null || text.isBlank()
 }

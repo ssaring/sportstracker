@@ -80,7 +80,7 @@ object TimeUtils {
     @JvmStatic
     fun timeString2TotalSeconds(time: String?): Int {
 
-        if (time == null || time.trim().isEmpty()) {
+        if (time == null || time.isBlank()) {
             return -1
         }
 

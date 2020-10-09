@@ -42,7 +42,7 @@ object ValidationUtils {
     @JvmStatic
     fun isOptionalValueIntegerBetween(value: String?, minValue: Int, maxValue: Int): Boolean {
 
-        if (value == null || value.trim().isEmpty()) {
+        if (value == null || value.isBlank()) {
             return true
         }
         return isValueIntegerBetween(value, minValue, maxValue)
