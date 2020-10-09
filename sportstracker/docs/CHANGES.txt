@@ -13,9 +13,10 @@ v7.7.1:
    - not shown when there is no equipment list for the selected sport type
  - SQLite Export: column DATE_TIME in table EXERCISE is now of type Integer,
    the previous type Text has caused problems in queries (e.g. sorting)
- - updated to JavaFX / OpenJFX 14
+ - updated to JavaFX / OpenJFX 15
    - provides improved macOS 10.15 support and several bufixes
- - updated Kotlin to version 1.4.0
+ - updated ControlsFX to version 11.0.2
+ - updated Kotlin to version 1.4.10
  - updated packaging of native installer creation for macOS, Windows and Linux
    - now uses jpackage introduced with JDK 14 (JEP 343)
    - jpackager-backports and workarounds are not needed anymore

@@ -1,7 +1,7 @@
 SportsTracker-TODO
 ==================
 
-OpenJFX 14 update:
+OpenJFX 15 update:
 - a lot of CSS warning when opening the Exercise Dialog (looks and works still properly)
   => seems to be an issue with TabPane CSS definition in OpenJFX, retry with next update
 

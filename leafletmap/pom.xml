@@ -17,8 +17,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javafx.version>14</javafx.version>
-        <kotlin.version>1.4.0</kotlin.version>
+        <javafx.version>15</javafx.version>
+        <kotlin.version>1.4.10</kotlin.version>
     </properties>
     
     <dependencies>
