@@ -147,18 +147,19 @@ class MainPanelController(
 
         cbHeartrateRanges.addEventHandler(ActionEvent.ACTION) { _ -> updateHeartRateRangeTimes() }
 
-        cbHeartrateRanges.converter = object : StringConverter<HeartRateLimit>() {
-            override fun toString(limit: HeartRateLimit): String {
-                val unitName = if (limit.isAbsoluteRange) "bpm" else "%"
-                return "${limit.lowerHeartRate} - ${limit.upperHeartRate} $unitName"
+        val exercise = document.exercise
+        if (exercise.heartRateLimits.isNotEmpty()) {
+
+            cbHeartrateRanges.converter = object : StringConverter<HeartRateLimit>() {
+                override fun toString(limit: HeartRateLimit): String {
+                    val unitName = if (limit.isAbsoluteRange) "bpm" else "%"
+                    return "${limit.lowerHeartRate} - ${limit.upperHeartRate} $unitName"
+                }
+
+                override fun fromString(string: String): HeartRateLimit =
+                        throw UnsupportedOperationException()
             }
 
-            override fun fromString(string: String): HeartRateLimit =
-                throw UnsupportedOperationException()
-        }
-
-        val exercise = document.exercise
-        if (!exercise.heartRateLimits.isEmpty()) {
             cbHeartrateRanges.items.addAll(exercise.heartRateLimits)
             cbHeartrateRanges.selectionModel.select(0)
         } else {
