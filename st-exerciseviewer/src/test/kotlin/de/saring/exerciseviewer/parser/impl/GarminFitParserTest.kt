@@ -449,7 +449,6 @@ class GarminFitParserTest {
         assertEquals(18, exercise.sampleList[50].temperature!!.toInt())
     }
 
-
     /**
      * This method tests the parser with an exercise file with running data (incl. heartrate, altitude, cadence)
      * recorded by a Garmin Fenix 6 watch.
@@ -502,5 +501,60 @@ class GarminFitParserTest {
         assertEquals(87 * 1000, exercise.sampleList[20].timestamp!!.toInt())
         assertEquals(6.15, exercise.sampleList[20].speed!!.toDouble(), 0.01)
         assertEquals(2, exercise.sampleList[20].altitude!!.toInt())
+    }
+
+    /**
+     * This method tests the parser with an exercise file with running data (incl. heartrate, altitude, cadence)
+     * recorded by a Suunto Spartan Sport Wrist HR Baro watch. For Suunto watches is speial handling of the location
+     * data needed, they don't store the start position of a exercise (just the sample positions).
+     */
+    @Test
+    @Throws(EVException::class)
+    fun testParseExerciseSuuntoSpartanSportWristHrBaro() {
+        val exercise = parser.parseExercise("misc/testdata/garmin-fit/Suunto_Spartan_Sport_Wrist_HR_Baro.fit")
+
+        // check exercise data
+        assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
+        assertNull(exercise.deviceName) // Suunto models are missing in the GarminProduct class (FIT SDK)
+        assertTrue(exercise.recordingMode.isHeartRate)
+        assertTrue(exercise.recordingMode.isSpeed)
+        assertTrue(exercise.recordingMode.isLocation)
+        assertTrue(exercise.recordingMode.isAltitude)
+        assertFalse(exercise.recordingMode.isCadence)
+        assertTrue(exercise.recordingMode.isTemperature)
+
+        assertEquals(LocalDateTime.of(2020, 10, 23, 14, 34,58, 0), exercise.dateTime)
+        assertEquals(22404, exercise.duration!!.toInt())
+
+        assertEquals(112, exercise.heartRateAVG!!.toInt())
+        assertEquals(282, exercise.energy!!.toInt())
+
+        assertEquals(5411, exercise.speed!!.distance)
+        assertEquals(8.69, exercise.speed!!.speedAvg.toDouble(), 0.01)
+        assertEquals(35.28, exercise.speed!!.speedMax.toDouble(), 0.01)
+
+        assertEquals(99, exercise.altitude!!.ascent)
+        assertEquals(73, exercise.altitude!!.altitudeAvg.toInt())
+
+        // no lap data contained
+
+        // check some sample data (on Suunto watches some samples may not contain all data)
+        assertEquals(2235, exercise.sampleList.size)
+        assertEquals(0, exercise.sampleList[0].timestamp!!.toInt())
+        assertNull(exercise.sampleList[0].speed)
+        assertNull(exercise.sampleList[0].altitude)
+        assertNull(exercise.sampleList[0].position)
+
+        assertEquals(256 * 1000, exercise.sampleList[250].timestamp!!.toInt())
+        assertEquals(12.10, exercise.sampleList[250].speed!!.toDouble(), 0.01)
+        assertEquals(85, exercise.sampleList[250].altitude!!.toInt())
+        assertEquals(52.029409417882, exercise.sampleList[250].position!!.latitude, 0.000001)
+        assertEquals(6.0244788229465, exercise.sampleList[250].position!!.longitude, 0.000001)
+
+        assertEquals(506 * 1000, exercise.sampleList[500].timestamp!!.toInt())
+        assertEquals(15.98, exercise.sampleList[500].speed!!.toDouble(), 0.01)
+        assertEquals(69, exercise.sampleList[500].altitude!!.toInt())
+        assertEquals(52.028528228402, exercise.sampleList[500].position!!.latitude, 0.000001)
+        assertEquals(6.0391104407608, exercise.sampleList[500].position!!.longitude, 0.000001)
     }
 }

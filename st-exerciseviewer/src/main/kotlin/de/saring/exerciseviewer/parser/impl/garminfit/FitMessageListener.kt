@@ -186,6 +186,10 @@ internal class FitMessageListener : MesgListener {
             sample.position = Position(
                     ConvertUtils.convertSemicircle2Degree(mesg.positionLat!!),
                     ConvertUtils.convertSemicircle2Degree(mesg.positionLong!!))
+
+            // Suunto watches don't store the startPosition in the Session message
+            // => so enable location recording mode when location data is stored in the Record messages (samples)
+            exercise.recordingMode.isLocation = true
         }
     }
 

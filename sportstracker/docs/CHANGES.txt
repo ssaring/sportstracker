@@ -32,6 +32,8 @@ v7.7.1:
    (Issue #220: Failed to parse exercise file on new Garmin device)
  - Garmin FIT parser: improved lookup of the device / product name
    - added the firmware software version to the device name
+   - Issue #234: added support for FIT files from Suunto Spartan watches
+     (tested with model Suunto Spartan Sport Wrist HR Baro)
  - TopoGrafixGpxParser: bugfix for issue #233
    - added support for heartrate data in GPX files from GatdetBridge
      (Android Bridge App, https://gadgetbridge.org/ )

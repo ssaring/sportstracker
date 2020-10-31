@@ -51,6 +51,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - Timex Ironmen Run Trainer (tested)
   - Timex Ironman Global Trainer  (tested)
   - Suunto Ambit       (tested with Ambit2, downloaded GPX files)
+  - Suunto Spartan     (tested with Spartan Sport Wrist HR Baro, FIT files)
   - Oregon Scientific SmartSync WM100 (tested)
   - HOLUX FunTrek      (tested with FunTrek 130, GPX files)
   - Some Sony Ericsson mobiles (tested with W580i)
