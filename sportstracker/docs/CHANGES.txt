@@ -23,6 +23,8 @@ v7.7.1:
    - created packages are smaller now
  - Statistics Dialog: improved naming for Totals, Minimums, Averages, Maximums
    - singular naming leads to misunderstandings (GitHub Issue #231)
+ - SQLiteExporter: Added export of missing entity properties
+   (SportType.SpeedMode and Equipment.notInUse)
  ExerciseViewer changes:
  - updated Garmin FIT SDK library to version 21.20.00, provides bugfixes
    and support for newer Garmin devices

@@ -117,7 +117,7 @@ public class SQLiteExporter {
     private void exportSportTypes(final Connection connection) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
-                "INSERT INTO SPORT_TYPE (ID, NAME, RECORD_DISTANCE, COLOR, ICON) VALUES (?, ?, ?, ?, ?)");
+                "INSERT INTO SPORT_TYPE (ID, NAME, RECORD_DISTANCE, SPEED_MODE, COLOR, ICON) VALUES (?, ?, ?, ?, ?, ?)");
 
         for (SportType sportType : document.getSportTypeList()) {
             statement.clearParameters();
@@ -125,9 +125,10 @@ public class SQLiteExporter {
             statement.setInt(1, sportType.getId());
             statement.setString(2, sportType.getName());
             statement.setInt(3, sportType.isRecordDistance() ? 1 : 0);
-            statement.setString(4, sportType.getColor() == null ? null : ColorUtils.toRGBCode(sportType.getColor()));
+            statement.setString(4, String.valueOf(sportType.getSpeedMode()));
+            statement.setString(5, sportType.getColor() == null ? null : ColorUtils.toRGBCode(sportType.getColor()));
             if (!StringUtils.isNullOrEmpty(sportType.getIcon())) {
-                statement.setString(5, sportType.getIcon());
+                statement.setString(6, sportType.getIcon());
             }
             statement.executeUpdate();
 
@@ -154,7 +155,7 @@ public class SQLiteExporter {
     private void exportEquipments(final Connection connection, final SportType sportType) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
-                "INSERT INTO EQUIPMENT (EQUIPMENT_ID, SPORT_TYPE_ID, NAME) VALUES (?, ?, ?)");
+                "INSERT INTO EQUIPMENT (EQUIPMENT_ID, SPORT_TYPE_ID, NAME, NOT_IN_USE) VALUES (?, ?, ?, ?)");
 
         for (Equipment equipment : sportType.getEquipmentList()) {
             statement.clearParameters();
@@ -162,6 +163,7 @@ public class SQLiteExporter {
             statement.setInt(1, equipment.getId());
             statement.setInt(2, sportType.getId());
             statement.setString(3, equipment.getName());
+            statement.setInt(4, equipment.isNotInUse() ? 1 : 0);
             statement.executeUpdate();
         }
     }

@@ -100,7 +100,7 @@ public class XMLExerciseList {
         }
         exercise.setSportSubType(sportSubType);
 
-        // get and convert date (format allready checked by XSD schema)
+        // get and convert date (format already checked by XSD schema)
         String strDate = eExercise.getChildText("date");
         try {
             exercise.setDateTime(LocalDateTime.parse(strDate, XMLUtils.DATE_TIME_FORMAT));
