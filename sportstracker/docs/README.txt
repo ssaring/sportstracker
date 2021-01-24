@@ -128,13 +128,10 @@ available on the SourceForge project page. They include an embedded Java
 Runtime Environment (JRE), so the user does not need to install Java before.
 The installers will create a menu entry for easy SportsTracker startup.
 
-If you are not using an installer, you need to download the ZIP archive with
-the application binaries. Then extract this archive to a directory of your
-choice.
-On Windows systems you can start the application just by starting the file 
-'sportstracker-x.y.z.jar'.
-On Unix-like systems you need to start it by using the command 
-'java -jar sportstracker-x.y.z.jar' from the application directory.
+If you are not using an installer, you need to download the ZIP file with the
+application source code and build the binaries by using Maven. The build
+process and the application execution is documented in the chapter
+'Developer Requirements' below.
 
 The default directory for the application data is '$HOME/.sportstracker',
 e.g. '/home/foo/.sportstracker' for the Linux user foo. You can also specify
