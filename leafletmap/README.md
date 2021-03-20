@@ -12,7 +12,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 #### Dependencies and used libraries
 
 * Java SE 11 (tested with AdoptOpenJDK 11)
-* OpenJFX 15
+* OpenJFX 16
     * Homepage: https://openjfx.io/
     * License: GPL v2 + Classpath Exception
 * Kotlin 1.4.10
@@ -63,7 +63,7 @@ LeafletMap 1.0.5:
 * Updated Leaflet to version 1.6.0, provides various fixes and performance
   improvements (contributed by Thomas Feuster, PR #219)
 * Updated to Kotlin 1.4.10
-* Updated to OpenJFX 15
+* Updated to OpenJFX 16
 * Use of kotlinx.serialization instead of jackson-module-kotlin dependency for
   JSON serialization (for test application only)
   -> provides better compatibility to the latest Kotlin versions 
