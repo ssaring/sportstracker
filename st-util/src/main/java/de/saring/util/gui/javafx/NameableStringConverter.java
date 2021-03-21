@@ -13,7 +13,7 @@ public class NameableStringConverter<T extends Nameable> extends StringConverter
 
     @Override
     public String toString(final T nameable) {
-        return nameable.getName();
+        return nameable == null ? null : nameable.getName();
     }
 
     @Override
