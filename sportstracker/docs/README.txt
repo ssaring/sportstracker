@@ -408,31 +408,31 @@ All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
 The SportsTracker project uses the following libraries:
 
-  - OpenJFX 15 (https://openjfx.io/)
+  - OpenJFX 16 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
   - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
       Includes: javax.inject-1.jar
       License: Apache License v2.0
-  - Kotlin 1.4.10 (http://kotlinlang.org/)
+  - Kotlin 1.4.31 (http://kotlinlang.org/)
       License: Apache License v2.0
   - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
-  - ControlsFX 11.0.2 (http://controlsfx.org/)
+  - ControlsFX 11.1.0 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - JFreeChart 1.5.0 and JFreeChart-FX 1.0.1 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
-  - LeafletMap 1.0.0 (https://github.com/ssaring/sportstracker)
+  - LeafletMap 1.0.5 (https://github.com/ssaring/sportstracker)
       License: Apache License v2.0
   - leaflet-color-markers (https://github.com/pointhi/leaflet-color-markers)
     - Modified version, included in leafletmap
     - License: not specified
-  - commons-cli 1.2 (http://commons.apache.org/cli/)
+  - commons-cli 1.4 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - sqlite-jdbc 3.20.0 (https://github.com/xerial/sqlite-jdbc)
+  - sqlite-jdbc 3.34.0 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
-  - JUnit 5.4.0 (http://www.junit.org)
+  - JUnit 5.7.1 (http://www.junit.org)
       License: Eclipse Public License v2.0. and Apache License v2.0
-  - Mockito 2.23.0 (http://code.google.com/p/mockito/)
+  - Mockito 3.8.0 (http://code.google.com/p/mockito/)
       License: MIT License
   - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.20.00
       URL: https://www.thisisant.com/developer/

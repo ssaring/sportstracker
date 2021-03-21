@@ -13,10 +13,10 @@ v7.7.1:
    - not shown when there is no equipment list for the selected sport type
  - SQLite Export: column DATE_TIME in table EXERCISE is now of type Integer,
    the previous type Text has caused problems in queries (e.g. sorting)
- - updated to JavaFX / OpenJFX 15
-   - provides improved macOS 10.15 support and several bufixes
- - updated ControlsFX to version 11.0.2
- - updated Kotlin to version 1.4.10
+ - updated to JavaFX / OpenJFX 16
+   - provides improved macOS 10.15 / 11 support and several bufixes
+ - updated ControlsFX to version 11.1.0
+ - updated Kotlin to version 1.4.31
  - updated packaging of native installer creation for macOS, Windows and Linux
    - now uses jpackage introduced with JDK 14 (JEP 343)
    - jpackager-backports and workarounds are not needed anymore
@@ -25,6 +25,10 @@ v7.7.1:
    - singular naming leads to misunderstandings (GitHub Issue #231)
  - SQLiteExporter: Added export of missing entity properties
    (SportType.SpeedMode and Equipment.notInUse)
+ - updated commons-cli to version 1.4
+ - updated sqlite-jdbc 3.34.0
+ - updated JUnit 5 to version 5.7.1
+ - updated Mockito to version 3.8.0
  ExerciseViewer changes:
  - updated Garmin FIT SDK library to version 21.20.00, provides bugfixes
    and support for newer Garmin devices
