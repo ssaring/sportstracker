@@ -1,6 +1,6 @@
 sudo: false
-# use Ubuntu 14.04 (Trusty) image, it contains the latest JDK
-dist: trusty
+# use Ubuntu 20.04 (Focal Fossa) image, it contains the latest JDK
+dist: focal
 
 before_install:
   # start X-server for GUI tests (xvfb)
