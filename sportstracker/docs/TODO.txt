@@ -1,6 +1,17 @@
 SportsTracker-TODO
 ==================
 
+Kotlin compatibility with JDK 16+:
+- when using JDK 16+ for building the application, the Maven build fails with the error "InaccessibleObjectException:
+  Unable to make protected void java.util.ResourceBundle.setParent(java.util.ResourceBundle) accessible:
+  module java.base does not "opens java.util" to unnamed module ...
+- that's a known Kotlin issue, which has not been fixed yet, see:
+  - https://youtrack.jetbrains.com/issue/KT-43704
+  - https://youtrack.jetbrains.com/issue/KT-44624
+- workaround for Maven build with JDK 16+: allow illegal access during build by setting:
+  export MAVEN_OPTS=--illegal-access=permit
+- this workaround is also in use in the Travis CI build (.travis.yml) => remove when fixed in Kotlin
+
 OpenJFX 16/15 update:
 - What about? "WARNING com.sun.javafx.application.PlatformImpl startup Unsupported JavaFX configuration: classes were loaded from 'unnamed module @3a567bb0'"
 - a lot of CSS warning when opening the Exercise Dialog (looks and works still properly)
