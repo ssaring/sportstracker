@@ -1,6 +1,19 @@
 SportsTracker-TODO
 ==================
 
+Use of new Java language and JDK features introduced from Java 12 to 16:
+- ST project is compatible with Java / JDK 16 (tested with AdoptOpenJDK 16)
+  - Maven modules already compile in Java 16 mode
+  - Kotlin incompatibility, see workaround below
+- TravisCI already uses OpenJDK 16
+- await JDK 16 support in IntelliJ IDEA before (will come in version 2021.1, March 2021)
+- interesting Java/JDK 16 features:
+  - use Stream.toList() method, see JDK-8180352
+  - use JEP 395: Records, see JEP 395
+  - use JEP 394: Pattern Matching for instanceof, see JEP 394
+  - JEP 392: Packaging Tool, see JEP 392 => any new features?
+- check for new language features in previous Java updates
+
 Kotlin compatibility with JDK 16+:
 - when using JDK 16+ for building the application, the Maven build fails with the error "InaccessibleObjectException:
   Unable to make protected void java.util.ResourceBundle.setParent(java.util.ResourceBundle) accessible:
