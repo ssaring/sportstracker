@@ -2,6 +2,10 @@ sudo: false
 # use Ubuntu 20.04 (Focal Fossa) image, it contains the latest JDK
 dist: focal
 
+before_install:
+  # workaround for Kotlin incompatibility with JDK 16+ (see https://youtrack.jetbrains.com/issue/KT-44624)
+  - "export MAVEN_OPTS=--illegal-access=permit"
+
 # use X Virtual Framebuffer to run GUI-based unit tests
 services:
   - xvfb
