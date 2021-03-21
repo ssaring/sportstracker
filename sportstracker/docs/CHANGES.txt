@@ -44,8 +44,9 @@ v7.7.1:
    - added support for heartrate data in GPX files from GatdetBridge
      (Android Bridge App, https://gadgetbridge.org/ )
  Project changes:
-  - use the Ubuntu Focal Fossa (20.04) image in Travis CI builds, it contains
-    the latest OpenJDK 11 package
+  - use the Ubuntu Focal Fossa (20.04) image in Travis CI builds
+    - provides improved XFVB setup for GUI unit tests
+    - provides support for OpenJDK 16
 
 v7.7.0:
  SportsTracker changes:
