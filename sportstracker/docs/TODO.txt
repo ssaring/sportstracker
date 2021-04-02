@@ -9,14 +9,16 @@ Use of new Java language and JDK features introduced from Java 12 to 16:
   - jpackage of JDK 16 tested successfully on macOS
 - TravisCI already uses OpenJDK 16
 - IntelliJ IDEA 2021.1 supports Java 16
-- Java language feature usages (completed):
+- Java language features already integrated:
+  - JEP 286: Local-Variable Type Inference
   - JEP 361: Switch Expressions
-  - JEP 394: Pattern Matching for instanceof
   - JEP 378: Text Blocks
+  - JEP 394: Pattern Matching for instanceof
   - Stream.toList() method (JDK-8180352)
 - other potentially interesting Java/JDK 12-16 features:
-  - JEP 395: Records, see JEP 395
-  - JEP 392: Packaging Tool, see JEP 392 => any new features?
+  - JEP 395: Records
+  - JEP 392: Packaging Tool => any new features?
+- add to ChangeLog / update ReadMe(s)
 
 Kotlin compatibility with JDK 16+:
 - when using JDK 16+ for building the application, the Maven build fails with the error "InaccessibleObjectException:
