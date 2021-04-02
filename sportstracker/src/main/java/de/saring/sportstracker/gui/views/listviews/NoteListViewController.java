@@ -66,8 +66,8 @@ public class NoteListViewController extends AbstractListViewController<Note> {
 
     @Override
     public void selectEntry(final IdObject entry) {
-        if (entry != null && entry instanceof Note) {
-            selectAndScrollToEntry((Note) entry);
+        if (entry != null && entry instanceof Note note) {
+            selectAndScrollToEntry(note);
         }
     }
 

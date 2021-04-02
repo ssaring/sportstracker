@@ -70,8 +70,8 @@ public class WeightListViewController extends AbstractListViewController<Weight>
 
     @Override
     public void selectEntry(final IdObject entry) {
-        if (entry != null && entry instanceof Weight) {
-            selectAndScrollToEntry((Weight) entry);
+        if (entry != null && entry instanceof Weight weight) {
+            selectAndScrollToEntry(weight);
         }
     }
 

@@ -99,8 +99,8 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
 
     @Override
     public void selectEntry(final IdObject entry) {
-        if (entry != null && entry instanceof Exercise) {
-            selectAndScrollToEntry((Exercise) entry);
+        if (entry != null && entry instanceof Exercise exercise) {
+            selectAndScrollToEntry(exercise);
         }
     }
 

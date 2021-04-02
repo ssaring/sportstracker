@@ -3,6 +3,7 @@ SportsTracker-TODO
 
 Java language feature usages:
 - JEP 361: Switch Expressions (done in module sportstracker)
+- JEP 394: Pattern Matching for instanceof
 
 Use of new Java language and JDK features introduced from Java 12 to 16:
 - ST project is compatible with Java / JDK 16 (tested with AdoptOpenJDK 16)
