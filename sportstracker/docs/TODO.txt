@@ -1,11 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Java language feature usages:
-- JEP 361: Switch Expressions (done in module sportstracker)
-- JEP 394: Pattern Matching for instanceof
-- Stream.toList() method (JDK-8180352)
-
 Use of new Java language and JDK features introduced from Java 12 to 16:
 - ST project is compatible with Java / JDK 16 (tested with AdoptOpenJDK 16)
   (e.g. vars, local inference, multiline strings etc)
@@ -14,9 +9,13 @@ Use of new Java language and JDK features introduced from Java 12 to 16:
   - jpackage of JDK 16 tested successfully on macOS
 - TravisCI already uses OpenJDK 16
 - IntelliJ IDEA 2021.1 supports Java 16
-- interesting Java/JDK 12-16 features:
-  - use JEP 378: Text Blocks
-  - use JEP 395: Records, see JEP 395
+- Java language feature usages (completed):
+  - JEP 361: Switch Expressions
+  - JEP 394: Pattern Matching for instanceof
+  - JEP 378: Text Blocks
+  - Stream.toList() method (JDK-8180352)
+- other potentially interesting Java/JDK 12-16 features:
+  - JEP 395: Records, see JEP 395
   - JEP 392: Packaging Tool, see JEP 392 => any new features?
 
 Kotlin compatibility with JDK 16+:

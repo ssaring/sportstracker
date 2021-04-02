@@ -170,10 +170,10 @@ public class SQLiteExporter {
 
     private void exportExercises(final Connection connection) throws SQLException {
 
-        final PreparedStatement statement = connection.prepareStatement( //
-                "INSERT INTO EXERCISE (ID, DATE_TIME, SPORT_TYPE_ID, SPORT_SUBTYPE_ID, INTENSITY, DURATION, DISTANCE, " +
-                        "AVG_SPEED, AVG_HEARTRATE, ASCENT, DESCENT, CALORIES, HRM_FILE, EQUIPMENT_ID, COMMENT) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        final PreparedStatement statement = connection.prepareStatement("""
+                INSERT INTO EXERCISE (ID, DATE_TIME, SPORT_TYPE_ID, SPORT_SUBTYPE_ID, INTENSITY, DURATION, DISTANCE, 
+                AVG_SPEED, AVG_HEARTRATE, ASCENT, DESCENT, CALORIES, HRM_FILE, EQUIPMENT_ID, COMMENT) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""");
 
         for (Exercise exercise : document.getExerciseList()) {
             statement.clearParameters();
