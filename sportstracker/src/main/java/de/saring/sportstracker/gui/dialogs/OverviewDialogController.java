@@ -738,24 +738,21 @@ public class OverviewDialogController extends AbstractDialogController {
      */
     private int getTimeStepCount(TimeRangeType timeType, int year) {
 
-        switch (timeType) {
-            case LAST_12_MONTHS:
-                return 13;
-            case MONTHS_OF_YEAR:
-                return 12;
-            case WEEKS_OF_YEAR:
+        return switch (timeType) {
+            case LAST_12_MONTHS -> 13;
+            case MONTHS_OF_YEAR -> 12;
+            case WEEKS_OF_YEAR -> {
                 // Workaround for a JFreeChart problem: use the Year instead
                 // of Week class for the bottom axis, otherwise there will be
                 // format problems on the axis (the first week is often "52")
                 // => get number of weeks for the specified year (mostly 52, sometimes 53)
-                LocalDate dateinYear = LocalDate.of(year, 1, 15);
+                LocalDate dateInYear = LocalDate.of(year, 1, 15);
                 WeekFields weekField = getWeekFieldsForWeekStart();
-                return (int) dateinYear.range(weekField.weekOfYear()).getMaximum();
-            case LAST_10_YEARS:
-                return 10;
-            default:
-                throw new IllegalArgumentException("Unknown TimeRangeType!");
-        }
+                yield (int) dateInYear.range(weekField.weekOfYear()).getMaximum();
+            }
+            case LAST_10_YEARS -> 10;
+            default -> throw new IllegalArgumentException("Unknown TimeRangeType!");
+        };
     }
 
     /**
@@ -769,25 +766,24 @@ public class OverviewDialogController extends AbstractDialogController {
      */
     private RegularTimePeriod createTimePeriodForTimeStep(TimeRangeType timeType, int year, int timeStep) {
 
-        switch (timeType) {
-            case LAST_12_MONTHS:
+        return switch (timeType) {
+            case LAST_12_MONTHS -> {
                 LocalDate now = LocalDate.now();
                 int tempMonth = now.getMonthValue() + timeStep - 1;
                 int tempYear = now.getYear() - 1 + tempMonth / 12;
-                return new Month(tempMonth % 12 + 1, tempYear);
-            case MONTHS_OF_YEAR:
-                return new Month(timeStep + 1, year);
-            case WEEKS_OF_YEAR:
+                yield new Month(tempMonth % 12 + 1, tempYear);
+            }
+            case MONTHS_OF_YEAR -> new Month(timeStep + 1, year);
+            case WEEKS_OF_YEAR -> {
                 // Workaround for a JFreeChart problem: use the Year instead
                 // of Week class for the botton axis, otherwise there will be
                 // format problems on the axis (the first week is often "52")
                 int tempWeekNr = timeStep + 1;
-                return new Year(1900 + tempWeekNr);
-            case LAST_10_YEARS:
-                return new Year(year - 9 + timeStep);
-            default:
-                throw new IllegalArgumentException("Unknow TimeRangeType!");
-        }
+                yield new Year(1900 + tempWeekNr);
+            }
+            case LAST_10_YEARS -> new Year(year - 9 + timeStep);
+            default -> throw new IllegalArgumentException("Unknow TimeRangeType!");
+        };
     }
 
     /**
@@ -1025,36 +1021,25 @@ public class OverviewDialogController extends AbstractDialogController {
          * @return name and unit system
          */
         private String getNameWithUnitSystem(final FormatUtils formatUtils, final SpeedMode speedMode) {
-            switch (this) {
-                case DISTANCE:
-                    return appResources.getString("st.dlg.overview.value_type.distance_sum",
+            return switch (this) {
+                case DISTANCE -> appResources.getString("st.dlg.overview.value_type.distance_sum",
                             formatUtils.getDistanceUnitName());
-                case DURATION:
-                    return appResources.getString("st.dlg.overview.value_type.duration_sum");
-                case ASCENT:
-                    return appResources.getString("st.dlg.overview.value_type.ascent_sum",
+                case DURATION -> appResources.getString("st.dlg.overview.value_type.duration_sum");
+                case ASCENT -> appResources.getString("st.dlg.overview.value_type.ascent_sum",
                             formatUtils.getAltitudeUnitName());
-                case DESCENT:
-                    return appResources.getString("st.dlg.overview.value_type.descent_sum",
+                case DESCENT -> appResources.getString("st.dlg.overview.value_type.descent_sum",
                             formatUtils.getAltitudeUnitName());
-                case CALORIES:
-                    return appResources.getString("st.dlg.overview.value_type.calories_sum");
-                case EXERCISES:
-                    return appResources.getString("st.dlg.overview.value_type.exercise_count");
-                case AVG_SPEED:
-                    return appResources.getString("st.dlg.overview.value_type.avg_speed",
+                case CALORIES -> appResources.getString("st.dlg.overview.value_type.calories_sum");
+                case EXERCISES -> appResources.getString("st.dlg.overview.value_type.exercise_count");
+                case AVG_SPEED -> appResources.getString("st.dlg.overview.value_type.avg_speed",
                             formatUtils.getSpeedUnitName(speedMode));
-                case SPORTSUBTYPE:
-                    return appResources.getString("st.dlg.overview.value_type.sportsubtype_distance",
+                case SPORTSUBTYPE -> appResources.getString("st.dlg.overview.value_type.sportsubtype_distance",
                             formatUtils.getDistanceUnitName());
-                case EQUIPMENT:
-                    return appResources.getString("st.dlg.overview.value_type.equipment_distance",
+                case EQUIPMENT -> appResources.getString("st.dlg.overview.value_type.equipment_distance",
                             formatUtils.getDistanceUnitName());
-                case WEIGHT:
-                    return appResources.getString("st.dlg.overview.value_type.weight", formatUtils.getWeightUnitName());
-                default:
-                    throw new IllegalArgumentException("Invalid value type!");
-            }
+                case WEIGHT -> appResources.getString("st.dlg.overview.value_type.weight", formatUtils.getWeightUnitName());
+                default -> throw new IllegalArgumentException("Invalid value type!");
+            };
         }
     }
 
