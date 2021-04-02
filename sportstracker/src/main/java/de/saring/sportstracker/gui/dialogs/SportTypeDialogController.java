@@ -2,7 +2,6 @@ package de.saring.sportstracker.gui.dialogs;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.saring.util.AppResources;
@@ -268,7 +267,7 @@ public class SportTypeDialogController extends AbstractDialogController {
         final List<Exercise> lRefExercises = document.getExerciseList().stream()
                 .filter(exercise -> exercise.getSportType().getId() == sportTypeViewModel.id
                         && exercise.getSportSubType().equals(selectedSportSubtype))
-                .collect(Collectors.toList());
+                .toList();
 
         // when there are referenced exercises => these exercises needs to be deleted too
         if (!lRefExercises.isEmpty()) {
@@ -385,7 +384,7 @@ public class SportTypeDialogController extends AbstractDialogController {
         List<Exercise> lRefExercises = document.getExerciseList().stream()
                 .filter(exercise -> exercise.getSportType().getId() == sportTypeViewModel.id
                         && exercise.getEquipment() != null && exercise.getEquipment().equals(selectedEquipment))
-                .collect(Collectors.toList());
+                .toList();
 
         // when there are referenced exercises => the equipment must be deleted in those too
         if (lRefExercises.size() > 0) {

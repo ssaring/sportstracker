@@ -2,7 +2,6 @@ package de.saring.sportstracker.gui.views.listviews;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -181,7 +180,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
 
     @Override
     protected List<Exercise> getTableEntries() {
-        return getDocument().getFilterableExerciseList().stream().collect(Collectors.toList());
+        return getDocument().getFilterableExerciseList().stream().toList();
     }
 
     @Override

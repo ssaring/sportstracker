@@ -3,7 +3,6 @@ package de.saring.sportstracker.gui.dialogs;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javafx.stage.FileChooser;
@@ -105,7 +104,7 @@ public class HRMFileOpenDialog {
             // extend all filename suffixes with prefix "*."
             final List<String> extendedSuffixes = Stream.of(parserInfo.getSuffixes())
                     .map(suffix -> "*." + suffix)
-                    .collect(Collectors.toList());
+                    .toList();
 
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(filterName, extendedSuffixes));
 

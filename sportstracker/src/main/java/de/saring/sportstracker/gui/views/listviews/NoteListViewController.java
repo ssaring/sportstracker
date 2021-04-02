@@ -2,7 +2,6 @@ package de.saring.sportstracker.gui.views.listviews;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.saring.sportstracker.gui.views.ViewPrinter;
 import javafx.beans.property.SimpleStringProperty;
@@ -103,6 +102,6 @@ public class NoteListViewController extends AbstractListViewController<Note> {
 
     @Override
     protected List<Note> getTableEntries() {
-        return getDocument().getFilterableNoteList().stream().collect(Collectors.toList());
+        return getDocument().getFilterableNoteList().stream().toList();
     }
 }

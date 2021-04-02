@@ -2,7 +2,6 @@ package de.saring.sportstracker.gui.views.listviews;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.saring.sportstracker.gui.views.ViewPrinter;
 import javafx.beans.property.SimpleStringProperty;
@@ -110,6 +109,6 @@ public class WeightListViewController extends AbstractListViewController<Weight>
 
     @Override
     protected List<Weight> getTableEntries() {
-        return getDocument().getFilterableWeightList().stream().collect(Collectors.toList());
+        return getDocument().getFilterableWeightList().stream().toList();
     }
 }

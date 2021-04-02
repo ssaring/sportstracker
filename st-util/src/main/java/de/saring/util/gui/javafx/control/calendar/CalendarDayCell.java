@@ -4,7 +4,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -77,7 +76,7 @@ class CalendarDayCell extends AbstractCalendarCell {
 
         calendarEntryLabels = entries.stream() //
                 .map(entry -> new CalendarEntryLabel(entry, calendarEntrySelectionListener, calendarActionListener)) //
-                .collect(Collectors.toList());
+                .toList();
 
         updateEntryLabels(calendarEntryLabels);
     }
