@@ -46,7 +46,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - Garmin Edge        (tested with Edge 500, 520, 530, 705, 820, FIT and TCX files)
   - Garmin Forerunner  (tested with Forerunner 35, 305, 910XT, 645, FIT and TCX files)
   - Garmin Oregon      (tested with Oregon 450, GPX files)
-  - Garmin Fenix       (tested with Fenix 2, 5x, 6, FIT files)
+  - Garmin Fenix       (tested with Fenix 2, 5x, 6, 6S Pro, FIT files)
   - Timex Ironmen Race Trainer (tested)
   - Timex Ironmen Run Trainer (tested)
   - Timex Ironman Global Trainer  (tested)
@@ -398,7 +398,7 @@ It's important to ensure a consistent code format and style all over the
 project. That's why all developers need to use the same configuration for their
 IDE.
 
-SportStracker can be started from the IDE by executing the class
+SportsTracker can be started from the IDE by executing the class
 "de.saring.sportstracker.STMain".
 It can also be started from command line after execution of "mvn package"
 with the command (inside the project root directory):
@@ -434,7 +434,7 @@ The SportsTracker project uses the following libraries:
       License: Eclipse Public License v2.0. and Apache License v2.0
   - Mockito 3.8.0 (http://code.google.com/p/mockito/)
       License: MIT License
-  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.20.00
+  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.47.00
       URL: https://www.thisisant.com/developer/
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: https://www.thisisant.com/resources/fit-sdk-beta/
@@ -450,7 +450,7 @@ important reasons:
 
   - much better tooling support for development, e.g. IDE's, debuggers,
     profilers, refactoring tools and so on
-  - much more usefull open source libraries, e.g. for diagram creation
+  - much more useful open source libraries, e.g. for diagram creation
   - support for more operating systems (e.g. MacOS X, ...)
   - less installation problems (no .NET runtime required on Linux or Mac OS X,
     no GTK+ libraries required on Windows and Mac OS X)
@@ -465,7 +465,7 @@ The SportsTracker project uses Git for Source Code Management (SCM), the project
 repository is hosted at GitHub. 
 URL: https://github.com/ssaring/sportstracker
 
-Subversion was used until SportStracker 4.2.1, since version 4.3.0 the 
+Subversion was used until SportsTracker 4.2.1, since version 4.3.0 the
 development has been switched to Mercurial and since version 6.1.0 to Git.
 
 The SVN history was not imported to the Mercurial repository, there are too 
@@ -473,7 +473,7 @@ much revisions, which are not interesting anymore (also from Mono/.NET past).
 So we used the chance to start with a lean Mercurial repository.
 The SVN repository will stay online at SourceForge for being able to access 
 all history revisions, if really needed. But there will be no future commits
-to SVN aymore, they will all go to the Git repository.
+to SVN anymore, they will all go to the Git repository.
 
 You can find further details for the SCM usage and the collaboration workflow
 at the GitHub project site and in the Git / GitHub documentation.

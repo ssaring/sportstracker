@@ -461,7 +461,7 @@ class GarminFitParserTest {
 
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
-        assertEquals("GARMIN (SW 5.0)", exercise.deviceName) // Fenix 6 model name is still missing in the GarminProduct class (FIT SDK)
+        assertEquals("GARMIN FENIX6 (SW 5.0)", exercise.deviceName) // Fenix 6 model name is still missing in the GarminProduct class (FIT SDK)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)

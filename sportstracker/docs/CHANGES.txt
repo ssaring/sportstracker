@@ -36,8 +36,8 @@ v7.7.1:
    - JEP 394: Pattern Matching for instanceof
    - Stream.toList() method (JDK-8180352)
  ExerciseViewer changes:
- - updated Garmin FIT SDK library to version 21.20.00, provides bugfixes
-   and support for newer Garmin devices
+ - updated Garmin FIT SDK library to version 21.47.00, provides bugfixes
+   and support for newer Garmin devices (e.g. Garmin Fenix 6)
  - updated Leaflet to version 1.6.0, provides various fixes and performance
    improvements (contributed by Thomas Feuster, PR #219)
  - Bugfix for reading exercise files from Garmin Fenix 6 and 5X devices
