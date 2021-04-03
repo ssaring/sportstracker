@@ -731,22 +731,13 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private void switchToView(final EntryViewController.ViewType viewType) {
 
         // determine controller of specified view
-        switch (viewType) {
-            case CALENDAR:
-                currentViewController = calendarViewController;
-                break;
-            case EXERCISE_LIST:
-                currentViewController = exerciseListViewController;
-                break;
-            case NOTE_LIST:
-                currentViewController = noteListViewController;
-                break;
-            case WEIGHT_LIST:
-                currentViewController = weightListViewController;
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid ViewType " + viewType + "!");
-        }
+        currentViewController = switch (viewType) {
+            case CALENDAR -> calendarViewController;
+            case EXERCISE_LIST -> exerciseListViewController;
+            case NOTE_LIST -> noteListViewController;
+            case WEIGHT_LIST -> weightListViewController;
+            default -> throw new IllegalArgumentException("Invalid ViewType " + viewType + "!");
+        };
 
         // update and display the new view
         currentViewController.removeSelection();
@@ -789,7 +780,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @param exerciseID ID of the exercise entry
      */
     private void editExercise(int exerciseID) {
-        final Exercise selExercise = document.getExerciseList().getByID(exerciseID);
+        final var selExercise = document.getExerciseList().getByID(exerciseID);
         dialogProvider.prExerciseDialogController.get().show(context.getPrimaryStage(), selExercise, false);
     }
 
@@ -799,7 +790,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @param noteID ID of the note entry
      */
     private void editNote(int noteID) {
-        final Note selectedNote = document.getNoteList().getByID(noteID);
+        final var selectedNote = document.getNoteList().getByID(noteID);
         dialogProvider.prNoteDialogController.get().show(context.getPrimaryStage(), selectedNote);
     }
 
@@ -809,7 +800,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @param weightID ID of the weight entry
      */
     private void editWeight(int weightID) {
-        final Weight selectedWeight = document.getWeightList().getByID(weightID);
+        final var selectedWeight = document.getWeightList().getByID(weightID);
         dialogProvider.prWeightDialogController.get().show(context.getPrimaryStage(), selectedWeight);
     }
 
@@ -819,9 +810,9 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @param exerciseID ID of the exercise entry to copy
      */
     private void copyExercise(final int exerciseID) {
-        final Exercise selectedExercise = document.getExerciseList().getByID(exerciseID);
+        final var selectedExercise = document.getExerciseList().getByID(exerciseID);
 
-        final Exercise copiedExercise = selectedExercise.clone(document.getExerciseList().getNewId());
+        final var copiedExercise = selectedExercise.clone(document.getExerciseList().getNewId());
         copiedExercise.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
         copiedExercise.setHrmFile(null);
 
@@ -835,9 +826,9 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @param noteID ID of the note entry to copy
      */
     private void copyNote(final int noteID) {
-        final Note selectedNote = document.getNoteList().getByID(noteID);
+        final var selectedNote = document.getNoteList().getByID(noteID);
 
-        final Note copiedNote = selectedNote.clone(document.getNoteList().getNewId());
+        final var copiedNote = selectedNote.clone(document.getNoteList().getNewId());
         copiedNote.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
 
         // start note dialog for the copied note
@@ -850,9 +841,9 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @param weightID ID of the weight entry to copy
      */
     private void copyWeight(final int weightID) {
-        final Weight selectedWeight = document.getWeightList().getByID(weightID);
+        final var selectedWeight = document.getWeightList().getByID(weightID);
 
-        final Weight copiedWeight = selectedWeight.clone(document.getWeightList().getNewId());
+        final var copiedWeight = selectedWeight.clone(document.getWeightList().getNewId());
         copiedWeight.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
 
         // start weight dialog for the copied weight

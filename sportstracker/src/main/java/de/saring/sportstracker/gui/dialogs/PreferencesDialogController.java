@@ -165,16 +165,12 @@ public class PreferencesDialogController extends AbstractDialogController {
 
             @Override
             public String toString(final STOptions.AutoCalculation autoCalculation) {
-                switch (autoCalculation) {
-                    case Distance:
-                        return context.getResources().getString("st.dlg.options.distance.text");
-                    case AvgSpeed:
-                        return context.getResources().getString("st.dlg.options.avg_speed.text");
-                    case Duration:
-                        return context.getResources().getString("st.dlg.options.duration.text");
-                    default:
-                        return "";
-                }
+                return switch (autoCalculation) {
+                    case Distance -> context.getResources().getString("st.dlg.options.distance.text");
+                    case AvgSpeed -> context.getResources().getString("st.dlg.options.avg_speed.text");
+                    case Duration -> context.getResources().getString("st.dlg.options.duration.text");
+                    default -> "";
+                };
             }
 
             @Override

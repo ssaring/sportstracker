@@ -6,7 +6,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.inject.Inject;
@@ -302,7 +301,7 @@ public class STDocumentImpl implements STDocument {
     public List<Exercise> checkExerciseFiles() {
         return exerciseList.stream()
                 .filter(exercise -> exercise.getHrmFile() != null && !new File(exercise.getHrmFile()).exists())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -330,7 +329,7 @@ public class STDocumentImpl implements STDocument {
                 .mapToObj(exerciseId -> getExerciseList().getByID(exerciseId))
                 .map(exercise -> exercise.getSportType().getSpeedMode())
                 .distinct()
-                .collect(Collectors.toList());
+                .toList();
 
         return speedModes.size() == 1 ? speedModes.get(0) : getOptions().getPreferredSpeedMode();
     }

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -368,7 +367,7 @@ public class ExerciseDialogController extends AbstractDialogController {
             Equipment selectedEquipment = exerciseViewModel.equipment.get();
             cbEquipment.getItems().addAll(selectedSportType.getEquipmentList().stream()
                     .filter(equipment -> !equipment.isNotInUse() || equipment.equals(selectedEquipment))
-                    .collect(Collectors.toList()));
+                    .toList());
 
             // label for average speed needs to show the unit for the sport types speed mode
             laAvgSpeed.setText(context.getResources().getString("st.dlg.exercise.avg_speed.text",

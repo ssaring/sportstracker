@@ -115,9 +115,9 @@ The OpenJDK can be downloaded from: http://jdk.java.net/
 If you want to download exercise files from your heartrate monitor you might
 need one of the download tools listed above.
 
-The application was tested on GNU/Linux (e.g. Ubuntu 18.04), Windows (e.g. 10)
-and macOS (10.13 - 10.15), although it should work on all systems
-with the required Java Runtime Environment.
+The application was tested on GNU/Linux (e.g. Ubuntu 20.04), Windows 10 and
+macOS (10.15 - 11), although it should work on all systems with the required
+Java Runtime Environment.
 
 
 Installation and Start
@@ -361,19 +361,19 @@ Developer Requirements
 ----------------------
 
 For compilation of the SportsTracker sources you need:
-  - Java SE Development Kit (JDK) 11 or greater
+  - Java SE Development Kit (JDK) 16 or greater
     (from http://jdk.java.net or https://adoptopenjdk.net)
-  - Maven 3.5.0 or greater
+  - Maven 3.6.0 or greater
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
   - IntelliJ IDEA Community Edition (http://www.jetbrains.com/idea/)
-    => preferred IDE, tested with version 2019.1
+    => preferred IDE, tested with version 2021.1
   - NetBeans IDE (from http://www.netbeans.org), Kotlin support not tested
   - Eclipse (from http://eclipse.org), Kotlin support not tested
 
 The Maven build configuration supports all typical goals (clean, compile,
-test, package, ...). The project is splitted into following modules (Maven
+test, package, ...). The project is split into following modules (Maven
 multi project), so it's not possible to create circular module dependencies.
 
   - st-parent: 
@@ -519,4 +519,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2020/03/14
+2020/04/03

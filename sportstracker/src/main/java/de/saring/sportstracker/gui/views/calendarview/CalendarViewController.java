@@ -116,8 +116,7 @@ public class CalendarViewController extends AbstractEntryViewController {
 
     @Override
     public void selectEntry(final IdObject entry) {
-        if (entry instanceof IdDateObject) {
-            IdDateObject dateEntry = (IdDateObject) entry;
+        if (entry instanceof IdDateObject dateEntry) {
 
             // set calendar to month/year of the entry
             displayedYear.set(dateEntry.getDateTime().getYear());
@@ -205,8 +204,8 @@ public class CalendarViewController extends AbstractEntryViewController {
 
             @Override
             public void onDraggedFileDroppedOnCalendarEntry(final IdDateObject entry, final String filePath) {
-                if (entry instanceof Exercise) {
-                    getEventHandler().onAssignDroppedHrmFileToExercise(filePath, (Exercise) entry);
+                if (entry instanceof Exercise exercise) {
+                    getEventHandler().onAssignDroppedHrmFileToExercise(filePath, exercise);
                 } else {
                     // the target entry was not an exercise -> add a new exercise for the dropped entry
                     getEventHandler().onAddExerciseForDroppedHrmFile(filePath);

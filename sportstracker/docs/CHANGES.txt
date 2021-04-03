@@ -29,6 +29,12 @@ v7.7.1:
  - updated sqlite-jdbc 3.34.0
  - updated JUnit 5 to version 5.7.1
  - updated Mockito to version 3.8.0
+ - use of new Java language features, introduced from Java 12 to Java 16
+   - JEP 286: Local-Variable Type Inference
+   - JEP 361: Switch Expressions
+   - JEP 378: Text Blocks
+   - JEP 394: Pattern Matching for instanceof
+   - Stream.toList() method (JDK-8180352)
  ExerciseViewer changes:
  - updated Garmin FIT SDK library to version 21.20.00, provides bugfixes
    and support for newer Garmin devices

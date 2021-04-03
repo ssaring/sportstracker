@@ -3,7 +3,6 @@ package de.saring.sportstracker.gui.views.calendarview;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
@@ -47,20 +46,21 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
     @Override
     public List<CalendarEntry> getCalendarEntriesForDate(final LocalDate date) {
 
+        final List<CalendarEntry> calendarEntries = new ArrayList<>();
         final List<Note> notes = document.getFilterableNoteList().getEntriesInDateRange(date, date);
-        final List<CalendarEntry> calendarEntries = notes.stream() //
-                .map(note -> createCalendarEntryForNote(note)) //
-                .collect(Collectors.toList());
+        calendarEntries.addAll(notes.stream()
+                .map(note -> createCalendarEntryForNote(note))
+                .toList());
 
         final List<Weight> weights = document.getFilterableWeightList().getEntriesInDateRange(date, date);
-        calendarEntries.addAll(weights.stream() //
-                .map(weight -> createCalendarEntryForWeight(weight)) //
-                .collect(Collectors.toList()));
+        calendarEntries.addAll(weights.stream()
+                .map(weight -> createCalendarEntryForWeight(weight))
+                .toList());
 
         final List<Exercise> exercises = document.getFilterableExerciseList().getEntriesInDateRange(date, date);
-        calendarEntries.addAll(exercises.stream() //
-                .map(exercise -> createCalendarEntryForExercise(exercise)) //
-                .collect(Collectors.toList()));
+        calendarEntries.addAll(exercises.stream()
+                .map(exercise -> createCalendarEntryForExercise(exercise))
+                .toList());
 
         return calendarEntries;
     }

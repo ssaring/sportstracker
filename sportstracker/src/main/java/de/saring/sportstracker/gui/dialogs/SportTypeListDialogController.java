@@ -2,7 +2,6 @@ package de.saring.sportstracker.gui.dialogs;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -10,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
@@ -140,7 +138,7 @@ public class SportTypeListDialogController extends AbstractDialogController {
         final SportType sportType = liSportTypes.getSelectionModel().getSelectedItem();
         final List<Exercise> lRefExercises = document.getExerciseList().stream()
                 .filter(exercise -> exercise.getSportType().equals(sportType))
-                .collect(Collectors.toList());
+                .toList();
 
         // when there are referenced exercises => these exercises needs to be deleted too
         if (!lRefExercises.isEmpty()) {

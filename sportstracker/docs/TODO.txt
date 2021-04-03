@@ -1,29 +1,22 @@
 SportsTracker-TODO
 ==================
 
-Use of new Java language and JDK features introduced from Java 12 to 16:
-- ST project is compatible with Java / JDK 16 (tested with AdoptOpenJDK 16)
-  - Maven modules already compile in Java 16 mode
-  - Kotlin incompatibility, see workaround below
-- TravisCI already uses OpenJDK 16
-- await JDK 16 support in IntelliJ IDEA before (will come in version 2021.1, March 2021)
-- interesting Java/JDK 16 features:
-  - use Stream.toList() method, see JDK-8180352
-  - use JEP 395: Records, see JEP 395
-  - use JEP 394: Pattern Matching for instanceof, see JEP 394
-  - JEP 392: Packaging Tool, see JEP 392 => any new features?
-- check for new language features in previous Java updates
-
 Kotlin compatibility with JDK 16+:
 - when using JDK 16+ for building the application, the Maven build fails with the error "InaccessibleObjectException:
   Unable to make protected void java.util.ResourceBundle.setParent(java.util.ResourceBundle) accessible:
   module java.base does not "opens java.util" to unnamed module ...
-- that's a known Kotlin issue, which has not been fixed yet, see:
+- that's a known Kotlin issue, which will be fixed in Kotlin 1.5.0-RC:
   - https://youtrack.jetbrains.com/issue/KT-43704
   - https://youtrack.jetbrains.com/issue/KT-44624
-- workaround for Maven build with JDK 16+: allow illegal access during build by setting:
+  - https://youtrack.jetbrains.com/issue/KT-45566
+- workaround for CLI Maven build with JDK 16+: allow illegal access during build by setting:
   export MAVEN_OPTS=--illegal-access=permit
 - this workaround is also in use in the Travis CI build (.travis.yml) => remove when fixed in Kotlin
+- workaround for internal project build and Maven build inside IntelliJ IDEA:
+  - set these env variables and launch IDEA from command line
+    export MAVEN_OPTS=--illegal-access=permit
+    export JAVA_TOOL_OPTIONS=--illegal-access=permit
+    open /Applications/IntelliJ\ IDEA.app
 
 OpenJFX 16/15 update:
 - What about? "WARNING com.sun.javafx.application.PlatformImpl startup Unsupported JavaFX configuration: classes were loaded from 'unnamed module @3a567bb0'"

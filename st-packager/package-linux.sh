@@ -26,7 +26,7 @@ $JAVA_HOME/bin/jpackage \
     --name SportsTracker \
     --app-version $ST_VERSION \
     --vendor "Saring.de" \
-    --copyright "(C) 2020 Stefan Saring" \
+    --copyright "(C) 2021 Stefan Saring" \
     --description "Application for tracking your sporting activities." \
     --linux-app-category "Sports;Utility" \
     --icon ./icons/linux/SportsTracker.png \

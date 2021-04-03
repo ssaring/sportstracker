@@ -501,8 +501,7 @@ public class StackedRenderer extends StackedXYAreaRenderer2 {
     @Override
     public Paint lookupSeriesPaint(int series) {
         Paint paint = super.lookupSeriesPaint(series);
-        if (paint instanceof Color) {
-            Color color = (Color) paint;
+        if (paint instanceof Color color) {
             paint = new Color(color.getColorSpace(), color.getColorComponents(null), areaAlpha);
         }
         return paint;
