@@ -12,8 +12,8 @@ Info
   * jpackage is the replacement for the JavaFX packager which has been removed
     from the JDK, there is also no ANT plugin available anymore
 * the created packages contain the required Java Runtime Environment (JRE)
-* has been tested with AdoptOpenJDK 14 on:
-  * macOS 10.15.4, Ubuntu Linux 18.04 and Windows 10
+* has been tested with AdoptOpenJDK 16 on:
+  * macOS 11.2, Ubuntu Linux 20.04 and Windows 10 (AdoptOpenJDK 14)
   * the packaged app and the installers are running perfectly without problems
 
 * this directory contains the scripts for automatic SportsTracker packaging
@@ -72,8 +72,8 @@ Linux Packaging Notes
 
 * Depending on the Linux system the created installer package is either an DEB
   (e.g. Ubuntu or Debian) or an RPM (e.g. Fedora) package.
-* DEB package creation requires the package 'fakeroot', can be installed from
-  the distribution repository.
+* DEB package creation requires the packages 'fakeroot' and 'binutils', can be
+  installed from the distribution repository.
 * Package installation command: sudo dpkg -i sportstracker-x.y.z.deb
 * Package uninstall command: sudo dpkg -P sportstracker
 
