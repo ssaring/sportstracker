@@ -51,7 +51,7 @@ Then on Linux (Ubuntu):
 
 Then on Windows:
 
-* make sure InnoSetup is installed, has been tested with 5.5.9u
+* make sure InnoSetup is installed, has been tested with 6.1.2
 * check the app settings and variables in 'package-windows.bat'
 * run 'package-windows.bat'
 * the created SportsTracker app package is located in directory 'package'
