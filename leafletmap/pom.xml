@@ -8,7 +8,7 @@
     <artifactId>leafletmap</artifactId>
     <name>leafletmap</name>
     <packaging>jar</packaging>
-    <version>1.0.5</version>
+    <version>1.0.6-SNAPSHOT</version>
 
     <organization>
         <name>Saring</name>
