@@ -2,7 +2,7 @@ SET ST_PROJECT_DIR=..\sportstracker
 SET BUILD_DIR=.\build
 SET PACKAGE_DIR=.\package
 
-SET ST_VERSION=7.7.1-SNAPSHOT
+SET ST_VERSION=7.8.0
 
 # cleanup
 RMDIR /S/Q %BUILD_DIR%

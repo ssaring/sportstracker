@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v7.7.1:
+v7.8.0:
  SportsTracker changes:
  - Equipment Usage: added a new dialog which displays the usages of each
    equipment for a selected sport type
@@ -14,7 +14,7 @@ v7.7.1:
  - SQLite Export: column DATE_TIME in table EXERCISE is now of type Integer,
    the previous type Text has caused problems in queries (e.g. sorting)
  - updated to JavaFX / OpenJFX 16
-   - provides improved macOS 10.15 / 11 support and several bufixes
+   - provides improved macOS 10.15 / 11 support and several bugfixes
  - updated ControlsFX to version 11.1.0
  - updated Kotlin to version 1.4.31
  - updated packaging of native installer creation for macOS, Windows and Linux

@@ -58,16 +58,6 @@ Reminder for Notes:
       - remove the reminder of each note
       - close the dialog
 
-JDK 9-14 migration:
-- works fine with up to JDK 14 (no build or test errors and no execution problems)
-- Use of Java Module System / Jigsaw?
-- use of JEP 272: Platform-Specific Desktop Features for mac-specific menu items
-  (see http://openjdk.java.net/jeps/272)
-  - currently for Swing apps only
-  - JavaFX support might be added after Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
-- migration to language features of JDK 12-14 is not done yet
-  (new switch expression, pattern matching, multiline strings etc.)
-
 JavaFX Migration:
 - Migration status: completed, Swing is not in use anymore
 - tested on macOS, Windows and Linux (incl. printing, drag & drop)
@@ -94,18 +84,16 @@ JavaFX Migration:
   - although this bug is closed, it still exists in JDK 10
   - temporary workaround in FxWorkarounds.fixDatePickerTextEntry() => remove when fixed in JavaFX
 
-Java 8 migration status:
-- full use of Lambdas and the new Java Date API (JSR 310) in all modules
-- the Parser implementations of the ExerciseViewer has not been updated for
-  using the latest Java 8 features 
-  => they are isolated and not the base for further development
-
 Mac OS X integration:
 - Application name is not displayed in the MenuBar, it shows STMain instead
   => Workaround: pass JVM parameter "-Xdock:name=SportsTracker" on startup
   => JDK 9/10 will provide a new API for macOS specific dock and menu integration
 - SportsTracker.app and native packages work properly, the name and icons are
   set via JVM parameter there
+- Use of JEP 272: Platform-Specific Desktop Features for mac-specific menu items
+  (see http://openjdk.java.net/jeps/272)
+  - currently for Swing apps only
+  - JavaFX support might be added after Java 10: https://bugs.openjdk.java.net/browse/JDK-8091107
 
 
 General TODOs:

@@ -12,7 +12,7 @@ the training plan or upcoming sport events.
 
 All the application data is stored in XML files. So it is very easy to access
 them with other tools or to write importers and exporters for other
-applications.
+applications. The users data can be exported to a SQLite database as well.
 
 If you are using a heartrate monitor with a computer interface you can display
 the recorded exercise files and evaluate the diagrams with the integrated
@@ -129,9 +129,9 @@ Runtime Environment (JRE), so the user does not need to install Java before.
 The installers will create a menu entry for easy SportsTracker startup.
 
 If you are not using an installer, you need to download the ZIP file with the
-application source code and build the binaries by using Maven. The build
-process and the application execution is documented in the chapter
-'Developer Requirements' below.
+application source code and build the application locally. The build process
+and the application execution is documented in the chapter 'Developer
+Requirements' below.
 
 The default directory for the application data is '$HOME/.sportstracker',
 e.g. '/home/foo/.sportstracker' for the Linux user foo. You can also specify
@@ -519,4 +519,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2020/04/03
+2021/04/05
