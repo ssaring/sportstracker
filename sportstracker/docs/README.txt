@@ -123,7 +123,7 @@ Java Runtime Environment.
 Installation and Start
 ----------------------
 
-For Windows, Mac and some Linux systems there are native installer packages
+For Windows, macOS and some Linux systems there are native installer packages
 available on the SourceForge project page. They include an embedded Java
 Runtime Environment (JRE), so the user does not need to install Java before.
 The installers will create a menu entry for easy SportsTracker startup.
@@ -148,6 +148,32 @@ visible when SportsTracker has been started by using the command line.
 Console start example for macOS: Start a Terminal and enter:
   'cd /Applications/SportsTracker.app/Contents/MacOS'
   './SportsTracker'
+
+
+Installer security notes for macOS and Windows 10 users
+-------------------------------------------------------
+
+The SportsTracker installer packages doesn't contain trusted code signing
+certificates. This can't be provided by an individual open source project, the
+expense and the effort are just too high.
+
+This causes problems on recent macOS versions (since macOS 10.15) when
+executing the downloaded and installed SportsTracker application. By default
+macOS marks all unsigned applications as quarantine, the user will get an error
+when executing them.
+This can be fixed easily be removing the quarantine flag on command line by
+executing this command in the terminal:
+
+  sudo xattr -cr /Applications/SportsTracker.app
+
+On Windows 10 the Microsoft Defender SmartScreen might try to prevent the
+SportsTracker installation, because it has no trusted code signing certificate.
+This SmartScreen warning needs to be bypassed by clicking on 'More info' and
+then 'Run anyway'.
+
+If these workarounds can't be used for some reasons, then the application needs
+to be build and packaged locally by the user. The locally created packages can
+be installed without problems.
 
 
 Usage
