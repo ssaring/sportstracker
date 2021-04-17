@@ -45,7 +45,7 @@ class MainPanelController(
     private lateinit var laHeartrateMaxValue: Label
 
     @FXML
-    private lateinit var cbHeartrateRanges: ChoiceBox<HeartRateLimit>
+    private lateinit var cbHeartrateRanges: ChoiceBox<HeartRateZone>
     @FXML
     private lateinit var laTimeBelowValue: Label
     @FXML
@@ -150,17 +150,25 @@ class MainPanelController(
         val exercise = document.exercise
         if (exercise.heartRateLimits.isNotEmpty()) {
 
-            cbHeartrateRanges.converter = object : StringConverter<HeartRateLimit>() {
-                override fun toString(limit: HeartRateLimit): String {
-                    val unitName = if (limit.isAbsoluteRange) "bpm" else "%"
-                    return "${limit.lowerHeartRate} - ${limit.upperHeartRate} $unitName"
+            cbHeartrateRanges.converter = object : StringConverter<HeartRateZone>() {
+                override fun toString(hrZone: HeartRateZone): String {
+                    val hrLimit = hrZone.heartRateLimit
+                    // display the zone name when the hr zone boundaries are not available
+                    if (!hrLimit.isAbsoluteRange && hrLimit.lowerHeartRate.toInt() == 0 && hrLimit.upperHeartRate.toInt() == 0) {
+                        return hrZone.name
+                    }
+                    val unitName = if (hrLimit.isAbsoluteRange) "bpm" else "%"
+                    return "${hrLimit.lowerHeartRate} - ${hrLimit.upperHeartRate} $unitName"
                 }
 
-                override fun fromString(string: String): HeartRateLimit =
+                override fun fromString(string: String): HeartRateZone =
                         throw UnsupportedOperationException()
             }
 
-            cbHeartrateRanges.items.addAll(exercise.heartRateLimits)
+            val zonePrefix = context.resources.getString("pv.main.zone_prefix")
+            exercise.heartRateLimits.forEachIndexed { index, limit ->
+                cbHeartrateRanges.items.add(HeartRateZone(limit, "$zonePrefix ${index + 1}"))
+            }
             cbHeartrateRanges.selectionModel.select(0)
         } else {
             cbHeartrateRanges.setDisable(true)
@@ -172,7 +180,7 @@ class MainPanelController(
      */
     private fun updateHeartRateRangeTimes() {
 
-        val limit = cbHeartrateRanges.value
+        val limit = cbHeartrateRanges.value.heartRateLimit
 
         // calculate percentages of times below, within and above
         document.exercise.duration?.let { duration ->
@@ -197,4 +205,12 @@ class MainPanelController(
 
     private fun boolean2EnabledString(enabled: Boolean) =
         context.resources.getString(if (enabled) "common.enabled" else "common.disabled")
+
+    /**
+     * Container class for storing the heartrate zone intems in the choicebox.
+     */
+    private class HeartRateZone(
+        val heartRateLimit: HeartRateLimit,
+        val name: String
+    )
 }

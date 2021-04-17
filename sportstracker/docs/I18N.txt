@@ -45,7 +45,11 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
-SportsTracker 7.7.1:
+SportsTracker 7.8.1:
+
+- pv.main.zone_prefix (new)
+
+SportsTracker 7.8.0:
 
 - st.view.equipment_usage.Action.text=Equipment (new)
 - st.view.equipment_usage.Action.shortDescription (new)
