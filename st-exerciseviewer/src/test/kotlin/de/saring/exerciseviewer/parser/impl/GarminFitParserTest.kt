@@ -447,6 +447,30 @@ class GarminFitParserTest {
         assertEquals(41.471779597923, exercise.sampleList[50].position!!.latitude, 0.000001)
         assertEquals(2.0914101507514, exercise.sampleList[50].position!!.longitude, 0.000001)
         assertEquals(18, exercise.sampleList[50].temperature!!.toInt())
+
+        // check heartrate zone data
+        // (heartrate zone boundaries are not available in Edge 820 FIT files, just the time in these zones)
+        assertEquals(5, exercise.heartRateLimits.size)
+        assertEquals(0, exercise.heartRateLimits[0].lowerHeartRate)
+        assertEquals(0, exercise.heartRateLimits[0].upperHeartRate)
+        assertFalse( exercise.heartRateLimits[0].isAbsoluteRange)
+        assertEquals(1, exercise.heartRateLimits[0].timeBelow)
+        assertEquals(634, exercise.heartRateLimits[0].timeWithin)
+        assertNull(exercise.heartRateLimits[0].timeAbove)
+
+        assertEquals(0, exercise.heartRateLimits[2].lowerHeartRate)
+        assertEquals(0, exercise.heartRateLimits[2].upperHeartRate)
+        assertFalse( exercise.heartRateLimits[2].isAbsoluteRange)
+        assertNull(exercise.heartRateLimits[2].timeBelow)
+        assertEquals(1565, exercise.heartRateLimits[2].timeWithin)
+        assertNull(exercise.heartRateLimits[2].timeAbove)
+
+        assertEquals(0, exercise.heartRateLimits[4].lowerHeartRate)
+        assertEquals(0, exercise.heartRateLimits[4].upperHeartRate)
+        assertFalse( exercise.heartRateLimits[4].isAbsoluteRange)
+        assertNull(exercise.heartRateLimits[4].timeBelow)
+        assertEquals(0, exercise.heartRateLimits[4].timeWithin)
+        assertEquals(0, exercise.heartRateLimits[4].timeAbove)
     }
 
     /**
@@ -523,7 +547,7 @@ class GarminFitParserTest {
         assertEquals(LocalDateTime.of(2021, 2, 6, 12, 3,55, 0), exercise.dateTime)
         assertEquals(3140, exercise.duration!!.toInt())
 
-        // check heartrate zone / target data
+        // check heartrate zone data
         assertEquals(5, exercise.heartRateLimits.size)
         assertEquals(87, exercise.heartRateLimits[0].lowerHeartRate)
         assertEquals(105, exercise.heartRateLimits[0].upperHeartRate)
@@ -598,5 +622,29 @@ class GarminFitParserTest {
         assertEquals(69, exercise.sampleList[500].altitude!!.toInt())
         assertEquals(52.028528228402, exercise.sampleList[500].position!!.latitude, 0.000001)
         assertEquals(6.0391104407608, exercise.sampleList[500].position!!.longitude, 0.000001)
+
+        // check heartrate zone data
+        // (heartrate zone boundaries are not available in Suunto Spartan FIT files, just the time in these zones)
+        assertEquals(3, exercise.heartRateLimits.size)
+        assertEquals(0, exercise.heartRateLimits[0].lowerHeartRate)
+        assertEquals(0, exercise.heartRateLimits[0].upperHeartRate)
+        assertFalse( exercise.heartRateLimits[0].isAbsoluteRange)
+        assertEquals(1320, exercise.heartRateLimits[0].timeBelow)
+        assertEquals(191, exercise.heartRateLimits[0].timeWithin)
+        assertNull(exercise.heartRateLimits[0].timeAbove)
+
+        assertEquals(0, exercise.heartRateLimits[1].lowerHeartRate)
+        assertEquals(0, exercise.heartRateLimits[1].upperHeartRate)
+        assertFalse( exercise.heartRateLimits[1].isAbsoluteRange)
+        assertNull(exercise.heartRateLimits[1].timeBelow)
+        assertEquals(312, exercise.heartRateLimits[1].timeWithin)
+        assertNull(exercise.heartRateLimits[1].timeAbove)
+
+        assertEquals(0, exercise.heartRateLimits[2].lowerHeartRate)
+        assertEquals(0, exercise.heartRateLimits[2].upperHeartRate)
+        assertFalse( exercise.heartRateLimits[2].isAbsoluteRange)
+        assertNull(exercise.heartRateLimits[2].timeBelow)
+        assertEquals(254, exercise.heartRateLimits[2].timeWithin)
+        assertEquals(162, exercise.heartRateLimits[2].timeAbove)
     }
 }

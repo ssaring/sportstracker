@@ -93,7 +93,8 @@ internal class FitMessageListener : MesgListener {
             exercise.cadence = ExerciseCadence(avgCadence, maxCadence, totalCycles)
         }
 
-        // read optional heartrate zone data (stored on older Garmin devices here, e.g. Edge 520 or Fenix 2)
+        // read optional heartrate zone data (stored on older Garmin devices here, e.g. Edge 520 or Suunto Spartan)
+        // (the heartrate zone boundaries are not available in the activities of these devices)
         mesg.timeInHrZone?.let { timeInHrZone ->
 
             for (i in 0..timeInHrZone.size - 3) {
@@ -108,10 +109,6 @@ internal class FitMessageListener : MesgListener {
                     )
                 )
             }
-
-            // TODO where are the zone definitions stored?
-            // TODO if not stored, then display them as Zone 1, 2, ... (and ignore these zones in Diagram panel)
-            // TODO add / extend unit test
         }
     }
 
