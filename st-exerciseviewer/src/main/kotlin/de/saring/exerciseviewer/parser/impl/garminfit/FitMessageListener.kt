@@ -4,20 +4,11 @@ import com.garmin.fit.*
 import java.util.LinkedList
 
 import de.saring.exerciseviewer.core.EVException
-import de.saring.exerciseviewer.data.EVExercise
-import de.saring.exerciseviewer.data.ExerciseAltitude
-import de.saring.exerciseviewer.data.ExerciseCadence
-import de.saring.exerciseviewer.data.ExerciseSample
-import de.saring.exerciseviewer.data.ExerciseSpeed
-import de.saring.exerciseviewer.data.ExerciseTemperature
-import de.saring.exerciseviewer.data.Lap
-import de.saring.exerciseviewer.data.LapAltitude
-import de.saring.exerciseviewer.data.LapSpeed
-import de.saring.exerciseviewer.data.LapTemperature
-import de.saring.exerciseviewer.data.Position
+import de.saring.exerciseviewer.data.*
 import de.saring.util.Date310Utils
 import de.saring.util.unitcalc.CalculationUtils
 import de.saring.util.unitcalc.ConvertUtils
+import kotlin.math.roundToInt
 
 /**
  * Message listener implementation for creating the EVExercise object from the FIT messages send by the decoder/parser.
@@ -26,21 +17,16 @@ import de.saring.util.unitcalc.ConvertUtils
  */
 internal class FitMessageListener : MesgListener {
 
-    /**
-     * The parsed exercise.
-     */
+    /** The parsed exercise. */
     private val exercise = EVExercise(EVExercise.ExerciseFileType.GARMIN_FIT)
-    /**
-     * List of created laps (collected in a LinkedList and not in EVExercise array, much faster).
-     */
+
+    /** List of created laps (collected in a LinkedList and not in EVExercise array, much faster). */
     private val lFitLaps = LinkedList<FitLap>()
-    /**
-     * List of created exercise samples (collected in a LinkedList and not in EVExercise array, much faster).
-     */
+
+    /** List of created exercise samples (collected in a LinkedList and not in EVExercise array, much faster). */
     private val lSamples = LinkedList<ExerciseSample>()
-    /**
-     * Flag for availability of temperature data.
-     */
+
+    /** Flag for availability of temperature data. */
     private var temperatureAvailable = false
 
     override fun onMesg(mesg: Mesg) {
@@ -52,6 +38,7 @@ internal class FitMessageListener : MesgListener {
             MesgNum.RECORD -> readRecordMessage(RecordMesg(mesg))
             MesgNum.LENGTH -> readLengthMessage(LengthMesg(mesg))
             MesgNum.DEVICE_INFO -> readDeviceInfoMessage(DeviceInfoMesg(mesg))
+            MESG_NUM_HEARTRATE_ZONES_NEW -> readHeartrateZonesNewMessage(mesg)
         }
     }
 
@@ -75,7 +62,7 @@ internal class FitMessageListener : MesgListener {
             exercise.recordingMode.isHeartRate = true
             exercise.heartRateMax = it
         }
-        mesg.totalCalories?.let {exercise.energy = it }
+        mesg.totalCalories?.let { exercise.energy = it }
 
         // read optional speed data
         mesg.totalDistance?.let { totalDistance ->
@@ -243,6 +230,65 @@ internal class FitMessageListener : MesgListener {
             }
         }
     }
+
+    /**
+     * Reads the heartrate zone / target information from the specified message. This message is contained in the FIT
+     * files of newer Garmin devices and has been tested successfully with FIT files from Fenix 5, Fenix 6, Forerunner
+     * 645 and Edge 530. The current FIT SDK does not support this message yet, so it needs to be processed by using
+     * special message and field numbers and without an appropriate message type.
+     * This message will be processed for each lap and then finally for the entire activity, there's no way to ignore
+     * the lap messages. Therefore all messages are being processed, the last contains the required data.
+     *
+     * TODO Use the Message type and numbers of the FIT SDK when it will be supported (message number 216).
+     *
+     * @param mesg heartrate zone message
+     */
+    private fun readHeartrateZonesNewMessage(mesg: Mesg) {
+
+        // TODO no data for e.g. Garmin Forerunner 910, Garmin Edge 520, Garmin Edge 820, Garmin Fenix 2, Suunto Spartan
+        // => Garmin Forerunner 35 does not contain HR zone data at all
+        // => get the data for them from other messages
+
+        if (exercise.recordingMode.isHeartRate) {
+
+            var hrZoneSplits: ShortArray = shortArrayOf()
+            mesg.getField(FIELD_NUM_HR_ZONE_SPLITS)?.let {
+                hrZoneSplits = it.shortValues.toShortArray()
+            }
+
+            var hrZoneTimes: LongArray = longArrayOf()
+            mesg.getField(FIELD_NUM_HR_ZONE_TIMES)?.let {
+                hrZoneTimes = it.longValues.toLongArray()
+            }
+
+            // ensure zone splits and times in zones are available
+            if (hrZoneSplits.isNotEmpty() && hrZoneTimes.size == hrZoneSplits.size + 1) {
+
+                // process and store all zones (delete from the previous lap message first)
+                exercise.heartRateLimits.clear()
+                for (i in 0..hrZoneSplits.size - 2) {
+                    exercise.heartRateLimits.add(
+                        HeartRateLimit(
+                            hrZoneSplits[i],
+                            hrZoneSplits[i + 1],
+                            if (i == 0) convertMillisToSeconds(hrZoneTimes.first()) else null,
+                            convertMillisToSeconds(hrZoneTimes[i + 1]),
+                            if (i == hrZoneSplits.size - 2) convertMillisToSeconds(hrZoneTimes.last()) else null,
+                            true
+                        )
+                    )
+                }
+            }
+
+            // TODO: store and display the other interesting information from this message
+            // -> current max heartrate of the user (not for the activity)
+            // const val FIELD_NUM_HR_MAX = 11 // contains 1 value of type Short (unit: bpm)
+            // -> current lactate threshold heartrate
+            // const val FIELD_NUM_HR_LACTATE_THRESHOLD = 13 // contains 1 value of type Short (unit: bpm)
+        }
+    }
+
+    private fun convertMillisToSeconds(msec: Long) = (msec / 1000.0).roundToInt()
 
     /**
      * Returns the EVExercise created from the received message. It sets up all lap and sample data and calculates the
@@ -469,5 +515,26 @@ internal class FitMessageListener : MesgListener {
                     .maxOrNull()
                     ?.let { exercise.heartRateMax = it }
         }
+    }
+
+    private companion object {
+
+        /**
+         * Number for detecting heartrate zone messages for newer Garmin devices, e.g. Fenix 5 or Forerunner 645
+         * (message is unsupported in FIT SDK yet).
+         */
+        const val MESG_NUM_HEARTRATE_ZONES_NEW = 216
+
+        /**
+         * Number for detecting heartrate zone time fields in heartrate zone messages for newer Garmin devices
+         * (unsupported yet). This field contains multiple values of type Long (below + x zones + above, unit: msec).
+         */
+        const val FIELD_NUM_HR_ZONE_TIMES = 2
+
+        /**
+         * Number for detecting heartrate zone splits in heartrate zone messages for newer Garmin devices (unsupported
+         * yet). This field contains multiple values of type Short (typically 6 values for 5 zones, unit: bpm).
+         */
+        const val FIELD_NUM_HR_ZONE_SPLITS = 6
     }
 }
