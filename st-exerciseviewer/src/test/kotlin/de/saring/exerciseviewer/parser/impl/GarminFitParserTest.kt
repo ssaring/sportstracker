@@ -36,7 +36,7 @@ class GarminFitParserTest {
     private val defaultTimeZone = TimeZone.getDefault()
 
     /**
-     * Change locale/timezone to Germany (files recorded there), otherwise the datetime comparision fails.
+     * Change locale/timezone to Germany (files recorded there), otherwise the datetime comparison fails.
      */
     @BeforeAll
     fun setUp() {
@@ -461,7 +461,7 @@ class GarminFitParserTest {
 
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
-        assertEquals("GARMIN FENIX6 (SW 5.0)", exercise.deviceName) // Fenix 6 model name is still missing in the GarminProduct class (FIT SDK)
+        assertEquals("GARMIN FENIX6 (SW 5.0)", exercise.deviceName)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
@@ -501,6 +501,48 @@ class GarminFitParserTest {
         assertEquals(87 * 1000, exercise.sampleList[20].timestamp!!.toInt())
         assertEquals(6.15, exercise.sampleList[20].speed!!.toDouble(), 0.01)
         assertEquals(2, exercise.sampleList[20].altitude!!.toInt())
+    }
+
+    /**
+     * This method tests the parser with an exercise file with running data (incl. heartrate, altitude, cadence)
+     * recorded by a Garmin Fenix 6S Pro watch.
+     * This test focuses on the heartrate zone data, as this is stored in a different way on newer Garmin devices
+     * (e.g. Garmin Fenix 5 or later, Garmin Edge 530 or later)
+     */
+    @Test
+    @Throws(EVException::class)
+    fun testParseExerciseFenix6SProRunningHeartrateZones() {
+        val exercise = parser.parseExercise("misc/testdata/garmin-fit/Garmin_Fenix_6S_Pro-Running.fit")
+
+        // check exercise data
+        assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
+        assertEquals("GARMIN FENIX6S (SW 13.1)", exercise.deviceName)
+        assertTrue(exercise.recordingMode.isHeartRate)
+
+        // check some basic data
+        assertEquals(LocalDateTime.of(2021, 2, 6, 12, 3,55, 0), exercise.dateTime)
+        assertEquals(3140, exercise.duration!!.toInt())
+
+        // check heartrate zone / target data
+        assertEquals(5, exercise.heartRateLimits.size)
+        assertEquals(87, exercise.heartRateLimits[0].lowerHeartRate)
+        assertEquals(105, exercise.heartRateLimits[0].upperHeartRate)
+        assertTrue( exercise.heartRateLimits[0].isAbsoluteRange)
+        assertEquals(0, exercise.heartRateLimits[0].timeBelow)
+        assertEquals(21, exercise.heartRateLimits[0].timeWithin)
+        assertNull(exercise.heartRateLimits[0].timeAbove)
+
+        assertEquals(121, exercise.heartRateLimits[2].lowerHeartRate)
+        assertEquals(140, exercise.heartRateLimits[2].upperHeartRate)
+        assertNull(exercise.heartRateLimits[2].timeBelow)
+        assertEquals(240, exercise.heartRateLimits[2].timeWithin)
+        assertNull(exercise.heartRateLimits[2].timeAbove)
+
+        assertEquals(157, exercise.heartRateLimits[4].lowerHeartRate)
+        assertEquals(174, exercise.heartRateLimits[4].upperHeartRate)
+        assertNull(exercise.heartRateLimits[4].timeBelow)
+        assertEquals(0, exercise.heartRateLimits[4].timeWithin)
+        assertEquals(0, exercise.heartRateLimits[4].timeAbove)
     }
 
     /**

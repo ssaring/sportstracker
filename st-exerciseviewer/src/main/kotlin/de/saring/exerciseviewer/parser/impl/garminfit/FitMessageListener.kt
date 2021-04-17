@@ -232,10 +232,10 @@ internal class FitMessageListener : MesgListener {
     }
 
     /**
-     * Reads the heartrate zone / target information from the specified message. This message is contained in the FIT
-     * files of newer Garmin devices and has been tested successfully with FIT files from Fenix 5, Fenix 6, Forerunner
-     * 645 and Edge 530. The current FIT SDK does not support this message yet, so it needs to be processed by using
-     * special message and field numbers and without an appropriate message type.
+     * Reads the heartrate zone information from the specified message. This message is contained in the FIT files of
+     * newer Garmin devices and has been tested successfully with FIT files from Fenix 5, Fenix 6, Forerunner 645 and
+     * Edge 530. The current FIT SDK does not support this message yet, so it needs to be processed by using special
+     * message and field numbers and without an appropriate message type.
      * This message will be processed for each lap and then finally for the entire activity, there's no way to ignore
      * the lap messages. Therefore all messages are being processed, the last contains the required data.
      *
