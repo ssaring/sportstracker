@@ -4,6 +4,12 @@ Changelog
 v7.8.1:
  SportsTracker changes:
  ExerciseViewer changes:
+ - Garmin FIT parser: provides heartrate zones information and times within
+   these zones (if available)
+   - newer Garmin devices (e.g. Garmin Forerunner 645, Garmin Fenix 5,
+     Garmin Edge 530 and later) provide all the data
+   - older Garmin devices (e.g. Garmin Forerunner 520 or 820, Suunto Spartan)
+     provide only the time in the heartrate zones, not the zone boundaries
  Project changes:
 
 v7.8.0:
