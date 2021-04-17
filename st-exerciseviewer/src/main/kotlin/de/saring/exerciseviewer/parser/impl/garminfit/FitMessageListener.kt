@@ -92,6 +92,27 @@ internal class FitMessageListener : MesgListener {
             val totalCycles = mesg.totalCycles ?: null
             exercise.cadence = ExerciseCadence(avgCadence, maxCadence, totalCycles)
         }
+
+        // read optional heartrate zone data (stored on older Garmin devices here, e.g. Edge 520 or Fenix 2)
+        mesg.timeInHrZone?.let { timeInHrZone ->
+
+            for (i in 0..timeInHrZone.size - 3) {
+                exercise.heartRateLimits.add(
+                    HeartRateLimit(
+                        0,
+                        0,
+                        if (i == 0) timeInHrZone.first().roundToInt() else null,
+                        timeInHrZone[i + 1].roundToInt(),
+                        if (i == timeInHrZone.size - 3) timeInHrZone.last().roundToInt() else null,
+                        false
+                    )
+                )
+            }
+
+            // TODO where are the zone definitions stored?
+            // TODO if not stored, then display them as Zone 1, 2, ... (and ignore these zones in Diagram panel)
+            // TODO add / extend unit test
+        }
     }
 
     /**
