@@ -10,6 +10,8 @@ v7.8.1:
      Garmin Edge 530 and later) provide all the data
    - older Garmin devices (e.g. Garmin Forerunner 520 or 820, Suunto Spartan)
      provide only the time in the heartrate zones, not the zone boundaries
+  - Diagram and Track Panel: bugfix for issue #243
+    (exercise files with completely flat altitude can't be displayed)
  Project changes:
 
 v7.8.0:

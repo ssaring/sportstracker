@@ -137,8 +137,9 @@ class TrackPanelController(
             val plotAltitude = chartAltitude.plot as XYPlot
 
             // use custom axis (both) with fixed ranges to avoid altitude to start with 0 and to avoid empty space on end of the distance axis
+            // (use a buffer of 10 on both range ends for avoiding display errors for exercises with flat altitude)
             val axisAltitude = FixedRangeNumberAxis(
-                    getAltitudeAxisTitle(), Range(sAltitude.minY, sAltitude.maxY), true)
+                    getAltitudeAxisTitle(), Range(sAltitude.minY - 10.0, sAltitude.maxY + 10.0), true)
             plotAltitude.rangeAxis = axisAltitude
             plotAltitude.domainAxis = FixedRangeNumberAxis(null, Range(0.0, sAltitude.maxX), false)
 

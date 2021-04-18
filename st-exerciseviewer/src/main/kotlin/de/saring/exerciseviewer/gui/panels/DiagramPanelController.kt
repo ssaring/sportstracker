@@ -344,7 +344,8 @@ class DiagramPanelController(
             /// use custom Y axis with fixed ranges to avoid e.g. altitude to start with 0
             // (don't do that when the minimum value is 0 (e.g. for speed), then there will be a useless margin below 0)
             if (sLeft.minY != 0.0) {
-                plot.rangeAxis = FixedRangeNumberAxis(plot.rangeAxis.label, Range(sLeft.minY, sLeft.maxY), true)
+                // use a buffer of 10 on both range ends for avoiding display errors for exercises with flat altitude
+                plot.rangeAxis = FixedRangeNumberAxis(plot.rangeAxis.label, Range(sLeft.minY - 10.0, sLeft.maxY + 10.0), true)
             }
 
             /// use custom X axis with fixed ranges to avoid empty space on end of the distance axis
