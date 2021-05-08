@@ -25,7 +25,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 * leaflet-color-markers (included, modified)
     * Homepage: https://github.com/pointhi/leaflet-color-markers
     * License: not specified
-* kotlinx.serialization 1.1.0 (for the demo only)
+* kotlinx.serialization 1.2.0 (for the demo only)
     * Homepage: https://github.com/Kotlin/kotlinx.serialization
     * License: Apache License 2.0
 
@@ -59,7 +59,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 #### Changelog
 
 LeafletMap 1.0.6:
-* Updated Kotlin to version 1.5.0-RC (solves JDK 16 compatibility issues)
+* Updated Kotlin to version 1.5.0 (solves JDK 16 compatibility issues)
 
 LeafletMap 1.0.5:
 * Added map layer "Satellite Esri" (contributed by Thomas Feuster, PR #211)

@@ -3,7 +3,7 @@ Changelog
 
 v7.8.1:
  SportsTracker changes:
- - updated Kotlin to version 1.5.0-RC (solves JDK 16 compatibility issues)
+ - updated Kotlin to version 1.5.0 (solves JDK 16 compatibility issues)
  ExerciseViewer changes:
  - Garmin FIT parser: provides heartrate zones information and times within
    these zones (if available)
