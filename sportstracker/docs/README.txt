@@ -369,18 +369,16 @@ There are many command line and graphical tools available for working with
 SQLite. If you´re looking for a handy, cross platform, open source application
 you should try 'DB Browser for SQLite' (http://sqlitebrowser.org/).
 
-Note: SQLite does not provides a date and time data type, the export uses an
-INTEGER as Unix-Time instead, this is the number of seconds since 1970-01-01
-00:00:00 UTC (see https://www.sqlite.org/datatype3.html).
+Note: SQLite does not provides a date and time data type, the export uses a
+string in ISO 8601 format "yyyy-MM-dd HH:mm:ss" (see
+https://www.sqlite.org/datatype3.html).
 The queries can use the built-in functions for conversion and formatting (see
 https://www.sqlite.org/lang_datefunc.html).
 
-Examples for date queries:
-select datetime(date_time, 'unixepoch') from exercise;
-select e.id, datetime(e.date_time, 'unixepoch'), max(e.distance)
-    from exercise e
-    where date(e.date_time, 'unixepoch')
-    between date('2015-06-29') and date('2015-12-31');
+Example for a date query:
+  select e.id, e.date_time, max(e.distance)
+  from exercise e
+  where date(e.date_time) between date('2015-06-29') and date('2015-12-31');
 
 
 Developer Requirements

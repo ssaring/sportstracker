@@ -117,18 +117,6 @@ class Date310UtilsTest {
                 Date310Utils.getNoonDateTimeForDate(null))
     }
 
-    /**
-     * Tests the method localDateTimeToUnixTime().
-     */
-    @Test
-    fun testLocalDateTimeToUnixTime() {
-
-        assertEquals(0L, Date310Utils.localDateTimeToUnixTime( //
-                LocalDateTime.of(1970, 1, 1, 0, 0, 0)))
-        assertEquals(1461253500L, Date310Utils.localDateTimeToUnixTime( //
-                LocalDateTime.of(2016, 4, 21, 15, 45, 0)))
-    }
-
     private fun createDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int): Date {
         val calendar = Calendar.getInstance()
         calendar.clear()

@@ -5,7 +5,6 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
-import java.time.ZoneOffset
 import java.time.temporal.WeekFields
 import java.util.Date
 
@@ -97,16 +96,5 @@ object Date310Utils {
     fun getNoonDateTimeForDate(date: LocalDate?): LocalDateTime {
         val tempDate = date ?: LocalDate.now()
         return LocalDateTime.of(tempDate, LocalTime.of(12, 0))
-    }
-
-    /**
-     * Converts the specified LocalDateTime to Unix time (the number of seconds since 1970-01-01 00:00:00 UTC).
-     *
-     * @param dateTime LocalDateTime object containing the date and time (JSR 310)
-     * @return Unix time
-     */
-    @JvmStatic
-    fun localDateTimeToUnixTime(dateTime: LocalDateTime): Long {
-        return dateTime.toInstant(ZoneOffset.UTC).epochSecond
     }
 }

@@ -1,7 +1,6 @@
 -- SQLite schema definition for SportsTracker export.
 
--- All date-time values are stored as an INTEGER, which is the Unix Time format
--- (number of seconds since 1970-01-01 00:00:00 UTC).
+-- All date-time values are stored as an TEXT with format "yyyy-MM-dd HH:mm:ss"
 -- All boolean values are stored as an INTEGER, 0 is false, 1 is true.
 
 -- enable Foreign Key Support (disabled by default)
@@ -39,7 +38,7 @@ CREATE TABLE EQUIPMENT (
 
 CREATE TABLE EXERCISE (
     ID INTEGER PRIMARY KEY NOT NULL,
-    DATE_TIME INTEGER NOT NULL,
+    DATE_TIME TEXT NOT NULL,
     SPORT_TYPE_ID INTEGER NOT NULL,
     SPORT_SUBTYPE_ID INTEGER NOT NULL,
     INTENSITY TEXT NOT NULL,

@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 
 import javax.inject.Singleton;
 
@@ -38,6 +39,7 @@ public class SQLiteExporter {
 
     private static final String SCHEMA_FILE = "/sql/st-export.sql";
     private static final String DATABASE_FILE = System.getProperty("user.home") + "/st-export.sqlite";
+    private static final DateTimeFormatter SQLITE_DATETIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private STDocument document;
 
@@ -179,7 +181,7 @@ public class SQLiteExporter {
             statement.clearParameters();
 
             statement.setInt(1, exercise.getId());
-            statement.setLong(2, Date310Utils.localDateTimeToUnixTime(exercise.getDateTime()));
+            statement.setString(2, exercise.getDateTime().format(SQLITE_DATETIME_FORMATTER));
             statement.setInt(3, exercise.getSportType().getId());
             statement.setInt(4, exercise.getSportSubType().getId());
             statement.setString(5, String.valueOf(exercise.getIntensity()));
@@ -212,7 +214,7 @@ public class SQLiteExporter {
             statement.clearParameters();
 
             statement.setInt(1, note.getId());
-            statement.setLong(2, Date310Utils.localDateTimeToUnixTime(note.getDateTime()));
+            statement.setString(2, note.getDateTime().format(SQLITE_DATETIME_FORMATTER));
             statement.setString(3, note.getComment());
             statement.executeUpdate();
         }
@@ -227,7 +229,7 @@ public class SQLiteExporter {
             statement.clearParameters();
 
             statement.setInt(1, weight.getId());
-            statement.setLong(2, Date310Utils.localDateTimeToUnixTime(weight.getDateTime()));
+            statement.setString(2, weight.getDateTime().format(SQLITE_DATETIME_FORMATTER));
             statement.setFloat(3, weight.getValue());
             if (!StringUtils.isNullOrEmpty(weight.getComment())) {
                 statement.setString(4, weight.getComment());
