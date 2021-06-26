@@ -124,7 +124,7 @@ Installation and Start
 ----------------------
 
 For Windows, macOS and some Linux systems there are native installer packages
-available on the SourceForge project page. They include an embedded Java
+available on the GitHub project release page. They include an embedded Java
 Runtime Environment (JRE), so the user does not need to install Java before.
 The installers will create a menu entry for easy SportsTracker startup.
 
@@ -489,16 +489,6 @@ The SportsTracker project uses Git for Source Code Management (SCM), the project
 repository is hosted at GitHub. 
 URL: https://github.com/ssaring/sportstracker
 
-Subversion was used until SportsTracker 4.2.1, since version 4.3.0 the
-development has been switched to Mercurial and since version 6.1.0 to Git.
-
-The SVN history was not imported to the Mercurial repository, there are too 
-much revisions, which are not interesting anymore (also from Mono/.NET past).
-So we used the chance to start with a lean Mercurial repository.
-The SVN repository will stay online at SourceForge for being able to access 
-all history revisions, if really needed. But there will be no future commits
-to SVN anymore, they will all go to the Git repository.
-
 You can find further details for the SCM usage and the collaboration workflow
 at the GitHub project site and in the Git / GitHub documentation.
 
@@ -506,12 +496,8 @@ at the GitHub project site and in the Git / GitHub documentation.
 Contact
 -------
 
-The website of SportsTracker can be found at:
+The website of the SportsTracker project can be found at:
 https://www.saring.de/sportstracker
-
-Download packages are available at the SourceForge project site
-(https://sourceforge.net/projects/sportstracker/), the discussion forum is
-located there too. 
 
 For enhancement requests or bug reports please use the issue tracker on the 
 GitHub project page (https://github.com/ssaring/sportstracker/issues).
