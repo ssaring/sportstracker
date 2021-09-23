@@ -11,8 +11,8 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Dependencies and used libraries
 
-* Java SE 11 (tested with AdoptOpenJDK 16)
-* OpenJFX 16
+* Java SE 11 (tested with OpenJDK 17)
+* OpenJFX 17.0.0.1
     * Homepage: https://openjfx.io/
     * License: GPL v2 + Classpath Exception
 * Kotlin 1.5.0
@@ -60,6 +60,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 LeafletMap 1.0.6:
 * Updated Kotlin to version 1.5.0 (solves JDK 16 compatibility issues)
+* Updated JavaFX / OpenJFX to version 17.0.0.1
 
 LeafletMap 1.0.5:
 * Added map layer "Satellite Esri" (contributed by Thomas Feuster, PR #211)

@@ -7,6 +7,8 @@ v7.8.1:
  - SQLite Exporter: datetime of exercises, notes and weight entries is now a
    string in ISO 8601 format "yyyy-MM-dd HH:mm:ss" instead of seconds since
    1.1.1970 (makes database processing easier and content more readable)
+ - updated to JavaFX / OpenJFX 17
+ - ensured JDK 17 compatibility
  ExerciseViewer changes:
  - Garmin FIT parser: provides heartrate zones information and times within
    these zones (if available)

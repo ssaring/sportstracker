@@ -17,7 +17,7 @@ macOS Catalina text rendering problem:
   -> same problem in all combinations
 - bug has been reported (and accepted) in the OpenJDK JavaFX bug system:
   - https://bugs.openjdk.java.net/browse/JDK-8236689
-  - bugfix is targeted for OpenJFX 17
+  - bugfix is targeted for OpenJFX 18
 
 Reminder for Notes:
 - useful for planning events or tasks (e.g. for training or maintenance)

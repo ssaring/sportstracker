@@ -110,7 +110,7 @@ implementations will probably work too (e.g. Oracle JDK).
 The SportsTracker installer packages contain an embedded Java SE Runtime
 Environment (JRE), a Java installation is not needed. Users of binary packages
 need to install a suited JDK before.
-The OpenJDK can be downloaded from: http://jdk.java.net/
+The OpenJDK can be downloaded e.g. from: https://adoptium.net/
 
 If you want to download exercise files from your heartrate monitor you might
 need one of the download tools listed above.
@@ -386,7 +386,7 @@ Developer Requirements
 
 For compilation of the SportsTracker sources you need:
   - Java SE Development Kit (JDK) 16 or greater
-    (from http://jdk.java.net or https://adoptopenjdk.net)
+    (from http://jdk.java.net or https://adoptium.net)
   - Maven 3.6.0 or greater
     (from http://maven.apache.org)
 
@@ -432,7 +432,7 @@ All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
 The SportsTracker project uses the following libraries:
 
-  - OpenJFX 16 (https://openjfx.io/)
+  - OpenJFX 17 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
   - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
       Includes: javax.inject-1.jar
