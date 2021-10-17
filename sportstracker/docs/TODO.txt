@@ -1,6 +1,11 @@
 SportsTracker-TODO
 ==================
 
+CI build system:
+- travis-ci.org has been ceased, alternative needed
+- either migrate to travis-ci.com (pricing for open source?) OR
+- migrate to GitHub Actions ( https://github.com/features/actions )
+
 OpenJFX 16/15 update:
 - What about? "WARNING com.sun.javafx.application.PlatformImpl startup Unsupported JavaFX configuration: classes were loaded from 'unnamed module @3a567bb0'"
 - a lot of CSS warning when opening the Exercise Dialog (looks and works still properly)
