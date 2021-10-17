@@ -9,4 +9,4 @@ services:
 language: java
 
 jdk:
-  - openjdk16
+  - openjdk17
