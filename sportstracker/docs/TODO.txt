@@ -2,16 +2,25 @@ SportsTracker-TODO
 ==================
 
 GitHub Actions CI:
+- Docs:
+  - https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+  - https://medium.com/@alexander.volminger/ci-cd-for-java-maven-using-github-actions-d009a7cb4b8f
+- Example: https://github.com/actions/starter-workflows/blob/main/ci/maven.yml
 - Status:
   - initial workflow created, but fails due to missing xvfb display
   - CI status badge added to README.md
 - Next:
+  - do the failed build stop properly, they seem to hang in 'Build with Maven'
   - successful build with tests
+    - fails with 'Exception in thread "Thread-0" java.lang.UnsupportedOperationException: Unable to open DISPLAY'
+    - see https://remarkablemark.org/blog/2020/12/12/headless-test-in-github-actions-workflow/
   - test build trigger on pull requests and direct master commits
   - test error handling on failing build
-  - test CI status badge in README.md
+  - enabled dependency cache?
+  - test CI status badge in README.md (works with failing build)
   - Changelog
   - delete Travis CI script / documentation update?
+  - delete Travis account?
 
 OpenJFX 16/15 update:
 - What about? "WARNING com.sun.javafx.application.PlatformImpl startup Unsupported JavaFX configuration: classes were loaded from 'unnamed module @3a567bb0'"
