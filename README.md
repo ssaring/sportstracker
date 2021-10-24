@@ -23,6 +23,6 @@ ExerciseViewer application.
 * SportsTracker website: https://www.saring.de/sportstracker/
 * GitHub project site: https://github.com/ssaring/sportstracker/
     * provides [release downloads](https://github.com/ssaring/sportstracker/releases), source code management, an [issue tracker](https://github.com/ssaring/sportstracker/issues) and pull request processing
-* Travis Continuous Integration: [![Build Status](https://travis-ci.org/ssaring/sportstracker.svg?branch=master)](https://travis-ci.org/ssaring/sportstracker)
+* Continuous Integration: [![SportsTracker CI](https://github.com/ssaring/sportstracker/actions/workflows/sportstracker-ci.yml/badge.svg?branch=master)](https://github.com/ssaring/sportstracker/actions/workflows/sportstracker-ci.yml)
 * SportsTracker documentation: [README.txt](sportstracker/docs/README.txt)
 * SportsTracker license: [GPL v2](sportstracker/docs/LICENSE.txt)
