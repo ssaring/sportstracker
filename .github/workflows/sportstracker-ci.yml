@@ -20,4 +20,4 @@ jobs:
       - name: Build with Maven
         uses: GabrielBB/xvfb-action@v1
         with:
-          run: mvn -B package -DskipTests
+          run: mvn -B package
