@@ -7,16 +7,10 @@ GitHub Actions CI:
   - https://medium.com/@alexander.volminger/ci-cd-for-java-maven-using-github-actions-d009a7cb4b8f
 - Example: https://github.com/actions/starter-workflows/blob/main/ci/maven.yml
 - Status:
-  - initial workflow created, but fails due to missing xvfb display
+  - works properly and fast, incl. UI relates test execution
   - CI status badge added to README.md
 - Next:
-  - successful build with tests
-    - fails with 'Exception in thread "Thread-0" java.lang.UnsupportedOperationException: Unable to open DISPLAY'
-    - see https://remarkablemark.org/blog/2020/12/12/headless-test-in-github-actions-workflow/
   - test build trigger on pull requests and direct master commits
-  - test error handling on failing build
-  - enabled dependency cache?
-  - test CI status badge in README.md (works with failing build)
   - Changelog
   - delete Travis CI script / documentation update?
   - delete Travis account?
