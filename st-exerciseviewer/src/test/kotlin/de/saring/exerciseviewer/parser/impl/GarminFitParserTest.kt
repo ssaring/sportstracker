@@ -102,7 +102,7 @@ class GarminFitParserTest {
 
         assertEquals(121, exercise.heartRateAVG?.toInt())
         assertEquals(180, exercise.heartRateMax?.toInt())
-        assertEquals(1567, exercise.energy?.toInt())
+        assertEquals(1567000, exercise.energy?.toInt())
 
         assertEquals(101710, exercise.speed?.distance)
         assertEquals(24.9948, exercise.speed?.speedAvg!!.toDouble(), 0.001)
