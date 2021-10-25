@@ -19,4 +19,5 @@ jobs:
           distribution: 'adopt'
       - name: Build with Maven
         uses: GabrielBB/xvfb-action@v1
-        run: mvn -B package
+        with:
+          run: mvn -B package -DskipTests
