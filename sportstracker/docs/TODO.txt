@@ -1,20 +1,6 @@
 SportsTracker-TODO
 ==================
 
-GitHub Actions CI:
-- Docs:
-  - https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-  - https://medium.com/@alexander.volminger/ci-cd-for-java-maven-using-github-actions-d009a7cb4b8f
-- Example: https://github.com/actions/starter-workflows/blob/main/ci/maven.yml
-- Status:
-  - works properly and fast, incl. UI relates test execution
-  - CI status badge added to README.md
-- Next:
-  - test build trigger on pull requests and direct master commits
-  - Changelog
-  - delete Travis CI script / documentation update?
-  - delete Travis account?
-
 OpenJFX 16/15 update:
 - What about? "WARNING com.sun.javafx.application.PlatformImpl startup Unsupported JavaFX configuration: classes were loaded from 'unnamed module @3a567bb0'"
 - a lot of CSS warning when opening the Exercise Dialog (looks and works still properly)
