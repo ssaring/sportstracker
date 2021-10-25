@@ -10,7 +10,6 @@ GitHub Actions CI:
   - initial workflow created, but fails due to missing xvfb display
   - CI status badge added to README.md
 - Next:
-  - do the failed build stop properly, they seem to hang in 'Build with Maven'
   - successful build with tests
     - fails with 'Exception in thread "Thread-0" java.lang.UnsupportedOperationException: Unable to open DISPLAY'
     - see https://remarkablemark.org/blog/2020/12/12/headless-test-in-github-actions-workflow/

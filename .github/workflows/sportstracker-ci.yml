@@ -18,4 +18,5 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
       - name: Build with Maven
-        run: mvn -B package -DskipTests
+        uses: GabrielBB/xvfb-action@v1
+        run: mvn -B package
