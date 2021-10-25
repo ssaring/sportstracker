@@ -18,4 +18,4 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
       - name: Build with Maven
-        run: mvn clean package
+        run: mvn -B package -DskipTests
