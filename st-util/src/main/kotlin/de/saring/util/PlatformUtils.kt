@@ -26,5 +26,5 @@ object PlatformUtils {
     fun isLinux(): Boolean = getOperatingSystemName().startsWith("LINUX")
 
     private fun getOperatingSystemName(): String =
-            System.getProperty("os.name").toUpperCase(Locale.getDefault())
+        System.getProperty("os.name").uppercase(Locale.getDefault())
 }

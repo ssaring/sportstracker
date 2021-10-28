@@ -2,7 +2,6 @@ package de.saring.sportstracker.gui.dialogs;
 
 import java.io.IOException;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,7 +10,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
-import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
 import org.controlsfx.validation.ValidationSupport;
@@ -136,21 +134,6 @@ public abstract class AbstractDialogController {
     protected Window getWindow(final Control control) {
         final Scene scene = control.getScene();
         return scene == null ? null : scene.getWindow();
-    }
-
-    /**
-     * Focuses the specified control at dialog start. This will be done asynchronously, otherwise
-     * the focusing fails. If the control is a TextField, then the cursor will be placed to the end.
-     *
-     * @param control control to focus
-     */
-    protected void focusInitialControl(final Control control) {
-        Platform.runLater(() -> {
-            control.requestFocus();
-            if (control instanceof TextField) {
-                ((TextField) control).selectEnd();
-            }
-        });
     }
 
     private Dialog<ButtonType> createDialog(final Window parent, final String title, final Parent root) {

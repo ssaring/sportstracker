@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
-import org.mockito.Mockito.verifyZeroInteractions
+import org.mockito.Mockito.verifyNoInteractions
 import java.util.ArrayList
 
 /**
@@ -94,7 +94,7 @@ class IdObjectListChangeListenerTest {
         assertFalse(idObjectList.removeByID(5))
 
         assertEquals(3, idObjectList.size())
-        verifyZeroInteractions(listenerMock)
+        verifyNoInteractions(listenerMock)
     }
 
     /**
@@ -125,7 +125,7 @@ class IdObjectListChangeListenerTest {
         assertEquals(3, idObjectList.size())
         assertEquals(1, idObjectList.iterator().next().id)
 
-        verifyZeroInteractions(listenerMock)
+        verifyNoInteractions(listenerMock)
     }
 
     /**
