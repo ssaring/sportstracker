@@ -5,7 +5,7 @@ ExeciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
 - use standalone mode when just one argument has been passed at app execution
-- display ExeciseViewer window only, don't launch the SportsTracker application
+- display ExerciseViewer window only, don't launch the SportsTracker application
   and don't load user data then
 - use speed mode and unit system configured by the user
 - document EV standalone mode usage
