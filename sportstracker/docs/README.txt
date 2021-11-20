@@ -426,7 +426,9 @@ SportsTracker can be started from the IDE by executing the class
 "de.saring.sportstracker.STMain".
 It can also be started from command line after execution of "mvn package"
 with the command (inside the project root directory):
-  java -jar sportstracker/target/sportstracker-x.y.z.jar
+  java --module-path sportstracker/target/lib \
+       --add-modules javafx.controls,javafx.fxml,javafx.web \
+       -jar sportstracker/target/sportstracker-x.y.z.jar
 
 All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
