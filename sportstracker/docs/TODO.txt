@@ -1,10 +1,6 @@
 SportsTracker-TODO
 ==================
 
-OpenJFX 16/15 update:
-- a lot of CSS warning when opening the Exercise Dialog (looks and works still properly)
-  => seems to be an issue with TabPane CSS definition in OpenJFX, retry with next update
-
 macOS Catalina text rendering problem:
 - when using a non-hidpi display (e.g. a 24" 1920x1200) the text rendering looks broken
   - the antialiased text in labels, menus and text fields looks like vertical pixel
@@ -48,7 +44,7 @@ JavaFX Migration:
   - Dialogs can't be displayed when they contain multiple controls with validation support
     (see https://bitbucket.org/controlsfx/controlsfx/issues/539/multiple-dialog-fields-with-validation )
   - workaround is to setup the validation after the dialog has been shown (with Platform.invokeLater(...)
-    => remove after the bug has been fixed in Filter-, Note- and Weight Dialog
+    => remove after the bug has been fixed in Filter-, Exercise-, Note- and Weight Dialog
 - ExerciseViewer: Done & tested
   - Bug (also with JavaFX 8u40): EV window is always placed in screen center, not placed at center of parent window
     (initially, when no previous window bounds were persisted)

@@ -197,7 +197,8 @@ public class ExerciseDialogController extends AbstractDialogController {
         fillSportTypeDependentControls();
 
         setupBinding();
-        setupValidation();
+        // due to a ControlsFX bug the validation setup must be executed after the dialog has been shown
+        Platform.runLater(this::setupValidation);
         setupAutoCalculation();
 
         FxWorkarounds.fixDatePickerTextEntry(dpDate);

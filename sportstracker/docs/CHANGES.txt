@@ -11,6 +11,8 @@ v7.8.1:
  - ensured JDK 17 compatibility
  - created a GitHub Actions based CI (continuous integration) pipeline for
    build and test execution (replaces the stalled Travis CI build)
+ - Exercise Dialog: fixed CSS warning on dialog display
+   (caused by a ControlsFX validation bug)
  ExerciseViewer changes:
  - Garmin FIT parser: provides heartrate zones information and times within
    these zones (if available)
