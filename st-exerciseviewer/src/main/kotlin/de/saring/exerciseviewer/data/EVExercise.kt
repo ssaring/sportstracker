@@ -18,6 +18,7 @@ import java.time.LocalDateTime
  * @property cadence The cadence data of exercise (if recorded).
  * @property altitude The altitude data of exercise (if recorded).
  * @property temperature The temperature data of exercise (if recorded).
+ * @property power The power data of exercise (if recorded).
  * @property energy Energy "wasted" for exercise (in kCal).
  * @property energyTotal Cumulative "wasted" energy of all exercises (in kCal).
  * @property sumExerciseTime Cumulative workout time (in minutes).
@@ -44,6 +45,7 @@ data class EVExercise(
     var cadence: ExerciseCadence? = null,
     var altitude: ExerciseAltitude? = null,
     var temperature: ExerciseTemperature? = null,
+    var power: ExercisePower? = null,
     var energy: Int? = null,
     var energyTotal: Int? = null,
     var sumExerciseTime: Int? = null,

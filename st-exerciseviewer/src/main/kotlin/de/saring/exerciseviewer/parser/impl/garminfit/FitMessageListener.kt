@@ -93,20 +93,13 @@ internal class FitMessageListener : MesgListener {
             exercise.cadence = ExerciseCadence(avgCadence, maxCadence, totalCycles)
         }
 
-        mesg.avgPower?.let { avgPower ->
+        // read optional power data
+        mesg.avgPower?.let { powerAvg ->
             exercise.recordingMode.isPower = true
-
-            // TODO store power values in some Exercise Power class
-            // TODO this values does not match the values displayed in Garmin Connect!
-            println("AVG Power: ${avgPower}")
-
-            mesg.maxPower?.let { maxPower ->
-                println("Max Power: ${maxPower}")
-            }
-
-            mesg.normalizedPower?.let { normalizedPower ->
-                println("Normalized Power: ${normalizedPower}")
-            }
+            val powerMax = mesg.maxPower?.toShort() ?: null
+            val powerNormalized = mesg.normalizedPower?.toShort() ?: null
+            exercise.power = ExercisePower(powerAvg.toShort(), powerMax, powerNormalized)
+            println(exercise.power)
         }
 
         // read optional heartrate zone data (stored on older Garmin devices here, e.g. Edge 520 or Suunto Spartan)
