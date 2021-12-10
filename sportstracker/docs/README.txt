@@ -443,7 +443,7 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - JDOM 2.0.6 (http://www.jdom.org)
       License: Apache-style open source license
-  - ControlsFX 11.1.0 (http://controlsfx.org/)
+  - ControlsFX 11.1.1 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - JFreeChart 1.5.0 and JFreeChart-FX 1.0.1 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
@@ -463,7 +463,7 @@ The SportsTracker project uses the following libraries:
   - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.47.00
       URL: https://www.thisisant.com/developer/
       License: FIT Protocol License (open source by Dynastream / Garmin)
-      License URL: https://www.thisisant.com/resources/fit-sdk-beta/
+      License URL: https://developer.garmin.com/fit/download/
 
 All dependencies will be downloaded automatically by Maven. The Garmin FIT
 library is missing in the Maven central repository, so I've created my own

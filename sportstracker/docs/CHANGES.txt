@@ -13,6 +13,7 @@ v7.8.1:
    build and test execution (replaces the stalled Travis CI build)
  - Exercise Dialog: fixed CSS warning on dialog display
    (caused by a ControlsFX validation bug)
+ - updated ControlsFX to version 11.1.1
  ExerciseViewer changes:
  - Garmin FIT parser: provides heartrate zones information and times within
    these zones (if available)
@@ -38,7 +39,7 @@ v7.8.0:
    the previous type Text has caused problems in queries (e.g. sorting)
  - updated to JavaFX / OpenJFX 16
    - provides improved macOS 10.15 / 11 support and several bugfixes
- - updated ControlsFX to version 11.1.0
+ - updated ControlsFX to version 11.1.1
  - updated Kotlin to version 1.4.31
  - updated packaging of native installer creation for macOS, Windows and Linux
    - now uses jpackage introduced with JDK 14 (JEP 343)
