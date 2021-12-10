@@ -99,7 +99,6 @@ internal class FitMessageListener : MesgListener {
             val powerMax = mesg.maxPower?.toShort() ?: null
             val powerNormalized = mesg.normalizedPower?.toShort() ?: null
             exercise.power = ExercisePower(powerAvg.toShort(), powerMax, powerNormalized)
-            println(exercise.power)
         }
 
         // read optional heartrate zone data (stored on older Garmin devices here, e.g. Edge 520 or Suunto Spartan)

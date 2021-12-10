@@ -49,6 +49,9 @@ SportsTracker 7.8.1:
 
 - pv.main.zone_prefix (new)
 
+- pv.opt.power_data.text (new)
+- pv.opt.normalized_power.text (new)
+
 SportsTracker 7.8.0:
 
 - st.view.equipment_usage.Action.text=Equipment (new)

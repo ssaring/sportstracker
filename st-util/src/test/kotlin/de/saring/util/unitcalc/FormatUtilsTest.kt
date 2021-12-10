@@ -241,6 +241,16 @@ class FormatUtilsTest {
     }
 
     /**
+     * Tests that testPowerToString works as expected.
+     */
+    @Test
+    fun testPowerToString() {
+        assertEquals("0 W", FormatUtils(UnitSystem.METRIC).powerToString(0))
+        assertEquals("183 W", FormatUtils(UnitSystem.METRIC).powerToString(183))
+        assertEquals("1,234 W", FormatUtils(UnitSystem.METRIC).powerToString(1234))
+    }
+
+    /**
      * Tests that weightToString works as expected.
      */
     @Test
