@@ -133,7 +133,7 @@ class GarminFitParserTest {
         assertEquals(22.1364, exercise.lapList[0].speed?.speedEnd!!.toDouble(), 0.001)
         assertEquals(151, exercise.lapList[0].altitude?.ascent)
         assertEquals(81, exercise.lapList[0].altitude?.descent)
-        assertEquals(302,exercise. lapList[0].altitude?.altitude?.toInt())
+        assertEquals(302, exercise.lapList[0].altitude?.altitude?.toInt())
         assertEquals(20, exercise.lapList[0].temperature?.temperature?.toInt())
         assertEquals(51.05553, exercise.lapList[0].positionSplit?.latitude!!, 0.001)
         assertEquals(13.93589, exercise.lapList[0].positionSplit?.longitude!!, 0.001)
@@ -453,21 +453,21 @@ class GarminFitParserTest {
         assertEquals(5, exercise.heartRateLimits.size)
         assertEquals(0, exercise.heartRateLimits[0].lowerHeartRate)
         assertEquals(0, exercise.heartRateLimits[0].upperHeartRate)
-        assertFalse( exercise.heartRateLimits[0].isAbsoluteRange)
+        assertFalse(exercise.heartRateLimits[0].isAbsoluteRange)
         assertEquals(1, exercise.heartRateLimits[0].timeBelow)
         assertEquals(634, exercise.heartRateLimits[0].timeWithin)
         assertNull(exercise.heartRateLimits[0].timeAbove)
 
         assertEquals(0, exercise.heartRateLimits[2].lowerHeartRate)
         assertEquals(0, exercise.heartRateLimits[2].upperHeartRate)
-        assertFalse( exercise.heartRateLimits[2].isAbsoluteRange)
+        assertFalse(exercise.heartRateLimits[2].isAbsoluteRange)
         assertNull(exercise.heartRateLimits[2].timeBelow)
         assertEquals(1565, exercise.heartRateLimits[2].timeWithin)
         assertNull(exercise.heartRateLimits[2].timeAbove)
 
         assertEquals(0, exercise.heartRateLimits[4].lowerHeartRate)
         assertEquals(0, exercise.heartRateLimits[4].upperHeartRate)
-        assertFalse( exercise.heartRateLimits[4].isAbsoluteRange)
+        assertFalse(exercise.heartRateLimits[4].isAbsoluteRange)
         assertNull(exercise.heartRateLimits[4].timeBelow)
         assertEquals(0, exercise.heartRateLimits[4].timeWithin)
         assertEquals(0, exercise.heartRateLimits[4].timeAbove)
@@ -493,7 +493,7 @@ class GarminFitParserTest {
         assertTrue(exercise.recordingMode.isCadence)
         assertTrue(exercise.recordingMode.isTemperature)
 
-        assertEquals(LocalDateTime.of(2019, 12, 12, 20, 0,1, 0), exercise.dateTime)
+        assertEquals(LocalDateTime.of(2019, 12, 12, 20, 0, 1, 0), exercise.dateTime)
         assertEquals(1238, exercise.duration!!.toInt())
 
         assertEquals(120, exercise.heartRateAVG!!.toInt())
@@ -544,14 +544,14 @@ class GarminFitParserTest {
         assertTrue(exercise.recordingMode.isHeartRate)
 
         // check some basic data
-        assertEquals(LocalDateTime.of(2021, 2, 6, 12, 3,55, 0), exercise.dateTime)
+        assertEquals(LocalDateTime.of(2021, 2, 6, 12, 3, 55, 0), exercise.dateTime)
         assertEquals(3140, exercise.duration!!.toInt())
 
         // check heartrate zone data
         assertEquals(5, exercise.heartRateLimits.size)
         assertEquals(87, exercise.heartRateLimits[0].lowerHeartRate)
         assertEquals(105, exercise.heartRateLimits[0].upperHeartRate)
-        assertTrue( exercise.heartRateLimits[0].isAbsoluteRange)
+        assertTrue(exercise.heartRateLimits[0].isAbsoluteRange)
         assertEquals(0, exercise.heartRateLimits[0].timeBelow)
         assertEquals(21, exercise.heartRateLimits[0].timeWithin)
         assertNull(exercise.heartRateLimits[0].timeAbove)
@@ -589,7 +589,7 @@ class GarminFitParserTest {
         assertFalse(exercise.recordingMode.isCadence)
         assertTrue(exercise.recordingMode.isTemperature)
 
-        assertEquals(LocalDateTime.of(2020, 10, 23, 14, 34,58, 0), exercise.dateTime)
+        assertEquals(LocalDateTime.of(2020, 10, 23, 14, 34, 58, 0), exercise.dateTime)
         assertEquals(22404, exercise.duration!!.toInt())
 
         assertEquals(112, exercise.heartRateAVG!!.toInt())
@@ -628,23 +628,51 @@ class GarminFitParserTest {
         assertEquals(3, exercise.heartRateLimits.size)
         assertEquals(0, exercise.heartRateLimits[0].lowerHeartRate)
         assertEquals(0, exercise.heartRateLimits[0].upperHeartRate)
-        assertFalse( exercise.heartRateLimits[0].isAbsoluteRange)
+        assertFalse(exercise.heartRateLimits[0].isAbsoluteRange)
         assertEquals(1320, exercise.heartRateLimits[0].timeBelow)
         assertEquals(191, exercise.heartRateLimits[0].timeWithin)
         assertNull(exercise.heartRateLimits[0].timeAbove)
 
         assertEquals(0, exercise.heartRateLimits[1].lowerHeartRate)
         assertEquals(0, exercise.heartRateLimits[1].upperHeartRate)
-        assertFalse( exercise.heartRateLimits[1].isAbsoluteRange)
+        assertFalse(exercise.heartRateLimits[1].isAbsoluteRange)
         assertNull(exercise.heartRateLimits[1].timeBelow)
         assertEquals(312, exercise.heartRateLimits[1].timeWithin)
         assertNull(exercise.heartRateLimits[1].timeAbove)
 
         assertEquals(0, exercise.heartRateLimits[2].lowerHeartRate)
         assertEquals(0, exercise.heartRateLimits[2].upperHeartRate)
-        assertFalse( exercise.heartRateLimits[2].isAbsoluteRange)
+        assertFalse(exercise.heartRateLimits[2].isAbsoluteRange)
         assertNull(exercise.heartRateLimits[2].timeBelow)
         assertEquals(254, exercise.heartRateLimits[2].timeWithin)
         assertEquals(162, exercise.heartRateLimits[2].timeAbove)
+    }
+
+    /**
+     * Tests the parser with a FIT exercise file with indoor cycling data recorded in Zwift, which contains data from
+     * heartrate, powermeter and cadence sensors.
+     */
+    @Test
+    @Throws(EVException::class)
+    fun testParseExerciseIndoorCyclingPowermeterZwift() {
+        // TODO add an suitable testfile to the project repo
+
+        val exercise = parser.parseExercise("/Users/stefan/Desktop/SportsTracker-Powermeter-Testfiles/Zwift-Cycling_Indoor-Assioma_Uno-2021-12-05.fit")
+        // TODO
+        println("Done")
+    }
+
+    /**
+     * Tests the parser with a FIT exercise file with indoor cycling data recorded on a Garmin Fenix 6S Pro, which
+     * contains data from heartrate, powermeter and cadence sensors.
+     */
+    @Test
+    @Throws(EVException::class)
+    fun testParseExerciseIndoorCyclingPowermeterFenix6() {
+        // TODO add an suitable testfile to the project repo
+
+        val exercise = parser.parseExercise("/Users/stefan/Desktop/SportsTracker-Powermeter-Testfiles/Fenix_6S_Pro-Cycling-Indoor-Assioma_Uno-2021-12-05.fit")
+        // TODO
+        println("Done")
     }
 }

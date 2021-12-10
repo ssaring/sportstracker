@@ -93,6 +93,22 @@ internal class FitMessageListener : MesgListener {
             exercise.cadence = ExerciseCadence(avgCadence, maxCadence, totalCycles)
         }
 
+        mesg.avgPower?.let { avgPower ->
+            exercise.recordingMode.isPower = true
+
+            // TODO store power values in some Exercise Power class
+            // TODO this values does not match the values displayed in Garmin Connect!
+            println("AVG Power: ${avgPower}")
+
+            mesg.maxPower?.let { maxPower ->
+                println("Max Power: ${maxPower}")
+            }
+
+            mesg.normalizedPower?.let { normalizedPower ->
+                println("Normalized Power: ${normalizedPower}")
+            }
+        }
+
         // read optional heartrate zone data (stored on older Garmin devices here, e.g. Edge 520 or Suunto Spartan)
         // (the heartrate zone boundaries are not available in the activities of these devices)
         mesg.timeInHrZone?.let { timeInHrZone ->
@@ -145,6 +161,8 @@ internal class FitMessageListener : MesgListener {
                     ConvertUtils.convertSemicircle2Degree(mesg.endPositionLong))
         }
 
+        // TODO parse and store power data on lap level
+
         lFitLaps.add(FitLap(lap, Date310Utils.dateToLocalDateTime(mesg.timestamp.date)))
     }
 
@@ -195,6 +213,12 @@ internal class FitMessageListener : MesgListener {
             // Suunto watches don't store the startPosition in the Session message
             // => so enable location recording mode when location data is stored in the Record messages (samples)
             exercise.recordingMode.isLocation = true
+        }
+
+        mesg.power?.let {
+            // TODO store power in ExerciseSample
+            // TODO validate power data with values displayed in Garmin Connect
+            println("Power: ${it}")
         }
     }
 

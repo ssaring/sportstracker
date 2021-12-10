@@ -1,6 +1,10 @@
 SportsTracker-TODO
 ==================
 
+ExeciseViewer Powermeter support:
+- test implementation for analyzing provided power data
+- see TODOs in GarminFitParserTest and FitMessageListener
+
 ExeciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
