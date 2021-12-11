@@ -6,12 +6,12 @@ ExeciseViewer power data support:
   - power data on Exercise level is parsed and stored properly (valid, compared with Garmin Connect)
   - power data on Sample level is parsed and stored
   - power data on Exercise level is displayed in Optional Panel
-  - power data on Sample level is displayed in Sample Panel
+  - power data on Sample level is displayed in Sample Panel and Track Panel (tooltip)
 - TODOs:
   - verify power data on Exercise level with Garmin Connect
   - see TODOs in GarminFitParserTest and FitMessageListener
   - parse, store and display power data on Lap and Sample level
-  - add power data to Diagram Panel and Track panel (in tooltip for current position)
+  - add power data to Diagram Panel
   - implement unit tests with suitable test FIT files
   - add to Changes and ReadMe
 
