@@ -179,6 +179,7 @@ internal class FitMessageListener : MesgListener {
 
         mesg.distance?.let { sample.distance = Math.round(it) }
         mesg.cadence?.let { sample.cadence = it }
+        mesg.power?.let { sample.power = it.toShort() }
 
         // on newer high-end Garmin devices (e.g. Fenix 6 or 5X) the speed and altitude is stored in the
         // enhancedSpeed or enhancedAltitude attributes => get it from there
@@ -205,12 +206,6 @@ internal class FitMessageListener : MesgListener {
             // Suunto watches don't store the startPosition in the Session message
             // => so enable location recording mode when location data is stored in the Record messages (samples)
             exercise.recordingMode.isLocation = true
-        }
-
-        mesg.power?.let {
-            // TODO store power in ExerciseSample
-            // TODO validate power data with values displayed in Garmin Connect
-            println("Power: ${it}")
         }
     }
 

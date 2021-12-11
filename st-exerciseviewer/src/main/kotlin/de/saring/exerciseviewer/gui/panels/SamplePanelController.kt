@@ -41,6 +41,8 @@ class SamplePanelController(
     @FXML
     private lateinit var tcCadence: TableColumn<ExerciseSample, Number>
     @FXML
+    private lateinit var tcPower: TableColumn<ExerciseSample, Number>
+    @FXML
     private lateinit var tcTemperature: TableColumn<ExerciseSample, Number>
 
     override val fxmlFilename: String = "/fxml/panels/SamplePanel.fxml"
@@ -54,6 +56,7 @@ class SamplePanelController(
         tcSpeed.cellValueFactory = PropertyValueFactory("speed")
         tcDistance.cellValueFactory = PropertyValueFactory("distance")
         tcCadence.cellValueFactory = PropertyValueFactory("cadence")
+        tcPower.cellValueFactory = PropertyValueFactory("power")
         tcTemperature.cellValueFactory = PropertyValueFactory("temperature")
 
         // setup custom number cell factories for all table columns
@@ -80,6 +83,10 @@ class SamplePanelController(
 
         tcCadence.cellFactory = FormattedNumberCellFactory {
             if (it != null) context.formatUtils.cadenceToString(it.toInt()) else null
+        }
+
+        tcPower.cellFactory = FormattedNumberCellFactory {
+            if (it != null) context.formatUtils.powerToString(it.toShort()) else null
         }
 
         tcTemperature.cellFactory = FormattedNumberCellFactory {

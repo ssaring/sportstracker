@@ -4,15 +4,18 @@ SportsTracker-TODO
 ExeciseViewer power data support:
 - Status:
   - power data on Exercise level is parsed and stored properly (valid, compared with Garmin Connect)
+  - power data on Sample level is parsed and stored
   - power data on Exercise level is displayed in Optional Panel
+  - power data on Sample level is displayed in Sample Panel
 - TODOs:
+  - verify power data on Exercise level with Garmin Connect
   - see TODOs in GarminFitParserTest and FitMessageListener
   - parse, store and display power data on Lap and Sample level
   - add power data to Diagram Panel and Track panel (in tooltip for current position)
   - implement unit tests with suitable test FIT files
   - add to Changes and ReadMe
 
-ExeciseViewer standalone mode:
+ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
 - use standalone mode when just one argument has been passed at app execution

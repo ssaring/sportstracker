@@ -9,6 +9,7 @@ package de.saring.exerciseviewer.data
  * @property altitude Altitude at record moment.
  * @property speed Speed at record moment (in km/h).
  * @property cadence Cadence at record moment (in rpm).
+ * @property power Power at record moment (in watts).
  * @property distance Distance at record moment (in meters).
  * @property temperature Temperature at record moment (in degrees celcius, optional).
  * @property position The geographical location of this sample in the exercise track (optional).
@@ -22,6 +23,7 @@ data class ExerciseSample(
         var altitude: Short? = null,
         var speed: Float? = null,
         var cadence: Short? = null,
+        var power: Short? = null,
         var distance: Int? = null,
         var temperature: Short? = null,
         var position: Position? = null)
