@@ -96,8 +96,8 @@ internal class FitMessageListener : MesgListener {
         // read optional power data
         mesg.avgPower?.let { powerAvg ->
             exercise.recordingMode.isPower = true
-            val powerMax = mesg.maxPower?.toShort() ?: null
-            val powerNormalized = mesg.normalizedPower?.toShort() ?: null
+            val powerMax = mesg.maxPower?.toShort()
+            val powerNormalized = mesg.normalizedPower?.toShort()
             exercise.power = ExercisePower(powerAvg.toShort(), powerMax, powerNormalized)
         }
 
@@ -155,8 +155,8 @@ internal class FitMessageListener : MesgListener {
 
         // read optional power data
         mesg.avgPower?.let { powerAvg ->
-            val powerMax = mesg.maxPower?.toShort() ?: null
-            val powerNormalized = mesg.normalizedPower?.toShort() ?: null
+            val powerMax = mesg.maxPower?.toShort()
+            val powerNormalized = mesg.normalizedPower?.toShort()
             lap.power = LapPower(powerAvg.toShort(), powerMax, powerNormalized)
         }
 
