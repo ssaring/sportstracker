@@ -3,13 +3,12 @@ SportsTracker-TODO
 
 ExeciseViewer power data support:
 - Status:
-  - power data on Exercise and Lap level is parsed and stored properly (valid, compared with Garmin Connect)
-  - power data on Sample level is parsed and stored
+  - power data on Exercise, Lap and Sample level is parsed and stored properly
   - power data on Exercise level is displayed in Optional Panel
   - power data on Lap level is displayed in Lap Panel
   - power data on Sample level is displayed in Sample Panel and Track Panel (tooltip)
+  - displayed power data is valid on Exercise, Lap and Sample level, compared with Garmin Connect
 - TODOs:
-  - verify power data on Sample level with Garmin Connect
   - add power data to Diagram Panel
   - implement unit tests with suitable test FIT files (see TODOs in GarminFitParserTest)
   - add to Changes and ReadMe
