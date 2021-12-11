@@ -51,6 +51,9 @@ SportsTracker 7.8.1:
 
 - pv.opt.power_data.text (new)
 - pv.opt.normalized_power.text (new)
+- pv.laps.avgPower (new)
+- pv.laps.maxPower (new)
+- pv.laps.normalizedPower (new)
 - pv.samples.power (new)
 - pv.track.tooltip.power (new)
 

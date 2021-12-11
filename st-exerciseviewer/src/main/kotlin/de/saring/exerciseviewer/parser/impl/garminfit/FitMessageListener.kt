@@ -153,7 +153,12 @@ internal class FitMessageListener : MesgListener {
                     ConvertUtils.convertSemicircle2Degree(mesg.endPositionLong))
         }
 
-        // TODO parse and store power data on lap level
+        // read optional power data
+        mesg.avgPower?.let { powerAvg ->
+            val powerMax = mesg.maxPower?.toShort() ?: null
+            val powerNormalized = mesg.normalizedPower?.toShort() ?: null
+            lap.power = LapPower(powerAvg.toShort(), powerMax, powerNormalized)
+        }
 
         lFitLaps.add(FitLap(lap, Date310Utils.dateToLocalDateTime(mesg.timestamp.date)))
     }
