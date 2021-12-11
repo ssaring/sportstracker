@@ -102,7 +102,7 @@ data class EVExercise(
         }
 
         // calculate relation of exercise distance to last sample distance
-        val (_, _, _, _, _, distance) = this.sampleList[this.sampleList.size - 1]
+        val (_, _, _, _, _, _, distance) = this.sampleList[this.sampleList.size - 1]
         val fRelation = distance!! / this.speed!!.distance.toDouble()
 
         // process all samples and recalculate the sample distance in relation to exercise distance
