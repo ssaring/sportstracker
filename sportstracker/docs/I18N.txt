@@ -55,6 +55,7 @@ SportsTracker 7.8.1:
 - pv.laps.maxPower (new)
 - pv.laps.normalizedPower (new)
 - pv.samples.power (new)
+- pv.diagram.axis.power (new)
 - pv.track.tooltip.power (new)
 
 SportsTracker 7.8.0:

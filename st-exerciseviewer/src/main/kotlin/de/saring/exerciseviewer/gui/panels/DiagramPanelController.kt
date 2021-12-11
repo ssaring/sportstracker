@@ -56,8 +56,8 @@ import org.jfree.data.Range
 import kotlin.math.sqrt
 
 /**
- * Controller (MVC) class of the "Samples" panel, which displays the exercise graphically (heartrate, altitude, speed
- * and cadence).
+ * Controller (MVC) class of the "Samples" panel, which displays the exercise graphically (heartrate, altitude, speed,
+ * cadence, power and temperature).
  *
  * @constructor constructor for dependency injection
  * @param context the ExerciseViewer UI context
@@ -152,7 +152,7 @@ class DiagramPanelController(
         val recordingMode = document.exercise.recordingMode
         return !document.exercise.sampleList.isEmpty() && (
                 recordingMode.isHeartRate || recordingMode.isAltitude || recordingMode.isSpeed ||
-                        recordingMode.isCadence || recordingMode.isTemperature)
+                        recordingMode.isCadence || recordingMode.isPower || recordingMode.isTemperature)
     }
 
     private fun setupAxisChoiceBoxes() {
@@ -192,6 +192,12 @@ class DiagramPanelController(
         if (exercise.recordingMode.isCadence) {
             cbLeftAxis.items.add(AxisType.CADENCE)
             cbRightAxis.items.add(AxisType.CADENCE)
+        }
+
+        // add power items if recorded
+        if (exercise.recordingMode.isPower) {
+            cbLeftAxis.items.add(AxisType.POWER)
+            cbRightAxis.items.add(AxisType.POWER)
         }
 
         // add temperature items if recorded
@@ -622,6 +628,8 @@ class DiagramPanelController(
                 return sample.speed?.toDouble()
             AxisType.CADENCE ->
                 return sample.cadence?.toDouble()
+            AxisType.POWER ->
+                return sample.power?.toDouble()
             AxisType.TEMPERATURE ->
                 return sample.temperature?.toDouble()
             else ->
@@ -640,7 +648,7 @@ class DiagramPanelController(
         val formatUtils = context.formatUtils
 
         when (axisType) {
-            AxisType.HEARTRATE, AxisType.CADENCE ->
+            AxisType.HEARTRATE, AxisType.CADENCE, AxisType.POWER ->
                 return value
             AxisType.ALTITUDE ->
                 return if (formatUtils.unitSystem == UnitSystem.METRIC)
@@ -719,6 +727,8 @@ class DiagramPanelController(
                 document.exercise.speed?.speedAvg?.toDouble()
             AxisType.CADENCE ->
                 document.exercise.cadence?.cadenceAvg?.toDouble()
+            AxisType.POWER ->
+                document.exercise.power?.powerAvg?.toDouble()
             AxisType.TEMPERATURE ->
                 document.exercise.temperature?.temperatureAvg?.toDouble()
             else ->
@@ -879,7 +889,7 @@ class DiagramPanelController(
      * displayed enum names.
      */
     private enum class AxisType {
-        NOTHING, HEARTRATE, ALTITUDE, SPEED, CADENCE, TEMPERATURE, TIME, DISTANCE
+        NOTHING, HEARTRATE, ALTITUDE, SPEED, CADENCE, POWER, TEMPERATURE, TIME, DISTANCE
     }
 
     /**
@@ -902,6 +912,8 @@ class DiagramPanelController(
                 appResources.getString("pv.diagram.axis.speed", formatUtils.getSpeedUnitName(speedMode))
             AxisType.CADENCE ->
                 appResources.getString("pv.diagram.axis.cadence")
+            AxisType.POWER ->
+                appResources.getString("pv.diagram.axis.power")
             AxisType.TEMPERATURE ->
                 appResources.getString("pv.diagram.axis.temperature", formatUtils.getTemperatureUnitName())
             AxisType.TIME ->
