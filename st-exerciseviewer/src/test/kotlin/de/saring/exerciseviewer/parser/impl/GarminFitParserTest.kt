@@ -650,14 +650,50 @@ class GarminFitParserTest {
 
     /**
      * Tests the parser with a FIT exercise file with indoor cycling data recorded in Zwift, which contains data from
-     * heartrate, powermeter and cadence sensors.
+     * heartrate, powermeter and cadence sensors. The Zwift recording does not provide normalized power data.
      */
     @Test
     @Throws(EVException::class)
     fun testParseExerciseIndoorCyclingPowermeterZwift() {
-        val exercise = parser.parseExercise("misc/testdata/garmin-fit/Zwift-Cycling_Indoor-Assioma_Uno-2021-12-12.fit")
-        // TODO
-        println("Done")
+        val exercise = parser.parseExercise("misc/testdata/garmin-fit/Zwift-Cycling_Indoor-Assioma_Uno.fit")
+
+        // check exercise data
+        assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
+        assertEquals("ZWIFT (SW 5.62)", exercise.deviceName)
+        assertTrue(exercise.recordingMode.isHeartRate)
+        assertTrue(exercise.recordingMode.isSpeed)
+        assertTrue(exercise.recordingMode.isCadence)
+        assertTrue(exercise.recordingMode.isPower)
+        assertTrue(exercise.recordingMode.isLocation)
+
+        // check some basic data
+        assertEquals(LocalDateTime.of(2021, 12, 12, 10, 15, 49, 0), exercise.dateTime)
+        assertEquals(3700, exercise.duration!!.toInt())
+
+        // check power and cadence data on exercise level
+        assertEquals(118, exercise.power!!.powerAvg!!.toInt())
+        assertEquals(248, exercise.power!!.powerMax!!.toInt())
+        assertNull(exercise.power!!.powerNormalized)
+
+        assertEquals(85, exercise.cadence!!.cadenceAvg!!.toInt())
+        assertEquals(100, exercise.cadence!!.cadenceMax!!.toInt())
+        assertEquals(0, exercise.cadence!!.cyclesTotal)
+
+        // check power and cadence data on lap level (just one)
+        assertEquals(1, exercise.lapList.size)
+        assertEquals(118, exercise.lapList[0].power!!.powerAvg!!.toInt())
+        assertEquals(248, exercise.lapList[0].power!!.powerMax!!.toInt())
+        assertNull(exercise.lapList[0].power!!.powerNormalized)
+        assertEquals(0, exercise.lapList[0].speed!!.cadence!!.toInt())
+
+        // check power and cadence data on sample level
+        assertEquals(370, exercise.sampleList.size)
+        assertEquals(66, exercise.sampleList[0].power!!.toInt())
+        assertEquals(68, exercise.sampleList[0].cadence!!!!.toInt())
+        assertEquals(124, exercise.sampleList[200].power!!.toInt())
+        assertEquals(87, exercise.sampleList[200].cadence!!!!.toInt())
+        assertEquals(0, exercise.sampleList[369].power!!.toInt())
+        assertEquals(0, exercise.sampleList[369].cadence!!!!.toInt())
     }
 
     /**
@@ -667,8 +703,46 @@ class GarminFitParserTest {
     @Test
     @Throws(EVException::class)
     fun testParseExerciseIndoorCyclingPowermeterFenix6() {
-        val exercise = parser.parseExercise("misc/testdata/garmin-fit/Garmin_Fenix_6S_Pro-Cycling-Indoor-Assioma_Uno-2021-12-12.fit")
-        // TODO
-        println("Done")
+        val exercise = parser.parseExercise("misc/testdata/garmin-fit/Garmin_Fenix_6S_Pro-Cycling-Indoor-Assioma_Uno.fit")
+
+        // check exercise data
+        assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
+        assertEquals("GARMIN FENIX6S (SW 19.2)", exercise.deviceName)
+        assertTrue(exercise.recordingMode.isHeartRate)
+        assertTrue(exercise.recordingMode.isSpeed)
+        assertTrue(exercise.recordingMode.isCadence)
+        assertTrue(exercise.recordingMode.isPower)
+        assertFalse(exercise.recordingMode.isLocation)
+
+        // check some basic data
+        assertEquals(LocalDateTime.of(2021, 12, 12, 10, 15, 53, 0), exercise.dateTime)
+        assertEquals(3548, exercise.duration!!.toInt())
+
+        // check power and cadence data on exercise level
+        assertEquals(122, exercise.power!!.powerAvg!!.toInt())
+        assertEquals(248, exercise.power!!.powerMax!!.toInt())
+        assertEquals(127, exercise.power!!.powerNormalized!!.toInt())
+
+        assertEquals(87, exercise.cadence!!.cadenceAvg!!.toInt())
+        assertEquals(101, exercise.cadence!!.cadenceMax!!.toInt())
+        assertEquals(517, exercise.cadence!!.cyclesTotal!!.toInt())
+
+        // check power data on lap level
+        assertEquals(3, exercise.lapList.size)
+        assertEquals(113, exercise.lapList[0].power!!.powerAvg!!.toInt())
+        assertEquals(134, exercise.lapList[0].power!!.powerMax!!.toInt())
+        assertEquals(114, exercise.lapList[0].power!!.powerNormalized!!.toInt())
+        assertEquals(133, exercise.lapList[1].power!!.powerAvg!!.toInt())
+        assertEquals(248, exercise.lapList[1].power!!.powerMax!!.toInt())
+        assertEquals(136, exercise.lapList[1].power!!.powerNormalized!!.toInt())
+
+        // check power and cadence data on sample level
+        assertEquals(356, exercise.sampleList.size)
+        assertEquals(45, exercise.sampleList[0].power!!.toInt())
+        assertEquals(69, exercise.sampleList[0].cadence!!!!.toInt())
+        assertEquals(123, exercise.sampleList[100].power!!.toInt())
+        assertEquals(91, exercise.sampleList[100].cadence!!!!.toInt())
+        assertEquals(60, exercise.sampleList[355].power!!.toInt())
+        assertEquals(79, exercise.sampleList[355].cadence!!!!.toInt())
     }
 }
