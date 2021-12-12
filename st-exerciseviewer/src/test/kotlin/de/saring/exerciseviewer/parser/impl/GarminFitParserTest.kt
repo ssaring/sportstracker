@@ -655,9 +655,7 @@ class GarminFitParserTest {
     @Test
     @Throws(EVException::class)
     fun testParseExerciseIndoorCyclingPowermeterZwift() {
-        // TODO add an suitable testfile to the project repo
-
-        val exercise = parser.parseExercise("/Users/stefan/Desktop/SportsTracker-Powermeter-Testfiles/Zwift-Cycling_Indoor-Assioma_Uno-2021-12-05.fit")
+        val exercise = parser.parseExercise("misc/testdata/garmin-fit/Zwift-Cycling_Indoor-Assioma_Uno-2021-12-12.fit")
         // TODO
         println("Done")
     }
@@ -669,9 +667,7 @@ class GarminFitParserTest {
     @Test
     @Throws(EVException::class)
     fun testParseExerciseIndoorCyclingPowermeterFenix6() {
-        // TODO add an suitable testfile to the project repo
-
-        val exercise = parser.parseExercise("/Users/stefan/Desktop/SportsTracker-Powermeter-Testfiles/Fenix_6S_Pro-Cycling-Indoor-Assioma_Uno-2021-12-05.fit")
+        val exercise = parser.parseExercise("misc/testdata/garmin-fit/Garmin_Fenix_6S_Pro-Cycling-Indoor-Assioma_Uno-2021-12-12.fit")
         // TODO
         println("Done")
     }
