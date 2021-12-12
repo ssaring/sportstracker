@@ -242,12 +242,12 @@ Users of heartrate monitors (HRM) can assign the recorded file to the exercise.
 Most of the exercise data can be imported from this file, so it does
 not need to be entered manually. The exercise files can also be viewed with 
 the integrated ExerciseViewer application, which displays all the recorded
-data and diagrams for it (except power data).
+data, diagrams and the track for it.
 
 HRM exercise files can be easily imported by drag & drop. The user must drag
 one single HRM file from the systems file manager and drop it to a day cell in
 the calendar view. If there is an exercise entry under the mouse cursor then 
-the HRM file will be assigned to this exercise. Otherwise a new exercise will
+the HRM file will be assigned to this exercise. Otherwise, a new exercise will
 be created and the data will be imported from the HRM file.
 Drag & drop has been successfully tested on Linux (Gnome and KDE), Windows and
 macOS.
@@ -289,6 +289,13 @@ current position is marked in the map by the blue marker. A tooltip shows all
 the details of the current position.
 The map data will be downloaded on demand from the OpenStreetMap project
 (http://www.openstreetmap.org).
+
+ExerciseViewer can also display power data (for FIT files only), if it has been
+recorded. It displays the average, maximum and normalized power for the
+exercise and each lap. The Diagram panel can display the power graph for all
+recorded samples.
+Further info on normalized power is available here:
+https://help.trainingpeaks.com/hc/en-us/articles/204071804-Normalized-Power
 
 New users, which have many Polar HRM files recorded before switching to
 SportsTracker, can import all HRM files at once by using the external tool

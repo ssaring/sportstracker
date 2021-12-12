@@ -36,6 +36,13 @@ import javafx.scene.control.Label
     private lateinit var laCyclesTotalValue: Label
 
     @FXML
+    private lateinit var laPowerAvgValue: Label
+    @FXML
+    private lateinit var laPowerMaxValue: Label
+    @FXML
+    private lateinit var laPowerNormalizedValue: Label
+
+    @FXML
     private lateinit var laAltitudeMinValue: Label
     @FXML
     private lateinit var laAltitudeAvgValue: Label
@@ -76,6 +83,19 @@ import javafx.scene.control.Label
         exercise.cadence?.let {
             laCadenceAvgValue.text = formatUtils.cadenceToString(it.cadenceAvg.toInt())
             laCadenceMaxValue.text = formatUtils.cadenceToString(it.cadenceMax.toInt())
+        }
+
+        // fill power data
+        exercise.power?.let { power ->
+            laPowerAvgValue.text = formatUtils.powerToString(power.powerAvg)
+
+            power.powerMax?.let { powerMax ->
+                laPowerMaxValue.text = formatUtils.powerToString(powerMax)
+            }
+
+            power.powerNormalized?.let { powerNormalized ->
+                laPowerNormalizedValue.text = formatUtils.powerToString(powerNormalized)
+            }
         }
 
         // fill total cycles data

@@ -230,6 +230,17 @@ class FormatUtils(val unitSystem: UnitSystem) {
     }
 
     /**
+     * Converts the power value to a text.
+     *
+     * @param power power in watts
+     * @return the power incl. unit name as text
+     */
+    fun powerToString(power: Short): String {
+        numberFormat.maximumFractionDigits = 0
+        return "${numberFormat.format(power)} W"
+    }
+
+    /**
      * Converts the weight to a text in the correct unit depending on what unit options are currently chosen. The unit
      * name is not included in the text.
      *

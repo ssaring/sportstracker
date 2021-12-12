@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v7.8.1:
+v7.9.0:
  SportsTracker changes:
  - updated Kotlin to version 1.6.0 (solves JDK 16/17 compatibility issues)
  - SQLite Exporter: datetime of exercises, notes and weight entries is now a
@@ -23,6 +23,14 @@ v7.8.1:
      provide only the time in the heartrate zones, not the zone boundaries
   - Diagram and Track Panel: bugfix for issue #243
     (exercise files with completely flat altitude can't be displayed)
+ - support for parsing and displaying power data:
+   - Garmin FIT parser: provides power data on exercise, lap and sample level
+     (average, maximum and normalized power for the exercise and each lap)
+   - Optional Panel: displays power data summary for the exercise
+   - Lap Panel: displays power data summary for each lap
+   - Sample Panel: displays power data for each recorded sample
+   - Diagram Panel: displays power data on each axis
+   - Track Panel: displays power data for the current position (tooltip)
  Project changes:
 
 v7.8.0:

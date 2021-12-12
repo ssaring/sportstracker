@@ -56,6 +56,12 @@ class LapPanelController(
     @FXML
     private lateinit var tcDescent: TableColumn<LapRow, Number>
     @FXML
+    private lateinit var tcAvgPower: TableColumn<LapRow, Number>
+    @FXML
+    private lateinit var tcMaxPower: TableColumn<LapRow, Number>
+    @FXML
+    private lateinit var tcNormalizedPower: TableColumn<LapRow, Number>
+    @FXML
     private lateinit var tcTemperature: TableColumn<LapRow, Number>
 
     override val fxmlFilename: String = "/fxml/panels/LapPanel.fxml"
@@ -76,6 +82,9 @@ class LapPanelController(
         tcAltitude.cellValueFactory = PropertyValueFactory("altitude")
         tcAscent.cellValueFactory = PropertyValueFactory("ascent")
         tcDescent.cellValueFactory = PropertyValueFactory("descent")
+        tcAvgPower.cellValueFactory = PropertyValueFactory("powerAvg")
+        tcMaxPower.cellValueFactory = PropertyValueFactory("powerMax")
+        tcNormalizedPower.cellValueFactory = PropertyValueFactory("powerNormalized")
         tcTemperature.cellValueFactory = PropertyValueFactory("temperature")
 
         // setup custom number cell factories for all table columns
@@ -119,6 +128,15 @@ class LapPanelController(
         tcDescent.cellFactory = FormattedNumberCellFactory {
             if (it == null) null else context.formatUtils.heightToString(it.toInt())
         }
+        tcAvgPower.cellFactory = FormattedNumberCellFactory {
+            if (it == null) null else context.formatUtils.powerToString(it.toShort())
+        }
+        tcMaxPower.cellFactory = FormattedNumberCellFactory {
+            if (it == null) null else context.formatUtils.powerToString(it.toShort())
+        }
+        tcNormalizedPower.cellFactory = FormattedNumberCellFactory {
+            if (it == null) null else context.formatUtils.powerToString(it.toShort())
+        }
         tcTemperature.cellFactory = FormattedNumberCellFactory {
             if (it == null) null else context.formatUtils.temperatureToString(it.toShort())
         }
@@ -159,6 +177,9 @@ class LapPanelController(
                     altitude = lap.altitude?.altitude?.toInt(),
                     ascent = lap.altitude?.ascent,
                     descent = lap.altitude?.descent,
+                    powerAvg = lap.power?.powerAvg,
+                    powerMax = lap.power?.powerMax,
+                    powerNormalized = lap.power?.powerNormalized,
                     temperature = lap.temperature?.temperature?.toInt()))
 
             previousLapSplitTime = lap.timeSplit
@@ -185,6 +206,9 @@ class LapPanelController(
      * @property altitude altitude at lap end
      * @property ascent ascent in lap
      * @property descent descent in lap
+     * @property powerAvg average power in lap
+     * @property powerMax maximum power in lap
+     * @property powerNormalized normalized power in lap
      * @property temperature temperature at lap end
      */
     class LapRow(
@@ -201,5 +225,8 @@ class LapPanelController(
             val altitude: Int?,
             val ascent: Int?,
             val descent: Int?,
+            val powerAvg: Short?,
+            val powerMax: Short?,
+            val powerNormalized: Short?,
             val temperature: Int?)
 }

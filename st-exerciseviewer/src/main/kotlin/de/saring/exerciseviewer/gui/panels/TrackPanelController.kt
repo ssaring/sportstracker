@@ -343,6 +343,9 @@ class TrackPanelController(
         sample.speed?.let {
             appendToolTipLine(sb, "pv.track.tooltip.speed", formatUtils.speedToString(it, 2, document.speedMode))
         }
+        sample.power?.let {
+            appendToolTipLine(sb, "pv.track.tooltip.power", formatUtils.powerToString(it))
+        }
         sample.temperature?.let {
             appendToolTipLine(sb, "pv.track.tooltip.temperature", formatUtils.temperatureToString(it))
         }

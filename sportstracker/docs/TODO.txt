@@ -1,7 +1,7 @@
 SportsTracker-TODO
 ==================
 
-ExeciseViewer standalone mode:
+ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
 - use standalone mode when just one argument has been passed at app execution

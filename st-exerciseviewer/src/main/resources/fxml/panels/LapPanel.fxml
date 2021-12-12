@@ -24,6 +24,9 @@
                 <TableColumn fx:id="tcAltitude" prefWidth="90.0" text="%pv.laps.altitude"/>
                 <TableColumn fx:id="tcAscent" prefWidth="90.0" text="%pv.laps.ascent"/>
                 <TableColumn fx:id="tcDescent" prefWidth="90.0" text="%pv.laps.descent"/>
+                <TableColumn fx:id="tcAvgPower" prefWidth="100.0" text="%pv.laps.avgPower"/>
+                <TableColumn fx:id="tcMaxPower" prefWidth="100.0" text="%pv.laps.maxPower"/>
+                <TableColumn fx:id="tcNormalizedPower" prefWidth="100.0" text="%pv.laps.normalizedPower"/>
                 <TableColumn fx:id="tcTemperature" prefWidth="90.0" text="%pv.laps.temperature"/>
             </columns>
         </TableView>

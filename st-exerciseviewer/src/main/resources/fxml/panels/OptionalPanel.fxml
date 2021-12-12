@@ -80,6 +80,36 @@
                         </GridPane>
                     </children>
                 </VBox>
+                <VBox spacing="16.0">
+                    <children>
+                        <HBox alignment="CENTER_LEFT">
+                            <children>
+                                <Label styleClass="label-header" text="%pv.opt.power_data.text"/>
+                            </children>
+                        </HBox>
+                        <GridPane hgap="16.0" vgap="10.0">
+                            <columnConstraints>
+                                <ColumnConstraints/>
+                                <ColumnConstraints/>
+                            </columnConstraints>
+                            <children>
+                                <Label text="%pv.opt.average.text"/>
+                                <Label fx:id="laPowerAvgValue" text="%common.n_a_" GridPane.columnIndex="1"/>
+                                <Label text="%pv.opt.maximum.text" GridPane.rowIndex="1"/>
+                                <Label fx:id="laPowerMaxValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="%pv.opt.normalized_power.text" GridPane.rowIndex="2"/>
+                                <Label fx:id="laPowerNormalizedValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="24.0"/>
+                            </VBox.margin>
+                            <rowConstraints>
+                                <RowConstraints/>
+                                <RowConstraints/>
+                            </rowConstraints>
+                        </GridPane>
+                    </children>
+                </VBox>
             </children>
         </VBox>
         <VBox spacing="28.0" GridPane.columnIndex="1">

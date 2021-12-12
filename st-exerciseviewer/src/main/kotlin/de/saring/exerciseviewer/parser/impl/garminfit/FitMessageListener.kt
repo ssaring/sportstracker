@@ -93,6 +93,14 @@ internal class FitMessageListener : MesgListener {
             exercise.cadence = ExerciseCadence(avgCadence, maxCadence, totalCycles)
         }
 
+        // read optional power data
+        mesg.avgPower?.let { powerAvg ->
+            exercise.recordingMode.isPower = true
+            val powerMax = mesg.maxPower?.toShort()
+            val powerNormalized = mesg.normalizedPower?.toShort()
+            exercise.power = ExercisePower(powerAvg.toShort(), powerMax, powerNormalized)
+        }
+
         // read optional heartrate zone data (stored on older Garmin devices here, e.g. Edge 520 or Suunto Spartan)
         // (the heartrate zone boundaries are not available in the activities of these devices)
         mesg.timeInHrZone?.let { timeInHrZone ->
@@ -145,6 +153,13 @@ internal class FitMessageListener : MesgListener {
                     ConvertUtils.convertSemicircle2Degree(mesg.endPositionLong))
         }
 
+        // read optional power data
+        mesg.avgPower?.let { powerAvg ->
+            val powerMax = mesg.maxPower?.toShort()
+            val powerNormalized = mesg.normalizedPower?.toShort()
+            lap.power = LapPower(powerAvg.toShort(), powerMax, powerNormalized)
+        }
+
         lFitLaps.add(FitLap(lap, Date310Utils.dateToLocalDateTime(mesg.timestamp.date)))
     }
 
@@ -169,6 +184,7 @@ internal class FitMessageListener : MesgListener {
 
         mesg.distance?.let { sample.distance = Math.round(it) }
         mesg.cadence?.let { sample.cadence = it }
+        mesg.power?.let { sample.power = it.toShort() }
 
         // on newer high-end Garmin devices (e.g. Fenix 6 or 5X) the speed and altitude is stored in the
         // enhancedSpeed or enhancedAltitude attributes => get it from there
