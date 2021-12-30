@@ -236,7 +236,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
                     break;
                 case "sportType":
                     // obtain sportType
-                    exercise.setType(children.item(i).getTextContent());
+                    exercise.setSportType(children.item(i).getTextContent());
                     break;
                 case "cmt":
                 case "code":

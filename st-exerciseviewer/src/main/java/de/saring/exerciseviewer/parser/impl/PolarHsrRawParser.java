@@ -173,9 +173,9 @@ public class PolarHsrRawParser extends AbstractExerciseParser {
             for (int i = 0; i < 7; i++) {
                 sbExerciseLabel.append(decodeChar(sdata(1, i + 3)));
             }
-            exercise.setType(sbExerciseLabel.toString());
+            exercise.setSportType(sbExerciseLabel.toString());
         } else {
-            exercise.setType("BasicUse");
+            exercise.setSportType("BasicUse");
         }
 
         // get exercise date

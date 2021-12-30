@@ -54,10 +54,10 @@ internal class FitMessageListener : MesgListener {
 
         // read optional sport and subsport names
         mesg.sport?.name?.let { sportName ->
-            exercise.type = enumToReadableName(sportName)
+            exercise.sportType = enumToReadableName(sportName)
 
             mesg.subSport?.name?.let { subSportName ->
-                exercise.type += " / ${enumToReadableName(subSportName)}";
+                exercise.sportType += " / ${enumToReadableName(subSportName)}";
             }
         }
 

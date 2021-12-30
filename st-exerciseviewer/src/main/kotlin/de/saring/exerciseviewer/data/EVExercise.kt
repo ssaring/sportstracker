@@ -8,7 +8,7 @@ import java.time.LocalDateTime
  * @property fileType File type of an exercise (see enums).
  * @property deviceName Name of the HRM device (optional).
  * @property dateTime Timestamp of exercise.
- * @property type Exercise type (label).
+ * @property sportType Exercise sport type (optional).
  * @property recordingMode Record mode (what was recorded in exercise).
  * @property duration Duration of exercise in tenths of a second.
  * @property recordingInterval Recording interval in seconds (e.g. 5s, 15s, 60s or DYNAMIC_RECORDING_INTERVAL).
@@ -35,7 +35,7 @@ data class EVExercise(
     var fileType: ExerciseFileType,
     var deviceName: String? = null,
     var dateTime: LocalDateTime? = null,
-    var type: String? = null,
+    var sportType: String? = null,
     var recordingMode: RecordingMode = RecordingMode(),
     var duration: Int? = null,
     var recordingInterval: Short? = null,

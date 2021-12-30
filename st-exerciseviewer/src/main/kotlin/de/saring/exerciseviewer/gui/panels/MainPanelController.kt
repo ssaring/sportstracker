@@ -110,7 +110,7 @@ class MainPanelController(
         if (!StringUtils.isNullOrEmpty(exercise.deviceName)) {
             laDeviceValue.text = exercise.deviceName
         }
-        exercise.type?.let {
+        exercise.sportType?.let {
             laTypeValue.text = it
         }
 
