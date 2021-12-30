@@ -1,7 +1,7 @@
 ; SportsTracker Inno Setup File
 
 #define MyAppName "SportsTracker"
-#define MyAppVersion "7.9.0"
+#define MyAppVersion "7.9.1"
 #define MyAppPublisher "Stefan Saring"
 #define MyAppURL "https://saring.de/sportstracker/"
 #define MyAppExeName "SportsTracker.exe"

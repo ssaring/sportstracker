@@ -58,6 +58,8 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Changelog
 
+LeafletMap 1.0.7:
+
 LeafletMap 1.0.6:
 * Updated Kotlin to version 1.6.10 (solves JDK 16/17 compatibility issues)
 * Updated JavaFX / OpenJFX to version 17.0.1
