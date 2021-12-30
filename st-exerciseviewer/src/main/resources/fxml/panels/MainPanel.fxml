@@ -38,8 +38,8 @@
                                 <Label fx:id="laEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                 <Label text="%pv.main.device.text" GridPane.rowIndex="3" />
                                 <Label fx:id="laDeviceValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <Label text="%pv.main.type.text" GridPane.rowIndex="4" />
-                                <Label fx:id="laTypeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <Label text="%pv.main.sport_type.text" GridPane.rowIndex="4" />
+                                <Label fx:id="laSportTypeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             </children>
                             <VBox.margin>
                                 <Insets left="24.0" />

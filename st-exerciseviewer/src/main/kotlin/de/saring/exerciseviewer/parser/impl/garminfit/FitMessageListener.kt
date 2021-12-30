@@ -49,9 +49,17 @@ internal class FitMessageListener : MesgListener {
      */
     private fun readSessionMessage(mesg: SessionMesg) {
 
-        // read time data
         exercise.dateTime = Date310Utils.dateToLocalDateTime(mesg.startTime.date)
         exercise.duration = Math.round(mesg.totalTimerTime * 10)
+
+        // read optional sport and subsport names
+        mesg.sport?.name?.let { sportName ->
+            exercise.sportType = enumToReadableName(sportName)
+
+            mesg.subSport?.name?.let { subSportName ->
+                exercise.sportType += " / ${enumToReadableName(subSportName)}";
+            }
+        }
 
         // read optional heartrate data
         mesg.avgHeartRate?.let {
@@ -549,6 +557,20 @@ internal class FitMessageListener : MesgListener {
                     .maxOrNull()
                     ?.let { exercise.heartRateMax = it }
         }
+    }
+
+    /**
+     * Converts the name of the Garmin Sport and SubSport enums into a readable variant (words are split
+     * with spaces instead of underscores, each word in lowercase with a capital first letter).
+     * Example: 'GRAVEL_CYCLING' will be 'Gravel Cycling'.
+     * @param enumName name to convert
+     * @return readable name
+     */
+    private fun enumToReadableName(enumName: String): String {
+        return enumName
+            .lowercase()
+            .split('_')
+            .joinToString(" ") { word -> word.replaceFirstChar { it.uppercase() } };
     }
 
     private companion object {

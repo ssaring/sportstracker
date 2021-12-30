@@ -90,6 +90,7 @@ class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
         assertEquals("GARMIN EDGE500 (SW 2.3)", exercise.deviceName)
+        assertEquals("Cycling", exercise.sportType)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
@@ -212,6 +213,7 @@ class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
         assertEquals("GARMIN FR910XT (SW 2.5)", exercise.deviceName)
+        assertEquals("Running / Generic", exercise.sportType)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
@@ -292,6 +294,7 @@ class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
         assertEquals("GARMIN FENIX2 (SW 4.4)", exercise.deviceName)
+        assertEquals("Generic", exercise.sportType)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
@@ -377,6 +380,7 @@ class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
         assertEquals("GARMIN EDGE_820 (SW 7.0)", exercise.deviceName)
+        assertEquals("Cycling / Road", exercise.sportType)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
@@ -486,6 +490,7 @@ class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
         assertEquals("GARMIN FENIX6 (SW 5.0)", exercise.deviceName)
+        assertEquals("Generic / Generic", exercise.sportType)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
@@ -541,6 +546,7 @@ class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
         assertEquals("GARMIN FENIX6S (SW 13.1)", exercise.deviceName)
+        assertEquals("Running / Generic", exercise.sportType)
         assertTrue(exercise.recordingMode.isHeartRate)
 
         // check some basic data
@@ -582,6 +588,7 @@ class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
         assertNull(exercise.deviceName) // Suunto models are missing in the GarminProduct class (FIT SDK)
+        assertEquals("Cycling / Mountain", exercise.sportType)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isLocation)
@@ -660,6 +667,7 @@ class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
         assertEquals("ZWIFT (SW 5.62)", exercise.deviceName)
+        assertEquals("Cycling / Virtual Activity", exercise.sportType)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isCadence)
@@ -708,6 +716,7 @@ class GarminFitParserTest {
         // check exercise data
         assertEquals(EVExercise.ExerciseFileType.GARMIN_FIT, exercise.fileType)
         assertEquals("GARMIN FENIX6S (SW 19.2)", exercise.deviceName)
+        assertEquals("Cycling / Indoor Cycling", exercise.sportType)
         assertTrue(exercise.recordingMode.isHeartRate)
         assertTrue(exercise.recordingMode.isSpeed)
         assertTrue(exercise.recordingMode.isCadence)

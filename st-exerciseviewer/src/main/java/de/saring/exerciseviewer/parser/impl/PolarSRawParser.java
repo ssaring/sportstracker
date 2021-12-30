@@ -85,7 +85,7 @@ public class PolarSRawParser extends AbstractExerciseParser {
         for (int i = 0; i < 7; i++) {
             sbExerciseLabel.append(decodeChar(fileContent[i + 3]));
         }
-        exercise.setType(sbExerciseLabel.toString());
+        exercise.setSportType(sbExerciseLabel.toString());
 
         // get exercise date
         int dateSeconds = decodeBCD(fileContent[10]);
