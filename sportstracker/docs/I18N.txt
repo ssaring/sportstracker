@@ -58,6 +58,9 @@ SportsTracker 7.8.1:
 - pv.diagram.axis.power (new)
 - pv.track.tooltip.power (new)
 
+- pv.main.sport_type.text (new)
+- pv.main.type.text (removed)
+
 SportsTracker 7.8.0:
 
 - st.view.equipment_usage.Action.text=Equipment (new)

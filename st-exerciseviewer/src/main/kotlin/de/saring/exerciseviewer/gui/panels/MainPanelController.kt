@@ -37,7 +37,7 @@ class MainPanelController(
     @FXML
     private lateinit var laDeviceValue: Label
     @FXML
-    private lateinit var laTypeValue: Label
+    private lateinit var laSportTypeValue: Label
 
     @FXML
     private lateinit var laHeartrateAvgValue: Label
@@ -111,7 +111,7 @@ class MainPanelController(
             laDeviceValue.text = exercise.deviceName
         }
         exercise.sportType?.let {
-            laTypeValue.text = it
+            laSportTypeValue.text = it
         }
 
         // fill time data

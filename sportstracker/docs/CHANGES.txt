@@ -31,6 +31,8 @@ v7.9.0:
    - Sample Panel: displays power data for each recorded sample
    - Diagram Panel: displays power data on each axis
    - Track Panel: displays power data for the current position (tooltip)
+ - Main Panel: sport type is displayed, if available (e.g. for Garmin FIT,
+   Polar and Timex files)
  Project changes:
 
 v7.8.0:
