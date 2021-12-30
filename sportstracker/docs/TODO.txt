@@ -1,6 +1,10 @@
 SportsTracker-TODO
 ==================
 
+ExerciseViewer Sport type / subtype names:
+- store in another EVExercise attribute - is 'type' OK?
+- add to unit tests
+
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
