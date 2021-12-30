@@ -2,7 +2,7 @@ SET ST_PROJECT_DIR=..\sportstracker
 SET BUILD_DIR=.\build
 SET PACKAGE_DIR=.\package
 
-SET ST_VERSION=7.9.0-SNAPSHOT
+SET ST_VERSION=7.9.0
 
 # cleanup
 RMDIR /S/Q %BUILD_DIR%
@@ -25,7 +25,7 @@ REM (WiX 3.0 Installer is needed for types exe and msi, needs to be in PATH)
     --name SportsTracker ^
     --app-version %ST_VERSION% ^
     --vendor "Saring.de" ^
-    --copyright "(C) 2021 Stefan Saring" ^
+    --copyright "(C) 2022 Stefan Saring" ^
     --description "Application for tracking your sporting activities." ^
     --icon ./icons/windows/SportsTracker.ico ^
     --module-path %JAVA_HOME%/jmods ^
