@@ -1,6 +1,12 @@
 SportsTracker-TODO
 ==================
 
+CSS issue:
+- Labels for section headers are not shown in bold anymore, although the font-weight is set in CSS
+- Problem: the default font family does not support bold fonts anymore
+- Solution: use another font-family, "Arial" works on macOS (on other systems as well?)
+  - See ImageViewer for bugfix implementation
+
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
