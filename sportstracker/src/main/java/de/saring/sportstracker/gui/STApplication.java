@@ -14,6 +14,7 @@ import de.saring.util.unitcalc.FormatUtils;
 import eu.lestard.easydi.EasyDI;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -35,6 +36,9 @@ public class STApplication extends Application {
 
     @Override
     public void init() throws Exception {
+
+        // System.out.println(String.join("\n", Font.getFamilies()));
+        System.out.println(Font.getDefault());
 
         // setup EasyDI for dependency injection
         var easyDI = new EasyDI();

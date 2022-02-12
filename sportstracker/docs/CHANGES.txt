@@ -3,6 +3,7 @@ Changelog
 
 v7.9.1:
  Project changes:
+ - Bugfix: section header labels are now using bold font again on macOS
  SportsTracker changes:
  ExerciseViewer changes:
 

@@ -6,6 +6,8 @@
 
 /* bold label for section headers */
 .label-header {
+    /* Default System font family on macOS does not support bold font */
+    -fx-font-family: "Arial";
     -fx-font-weight: bold;
 }
 
