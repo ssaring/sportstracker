@@ -2,6 +2,10 @@ name: Package SportsTracker for macOS
 
 # no trigger events, has to be started manually
 on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build_and_test:
