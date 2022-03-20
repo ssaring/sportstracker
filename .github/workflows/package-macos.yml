@@ -24,6 +24,6 @@ jobs:
       - name: Archive package
         uses: actions/upload-artifact@v3
         with:
-          name: SportsTracker-macOS_DMG_x64
+          name: SportsTracker-macOS_x64_dmg
           path: st-packager/package/SportsTracker-*.dmg
           retention-days: 5
