@@ -1,7 +1,8 @@
 name: Package SportsTracker for macOS
 
-# workflow has to be started (dispatched) manually
-on: [workflow_dispatch]
+# workflow has to be started manually, not by events
+on:
+  workflow_dispatch:
 
 jobs:
   build_and_test:

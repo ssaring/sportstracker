@@ -8,6 +8,7 @@ Package with GitHub Actions:
   - Upload package artifact for download later
   - Test created packages
   - Setup workflows for Linux and Windows
+    - New workflows has to be created on the default branch, otherwise manual trigger is not available
   - Document Workflow packaging
   - Close branch
 
