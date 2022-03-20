@@ -1,0 +1,19 @@
+name: Package SportsTracker for macOS
+
+# no trigger events, has to be started manually
+on:
+
+jobs:
+  build_and_test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: maven
+      - name: Build with Maven
+        with:
+          run: mvn -B package -DskipTests
