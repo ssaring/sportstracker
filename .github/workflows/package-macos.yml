@@ -1,11 +1,8 @@
 name: Package SportsTracker for macOS
 
-# no trigger events, has to be started manually
+# workflow has to be started (dispatched) manually
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   build_and_test:
