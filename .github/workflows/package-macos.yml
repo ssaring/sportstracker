@@ -1,4 +1,4 @@
-name: Package SportsTracker for macOS
+name: Package ST for macOS
 
 # workflow has to be started manually, not by events
 on:
