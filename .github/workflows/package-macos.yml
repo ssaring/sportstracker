@@ -1,0 +1,19 @@
+name: Package SportsTracker for macOS
+
+# workflow has to be started manually, not by events
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B package -DskipTests

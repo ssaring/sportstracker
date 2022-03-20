@@ -1,6 +1,17 @@
 SportsTracker-TODO
 ==================
 
+Package with GitHub Actions:
+- test whether this can replace the local builds in custom VMs with Windows / Linux / macOS
+- Package workflow for macOS started, see package-macos.yml
+- TODO
+  - Upload package artifact for download later
+  - Test created packages
+  - Setup workflows for Linux and Windows
+    - New workflows has to be created on the default branch, otherwise manual trigger is not available
+  - Document Workflow packaging
+  - Close branch
+
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
