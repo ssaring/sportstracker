@@ -3,11 +3,11 @@ SportsTracker-TODO
 
 Package with GitHub Actions:
 - test whether this can replace the local builds in custom VMs with Windows / Linux / macOS
-- Package workflow for macOS x64 completed (package-macos.yml)
+- Package workflow for macOS x64 and Ubuntu x64 completed
   - package artifact archived (retention time 5 days) and installation tested successfully
 - TODO
-  - Setup workflows for Linux and Windows
-    - New workflows has to be created on the default branch, otherwise manual trigger is not available
+  - Complete workflow for Windows (InnoSetup/Wix and Archiving are missing)
+    - InnoSetup will be missing in windows-2022!
   - Document Workflow packaging
   - Close branch
 
