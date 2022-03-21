@@ -1,0 +1,29 @@
+name: Package ST for Ubuntu Linux
+
+# workflow has to be started manually, not by events
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B package -DskipTests
+      - name: Package creation
+        run: |
+          cd st-packager
+          ./package-linux.sh
+      - name: Archive package
+        uses: actions/upload-artifact@v3
+        with:
+          name: SportsTracker-Ubuntu_x64_deb
+          path: st-packager/package/sportstracker-*.deb
+          retention-days: 5
