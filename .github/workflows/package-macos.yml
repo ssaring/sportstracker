@@ -1,4 +1,4 @@
-name: Package ST for macOS
+name: Package for macOS
 
 # workflow has to be started manually, not by events
 on:

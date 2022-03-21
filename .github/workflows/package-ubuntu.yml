@@ -1,4 +1,4 @@
-name: Package ST for Ubuntu Linux
+name: Package for Ubuntu Linux
 
 # workflow has to be started manually, not by events
 on:
@@ -24,6 +24,6 @@ jobs:
       - name: Archive package
         uses: actions/upload-artifact@v3
         with:
-          name: SportsTracker-Ubuntu_x64_deb
-          path: st-packager/package/sportstracker-*.deb
+          name: SportsTracker-Ubuntu_amd64_deb
+          path: st-packager/package/sportstracker_*.deb
           retention-days: 5
