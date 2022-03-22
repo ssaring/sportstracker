@@ -22,3 +22,9 @@ jobs:
           cd st-packager
           package-windows.bat
         shell: cmd
+      - name: Archive package
+        uses: actions/upload-artifact@v3
+        with:
+          name: SportsTracker-Windows_x64
+          path: st-packager/package/SportsTracker/
+          retention-days: 5
