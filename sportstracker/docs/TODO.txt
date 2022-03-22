@@ -3,10 +3,10 @@ SportsTracker-TODO
 
 Package with GitHub Actions:
 - test whether this can replace the local builds in custom VMs with Windows / Linux / macOS
-- Package workflow for macOS x64 and Ubuntu x64 completed
+- Package workflow for macOS x64, Ubuntu x64 and Windows x64 completed
   - package artifact archived (retention time 5 days) and installation tested successfully
 - TODO
-  - Test Windows installation - 64 bit?
+  - Windows ZIP package contains no ST subfolder
   - InnoSetup or WiX installer crratopm for Windows (currently only the binary ZIP package is archived)
     - InnoSetup will be missing in windows-2022!
   - Document Workflow packaging
