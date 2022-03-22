@@ -26,5 +26,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: SportsTracker-Windows_x64
-          path: st-packager/package/SportsTracker
+          path: st-packager/package/SportsTracker/
           retention-days: 5
