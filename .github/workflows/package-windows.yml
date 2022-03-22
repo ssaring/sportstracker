@@ -21,3 +21,4 @@ jobs:
         run: |
           cd st-packager
           package-windows.bat
+        shell: cmd
