@@ -6,7 +6,7 @@ Package with GitHub Actions:
 - Package workflow for macOS x64 and Ubuntu x64 completed
   - package artifact archived (retention time 5 days) and installation tested successfully
 - TODO
-  - Complete workflow for Windows (InnoSetup/Wix and Archiving are missing)
+  - InnoSetup or WiX installer crratopm for Windows (currently only the binary ZIP package is archived)
     - InnoSetup will be missing in windows-2022!
   - Document Workflow packaging
   - Close branch
