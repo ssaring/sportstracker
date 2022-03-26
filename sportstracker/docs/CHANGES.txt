@@ -4,6 +4,8 @@ Changelog
 v7.9.1:
  Project changes:
  - Bugfix: section header labels are now using bold font again on macOS
+ - Updated JavaFX / OpenJFX to version 18
+   - contains critical bugfixes for Apple Silicon support (crashed before)
  SportsTracker changes:
  ExerciseViewer changes:
 
