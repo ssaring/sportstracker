@@ -20,7 +20,7 @@ REM use type app-image, exe or msi depending on the needed package type
 REM (WiX 3.0 Installer is needed for types exe and msi, needs to be in PATH)
 %JAVA_HOME%\bin\jpackage ^
     --verbose ^
-    --type app-image ^
+    --type exe ^
     --input %BUILD_DIR% ^
     --main-jar ./sportstracker-%ST_VERSION%.jar ^
     --dest %PACKAGE_DIR% ^
