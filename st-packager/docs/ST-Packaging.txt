@@ -12,8 +12,8 @@ Info
   * jpackage is the replacement for the JavaFX packager which has been removed
     from the JDK, there is also no ANT plugin available anymore
 * the created packages contain the required Java Runtime Environment (JRE)
-* has been tested with AdoptOpenJDK 16 on:
-  * macOS 11.2, Ubuntu Linux 20.04 and Windows 10 (AdoptOpenJDK 14)
+* has been tested with Adoptium / Temurin OpenJDK 17 on:
+  * macOS 12, Ubuntu Linux 20.04 and Windows 10
   * the packaged app and the installers are running perfectly without problems
 
 * this directory contains the scripts for automatic SportsTracker packaging
@@ -28,8 +28,8 @@ Info
     * SportsTracker.app 7.7.1 built with JDK 14: 140 MB
 
 
-HowTo package
--------------
+HowTo package manually on local systems
+---------------------------------------
 
 First on all platforms:
 
@@ -51,14 +51,24 @@ Then on Linux (Ubuntu):
 
 Then on Windows:
 
-* make sure InnoSetup is installed, has been tested with 6.1.2
 * check the app settings and variables in 'package-windows.bat'
 * run 'package-windows.bat'
-* the created SportsTracker app package is located in directory 'package'
-* open the InnoSetup project by opening the file 'SportsTracker.iss'
-* update the properties in the project file (e.g. the version)
-* run the installer creation (Run or F9)
-* the created InnoSetup installer is located in directory 'package/InnoSetup'
+* the created EXE installer package is located in directory 'package'
+
+
+HowTo package via GitHub Actions
+--------------------------------
+
+* Packaging can be executed via GitHub Actions on remote systems at GitHub
+  without the need for installing and executing the target operating system.
+* Supported package types:
+  * macOS x64 (DMG package)
+  * Ubuntu Linux amd64 (DEB package)
+  * Windows x64 (EXE package)
+* For packaging just execute the "Package for XYZ" Action for the appropriate
+  target system.
+* The created package can be downloaded as a build artifact afterwards, will
+  be removed automatically after 5 retention days.
 
 
 macOS Packaging Notes
@@ -81,8 +91,6 @@ Linux Packaging Notes
 Windows Packaging Notes
 -----------------------
 
-* The InnoSetup installer creation is not executed by the jpackager, it seems
-  to support the WiX installer tool only. 
-  The current WiX version requires an outdated .NET SDK, that's why the use of
-  InnoSetup is preferred (lightweight and runs without problems).
-* Therefore the installer creation has to be done manually after packaging.
+* For EXE installer creation the WiX Toolset (https://wixtoolset.org/) is being
+  used (version 3.x). This needs to be installed on the packaging system and
+  executable from the PATH variable.

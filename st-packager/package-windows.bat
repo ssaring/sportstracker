@@ -3,6 +3,8 @@ SET BUILD_DIR=.\build
 SET PACKAGE_DIR=.\package
 
 SET ST_VERSION=7.9.1-SNAPSHOT
+REM Packager fails, when package version contains any suffixes, e.g. -SNAPSHOT
+SET ST_PACKAGE_VERSION=7.9.1
 
 # cleanup
 RMDIR /S/Q %BUILD_DIR%
@@ -18,16 +20,18 @@ REM use type app-image, exe or msi depending on the needed package type
 REM (WiX 3.0 Installer is needed for types exe and msi, needs to be in PATH)
 %JAVA_HOME%\bin\jpackage ^
     --verbose ^
-    --type app-image ^
+    --type exe ^
     --input %BUILD_DIR% ^
     --main-jar ./sportstracker-%ST_VERSION%.jar ^
     --dest %PACKAGE_DIR% ^
     --name SportsTracker ^
-    --app-version %ST_VERSION% ^
+    --app-version %ST_PACKAGE_VERSION% ^
     --vendor "Saring.de" ^
     --copyright "(C) 2022 Stefan Saring" ^
     --description "Application for tracking your sporting activities." ^
     --icon ./icons/windows/SportsTracker.ico ^
+    --license-file %BUILD_DIR%/docs/LICENSE.txt ^
+    --win-menu ^
     --module-path %JAVA_HOME%/jmods ^
     --add-modules java.base,java.desktop,java.logging,java.net.http,java.scripting,java.sql,java.xml,jdk.crypto.ec,jdk.localedata,jdk.jsobject,jdk.unsupported
 

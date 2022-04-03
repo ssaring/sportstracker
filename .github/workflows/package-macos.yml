@@ -1,11 +1,11 @@
-name: Package SportsTracker for macOS
+name: Package for macOS
 
 # workflow has to be started manually, not by events
 on:
   workflow_dispatch:
 
 jobs:
-  build_and_test:
+  build_and_package:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,3 +17,13 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package -DskipTests
+      - name: Package creation
+        run: |
+          cd st-packager
+          ./package-macos.sh
+      - name: Archive package
+        uses: actions/upload-artifact@v3
+        with:
+          name: SportsTracker-macOS_x64_dmg
+          path: st-packager/package/SportsTracker-*.dmg
+          retention-days: 5
