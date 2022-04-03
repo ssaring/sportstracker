@@ -1,16 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Package with GitHub Actions:
-- test whether this can replace the local builds in custom VMs with Windows / Linux / macOS
-- Package workflow for macOS x64, Ubuntu x64 and Windows x64 completed
-  - package artifact archived (retention time 5 days) and installation tested successfully
-- TODO
-  - InnoSetup or WiX installer creation for Windows (currently only the binary ZIP package is archived)
-    - InnoSetup is missing in windows-2022!
-  - Document Workflow packaging
-  - Close branch
-
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
