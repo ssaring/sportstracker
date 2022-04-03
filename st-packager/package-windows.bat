@@ -30,6 +30,7 @@ REM (WiX 3.0 Installer is needed for types exe and msi, needs to be in PATH)
     --copyright "(C) 2022 Stefan Saring" ^
     --description "Application for tracking your sporting activities." ^
     --icon ./icons/windows/SportsTracker.ico ^
+    --license-file %BUILD_DIR%/docs/LICENSE.txt ^
     --win-menu ^
     --module-path %JAVA_HOME%/jmods ^
     --add-modules java.base,java.desktop,java.logging,java.net.http,java.scripting,java.sql,java.xml,jdk.crypto.ec,jdk.localedata,jdk.jsobject,jdk.unsupported
