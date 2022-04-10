@@ -11,6 +11,7 @@ v7.9.1:
  - updated jdom2 to version 2.0.6.1
  - updated commons-cli to version 1.5.0
  - updated JUnit to version 5.8.2
+ - updated Mockito to version 4.4.0
  SportsTracker changes:
  ExerciseViewer changes:
 
