@@ -7,6 +7,10 @@ v7.9.1:
  - Updated JavaFX / OpenJFX to version 18
    - contains critical bugfixes for Apple Silicon support (crashed before)
  - updated Kotlin to version 1.6.20
+ - updated sqlite-jdbc to version 3.37.2
+ - updated jdom2 to version 2.0.6.1
+ - updated commons-cli to version 1.5.0
+ - updated JUnit to version 5.8.2
  SportsTracker changes:
  ExerciseViewer changes:
 

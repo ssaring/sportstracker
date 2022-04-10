@@ -448,7 +448,7 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - Kotlin 1.6.20 (http://kotlinlang.org/)
       License: Apache License v2.0
-  - JDOM 2.0.6 (http://www.jdom.org)
+  - JDOM 2.0.6.1 (http://www.jdom.org)
       License: Apache-style open source license
   - ControlsFX 11.1.1 (http://controlsfx.org/)
       License: BSD 3-Clause License
@@ -459,11 +459,11 @@ The SportsTracker project uses the following libraries:
   - leaflet-color-markers (https://github.com/pointhi/leaflet-color-markers)
     - Modified version, included in leafletmap
     - License: not specified
-  - commons-cli 1.4 (http://commons.apache.org/cli/)
+  - commons-cli 1.5.0 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - sqlite-jdbc 3.34.0 (https://github.com/xerial/sqlite-jdbc)
+  - sqlite-jdbc 3.36.0.3 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
-  - JUnit 5.7.1 (http://www.junit.org)
+  - JUnit 5.8.2 (http://www.junit.org)
       License: Eclipse Public License v2.0. and Apache License v2.0
   - Mockito 3.8.0 (http://code.google.com/p/mockito/)
       License: MIT License
