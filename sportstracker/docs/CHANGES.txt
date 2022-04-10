@@ -6,6 +6,7 @@ v7.9.1:
  - Bugfix: section header labels are now using bold font again on macOS
  - Updated JavaFX / OpenJFX to version 18
    - contains critical bugfixes for Apple Silicon support (crashed before)
+ - updated Kotlin to version 1.6.20
  SportsTracker changes:
  ExerciseViewer changes:
 

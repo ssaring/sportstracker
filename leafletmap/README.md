@@ -15,7 +15,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 * OpenJFX 18
     * Homepage: https://openjfx.io/
     * License: GPL v2 + Classpath Exception
-* Kotlin 1.6.10
+* Kotlin 1.6.20
     * Homepage: http://kotlinlang.org/
     * License: Apache License v2.0
 * Leaflet 1.6.0 (included)
@@ -61,6 +61,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 LeafletMap 1.0.7:
 * Updated JavaFX / OpenJFX to version 18 
   (contains critical bugfixes for Apple Silicon support)
+* Updated Kotlin to version 1.6.20
 
 LeafletMap 1.0.6:
 * Updated Kotlin to version 1.6.10 (solves JDK 16/17 compatibility issues)
