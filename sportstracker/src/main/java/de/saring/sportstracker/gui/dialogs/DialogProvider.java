@@ -2,9 +2,9 @@ package de.saring.sportstracker.gui.dialogs;
 
 import de.saring.exerciseviewer.gui.EVMain;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 
 /**
  * Class for grouping all the Dialog controller providers. The goal is to reduce the dependency injection

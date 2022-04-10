@@ -15,8 +15,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 import javafx.stage.Window;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportType;

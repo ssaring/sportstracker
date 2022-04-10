@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;

@@ -12,7 +12,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.gui.STContext;

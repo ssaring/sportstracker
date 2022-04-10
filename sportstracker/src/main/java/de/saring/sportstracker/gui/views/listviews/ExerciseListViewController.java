@@ -3,8 +3,8 @@ package de.saring.sportstracker.gui.views.listviews;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.Exercise;

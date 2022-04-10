@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import de.saring.util.unitcalc.UnitSystem;
 import org.jfree.chart.ChartFactory;

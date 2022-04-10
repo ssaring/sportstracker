@@ -8,8 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;

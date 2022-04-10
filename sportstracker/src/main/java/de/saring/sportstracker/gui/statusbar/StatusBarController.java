@@ -1,7 +1,7 @@
 package de.saring.sportstracker.gui.statusbar;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.STContext;

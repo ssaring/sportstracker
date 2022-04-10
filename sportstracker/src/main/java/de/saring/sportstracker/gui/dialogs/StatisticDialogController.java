@@ -16,8 +16,8 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.stage.Window;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.statistic.StatisticCalculator;

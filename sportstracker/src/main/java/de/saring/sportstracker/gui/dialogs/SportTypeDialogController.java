@@ -23,7 +23,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.controlsfx.validation.Validator;
 

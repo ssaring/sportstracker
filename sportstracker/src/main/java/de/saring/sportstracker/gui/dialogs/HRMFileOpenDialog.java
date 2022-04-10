@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import de.saring.exerciseviewer.parser.ExerciseParserFactory;
 import de.saring.exerciseviewer.parser.ExerciseParserInfo;

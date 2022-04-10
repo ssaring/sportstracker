@@ -443,8 +443,8 @@ The SportsTracker project uses the following libraries:
 
   - OpenJFX 18 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
-  - EasyDI 0.3.0 (https://github.com/lestard/EasyDI)
-      Includes: javax.inject-1.jar
+  - EasyDI 0.6.0 (https://github.com/lestard/EasyDI)
+      Includes: jakarta.inject 2.0.1
       License: Apache License v2.0
   - Kotlin 1.6.20 (http://kotlinlang.org/)
       License: Apache License v2.0

@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.Window;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import de.saring.sportstracker.gui.STContext;
 

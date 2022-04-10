@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Window;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.controlsfx.validation.Validator;
 

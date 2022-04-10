@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import de.saring.util.gui.javafx.FxWorkarounds;
 import de.saring.util.unitcalc.UnitSystem;

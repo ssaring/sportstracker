@@ -1,12 +1,9 @@
 package de.saring.sportstracker.gui;
 
-import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.gui.views.EntryViewEventHandler;
 import javafx.event.ActionEvent;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 /**
  * This interface provides all controller (MVC) functionality of the SportsTracker main application window.

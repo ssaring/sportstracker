@@ -1,6 +1,6 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import de.saring.sportstracker.data.statistic.StatisticCalculator;
 import de.saring.sportstracker.gui.STContext;

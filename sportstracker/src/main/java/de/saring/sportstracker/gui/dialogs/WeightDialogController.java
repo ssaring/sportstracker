@@ -14,7 +14,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;

@@ -11,8 +11,8 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import de.saring.util.AppResources;
 import de.saring.util.unitcalc.FormatUtils;

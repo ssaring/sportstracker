@@ -8,7 +8,7 @@ import javafx.stage.Modality
 import javafx.stage.Stage
 import java.util.logging.Level
 import java.util.logging.Logger
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 /**
  * This is the main class of the ExerciseViewer "sub-application" (is a child-dialog of the parent frame).

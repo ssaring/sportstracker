@@ -7,7 +7,7 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.util.unitcalc.SpeedMode;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * This class is for reading / storing of the application data from / to
