@@ -24,7 +24,6 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.Date310Utils;
 import de.saring.util.StringUtils;
 import de.saring.util.gui.javafx.ColorUtils;
 

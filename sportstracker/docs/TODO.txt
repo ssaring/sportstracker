@@ -1,6 +1,12 @@
 SportsTracker-TODO
 ==================
 
+SQLite Export:
+- use unique IDs for SportType, SubType, Equipment in Exercise mapping
+  - use a map during export for matching the unique IDs for the exported exercixes
+- remove additional non-unique IDs in tables SPORT_SUBTYPE and EQUIPMENT
+- update web and backend JavaScript projects afterwards
+
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
