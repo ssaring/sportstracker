@@ -1,5 +1,19 @@
 package de.saring.sportstracker.storage;
 
+import de.saring.sportstracker.core.STException;
+import de.saring.sportstracker.core.STExceptionID;
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.Note;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.data.Weight;
+import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.StringUtils;
+import de.saring.util.data.IdObject;
+import de.saring.util.gui.javafx.ColorUtils;
+import jakarta.inject.Singleton;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,20 +26,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
-
-import jakarta.inject.Singleton;
-
-import de.saring.sportstracker.core.STException;
-import de.saring.sportstracker.core.STExceptionID;
-import de.saring.sportstracker.data.Equipment;
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.Note;
-import de.saring.sportstracker.data.SportSubType;
-import de.saring.sportstracker.data.SportType;
-import de.saring.sportstracker.data.Weight;
-import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.StringUtils;
-import de.saring.util.gui.javafx.ColorUtils;
+import java.util.HashMap;
 
 /**
  * Exporter for the SportsTracker application data to a SQLite database. The exporter uses the plain
@@ -41,6 +42,9 @@ public class SQLiteExporter {
     private static final DateTimeFormatter SQLITE_DATETIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private STDocument document;
+
+    private HashMap <String, Long> sportSubTypePrimaryKeyMap;
+    private HashMap <String, Long> equipmentPrimaryKeyMap;
 
     /**
      * C'tor for dependency injection
@@ -68,6 +72,8 @@ public class SQLiteExporter {
     public void exportToSqlite() throws STException {
 
         deleteExistingDatabase();
+        sportSubTypePrimaryKeyMap = new HashMap<>();
+        equipmentPrimaryKeyMap = new HashMap<>();
 
         // create database connection
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_FILE)) {
@@ -141,31 +147,36 @@ public class SQLiteExporter {
     private void exportSportSubTypes(final Connection connection, final SportType sportType) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
-                "INSERT INTO SPORT_SUBTYPE (SPORT_SUBTYPE_ID, SPORT_TYPE_ID, NAME) VALUES (?, ?, ?)");
+                "INSERT INTO SPORT_SUBTYPE (SPORT_TYPE_ID, NAME) VALUES (?, ?)",
+                Statement.RETURN_GENERATED_KEYS);
 
         for (SportSubType sportSubType : sportType.getSportSubTypeList()) {
             statement.clearParameters();
 
-            statement.setInt(1, sportSubType.getId());
-            statement.setInt(2, sportType.getId());
-            statement.setString(3, sportSubType.getName());
+            statement.setInt(1, sportType.getId());
+            statement.setString(2, sportSubType.getName());
             statement.executeUpdate();
+
+            var primaryKey = getGeneratedPrimaryKey(statement);
+            storeSportSubTypePrimaryKey(sportSubType, sportType, primaryKey);
         }
     }
 
     private void exportEquipments(final Connection connection, final SportType sportType) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
-                "INSERT INTO EQUIPMENT (EQUIPMENT_ID, SPORT_TYPE_ID, NAME, NOT_IN_USE) VALUES (?, ?, ?, ?)");
+                "INSERT INTO EQUIPMENT (SPORT_TYPE_ID, NAME, NOT_IN_USE) VALUES (?, ?, ?)");
 
         for (Equipment equipment : sportType.getEquipmentList()) {
             statement.clearParameters();
 
-            statement.setInt(1, equipment.getId());
-            statement.setInt(2, sportType.getId());
-            statement.setString(3, equipment.getName());
-            statement.setInt(4, equipment.isNotInUse() ? 1 : 0);
+            statement.setInt(1, sportType.getId());
+            statement.setString(2, equipment.getName());
+            statement.setInt(3, equipment.isNotInUse() ? 1 : 0);
             statement.executeUpdate();
+
+            var primaryKey = getGeneratedPrimaryKey(statement);
+            storeEquipmentPrimaryKey(equipment, sportType, primaryKey);
         }
     }
 
@@ -182,7 +193,7 @@ public class SQLiteExporter {
             statement.setInt(1, exercise.getId());
             statement.setString(2, exercise.getDateTime().format(SQLITE_DATETIME_FORMATTER));
             statement.setInt(3, exercise.getSportType().getId());
-            statement.setInt(4, exercise.getSportSubType().getId());
+            statement.setLong(4, getPrimaryKeyForSportType(exercise.getSportSubType(), exercise.getSportType()));
             statement.setString(5, String.valueOf(exercise.getIntensity()));
             statement.setInt(6, exercise.getDuration());
             statement.setFloat(7, exercise.getDistance());
@@ -195,7 +206,7 @@ public class SQLiteExporter {
                 statement.setString(13, exercise.getHrmFile());
             }
             if (exercise.getEquipment() != null) {
-                statement.setInt(14, exercise.getEquipment().getId());
+                statement.setLong(14, getPrimaryKeyForEquipment(exercise.getEquipment(), exercise.getSportType()));
             }
             if (!StringUtils.isNullOrEmpty(exercise.getComment())) {
                 statement.setString(15, exercise.getComment());
@@ -235,5 +246,46 @@ public class SQLiteExporter {
             }
             statement.executeUpdate();
         }
+    }
+
+    private long getGeneratedPrimaryKey(Statement statement) throws SQLException {
+        var resultSet = statement.getGeneratedKeys();
+        if (resultSet.next()) {
+            return resultSet.getLong(1);
+        } else {
+            throw new SQLException("Generated primary key was not returned!");
+        }
+    }
+
+    private void storeSportSubTypePrimaryKey(SportSubType sportSubType, SportType sportType, long primaryKey) {
+        var identifier = getSportTypeRelatedIdentifier(sportSubType, sportType);
+        sportSubTypePrimaryKeyMap.put(identifier, primaryKey);
+    }
+
+    private void storeEquipmentPrimaryKey(Equipment equipment, SportType sportType, long primaryKey) {
+        var identifier = getSportTypeRelatedIdentifier(equipment, sportType);
+        equipmentPrimaryKeyMap.put(identifier, primaryKey);
+    }
+
+    private String getSportTypeRelatedIdentifier(IdObject idObject, SportType sportType) {
+        return idObject.getId() + "-" + sportType.getId();
+    }
+
+    private long getPrimaryKeyForSportType(SportSubType sportSubType, SportType sportType) {
+        var identifier = getSportTypeRelatedIdentifier(sportSubType, sportType);
+        var primaryKey = sportSubTypePrimaryKeyMap.get(identifier);
+        if (primaryKey == null) {
+            throw new IllegalStateException("Failed to find primary key for SportSubType: " + sportSubType + "!");
+        }
+        return primaryKey;
+    }
+
+    private long getPrimaryKeyForEquipment(Equipment equipment, SportType sportType) {
+        var identifier = getSportTypeRelatedIdentifier(equipment, sportType);
+        var primaryKey = equipmentPrimaryKeyMap.get(identifier);
+        if (primaryKey == null) {
+            throw new IllegalStateException("Failed to find primary key for Equipment: " + equipment + "!");
+        }
+        return primaryKey;
     }
 }

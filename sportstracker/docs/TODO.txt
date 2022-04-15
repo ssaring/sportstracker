@@ -2,9 +2,13 @@ SportsTracker-TODO
 ==================
 
 SQLite Export:
-- use unique IDs for SportType, SubType, Equipment in Exercise mapping
-  - use a map during export for matching the unique IDs for the exported exercixes
-- remove additional non-unique IDs in tables SPORT_SUBTYPE and EQUIPMENT
+- Status:
+  - SQL schema has been updated
+  - Exporter has been adjusted
+  - initial smoke test seems valid
+- Next:
+  - fix unit tests
+  - document changes
 - update web and backend JavaScript projects afterwards
 
 ExerciseViewer standalone mode:

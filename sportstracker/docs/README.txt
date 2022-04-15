@@ -369,14 +369,14 @@ existing database will be overwritten. The database schema is defined in the
 source file 'st-export.sql'.
 
 The SportsTracker application already contains the native SQLite libraries for
-Windows, Mac and Linux (part of the sqlite-jdbc library). Users of other
+Windows, macOS and Linux (part of the sqlite-jdbc library). Users of other
 systems must provide the native libraries manually.
 
 There are many command line and graphical tools available for working with
 SQLite. If you´re looking for a handy, cross platform, open source application
 you should try 'DB Browser for SQLite' (http://sqlitebrowser.org/).
 
-Note: SQLite does not provides a date and time data type, the export uses a
+Note: SQLite does not provide a date and time data type, the export uses a
 string in ISO 8601 format "yyyy-MM-dd HH:mm:ss" (see
 https://www.sqlite.org/datatype3.html).
 The queries can use the built-in functions for conversion and formatting (see
