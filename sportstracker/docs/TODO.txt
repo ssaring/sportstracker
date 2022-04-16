@@ -1,16 +1,6 @@
 SportsTracker-TODO
 ==================
 
-SQLite Export:
-- Status:
-  - SQL schema has been updated
-  - Exporter has been adjusted
-  - initial smoke test seems valid
-- Next:
-  - fix unit tests
-  - document changes
-- update web and backend JavaScript projects afterwards
-
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system

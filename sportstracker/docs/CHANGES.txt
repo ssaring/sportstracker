@@ -15,6 +15,12 @@ v7.9.1:
  - updated JUnit to version 5.8.2
  - updated Mockito to version 4.4.0
  SportsTracker changes:
+ - SQLite Exporter:
+   - table Exercise now uses the SportSubType and Equipment primary keys (ID)
+     for referencing sport subtypes and equipments
+   - columns SportSubType.SPORT_SUBTYPE_ID and Equipment.EQUIPMENT_ID are not
+     needed anymore and were removed
+   -> makes SQL queries a lot simpler and faster
  ExerciseViewer changes:
 
 v7.9.0:
