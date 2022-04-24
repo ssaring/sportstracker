@@ -6,6 +6,12 @@
 -- enable Foreign Key Support (disabled by default)
 PRAGMA foreign_keys = ON;
 
+CREATE TABLE META (
+    SCHEMA_VERSION INTEGER NOT NULL UNIQUE,
+    UPDATE_DATE_TIME TEXT NOT NULL DEFAULT (datetime('now','localtime'))
+);
+INSERT INTO META (SCHEMA_VERSION) VALUES (1);
+
 CREATE TABLE SPORT_TYPE (
     ID INTEGER PRIMARY KEY NOT NULL,
     NAME TEXT NOT NULL,

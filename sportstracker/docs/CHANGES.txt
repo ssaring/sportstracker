@@ -21,6 +21,7 @@ v7.9.1:
    - columns SportSubType.SPORT_SUBTYPE_ID and Equipment.EQUIPMENT_ID are not
      needed anymore and were removed
    -> makes SQL queries a lot simpler and faster
+   - added table Meta for storing database schema version and update timestamp
  ExerciseViewer changes:
 
 v7.9.0:
