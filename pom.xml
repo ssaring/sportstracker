@@ -19,7 +19,7 @@
         <application.mainClass>de.saring.sportstracker.STMain</application.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.6.20</kotlin.version>
-        <javafx.version>18</javafx.version>
+        <javafx.version>18.0.1</javafx.version>
         <junit.version>5.8.2</junit.version>
     </properties>
     

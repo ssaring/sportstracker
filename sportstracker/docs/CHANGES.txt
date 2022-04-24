@@ -4,7 +4,7 @@ Changelog
 v7.9.1:
  Project changes:
  - Bugfix: section header labels are now using bold font again on macOS
- - Updated JavaFX / OpenJFX to version 18
+ - Updated JavaFX / OpenJFX to version 18.0.1
    - contains critical bugfixes for Apple Silicon support (crashed before)
  - updated Kotlin to version 1.6.20
  - updated EasyDI to version 0.6.0
