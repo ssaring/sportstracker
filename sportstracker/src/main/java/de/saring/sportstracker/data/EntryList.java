@@ -86,10 +86,17 @@ public class EntryList<T extends Entry> extends IdDateObjectList<T> {
             // normal searching for substring (is not case sensitive !)
             strCommentSubString = strCommentSubString.toLowerCase();
             String strEntryComment = entry.getComment().toLowerCase();
-            if (!strEntryComment.contains(strCommentSubString)) {
-                return false;
+
+            // normal search can contain multiple words separated by any whitespace character
+            // => each of these words needs to be contained in the entry comment, the order does not matter (AND logic)
+            String[] filterWords = strCommentSubString.split("\\s+");
+            for (var filterWord : filterWords) {
+                if (!strEntryComment.contains(filterWord)) {
+                    return false;
+                }
             }
-        } else {
+        }
+        else {
             // regular expression searching for substring (is case sensitive !)
             Pattern ptnCommentSubString = Pattern.compile(strCommentSubString);
             Matcher matcher = ptnCommentSubString.matcher(entry.getComment());

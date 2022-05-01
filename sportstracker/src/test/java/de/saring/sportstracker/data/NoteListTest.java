@@ -70,7 +70,7 @@ public class NoteListTest {
 
         EntryFilter filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
-        filter.setDateEnd(LocalDate.of(2003, 04, 30));
+        filter.setDateEnd(LocalDate.of(2003, 4, 30));
         filter.setEntryType(EntryFilter.EntryType.NOTE);
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
@@ -88,7 +88,7 @@ public class NoteListTest {
 
         EntryFilter filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
-        filter.setDateEnd(LocalDate.of(2003, 04, 30));
+        filter.setDateEnd(LocalDate.of(2003, 4, 30));
         filter.setEntryType(EntryFilter.EntryType.WEIGHT);
         filter.setCommentSubString("");
         filter.setRegularExpressionMode(false);
@@ -234,5 +234,25 @@ public class NoteListTest {
 
         assertThrows(PatternSyntaxException.class, () ->
             list.getEntriesForFilter(filter));
+    }
+
+    /**
+     * Tests for getEntriesForFilter() - scenario: the filter contains multiple words, all of them
+     * need to be contained in the comment text, the case and the order does not matter (no regex-mode).
+     * One single note needs to be found for this filter.
+     */
+    @Test
+    public void testGetEntriesForFilter12() {
+
+        EntryFilter filter = new EntryFilter();
+        filter.setDateStart(LocalDate.of(2003, 1, 1));
+        filter.setDateEnd(LocalDate.of(2003, 12, 31));
+        filter.setEntryType(EntryFilter.EntryType.NOTE);
+        filter.setCommentSubString(" 3    NOTe ");
+        filter.setRegularExpressionMode(false);
+
+        EntryList<Note> entryList = list.getEntriesForFilter(filter);
+        assertEquals(1, entryList.size());
+        assertEquals("Dummy note 3", entryList.getAt(0).getComment());
     }
 }

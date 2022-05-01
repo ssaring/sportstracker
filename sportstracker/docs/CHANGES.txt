@@ -22,6 +22,8 @@ v7.9.1:
      needed anymore and were removed
    -> makes SQL queries a lot simpler and faster
    - added table Meta for storing database schema version and update timestamp
+ - Entry Filter (Exercise, Note, Weight): added support for searching for
+   multiple words in any order (AND logic, case-insensitive)
  ExerciseViewer changes:
 
 v7.9.0:
