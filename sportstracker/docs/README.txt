@@ -237,6 +237,10 @@ using sorting and filters.
 Filters can be used in all views, all entry types are filterable. The filter
 can only be enabled for one specific entry type, the entries of all other types
 will not be filtered meanwhile.
+The filter can be used to search in the comments of the entries. In the normal
+mode each of the entered filter words needs to be found in the entry comment
+(AND logic, case-insensitive). There is also a regular expression mode which,
+this filter is case-sensitive and supports only one valid regular expression.
 
 Users of heartrate monitors (HRM) can assign the recorded file to the exercise.
 Most of the exercise data can be imported from this file, so it does
