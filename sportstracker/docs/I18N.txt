@@ -47,6 +47,10 @@ History of resource changes for each release
 
 SportsTracker 7.8.1:
 
+- st.dlg.filter.string_comments.text (edited)
+
+SportsTracker 7.8.1:
+
 - pv.main.zone_prefix (new)
 
 - pv.opt.power_data.text (new)
