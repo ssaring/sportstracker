@@ -52,13 +52,14 @@ internal class FitMessageListener : MesgListener {
         exercise.dateTime = Date310Utils.dateToLocalDateTime(mesg.startTime.date)
         exercise.duration = Math.round(mesg.totalTimerTime * 10)
 
-        // read optional sport and subsport names
-        mesg.sport?.name?.let { sportName ->
-            exercise.sportType = enumToReadableName(sportName)
+        // read optional sport and subsport names and IDs
+        mesg.sport?.let { sport ->
+            exercise.sportType = enumToReadableName(sport.name)
 
-            mesg.subSport?.name?.let { subSportName ->
-                exercise.sportType += " / ${enumToReadableName(subSportName)}";
+            mesg.subSport?.let { subSport ->
+                exercise.sportType += " / ${enumToReadableName(subSport.name)}";
             }
+            exercise.sportTypeFit = SportTypeFit(sport.value, mesg.subSport?.value)
         }
 
         // read optional heartrate data
