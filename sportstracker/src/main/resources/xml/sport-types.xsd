@@ -48,6 +48,11 @@
 									<xs:attribute name="blue" type="xs:unsignedByte" use="required"/>
 								</xs:complexType>
 							</xs:element>
+							<xs:element name="fit-id" type="xs:int" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>The matching FIT-protocol ID of this sport type.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
 							<xs:element name="sport-subtype-list">
 								<xs:annotation>
 									<xs:documentation>List of subtypes of this sport.</xs:documentation>
@@ -68,6 +73,11 @@
 													<xs:element name="name" type="xs:string">
 														<xs:annotation>
 															<xs:documentation>The name of this sport subtype.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="fit-id" type="xs:int" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>The matching FIT-protocol ID of this sport subtype.</xs:documentation>
 														</xs:annotation>
 													</xs:element>
 												</xs:sequence>

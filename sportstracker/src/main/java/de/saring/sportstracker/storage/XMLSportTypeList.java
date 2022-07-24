@@ -21,8 +21,7 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.util.gui.javafx.ColorUtils;
 
 /**
- * This class is for reading and writing a SportTypeList object from or to a
- * XML file.
+ * This class is for reading and writing a SportTypeList object from or to a XML file.
  *
  * @author Stefan Saring
  * @version 2.0
@@ -118,11 +117,23 @@ public class XMLSportTypeList {
             }
         }
 
+        // get optional element 'fit-id'
+        Element eFitId = eSportType.getChild("fit-id");
+        if (eFitId != null) {
+            sportType.setFitId(Integer.parseInt(eFitId.getText()));
+        }
+
         // read all contained sport sub types
         Element eSportSubTypeList = eSportType.getChild("sport-subtype-list");
         eSportSubTypeList.getChildren("sport-subtype").forEach(eSportSubType -> {
             SportSubType sportSubType = new SportSubType(Integer.parseInt(eSportSubType.getChildText("id")));
             sportSubType.setName(eSportSubType.getChildText("name"));
+
+            // get optional element 'fit-id'
+            Element eSubTypeFitId = eSportSubType.getChild("fit-id");
+            if (eSubTypeFitId != null) {
+                sportSubType.setFitId(Integer.parseInt(eSubTypeFitId.getText()));
+            }
             sportType.getSportSubTypeList().set(sportSubType);
         });
 
@@ -188,6 +199,10 @@ public class XMLSportTypeList {
             eColor.setAttribute("blue", String.valueOf(awtColor.getBlue()));
             eSportType.addContent(eColor);
 
+            if (sportType.getFitId() != null) {
+                XMLUtils.addElement(eSportType, "fit-id", sportType.getFitId().toString());
+            }
+
             // append an "sport-subtype" element for each sport subtype
             Element eSportSubTypeList = new Element("sport-subtype-list");
             eSportType.addContent(eSportSubTypeList);
@@ -197,6 +212,10 @@ public class XMLSportTypeList {
                 eSportSubTypeList.addContent(eSportSubType);
                 XMLUtils.addElement(eSportSubType, "id", String.valueOf(sportSubType.getId()));
                 XMLUtils.addElement(eSportSubType, "name", sportSubType.getName());
+
+                if (sportSubType.getFitId() != null) {
+                    XMLUtils.addElement(eSportSubType, "fit-id", sportSubType.getFitId().toString());
+                }
             });
 
             // append an "equipment" element for each equipment

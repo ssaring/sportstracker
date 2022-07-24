@@ -42,6 +42,12 @@ public final class SportType extends IdObject implements Nameable, Cloneable {
     private Color color = Color.BLACK;
 
     /**
+     * The matching FIT-protocol ID of this sport type (optional). The list of all FIT-specific sport types is defined
+     * in the Garmin FIT SDK library in the enum [com.garmin.fit.Sport].
+     */
+    private Integer fitId;
+
+    /**
      * This is the list of all subtypes of this sport type.
      */
     private IdObjectList<SportSubType> sportSubTypeList = new IdObjectList<>();
@@ -102,6 +108,14 @@ public final class SportType extends IdObject implements Nameable, Cloneable {
         this.color = color;
     }
 
+    public Integer getFitId() {
+        return fitId;
+    }
+
+    public void setFitId(Integer fitId) {
+        this.fitId = fitId;
+    }
+
     public IdObjectList<SportSubType> getSportSubTypeList() {
         return sportSubTypeList;
     }
@@ -150,7 +164,8 @@ public final class SportType extends IdObject implements Nameable, Cloneable {
         sBuilder.append("  recordDistance=").append(this.recordDistance).append("\n");
         sBuilder.append("  speedMode=").append(this.speedMode).append("\n");
         sBuilder.append("  icon=").append(this.icon).append("\n");
-        sBuilder.append("  color=").append(this.color).append("]\n");
+        sBuilder.append("  color=").append(this.color).append("\n");
+        sBuilder.append("  fitId=").append(this.fitId).append("]\n");
 
         if (this.sportSubTypeList != null) {
             this.sportSubTypeList.forEach(sBuilder::append);
