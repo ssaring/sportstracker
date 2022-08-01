@@ -7,8 +7,10 @@ SportType-Mapping from Garmin FIT files:
   - ST: SportType and SportSubType have the optional attribute fitId
   - XMLStorage reads / writes persists the FIT-ID properly (incl. unit tests)
   - modified ST already installed locally to prevent local configuration loss
+  - sport-types.xml (own): fit-id's are configured
 - TODO:
   - implement automated mapping when importing Exercises from HRM files
+    => see TODO in ExerciseDialogController
   - Optional: add UI for define the SportType => FIT mapping
   - documentation and changelog
 

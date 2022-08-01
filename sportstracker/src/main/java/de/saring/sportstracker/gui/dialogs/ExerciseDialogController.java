@@ -519,6 +519,9 @@ public class ExerciseDialogController extends AbstractDialogController {
             exerciseViewModel.duration.set(0);
         }
 
+        // map sport type and subtype if available (in FIT files only)
+        // TODO
+
         // fill ascent- and descent-related values
         if (evExercise.getAltitude() != null) {
             exerciseViewModel.ascent.set(evExercise.getAltitude().getAscent());
