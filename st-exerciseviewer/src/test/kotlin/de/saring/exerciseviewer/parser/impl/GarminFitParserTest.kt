@@ -100,11 +100,11 @@ class GarminFitParserTest {
         assertTrue(exercise.recordingMode.isTemperature)
 
         assertEquals(LocalDateTime.of(2010, 7, 4, 6, 7, 36), exercise.dateTime)
-        assertEquals(146499, exercise.duration?.toInt())
+        assertEquals(146499, exercise.duration)
 
         assertEquals(121, exercise.heartRateAVG?.toInt())
         assertEquals(180, exercise.heartRateMax?.toInt())
-        assertEquals(1567, exercise.energy?.toInt())
+        assertEquals(1567, exercise.energy)
 
         assertEquals(101710, exercise.speed?.distance)
         assertEquals(24.9948, exercise.speed?.speedAvg!!.toDouble(), 0.001)
@@ -125,7 +125,7 @@ class GarminFitParserTest {
         assertEquals(32, exercise.temperature?.temperatureMax?.toInt())
 
         assertEquals("Cycling", exercise.sportType)
-        assertEquals(Sport.CYCLING.value, exercise.sportTypeFit!!.sportTypeId)
+        assertEquals(Sport.CYCLING.value.toInt(), exercise.sportTypeFit!!.sportTypeId)
         assertNull(exercise.sportTypeFit!!.sportSubTypeId)
 
         // check lap data
@@ -246,8 +246,8 @@ class GarminFitParserTest {
         assertNull(exercise.temperature)
 
         assertEquals("Running / Generic", exercise.sportType)
-        assertEquals(Sport.RUNNING.value, exercise.sportTypeFit!!.sportTypeId)
-        assertEquals(SubSport.GENERIC.value, exercise.sportTypeFit!!.sportSubTypeId)
+        assertEquals(Sport.RUNNING.value.toInt(), exercise.sportTypeFit!!.sportTypeId)
+        assertEquals(SubSport.GENERIC.value.toInt(), exercise.sportTypeFit!!.sportSubTypeId)
 
         // check some lap data
         assertEquals(10, exercise.lapList.size)
@@ -333,7 +333,7 @@ class GarminFitParserTest {
         assertEquals(34, exercise.temperature!!.temperatureMax.toInt())
 
         assertEquals("Generic", exercise.sportType)
-        assertEquals(Sport.GENERIC.value, exercise.sportTypeFit!!.sportTypeId)
+        assertEquals(Sport.GENERIC.value.toInt(), exercise.sportTypeFit!!.sportTypeId)
         assertNull(exercise.sportTypeFit!!.sportSubTypeId)
 
         // check some lap data
@@ -424,8 +424,8 @@ class GarminFitParserTest {
         assertEquals(20, exercise.temperature!!.temperatureMax.toInt())
 
         assertEquals("Cycling / Road", exercise.sportType)
-        assertEquals(Sport.CYCLING.value, exercise.sportTypeFit!!.sportTypeId)
-        assertEquals(SubSport.ROAD.value, exercise.sportTypeFit!!.sportSubTypeId)
+        assertEquals(Sport.CYCLING.value.toInt(), exercise.sportTypeFit!!.sportTypeId)
+        assertEquals(SubSport.ROAD.value.toInt(), exercise.sportTypeFit!!.sportSubTypeId)
 
         // check some lap data
         assertEquals(1, exercise.lapList.size)
@@ -524,8 +524,8 @@ class GarminFitParserTest {
         assertEquals(3, exercise.altitude!!.altitudeAvg.toInt())
 
         assertEquals("Generic / Generic", exercise.sportType)
-        assertEquals(Sport.GENERIC.value, exercise.sportTypeFit!!.sportTypeId)
-        assertEquals(SubSport.GENERIC.value, exercise.sportTypeFit!!.sportSubTypeId)
+        assertEquals(Sport.GENERIC.value.toInt(), exercise.sportTypeFit!!.sportTypeId)
+        assertEquals(SubSport.GENERIC.value.toInt(), exercise.sportTypeFit!!.sportSubTypeId)
 
         // check some lap data
         assertEquals(1, exercise.lapList.size)
@@ -569,8 +569,8 @@ class GarminFitParserTest {
         assertEquals(3140, exercise.duration!!.toInt())
 
         assertEquals("Running / Generic", exercise.sportType)
-        assertEquals(Sport.RUNNING.value, exercise.sportTypeFit!!.sportTypeId)
-        assertEquals(SubSport.GENERIC.value, exercise.sportTypeFit!!.sportSubTypeId)
+        assertEquals(Sport.RUNNING.value.toInt(), exercise.sportTypeFit!!.sportTypeId)
+        assertEquals(SubSport.GENERIC.value.toInt(), exercise.sportTypeFit!!.sportSubTypeId)
 
         // check heartrate zone data
         assertEquals(5, exercise.heartRateLimits.size)
@@ -597,7 +597,7 @@ class GarminFitParserTest {
     /**
      * This method tests the parser with an exercise file with running data (incl. heartrate, altitude, cadence)
      * recorded by a Suunto Spartan Sport Wrist HR Baro watch. For Suunto watches is speial handling of the location
-     * data needed, they don't store the start position of a exercise (just the sample positions).
+     * data needed, they don't store the start position of an exercise (just the sample positions).
      */
     @Test
     @Throws(EVException::class)
@@ -628,8 +628,8 @@ class GarminFitParserTest {
         assertEquals(73, exercise.altitude!!.altitudeAvg.toInt())
 
         assertEquals("Cycling / Mountain", exercise.sportType)
-        assertEquals(Sport.CYCLING.value, exercise.sportTypeFit!!.sportTypeId)
-        assertEquals(SubSport.MOUNTAIN.value, exercise.sportTypeFit!!.sportSubTypeId)
+        assertEquals(Sport.CYCLING.value.toInt(), exercise.sportTypeFit!!.sportTypeId)
+        assertEquals(SubSport.MOUNTAIN.value.toInt(), exercise.sportTypeFit!!.sportSubTypeId)
 
         // no lap data contained
 
@@ -709,8 +709,8 @@ class GarminFitParserTest {
         assertEquals(0, exercise.cadence!!.cyclesTotal)
 
         assertEquals("Cycling / Virtual Activity", exercise.sportType)
-        assertEquals(Sport.CYCLING.value, exercise.sportTypeFit!!.sportTypeId)
-        assertEquals(SubSport.VIRTUAL_ACTIVITY.value, exercise.sportTypeFit!!.sportSubTypeId)
+        assertEquals(Sport.CYCLING.value.toInt(), exercise.sportTypeFit!!.sportTypeId)
+        assertEquals(SubSport.VIRTUAL_ACTIVITY.value.toInt(), exercise.sportTypeFit!!.sportSubTypeId)
 
         // check power and cadence data on lap level (just one)
         assertEquals(1, exercise.lapList.size)
@@ -761,8 +761,8 @@ class GarminFitParserTest {
         assertEquals(517, exercise.cadence!!.cyclesTotal!!.toInt())
 
         assertEquals("Cycling / Indoor Cycling", exercise.sportType)
-        assertEquals(Sport.CYCLING.value, exercise.sportTypeFit!!.sportTypeId)
-        assertEquals(SubSport.INDOOR_CYCLING.value, exercise.sportTypeFit!!.sportSubTypeId)
+        assertEquals(Sport.CYCLING.value.toInt(), exercise.sportTypeFit!!.sportTypeId)
+        assertEquals(SubSport.INDOOR_CYCLING.value.toInt(), exercise.sportTypeFit!!.sportSubTypeId)
 
         // check power data on lap level
         assertEquals(3, exercise.lapList.size)

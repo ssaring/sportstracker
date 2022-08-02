@@ -11,6 +11,6 @@ package de.saring.exerciseviewer.data
  * @author Stefan Saring
  */
 data class SportTypeFit(
-    var sportTypeId: Short,
-    var sportSubTypeId: Short? = null,
+    var sportTypeId: Int,
+    var sportSubTypeId: Int? = null,
 )

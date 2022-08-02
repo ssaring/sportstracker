@@ -55,11 +55,12 @@ internal class FitMessageListener : MesgListener {
         // read optional sport and subsport names and IDs
         mesg.sport?.let { sport ->
             exercise.sportType = enumToReadableName(sport.name)
+            exercise.sportTypeFit = SportTypeFit(sport.value.toInt(), null)
 
             mesg.subSport?.let { subSport ->
                 exercise.sportType += " / ${enumToReadableName(subSport.name)}";
+                exercise.sportTypeFit = SportTypeFit(sport.value.toInt(), subSport.value.toInt())
             }
-            exercise.sportTypeFit = SportTypeFit(sport.value, mesg.subSport?.value)
         }
 
         // read optional heartrate data

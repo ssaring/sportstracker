@@ -9,7 +9,7 @@ SportType-Mapping from Garmin FIT files:
   - modified ST already installed locally to prevent local configuration loss
   - sport-types.xml (own): fit-id's are configured
 - TODO:
-  - implement automated mapping when importing Exercises from HRM files
+  - complete implement automated mapping when importing Exercises from HRM files
     => see TODO in ExerciseDialogController
   - Optional: add UI for define the SportType => FIT mapping
   - documentation and changelog
