@@ -49,6 +49,9 @@ SportsTracker 7.8.1:
 
 - st.dlg.filter.string_comments.text (edited)
 
+- st.dlg.sporttype.fit_sporttype.text (new)
+- st.dlg.sporttype.fit_sporttype.not_mapped.text (new)
+
 SportsTracker 7.8.1:
 
 - pv.main.zone_prefix (new)

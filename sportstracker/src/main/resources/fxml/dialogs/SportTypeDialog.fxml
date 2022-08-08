@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="24.0" stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogs.SportTypeDialogController">
+<VBox spacing="24.0" stylesheets="@../SportsTracker.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogs.SportTypeDialogController">
     <children>
         <VBox spacing="12.0">
             <children>
@@ -30,12 +30,14 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <Label text="%st.dlg.sporttype.name.text" />
                         <Label text="%st.dlg.sporttype.distance.text" GridPane.rowIndex="1" />
                         <Label text="%st.dlg.sporttype.speed_mode.text" GridPane.rowIndex="2" />
                         <Label text="%st.dlg.sporttype.color.text" GridPane.rowIndex="3" />
+                        <Label text="%st.dlg.sporttype.fit_sporttype.text" GridPane.rowIndex="4" />
                         <TextField fx:id="tfName" GridPane.columnIndex="1" />
                         <CheckBox fx:id="cbRecordDistance" mnemonicParsing="false" text="%st.dlg.sporttype.record_distance.text" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <ComboBox fx:id="cbSpeedMode" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -44,6 +46,7 @@
                                 <Tooltip text="%st.dlg.sporttype.select.Action.shortDescription" />
                             </tooltip>
                         </ColorPicker>
+                        <ComboBox fx:id="cbFitSportType" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     </children>
                     <padding>
                         <Insets left="24.0" />

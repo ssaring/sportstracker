@@ -9,8 +9,10 @@ SportType-Mapping from Garmin FIT files:
   - modified ST already installed locally to prevent local configuration loss
   - sport-types.xml (own): fit-id's are configured
   - ExerciseDialog: mapping of sport types / subtypes while importing FIT files works
+  - UI for mapping SportType to Garmin Fit Sport is implemented and tested
 - TODO:
-  - Optional: add UI for define the SportType => FIT mapping
+  - add UI for define the SportSubType => FIT mapping
+    -> is a new dialog needed here?
   - documentation and changelog
 
 ExerciseViewer standalone mode:

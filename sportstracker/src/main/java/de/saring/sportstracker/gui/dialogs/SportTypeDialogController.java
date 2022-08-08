@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import com.garmin.fit.Sport;
+import de.saring.exerciseviewer.parser.impl.garminfit.FitUtils;
 import de.saring.util.AppResources;
 import de.saring.util.unitcalc.SpeedMode;
 import javafx.beans.binding.Bindings;
@@ -33,6 +35,7 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.sportstracker.gui.dialogs.SportTypeViewModel.FitMappingEntry;
 import de.saring.util.StringUtils;
 import de.saring.util.gui.javafx.NameableListCell;
 
@@ -56,6 +59,9 @@ public class SportTypeDialogController extends AbstractDialogController {
 
     @FXML
     private ColorPicker cpColor;
+
+    @FXML
+    private ComboBox<FitMappingEntry> cbFitSportType;
 
     @FXML
     private ListView<SportSubType> liSportSubtypes;
@@ -119,6 +125,7 @@ public class SportTypeDialogController extends AbstractDialogController {
         final String notInUseSuffix = context.getResources().getString("st.dlg.sporttype.equipment_not_in_use.suffix");
         liEquipments.setCellFactory(list -> new EquipmentListCell(notInUseSuffix));
 
+        setupFitMapping();
         setupBinding();
         setupValidation();
 
@@ -141,6 +148,18 @@ public class SportTypeDialogController extends AbstractDialogController {
     }
 
     /**
+     * Adds all possible choices to the selection of an appropriate Garmin FIT sport type (incl. default "not mapped").
+     */
+    private void setupFitMapping() {
+        cbFitSportType.getItems().add(new FitMappingEntry(Integer.MAX_VALUE,
+                context.getResources().getString("st.dlg.sporttype.fit_sporttype.not_mapped.text")));
+
+        cbFitSportType.getItems().addAll(Stream.of(Sport.values())
+                .map(sport -> new FitMappingEntry(sport.getValue(), FitUtils.enumToReadableName(sport.name())))
+                .toList());
+    }
+
+    /**
      * Setup of the binding between the view model and the UI controls.
      */
     private void setupBinding() {
@@ -148,6 +167,7 @@ public class SportTypeDialogController extends AbstractDialogController {
         cbRecordDistance.selectedProperty().bindBidirectional(sportTypeViewModel.recordDistance);
         cbSpeedMode.valueProperty().bindBidirectional(sportTypeViewModel.speedMode);
         cpColor.valueProperty().bindBidirectional(sportTypeViewModel.color);
+        cbFitSportType.valueProperty().bindBidirectional(sportTypeViewModel.fitSportType);
 
         // the record distance mode can only be changed, when no exercises exists for
         // this sport type => disable checkbox, when such exercises were found
