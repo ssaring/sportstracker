@@ -65,6 +65,7 @@
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddSportSubtype" text="%st.dlg.sporttype.add_subtype.Action.text" />
                                 <Button fx:id="btSportSubtypeEdit" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEditSportSubtype" text="%st.dlg.sporttype.edit_subtype.Action.text" />
                                 <Button fx:id="btSportSubtypeDelete" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDeleteSportSubtype" text="%st.dlg.sporttype.delete_subtype.Action.text" />
+                                <Button fx:id="btSportSubtypeFitMap" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onFitMapSportSubtype" text="%st.dlg.sporttype.fit_map_subtypes.Action.text" />
                             </children>
                         </VBox>
                     </children>

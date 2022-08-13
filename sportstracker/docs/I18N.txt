@@ -39,18 +39,21 @@ resource in one view.
 
 
 Stefan Saring
-2020/01/01
+2022/08/13
 
 
 History of resource changes for each release
 --------------------------------------------
 
-SportsTracker 7.8.1:
+SportsTracker 7.9.1:
 
 - st.dlg.filter.string_comments.text (edited)
 
 - st.dlg.sporttype.fit_sporttype.text (new)
 - st.dlg.sporttype.fit_sporttype.not_mapped.text (new)
+- st.dlg.sporttype.fit_map_subtypes.Action.text (new)
+- st.dlg.sporttype.choice.fit_map_subtype.title (new)
+- st.dlg.sporttype.choice.fit_map_subtype.text (new)
 
 SportsTracker 7.8.1:
 
