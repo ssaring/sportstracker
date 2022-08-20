@@ -24,6 +24,12 @@ v7.9.1:
    - added table Meta for storing database schema version and update timestamp
  - Entry Filter (Exercise, Note, Weight): added support for searching for
    multiple words in any order (AND logic, case-insensitive)
+ - Automatic sport type and subtype mapping when importing Garmin FIT files
+   - user configuration is needed for mapping the SportsTracker sport types and
+     subtypes to the matching Garmin FIT sport types and subtypes (as displayed
+     in ExerciseViewer)
+   - Sport Type Dialog: added UI for mapping FIT sport types and subtypes
+   - SQLite Exporter: added FIT ID columns to SportType and SportSubType tables
  ExerciseViewer changes:
 
 v7.9.0:

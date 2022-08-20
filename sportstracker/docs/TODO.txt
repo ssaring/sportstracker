@@ -11,10 +11,7 @@ SportType-Mapping from Garmin FIT files:
   - ExerciseDialog: mapping of sport types / subtypes while importing FIT files works
   - UI for mapping SportType to Garmin Fit Sport is implemented and tested
 - TODO:
-  - add UI for define the SportSubType => FIT mapping
-    -> started, see TODOs in SportTypeListDialogController
   - add fitId columns for SportType and SportSubType to the SQLite export
-  - documentation and changelog
 
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
