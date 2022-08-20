@@ -67,6 +67,7 @@ public class SQLiteExporterTest {
 
         SportSubType sportSubType = new SportSubType(1);
         sportSubType.setName("MTB");
+        sportSubType.setFitId(8);
 
         Equipment equipment = new Equipment(1);
         equipment.setName("Bike 1");
@@ -74,6 +75,7 @@ public class SQLiteExporterTest {
         SportType sportType = new SportType(1);
         sportType.setName("Cycling");
         sportType.setColor(Color.BLUE);
+        sportType.setFitId(2);
         sportType.getSportSubTypeList().set(sportSubType);
         sportType.getEquipmentList().set(equipment);
 

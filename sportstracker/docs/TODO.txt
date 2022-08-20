@@ -1,18 +1,6 @@
 SportsTracker-TODO
 ==================
 
-SportType-Mapping from Garmin FIT files:
-- Status:
-  - EV: Sport type and subtype IDs are stored in EVExercise->SportTypeFit class
-  - ST: SportType and SportSubType have the optional attribute fitId
-  - XMLStorage reads / writes persists the FIT-ID properly (incl. unit tests)
-  - modified ST already installed locally to prevent local configuration loss
-  - sport-types.xml (own): fit-id's are configured
-  - ExerciseDialog: mapping of sport types / subtypes while importing FIT files works
-  - UI for mapping SportType to Garmin Fit Sport is implemented and tested
-- TODO:
-  - add fitId columns for SportType and SportSubType to the SQLite export
-
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
