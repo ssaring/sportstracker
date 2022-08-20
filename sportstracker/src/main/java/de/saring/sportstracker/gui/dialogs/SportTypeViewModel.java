@@ -29,6 +29,7 @@ public class SportTypeViewModel {
     public final ObjectProperty<SpeedModeItem> speedMode;
     public final StringProperty icon;
     public final ObjectProperty<Color> color;
+    public final ObjectProperty<FitMappingEntry> fitSportType;
 
     // ObservableLists are not being used here, the dialog needs features of IdObjectList
     public final IdObjectList<SportSubType> sportSubtypes;
@@ -46,6 +47,8 @@ public class SportTypeViewModel {
         this.speedMode = new SimpleObjectProperty<>(SpeedModeItem.findBySpeedMode(sportType.getSpeedMode()));
         this.icon = new SimpleStringProperty(sportType.getIcon());
         this.color = new SimpleObjectProperty<>(sportType.getColor() == null ? Color.BLACK : sportType.getColor());
+        this.fitSportType = new SimpleObjectProperty(new FitMappingEntry(
+                sportType.getFitId() == null ? Integer.MAX_VALUE : sportType.getFitId(), ""));
 
         this.sportSubtypes = sportType.getSportSubTypeList();
         this.equipments = sportType.getEquipmentList();
@@ -63,9 +66,34 @@ public class SportTypeViewModel {
         sportType.setSpeedMode(speedMode.getValue().getSpeedMode());
         sportType.setIcon(StringUtils.getTrimmedTextOrNull(icon.getValue()));
         sportType.setColor(color.getValue());
+        sportType.setFitId(fitSportType.getValue().fitId == Integer.MAX_VALUE ? null : fitSportType.getValue().fitId);
 
         sportSubtypes.forEach(sportSubType -> sportType.getSportSubTypeList().set(sportSubType));
         equipments.forEach(equipment -> sportType.getEquipmentList().set(equipment));
         return sportType;
+    }
+
+    /**
+     * Record for displaying the appropriate Garmin FIT sport type in the mapping selection combobox.
+     * The identity is defined by the fitId only, this is sufficient for the JavaFX binding mapping.
+     */
+    public record FitMappingEntry(int fitId, String displayName) {
+
+        @Override
+        public boolean equals(Object obj) {
+            return obj != null
+                    && obj instanceof FitMappingEntry
+                    && fitId == ((FitMappingEntry) obj).fitId;
+        }
+
+        @Override
+        public int hashCode() {
+            return fitId;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
+        }
     }
 }

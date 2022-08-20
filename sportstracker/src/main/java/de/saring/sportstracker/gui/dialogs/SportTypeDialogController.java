@@ -1,9 +1,13 @@
 package de.saring.sportstracker.gui.dialogs;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import com.garmin.fit.Sport;
+import com.garmin.fit.SubSport;
+import de.saring.exerciseviewer.parser.impl.garminfit.FitUtils;
 import de.saring.util.AppResources;
 import de.saring.util.unitcalc.SpeedMode;
 import javafx.beans.binding.Bindings;
@@ -16,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
@@ -33,6 +38,7 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
+import de.saring.sportstracker.gui.dialogs.SportTypeViewModel.FitMappingEntry;
 import de.saring.util.StringUtils;
 import de.saring.util.gui.javafx.NameableListCell;
 
@@ -58,6 +64,9 @@ public class SportTypeDialogController extends AbstractDialogController {
     private ColorPicker cpColor;
 
     @FXML
+    private ComboBox<FitMappingEntry> cbFitSportType;
+
+    @FXML
     private ListView<SportSubType> liSportSubtypes;
 
     @FXML
@@ -67,6 +76,8 @@ public class SportTypeDialogController extends AbstractDialogController {
     private Button btSportSubtypeEdit;
     @FXML
     private Button btSportSubtypeDelete;
+    @FXML
+    private Button btSportSubtypeFitMap;
 
     @FXML
     private Button btEquipmentEdit;
@@ -117,8 +128,10 @@ public class SportTypeDialogController extends AbstractDialogController {
         cbSpeedMode.getItems().addAll(List.of(SpeedModeItem.values()));
         liSportSubtypes.setCellFactory(list -> new NameableListCell<>());
         final String notInUseSuffix = context.getResources().getString("st.dlg.sporttype.equipment_not_in_use.suffix");
+        liSportSubtypes.setCellFactory(list -> new SportSubTypeListCell());
         liEquipments.setCellFactory(list -> new EquipmentListCell(notInUseSuffix));
 
+        setupFitMapping();
         setupBinding();
         setupValidation();
 
@@ -141,6 +154,18 @@ public class SportTypeDialogController extends AbstractDialogController {
     }
 
     /**
+     * Adds all possible choices to the selection of an appropriate Garmin FIT sport type (incl. default "not mapped").
+     */
+    private void setupFitMapping() {
+        cbFitSportType.getItems().add(new FitMappingEntry(Integer.MAX_VALUE,
+                context.getResources().getString("st.dlg.sporttype.fit_sporttype.not_mapped.text")));
+
+        cbFitSportType.getItems().addAll(Stream.of(Sport.values())
+                .map(sport -> new FitMappingEntry(sport.getValue(), FitUtils.enumToReadableName(sport.name())))
+                .toList());
+    }
+
+    /**
      * Setup of the binding between the view model and the UI controls.
      */
     private void setupBinding() {
@@ -148,6 +173,7 @@ public class SportTypeDialogController extends AbstractDialogController {
         cbRecordDistance.selectedProperty().bindBidirectional(sportTypeViewModel.recordDistance);
         cbSpeedMode.valueProperty().bindBidirectional(sportTypeViewModel.speedMode);
         cpColor.valueProperty().bindBidirectional(sportTypeViewModel.color);
+        cbFitSportType.valueProperty().bindBidirectional(sportTypeViewModel.fitSportType);
 
         // the record distance mode can only be changed, when no exercises exists for
         // this sport type => disable checkbox, when such exercises were found
@@ -159,11 +185,12 @@ public class SportTypeDialogController extends AbstractDialogController {
         // speed mode can only be configured when distance is being recorded
         cbSpeedMode.disableProperty().bind(cbRecordDistance.selectedProperty().not());
 
-        // Edit and Delete buttons must be disabled when there is no selection in the appropriate list
+        // Edit, Delete and Fit Map buttons must be disabled when there is no selection in the appropriate list
         final BooleanBinding sportSubtypeSelected = Bindings.isNull(
                 liSportSubtypes.getSelectionModel().selectedItemProperty());
         btSportSubtypeEdit.disableProperty().bind(sportSubtypeSelected);
         btSportSubtypeDelete.disableProperty().bind(sportSubtypeSelected);
+        btSportSubtypeFitMap.disableProperty().bind(sportSubtypeSelected);
 
         final BooleanBinding equipmentSelected = Bindings.isNull(
                 liEquipments.getSelectionModel().selectedItemProperty());
@@ -290,6 +317,37 @@ public class SportTypeDialogController extends AbstractDialogController {
     }
 
     /**
+     * Action for mapping the selected sport subtype to a Garmin FIT subtype.
+     */
+    @FXML
+    private void onFitMapSportSubtype(final ActionEvent event) {
+
+        final SportSubType selectedSportSubtype = liSportSubtypes.getSelectionModel().getSelectedItem();
+        if (selectedSportSubtype != null) {
+
+            // get list of all possible FIT subtype mappings and determine the current mapping
+            // => if not mapped yet, use the first "not mapped" mapping
+            var fitSubtypeMappings = createFitSportSubtypeMappings();
+            var currentFitSubtypeMapping = fitSubtypeMappings.stream()
+                        .filter(sm -> Integer.valueOf(sm.fitId()).equals(selectedSportSubtype.getFitId()))
+                        .findFirst().orElseGet(() -> fitSubtypeMappings.get(0));
+
+            var choiceDlg = new ChoiceDialog<>(currentFitSubtypeMapping, fitSubtypeMappings);
+            choiceDlg.initOwner(getWindow(liSportSubtypes));
+            choiceDlg.setTitle(context.getResources().getString("st.dlg.sporttype.choice.fit_map_subtype.title"));
+            choiceDlg.setContentText(context.getResources().getString("st.dlg.sporttype.choice.fit_map_subtype.text"));
+            choiceDlg.setHeaderText(null);
+            var choice = choiceDlg.showAndWait();
+
+            if (choice.isPresent()) {
+                var selectedFitId = choice.get().fitId();
+                selectedSportSubtype.setFitId(selectedFitId == Integer.MAX_VALUE ? null : selectedFitId);
+                updateSportSubtypeList();
+            }
+        }
+    }
+
+    /**
      * Displays the add/edit dialog for the specified sport subtype name (includes
      * error checking and dialog redisplay). The modified sport subtype will be
      * stored in the sport type.
@@ -339,6 +397,21 @@ public class SportTypeDialogController extends AbstractDialogController {
                 }
             }
         }
+    }
+
+    /**
+     * Creates a list of all possible choices for the selection of an appropriate Garmin FIT sport subtype (incl.
+     * default "not mapped").
+     */
+    private List<FitMappingEntry> createFitSportSubtypeMappings() {
+        var subTypeMappings = new ArrayList<FitMappingEntry>();
+        subTypeMappings.add(new FitMappingEntry(Integer.MAX_VALUE,
+                context.getResources().getString("st.dlg.sporttype.fit_sporttype.not_mapped.text")));
+
+        subTypeMappings.addAll(Stream.of(SubSport.values())
+                .map(subSport -> new FitMappingEntry(subSport.getValue(), FitUtils.enumToReadableName(subSport.name())))
+                .toList());
+        return subTypeMappings;
     }
 
     /**
@@ -506,6 +579,34 @@ public class SportTypeDialogController extends AbstractDialogController {
                     .filter(speedModeItem -> speedMode == speedModeItem.getSpeedMode())
                     .findAny()
                     .orElseThrow(() -> new IllegalArgumentException("Invalid speedMode '" + speedMode + "'!"));
+        }
+    }
+
+    /**
+     * ListCell for the JavaFX ListView control which displays the SportSubType items with their Garmin FIT subtype
+     * mapping if available.
+     */
+    private class SportSubTypeListCell extends ListCell<SportSubType> {
+
+        @Override
+        protected void updateItem(final SportSubType sportSubType, final boolean empty) {
+            super.updateItem(sportSubType, empty);
+
+            String cellText = null;
+            if (sportSubType != null) {
+                cellText = sportSubType.getName();
+
+                // determine and append name of mapped FIT sport subtype if present
+                if (sportSubType.getFitId() != null) {
+                    String fitSportSubtypeName = Stream.of(SubSport.values())
+                            .filter(subSport -> sportSubType.getFitId().shortValue() == subSport.getValue())
+                            .map(subSport -> FitUtils.enumToReadableName(subSport.name()))
+                            .findFirst().orElseGet(() -> "?");
+
+                    cellText += " (" + fitSportSubtypeName + ")";
+                }
+            }
+            setText(cellText);
         }
     }
 

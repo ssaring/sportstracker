@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.exerciseviewer.data.SportTypeFit;
 import jakarta.inject.Inject;
 
 import de.saring.util.gui.javafx.FxWorkarounds;
@@ -527,6 +528,40 @@ public class ExerciseDialogController extends AbstractDialogController {
             if (document.getOptions().getUnitSystem() == UnitSystem.ENGLISH) {
                 exerciseViewModel.ascent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.ascent.get()));
                 exerciseViewModel.descent.set(ConvertUtils.convertMeter2Feet(exerciseViewModel.descent.get()));
+            }
+        }
+
+        mapFitToStSportTypes(evExercise);
+    }
+
+    /**
+     * Maps the optional Garmin FIT sport types and subtypes to the SportsTracker equivalents and selects
+     * them in the choice-boxes.
+     *
+     * @param evExercise exercise
+     */
+    private void mapFitToStSportTypes(EVExercise evExercise) {
+        if (evExercise.getSportTypeFit() != null) {
+
+            var sportTypeFit = evExercise.getSportTypeFit();
+            var fitSportTypeId = sportTypeFit.getSportTypeId();
+
+            var oMappedSportType = cbSportType.getItems().stream()
+                    .filter(sportType -> sportType.getFitId() != null)
+                    .filter(sportType -> sportType.getFitId().shortValue() == fitSportTypeId)
+                    .findFirst();
+
+            if (oMappedSportType.isPresent()) {
+                cbSportType.getSelectionModel().select(oMappedSportType.get());
+
+                var fitSportSubTypeId = sportTypeFit.getSportSubTypeId();
+                if (fitSportSubTypeId != null) {
+                    cbSportSubtype.getItems().stream()
+                            .filter(subType -> subType.getFitId() != null)
+                            .filter(subType -> subType.getFitId().equals(fitSportSubTypeId))
+                            .limit(1)
+                            .forEach(subType -> cbSportSubtype.getSelectionModel().select(subType));
+                }
             }
         }
     }

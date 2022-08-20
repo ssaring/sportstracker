@@ -6,22 +6,27 @@
 		<speed-mode>SPEED</speed-mode>
 		<icon>cycling.png</icon>
 		<color red="30" green="50" blue="180" />
+		<fit-id>2</fit-id>
 		<sport-subtype-list>
 			<sport-subtype>
 				<id>1</id>
 				<name>MTB tour</name>
+				<fit-id>8</fit-id>
 			</sport-subtype>
 			<sport-subtype>
 				<id>2</id>
 				<name>MTB race</name>
+				<fit-id>8</fit-id>
 			</sport-subtype>
 			<sport-subtype>
 				<id>3</id>
 				<name>Road tour</name>
+				<fit-id>7</fit-id>
 			</sport-subtype>
 			<sport-subtype>
 				<id>4</id>
 				<name>Road race</name>
+				<fit-id>7</fit-id>
 			</sport-subtype>
 		</sport-subtype-list>
         <equipment-list>

@@ -124,7 +124,7 @@ public class SQLiteExporter {
     private void exportSportTypes(final Connection connection) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
-                "INSERT INTO SPORT_TYPE (ID, NAME, RECORD_DISTANCE, SPEED_MODE, COLOR, ICON) VALUES (?, ?, ?, ?, ?, ?)");
+                "INSERT INTO SPORT_TYPE (ID, NAME, RECORD_DISTANCE, SPEED_MODE, COLOR, ICON, FIT_ID) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         for (SportType sportType : document.getSportTypeList()) {
             statement.clearParameters();
@@ -137,6 +137,9 @@ public class SQLiteExporter {
             if (!StringUtils.isNullOrEmpty(sportType.getIcon())) {
                 statement.setString(6, sportType.getIcon());
             }
+            if (sportType.getFitId() != null) {
+                statement.setInt(7, sportType.getFitId());
+            }
             statement.executeUpdate();
 
             exportSportSubTypes(connection, sportType);
@@ -147,7 +150,7 @@ public class SQLiteExporter {
     private void exportSportSubTypes(final Connection connection, final SportType sportType) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
-                "INSERT INTO SPORT_SUBTYPE (SPORT_TYPE_ID, NAME) VALUES (?, ?)",
+                "INSERT INTO SPORT_SUBTYPE (SPORT_TYPE_ID, NAME, FIT_ID) VALUES (?, ?, ?)",
                 Statement.RETURN_GENERATED_KEYS);
 
         for (SportSubType sportSubType : sportType.getSportSubTypeList()) {
@@ -155,6 +158,9 @@ public class SQLiteExporter {
 
             statement.setInt(1, sportType.getId());
             statement.setString(2, sportSubType.getName());
+            if (sportSubType.getFitId() != null) {
+                statement.setInt(3, sportSubType.getFitId());
+            }
             statement.executeUpdate();
 
             var primaryKey = getGeneratedPrimaryKey(statement);

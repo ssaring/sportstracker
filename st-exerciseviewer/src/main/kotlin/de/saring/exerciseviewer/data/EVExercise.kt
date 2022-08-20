@@ -8,7 +8,6 @@ import java.time.LocalDateTime
  * @property fileType File type of an exercise (see enums).
  * @property deviceName Name of the HRM device (optional).
  * @property dateTime Timestamp of exercise.
- * @property sportType Exercise sport type (optional).
  * @property recordingMode Record mode (what was recorded in exercise).
  * @property duration Duration of exercise in tenths of a second.
  * @property recordingInterval Recording interval in seconds (e.g. 5s, 15s, 60s or DYNAMIC_RECORDING_INTERVAL).
@@ -24,6 +23,8 @@ import java.time.LocalDateTime
  * @property sumExerciseTime Cumulative workout time (in minutes).
  * @property sumRideTime Cumulative ride time (in minutes).
  * @property odometer  Odometer (cumulative ride distance) in km.
+ * @property sportType Exercise sport type (optional).
+ * @property sportTypeFit FIT-protocol specific sport type and subtype info (optional).
  * @property heartRateLimits List of heartrate limit data (can be more then one).
  * @property lapList List containing the data of all exercise laps.
  * @property sampleList List containing the data of all recorded exercise samples (for each interval).
@@ -35,7 +36,6 @@ data class EVExercise(
     var fileType: ExerciseFileType,
     var deviceName: String? = null,
     var dateTime: LocalDateTime? = null,
-    var sportType: String? = null,
     var recordingMode: RecordingMode = RecordingMode(),
     var duration: Int? = null,
     var recordingInterval: Short? = null,
@@ -51,6 +51,8 @@ data class EVExercise(
     var sumExerciseTime: Int? = null,
     var sumRideTime: Int? = null,
     var odometer: Int? = null,
+    var sportType: String? = null,
+    var sportTypeFit: SportTypeFit? = null,
 
     var heartRateLimits: MutableList<HeartRateLimit> = mutableListOf(),
     var lapList: MutableList<Lap> = mutableListOf(),

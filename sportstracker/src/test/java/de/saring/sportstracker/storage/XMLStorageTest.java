@@ -74,6 +74,7 @@ public class XMLStorageTest {
         assertEquals(type1AwtColor.getRed(), 30);
         assertEquals(type1AwtColor.getGreen(), 50);
         assertEquals(type1AwtColor.getBlue(), 180);
+        assertEquals(type1.getFitId(), 2);
         assertEquals(type1.getSportSubTypeList().size(), 4);
         assertEquals(type1.getEquipmentList().size(), 2);
 
@@ -81,15 +82,19 @@ public class XMLStorageTest {
         SportSubType subType1_1 = type1.getSportSubTypeList().getByID(1);
         assertEquals(subType1_1.getId(), 1);
         assertEquals(subType1_1.getName(), "MTB tour");
+        assertEquals(subType1_1.getFitId(), 8);
         SportSubType subType1_2 = type1.getSportSubTypeList().getByID(2);
         assertEquals(subType1_2.getId(), 2);
         assertEquals(subType1_2.getName(), "MTB race");
+        assertEquals(subType1_2.getFitId(), 8);
         SportSubType subType1_3 = type1.getSportSubTypeList().getByID(3);
         assertEquals(subType1_3.getId(), 3);
         assertEquals(subType1_3.getName(), "Road tour");
+        assertEquals(subType1_3.getFitId(), 7);
         SportSubType subType1_4 = type1.getSportSubTypeList().getByID(4);
         assertEquals(subType1_4.getId(), 4);
         assertEquals(subType1_4.getName(), "Road race");
+        assertEquals(subType1_4.getFitId(), 7);
 
         // check equipment of sporttype 1            
         Equipment equipment1_1 = type1.getEquipmentList().getByID(1);
@@ -112,6 +117,7 @@ public class XMLStorageTest {
         assertEquals(type2AwtColor.getRed(), 210);
         assertEquals(type2AwtColor.getGreen(), 60);
         assertEquals(type2AwtColor.getBlue(), 0);
+        assertNull(type2.getFitId());
         assertEquals(type2.getSportSubTypeList().size(), 2);
         assertEquals(type2.getEquipmentList().size(), 0);
 
@@ -119,9 +125,11 @@ public class XMLStorageTest {
         SportSubType subType2_1 = type2.getSportSubTypeList().getByID(1);
         assertEquals(subType2_1.getId(), 1);
         assertEquals(subType2_1.getName(), "Jogging");
+        assertNull(subType2_1.getFitId());
         SportSubType subType2_2 = type2.getSportSubTypeList().getByID(2);
         assertEquals(subType2_2.getId(), 2);
         assertEquals(subType2_2.getName(), "Competition");
+        assertNull(subType2_2.getFitId());
     }
 
     /**

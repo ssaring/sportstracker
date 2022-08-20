@@ -256,6 +256,17 @@ be created and the data will be imported from the HRM file.
 Drag & drop has been successfully tested on Linux (Gnome and KDE), Windows and
 macOS.
 
+When importing Garmin FIT exercise files the sport type and sport subtype can
+be mapped automatically from the FIT exercise to the appropriate SportsTracker
+types.
+The user needs to configure the mapping between FIT and SportsTracker types
+before, which can be done in the Sport Type Dialog. The Garmin FIT sport type
+and subtype of an exercise can be found in the ExerciseViewer Main panel when
+displaying FIT files.
+When importing a FIT file SportsTracker searches for a matching mapping for
+both the sport type and subtype and preselects them in the Exercise Dialog if
+found.
+
 For the creation of statistics the user needs to specify at least the 
 calculation filter for the time range, e.g. the current month. It's also 
 possible to set filters for the sport type, the subtype, the intensity, the
@@ -488,9 +499,9 @@ important reasons:
   - much better tooling support for development, e.g. IDE's, debuggers,
     profilers, refactoring tools and so on
   - much more useful open source libraries, e.g. for diagram creation
-  - support for more operating systems (e.g. MacOS X, ...)
-  - less installation problems (no .NET runtime required on Linux or Mac OS X,
-    no GTK+ libraries required on Windows and Mac OS X)
+  - support for more operating systems (e.g. macOS, ...)
+  - less installation problems (no .NET runtime required on Linux or macOS,
+    no GTK+ libraries required on Windows and macOS)
   - I18N support on all operating systems
   - the Java platform is much more mature and reliable than Mono
 
@@ -542,4 +553,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2021/12/30
+2022/08/22
