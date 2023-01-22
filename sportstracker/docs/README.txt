@@ -456,7 +456,7 @@ All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
 The SportsTracker project uses the following libraries:
 
-  - OpenJFX 18.0.1 (https://openjfx.io/)
+  - OpenJFX 19.0.2.1 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
   - EasyDI 0.6.0 (https://github.com/lestard/EasyDI)
       Includes: jakarta.inject 2.0.1
@@ -476,13 +476,13 @@ The SportsTracker project uses the following libraries:
     - License: not specified
   - commons-cli 1.5.0 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - sqlite-jdbc 3.36.0.3 (https://github.com/xerial/sqlite-jdbc)
+  - sqlite-jdbc 3.40.0.0 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
   - JUnit 5.8.2 (http://www.junit.org)
       License: Eclipse Public License v2.0. and Apache License v2.0
   - Mockito 4.4.0 (http://code.google.com/p/mockito/)
       License: MIT License
-  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.47.00
+  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.94.0
       URL: https://www.thisisant.com/developer/
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: https://developer.garmin.com/fit/download/

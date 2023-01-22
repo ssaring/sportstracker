@@ -4,12 +4,12 @@ Changelog
 v7.9.1:
  Project changes:
  - Bugfix: section header labels are now using bold font again on macOS
- - Updated JavaFX / OpenJFX to version 18.0.1
+ - Updated JavaFX / OpenJFX to version 19.0.2.1
    - contains critical bugfixes for Apple Silicon support (crashed before)
  - updated Kotlin to version 1.7.10
  - updated EasyDI to version 0.6.0
    - replaced outdated dependency javax.inject with new jakarta.inject
- - updated sqlite-jdbc to version 3.37.2
+ - updated sqlite-jdbc to version 3.40.0
  - updated jdom2 to version 2.0.6.1
  - updated commons-cli to version 1.5.0
  - updated JUnit to version 5.8.2
@@ -31,6 +31,8 @@ v7.9.1:
    - Sport Type Dialog: added UI for mapping FIT sport types and subtypes
    - SQLite Exporter: added FIT ID columns to SportType and SportSubType tables
  ExerciseViewer changes:
+ - updated Garmin FIT SDK library to version 21.94.0, provides bugfixes
+   and support for newer Garmin devices (e.g. Garmin Forerunner 955)
 
 v7.9.0:
  Project changes:
