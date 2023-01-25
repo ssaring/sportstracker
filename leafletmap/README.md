@@ -58,6 +58,8 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Changelog
 
+LeafletMap 1.0.8:
+
 LeafletMap 1.0.7:
 * Updated JavaFX / OpenJFX to version 19
   (contains critical bugfixes for Apple Silicon support)
