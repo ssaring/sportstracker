@@ -3,6 +3,7 @@ Changelog
 
 v7.9.2:
  Project changes:
+ - updated Kotlin to version 1.8.0
  SportsTracker changes:
  ExerciseViewer changes:
 

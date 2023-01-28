@@ -47,7 +47,7 @@ public class SportTypeViewModel {
         this.speedMode = new SimpleObjectProperty<>(SpeedModeItem.findBySpeedMode(sportType.getSpeedMode()));
         this.icon = new SimpleStringProperty(sportType.getIcon());
         this.color = new SimpleObjectProperty<>(sportType.getColor() == null ? Color.BLACK : sportType.getColor());
-        this.fitSportType = new SimpleObjectProperty(new FitMappingEntry(
+        this.fitSportType = new SimpleObjectProperty<>(new FitMappingEntry(
                 sportType.getFitId() == null ? Integer.MAX_VALUE : sportType.getFitId(), ""));
 
         this.sportSubtypes = sportType.getSportSubTypeList();
@@ -81,8 +81,7 @@ public class SportTypeViewModel {
 
         @Override
         public boolean equals(Object obj) {
-            return obj != null
-                    && obj instanceof FitMappingEntry
+            return obj instanceof FitMappingEntry
                     && fitId == ((FitMappingEntry) obj).fitId;
         }
 
