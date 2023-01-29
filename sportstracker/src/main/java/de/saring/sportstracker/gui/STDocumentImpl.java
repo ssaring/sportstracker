@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
+import de.saring.sportstracker.storage.DbStorage;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -44,6 +45,7 @@ public class STDocumentImpl implements STDocument {
     private static final String FILENAME_NOTE_LIST = "notes.xml";
     private static final String FILENAME_WEIGHT_LIST = "weights.xml";
     private static final String FILENAME_OPTIONS = "st-options.xml";
+    private static final String FILENAME_SPORTSTRACKER_DATABASE = "sportstracker.sqlite";
 
     private final STContext context;
 
@@ -72,6 +74,8 @@ public class STDocumentImpl implements STDocument {
      * The data storage instance of the application.
      */
     private final IStorage storage;
+
+    private final DbStorage dbStorage;
 
     /**
      * The directory where the application data of the user is stored.
@@ -102,9 +106,10 @@ public class STDocumentImpl implements STDocument {
      * @param storage the data storage instance to be used
      */
     @Inject
-    public STDocumentImpl(final STContext context, final IStorage storage) {
+    public STDocumentImpl(final STContext context, final IStorage storage, final DbStorage dbStorage) {
         this.context = context;
         this.storage = storage;
+        this.dbStorage = dbStorage;
 
         // create name of directory where the data is stored
         dataDirectory = System.getProperty("user.home") + "/.sportstracker";
@@ -272,6 +277,8 @@ public class STDocumentImpl implements STDocument {
 
     @Override
     public void readApplicationData() throws STException {
+        testDbStorage();
+
         try {
             // read application data from XML files
             sportTypeList = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
@@ -285,6 +292,23 @@ public class STDocumentImpl implements STDocument {
             registerListChangeListener(this);
             dirtyData = false;
         }
+    }
+
+    // TODO remove
+    private void testDbStorage() throws STException {
+        var msStart = System.currentTimeMillis();
+
+        dbStorage.openDatabase(dataDirectory + "/" + FILENAME_SPORTSTRACKER_DATABASE);
+        var msOpened = System.currentTimeMillis();
+        System.out.println("Opened database in " + (msOpened - msStart) + " msec");
+
+        var dbNotes = dbStorage.readAllNotes();
+        var msNotesRead = System.currentTimeMillis();
+        System.out.println("Loaded " + dbNotes.size() + " Notes in " + (msNotesRead - msOpened) + " msec");
+
+        var dbWeights = dbStorage.readAllWeights();
+        var msWeightsRead = System.currentTimeMillis();
+        System.out.println("Loaded " + dbWeights.size() + " Weights in " + (msWeightsRead - msNotesRead) + " msec");
     }
 
     @Override

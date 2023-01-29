@@ -1,6 +1,13 @@
 SportsTracker-TODO
 ==================
 
+SQLite migration:
+- Documentation: https://www.sqlitetutorial.net/sqlite-java/
+- Status:
+  - list of Notes and Weights is read from database
+- TODO:
+  - see TODOs in DbStorage and STDocumentImpl
+
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
