@@ -15,9 +15,7 @@ import javafx.scene.paint.Color;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,18 +95,21 @@ public class DbStorage {
     }
 
     // TODO move entity-related methods to a dedicated repository for each entity?
-    public List<Exercise> readAllExercises() throws STException {
+    public List<Exercise> readAllExercises(List<SportType> sportTypes) throws STException {
         var exercises = new ArrayList<Exercise>();
 
         try(var statement = connection.createStatement()) {
             var rs = statement.executeQuery("SELECT * FROM EXERCISE");
             while(rs.next())
             {
+                var sportType = getSportTypeById(sportTypes, rs.getInt("SPORT_TYPE_ID"));
+                var sportSubType = getSportSubTypeById(sportType, rs.getInt("SPORT_SUBTYPE_ID"));
+                var equipment = getEquipmentById(sportType, rs.getInt("EQUIPMENT_ID"));
+
                 var exercise = new Exercise(rs.getInt("ID"));
                 exercise.setDateTime(Date310Utils.dateToLocalDateTime(rs.getDate("DATE_TIME")));
-                // TODO map entities
-                exercise.setSportType(new SportType(rs.getInt("SPORT_TYPE_ID")));
-                exercise.setSportSubType(new SportSubType(rs.getInt("SPORT_SUBTYPE_ID")));
+                exercise.setSportType(sportType);
+                exercise.setSportSubType(sportSubType);
                 exercise.setIntensity(Exercise.IntensityType.valueOf(rs.getString("INTENSITY")));
                 exercise.setDuration(rs.getInt("DURATION"));
                 exercise.setDistance(rs.getFloat("DISTANCE"));
@@ -118,8 +119,7 @@ public class DbStorage {
                 exercise.setDescent(rs.getInt("DESCENT"));
                 exercise.setCalories(rs.getInt("CALORIES"));
                 exercise.setHrmFile(rs.getString("HRM_FILE"));
-                // TODO map entities
-                exercise.setEquipment(new Equipment(rs.getInt("EQUIPMENT_ID")));
+                exercise.setEquipment(equipment);
                 exercise.setComment(rs.getString("COMMENT"));
                 exercises.add(exercise);
             }
@@ -195,5 +195,19 @@ public class DbStorage {
                 .filter(st -> sportTypeId == st.getId())
                 .findAny()
                 .get();
+    }
+
+    private SportSubType getSportSubTypeById(SportType sportType, int sportSubTypeId) {
+        return sportType.getSportSubTypeList().stream()
+                .filter(sst -> sportSubTypeId == sst.getId())
+                .findAny()
+                .get();
+    }
+
+    private Equipment getEquipmentById(SportType sportType, int equipmentId) {
+        return sportType.getEquipmentList().stream()
+                .filter(eq -> equipmentId == eq.getId())
+                .findAny()
+                .orElse(null);
     }
 }

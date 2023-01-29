@@ -6,12 +6,12 @@ SQLite migration:
 - Status:
   - all entity objects are read from database
   - performance tests with production database export:
-    Opened database in 230 msec
+    Opened database in 155 msec
     Loaded 552 Notes in 27 msec
-    Loaded 691 Weights in 8 msec
+    Loaded 691 Weights in 21 msec
     Loaded 8 SportTypes in 1 msec
-    Loaded 4873 Exercises in 47 msec
-    Reloaded 4873 Exercises in 32 msec
+    Loaded 4873 Exercises in 55 msec
+    Reloaded 4873 Exercises in 35 msec
     => very fast
 - TODO:
   - see TODOs in DbStorage and STDocumentImpl
