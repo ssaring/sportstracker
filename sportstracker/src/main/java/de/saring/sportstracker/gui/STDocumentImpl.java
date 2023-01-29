@@ -310,9 +310,13 @@ public class STDocumentImpl implements STDocument {
         var msWeightsRead = System.currentTimeMillis();
         System.out.println("Loaded " + dbWeights.size() + " Weights in " + (msWeightsRead - msNotesRead) + " msec");
 
+        var dbSportTypes = dbStorage.readAllSportTypes();
+        var msSportTypesRead = System.currentTimeMillis();
+        System.out.println("Loaded " + dbSportTypes.size() + " SportTypes in " + (msSportTypesRead - msWeightsRead) + " msec");
+
         var dbExercises = dbStorage.readAllExercises();
         var msExercisesRead = System.currentTimeMillis();
-        System.out.println("Loaded " + dbExercises.size() + " Exercises in " + (msExercisesRead - msWeightsRead) + " msec");
+        System.out.println("Loaded " + dbExercises.size() + " Exercises in " + (msExercisesRead - msSportTypesRead) + " msec");
 
         var dbExercises2 = dbStorage.readAllExercises();
         var msExercisesRead2 = System.currentTimeMillis();

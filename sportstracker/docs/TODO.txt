@@ -4,13 +4,14 @@ SportsTracker-TODO
 SQLite migration:
 - Documentation: https://www.sqlitetutorial.net/sqlite-java/
 - Status:
-  - list of Notes, Weights and Exercises is read from database
+  - all entity objects are read from database
   - performance tests with production database export:
-      Opened database in 233 msec
-      Loaded 552 Notes in 30 msec
-      Loaded 691 Weights in 9 msec
-      Loaded 4873 Exercises in 47 msec
-      Reloaded 4873 Exercises in 32 msec
+    Opened database in 230 msec
+    Loaded 552 Notes in 27 msec
+    Loaded 691 Weights in 8 msec
+    Loaded 8 SportTypes in 1 msec
+    Loaded 4873 Exercises in 47 msec
+    Reloaded 4873 Exercises in 32 msec
     => very fast
 - TODO:
   - see TODOs in DbStorage and STDocumentImpl

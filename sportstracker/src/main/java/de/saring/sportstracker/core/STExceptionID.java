@@ -64,6 +64,18 @@ public enum STExceptionID {
      * failed to read all Exercises from database
      */
     DBSTORAGE_READ_EXERCISES,
+    /**
+     * failed to read all SportTypes from database
+     */
+    DBSTORAGE_READ_SPORT_TYPES,
+    /**
+     * failed to read all SportSubTypes from database
+     */
+    DBSTORAGE_READ_SPORT_SUBTYPES,
+    /**
+     * failed to read all Equipments from database
+     */
+    DBSTORAGE_READ_EQUIPMENTS,
 
     /**
      * failed to create application directory
