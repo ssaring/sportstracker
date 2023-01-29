@@ -45,7 +45,7 @@ public class STDocumentImpl implements STDocument {
     private static final String FILENAME_NOTE_LIST = "notes.xml";
     private static final String FILENAME_WEIGHT_LIST = "weights.xml";
     private static final String FILENAME_OPTIONS = "st-options.xml";
-    private static final String FILENAME_SPORTSTRACKER_DATABASE = "sportstracker.sqlite";
+    private static final String FILENAME_ST_DATABASE = "sportstracker.sqlite";
 
     private final STContext context;
 
@@ -298,7 +298,7 @@ public class STDocumentImpl implements STDocument {
     private void testDbStorage() throws STException {
         var msStart = System.currentTimeMillis();
 
-        dbStorage.openDatabase(dataDirectory + "/" + FILENAME_SPORTSTRACKER_DATABASE);
+        dbStorage.openDatabase(dataDirectory + "/" + FILENAME_ST_DATABASE);
         var msOpened = System.currentTimeMillis();
         System.out.println("Opened database in " + (msOpened - msStart) + " msec");
 
@@ -309,6 +309,14 @@ public class STDocumentImpl implements STDocument {
         var dbWeights = dbStorage.readAllWeights();
         var msWeightsRead = System.currentTimeMillis();
         System.out.println("Loaded " + dbWeights.size() + " Weights in " + (msWeightsRead - msNotesRead) + " msec");
+
+        var dbExercises = dbStorage.readAllExercises();
+        var msExercisesRead = System.currentTimeMillis();
+        System.out.println("Loaded " + dbExercises.size() + " Exercises in " + (msExercisesRead - msWeightsRead) + " msec");
+
+        var dbExercises2 = dbStorage.readAllExercises();
+        var msExercisesRead2 = System.currentTimeMillis();
+        System.out.println("Reloaded " + dbExercises2.size() + " Exercises in " + (msExercisesRead2 - msExercisesRead) + " msec");
     }
 
     @Override

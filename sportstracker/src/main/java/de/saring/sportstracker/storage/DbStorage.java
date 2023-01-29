@@ -2,7 +2,11 @@ package de.saring.sportstracker.storage;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
+import de.saring.sportstracker.data.SportSubType;
+import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.Weight;
 import de.saring.util.Date310Utils;
 import jakarta.inject.Singleton;
@@ -82,9 +86,43 @@ public class DbStorage {
                 weights.add(weight);
             }
         } catch (SQLException e) {
-            throw new STException(STExceptionID.DBSTORAGE_READ_NOTES, "Failed to read all Weights!", e);
+            throw new STException(STExceptionID.DBSTORAGE_READ_WEIGHTS, "Failed to read all Weights!", e);
         }
 
         return weights;
+    }
+
+    // TODO move entity-related methods to a dedicated repository for each entity?
+    public List<Exercise> readAllExercises() throws STException {
+        var exercises = new ArrayList<Exercise>();
+
+        try(var statement = connection.createStatement()) {
+            var rs = statement.executeQuery("SELECT * FROM EXERCISE");
+            while(rs.next())
+            {
+                var exercise = new Exercise(rs.getInt("ID"));
+                exercise.setDateTime(Date310Utils.dateToLocalDateTime(rs.getDate("DATE_TIME")));
+                // TODO map entities
+                exercise.setSportType(new SportType(rs.getInt("SPORT_TYPE_ID")));
+                exercise.setSportSubType(new SportSubType(rs.getInt("SPORT_SUBTYPE_ID")));
+                exercise.setIntensity(Exercise.IntensityType.valueOf(rs.getString("INTENSITY")));
+                exercise.setDuration(rs.getInt("DURATION"));
+                exercise.setDistance(rs.getFloat("DISTANCE"));
+                exercise.setAvgSpeed(rs.getFloat("AVG_SPEED"));
+                exercise.setAvgHeartRate(rs.getInt("AVG_HEARTRATE"));
+                exercise.setAscent(rs.getInt("ASCENT"));
+                exercise.setDescent(rs.getInt("DESCENT"));
+                exercise.setCalories(rs.getInt("CALORIES"));
+                exercise.setHrmFile(rs.getString("HRM_FILE"));
+                // TODO map entities
+                exercise.setEquipment(new Equipment(rs.getInt("EQUIPMENT_ID")));
+                exercise.setComment(rs.getString("COMMENT"));
+                exercises.add(exercise);
+            }
+        } catch (SQLException e) {
+            throw new STException(STExceptionID.DBSTORAGE_READ_EXERCISES, "Failed to read all Exercises!", e);
+        }
+
+        return exercises;
     }
 }

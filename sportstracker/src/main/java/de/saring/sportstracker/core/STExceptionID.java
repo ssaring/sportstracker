@@ -45,17 +45,25 @@ public enum STExceptionID {
     XMLSTORAGE_STORE_WEIGHT_LIST,
 
     /**
-     * failed to open SportsTracker SQLite databasse
+     * failed to open SportsTracker SQLite database
      */
     DBSTORAGE_OPEN_DATABASE,
     /**
-     * failed to close SportsTracker SQLite databasse
+     * failed to close SportsTracker SQLite database
      */
     DBSTORAGE_CLOSE_DATABASE,
     /**
-     * failed to read all Notes from databasse
+     * failed to read all Notes from database
      */
     DBSTORAGE_READ_NOTES,
+    /**
+     * failed to read all Weights from database
+     */
+    DBSTORAGE_READ_WEIGHTS,
+    /**
+     * failed to read all Exercises from database
+     */
+    DBSTORAGE_READ_EXERCISES,
 
     /**
      * failed to create application directory
