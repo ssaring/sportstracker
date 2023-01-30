@@ -66,8 +66,8 @@
         </dependency>
         <dependency>
             <groupId>org.jfree</groupId>
-            <artifactId>jfreechart-fx</artifactId>
-            <version>1.0.1</version>
+            <artifactId>org.jfree.chart.fx</artifactId>
+            <version>2.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.controlsfx</groupId>

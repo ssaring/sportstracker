@@ -7,6 +7,7 @@ v7.9.2:
  - updated ControlsFX to version 11.1.2
  - updated JUnit to version 5.9.2
  - updated Mockito to version 5.0.0
+ - updated JFreeChart to version 1.5.3 and JFreeChart-FX to 2.0.1
  SportsTracker changes:
  ExerciseViewer changes:
 
