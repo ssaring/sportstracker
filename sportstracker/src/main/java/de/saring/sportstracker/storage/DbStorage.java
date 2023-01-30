@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,6 @@ import java.util.List;
  */
 @Singleton
 public class DbStorage {
-
-    // TODO: readInt etc. return 0 when the database value is NULL => to be checked in optional columns!
 
     private Connection connection;
 
@@ -104,7 +103,8 @@ public class DbStorage {
             {
                 var sportType = getSportTypeById(sportTypes, rs.getInt("SPORT_TYPE_ID"));
                 var sportSubType = getSportSubTypeById(sportType, rs.getInt("SPORT_SUBTYPE_ID"));
-                var equipment = getEquipmentById(sportType, rs.getInt("EQUIPMENT_ID"));
+                var equipmentID = getIntegerOrNull(rs, "EQUIPMENT_ID");
+                var equipment = equipmentID == null ? null : getEquipmentById(sportType, equipmentID);
 
                 var exercise = new Exercise(rs.getInt("ID"));
                 exercise.setDateTime(Date310Utils.dateToLocalDateTime(rs.getDate("DATE_TIME")));
@@ -144,7 +144,7 @@ public class DbStorage {
                 sportType.setSpeedMode(SpeedMode.valueOf(rs.getString("SPEED_MODE")));
                 sportType.setColor(Color.web(rs.getString("COLOR")));
                 sportType.setIcon(rs.getString("ICON"));
-                sportType.setFitId(rs.getInt("FIT_ID"));
+                sportType.setFitId(getIntegerOrNull(rs, "FIT_ID"));
                 sportTypes.add(sportType);
             }
         } catch (SQLException e) {
@@ -165,7 +165,7 @@ public class DbStorage {
                 var sportType = getSportTypeById(sportTypes, rs.getInt("SPORT_TYPE_ID"));
                 var sportSubType = new SportSubType(rs.getInt("ID"));
                 sportSubType.setName(rs.getString("NAME"));
-                sportSubType.setFitId(rs.getInt("FIT_ID"));
+                sportSubType.setFitId(getIntegerOrNull(rs, "FIT_ID"));
                 sportType.getSportSubTypeList().set(sportSubType);
             }
         } catch (SQLException e) {
@@ -209,5 +209,10 @@ public class DbStorage {
                 .filter(eq -> equipmentId == eq.getId())
                 .findAny()
                 .orElse(null);
+    }
+
+    private Integer getIntegerOrNull(ResultSet rs, String columnName) throws SQLException {
+        int value = rs.getInt(columnName);
+        return rs.wasNull() ? null : value;
     }
 }
