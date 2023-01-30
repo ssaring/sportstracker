@@ -10,6 +10,7 @@ import java.util.List;
 
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.storage.DbStorage;
 import de.saring.util.unitcalc.SpeedMode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ public class STDocumentTest {
     public void setUp() {
         // STContext needs to be mocked
         STContext contextMock = mock(STContext.class);
-        document = new STDocumentImpl(contextMock, null);
+        document = new STDocumentImpl(contextMock, null, mock(DbStorage.class));
         document.loadOptions();
     }
 

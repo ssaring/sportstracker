@@ -38,7 +38,7 @@ public class SQLiteExporterTest {
     public void setUp() throws IOException {
 
         STContext contextMock = mock(STContext.class);
-        document = new STDocumentImpl(contextMock, null);
+        document = new STDocumentImpl(contextMock, null, mock(DbStorage.class));
         fillDocumentWithTestData();
 
         exporter = new SQLiteExporter(document);
