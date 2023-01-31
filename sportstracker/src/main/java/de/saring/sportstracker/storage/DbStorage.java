@@ -35,6 +35,8 @@ public class DbStorage {
 
         try {
             connection = DriverManager.getConnection(jdbcUrl);
+            // AutoCommit is default for SQLite, use own TX management instead
+            connection.setAutoCommit(false);
         } catch (SQLException e) {
             throw new STException(STExceptionID.DBSTORAGE_OPEN_DATABASE,
                     "Failed to open SQLite database '" + jdbcUrl + "'!", e);
@@ -56,8 +58,8 @@ public class DbStorage {
     public List<Note> readAllNotes() throws STException {
         var notes = new ArrayList<Note>();
 
-        try(var statement = connection.createStatement()) {
-            var rs = statement.executeQuery("SELECT * FROM NOTE");
+        try(var statement = connection.prepareStatement("SELECT * FROM NOTE")) {
+            var rs = statement.executeQuery();
             while(rs.next())
             {
                 var note = new Note(rs.getInt("ID"));
@@ -76,8 +78,8 @@ public class DbStorage {
     public List<Weight> readAllWeights() throws STException {
         var weights = new ArrayList<Weight>();
 
-        try(var statement = connection.createStatement()) {
-            var rs = statement.executeQuery("SELECT * FROM WEIGHT");
+        try(var statement = connection.prepareStatement("SELECT * FROM WEIGHT")) {
+            var rs = statement.executeQuery();
             while(rs.next())
             {
                 var weight = new Weight(rs.getInt("ID"));
@@ -97,8 +99,8 @@ public class DbStorage {
     public List<Exercise> readAllExercises(List<SportType> sportTypes) throws STException {
         var exercises = new ArrayList<Exercise>();
 
-        try(var statement = connection.createStatement()) {
-            var rs = statement.executeQuery("SELECT * FROM EXERCISE");
+        try(var statement = connection.prepareStatement("SELECT * FROM EXERCISE")) {
+            var rs = statement.executeQuery();
             while(rs.next())
             {
                 var sportType = getSportTypeById(sportTypes, rs.getInt("SPORT_TYPE_ID"));
@@ -134,8 +136,8 @@ public class DbStorage {
     public List<SportType> readAllSportTypes() throws STException {
         var sportTypes = new ArrayList<SportType>();
 
-        try(var statement = connection.createStatement()) {
-            var rs = statement.executeQuery("SELECT * FROM SPORT_TYPE");
+        try(var statement = connection.prepareStatement("SELECT * FROM SPORT_TYPE")) {
+            var rs = statement.executeQuery();
             while(rs.next())
             {
                 var sportType = new SportType(rs.getInt("ID"));
@@ -158,8 +160,8 @@ public class DbStorage {
 
     private void readAllSportSubTypes(List<SportType> sportTypes) throws STException {
 
-        try(var statement = connection.createStatement()) {
-            var rs = statement.executeQuery("SELECT * FROM SPORT_SUBTYPE");
+        try(var statement = connection.prepareStatement("SELECT * FROM SPORT_SUBTYPE")) {
+            var rs = statement.executeQuery();
             while(rs.next())
             {
                 var sportType = getSportTypeById(sportTypes, rs.getInt("SPORT_TYPE_ID"));
@@ -175,8 +177,8 @@ public class DbStorage {
 
     private void readAllEquipments(List<SportType> sportTypes) throws STException {
 
-        try(var statement = connection.createStatement()) {
-            var rs = statement.executeQuery("SELECT * FROM EQUIPMENT");
+        try(var statement = connection.prepareStatement("SELECT * FROM EQUIPMENT")) {
+            var rs = statement.executeQuery();
             while(rs.next())
             {
                 var sportType = getSportTypeById(sportTypes, rs.getInt("SPORT_TYPE_ID"));
