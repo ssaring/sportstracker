@@ -277,15 +277,45 @@ public class STDocumentImpl implements STDocument {
 
     @Override
     public void readApplicationData() throws STException {
-        testDbStorage();
+        // testDbStorage();
 
         try {
-            // read application data from XML files
+            var msStart = System.currentTimeMillis();
+            dbStorage.openDatabase(dataDirectory + "/" + FILENAME_ST_DATABASE);
+            var msOpened = System.currentTimeMillis();
+            System.out.println("Opened database in " + (msOpened - msStart) + " msec");
+
+            // read application data from SQLite database
+            var dbSportTypes = dbStorage.readAllSportTypes();
+            var dbExercises = dbStorage.readAllExercises(dbSportTypes);
+            var dbNotes = dbStorage.readAllNotes();
+            var dbWeights = dbStorage.readAllWeights();
+            var msDataRead = System.currentTimeMillis();
+            System.out.println("Loaded all data in " + (msDataRead - msOpened) + " msec");
+
+            sportTypeList = new SportTypeList();
+            exerciseList = new ExerciseList();
+            noteList = new NoteList();
+            weightList = new WeightList();
+
+            sportTypeList.clearAndAddAll(dbSportTypes);
+            exerciseList.clearAndAddAll(dbExercises);
+            noteList.clearAndAddAll(dbNotes);
+            weightList.clearAndAddAll(dbWeights);
+
+            var msDataConverted = System.currentTimeMillis();
+            System.out.println("Converted all data in " + (msDataConverted - msDataRead) + " msec");
+
+            // TODO remove reading from XML
+            /* read application data from XML files
             sportTypeList = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
                     options.getPreferredSpeedMode());
             exerciseList = storage.readExerciseList(dataDirectory + "/" + FILENAME_EXERCISE_LIST, sportTypeList);
             noteList = storage.readNoteList(dataDirectory + "/" + FILENAME_NOTE_LIST);
             weightList = storage.readWeightList(dataDirectory + "/" + FILENAME_WEIGHT_LIST);
+
+            var msDataLoaded = System.currentTimeMillis();
+            System.out.println("Loaded all data from XML in " + (msDataLoaded - msStart) + " msec"); */
         } finally {
             // register this document as a listener for list content changes
             // (also when reading data has failed)
