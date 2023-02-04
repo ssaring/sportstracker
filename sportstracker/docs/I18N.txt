@@ -45,6 +45,11 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 7.9.2:
+
+st.main.error.load_data (removed)
+st.main.error.open_load_data (new)
+
 SportsTracker 7.9.1:
 
 - st.dlg.filter.string_comments.text (edited)

@@ -11,13 +11,7 @@ SQLite migration:
       - Loaded all data in 111 msec
       - Converted all data in 5 msec
     - loading of all data from XML: 350 msec => similar to opening SQLite database and read from there
-    - older SQLite performance tests:
-        Opened database in 155 msec
-        Loaded 552 Notes in 27 msec
-        Loaded 691 Weights in 21 msec
-        Loaded 8 SportTypes in 1 msec
-        Loaded 4873 Exercises in 55 msec
-        Reloaded 4873 Exercises in 35 msec
+    - DB schema version is validated on startup
 - TODO:
   - keep the IdDateObjectList collections because of date order or switch to normal List objects?
   - implement XML to SQLite data migration when SQLite database does not exist yet

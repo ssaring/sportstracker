@@ -871,7 +871,9 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             super.succeeded();
             context.blockMainWindow(false);
 
-            updateFinally();
+            updateView();
+            // listener must be registered after loading data, because new lists are created
+            registerListenerForDataChanges();
             displayCorruptExercises();
             addInitialSportTypesIfMissing();
         }
@@ -882,15 +884,9 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             context.blockMainWindow(false);
 
             LOGGER.log(Level.SEVERE, "Failed to load application data!", getException());
-            updateFinally();
             context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
-                    "common.error", "st.main.error.load_data");
-        }
-
-        private void updateFinally() {
-            updateView();
-            // listener must be registered after loading data, because new lists are created
-            registerListenerForDataChanges();
+                    "common.error", "st.main.error.open_load_data");
+            exitApplication();
         }
 
         private void displayCorruptExercises() {

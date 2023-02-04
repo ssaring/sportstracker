@@ -277,7 +277,7 @@ public class STDocumentImpl implements STDocument {
 
     @Override
     public void readApplicationData() throws STException {
-        // testDbStorage();
+        // TODO remove System.out's
 
         try {
             var msStart = System.currentTimeMillis();
