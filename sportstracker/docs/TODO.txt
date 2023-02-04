@@ -19,8 +19,7 @@ SQLite migration:
         Loaded 4873 Exercises in 55 msec
         Reloaded 4873 Exercises in 35 msec
 - TODO:
-  - see TODOs in DbStorage and STDocumentImpl
-  - keep the IdDateObjectList collections because of date order or switch to normal List objects
+  - keep the IdDateObjectList collections because of date order or switch to normal List objects?
   - implement XML to SQLite data migration when SQLite database does not exist yet
   - implement DB schema version validation when opening database
   - does SportType object needs to contain all SportSubTypes and Equipments?

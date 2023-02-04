@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 
+import de.saring.sportstracker.storage.db.DbStorage;
 import javafx.scene.paint.Color;
 
 import org.junit.jupiter.api.AfterEach;

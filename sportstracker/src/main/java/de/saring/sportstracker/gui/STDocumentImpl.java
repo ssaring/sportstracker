@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
-import de.saring.sportstracker.storage.DbStorage;
+import de.saring.sportstracker.storage.db.DbStorage;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -286,10 +286,10 @@ public class STDocumentImpl implements STDocument {
             System.out.println("Opened database in " + (msOpened - msStart) + " msec");
 
             // read application data from SQLite database
-            var dbSportTypes = dbStorage.readAllSportTypes();
-            var dbExercises = dbStorage.readAllExercises(dbSportTypes);
-            var dbNotes = dbStorage.readAllNotes();
-            var dbWeights = dbStorage.readAllWeights();
+            var dbSportTypes = dbStorage.getSportTypeRepository().readAllSportTypes();
+            var dbExercises = dbStorage.getExerciseRepository().readAllExercises(dbSportTypes);
+            var dbNotes = dbStorage.getNoteRepository().readAllNotes();
+            var dbWeights = dbStorage.getWeightRepository().readAllWeights();
             var msDataRead = System.currentTimeMillis();
             System.out.println("Loaded all data in " + (msDataRead - msOpened) + " msec");
 
@@ -306,7 +306,7 @@ public class STDocumentImpl implements STDocument {
             var msDataConverted = System.currentTimeMillis();
             System.out.println("Converted all data in " + (msDataConverted - msDataRead) + " msec");
 
-            // TODO remove reading from XML
+            // TODO remove reading from XML, reuse for data migration
             /* read application data from XML files
             sportTypeList = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
                     options.getPreferredSpeedMode());
@@ -322,35 +322,6 @@ public class STDocumentImpl implements STDocument {
             registerListChangeListener(this);
             dirtyData = false;
         }
-    }
-
-    // TODO remove
-    private void testDbStorage() throws STException {
-        var msStart = System.currentTimeMillis();
-
-        dbStorage.openDatabase(dataDirectory + "/" + FILENAME_ST_DATABASE);
-        var msOpened = System.currentTimeMillis();
-        System.out.println("Opened database in " + (msOpened - msStart) + " msec");
-
-        var dbNotes = dbStorage.readAllNotes();
-        var msNotesRead = System.currentTimeMillis();
-        System.out.println("Loaded " + dbNotes.size() + " Notes in " + (msNotesRead - msOpened) + " msec");
-
-        var dbWeights = dbStorage.readAllWeights();
-        var msWeightsRead = System.currentTimeMillis();
-        System.out.println("Loaded " + dbWeights.size() + " Weights in " + (msWeightsRead - msNotesRead) + " msec");
-
-        var dbSportTypes = dbStorage.readAllSportTypes();
-        var msSportTypesRead = System.currentTimeMillis();
-        System.out.println("Loaded " + dbSportTypes.size() + " SportTypes in " + (msSportTypesRead - msWeightsRead) + " msec");
-
-        var dbExercises = dbStorage.readAllExercises(dbSportTypes);
-        var msExercisesRead = System.currentTimeMillis();
-        System.out.println("Loaded " + dbExercises.size() + " Exercises in " + (msExercisesRead - msSportTypesRead) + " msec");
-
-        var dbExercises2 = dbStorage.readAllExercises(dbSportTypes);
-        var msExercisesRead2 = System.currentTimeMillis();
-        System.out.println("Reloaded " + dbExercises2.size() + " Exercises in " + (msExercisesRead2 - msExercisesRead) + " msec");
     }
 
     @Override
