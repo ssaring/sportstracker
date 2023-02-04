@@ -17,6 +17,8 @@ import java.sql.SQLException;
 @Singleton
 public class DbStorage {
 
+    private static final int SCHEMA_VERSION = 1;
+
     private Connection connection;
 
     private NoteRepository noteRepository;
@@ -36,6 +38,7 @@ public class DbStorage {
                     "Failed to open SQLite database '" + jdbcUrl + "'!", e);
         }
 
+        validateSchemaVersion();
         noteRepository = new NoteRepository(connection);
         weightRepository = new WeightRepository(connection);
         exerciseRepository = new ExerciseRepository(connection);
@@ -67,5 +70,19 @@ public class DbStorage {
 
     public SportTypeRepository getSportTypeRepository() {
         return sportTypeRepository;
+    }
+
+    private void validateSchemaVersion() throws STException {
+        try(var statement = connection.prepareStatement("SELECT SCHEMA_VERSION FROM META")) {
+            var rs = statement.executeQuery();
+            rs.next();
+            var schemaVersion = rs.getInt("SCHEMA_VERSION");
+            if (schemaVersion != SCHEMA_VERSION) {
+                throw new STException(STExceptionID.DBSTORAGE_INVALID_SCHEMA, "DB schema version is invalid! " +
+                        "Expected version " + SCHEMA_VERSION + ", found version " + schemaVersion + ".");
+            }
+        } catch (SQLException e) {
+            throw new STException(STExceptionID.DBSTORAGE_INVALID_SCHEMA, "Failed to read DB schema version!", e);
+        }
     }
 }

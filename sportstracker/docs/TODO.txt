@@ -21,7 +21,6 @@ SQLite migration:
 - TODO:
   - keep the IdDateObjectList collections because of date order or switch to normal List objects?
   - implement XML to SQLite data migration when SQLite database does not exist yet
-  - implement DB schema version validation when opening database
   - does SportType object needs to contain all SportSubTypes and Equipments?
     - add reverse relations instead? (SportSubtype and Equipment have SportType property)
     -> SportType objects would be more lean when dealing without lists (e.g. when referenced in Exercise)

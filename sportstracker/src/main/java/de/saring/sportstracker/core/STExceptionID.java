@@ -53,6 +53,10 @@ public enum STExceptionID {
      */
     DBSTORAGE_CLOSE_DATABASE,
     /**
+     * failed to validate database schema version
+     */
+    DBSTORAGE_INVALID_SCHEMA,
+    /**
      * failed to read all Notes from database
      */
     DBSTORAGE_READ_NOTES,
