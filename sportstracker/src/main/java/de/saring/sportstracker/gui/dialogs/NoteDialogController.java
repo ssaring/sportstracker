@@ -1,7 +1,10 @@
 package de.saring.sportstracker.gui.dialogs;
 
 import java.time.LocalTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import de.saring.sportstracker.core.STException;
 import de.saring.util.gui.javafx.FxWorkarounds;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -26,6 +29,8 @@ import de.saring.util.gui.javafx.TimeToStringConverter;
  * @author Stefan Saring
  */
 public class NoteDialogController extends AbstractDialogController {
+
+    private static final Logger LOGGER = Logger.getLogger(NoteDialogController.class.getName());
 
     private final STDocument document;
 
@@ -98,10 +103,19 @@ public class NoteDialogController extends AbstractDialogController {
 
     @Override
     protected boolean validateAndStore() {
-
         // store the new Note, no further validation needed
         final Note newNote = noteViewModel.getNote();
-        document.getNoteList().set(newNote);
-        return true;
+
+        try {
+            if (newNote.getId() == null) {
+                document.getStorage().getNoteRepository().createNote(newNote);
+            } else {
+                document.getStorage().getNoteRepository().updateNote(newNote);
+            }
+            return true;
+        } catch (STException e) {
+            LOGGER.log(Level.SEVERE, "Failed to store Note '" + newNote.getId() + "'!", e);
+            return false;
+        }
     }
 }

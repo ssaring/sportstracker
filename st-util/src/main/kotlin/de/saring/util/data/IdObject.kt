@@ -5,11 +5,11 @@ import java.util.Objects
 /**
  * Abstract base class for all objects which needs to have an ID for referencing. The ID can't be changed.
  *
- * @property id the ID of the object
+ * @property id the ID of the object (null for new, not persisted objects)
  *
  * @author Stefan Saring
  */
-abstract class IdObject(val id: Int) {
+abstract class IdObject(val id: Int?) {
 
     /**
      * Compares the specified object with this object. The objects are equal when they are of the same type and when

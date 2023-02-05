@@ -147,6 +147,11 @@ public class STDocumentImpl implements STDocument {
     }
 
     @Override
+    public DbStorage getStorage() {
+        return dbStorage;
+    }
+
+    @Override
     public STOptions getOptions() {
         return options;
     }

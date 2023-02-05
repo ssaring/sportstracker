@@ -65,6 +65,10 @@ public enum STExceptionID {
      */
     DBSTORAGE_READ_NOTES,
     /**
+     * failed to read a specific entry by ID from database
+     */
+    DBSTORAGE_READ_ENTRY,
+    /**
      * failed to create a specific new entry in database
      */
     DBSTORAGE_CREATE_ENTRY,

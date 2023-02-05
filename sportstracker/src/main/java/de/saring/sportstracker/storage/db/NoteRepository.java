@@ -41,11 +41,12 @@ public class NoteRepository {
 
     public Note readNote(int noteId) throws STException {
         try (var statement = connection.prepareStatement("SELECT * FROM NOTE WHERE ID = ?")) {
+            statement.setInt(1, noteId);
             var rs = statement.executeQuery();
             rs.next();
             return readNoteFromResultSet(rs);
         } catch (SQLException e) {
-            throw new STException(STExceptionID.DBSTORAGE_READ_NOTES, "Failed to read all Notes!", e);
+            throw new STException(STExceptionID.DBSTORAGE_READ_ENTRY, "Failed to read Note with ID '" + noteId + "'!", e);
         }
     }
 
@@ -53,7 +54,7 @@ public class NoteRepository {
         try (var statement = connection.prepareStatement("INSERT INTO NOTE " +
                 "(DATE_TIME, COMMENT) " +
                 "VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-            statement.setObject(1, note.getDateTime());
+            statement.setString(1, RepositoryUtil.dateTimeToString(note.getDateTime()));
             statement.setString(2, note.getComment());
             statement.executeUpdate();
 
@@ -72,7 +73,7 @@ public class NoteRepository {
                 "DATE_TIME = ?, " +
                 "COMMENT = ? " +
                 "WHERE ID = ?")) {
-            statement.setObject(1, note.getDateTime());
+            statement.setString(1, RepositoryUtil.dateTimeToString(note.getDateTime()));
             statement.setString(2, note.getComment());
             statement.setInt(3, note.getId());
             statement.executeUpdate();

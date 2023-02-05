@@ -3,9 +3,12 @@ package de.saring.sportstracker.storage.db;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.storage.XMLUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -14,6 +17,10 @@ import java.util.List;
  * @author Stefan Saring
  */
 public class RepositoryUtil {
+
+    private static final DateTimeFormatter SQLITE_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-mm-dd HH:mm:ss");
+
+    // TODO implement unit tests
 
     private RepositoryUtil() {
     }
@@ -43,5 +50,9 @@ public class RepositoryUtil {
                 .filter(eq -> equipmentId == eq.getId())
                 .findAny()
                 .orElse(null);
+    }
+
+    public static String dateTimeToString(LocalDateTime dateTime) {
+        return dateTime.format(SQLITE_DATE_TIME_FORMAT);
     }
 }

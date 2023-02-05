@@ -13,6 +13,7 @@ import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.data.WeightList;
+import de.saring.sportstracker.storage.db.DbStorage;
 import de.saring.util.data.IdObjectListChangeListener;
 import de.saring.util.unitcalc.SpeedMode;
 
@@ -36,6 +37,8 @@ public interface STDocument extends IdObjectListChangeListener {
     NoteList getNoteList();
 
     WeightList getWeightList();
+
+    DbStorage getStorage();
 
     STOptions getOptions();
 

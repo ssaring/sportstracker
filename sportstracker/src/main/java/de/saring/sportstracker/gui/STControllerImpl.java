@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Entry;
 import de.saring.sportstracker.data.EntryList;
 import de.saring.sportstracker.storage.SQLiteExporter;
@@ -790,8 +791,12 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @param noteID ID of the note entry
      */
     private void editNote(int noteID) {
-        final var selectedNote = document.getNoteList().getByID(noteID);
-        dialogProvider.prNoteDialogController.get().show(context.getPrimaryStage(), selectedNote);
+        try {
+            final var selectedNote = document.getStorage().getNoteRepository().readNote(noteID);
+            dialogProvider.prNoteDialogController.get().show(context.getPrimaryStage(), selectedNote);
+        } catch (STException e) {
+            LOGGER.log(Level.SEVERE, "Failed to edit Note '" + noteID + "'!", e);
+        }
     }
 
     /**

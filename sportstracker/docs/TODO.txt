@@ -15,8 +15,15 @@ SQLite migration:
 - TODO:
   - implement and test CRUD actions in entry repositories
     - started in NoteRepository, TODO: test
+    - started in NoteDialogController and STControllerImpl, see TODOs there
+      - Edit of existing Notes works, Add and Delete Note is missing
+      - ID of IdObject needs to be an optional Integer or Long
+        - adjust classes and tests
+    - implement change handling and note list reload in NoteRepository
+    - implement dirty flag handling in repository
     - refactor: move common methods in AbstractRepository base class or RepositoryUtil
   - keep the IdDateObjectList collections because of date order or switch to normal List objects?
+  - change ID type from int to long in IdObject?
   - implement XML to SQLite data migration when SQLite database does not exist yet
   - does SportType object needs to contain all SportSubTypes and Equipments?
     - add reverse relations instead? (SportSubtype and Equipment have SportType property)
