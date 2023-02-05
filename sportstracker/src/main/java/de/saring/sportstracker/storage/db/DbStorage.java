@@ -56,7 +56,15 @@ public class DbStorage {
         }
     }
 
-    public NoteRepository getNoteRepository() {
+    public void commitChanges() throws STException {
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            throw new STException(STExceptionID.DBSTORAGE_COMMIT_CHANGES, "Failed to commit database changes!'", e);
+        }
+    }
+
+        public NoteRepository getNoteRepository() {
         return noteRepository;
     }
 

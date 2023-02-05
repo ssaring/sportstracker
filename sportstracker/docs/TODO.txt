@@ -13,6 +13,9 @@ SQLite migration:
     - loading of all data from XML: 350 msec => similar to opening SQLite database and read from there
     - DB schema version is validated on startup
 - TODO:
+  - implement and test CRUD actions in entry repositories
+    - started in NoteRepository, TODO: test
+    - refactor: move common methods in AbstractRepository base class or RepositoryUtil
   - keep the IdDateObjectList collections because of date order or switch to normal List objects?
   - implement XML to SQLite data migration when SQLite database does not exist yet
   - does SportType object needs to contain all SportSubTypes and Equipments?

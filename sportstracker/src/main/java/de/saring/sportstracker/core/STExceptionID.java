@@ -57,9 +57,25 @@ public enum STExceptionID {
      */
     DBSTORAGE_INVALID_SCHEMA,
     /**
+     * failed to commit all database changes
+     */
+    DBSTORAGE_COMMIT_CHANGES,
+    /**
      * failed to read all Notes from database
      */
     DBSTORAGE_READ_NOTES,
+    /**
+     * failed to create a specific new entry in database
+     */
+    DBSTORAGE_CREATE_ENTRY,
+    /**
+     * failed to update a specific existing entry in database
+     */
+    DBSTORAGE_UPDATE_ENTRY,
+    /**
+     * failed to delete a specific entry from database
+     */
+    DBSTORAGE_DELETE_ENTRY,
     /**
      * failed to read all Weights from database
      */
