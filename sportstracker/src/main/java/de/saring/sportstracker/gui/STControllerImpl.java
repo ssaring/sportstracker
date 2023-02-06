@@ -302,7 +302,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     @Override
     public void onAddNote(final ActionEvent event) {
         // start Note dialog for a new created Note
-        final Note newNote = new Note(document.getNoteList().getNewId());
+        final Note newNote = new Note(null);
         newNote.setDateTime(Date310Utils.getNoonDateTimeForDate(dateForNewEntries));
 
         dialogProvider.prNoteDialogController.get().show(context.getPrimaryStage(), newNote);
@@ -378,7 +378,18 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 // finally remove the entries
+                boolean isNote = currentViewController.getSelectedNoteCount() > 0;
+
                 for (int id : selectedEntryIDs) {
+                    if (isNote) {
+                        // TODO remove the special handling of Note entries once DB migration is done for other types as well
+                        try {
+                            Note note = document.getStorage().getNoteRepository().readNote(id);
+                            document.getStorage().getNoteRepository().deleteNote(note);
+                        } catch (STException e) {
+                            LOGGER.log(Level.SEVERE, "Failed to delete Note '" + id + "'!", e);
+                        }
+                    }
                     entryList.removeByID(id);
                 }
             }

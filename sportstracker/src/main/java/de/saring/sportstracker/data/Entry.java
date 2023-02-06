@@ -15,9 +15,9 @@ public abstract class Entry extends IdDateObject {
     /**
      * Standard c'tor.
      *
-     * @param id the ID of the object
+     * @param id the ID of the object (null for new, not persisted objects)
      */
-    public Entry(int id) {
+    public Entry(Integer id) {
         super(id);
     }
 

@@ -11,14 +11,18 @@ SQLite migration:
       - Loaded all data in 111 msec
       - Converted all data in 5 msec
     - loading of all data from XML: 350 msec => similar to opening SQLite database and read from there
-    - DB schema version is validated on startup
+  - DB schema version is validated on startup
+  - NoteRepository implementation completed (CRUD, manually tested)
+  - Add/Edit/Delete actions for Note entries are executed in DBStorage
+    (and in NoteList in parallel for updating changes in all registered views)
 - TODO:
   - implement and test CRUD actions in entry repositories
-    - started in NoteRepository, TODO: test
-    - started in NoteDialogController and STControllerImpl, see TODOs there
-      - Edit of existing Notes works, Add and Delete Note is missing
-      - ID of IdObject needs to be an optional Integer or Long
-        - adjust classes and tests
+    - ID of IdObject needs to be an optional Long
+      - adjust classes and tests
+    - Note editing actions:
+      - remove synchronized storage of Notes in DBStorage and STDocument.noteList
+      - implement registration of views for changes in NoteRepository
+    - see TODOs in NoteDialogController and STControllerImpl
     - implement change handling and note list reload in NoteRepository
     - implement dirty flag handling in repository
     - refactor: move common methods in AbstractRepository base class or RepositoryUtil

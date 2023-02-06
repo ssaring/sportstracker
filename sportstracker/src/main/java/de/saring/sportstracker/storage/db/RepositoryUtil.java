@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class RepositoryUtil {
 
-    private static final DateTimeFormatter SQLITE_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-mm-dd HH:mm:ss");
+    private static final DateTimeFormatter SQLITE_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     // TODO implement unit tests
 

@@ -12,9 +12,9 @@ public final class Note extends Entry {
     /**
      * Standard c'tor.
      *
-     * @param id the ID of the object
+     * @param id the ID of the object (null for new, not persisted objects)
      */
-    public Note(int id) {
+    public Note(Integer id) {
         super(id);
     }
 

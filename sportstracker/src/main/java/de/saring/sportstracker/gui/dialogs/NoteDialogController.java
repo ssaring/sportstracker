@@ -104,14 +104,17 @@ public class NoteDialogController extends AbstractDialogController {
     @Override
     protected boolean validateAndStore() {
         // store the new Note, no further validation needed
-        final Note newNote = noteViewModel.getNote();
+        Note newNote = noteViewModel.getNote();
 
         try {
             if (newNote.getId() == null) {
-                document.getStorage().getNoteRepository().createNote(newNote);
+                newNote = document.getStorage().getNoteRepository().createNote(newNote);
             } else {
                 document.getStorage().getNoteRepository().updateNote(newNote);
             }
+
+            // TODO remove once the synchronized storage in NoteList and view updates are not needed anymore
+            document.getNoteList().set(newNote);
             return true;
         } catch (STException e) {
             LOGGER.log(Level.SEVERE, "Failed to store Note '" + newNote.getId() + "'!", e);

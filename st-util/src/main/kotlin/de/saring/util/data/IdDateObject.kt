@@ -7,11 +7,11 @@ import java.time.LocalTime
 /**
  * Abstract base class for all objects which needs to have an ID for referencing and contain a date  and a time.
  *
- * @property id the ID of the object
+ * @property id the ID of the object (null for new, not persisted objects)
  *
  * @author Stefan Saring
  */
-abstract class IdDateObject (id: Int) : IdObject(id) {
+abstract class IdDateObject (id: Int?) : IdObject(id) {
 
     /**
      * The date and time of this object. The initial value is today, 12:00:00.
