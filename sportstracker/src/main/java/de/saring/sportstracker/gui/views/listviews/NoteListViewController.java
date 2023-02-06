@@ -1,8 +1,12 @@
 package de.saring.sportstracker.gui.views.listviews;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.gui.views.ViewPrinter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -27,6 +31,8 @@ import de.saring.util.gui.javafx.LocalDateCellFactory;
  */
 @Singleton
 public class NoteListViewController extends AbstractListViewController<Note> {
+
+    private static final Logger LOGGER = Logger.getLogger(NoteListViewController.class.getName());
 
     @FXML
     private TableView<Note> tvNotes;
@@ -102,6 +108,14 @@ public class NoteListViewController extends AbstractListViewController<Note> {
 
     @Override
     protected List<Note> getTableEntries() {
-        return getDocument().getFilterableNoteList().stream().toList();
+        // TODO filter is not supported yet
+        // return getDocument().getFilterableNoteList().stream().toList();
+
+        try {
+            return getDocument().getStorage().getNoteRepository().readAllNotes();
+        } catch (STException e) {
+            LOGGER.log(Level.SEVERE, "Failed to read all Notes!", e);
+            return new ArrayList<>();
+        }
     }
 }

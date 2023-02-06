@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 import de.saring.sportstracker.storage.db.DbStorage;
+import de.saring.sportstracker.storage.db.RepositoryChangeListener;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -361,6 +362,11 @@ public class STDocumentImpl implements STDocument {
         exerciseList.addListChangeListener(listener);
         noteList.addListChangeListener(listener);
         weightList.addListChangeListener(listener);
+    }
+
+    @Override
+    public void registerRepositoryChangeListener(RepositoryChangeListener listener) {
+        dbStorage.getNoteRepository().addChangeListener(listener);
     }
 
     @Override

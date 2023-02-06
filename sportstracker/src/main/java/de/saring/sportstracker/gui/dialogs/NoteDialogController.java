@@ -112,9 +112,6 @@ public class NoteDialogController extends AbstractDialogController {
             } else {
                 document.getStorage().getNoteRepository().updateNote(newNote);
             }
-
-            // TODO remove once the synchronized storage in NoteList and view updates are not needed anymore
-            document.getNoteList().set(newNote);
             return true;
         } catch (STException e) {
             LOGGER.log(Level.SEVERE, "Failed to store Note '" + newNote.getId() + "'!", e);

@@ -21,6 +21,8 @@ SQLite migration:
       - adjust classes and tests
     - Note editing actions:
       - remove synchronized storage of Notes in DBStorage and STDocument.noteList
+      - already started in NoteRepository and NoteListViewController -> changes are updated instantly in NoteList view
+      - TODO not implemented in CalendarView yet, to be done in CalendarDataProvider
       - implement registration of views for changes in NoteRepository
     - see TODOs in NoteDialogController and STControllerImpl
     - implement change handling and note list reload in NoteRepository

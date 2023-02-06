@@ -389,8 +389,9 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
                         } catch (STException e) {
                             LOGGER.log(Level.SEVERE, "Failed to delete Note '" + id + "'!", e);
                         }
+                    } else {
+                        entryList.removeByID(id);
                     }
-                    entryList.removeByID(id);
                 }
             }
         }
@@ -727,7 +728,15 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * object in the current view, if specified.
      */
     private void registerListenerForDataChanges() {
+        // TODO remove when DB storage migration completed
         document.registerListChangeListener(changedObject -> {
+            updateView();
+            if (changedObject != null) {
+                currentViewController.selectEntry(changedObject);
+            }
+        });
+
+        document.registerRepositoryChangeListener(changedObject -> {
             updateView();
             if (changedObject != null) {
                 currentViewController.selectEntry(changedObject);

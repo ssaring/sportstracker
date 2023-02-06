@@ -14,6 +14,7 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.sportstracker.storage.db.DbStorage;
+import de.saring.sportstracker.storage.db.RepositoryChangeListener;
 import de.saring.util.data.IdObjectListChangeListener;
 import de.saring.util.unitcalc.SpeedMode;
 
@@ -138,6 +139,13 @@ public interface STDocument extends IdObjectListChangeListener {
      * @param listener the IdObjectListChangeListener to register
      */
     void registerListChangeListener(IdObjectListChangeListener listener);
+
+    /**
+     * Register the specified RepositoryChangeListener on all database repositories.
+     *
+     * @param listener the listener to register
+     */
+    void registerRepositoryChangeListener(RepositoryChangeListener listener);
 
     /**
      * Returns the speed mode of the specified exercises which has to be used for displaying the speed for them (e.g.
