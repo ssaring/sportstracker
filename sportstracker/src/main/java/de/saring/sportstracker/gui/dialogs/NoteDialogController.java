@@ -112,6 +112,7 @@ public class NoteDialogController extends AbstractDialogController {
             } else {
                 document.getStorage().getNoteRepository().updateNote(newNote);
             }
+            document.updateApplicationData();
             return true;
         } catch (STException e) {
             LOGGER.log(Level.SEVERE, "Failed to store Note '" + newNote.getId() + "'!", e);

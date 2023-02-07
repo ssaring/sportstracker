@@ -378,18 +378,20 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 // finally remove the entries
+                // TODO remove the special handling of Note entries once DB migration is done for other types as well
                 boolean isNote = currentViewController.getSelectedNoteCount() > 0;
-
-                for (int id : selectedEntryIDs) {
-                    if (isNote) {
-                        // TODO remove the special handling of Note entries once DB migration is done for other types as well
-                        try {
-                            Note note = document.getStorage().getNoteRepository().readNote(id);
+                if (isNote) {
+                    try {
+                        for (int id : selectedEntryIDs) {
+                            Note note = document.getNoteList().getByID(id);
                             document.getStorage().getNoteRepository().deleteNote(note);
-                        } catch (STException e) {
-                            LOGGER.log(Level.SEVERE, "Failed to delete Note '" + id + "'!", e);
                         }
-                    } else {
+                        document.updateApplicationData();
+                    } catch (STException e) {
+                        LOGGER.log(Level.SEVERE, "Failed to delete Notes!", e);
+                    }
+                } else {
+                    for (int id : selectedEntryIDs) {
                         entryList.removeByID(id);
                     }
                 }
@@ -728,15 +730,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * object in the current view, if specified.
      */
     private void registerListenerForDataChanges() {
-        // TODO remove when DB storage migration completed
         document.registerListChangeListener(changedObject -> {
-            updateView();
-            if (changedObject != null) {
-                currentViewController.selectEntry(changedObject);
-            }
-        });
-
-        document.registerRepositoryChangeListener(changedObject -> {
             updateView();
             if (changedObject != null) {
                 currentViewController.selectEntry(changedObject);
@@ -811,12 +805,8 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @param noteID ID of the note entry
      */
     private void editNote(int noteID) {
-        try {
-            final var selectedNote = document.getStorage().getNoteRepository().readNote(noteID);
-            dialogProvider.prNoteDialogController.get().show(context.getPrimaryStage(), selectedNote);
-        } catch (STException e) {
-            LOGGER.log(Level.SEVERE, "Failed to edit Note '" + noteID + "'!", e);
-        }
+        final var selectedNote = document.getNoteList().getByID(noteID);
+        dialogProvider.prNoteDialogController.get().show(context.getPrimaryStage(), selectedNote);
     }
 
     /**

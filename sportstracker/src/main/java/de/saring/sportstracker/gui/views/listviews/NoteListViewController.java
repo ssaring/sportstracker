@@ -1,28 +1,23 @@
 package de.saring.sportstracker.gui.views.listviews;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import de.saring.sportstracker.core.STException;
+import de.saring.sportstracker.data.Note;
+import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STDocument;
 import de.saring.sportstracker.gui.views.ViewPrinter;
+import de.saring.util.StringUtils;
+import de.saring.util.data.IdObject;
+import de.saring.util.gui.javafx.LocalDateCellFactory;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
-
-import de.saring.sportstracker.data.Note;
-import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.StringUtils;
-import de.saring.util.data.IdObject;
-import de.saring.util.gui.javafx.LocalDateCellFactory;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Controller class of the Note List View, which displays all the user notes  (or a filtered list) in a table view.
@@ -108,14 +103,6 @@ public class NoteListViewController extends AbstractListViewController<Note> {
 
     @Override
     protected List<Note> getTableEntries() {
-        // TODO filter is not supported yet
-        // return getDocument().getFilterableNoteList().stream().toList();
-
-        try {
-            return getDocument().getStorage().getNoteRepository().readAllNotes();
-        } catch (STException e) {
-            LOGGER.log(Level.SEVERE, "Failed to read all Notes!", e);
-            return new ArrayList<>();
-        }
+        return getDocument().getFilterableNoteList().stream().toList();
     }
 }

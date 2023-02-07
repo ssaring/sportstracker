@@ -14,7 +14,6 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.sportstracker.storage.db.DbStorage;
-import de.saring.sportstracker.storage.db.RepositoryChangeListener;
 import de.saring.util.data.IdObjectListChangeListener;
 import de.saring.util.unitcalc.SpeedMode;
 
@@ -125,6 +124,14 @@ public interface STDocument extends IdObjectListChangeListener {
     void storeApplicationData() throws STException;
 
     /**
+     * Reloads all application data (notes, weights, exercises, sport types) from the storage. Needs to be called
+     * whenever some application data has been modified by one of the storage repositories.
+     *
+     * @throws STException thrown on read problems
+     */
+    void updateApplicationData() throws STException;
+
+    /**
      * Checks all exercises for the existence of the attached exercise files
      * (if there is one).
      *
@@ -139,13 +146,6 @@ public interface STDocument extends IdObjectListChangeListener {
      * @param listener the IdObjectListChangeListener to register
      */
     void registerListChangeListener(IdObjectListChangeListener listener);
-
-    /**
-     * Register the specified RepositoryChangeListener on all database repositories.
-     *
-     * @param listener the listener to register
-     */
-    void registerRepositoryChangeListener(RepositoryChangeListener listener);
 
     /**
      * Returns the speed mode of the specified exercises which has to be used for displaying the speed for them (e.g.

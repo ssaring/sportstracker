@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 import de.saring.sportstracker.storage.db.DbStorage;
-import de.saring.sportstracker.storage.db.RepositoryChangeListener;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -283,31 +282,24 @@ public class STDocumentImpl implements STDocument {
 
     @Override
     public void readApplicationData() throws STException {
-        // TODO remove System.out's
+        LOGGER.info("Reading application data");
+
+        sportTypeList = new SportTypeList();
+        exerciseList = new ExerciseList();
+        noteList = new NoteList();
+        weightList = new WeightList();
 
         try {
+            // TODO remove System.out's
             var msStart = System.currentTimeMillis();
             dbStorage.openDatabase(dataDirectory + "/" + FILENAME_ST_DATABASE);
             var msOpened = System.currentTimeMillis();
             System.out.println("Opened database in " + (msOpened - msStart) + " msec");
 
             // read application data from SQLite database
-            var dbSportTypes = dbStorage.getSportTypeRepository().readAllSportTypes();
-            var dbExercises = dbStorage.getExerciseRepository().readAllExercises(dbSportTypes);
-            var dbNotes = dbStorage.getNoteRepository().readAllNotes();
-            var dbWeights = dbStorage.getWeightRepository().readAllWeights();
+            updateApplicationData();
             var msDataRead = System.currentTimeMillis();
             System.out.println("Loaded all data in " + (msDataRead - msOpened) + " msec");
-
-            sportTypeList = new SportTypeList();
-            exerciseList = new ExerciseList();
-            noteList = new NoteList();
-            weightList = new WeightList();
-
-            sportTypeList.clearAndAddAll(dbSportTypes);
-            exerciseList.clearAndAddAll(dbExercises);
-            noteList.clearAndAddAll(dbNotes);
-            weightList.clearAndAddAll(dbWeights);
 
             var msDataConverted = System.currentTimeMillis();
             System.out.println("Converted all data in " + (msDataConverted - msDataRead) + " msec");
@@ -332,6 +324,7 @@ public class STDocumentImpl implements STDocument {
 
     @Override
     public void storeApplicationData() throws STException {
+        LOGGER.info("Storing application data");
         // TODO store in XML has been disabled to prevent damage of production data
         System.out.println("TODO: Save to XML has been disabled, Save to DB not implemented yet");
 
@@ -341,6 +334,24 @@ public class STDocumentImpl implements STDocument {
         storage.storeNoteList(noteList, dataDirectory + "/" + FILENAME_NOTE_LIST);
         storage.storeWeightList(weightList, dataDirectory + "/" + FILENAME_WEIGHT_LIST);
         dirtyData = false; */
+    }
+
+    @Override
+    public void updateApplicationData() throws STException {
+        LOGGER.info("Updating application data");
+        dirtyData = true;
+
+        var dbSportTypes = dbStorage.getSportTypeRepository().readAllSportTypes();
+        sportTypeList.clearAndAddAll(dbSportTypes);
+
+        var dbExercises = dbStorage.getExerciseRepository().readAllExercises(dbSportTypes);
+        exerciseList.clearAndAddAll(dbExercises);
+
+        var dbNotes = dbStorage.getNoteRepository().readAllNotes();
+        noteList.clearAndAddAll(dbNotes);
+
+        var dbWeights = dbStorage.getWeightRepository().readAllWeights();
+        weightList.clearAndAddAll(dbWeights);
     }
 
     @Override
@@ -362,11 +373,6 @@ public class STDocumentImpl implements STDocument {
         exerciseList.addListChangeListener(listener);
         noteList.addListChangeListener(listener);
         weightList.addListChangeListener(listener);
-    }
-
-    @Override
-    public void registerRepositoryChangeListener(RepositoryChangeListener listener) {
-        dbStorage.getNoteRepository().addChangeListener(listener);
     }
 
     @Override
