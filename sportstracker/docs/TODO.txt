@@ -3,6 +3,20 @@ SportsTracker-TODO
 
 SQLite migration:
 - Documentation: https://www.sqlitetutorial.net/sqlite-java/
+- Data management concept:
+  - STDocument contains all application data for read access, will be read on application start
+    -> no further database queries for displaying, search, filter etc. needed
+  - all data modification is done via the specific repositories, not in the lists handled by STDocument
+    -> STDocumment:updateApplicationData() needs to be called manully after every application data change
+       -> STDocument will reload all application data for read access and notify all views for updates
+       -> STDocument will mark the application data as dirty
+  - advantages:
+    - repository classes are very simple, no caching and no change management is needed there
+    - no performance issues, as the lists in STDocument are just loaded once on start or data changes
+    - search and filter features can stay as they are implemented in STDocument and EntryList,
+      no complicated repository queries needed
+  - disadvantages:
+    - STDocumment:updateApplicationData() needs to be called on every application data change
 - Status:
   - all application data os read from SQLite database and displayed in SportsTracker
   - performance tests with production database export:
@@ -16,21 +30,18 @@ SQLite migration:
   - Add/Edit/Delete actions for Note entries are executed in DBStorage
     (and in NoteList in parallel for updating changes in all registered views)
 - TODO:
+  - ID of IdObject needs to be an optional Long
+    - adjust classes and tests
   - implement and test CRUD actions in entry repositories
-    - ID of IdObject needs to be an optional Long
-      - adjust classes and tests
-    - Note editing actions:
-      - remove synchronized storage of Notes in DBStorage and STDocument.noteList
-      - already started in NoteRepository and NoteListViewController -> changes are updated instantly in NoteList view
-      - TODO not implemented in CalendarView yet, to be done in CalendarDataProvider
-      - implement registration of views for changes in NoteRepository
-    - see TODOs in NoteDialogController and STControllerImpl
-    - implement change handling and note list reload in NoteRepository
-    - implement dirty flag handling in repository
     - refactor: move common methods in AbstractRepository base class or RepositoryUtil
-  - keep the IdDateObjectList collections because of date order or switch to normal List objects?
-  - change ID type from int to long in IdObject?
+  - implement CRUD actions in Weight/Exercise/SportType repositories
+    - make use of those CRUD actions in the application edit actions, don't modify the STDocument lists anymore
+  - IdObjectList: remove set() and removeById() methods when all lists were migrated to DbStorage
+    - this lists has to be read only, only refill of lists should be possible
+      -> data modification need to happen in the specific repositories
+  - see TODOs in STControllerImpl
   - implement XML to SQLite data migration when SQLite database does not exist yet
+  - select added or modified entries in the current view (has worked before SQLite migration)
   - does SportType object needs to contain all SportSubTypes and Equipments?
     - add reverse relations instead? (SportSubtype and Equipment have SportType property)
     -> SportType objects would be more lean when dealing without lists (e.g. when referenced in Exercise)
