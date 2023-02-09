@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Database repository for the Weight data.
@@ -17,6 +18,8 @@ import java.util.List;
  */
 public class WeightRepository {
 
+    private static final Logger LOGGER = Logger.getLogger(WeightRepository.class.getName());
+
     private final Connection connection;
 
     public WeightRepository(Connection connection) {
@@ -24,6 +27,7 @@ public class WeightRepository {
     }
 
     public List<Weight> readAllWeights() throws STException {
+        LOGGER.info("Reading all Weights");
         var weights = new ArrayList<Weight>();
 
         try(var statement = connection.prepareStatement("SELECT * FROM WEIGHT")) {

@@ -3,11 +3,13 @@ package de.saring.sportstracker.gui;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
+import de.saring.sportstracker.core.ApplicationDataChangeListener;
 import de.saring.sportstracker.storage.db.DbStorage;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -27,7 +29,6 @@ import de.saring.sportstracker.data.WeightList;
 import de.saring.sportstracker.storage.IStorage;
 import de.saring.util.XmlBeanStorage;
 import de.saring.util.data.IdObject;
-import de.saring.util.data.IdObjectListChangeListener;
 import de.saring.util.unitcalc.SpeedMode;
 
 /**
@@ -76,6 +77,11 @@ public class STDocumentImpl implements STDocument {
     private final IStorage storage;
 
     private final DbStorage dbStorage;
+
+    /**
+     * List of listeners which will be notified on each application data change.
+     */
+    private List<ApplicationDataChangeListener> changeListeners = new ArrayList<>();
 
     /**
      * The directory where the application data of the user is stored.
@@ -289,37 +295,39 @@ public class STDocumentImpl implements STDocument {
         noteList = new NoteList();
         weightList = new WeightList();
 
-        try {
-            // TODO remove System.out's
-            var msStart = System.currentTimeMillis();
-            dbStorage.openDatabase(dataDirectory + "/" + FILENAME_ST_DATABASE);
-            var msOpened = System.currentTimeMillis();
-            System.out.println("Opened database in " + (msOpened - msStart) + " msec");
+        var msStart = System.currentTimeMillis();
+        dbStorage.openDatabase(dataDirectory + "/" + FILENAME_ST_DATABASE);
+        var msOpened = System.currentTimeMillis();
+        LOGGER.info("Opened SQLite database in " + (msOpened - msStart) + " msec");
 
-            // read application data from SQLite database
-            updateApplicationData();
-            var msDataRead = System.currentTimeMillis();
-            System.out.println("Loaded all data in " + (msDataRead - msOpened) + " msec");
+        // read application data from SQLite database
+        readListsFromStorage();
+        var msDataRead = System.currentTimeMillis();
+        LOGGER.info("Loaded all data in " + (msDataRead - msOpened) + " msec");
 
-            var msDataConverted = System.currentTimeMillis();
-            System.out.println("Converted all data in " + (msDataConverted - msDataRead) + " msec");
+        // TODO remove reading from XML, reuse for data migration
+        /* read application data from XML files
+        sportTypeList = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
+                options.getPreferredSpeedMode());
+        exerciseList = storage.readExerciseList(dataDirectory + "/" + FILENAME_EXERCISE_LIST, sportTypeList);
+        noteList = storage.readNoteList(dataDirectory + "/" + FILENAME_NOTE_LIST);
+        weightList = storage.readWeightList(dataDirectory + "/" + FILENAME_WEIGHT_LIST); */
 
-            // TODO remove reading from XML, reuse for data migration
-            /* read application data from XML files
-            sportTypeList = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
-                    options.getPreferredSpeedMode());
-            exerciseList = storage.readExerciseList(dataDirectory + "/" + FILENAME_EXERCISE_LIST, sportTypeList);
-            noteList = storage.readNoteList(dataDirectory + "/" + FILENAME_NOTE_LIST);
-            weightList = storage.readWeightList(dataDirectory + "/" + FILENAME_WEIGHT_LIST);
+        dirtyData = false;
+    }
 
-            var msDataLoaded = System.currentTimeMillis();
-            System.out.println("Loaded all data from XML in " + (msDataLoaded - msStart) + " msec"); */
-        } finally {
-            // register this document as a listener for list content changes
-            // (also when reading data has failed)
-            registerListChangeListener(this);
-            dirtyData = false;
-        }
+    private void readListsFromStorage() throws STException {
+        var dbSportTypes = dbStorage.getSportTypeRepository().readAllSportTypes();
+        sportTypeList.clearAndAddAll(dbSportTypes);
+
+        var dbExercises = dbStorage.getExerciseRepository().readAllExercises(dbSportTypes);
+        exerciseList.clearAndAddAll(dbExercises);
+
+        var dbNotes = dbStorage.getNoteRepository().readAllNotes();
+        noteList.clearAndAddAll(dbNotes);
+
+        var dbWeights = dbStorage.getWeightRepository().readAllWeights();
+        weightList.clearAndAddAll(dbWeights);
     }
 
     @Override
@@ -337,21 +345,13 @@ public class STDocumentImpl implements STDocument {
     }
 
     @Override
-    public void updateApplicationData() throws STException {
+    public void updateApplicationData(IdObject changedObject) throws STException {
         LOGGER.info("Updating application data");
         dirtyData = true;
+        readListsFromStorage();
 
-        var dbSportTypes = dbStorage.getSportTypeRepository().readAllSportTypes();
-        sportTypeList.clearAndAddAll(dbSportTypes);
-
-        var dbExercises = dbStorage.getExerciseRepository().readAllExercises(dbSportTypes);
-        exerciseList.clearAndAddAll(dbExercises);
-
-        var dbNotes = dbStorage.getNoteRepository().readAllNotes();
-        noteList.clearAndAddAll(dbNotes);
-
-        var dbWeights = dbStorage.getWeightRepository().readAllWeights();
-        weightList.clearAndAddAll(dbWeights);
+        // notify all listeners of application data changes
+        changeListeners.forEach(listener -> listener.applicationDataChanged(changedObject));
     }
 
     @Override
@@ -362,17 +362,8 @@ public class STDocumentImpl implements STDocument {
     }
 
     @Override
-    public void listChanged(IdObject changedObject) {
-        // one of the data lists has been changed => set dirty data flag
-        dirtyData = true;
-    }
-
-    @Override
-    public void registerListChangeListener(IdObjectListChangeListener listener) {
-        sportTypeList.addListChangeListener(listener);
-        exerciseList.addListChangeListener(listener);
-        noteList.addListChangeListener(listener);
-        weightList.addListChangeListener(listener);
+    public void registerChangeListener(ApplicationDataChangeListener listener) {
+        changeListeners.add(listener);
     }
 
     @Override

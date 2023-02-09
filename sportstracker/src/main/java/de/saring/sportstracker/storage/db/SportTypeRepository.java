@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Database repository for the SportType and related data.
@@ -20,6 +21,8 @@ import java.util.List;
  */
 public class SportTypeRepository {
 
+    private static final Logger LOGGER = Logger.getLogger(SportTypeRepository.class.getName());
+
     private final Connection connection;
 
     public SportTypeRepository(Connection connection) {
@@ -27,6 +30,7 @@ public class SportTypeRepository {
     }
 
     public List<SportType> readAllSportTypes() throws STException {
+        LOGGER.info("Reading all SportTypes");
         var sportTypes = new ArrayList<SportType>();
 
         try(var statement = connection.prepareStatement("SELECT * FROM SPORT_TYPE")) {

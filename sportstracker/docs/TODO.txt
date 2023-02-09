@@ -7,7 +7,7 @@ SQLite migration:
   - STDocument contains all application data for read access, will be read on application start
     -> no further database queries for displaying, search, filter etc. needed
   - all data modification is done via the specific repositories, not in the lists handled by STDocument
-    -> STDocumment:updateApplicationData() needs to be called manully after every application data change
+    -> STDocumment:updateApplicationData() needs to be called manually after every application data change
        -> STDocument will reload all application data for read access and notify all views for updates
        -> STDocument will mark the application data as dirty
   - advantages:
@@ -16,7 +16,7 @@ SQLite migration:
     - search and filter features can stay as they are implemented in STDocument and EntryList,
       no complicated repository queries needed
   - disadvantages:
-    - STDocumment:updateApplicationData() needs to be called on every application data change
+    - STDocumment:updateApplicationData() needs to be called manually on every application data change
 - Status:
   - all application data os read from SQLite database and displayed in SportsTracker
   - performance tests with production database export:
@@ -30,6 +30,8 @@ SQLite migration:
   - Add/Edit/Delete actions for Note entries are executed in DBStorage
     (and in NoteList in parallel for updating changes in all registered views)
 - TODO:
+  - remove all change listeners from IdObjectList, is now done by the ApplicationDataChangeListeners in STDocument
+  - port Storage and Repositories to Kotlin?
   - ID of IdObject needs to be an optional Long
     - adjust classes and tests
   - implement and test CRUD actions in entry repositories

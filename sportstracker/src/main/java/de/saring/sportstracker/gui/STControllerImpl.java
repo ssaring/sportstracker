@@ -386,7 +386,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
                             Note note = document.getNoteList().getByID(id);
                             document.getStorage().getNoteRepository().deleteNote(note);
                         }
-                        document.updateApplicationData();
+                        document.updateApplicationData(null);
                     } catch (STException e) {
                         LOGGER.log(Level.SEVERE, "Failed to delete Notes!", e);
                     }
@@ -730,7 +730,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * object in the current view, if specified.
      */
     private void registerListenerForDataChanges() {
-        document.registerListChangeListener(changedObject -> {
+        document.registerChangeListener(changedObject -> {
             updateView();
             if (changedObject != null) {
                 currentViewController.selectEntry(changedObject);

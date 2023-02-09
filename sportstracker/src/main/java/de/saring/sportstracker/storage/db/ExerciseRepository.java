@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Database repository for the Exercise data.
@@ -18,6 +19,8 @@ import java.util.List;
  */
 public class ExerciseRepository {
 
+    private static final Logger LOGGER = Logger.getLogger(ExerciseRepository.class.getName());
+
     private final Connection connection;
 
     public ExerciseRepository(Connection connection) {
@@ -25,6 +28,7 @@ public class ExerciseRepository {
     }
 
     public List<Exercise> readAllExercises(List<SportType> sportTypes) throws STException {
+        LOGGER.info("Reading all Exercises");
         var exercises = new ArrayList<Exercise>();
 
         try(var statement = connection.prepareStatement("SELECT * FROM EXERCISE")) {

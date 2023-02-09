@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui;
 
 import java.util.List;
 
+import de.saring.sportstracker.core.ApplicationDataChangeListener;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STOptions;
 import de.saring.sportstracker.data.EntryList;
@@ -14,7 +15,7 @@ import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.data.WeightList;
 import de.saring.sportstracker.storage.db.DbStorage;
-import de.saring.util.data.IdObjectListChangeListener;
+import de.saring.util.data.IdObject;
 import de.saring.util.unitcalc.SpeedMode;
 
 /**
@@ -23,7 +24,7 @@ import de.saring.util.unitcalc.SpeedMode;
  *
  * @author Stefan Saring
  */
-public interface STDocument extends IdObjectListChangeListener {
+public interface STDocument {
 
     /** Command line parameter for a specific data directory (optional). */
     String PARAMETER_DATA_DIR = "--datadir=";
@@ -126,10 +127,12 @@ public interface STDocument extends IdObjectListChangeListener {
     /**
      * Reloads all application data (notes, weights, exercises, sport types) from the storage. Needs to be called
      * whenever some application data has been modified by one of the storage repositories.
+     * After reload all registered {@link ApplicationDataChangeListener} will be notified.
      *
+     * @param changedObject the added / changed object (or null when removed or all objects changed)
      * @throws STException thrown on read problems
      */
-    void updateApplicationData() throws STException;
+    void updateApplicationData(IdObject changedObject) throws STException;
 
     /**
      * Checks all exercises for the existence of the attached exercise files
@@ -140,12 +143,11 @@ public interface STDocument extends IdObjectListChangeListener {
     List<Exercise> checkExerciseFiles();
 
     /**
-     * Register the specified IdObjectListChangeListener on all stored data lists
-     * (for sport types, exercises, notes and weights).
+     * Register the specified listener for notification on all application data changes.
      *
-     * @param listener the IdObjectListChangeListener to register
+     * @param listener the listener to register
      */
-    void registerListChangeListener(IdObjectListChangeListener listener);
+    void registerChangeListener(ApplicationDataChangeListener listener);
 
     /**
      * Returns the speed mode of the specified exercises which has to be used for displaying the speed for them (e.g.
