@@ -3,7 +3,6 @@ package de.saring.sportstracker.storage.db;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
-import de.saring.sportstracker.storage.XMLUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
