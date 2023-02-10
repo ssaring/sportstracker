@@ -333,15 +333,15 @@ public class STDocumentImpl implements STDocument {
     @Override
     public void storeApplicationData() throws STException {
         LOGGER.info("Storing application data");
-        // TODO store in XML has been disabled to prevent damage of production data
-        System.out.println("TODO: Save to XML has been disabled, Save to DB not implemented yet");
+        dbStorage.commitChanges();
+        dirtyData = false;
 
+        // TODO remove XML storage
         /* store application data in XML files
         storage.storeSportTypeList(sportTypeList, dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST);
         storage.storeExerciseList(exerciseList, dataDirectory + "/" + FILENAME_EXERCISE_LIST);
         storage.storeNoteList(noteList, dataDirectory + "/" + FILENAME_NOTE_LIST);
-        storage.storeWeightList(weightList, dataDirectory + "/" + FILENAME_WEIGHT_LIST);
-        dirtyData = false; */
+        storage.storeWeightList(weightList, dataDirectory + "/" + FILENAME_WEIGHT_LIST); */
     }
 
     @Override

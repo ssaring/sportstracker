@@ -29,8 +29,8 @@ SQLite migration:
   - NoteRepository implementation completed (CRUD, manually tested)
   - Add/Edit/Delete actions for Note entries are executed in DBStorage
     (and in NoteList in parallel for updating changes in all registered views)
+  - committing database changes works properly
 - TODO:
-  - call DbStorage.close() on application exit
   - remove all change listeners from IdObjectList, is now done by the ApplicationDataChangeListeners in STDocument
   - ID of IdObject needs to be an optional Long
     - adjust classes and tests

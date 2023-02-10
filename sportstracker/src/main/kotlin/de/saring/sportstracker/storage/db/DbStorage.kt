@@ -5,6 +5,7 @@ import de.saring.sportstracker.core.STExceptionID
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
+import java.util.logging.Level
 import java.util.logging.Logger
 
 /**
@@ -42,14 +43,16 @@ class DbStorage {
         sportTypeRepository = SportTypeRepository(connection)
     }
 
-    @Throws(STException::class)
     fun closeDatabase() {
         LOGGER.info("Closing database")
 
-        try {
-            connection.close()
-        } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_CLOSE_DATABASE, "Failed to close opened SQLite database!", e)
+        // connection might be null on application exit when opening the database has failed
+        connection?.let {
+            try {
+                it.close()
+            } catch (e: Exception) {
+                LOGGER.log(Level.SEVERE, "Failed to close opened SQLite database!", e)
+            }
         }
     }
 
