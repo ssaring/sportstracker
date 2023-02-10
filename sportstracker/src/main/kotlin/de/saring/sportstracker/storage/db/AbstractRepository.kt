@@ -16,16 +16,16 @@ import java.util.logging.Logger
  * @author Stefan Saring
  */
 abstract class AbstractRepository<T : IdObject>(
-    private val connection: Connection
+    protected val connection: Connection
 ) {
 
     @Throws(STException::class)
-    fun readAll(): List<T> {
+    open fun readAll(): List<T> {
         logger.info("Reading all $entityName entries")
         val entries = mutableListOf<T>()
 
         try {
-            connection.prepareStatement("SELECT * FROM $entityName").use { statement ->
+            connection.prepareStatement("SELECT * FROM $tableName").use { statement ->
                 val rs: ResultSet = statement.executeQuery()
                 while (rs.next()) {
                     entries.add(readFromResultSet(rs))
@@ -38,11 +38,11 @@ abstract class AbstractRepository<T : IdObject>(
     }
 
     @Throws(STException::class)
-    fun readById(entryId: Int): T {
+    open fun readById(entryId: Int): T {
         logger.info("Reading $entityName with ID '$entryId'")
 
         try {
-            connection.prepareStatement("SELECT * FROM $entityName WHERE ID = ?").use { statement ->
+            connection.prepareStatement("SELECT * FROM $tableName WHERE ID = ?").use { statement ->
                 statement.setInt(1, entryId)
                 val rs: ResultSet = statement.executeQuery()
                 rs.next()
@@ -58,7 +58,7 @@ abstract class AbstractRepository<T : IdObject>(
         logger.info("Deleting $entityName with ID '${entry.id}'")
 
         try {
-            connection.prepareStatement("DELETE FROM $entityName WHERE ID = ?").use { statement ->
+            connection.prepareStatement("DELETE FROM $tableName WHERE ID = ?").use { statement ->
                 statement.setInt(1, (entry.id)!!)
                 statement.executeUpdate()
             }
@@ -67,10 +67,8 @@ abstract class AbstractRepository<T : IdObject>(
         }
     }
 
-    /**
-     * The name of the entity class, needs to be the same for the database table.
-     */
     protected abstract val entityName: String
+    protected abstract val tableName: String
 
     // TODO why is the Logger name always 'AbstractRepository' when using the logger from the base class?
     protected abstract val logger: Logger

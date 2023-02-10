@@ -10,6 +10,7 @@ import de.saring.sportstracker.storage.db.RepositoryUtil.getSportTypeById
 import de.saring.util.unitcalc.SpeedMode
 import javafx.scene.paint.Color
 import java.sql.Connection
+import java.sql.ResultSet
 import java.sql.SQLException
 import java.util.logging.Logger
 
@@ -22,35 +23,32 @@ import java.util.logging.Logger
  * @author Stefan Saring
  */
 class SportTypeRepository(
-    private val connection: Connection
-) {
+    connection: Connection
+) : AbstractRepository<SportType>(connection) {
 
     @Throws(STException::class)
-    fun readAllSportTypes(): List<SportType> {
-        LOGGER.info("Reading all SportTypes")
-        val sportTypes = ArrayList<SportType>()
-
-        try {
-            connection.prepareStatement("SELECT * FROM SPORT_TYPE").use { statement ->
-                val rs = statement.executeQuery()
-                while (rs.next()) {
-                    val sportType = SportType(rs.getInt("ID"))
-                    sportType.setName(rs.getString("NAME"))
-                    sportType.isRecordDistance = rs.getBoolean("RECORD_DISTANCE")
-                    sportType.speedMode = SpeedMode.valueOf(rs.getString("SPEED_MODE"))
-                    sportType.color = Color.web(rs.getString("COLOR"))
-                    sportType.icon = rs.getString("ICON")
-                    sportType.fitId = getIntegerOrNull(rs, "FIT_ID")
-                    sportTypes.add(sportType)
-                }
-            }
-        } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_READ_ALL, "Failed to read all SportTypes!", e)
-        }
-
+    override fun readAll(): List<SportType> {
+        val sportTypes = super.readAll()
         readAllSportSubTypes(sportTypes)
         readAllEquipments(sportTypes)
         return sportTypes
+    }
+
+    override val entityName = "SportType"
+
+    override val tableName = "SPORT_TYPE"
+
+    override val logger: Logger = Logger.getLogger(SportTypeRepository::class.java.name)
+
+    override fun readFromResultSet(rs: ResultSet): SportType {
+        val sportType = SportType(rs.getInt("ID"))
+        sportType.setName(rs.getString("NAME"))
+        sportType.isRecordDistance = rs.getBoolean("RECORD_DISTANCE")
+        sportType.speedMode = SpeedMode.valueOf(rs.getString("SPEED_MODE"))
+        sportType.color = Color.web(rs.getString("COLOR"))
+        sportType.icon = rs.getString("ICON")
+        sportType.fitId = getIntegerOrNull(rs, "FIT_ID")
+        return sportType
     }
 
     private fun readAllSportSubTypes(sportTypes: List<SportType>) {
@@ -85,9 +83,5 @@ class SportTypeRepository(
         } catch (e: SQLException) {
             throw STException(STExceptionID.DBSTORAGE_READ_ALL, "Failed to read all Equipments!", e)
         }
-    }
-
-    companion object {
-        private val LOGGER = Logger.getLogger(SportTypeRepository::class.java.name)
     }
 }

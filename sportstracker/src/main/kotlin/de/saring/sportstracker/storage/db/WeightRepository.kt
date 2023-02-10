@@ -14,10 +14,12 @@ import java.util.logging.Logger
  * @author Stefan Saring
  */
 class WeightRepository(
-    private val connection: Connection
+    connection: Connection
 ) : AbstractRepository<Weight>(connection) {
 
     override val entityName = "Weight"
+
+    override val tableName = "WEIGHT"
 
     override val logger: Logger = Logger.getLogger(WeightRepository::class.java.name)
 

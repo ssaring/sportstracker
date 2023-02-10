@@ -317,10 +317,10 @@ public class STDocumentImpl implements STDocument {
     }
 
     private void readListsFromStorage() throws STException {
-        var dbSportTypes = dbStorage.getSportTypeRepository().readAllSportTypes();
+        var dbSportTypes = dbStorage.getSportTypeRepository().readAll();
         sportTypeList.clearAndAddAll(dbSportTypes);
 
-        var dbExercises = dbStorage.getExerciseRepository().readAllExercises(dbSportTypes);
+        var dbExercises = dbStorage.getExerciseRepository().readAll(dbSportTypes);
         exerciseList.clearAndAddAll(dbExercises);
 
         var dbNotes = dbStorage.getNoteRepository().readAll();

@@ -19,11 +19,11 @@ import java.util.logging.Logger
  * @author Stefan Saring
  */
 class NoteRepository(
-    private val connection: Connection
+    connection: Connection
 ) : AbstractRepository<Note>(connection) {
 
     @Throws(STException::class)
-    fun createNote(note: Note): Note {
+    fun create(note: Note): Note {
         logger.info("Creating new Note")
 
         try {
@@ -44,7 +44,7 @@ class NoteRepository(
     }
 
     @Throws(STException::class)
-    fun updateNote(note: Note) {
+    fun update(note: Note) {
         logger.info("Updating Note with ID '${note.id}'")
 
         try {
@@ -61,6 +61,8 @@ class NoteRepository(
     }
 
     override val entityName = "Note"
+
+    override val tableName = "NOTE"
 
     override val logger: Logger = Logger.getLogger(NoteRepository::class.java.name)
 

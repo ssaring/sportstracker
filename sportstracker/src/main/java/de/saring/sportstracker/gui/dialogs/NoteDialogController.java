@@ -108,9 +108,9 @@ public class NoteDialogController extends AbstractDialogController {
 
         try {
             if (newNote.getId() == null) {
-                newNote = document.getStorage().getNoteRepository().createNote(newNote);
+                newNote = document.getStorage().getNoteRepository().create(newNote);
             } else {
-                document.getStorage().getNoteRepository().updateNote(newNote);
+                document.getStorage().getNoteRepository().update(newNote);
             }
             document.updateApplicationData(newNote);
             return true;
