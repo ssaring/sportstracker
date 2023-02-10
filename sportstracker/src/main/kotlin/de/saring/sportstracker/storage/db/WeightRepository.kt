@@ -11,12 +11,13 @@ import java.util.logging.Logger
 /**
  * Database repository for the Weight data.
  *
- * @property connection
+ * @property connection database connection
  *
  * @author Stefan Saring
  */
 class WeightRepository(
-    private val connection: Connection) {
+    private val connection: Connection
+) {
 
     @Throws(STException::class)
     fun readAllWeights(): List<Weight>? {
