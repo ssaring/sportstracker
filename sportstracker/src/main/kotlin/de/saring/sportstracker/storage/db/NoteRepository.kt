@@ -20,45 +20,11 @@ import java.util.logging.Logger
  */
 class NoteRepository(
     private val connection: Connection
-) {
-
-    @Throws(STException::class)
-    fun readAllNotes(): List<Note> {
-        LOGGER.info("Reading all Notes")
-        val notes = ArrayList<Note>()
-
-        try {
-            connection.prepareStatement("SELECT * FROM NOTE").use { statement ->
-                val rs: ResultSet = statement.executeQuery()
-                while (rs.next()) {
-                    notes.add(readNoteFromResultSet(rs))
-                }
-            }
-        } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_READ_NOTES, "Failed to read all Notes!", e)
-        }
-        return notes
-    }
-
-    @Throws(STException::class)
-    fun readNote(noteId: Int): Note {
-        LOGGER.info("Reading Note with ID '$noteId'")
-
-        try {
-            connection.prepareStatement("SELECT * FROM NOTE WHERE ID = ?").use { statement ->
-                statement.setInt(1, noteId)
-                val rs: ResultSet = statement.executeQuery()
-                rs.next()
-                return readNoteFromResultSet(rs)
-            }
-        } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_READ_ENTRY, "Failed to read Note with ID '$noteId'!", e)
-        }
-    }
+) : AbstractRepository<Note>(connection) {
 
     @Throws(STException::class)
     fun createNote(note: Note): Note {
-        LOGGER.info("Creating new Note")
+        logger.info("Creating new Note")
 
         try {
             connection.prepareStatement("INSERT INTO NOTE (DATE_TIME, COMMENT) VALUES (?, ?)",
@@ -70,7 +36,7 @@ class NoteRepository(
                 val rs: ResultSet = statement.generatedKeys
                 rs.next()
                 val noteId: Int = rs.getInt(1)
-                return readNote(noteId)
+                return readById(noteId)
             }
         } catch (e: SQLException) {
             throw STException(STExceptionID.DBSTORAGE_CREATE_ENTRY, "Failed to update Note with ID '${note.id}'!", e)
@@ -79,7 +45,7 @@ class NoteRepository(
 
     @Throws(STException::class)
     fun updateNote(note: Note) {
-        LOGGER.info("Updating Note with ID '${note.id}'")
+        logger.info("Updating Note with ID '${note.id}'")
 
         try {
             connection.prepareStatement("UPDATE NOTE SET DATE_TIME = ?, COMMENT = ? WHERE ID = ?"
@@ -94,29 +60,14 @@ class NoteRepository(
         }
     }
 
-    @Throws(STException::class)
-    fun deleteNote(note: Note) {
-        LOGGER.info("Deleting Note with ID '${note.id}'")
+    override val entityName = "Note"
 
-        try {
-            connection.prepareStatement("DELETE FROM NOTE WHERE ID = ?").use { statement ->
-                statement.setInt(1, (note.id)!!)
-                statement.executeUpdate()
-            }
-        } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_DELETE_ENTRY, "Failed to delete Note with ID '${note.id}'!", e)
-        }
-    }
+    override val logger: Logger = Logger.getLogger(NoteRepository::class.java.name)
 
-    @Throws(SQLException::class)
-    private fun readNoteFromResultSet(rs: ResultSet): Note {
+    override fun readFromResultSet(rs: ResultSet): Note {
         val note = Note(rs.getInt("ID"))
         note.dateTime = dateToLocalDateTime(rs.getDate("DATE_TIME"))
         note.comment = rs.getString("COMMENT")
         return note
-    }
-
-    companion object {
-        private val LOGGER = Logger.getLogger(NoteRepository::class.java.name)
     }
 }

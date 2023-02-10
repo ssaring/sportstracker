@@ -45,7 +45,7 @@ class SportTypeRepository(
                 }
             }
         } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_READ_SPORT_TYPES, "Failed to read all SportTypes!", e)
+            throw STException(STExceptionID.DBSTORAGE_READ_ALL, "Failed to read all SportTypes!", e)
         }
 
         readAllSportSubTypes(sportTypes)
@@ -66,7 +66,7 @@ class SportTypeRepository(
                 }
             }
         } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_READ_SPORT_SUBTYPES, "Failed to read all SportSubTypes!", e)
+            throw STException(STExceptionID.DBSTORAGE_READ_ALL, "Failed to read all SportSubTypes!", e)
         }
     }
 
@@ -83,7 +83,7 @@ class SportTypeRepository(
                 }
             }
         } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_READ_EQUIPMENTS, "Failed to read all Equipments!", e)
+            throw STException(STExceptionID.DBSTORAGE_READ_ALL, "Failed to read all Equipments!", e)
         }
     }
 

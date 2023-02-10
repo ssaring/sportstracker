@@ -54,7 +54,7 @@ class ExerciseRepository(
                 }
             }
         } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_READ_EXERCISES, "Failed to read all Exercises!", e)
+            throw STException(STExceptionID.DBSTORAGE_READ_ALL, "Failed to read all Exercises!", e)
         }
         return exercises
     }

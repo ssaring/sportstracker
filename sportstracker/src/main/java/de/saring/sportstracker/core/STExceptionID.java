@@ -61,9 +61,9 @@ public enum STExceptionID {
      */
     DBSTORAGE_COMMIT_CHANGES,
     /**
-     * failed to read all Notes from database
+     * failed to read all specific entries from database
      */
-    DBSTORAGE_READ_NOTES,
+    DBSTORAGE_READ_ALL,
     /**
      * failed to read a specific entry by ID from database
      */
@@ -80,26 +80,6 @@ public enum STExceptionID {
      * failed to delete a specific entry from database
      */
     DBSTORAGE_DELETE_ENTRY,
-    /**
-     * failed to read all Weights from database
-     */
-    DBSTORAGE_READ_WEIGHTS,
-    /**
-     * failed to read all Exercises from database
-     */
-    DBSTORAGE_READ_EXERCISES,
-    /**
-     * failed to read all SportTypes from database
-     */
-    DBSTORAGE_READ_SPORT_TYPES,
-    /**
-     * failed to read all SportSubTypes from database
-     */
-    DBSTORAGE_READ_SPORT_SUBTYPES,
-    /**
-     * failed to read all Equipments from database
-     */
-    DBSTORAGE_READ_EQUIPMENTS,
 
     /**
      * failed to create application directory

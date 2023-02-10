@@ -384,7 +384,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
                     try {
                         for (int id : selectedEntryIDs) {
                             Note note = document.getNoteList().getByID(id);
-                            document.getStorage().getNoteRepository().deleteNote(note);
+                            document.getStorage().getNoteRepository().delete(note);
                         }
                         document.updateApplicationData(null);
                     } catch (STException e) {
