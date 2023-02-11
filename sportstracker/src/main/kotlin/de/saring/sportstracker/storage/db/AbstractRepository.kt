@@ -54,6 +54,28 @@ abstract class AbstractRepository<T : IdObject>(
     }
 
     @Throws(STException::class)
+    fun create(entry: T): T {
+        logger.info("Creating new $entityName")
+
+        try {
+            return executeCreate(entry)
+        } catch (e: SQLException) {
+            throw STException(STExceptionID.DBSTORAGE_CREATE_ENTRY, "Failed to create new $entityName!", e)
+        }
+    }
+
+    @Throws(STException::class)
+    fun update(entry: T) {
+        logger.info("Updating $entityName with ID '${entry.id}'")
+
+        try {
+            executeUpdate(entry)
+        } catch (e: SQLException) {
+            throw STException(STExceptionID.DBSTORAGE_UPDATE_ENTRY, "Failed to update $entityName with ID '${entry.id}'!", e)
+        }
+    }
+
+    @Throws(STException::class)
     fun delete(entryId: Int) {
         logger.info("Deleting $entityName with ID '$entryId'")
 
@@ -70,8 +92,10 @@ abstract class AbstractRepository<T : IdObject>(
     protected abstract val entityName: String
     protected abstract val tableName: String
 
-    // TODO why is the Logger name always 'AbstractRepository' when using the logger from the base class?
     protected abstract val logger: Logger
 
     protected abstract fun readFromResultSet(rs: ResultSet): T
+
+    protected abstract fun executeCreate(entry: T): T
+    protected abstract fun executeUpdate(entry: T)
 }

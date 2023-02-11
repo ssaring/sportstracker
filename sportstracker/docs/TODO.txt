@@ -40,6 +40,7 @@ SQLite migration:
   - remove all change listeners from IdObjectList, is now done by the ApplicationDataChangeListeners in STDocument
   - ID of IdObject needs to be an optional Long
     - adjust classes and tests
+  - is sorting by date in IdDateObjectList really needed? Might be for filter etc.
   - implement and test CRUD actions in SportTypeRepository and their usage
   - implement CRUD actions in Weight/Exercise/SportType repositories
   - IdObjectList: remove set() and removeById() methods when all lists were migrated to DbStorage

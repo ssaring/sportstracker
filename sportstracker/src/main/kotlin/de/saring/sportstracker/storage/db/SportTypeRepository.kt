@@ -9,6 +9,7 @@ import de.saring.sportstracker.storage.db.RepositoryUtil.getIntegerOrNull
 import de.saring.sportstracker.storage.db.RepositoryUtil.getSportTypeById
 import de.saring.util.unitcalc.SpeedMode
 import javafx.scene.paint.Color
+import java.lang.UnsupportedOperationException
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.SQLException
@@ -83,5 +84,15 @@ class SportTypeRepository(
         } catch (e: SQLException) {
             throw STException(STExceptionID.DBSTORAGE_READ_ALL, "Failed to read all Equipments!", e)
         }
+    }
+
+    override fun executeUpdate(entry: SportType) {
+        // TODO
+        throw UnsupportedOperationException("TODO")
+    }
+
+    override fun executeCreate(entry: SportType): SportType {
+        // TODO
+        throw UnsupportedOperationException("TODO")
     }
 }

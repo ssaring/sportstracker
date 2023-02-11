@@ -81,4 +81,14 @@ class ExerciseRepository(
         exercise.comment = rs.getString("COMMENT")
         return exercise
     }
+
+    override fun executeUpdate(entry: Exercise) {
+        // TODO
+        throw UnsupportedOperationException("TODO")
+    }
+
+    override fun executeCreate(entry: Exercise): Exercise {
+        // TODO
+        throw UnsupportedOperationException("TODO")
+    }
 }
