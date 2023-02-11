@@ -34,10 +34,10 @@ public class ExerciseViewModelTest {
 
     @BeforeEach
     public void setUp() {
-        exercise = new Exercise(123);
+        exercise = new Exercise(123L);
         exercise.setDateTime(LocalDateTime.of(2014, 10, 20, 7, 30, 0));
-        exercise.setSportType(new SportType(234));
-        exercise.setSportSubType(new SportSubType(345));
+        exercise.setSportType(new SportType(234L));
+        exercise.setSportSubType(new SportSubType(345L));
         exercise.setDuration(3600);
         exercise.setIntensity(Exercise.IntensityType.HIGH);
         exercise.setDistance(115f);
@@ -47,7 +47,7 @@ public class ExerciseViewModelTest {
         exercise.setDescent(1230);
         exercise.setCalories(1950);
         exercise.setHrmFile("foo.hrm");
-        exercise.setEquipment(new Equipment(456));
+        exercise.setEquipment(new Equipment(456L));
         exercise.setComment("Foo Bar");
     }
 
@@ -161,7 +161,7 @@ public class ExerciseViewModelTest {
                 new FormatUtils(UnitSystem.METRIC), SpeedMode.SPEED);
 
         // test with sport type where the distance is recorded
-        SportType stWithDistance = new SportType(100);
+        SportType stWithDistance = new SportType(100L);
         stWithDistance.setRecordDistance(true);
         viewModel.sportType.set(stWithDistance);
 
@@ -171,7 +171,7 @@ public class ExerciseViewModelTest {
         assertTrue(viewModel.sportTypeRecordDistance.get());
 
         // test with sport type where the distance is not recorded
-        SportType stWithoutDistance = new SportType(101);
+        SportType stWithoutDistance = new SportType(101L);
         stWithoutDistance.setRecordDistance(false);
         viewModel.sportType.set(stWithoutDistance);
 
@@ -529,7 +529,7 @@ public class ExerciseViewModelTest {
         assertEquals("03:23", viewModel.avgSpeed.get());
     }
 
-    private SportType createSportType(int id, SpeedMode speedMode) {
+    private SportType createSportType(long id, SpeedMode speedMode) {
         SportType sportType = new SportType(id);
         sportType.setSpeedMode(speedMode);
         return sportType;

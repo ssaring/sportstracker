@@ -28,38 +28,38 @@ public class ExerciseListTest {
         // create a sport type list with 2 sport types with 2 sport subtypes in each
         sportTypeList = new SportTypeList();
 
-        SportType type1 = new SportType(1);
+        SportType type1 = new SportType(1L);
         type1.setName("SportType 1");
-        SportSubType subType11 = new SportSubType(11);
+        SportSubType subType11 = new SportSubType(11L);
         subType11.setName("SportSubType 11");
         type1.getSportSubTypeList().set(subType11);
-        SportSubType subType12 = new SportSubType(12);
+        SportSubType subType12 = new SportSubType(12L);
         subType12.setName("SportSubType 12");
         type1.getSportSubTypeList().set(subType12);
         sportTypeList.set(type1);
 
-        SportType type2 = new SportType(2);
+        SportType type2 = new SportType(2L);
         type2.setName("SportType 2");
-        SportSubType subType21 = new SportSubType(21);
+        SportSubType subType21 = new SportSubType(21L);
         subType21.setName("SportSubType 21");
         type2.getSportSubTypeList().set(subType21);
-        SportSubType subType22 = new SportSubType(22);
+        SportSubType subType22 = new SportSubType(22L);
         subType22.setName("SportSubType 22");
         type2.getSportSubTypeList().set(subType22);
         sportTypeList.set(type2);
 
         // add two equipment's to sport type 2
-        Equipment eq21 = new Equipment(21);
+        Equipment eq21 = new Equipment(21L);
         eq21.setName("Equipment 21");
         type2.getEquipmentList().set(eq21);
-        Equipment eq22 = new Equipment(22);
+        Equipment eq22 = new Equipment(22L);
         eq22.setName("Equipment 22");
         type2.getEquipmentList().set(eq22);
 
         // create a new list with some test content
         list = new ExerciseList();
 
-        Exercise exe1 = new Exercise(1);
+        Exercise exe1 = new Exercise(1L);
         exe1.setSportType(type1);
         exe1.setSportSubType(subType12);
         exe1.setDateTime(LocalDateTime.of(2003, 9, 2, 0, 0, 0));
@@ -67,7 +67,7 @@ public class ExerciseListTest {
         exe1.setIntensity(Exercise.IntensityType.LOW);
         list.set(exe1);
 
-        Exercise exe2 = new Exercise(2);
+        Exercise exe2 = new Exercise(2L);
         exe2.setSportType(type1);
         exe2.setSportSubType(subType11);
         exe2.setDateTime(LocalDateTime.of(2003, 8, 20, 0, 0, 0));
@@ -75,7 +75,7 @@ public class ExerciseListTest {
         exe2.setIntensity(Exercise.IntensityType.HIGH);
         list.set(exe2);
 
-        Exercise exe3 = new Exercise(3);
+        Exercise exe3 = new Exercise(3L);
         exe3.setSportType(type2);
         exe3.setSportSubType(subType22);
         exe3.setEquipment(eq22);
@@ -203,7 +203,7 @@ public class ExerciseListTest {
     @Test
     public void testGetEntriesForFilter4() {
 
-        SportType sportTypeUnknown = new SportType(4);
+        SportType sportTypeUnknown = new SportType(4L);
 
         EntryFilter filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));
@@ -224,7 +224,7 @@ public class ExerciseListTest {
     @Test
     public void testGetEntriesForFilter5() {
 
-        SportSubType sportSubTypeUnknown = new SportSubType(7);
+        SportSubType sportSubTypeUnknown = new SportSubType(7L);
 
         EntryFilter filter = new EntryFilter();
         filter.setDateStart(LocalDate.of(2003, 1, 1));

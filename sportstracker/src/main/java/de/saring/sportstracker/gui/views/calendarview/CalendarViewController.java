@@ -90,7 +90,7 @@ public class CalendarViewController extends AbstractEntryViewController {
     }
 
     @Override
-    public int[] getSelectedExerciseIDs() {
+    public long[] getSelectedExerciseIDs() {
         return getSelectedEntryIdsOfClass(Exercise.class);
     }
 
@@ -100,7 +100,7 @@ public class CalendarViewController extends AbstractEntryViewController {
     }
 
     @Override
-    public int[] getSelectedNoteIDs() {
+    public long[] getSelectedNoteIDs() {
         return getSelectedEntryIdsOfClass(Note.class);
     }
 
@@ -110,7 +110,7 @@ public class CalendarViewController extends AbstractEntryViewController {
     }
 
     @Override
-    public int[] getSelectedWeightIDs() {
+    public long[] getSelectedWeightIDs() {
         return getSelectedEntryIdsOfClass(Weight.class);
     }
 
@@ -324,13 +324,13 @@ public class CalendarViewController extends AbstractEntryViewController {
      *
      * @return array of the selected CalendarEntry ID's (can be empty but not null)
      */
-    private int[] getSelectedEntryIdsOfClass(final Class<? extends IdDateObject> clazz) {
+    private long[] getSelectedEntryIdsOfClass(final Class<? extends IdDateObject> clazz) {
         final IdObject selectedEntry = calendarControl.selectedEntryProperty().get();
 
         if ((selectedEntry == null) || (selectedEntry.getClass() != clazz)) {
-            return new int[0];
+            return new long[0];
         } else {
-            return new int[] { selectedEntry.getId() };
+            return new long[] { selectedEntry.getId() };
         }
     }
 

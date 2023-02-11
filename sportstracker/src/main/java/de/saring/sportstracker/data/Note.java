@@ -14,7 +14,7 @@ public final class Note extends Entry {
      *
      * @param id the ID of the object (null for new, not persisted objects)
      */
-    public Note(Integer id) {
+    public Note(Long id) {
         super(id);
     }
 
@@ -25,7 +25,7 @@ public final class Note extends Entry {
      * @param cloneId ID of the cloned Note
      * @return the Note clone
      */
-    public Note clone(int cloneId) {
+    public Note clone(Long cloneId) {
         Note clone = new Note(cloneId);
         clone.setDateTime(this.getDateTime());
         clone.setComment(this.getComment());

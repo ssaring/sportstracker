@@ -27,7 +27,7 @@ public final class Equipment extends IdObject implements Nameable, Cloneable {
      *
      * @param id the ID of the object
      */
-    public Equipment(Integer id) {
+    public Equipment(Long id) {
         super(id);
     }
 

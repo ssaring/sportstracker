@@ -83,7 +83,7 @@ public interface STDocument {
 
     /**
      * This method returns the list of exercises for display in the GUI.
-     * If the filter is enabled, the returned list will contains just the
+     * If the filter is enabled, the returned list will contain just the
      * filtered exercises, otherwise it will contain all.
      *
      * @return list of Exercise objects
@@ -92,7 +92,7 @@ public interface STDocument {
 
     /**
      * This method returns the list of notes for display in the GUI.
-     * If the filter is enabled, the returned list will contains just the
+     * If the filter is enabled, the returned list will contain just the
      * filtered notes, otherwise it will contain all.
      *
      * @return list of Note objects
@@ -101,7 +101,7 @@ public interface STDocument {
 
     /**
      * This method returns the list of weights for display in the GUI.
-     * If the filter is enabled, the returned list will contains just the
+     * If the filter is enabled, the returned list will contain just the
      * filtered weights, otherwise it will contain all.
      *
      * @return list of Weight objects
@@ -157,5 +157,5 @@ public interface STDocument {
      * @param exerciseIds IDs of exercises to check
      * @return speed mode to use for them
      */
-    SpeedMode getSpeedModeForExercises(final int[] exerciseIds);
+    SpeedMode getSpeedModeForExercises(final long[] exerciseIds);
 }

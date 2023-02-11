@@ -24,7 +24,7 @@ import de.saring.util.unitcalc.ConvertUtils;
  */
 public class WeightViewModel {
 
-    private final Integer id;
+    private final Long id;
     private final UnitSystem unitSystem;
 
     public final ObjectProperty<LocalDate> date;

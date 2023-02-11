@@ -70,10 +70,10 @@ public class STDocumentTest {
      */
     @Test
     public void testGetSpeedModeForExercisesWithSameSpeedMode() {
-        final int exerciseId1 = appendExerciseWithSpeedMode(SpeedMode.PACE);
-        final int exerciseId2 = appendExerciseWithSpeedMode(SpeedMode.PACE);
+        final long exerciseId1 = appendExerciseWithSpeedMode(SpeedMode.PACE);
+        final long exerciseId2 = appendExerciseWithSpeedMode(SpeedMode.PACE);
 
-        final SpeedMode speedMode = document.getSpeedModeForExercises(new int[]{exerciseId1, exerciseId2});
+        final SpeedMode speedMode = document.getSpeedModeForExercises(new long[]{exerciseId1, exerciseId2});
 
         assertEquals(SpeedMode.PACE, speedMode);
     }
@@ -84,15 +84,15 @@ public class STDocumentTest {
      */
     @Test
     public void testGetSpeedModeForExercisesWithDifferentSpeedMode() {
-        final int exerciseId1 = appendExerciseWithSpeedMode(SpeedMode.PACE);
-        final int exerciseId2 = appendExerciseWithSpeedMode(SpeedMode.SPEED);
+        final long exerciseId1 = appendExerciseWithSpeedMode(SpeedMode.PACE);
+        final long exerciseId2 = appendExerciseWithSpeedMode(SpeedMode.SPEED);
 
-        final SpeedMode speedMode = document.getSpeedModeForExercises(new int[]{exerciseId1, exerciseId2});
+        final SpeedMode speedMode = document.getSpeedModeForExercises(new long[]{exerciseId1, exerciseId2});
 
         assertEquals(document.getOptions().getPreferredSpeedMode(), speedMode);
     }
 
-    private int appendExerciseWithSpeedMode(SpeedMode speedMode) {
+    private long appendExerciseWithSpeedMode(SpeedMode speedMode) {
         final Exercise exercise = new Exercise(document.getExerciseList().getNewId());
         exercise.setDateTime(LocalDateTime.now());
         final SportType sportType = new SportType(document.getSportTypeList().getNewId());

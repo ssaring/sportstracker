@@ -9,7 +9,7 @@ import java.util.Objects
  *
  * @author Stefan Saring
  */
-abstract class IdObject(val id: Int?) {
+abstract class IdObject(val id: Long?) {
 
     /**
      * Compares the specified object with this object. The objects are equal when they are of the same type and when

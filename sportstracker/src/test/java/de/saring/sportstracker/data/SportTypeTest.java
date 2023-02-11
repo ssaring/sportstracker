@@ -23,30 +23,30 @@ public class SportTypeTest {
     public void setUp() {
 
         // create a new sport type with some test content
-        type = new SportType(1);
+        type = new SportType(1L);
         type.setName("Cycling");
         type.setSpeedMode(SpeedMode.SPEED);
         type.setIcon("cycling.png");
         type.setColor(Color.RED);
         type.setRecordDistance(true);
 
-        SportSubType sub1 = new SportSubType(1);
+        SportSubType sub1 = new SportSubType(1L);
         sub1.setName("MTB");
         type.getSportSubTypeList().set(sub1);
 
-        SportSubType sub2 = new SportSubType(2);
+        SportSubType sub2 = new SportSubType(2L);
         sub2.setName("Road");
         type.getSportSubTypeList().set(sub2);
 
-        SportSubType sub3 = new SportSubType(3);
+        SportSubType sub3 = new SportSubType(3L);
         sub3.setName("City");
         type.getSportSubTypeList().set(sub3);
 
-        Equipment equipment1 = new Equipment(1);
+        Equipment equipment1 = new Equipment(1L);
         equipment1.setName("Cannondale Jekyll");
         type.getEquipmentList().set(equipment1);
 
-        Equipment equipment2 = new Equipment(2);
+        Equipment equipment2 = new Equipment(2L);
         equipment2.setName("Cannondale R800");
         type.getEquipmentList().set(equipment2);
     }

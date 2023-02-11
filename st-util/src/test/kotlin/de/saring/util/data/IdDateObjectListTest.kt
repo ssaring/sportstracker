@@ -142,7 +142,7 @@ class IdDateObjectListTest {
     /**
      * Subclass of abstract class IdDateObject for testing.
      */
-    internal class DateNameObject(id: Int, dateTime: LocalDateTime, var name: String) : IdDateObject(id) {
+    internal class DateNameObject(id: Long, dateTime: LocalDateTime, var name: String) : IdDateObject(id) {
 
         init {
             this.dateTime = dateTime

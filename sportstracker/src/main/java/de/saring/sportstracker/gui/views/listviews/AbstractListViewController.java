@@ -110,9 +110,9 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
      *
      * @return array of IDs (can be empty)
      */
-    protected int[] getSelectedEntryIDs() {
+    protected long[] getSelectedEntryIDs() {
         final List<T> selectedEntries = getTableView().getSelectionModel().getSelectedItems();
-        final int[] selectedEntryIds = new int[selectedEntries.size()];
+        final long[] selectedEntryIds = new long[selectedEntries.size()];
 
         for (int i = 0; i < selectedEntryIds.length; i++) {
             selectedEntryIds[i] = selectedEntries.get(i).getId();

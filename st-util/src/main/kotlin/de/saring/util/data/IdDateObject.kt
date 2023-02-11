@@ -11,7 +11,7 @@ import java.time.LocalTime
  *
  * @author Stefan Saring
  */
-abstract class IdDateObject (id: Int?) : IdObject(id) {
+abstract class IdDateObject (id: Long?) : IdObject(id) {
 
     /**
      * The date and time of this object. The initial value is today, 12:00:00.

@@ -102,13 +102,13 @@ public class FilterDialogController extends AbstractDialogController {
         this.document = document;
 
         final String resourceAll = context.getResources().getString("st.dlg.filter.all.text");
-        sportTypeAll = new SportType(Integer.MAX_VALUE);
+        sportTypeAll = new SportType(Long.MAX_VALUE);
         sportTypeAll.setName(resourceAll);
 
-        sportSubtypeAll = new SportSubType(Integer.MAX_VALUE);
+        sportSubtypeAll = new SportSubType(Long.MAX_VALUE);
         sportSubtypeAll.setName(resourceAll);
 
-        equipmentAll = new Equipment(Integer.MAX_VALUE);
+        equipmentAll = new Equipment(Long.MAX_VALUE);
         equipmentAll.setName(resourceAll);
     }
 

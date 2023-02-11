@@ -66,21 +66,21 @@ public class SQLiteExporterTest {
 
     private void fillDocumentWithTestData() {
 
-        SportSubType sportSubType = new SportSubType(1);
+        SportSubType sportSubType = new SportSubType(1L);
         sportSubType.setName("MTB");
         sportSubType.setFitId(8);
 
-        Equipment equipment = new Equipment(1);
+        Equipment equipment = new Equipment(1L);
         equipment.setName("Bike 1");
 
-        SportType sportType = new SportType(1);
+        SportType sportType = new SportType(1L);
         sportType.setName("Cycling");
         sportType.setColor(Color.BLUE);
         sportType.setFitId(2);
         sportType.getSportSubTypeList().set(sportSubType);
         sportType.getEquipmentList().set(equipment);
 
-        Exercise exercise = new Exercise(1);
+        Exercise exercise = new Exercise(1L);
         exercise.setDateTime(LocalDateTime.now());
         exercise.setSportType(sportType);
         exercise.setSportSubType(sportSubType);
@@ -93,11 +93,11 @@ public class SQLiteExporterTest {
         exercise.setHrmFile("FooBar.fit");
         exercise.setComment("Foo Bar");
 
-        Note note = new Note(1);
+        Note note = new Note(1L);
         note.setDateTime(LocalDateTime.now());
         note.setComment("Some comment...");
 
-        Weight weight = new Weight(1);
+        Weight weight = new Weight(1L);
         weight.setValue(123.4f);
         weight.setDateTime(LocalDateTime.now());
         weight.setComment("Some other comment...");

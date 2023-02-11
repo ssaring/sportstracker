@@ -28,17 +28,17 @@ public class NoteListTest {
         // create a new list with some test content
         list = new NoteList();
 
-        Note note1 = new Note(1);
+        Note note1 = new Note(1L);
         note1.setDateTime(LocalDateTime.of(2003, 9, 2, 0, 0, 0));
         note1.setComment("Dummy note 1");
         list.set(note1);
 
-        Note note2 = new Note(2);
+        Note note2 = new Note(2L);
         note2.setDateTime(LocalDateTime.of(2003, 8, 20, 0, 0, 0));
         note2.setComment("Dummy note 2");
         list.set(note2);
 
-        Note note3 = new Note(3);
+        Note note3 = new Note(3L);
         note3.setDateTime(LocalDateTime.of(2003, 9, 6, 0, 0, 0));
         note3.setComment("Dummy note 3");
         list.set(note3);

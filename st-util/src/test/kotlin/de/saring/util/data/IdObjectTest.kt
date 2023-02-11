@@ -30,7 +30,7 @@ class IdObjectTest {
     }
 
     // Subclasses of abstract class IdObject for testing.
-    internal class SubClass1(id: Int) : IdObject(id)
+    internal class SubClass1(id: Long) : IdObject(id)
 
-    internal class SubClass2(id: Int) : IdObject(id)
+    internal class SubClass2(id: Long) : IdObject(id)
 }

@@ -23,15 +23,20 @@ object RepositoryUtil {
         return if (rs.wasNull()) null else value
     }
 
-    fun getSportTypeById(sportTypes: List<SportType>, sportTypeId: Int): SportType {
+    fun getLongOrNull(rs: ResultSet, columnName: String): Long? {
+        val value = rs.getLong(columnName)
+        return if (rs.wasNull()) null else value
+    }
+
+    fun getSportTypeById(sportTypes: List<SportType>, sportTypeId: Long): SportType {
         return sportTypes.first { sportTypeId == it.id }
     }
 
-    fun getSportSubTypeById(sportType: SportType, sportSubTypeId: Int): SportSubType {
+    fun getSportSubTypeById(sportType: SportType, sportSubTypeId: Long): SportSubType {
         return sportType.sportSubTypeList.first { sportSubTypeId == it.id }
     }
 
-    fun getEquipmentById(sportType: SportType, equipmentId: Int): Equipment {
+    fun getEquipmentById(sportType: SportType, equipmentId: Long): Equipment {
         return sportType.equipmentList.first { equipmentId == it.id }
     }
 

@@ -63,7 +63,7 @@ public class WeightListViewController extends AbstractListViewController<Weight>
     }
 
     @Override
-    public int[] getSelectedWeightIDs() {
+    public long[] getSelectedWeightIDs() {
         return getSelectedEntryIDs();
     }
 

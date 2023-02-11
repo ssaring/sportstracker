@@ -59,7 +59,7 @@ public interface EntryViewController {
      *
      * @return array of the selected exercise ID's (can be empty)
      */
-    int[] getSelectedExerciseIDs();
+    long[] getSelectedExerciseIDs();
 
     /**
      * This methods returns the number of selected notes.
@@ -73,7 +73,7 @@ public interface EntryViewController {
      *
      * @return array of the selected note ID's (can be empty)
      */
-    int[] getSelectedNoteIDs();
+    long[] getSelectedNoteIDs();
 
     /**
      * This methods returns the number of selected weights.
@@ -87,7 +87,7 @@ public interface EntryViewController {
      *
      * @return array of the selected weight ID's (can be empty)
      */
-    int[] getSelectedWeightIDs();
+    long[] getSelectedWeightIDs();
 
     /**
      * Selects the specified entry (of type Exercise, Weight or Note) in this

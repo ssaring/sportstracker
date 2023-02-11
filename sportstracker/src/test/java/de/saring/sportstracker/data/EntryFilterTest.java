@@ -24,22 +24,22 @@ public class EntryFilterTest {
         // create a sport type list with 2 sport types with 2 sport subtypes in each
         sportTypeList = new SportTypeList();
 
-        SportType type1 = new SportType(1);
+        SportType type1 = new SportType(1L);
         type1.setName("SportType 1");
-        SportSubType subType11 = new SportSubType(11);
+        SportSubType subType11 = new SportSubType(11L);
         subType11.setName("SportSubType 11");
         type1.getSportSubTypeList().set(subType11);
-        SportSubType subType12 = new SportSubType(12);
+        SportSubType subType12 = new SportSubType(12L);
         subType12.setName("SportSubType 12");
         type1.getSportSubTypeList().set(subType12);
         sportTypeList.set(type1);
 
-        SportType type2 = new SportType(2);
+        SportType type2 = new SportType(2L);
         type2.setName("SportType 2");
-        SportSubType subType21 = new SportSubType(21);
+        SportSubType subType21 = new SportSubType(21L);
         subType21.setName("SportSubType 21");
         type2.getSportSubTypeList().set(subType21);
-        SportSubType subType22 = new SportSubType(22);
+        SportSubType subType22 = new SportSubType(22L);
         subType22.setName("SportSubType 22");
         type2.getSportSubTypeList().set(subType22);
         sportTypeList.set(type2);

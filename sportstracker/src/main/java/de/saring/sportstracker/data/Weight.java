@@ -17,7 +17,7 @@ public final class Weight extends Entry {
      *
      * @param id the ID of the object
      */
-    public Weight(Integer id) {
+    public Weight(Long id) {
         super(id);
     }
 
@@ -36,7 +36,7 @@ public final class Weight extends Entry {
      * @param cloneId ID of the cloned Weight
      * @return the Weight clone
      */
-    public Weight clone(int cloneId) {
+    public Weight clone(Long cloneId) {
         Weight clone = new Weight(cloneId);
         clone.setDateTime(this.getDateTime());
         clone.setValue(this.getValue());

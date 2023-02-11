@@ -136,5 +136,5 @@ class IdObjectListTest {
     /**
      * Subclass of abstract class IdObject for testing.
      */
-    internal class NameObject(id: Int, val name: String) : IdObject(id)
+    internal class NameObject(id: Long, val name: String) : IdObject(id)
 }

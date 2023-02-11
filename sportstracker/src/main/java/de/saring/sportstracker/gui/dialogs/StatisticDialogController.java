@@ -203,7 +203,7 @@ public class StatisticDialogController extends AbstractDialogController {
      */
     private SpeedMode getSpeedModeForCalculatedExercises(EntryList<Exercise> exercises) {
 
-        int[] exerciseIds = new int[exercises.size()];
+        long[] exerciseIds = new long[exercises.size()];
         for (int i = 0; i < exerciseIds.length; i++) {
             exerciseIds[i] = exercises.getAt(i).getId();
         }

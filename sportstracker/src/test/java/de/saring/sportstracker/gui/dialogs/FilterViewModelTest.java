@@ -29,10 +29,10 @@ public class FilterViewModelTest {
         entryFilter.setDateStart(LocalDate.of(2014, 10, 1));
         entryFilter.setDateEnd(LocalDate.of(2014, 10, 31));
         entryFilter.setEntryType(EntryFilter.EntryType.EXERCISE);
-        entryFilter.setSportType(new SportType(100));
-        entryFilter.setSportSubType(new SportSubType(200));
+        entryFilter.setSportType(new SportType(100L));
+        entryFilter.setSportSubType(new SportSubType(200L));
         entryFilter.setIntensity(Exercise.IntensityType.HIGH);
-        entryFilter.setEquipment(new Equipment(300));
+        entryFilter.setEquipment(new Equipment(300L));
         entryFilter.setCommentSubString("Foo Bar");
         entryFilter.setRegularExpressionMode(true);
     }
@@ -59,7 +59,7 @@ public class FilterViewModelTest {
         // test after modifications
         viewModel.dateEnd.set(LocalDate.of(2014, 12, 31));
         viewModel.entryType.set(EntryFilter.EntryType.WEIGHT);
-        viewModel.sportSubtype.set(new SportSubType(201));
+        viewModel.sportSubtype.set(new SportSubType(201L));
         viewModel.intensity.set(new FilterViewModel.IntensityItem(null));
         viewModel.commentSubString.set("   Bar Foo    ");
 

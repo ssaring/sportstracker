@@ -18,7 +18,7 @@ public class EquipmentTest {
      */
     @Test
     public void testClone() {
-        Equipment eOrg = new Equipment(123);
+        Equipment eOrg = new Equipment(123L);
         eOrg.setName("Equip");
         eOrg.setNotInUse(true);
 

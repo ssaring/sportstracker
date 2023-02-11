@@ -68,7 +68,7 @@ public class XMLWeightList {
      * @return the created Weight object
      */
     private Weight readWeight(Element eWeight) {
-        Weight weight = new Weight(Integer.parseInt(eWeight.getChildText("id")));
+        Weight weight = new Weight(Long.parseLong(eWeight.getChildText("id")));
         weight.setValue(Float.parseFloat(eWeight.getChildText("value")));
         weight.setComment(eWeight.getChildText("comment"));
 

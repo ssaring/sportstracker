@@ -15,7 +15,7 @@ import de.saring.util.gui.javafx.FxmlLoader;
  */
 public abstract class AbstractEntryViewController implements EntryViewController {
 
-    private static final int[] EMPTY_ID_ARRAY = new int[0];
+    private static final long[] EMPTY_ID_ARRAY = new long[0];
 
     private final STContext context;
     private final STDocument document;
@@ -63,7 +63,7 @@ public abstract class AbstractEntryViewController implements EntryViewController
     }
 
     @Override
-    public int[] getSelectedExerciseIDs() {
+    public long[] getSelectedExerciseIDs() {
         return EMPTY_ID_ARRAY;
     }
 
@@ -73,7 +73,7 @@ public abstract class AbstractEntryViewController implements EntryViewController
     }
 
     @Override
-    public int[] getSelectedNoteIDs() {
+    public long[] getSelectedNoteIDs() {
         return EMPTY_ID_ARRAY;
     }
 
@@ -83,7 +83,7 @@ public abstract class AbstractEntryViewController implements EntryViewController
     }
 
     @Override
-    public int[] getSelectedWeightIDs() {
+    public long[] getSelectedWeightIDs() {
         return EMPTY_ID_ARRAY;
     }
 

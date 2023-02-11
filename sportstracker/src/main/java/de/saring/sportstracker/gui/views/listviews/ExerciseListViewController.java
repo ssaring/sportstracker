@@ -92,7 +92,7 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
     }
 
     @Override
-    public int[] getSelectedExerciseIDs() {
+    public long[] getSelectedExerciseIDs() {
         return getSelectedEntryIDs();
     }
 

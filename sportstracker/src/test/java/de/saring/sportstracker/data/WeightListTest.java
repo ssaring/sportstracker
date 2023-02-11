@@ -28,17 +28,17 @@ public class WeightListTest {
         // create a new list with some test content
         list = new WeightList();
 
-        Weight weight1 = new Weight(1);
+        Weight weight1 = new Weight(1L);
         weight1.setDateTime(LocalDateTime.of(2003, 9, 2, 0, 0, 0));
         weight1.setComment("Dummy weight 1");
         list.set(weight1);
 
-        Weight weight2 = new Weight(2);
+        Weight weight2 = new Weight(2L);
         weight2.setDateTime(LocalDateTime.of(2003, 8, 20, 0, 0, 0));
         weight2.setComment("Dummy weight 2");
         list.set(weight2);
 
-        Weight weight3 = new Weight(3);
+        Weight weight3 = new Weight(3L);
         weight3.setDateTime(LocalDateTime.of(2003, 9, 6, 0, 0, 0));
         weight3.setComment("Dummy weight 3");
         list.set(weight3);

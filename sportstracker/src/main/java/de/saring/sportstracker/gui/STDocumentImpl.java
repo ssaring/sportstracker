@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import de.saring.sportstracker.core.ApplicationDataChangeListener;
 import de.saring.sportstracker.storage.db.DbStorage;
@@ -367,13 +367,13 @@ public class STDocumentImpl implements STDocument {
     }
 
     @Override
-    public SpeedMode getSpeedModeForExercises(final int[] exerciseIds) {
+    public SpeedMode getSpeedModeForExercises(final long[] exerciseIds) {
 
         if (exerciseIds == null || exerciseIds.length == 0) {
             throw new IllegalArgumentException("Empty exerciseIds!");
         }
 
-        final List<SpeedMode> speedModes = IntStream.of(exerciseIds)
+        final List<SpeedMode> speedModes = LongStream.of(exerciseIds)
                 .mapToObj(exerciseId -> getExerciseList().getByID(exerciseId))
                 .map(exercise -> exercise.getSportType().getSpeedMode())
                 .distinct()

@@ -42,7 +42,7 @@ class SportTypeRepository(
     override val logger: Logger = Logger.getLogger(SportTypeRepository::class.java.name)
 
     override fun readFromResultSet(rs: ResultSet): SportType {
-        val sportType = SportType(rs.getInt("ID"))
+        val sportType = SportType(rs.getLong("ID"))
         sportType.setName(rs.getString("NAME"))
         sportType.isRecordDistance = rs.getBoolean("RECORD_DISTANCE")
         sportType.speedMode = SpeedMode.valueOf(rs.getString("SPEED_MODE"))
@@ -57,8 +57,8 @@ class SportTypeRepository(
             connection.prepareStatement("SELECT * FROM SPORT_SUBTYPE").use { statement ->
                 val rs = statement.executeQuery()
                 while (rs.next()) {
-                    val sportType = getSportTypeById(sportTypes, rs.getInt("SPORT_TYPE_ID"))
-                    val sportSubType = SportSubType(rs.getInt("ID"))
+                    val sportType = getSportTypeById(sportTypes, rs.getLong("SPORT_TYPE_ID"))
+                    val sportSubType = SportSubType(rs.getLong("ID"))
                     sportSubType.setName(rs.getString("NAME"))
                     sportSubType.fitId = getIntegerOrNull(rs, "FIT_ID")
                     sportType.sportSubTypeList.set(sportSubType)
@@ -74,8 +74,8 @@ class SportTypeRepository(
             connection.prepareStatement("SELECT * FROM EQUIPMENT").use { statement ->
                 val rs = statement.executeQuery()
                 while (rs.next()) {
-                    val sportType = getSportTypeById(sportTypes, rs.getInt("SPORT_TYPE_ID"))
-                    val equipment = Equipment(rs.getInt("ID"))
+                    val sportType = getSportTypeById(sportTypes, rs.getLong("SPORT_TYPE_ID"))
+                    val equipment = Equipment(rs.getLong("ID"))
                     equipment.setName(rs.getString("NAME"))
                     equipment.isNotInUse = rs.getBoolean("NOT_IN_USE")
                     sportType.equipmentList.set(equipment)

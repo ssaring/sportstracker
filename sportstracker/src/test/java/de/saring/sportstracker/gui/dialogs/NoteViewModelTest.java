@@ -20,7 +20,7 @@ public class NoteViewModelTest {
 
     @BeforeEach
     public void setUp() {
-        note = new Note(123);
+        note = new Note(123L);
         note.setDateTime(LocalDateTime.of(2014, 10, 20, 7, 30, 0));
         note.setComment("Foo Bar");
     }

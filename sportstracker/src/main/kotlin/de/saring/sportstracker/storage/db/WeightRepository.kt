@@ -25,36 +25,36 @@ class WeightRepository(
     override val logger: Logger = Logger.getLogger(WeightRepository::class.java.name)
 
     override fun readFromResultSet(rs: ResultSet): Weight {
-        val weight = Weight(rs.getInt("ID"))
+        val weight = Weight(rs.getLong("ID"))
         weight.dateTime = dateToLocalDateTime(rs.getDate("DATE_TIME"))
         weight.value = rs.getFloat("VALUE")
         weight.comment = rs.getString("COMMENT")
         return weight
     }
 
-    override fun executeCreate(weight: Weight): Weight {
+    override fun executeCreate(entry: Weight): Weight {
         connection.prepareStatement("INSERT INTO WEIGHT (DATE_TIME, VALUE, COMMENT) VALUES (?, ?, ?)",
             Statement.RETURN_GENERATED_KEYS
         ).use { statement ->
-            statement.setString(1, RepositoryUtil.dateTimeToString(weight.dateTime))
-            statement.setFloat(2, weight.value)
-            statement.setString(3, weight.comment)
+            statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
+            statement.setFloat(2, entry.value)
+            statement.setString(3, entry.comment)
             statement.executeUpdate()
 
             val rs = statement.generatedKeys
             rs.next()
-            val weightID = rs.getInt(1)
+            val weightID = rs.getLong(1)
             return readById(weightID)
         }
     }
 
-    override fun executeUpdate(weight: Weight) {
+    override fun executeUpdate(entry: Weight) {
         connection.prepareStatement("UPDATE WEIGHT SET DATE_TIME = ?, VALUE = ?, COMMENT = ? WHERE ID = ?"
         ).use { statement ->
-            statement.setString(1, RepositoryUtil.dateTimeToString(weight.dateTime))
-            statement.setFloat(2, weight.value)
-            statement.setString(3, weight.comment)
-            statement.setInt(4, weight.id!!)
+            statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
+            statement.setFloat(2, entry.value)
+            statement.setString(3, entry.comment)
+            statement.setLong(4, entry.id!!)
             statement.executeUpdate()
         }
     }

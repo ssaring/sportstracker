@@ -724,7 +724,7 @@ public class OverviewDialogController extends AbstractDialogController {
             // when there is no weight value, add at least the first and last dataset item
             // to make sure the full time range is shown
             else if (timeStep == 0 || timeStep == timeStepCount - 1) {
-                dataset.add(timePeriod, (Number) null, seriesName, true);
+                dataset.add(timePeriod, null, seriesName, true);
             }
         }
     }
@@ -901,7 +901,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
                 if (filter.getSportType() != null && !currentFilter.getSportType().equals(filter.getSportType())) {
                     // filters have different sport types => add a not existing sport type, so nothing will be found
-                    filter.setSportType(new SportType(Integer.MIN_VALUE));
+                    filter.setSportType(new SportType(Long.MIN_VALUE));
                 } else {
                     filter.setSportType(currentFilter.getSportType());
 
@@ -920,7 +920,7 @@ public class OverviewDialogController extends AbstractDialogController {
             if (currentFilter.getEquipment() != null) {
                 if (filter.getEquipment() != null && !currentFilter.getEquipment().equals(filter.getEquipment())) {
                     // filters have different equipments => add a not existing equipment, so nothing will be found
-                    filter.setEquipment(new Equipment(Integer.MIN_VALUE));
+                    filter.setEquipment(new Equipment(Long.MIN_VALUE));
                 } else {
                     filter.setEquipment(currentFilter.getEquipment());
                 }
@@ -974,7 +974,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
         private String resourceKey;
 
-        private TimeRangeType(final String resourceKey) {
+        TimeRangeType(final String resourceKey) {
             this.resourceKey = resourceKey;
         }
 
@@ -1004,7 +1004,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
         private String resourceKey;
 
-        private ValueType(final String resourceKey) {
+        ValueType(final String resourceKey) {
             this.resourceKey = resourceKey;
         }
 
@@ -1056,7 +1056,7 @@ public class OverviewDialogController extends AbstractDialogController {
 
         private String resourceKey;
 
-        private OverviewType(final String resourceKey) {
+        OverviewType(final String resourceKey) {
             this.resourceKey = resourceKey;
         }
 

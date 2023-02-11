@@ -69,7 +69,7 @@ public class XMLNoteList {
      * @return the created Note object
      */
     private Note readNote(Element eNote) {
-        Note note = new Note(Integer.parseInt(eNote.getChildText("id")));
+        Note note = new Note(Long.parseLong(eNote.getChildText("id")));
         note.setComment(eNote.getChildText("text"));
 
         // get and convert date (format already checked by XSD schema)

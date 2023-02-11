@@ -155,7 +155,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         this.document = document;
         this.dialogProvider = dialogProvider;
 
-        equipmentNone = new Equipment(Integer.MAX_VALUE);
+        equipmentNone = new Equipment(Long.MAX_VALUE);
         equipmentNone.setName(context.getResources().getString("st.dlg.exercise.equipment.none.text"));
     }
 

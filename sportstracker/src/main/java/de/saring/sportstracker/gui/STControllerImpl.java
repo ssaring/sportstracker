@@ -357,7 +357,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
 
     @Override
     public void onDeleteEntry(final ActionEvent event) {
-        int[] selectedEntryIDs = null;
+        long[] selectedEntryIDs = null;
         EntryList<? extends Entry> entryList = null;
         AbstractRepository repository = null;
 
@@ -385,7 +385,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 // finally remove the entries
                 try {
-                    for (int id : selectedEntryIDs) {
+                    for (long id : selectedEntryIDs) {
                         repository.delete(id);
                     }
                     document.updateApplicationData(null);
@@ -400,7 +400,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     public void onViewHrmFile(final ActionEvent event) {
         // get selected exercise and start ExerciseViewer for it's HRM file
         // (special checks not needed here, done by action status property)
-        final int exerciseID = currentViewController.getSelectedExerciseIDs()[0];
+        final long exerciseID = currentViewController.getSelectedExerciseIDs()[0];
         final Exercise exercise = document.getExerciseList().getByID(exerciseID);
         final String hrmFile = exercise.getHrmFile();
         final SpeedMode speedMode = exercise.getSportType().getSpeedMode();
@@ -621,7 +621,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
         // action 'View HRM File' is only enabled when the selected exercise contains a HRM file
         boolean fHRMEnabled = false;
         if (selExerciseCount == 1) {
-            final int selExerciseID = currentViewController.getSelectedExerciseIDs()[0];
+            final long selExerciseID = currentViewController.getSelectedExerciseIDs()[0];
             final Exercise selExercise = document.getExerciseList().getByID(selExerciseID);
             fHRMEnabled = StringUtils.getTrimmedTextOrNull(selExercise.getHrmFile()) != null;
         }
@@ -791,7 +791,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      *
      * @param exerciseID ID of the exercise entry
      */
-    private void editExercise(int exerciseID) {
+    private void editExercise(long exerciseID) {
         final var selExercise = document.getExerciseList().getByID(exerciseID);
         dialogProvider.prExerciseDialogController.get().show(context.getPrimaryStage(), selExercise, false);
     }
@@ -801,7 +801,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      *
      * @param noteID ID of the note entry
      */
-    private void editNote(int noteID) {
+    private void editNote(long noteID) {
         final var selectedNote = document.getNoteList().getByID(noteID);
         dialogProvider.prNoteDialogController.get().show(context.getPrimaryStage(), selectedNote);
     }
@@ -811,7 +811,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      *
      * @param weightID ID of the weight entry
      */
-    private void editWeight(int weightID) {
+    private void editWeight(long weightID) {
         final var selectedWeight = document.getWeightList().getByID(weightID);
         dialogProvider.prWeightDialogController.get().show(context.getPrimaryStage(), selectedWeight);
     }
@@ -821,7 +821,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      *
      * @param exerciseID ID of the exercise entry to copy
      */
-    private void copyExercise(final int exerciseID) {
+    private void copyExercise(final long exerciseID) {
         final var selectedExercise = document.getExerciseList().getByID(exerciseID);
 
         final var copiedExercise = selectedExercise.clone(document.getExerciseList().getNewId());
@@ -837,7 +837,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      *
      * @param noteID ID of the note entry to copy
      */
-    private void copyNote(final int noteID) {
+    private void copyNote(final long noteID) {
         final var selectedNote = document.getNoteList().getByID(noteID);
 
         final var copiedNote = selectedNote.clone(document.getNoteList().getNewId());
@@ -852,7 +852,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      *
      * @param weightID ID of the weight entry to copy
      */
-    private void copyWeight(final int weightID) {
+    private void copyWeight(final long weightID) {
         final var selectedWeight = document.getWeightList().getByID(weightID);
 
         final var copiedWeight = selectedWeight.clone(document.getWeightList().getNewId());

@@ -38,12 +38,12 @@ abstract class AbstractRepository<T : IdObject>(
     }
 
     @Throws(STException::class)
-    open fun readById(entryId: Int): T {
+    open fun readById(entryId: Long): T {
         logger.info("Reading $entityName with ID '$entryId'")
 
         try {
             connection.prepareStatement("SELECT * FROM $tableName WHERE ID = ?").use { statement ->
-                statement.setInt(1, entryId)
+                statement.setLong(1, entryId)
                 val rs: ResultSet = statement.executeQuery()
                 rs.next()
                 return readFromResultSet(rs)
@@ -76,12 +76,12 @@ abstract class AbstractRepository<T : IdObject>(
     }
 
     @Throws(STException::class)
-    fun delete(entryId: Int) {
+    fun delete(entryId: Long) {
         logger.info("Deleting $entityName with ID '$entryId'")
 
         try {
             connection.prepareStatement("DELETE FROM $tableName WHERE ID = ?").use { statement ->
-                statement.setInt(1, entryId)
+                statement.setLong(1, entryId)
                 statement.executeUpdate()
             }
         } catch (e: SQLException) {

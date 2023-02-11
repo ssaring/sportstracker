@@ -22,7 +22,7 @@ public class WeightViewModelTest {
 
     @BeforeEach
     public void setUp() {
-        weight = new Weight(123);
+        weight = new Weight(123L);
         weight.setDateTime(LocalDateTime.of(2014, 10, 20, 7, 30, 0));
         weight.setValue(65.7f);
         weight.setComment("Foo Bar");

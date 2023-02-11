@@ -25,7 +25,7 @@ public class SportTypeViewModelTest {
 
     @BeforeEach
     public void setUp() {
-        sportType = new SportType(123);
+        sportType = new SportType(123L);
         sportType.setName("Foo Bar");
         sportType.setRecordDistance(false);
         sportType.setSpeedMode(SpeedMode.PACE);
@@ -33,11 +33,11 @@ public class SportTypeViewModelTest {
         sportType.setIcon("fooBar.png");
         sportType.setFitId(Integer.valueOf(Sport.CYCLING.getValue()));
 
-        sportType.getSportSubTypeList().set(new SportSubType(200));
-        sportType.getSportSubTypeList().set(new SportSubType(201));
+        sportType.getSportSubTypeList().set(new SportSubType(200L));
+        sportType.getSportSubTypeList().set(new SportSubType(201L));
 
-        sportType.getEquipmentList().set(new Equipment(300));
-        sportType.getEquipmentList().set(new Equipment(301));
+        sportType.getEquipmentList().set(new Equipment(300L));
+        sportType.getEquipmentList().set(new Equipment(301L));
     }
 
     /**
@@ -79,7 +79,7 @@ public class SportTypeViewModelTest {
         viewModel.fitSportType.set(new FitMappingEntry(Sport.RUNNING.getValue(), ""));
 
         viewModel.sportSubtypes.removeByID(200);
-        viewModel.equipments.set(new Equipment(302));
+        viewModel.equipments.set(new Equipment(302L));
 
         SportType modifiedSportType = viewModel.getSportType();
         assertEquals("Bar Foo", modifiedSportType.getName());

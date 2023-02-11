@@ -30,13 +30,13 @@ open class IdObjectList<T : IdObject> : Iterable<T> {
      *
      * @return a new unused ID
      */
-    fun getNewId(): Int {
+    fun getNewId(): Long {
 
         val hsIDsInUse = stream()
                 .map { it.id }
                 .collect(Collectors.toSet())
 
-        var newID = 1
+        var newID = 1L
         while (hsIDsInUse.contains(newID)) {
             newID++
         }
@@ -49,7 +49,7 @@ open class IdObjectList<T : IdObject> : Iterable<T> {
      * @param id ID of IdObject
      * @return the IdObject object or null
      */
-    fun getByID(id: Int): T? {
+    fun getByID(id: Long): T? {
         return stream()
                 .filter { o -> o.id == id }
                 .findFirst()
@@ -121,7 +121,7 @@ open class IdObjectList<T : IdObject> : Iterable<T> {
      * @param id ID of IdObject to remove
      * @return true on success
      */
-    fun removeByID(id: Int): Boolean {
+    fun removeByID(id: Long): Boolean {
         var removed = false
 
         val idObject = getByID(id)

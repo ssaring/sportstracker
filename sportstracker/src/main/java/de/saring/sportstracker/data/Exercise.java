@@ -110,7 +110,7 @@ public final class Exercise extends Entry implements Cloneable {
      *
      * @param id the ID of the object
      */
-    public Exercise(Integer id) {
+    public Exercise(Long id) {
         super(id);
     }
 
@@ -217,7 +217,7 @@ public final class Exercise extends Entry implements Cloneable {
      * @param cloneId ID of the cloned Exercise
      * @return the Exercise clone
      */
-    public Exercise clone(int cloneId) {
+    public Exercise clone(Long cloneId) {
         Exercise clone = new Exercise(cloneId);
         clone.setDateTime(this.getDateTime());
         clone.setSportType(this.getSportType());

@@ -19,7 +19,7 @@ import de.saring.sportstracker.data.Note;
  */
 public class NoteViewModel {
 
-    private final Integer id;
+    private final Long id;
     public final ObjectProperty<LocalDate> date;
     public final ObjectProperty<LocalTime> time;
     public final StringProperty comment;

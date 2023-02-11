@@ -17,7 +17,7 @@ public class SportSubTypeTest {
      */
     @Test
     public void testClone() {
-        SportSubType sstOrg = new SportSubType(123);
+        SportSubType sstOrg = new SportSubType(123L);
         sstOrg.setName("Sstype");
 
         SportSubType sstClone = sstOrg.clone();

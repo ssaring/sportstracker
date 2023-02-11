@@ -12,11 +12,13 @@ SQLite migration:
        -> STDocument will mark the application data as dirty
   - advantages:
     - repository classes are very simple, no caching and no change management is needed there
+      - most repository implementation is similar and can be done in an abstract base class
     - no performance issues, as the lists in STDocument are just loaded once on start or data changes
     - search and filter features can stay as they are implemented in STDocument and EntryList,
       no complicated repository queries needed
   - disadvantages:
-    - STDocumment:updateApplicationData() needs to be called manually on every application data change
+    - STDocument:updateApplicationData() needs to be called manually on every application data change
+    - all application data is reloaded after every change action (performance is good enough)
 - Status:
   - all application data os read from SQLite database and displayed in SportsTracker
   - performance tests with production database export:
@@ -26,20 +28,16 @@ SQLite migration:
       - Converted all data in 5 msec
     - loading of all data from XML: 350 msec => similar to opening SQLite database and read from there
   - DB schema version is validated on startup
-  - NoteRepository implementation completed (CRUD, manually tested)
-  - Add/Edit/Delete actions for Note entries are executed in DBStorage
-    (and in NoteList in parallel for updating changes in all registered views)
+  - Add/Edit/Delete actions for Note and Weight entries are executed in DBStorage,
+    all views are updated properly afterwards
   - committing database changes works properly
 - TODO:
-  - implement CRUD methods in Weight/ExerciseRepository and their usage
+  - implement CRUD methods in ExerciseRepository and their usage
     - deletion works for all entries properly
     - make use of those CRUD actions in the application edit actions, don't modify the STDocument lists anymore
   - see TODOs in repository classes
-  - Fix existing unit tests
   - DbStorage + Repository unit tests
   - remove all change listeners from IdObjectList, is now done by the ApplicationDataChangeListeners in STDocument
-  - ID of IdObject needs to be an optional Long
-    - adjust classes and tests
   - is sorting by date in IdDateObjectList really needed? Might be for filter etc.
   - implement and test CRUD actions in SportTypeRepository and their usage
   - implement CRUD actions in Weight/Exercise/SportType repositories

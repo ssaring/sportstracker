@@ -17,7 +17,7 @@ public abstract class Entry extends IdDateObject {
      *
      * @param id the ID of the object (null for new, not persisted objects)
      */
-    public Entry(Integer id) {
+    public Entry(Long id) {
         super(id);
     }
 

@@ -79,7 +79,7 @@ public class XMLSportTypeList {
      */
     private SportType readSportType(Element eSportType, SpeedMode defaultSpeedMode) {
 
-        SportType sportType = new SportType(Integer.parseInt(eSportType.getChildText("id")));
+        SportType sportType = new SportType(Long.parseLong(eSportType.getChildText("id")));
         sportType.setSpeedMode(defaultSpeedMode);
         sportType.setName(eSportType.getChildText("name"));
         sportType.setIcon(eSportType.getChildText("icon"));
@@ -126,7 +126,7 @@ public class XMLSportTypeList {
         // read all contained sport sub types
         Element eSportSubTypeList = eSportType.getChild("sport-subtype-list");
         eSportSubTypeList.getChildren("sport-subtype").forEach(eSportSubType -> {
-            SportSubType sportSubType = new SportSubType(Integer.parseInt(eSportSubType.getChildText("id")));
+            SportSubType sportSubType = new SportSubType(Long.parseLong(eSportSubType.getChildText("id")));
             sportSubType.setName(eSportSubType.getChildText("name"));
 
             // get optional element 'fit-id'
@@ -142,7 +142,7 @@ public class XMLSportTypeList {
         if (eEquipmentList != null) {
 
             eEquipmentList.getChildren("equipment").forEach(eEquipment -> {
-                Equipment equipment = new Equipment(Integer.parseInt(eEquipment.getChildText("id")));
+                Equipment equipment = new Equipment(Long.parseLong(eEquipment.getChildText("id")));
                 equipment.setName(eEquipment.getChildText("name"));
                 equipment.setNotInUse(Boolean.valueOf(eEquipment.getChildText("not-in-use")));
                 sportType.getEquipmentList().set(equipment);

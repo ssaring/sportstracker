@@ -28,14 +28,14 @@ public class StatisticCalculatorTest {
     public void setUp() {
 
         // create one sport type with one subtype
-        SportType sportType1 = new SportType(1);
-        SportSubType sportSubType1 = new SportSubType(1);
+        SportType sportType1 = new SportType(1L);
+        SportSubType sportSubType1 = new SportSubType(1L);
         sportType1.getSportSubTypeList().set(sportSubType1);
 
         // create some exercises for statistic calculation
         lExercises = new IdObjectList<>();
 
-        Exercise tempExercise = new Exercise(1);
+        Exercise tempExercise = new Exercise(1L);
         tempExercise.setSportType(sportType1);
         tempExercise.setSportSubType(sportSubType1);
         tempExercise.setDateTime(LocalDateTime.now());
@@ -48,7 +48,7 @@ public class StatisticCalculatorTest {
         tempExercise.setAvgHeartRate(138);
         lExercises.set(tempExercise);
 
-        tempExercise = new Exercise(2);
+        tempExercise = new Exercise(2L);
         tempExercise.setSportType(sportType1);
         tempExercise.setSportSubType(sportSubType1);
         tempExercise.setDateTime(LocalDateTime.now());
@@ -60,7 +60,7 @@ public class StatisticCalculatorTest {
         tempExercise.setCalories(890);
         lExercises.set(tempExercise);
 
-        tempExercise = new Exercise(3);
+        tempExercise = new Exercise(3L);
         tempExercise.setSportType(sportType1);
         tempExercise.setSportSubType(sportSubType1);
         tempExercise.setDateTime(LocalDateTime.now());
@@ -73,7 +73,7 @@ public class StatisticCalculatorTest {
         tempExercise.setCalories(620);
         lExercises.set(tempExercise);
 
-        tempExercise = new Exercise(4);
+        tempExercise = new Exercise(4L);
         tempExercise.setSportType(sportType1);
         tempExercise.setSportSubType(sportSubType1);
         tempExercise.setDateTime(LocalDateTime.now());

@@ -131,5 +131,5 @@ class IdObjectListChangeListenerTest {
     /**
      * Subclass of abstract class IdObject for testing.
      */
-    internal class DummyIdObject(id: Int) : IdObject(id)
+    internal class DummyIdObject(id: Long) : IdObject(id)
 }

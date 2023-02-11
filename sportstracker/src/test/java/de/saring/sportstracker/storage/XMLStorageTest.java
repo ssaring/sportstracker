@@ -248,46 +248,46 @@ public class XMLStorageTest {
         SportTypeList sportTypeList = new SportTypeList();
 
         // create cycling sport type
-        SportType sportType = new SportType(1);
+        SportType sportType = new SportType(1L);
         sportType.setName("Cycling");
         sportType.setSpeedMode(SpeedMode.SPEED);
         sportTypeList.set(sportType);
 
-        SportSubType subType = new SportSubType(1);
+        SportSubType subType = new SportSubType(1L);
         subType.setName("MTB tour");
         sportType.getSportSubTypeList().set(subType);
 
-        subType = new SportSubType(2);
+        subType = new SportSubType(2L);
         subType.setName("MTB race");
         sportType.getSportSubTypeList().set(subType);
 
-        subType = new SportSubType(3);
+        subType = new SportSubType(3L);
         subType.setName("Road tour");
         sportType.getSportSubTypeList().set(subType);
 
-        subType = new SportSubType(4);
+        subType = new SportSubType(4L);
         subType.setName("Road race");
         sportType.getSportSubTypeList().set(subType);
 
-        Equipment equipment = new Equipment(1);
+        Equipment equipment = new Equipment(1L);
         equipment.setName("Cannondale Jekyll");
         sportType.getEquipmentList().set(equipment);
 
-        equipment = new Equipment(2);
+        equipment = new Equipment(2L);
         equipment.setName("Cannondale R800");
         sportType.getEquipmentList().set(equipment);
 
         // create running sport type
-        sportType = new SportType(2);
+        sportType = new SportType(2L);
         sportType.setName("Running");
         sportType.setSpeedMode(SpeedMode.PACE);
         sportTypeList.set(sportType);
 
-        subType = new SportSubType(1);
+        subType = new SportSubType(1L);
         subType.setName("Jogging");
         sportType.getSportSubTypeList().set(subType);
 
-        subType = new SportSubType(2);
+        subType = new SportSubType(2L);
         subType.setName("Competition");
         sportType.getSportSubTypeList().set(subType);
 

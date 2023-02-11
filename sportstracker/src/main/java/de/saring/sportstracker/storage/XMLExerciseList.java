@@ -18,8 +18,7 @@ import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.data.SportTypeList;
 
 /**
- * This class is for reading or writing an ExerciseList object from or to a XML
- * file.
+ * This class is for reading or writing an ExerciseList object from or to an XML file.
  *
  * @author Stefan Saring
  * @version 2.0
@@ -79,8 +78,7 @@ public class XMLExerciseList {
      */
     private Exercise readExercise(Element eExercise, SportTypeList sportTypeList) {
 
-        Exercise exercise = new Exercise(
-                Integer.parseInt(eExercise.getChildText("id")));
+        Exercise exercise = new Exercise(Long.parseLong(eExercise.getChildText("id")));
 
         // get sport type by parsed ID
         int sportTypeID = Integer.parseInt(eExercise.getChildText("sport-type-id"));
@@ -162,7 +160,7 @@ public class XMLExerciseList {
     }
 
     /**
-     * Writes the exercise list to the specified XML file..
+     * Writes the exercise list to the specified XML file.
      *
      * @param exerciseList the exercise list to store
      * @param destination name of the XML file to write to

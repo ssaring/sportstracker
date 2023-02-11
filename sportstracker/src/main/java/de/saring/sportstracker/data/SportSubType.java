@@ -27,7 +27,7 @@ public final class SportSubType extends IdObject implements Nameable, Cloneable 
      *
      * @param id the ID of the object
      */
-    public SportSubType(Integer id) {
+    public SportSubType(Long id) {
         super(id);
     }
 

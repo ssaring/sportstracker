@@ -63,7 +63,7 @@ public final class SportType extends IdObject implements Nameable, Cloneable {
      *
      * @param id the ID of the object
      */
-    public SportType(Integer id) {
+    public SportType(Long id) {
         super(id);
     }
 

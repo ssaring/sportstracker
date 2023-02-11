@@ -51,7 +51,7 @@ public class StatusBarController {
      *
      * @param selectedExerciseIds array of currently selected exercise IDs (can be empty, not null)
      */
-    public void updateStatusBar(final int[] selectedExerciseIds) {
+    public void updateStatusBar(final long[] selectedExerciseIds) {
         String statusText = "";
 
         // create status bar text only when exercises are selected
@@ -62,7 +62,7 @@ public class StatusBarController {
             int sumDuration = 0;
 
             // calculate summary distance, AVG speed and duration for all selected exercises
-            for (int exerciseID : selectedExerciseIds) {
+            for (long exerciseID : selectedExerciseIds) {
                 final Exercise selExercise = document.getExerciseList().getByID(exerciseID);
                 sumDistance += selExercise.getDistance();
                 sumDuration += selExercise.getDuration();

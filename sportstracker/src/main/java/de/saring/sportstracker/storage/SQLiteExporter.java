@@ -129,7 +129,7 @@ public class SQLiteExporter {
         for (SportType sportType : document.getSportTypeList()) {
             statement.clearParameters();
 
-            statement.setInt(1, sportType.getId());
+            statement.setLong(1, sportType.getId());
             statement.setString(2, sportType.getName());
             statement.setInt(3, sportType.isRecordDistance() ? 1 : 0);
             statement.setString(4, String.valueOf(sportType.getSpeedMode()));
@@ -156,7 +156,7 @@ public class SQLiteExporter {
         for (SportSubType sportSubType : sportType.getSportSubTypeList()) {
             statement.clearParameters();
 
-            statement.setInt(1, sportType.getId());
+            statement.setLong(1, sportType.getId());
             statement.setString(2, sportSubType.getName());
             if (sportSubType.getFitId() != null) {
                 statement.setInt(3, sportSubType.getFitId());
@@ -176,7 +176,7 @@ public class SQLiteExporter {
         for (Equipment equipment : sportType.getEquipmentList()) {
             statement.clearParameters();
 
-            statement.setInt(1, sportType.getId());
+            statement.setLong(1, sportType.getId());
             statement.setString(2, equipment.getName());
             statement.setInt(3, equipment.isNotInUse() ? 1 : 0);
             statement.executeUpdate();
@@ -196,9 +196,9 @@ public class SQLiteExporter {
         for (Exercise exercise : document.getExerciseList()) {
             statement.clearParameters();
 
-            statement.setInt(1, exercise.getId());
+            statement.setLong(1, exercise.getId());
             statement.setString(2, exercise.getDateTime().format(SQLITE_DATETIME_FORMATTER));
-            statement.setInt(3, exercise.getSportType().getId());
+            statement.setLong(3, exercise.getSportType().getId());
             statement.setLong(4, getPrimaryKeyForSportType(exercise.getSportSubType(), exercise.getSportType()));
             statement.setString(5, String.valueOf(exercise.getIntensity()));
             statement.setInt(6, exercise.getDuration());
@@ -229,7 +229,7 @@ public class SQLiteExporter {
         for (Note note : document.getNoteList()) {
             statement.clearParameters();
 
-            statement.setInt(1, note.getId());
+            statement.setLong(1, note.getId());
             statement.setString(2, note.getDateTime().format(SQLITE_DATETIME_FORMATTER));
             statement.setString(3, note.getComment());
             statement.executeUpdate();
@@ -244,7 +244,7 @@ public class SQLiteExporter {
         for (Weight weight : document.getWeightList()) {
             statement.clearParameters();
 
-            statement.setInt(1, weight.getId());
+            statement.setLong(1, weight.getId());
             statement.setString(2, weight.getDateTime().format(SQLITE_DATETIME_FORMATTER));
             statement.setFloat(3, weight.getValue());
             if (!StringUtils.isNullOrEmpty(weight.getComment())) {
