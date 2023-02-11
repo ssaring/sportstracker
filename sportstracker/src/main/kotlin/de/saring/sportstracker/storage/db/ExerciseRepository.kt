@@ -13,6 +13,8 @@ import java.lang.UnsupportedOperationException
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.SQLException
+import java.sql.Statement
+import java.sql.Types
 import java.util.logging.Logger
 
 /**
@@ -56,10 +58,6 @@ class ExerciseRepository(
         throw UnsupportedOperationException("Use readAll(List<SportType>) for reading all Exercises!")
     }
 
-    override fun readById(entryId: Long): Exercise {
-        throw UnsupportedOperationException("Use readById(Int, List<SportType>) for reading an Exercise!")
-    }
-
     override val entityName = "Exercise"
 
     override val tableName = "EXERCISE"
@@ -82,13 +80,58 @@ class ExerciseRepository(
         return exercise
     }
 
-    override fun executeUpdate(entry: Exercise) {
-        // TODO
-        throw UnsupportedOperationException("TODO")
+    override fun executeCreate(entry: Exercise): Exercise {
+        connection.prepareStatement("INSERT INTO EXERCISE " +
+                "(DATE_TIME, SPORT_TYPE_ID, SPORT_SUBTYPE_ID, INTENSITY, DURATION, DISTANCE, AVG_SPEED, " +
+                "AVG_HEARTRATE, ASCENT, DESCENT, CALORIES, HRM_FILE, EQUIPMENT_ID, COMMENT) VALUES " +
+                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            Statement.RETURN_GENERATED_KEYS
+        ).use { statement ->
+            statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
+            statement.setLong(2, entry.sportType.id!!)
+            statement.setLong(3, entry.sportSubType.id!!)
+            statement.setString(4, entry.intensity.name)
+            statement.setInt(5, entry.duration)
+            statement.setFloat(6, entry.distance)
+            statement.setFloat(7, entry.avgSpeed)
+            statement.setInt(8, entry.avgHeartRate)
+            statement.setInt(9, entry.ascent)
+            statement.setInt(10, entry.descent)
+            statement.setInt(11, entry.calories)
+            statement.setString(12, entry.hrmFile)
+            statement.setObject(13, entry.equipment?.id, Types.INTEGER);
+            statement.setString(14, entry.comment)
+            statement.executeUpdate()
+
+            val rs = statement.generatedKeys
+            rs.next()
+            val exerciseId = rs.getLong(1)
+            return readById(exerciseId)
+        }
     }
 
-    override fun executeCreate(entry: Exercise): Exercise {
-        // TODO
-        throw UnsupportedOperationException("TODO")
+    override fun executeUpdate(entry: Exercise) {
+        connection.prepareStatement("UPDATE EXERCISE SET " +
+                "DATE_TIME = ?, SPORT_TYPE_ID = ?, SPORT_SUBTYPE_ID = ?, INTENSITY = ?, DURATION = ?, " +
+                "DISTANCE = ?, AVG_SPEED = ?, AVG_HEARTRATE = ?, ASCENT = ?, DESCENT = ?, " +
+                "CALORIES = ?, HRM_FILE = ?, EQUIPMENT_ID = ?, COMMENT = ? WHERE ID = ?"
+        ).use { statement ->
+            statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
+            statement.setLong(2, entry.sportType.id!!)
+            statement.setLong(3, entry.sportSubType.id!!)
+            statement.setString(4, entry.intensity.name)
+            statement.setInt(5, entry.duration)
+            statement.setFloat(6, entry.distance)
+            statement.setFloat(7, entry.avgSpeed)
+            statement.setInt(8, entry.avgHeartRate)
+            statement.setInt(9, entry.ascent)
+            statement.setInt(10, entry.descent)
+            statement.setInt(11, entry.calories)
+            statement.setString(12, entry.hrmFile)
+            statement.setObject(13, entry.equipment?.id, Types.INTEGER);
+            statement.setString(14, entry.comment)
+            statement.setLong(15, entry.id!!)
+            statement.executeUpdate()
+        }
     }
 }

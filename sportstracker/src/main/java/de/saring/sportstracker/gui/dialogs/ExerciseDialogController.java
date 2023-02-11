@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.saring.exerciseviewer.data.SportTypeFit;
+import de.saring.sportstracker.core.STException;
 import jakarta.inject.Inject;
 
 import de.saring.util.gui.javafx.FxWorkarounds;
@@ -229,15 +229,25 @@ public class ExerciseDialogController extends AbstractDialogController {
 
     @Override
     protected boolean validateAndStore() {
-        final Exercise newExercise = exerciseViewModel.getExercise();
+        Exercise newExercise = exerciseViewModel.getExercise();
 
         if (!checkForNoEquipmentSelection(newExercise)) {
             return false;
         }
 
         // store the new Exercise, no further validation needed
-        document.getExerciseList().set(newExercise);
-        return true;
+        try {
+            if (newExercise.getId() == null) {
+                newExercise = document.getStorage().getExerciseRepository().create(newExercise);
+            } else {
+                document.getStorage().getExerciseRepository().update(newExercise);
+            }
+            document.updateApplicationData(newExercise);
+            return true;
+        } catch (STException e) {
+            LOGGER.log(Level.SEVERE, "Failed to store Exercise '" + newExercise.getId() + "'!", e);
+            return false;
+        }
     }
 
     private boolean checkForNoEquipmentSelection(Exercise exercise) {

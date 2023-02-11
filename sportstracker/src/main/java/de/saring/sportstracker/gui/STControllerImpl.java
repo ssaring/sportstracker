@@ -768,7 +768,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @return the created Exercise
      */
     private Exercise createNewExercise(final LocalDate date) {
-        final Exercise exercise = new Exercise(document.getExerciseList().getNewId());
+        final Exercise exercise = new Exercise(null);
         exercise.setDateTime(Date310Utils.getNoonDateTimeForDate(date));
         exercise.setIntensity(Exercise.IntensityType.NORMAL);
 

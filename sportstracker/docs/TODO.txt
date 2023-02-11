@@ -7,7 +7,7 @@ SQLite migration:
   - STDocument contains all application data for read access, will be read on application start
     -> no further database queries for displaying, search, filter etc. needed
   - all data modification is done via the specific repositories, not in the lists handled by STDocument
-    -> STDocumment:updateApplicationData() needs to be called manually after every application data change
+    -> STDocument:updateApplicationData() needs to be called manually after every application data change
        -> STDocument will reload all application data for read access and notify all views for updates
        -> STDocument will mark the application data as dirty
   - advantages:
@@ -28,13 +28,10 @@ SQLite migration:
       - Converted all data in 5 msec
     - loading of all data from XML: 350 msec => similar to opening SQLite database and read from there
   - DB schema version is validated on startup
-  - Add/Edit/Delete actions for Note and Weight entries are executed in DBStorage,
+  - Add/Edit/Delete actions for Note, Weight and Exercise entries are executed in DBStorage,
     all views are updated properly afterwards
   - committing database changes works properly
 - TODO:
-  - implement CRUD methods in ExerciseRepository and their usage
-    - deletion works for all entries properly
-    - make use of those CRUD actions in the application edit actions, don't modify the STDocument lists anymore
   - see TODOs in repository classes
   - DbStorage + Repository unit tests
   - remove all change listeners from IdObjectList, is now done by the ApplicationDataChangeListeners in STDocument
