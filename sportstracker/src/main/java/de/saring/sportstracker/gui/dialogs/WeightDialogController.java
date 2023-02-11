@@ -1,7 +1,10 @@
 package de.saring.sportstracker.gui.dialogs;
 
 import java.time.LocalTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import de.saring.sportstracker.core.STException;
 import de.saring.util.gui.javafx.FxWorkarounds;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -31,6 +34,8 @@ import de.saring.util.gui.javafx.TimeToStringConverter;
  * @author Stefan Saring
  */
 public class WeightDialogController extends AbstractDialogController {
+
+    private static final Logger LOGGER = Logger.getLogger(WeightDialogController.class.getName());
 
     private final STDocument document;
 
@@ -73,8 +78,7 @@ public class WeightDialogController extends AbstractDialogController {
     public void show(final Window parent, final Weight weight) {
         this.weightViewModel = new WeightViewModel(weight, document.getOptions().getUnitSystem());
 
-        final boolean newWeight = document.getWeightList().getByID(weight.getId()) == null;
-        final String dlgTitleKey = newWeight ? "st.dlg.weight.title.add" : "st.dlg.weight.title";
+        final String dlgTitleKey = weight.getId() == null ? "st.dlg.weight.title.add" : "st.dlg.weight.title";
         final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
         showEditDialog("/fxml/dialogs/WeightDialog.fxml", parent, dlgTitle);
@@ -114,10 +118,20 @@ public class WeightDialogController extends AbstractDialogController {
 
     @Override
     protected boolean validateAndStore() {
-
         // store the new Weight, no further validation needed
-        final Weight newWeight = weightViewModel.getWeight();
-        document.getWeightList().set(newWeight);
-        return true;
+        Weight newWeight = weightViewModel.getWeight();
+
+        try {
+            if (newWeight.getId() == null) {
+                newWeight = document.getStorage().getWeightRepository().create(newWeight);
+            } else {
+                document.getStorage().getWeightRepository().update(newWeight);
+            }
+            document.updateApplicationData(newWeight);
+            return true;
+        } catch (STException e) {
+            LOGGER.log(Level.SEVERE, "Failed to store Weight '" + newWeight.getId() + "'!", e);
+            return false;
+        }
     }
 }

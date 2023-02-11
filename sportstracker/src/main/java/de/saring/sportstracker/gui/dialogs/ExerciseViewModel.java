@@ -37,7 +37,7 @@ import de.saring.util.unitcalc.SpeedMode;
  */
 public class ExerciseViewModel {
 
-    private final int id;
+    private final Integer id;
     private final FormatUtils formatUtils;
 
     public final ObjectProperty<LocalDate> date;

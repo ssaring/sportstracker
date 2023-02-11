@@ -110,7 +110,7 @@ public final class Exercise extends Entry implements Cloneable {
      *
      * @param id the ID of the object
      */
-    public Exercise(int id) {
+    public Exercise(Integer id) {
         super(id);
     }
 

@@ -313,7 +313,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     @Override
     public void onAddWeight(final ActionEvent event) {
         // start Weight dialog for a new created Weight
-        final Weight newWeight = new Weight(document.getWeightList().getNewId());
+        final Weight newWeight = new Weight(null);
         newWeight.setDateTime(Date310Utils.getNoonDateTimeForDate(dateForNewEntries));
 
         // initialize with the weight value of previous entry (if there is some)

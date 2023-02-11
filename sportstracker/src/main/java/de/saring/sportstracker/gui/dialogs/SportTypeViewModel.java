@@ -23,7 +23,7 @@ import de.saring.util.data.IdObjectList;
  */
 public class SportTypeViewModel {
 
-    public final int id;
+    public final Integer id;
     public final StringProperty name;
     public final BooleanProperty recordDistance;
     public final ObjectProperty<SpeedModeItem> speedMode;

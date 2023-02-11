@@ -177,8 +177,7 @@ public class ExerciseDialogController extends AbstractDialogController {
             exerciseViewModel.equipment.set(equipmentNone);
         }
 
-        final boolean newExercise = document.getExerciseList().getByID(exercise.getId()) == null;
-        final String dlgTitleKey = newExercise ? "st.dlg.exercise.title.add" : "st.dlg.exercise.title";
+        final String dlgTitleKey = exercise.getId() == null ? "st.dlg.exercise.title.add" : "st.dlg.exercise.title";
         final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
         showEditDialog("/fxml/dialogs/ExerciseDialog.fxml", parent, dlgTitle);

@@ -38,7 +38,6 @@ class WeightRepository(
         ).use { statement ->
             statement.setString(1, RepositoryUtil.dateTimeToString(weight.dateTime))
             statement.setFloat(2, weight.value)
-            // TODO test that persisted string is null in DB when no comment is given
             statement.setString(3, weight.comment)
             statement.executeUpdate()
 
@@ -54,7 +53,6 @@ class WeightRepository(
         ).use { statement ->
             statement.setString(1, RepositoryUtil.dateTimeToString(weight.dateTime))
             statement.setFloat(2, weight.value)
-            // TODO test that persisted string is null in DB when no comment is given
             statement.setString(3, weight.comment)
             statement.setInt(4, weight.id!!)
             statement.executeUpdate()

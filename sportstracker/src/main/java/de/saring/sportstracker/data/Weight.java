@@ -17,7 +17,7 @@ public final class Weight extends Entry {
      *
      * @param id the ID of the object
      */
-    public Weight(int id) {
+    public Weight(Integer id) {
         super(id);
     }
 

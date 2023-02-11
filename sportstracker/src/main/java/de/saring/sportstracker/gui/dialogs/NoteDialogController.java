@@ -67,7 +67,7 @@ public class NoteDialogController extends AbstractDialogController {
     public void show(final Window parent, final Note note) {
         this.noteViewModel = new NoteViewModel(note);
 
-        final String dlgTitleKey = note.getComment() == null ? "st.dlg.note.title.add" : "st.dlg.note.title";
+        final String dlgTitleKey = note.getId() == null ? "st.dlg.note.title.add" : "st.dlg.note.title";
         final String dlgTitle = context.getResources().getString(dlgTitleKey);
 
         showEditDialog("/fxml/dialogs/NoteDialog.fxml", parent, dlgTitle);
