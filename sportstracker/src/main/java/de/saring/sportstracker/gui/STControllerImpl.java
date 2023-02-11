@@ -824,7 +824,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private void copyExercise(final long exerciseID) {
         final var selectedExercise = document.getExerciseList().getByID(exerciseID);
 
-        final var copiedExercise = selectedExercise.clone(document.getExerciseList().getNewId());
+        final var copiedExercise = selectedExercise.clone(null);
         copiedExercise.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
         copiedExercise.setHrmFile(null);
 
@@ -840,7 +840,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private void copyNote(final long noteID) {
         final var selectedNote = document.getNoteList().getByID(noteID);
 
-        final var copiedNote = selectedNote.clone(document.getNoteList().getNewId());
+        final var copiedNote = selectedNote.clone(null);
         copiedNote.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
 
         // start note dialog for the copied note
@@ -855,7 +855,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private void copyWeight(final long weightID) {
         final var selectedWeight = document.getWeightList().getByID(weightID);
 
-        final var copiedWeight = selectedWeight.clone(document.getWeightList().getNewId());
+        final var copiedWeight = selectedWeight.clone(null);
         copiedWeight.setDateTime(Date310Utils.getNoonDateTimeForDate(null));
 
         // start weight dialog for the copied weight

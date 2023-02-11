@@ -20,7 +20,7 @@ SQLite migration:
     - STDocument:updateApplicationData() needs to be called manually on every application data change
     - all application data is reloaded after every change action (performance is good enough)
 - Status:
-  - all application data os read from SQLite database and displayed in SportsTracker
+  - all application data is read from SQLite database and displayed in SportsTracker
   - performance tests with production database export:
     - loading of all data from SQLite: 270 msec => very fast
       - Opened database in 156 msec
@@ -28,22 +28,19 @@ SQLite migration:
       - Converted all data in 5 msec
     - loading of all data from XML: 350 msec => similar to opening SQLite database and read from there
   - DB schema version is validated on startup
-  - Add/Edit/Delete actions for Note, Weight and Exercise entries are executed in DBStorage,
+  - Add/Edit/Delete/Clone actions for Note, Weight and Exercise entries are executed in DBStorage,
     all views are updated properly afterwards
   - committing database changes works properly
 - TODO:
-  - see TODOs in repository classes
-  - DbStorage + Repository unit tests
-  - remove all change listeners from IdObjectList, is now done by the ApplicationDataChangeListeners in STDocument
-  - is sorting by date in IdDateObjectList really needed? Might be for filter etc.
   - implement and test CRUD actions in SportTypeRepository and their usage
-  - implement CRUD actions in Weight/Exercise/SportType repositories
+  - DbStorage + Repository + RepositoryUtil unit tests
+  - is sorting by date in IdDateObjectList really needed? Might be for filter etc.
   - IdObjectList: remove set() and removeById() methods when all lists were migrated to DbStorage
+    - also remove ID generation methods
     - this lists has to be read only, only refill of lists should be possible
       -> data modification need to happen in the specific repositories
-  - see TODOs in STControllerImpl
+  - implement initial SQLite database creation when it does not exist yet
   - implement XML to SQLite data migration when SQLite database does not exist yet
-  - select added or modified entries in the current view (has worked before SQLite migration)
   - does SportType object needs to contain all SportSubTypes and Equipments?
     - add reverse relations instead? (SportSubtype and Equipment have SportType property)
     -> SportType objects would be more lean when dealing without lists (e.g. when referenced in Exercise)

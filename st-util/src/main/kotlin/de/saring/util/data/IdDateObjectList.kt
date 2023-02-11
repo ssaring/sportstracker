@@ -25,18 +25,14 @@ open class IdDateObjectList<T : IdDateObject> : IdObjectList<T>() {
         // remove the object in the list if it's already stored (same ID)
         idObjects.remove(t)
 
-        try {
-            // insert the object by date order (or add it to the end)
-            for (i in 0 until idObjects.size) {
-                if (t.dateTime.isBefore(idObjects[i].dateTime)) {
-                    idObjects.add(i, t)
-                    return
-                }
+        // insert the object by date order (or add it to the end)
+        for (i in 0 until idObjects.size) {
+            if (t.dateTime.isBefore(idObjects[i].dateTime)) {
+                idObjects.add(i, t)
+                return
             }
-            idObjects.add(t)
-        } finally {
-            notifyAllListChangelisteners(t)
         }
+        idObjects.add(t)
     }
 
     /**
@@ -50,8 +46,6 @@ open class IdDateObjectList<T : IdDateObject> : IdObjectList<T>() {
         idObjects.clear()
         idObjects.addAll(entries)
         idObjects.sortBy { it.dateTime }
-
-        notifyAllListChangelisteners(null)
     }
 
     /**

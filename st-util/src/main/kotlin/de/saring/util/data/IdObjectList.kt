@@ -7,7 +7,6 @@ import java.util.stream.Stream
  * This list contains unique instances of IdObject subclasses. It will never contain multiple instances with  the same
  * ID. It also provides useful methods for getting and removing instances by ID or by their index and for getting new
  * unique IDs.
- * Its possible to register IdObjectListChangeListener which will be informed each time the list content has changed.
  *
  * @param <T> the object type to store in this list, must be a subclass of IdObject
  *
@@ -19,11 +18,6 @@ open class IdObjectList<T : IdObject> : Iterable<T> {
      * Generic list of subclasses of IdObject. Only subclasses can directly access this list.
      */
     protected val idObjects = mutableListOf<T>()
-
-    /**
-     * List of listeners which will be notified on each list content change.
-     */
-    private val listChangeListeners = mutableListOf<IdObjectListChangeListener>()
 
     /**
      * This method returns an unique ID, which is not in use yet.
@@ -88,17 +82,13 @@ open class IdObjectList<T : IdObject> : Iterable<T> {
      */
     open fun set(t: T) {
 
-        try {
-            val index = idObjects.indexOf(t)
-            if (index >= 0) {
-                // replace old IdObject if there is one with the ID of the new one
-                this.idObjects[index] = t
-            } else {
-                // the object has a new ID => add to end of list
-                this.idObjects.add(t)
-            }
-        } finally {
-            notifyAllListChangelisteners(t)
+        val index = idObjects.indexOf(t)
+        if (index >= 0) {
+            // replace old IdObject if there is one with the ID of the new one
+            this.idObjects[index] = t
+        } else {
+            // the object has a new ID => add to end of list
+            this.idObjects.add(t)
         }
     }
 
@@ -109,10 +99,8 @@ open class IdObjectList<T : IdObject> : Iterable<T> {
      * @param entries list of IdObjects to store (must not be null, entries must not be null and all entries and must have a valid ID)
      */
     open fun clearAndAddAll(entries: List<T>) {
-
         idObjects.clear()
         idObjects.addAll(entries)
-        notifyAllListChangelisteners(null)
     }
 
     /**
@@ -127,10 +115,6 @@ open class IdObjectList<T : IdObject> : Iterable<T> {
         val idObject = getByID(id)
         if (idObject != null) {
             removed = this.idObjects.remove(idObject)
-        }
-
-        if (removed) {
-            notifyAllListChangelisteners(null)
         }
         return removed
     }
@@ -157,28 +141,9 @@ open class IdObjectList<T : IdObject> : Iterable<T> {
     fun stream(): Stream<T> = idObjects.stream()
 
     /**
-     * Adds the specified IdObjectListChangeListener to the list of listeners which will be notified on each list
-     * change.
-     *
-     * @param listener the IdObjectListChangeListener to add
-     */
-    fun addListChangeListener(listener: IdObjectListChangeListener) {
-        listChangeListeners.add(listener)
-    }
-
-    /**
      * Returns a string representation of this object.
      *
      * @return string with object content
      */
     override fun toString(): String = "${this.javaClass.name}: size=${idObjects.size}"
-
-    /**
-     * Notifies all registered listeners that the content of the list has been changed.
-     *
-     * @param changedObject the added / changed object (or null when removed or all objects changed)
-     */
-    protected fun notifyAllListChangelisteners(changedObject: IdObject?) {
-        listChangeListeners.forEach { it.listChanged(changedObject) }
-    }
 }
