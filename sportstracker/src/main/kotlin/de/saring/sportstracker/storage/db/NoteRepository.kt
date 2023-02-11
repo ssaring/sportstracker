@@ -33,13 +33,14 @@ class NoteRepository(
                 statement.setString(1, dateTimeToString(note.dateTime))
                 statement.setString(2, note.comment)
                 statement.executeUpdate()
-                val rs: ResultSet = statement.generatedKeys
+
+                val rs = statement.generatedKeys
                 rs.next()
-                val noteId: Int = rs.getInt(1)
+                val noteId = rs.getInt(1)
                 return readById(noteId)
             }
         } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_CREATE_ENTRY, "Failed to update Note with ID '${note.id}'!", e)
+            throw STException(STExceptionID.DBSTORAGE_CREATE_ENTRY, "Failed to create new Note!", e)
         }
     }
 
@@ -52,7 +53,7 @@ class NoteRepository(
             ).use { statement ->
                 statement.setString(1, dateTimeToString(note.dateTime))
                 statement.setString(2, note.comment)
-                statement.setInt(3, (note.id)!!)
+                statement.setInt(3, note.id!!)
                 statement.executeUpdate()
             }
         } catch (e: SQLException) {
