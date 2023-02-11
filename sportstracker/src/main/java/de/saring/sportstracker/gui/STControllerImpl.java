@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -15,6 +16,7 @@ import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.Entry;
 import de.saring.sportstracker.data.EntryList;
 import de.saring.sportstracker.storage.SQLiteExporter;
+import de.saring.sportstracker.storage.db.AbstractRepository;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
@@ -357,20 +359,24 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     public void onDeleteEntry(final ActionEvent event) {
         int[] selectedEntryIDs = null;
         EntryList<? extends Entry> entryList = null;
+        AbstractRepository repository = null;
 
         // get selected entry IDs and the type of their list
         if (currentViewController.getSelectedExerciseCount() > 0) {
             selectedEntryIDs = currentViewController.getSelectedExerciseIDs();
             entryList = document.getExerciseList();
+            repository = document.getStorage().getExerciseRepository();
         } else if (currentViewController.getSelectedNoteCount() > 0) {
             selectedEntryIDs = currentViewController.getSelectedNoteIDs();
             entryList = document.getNoteList();
+            repository = document.getStorage().getNoteRepository();
         } else if (currentViewController.getSelectedWeightCount() > 0) {
             selectedEntryIDs = currentViewController.getSelectedWeightIDs();
             entryList = document.getWeightList();
+            repository = document.getStorage().getWeightRepository();
         }
 
-        if (selectedEntryIDs != null && selectedEntryIDs.length > 0) {
+        if (selectedEntryIDs != null && selectedEntryIDs.length > 0 && repository != null) {
 
             // show confirmation dialog first
             final Optional<ButtonType> result = context.showConfirmationDialog(context.getPrimaryStage(), //
@@ -378,22 +384,13 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 // finally remove the entries
-                // TODO remove the special handling of Note entries once DB migration is done for other types as well
-                boolean isNote = currentViewController.getSelectedNoteCount() > 0;
-                if (isNote) {
-                    try {
-                        for (int id : selectedEntryIDs) {
-                            Note note = document.getNoteList().getByID(id);
-                            document.getStorage().getNoteRepository().delete(note);
-                        }
-                        document.updateApplicationData(null);
-                    } catch (STException e) {
-                        LOGGER.log(Level.SEVERE, "Failed to delete Notes!", e);
-                    }
-                } else {
+                try {
                     for (int id : selectedEntryIDs) {
-                        entryList.removeByID(id);
+                        repository.delete(id);
                     }
+                    document.updateApplicationData(null);
+                } catch (STException e) {
+                    LOGGER.log(Level.SEVERE, "Failed to delete the selected entries!", e);
                 }
             }
         }

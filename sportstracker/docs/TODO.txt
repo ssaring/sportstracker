@@ -32,8 +32,11 @@ SQLite migration:
   - committing database changes works properly
 - TODO:
   - implement CRUD methods in Weight/ExerciseRepository and their usage
+    - deletion works for all entries properly
     - make use of those CRUD actions in the application edit actions, don't modify the STDocument lists anymore
   - see TODOs in repository classes
+  - Fix existing unit tests
+  - DbStorage + Repository unit tests
   - remove all change listeners from IdObjectList, is now done by the ApplicationDataChangeListeners in STDocument
   - ID of IdObject needs to be an optional Long
     - adjust classes and tests

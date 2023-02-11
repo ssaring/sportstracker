@@ -54,16 +54,16 @@ abstract class AbstractRepository<T : IdObject>(
     }
 
     @Throws(STException::class)
-    fun delete(entry: T) {
-        logger.info("Deleting $entityName with ID '${entry.id}'")
+    fun delete(entryId: Int) {
+        logger.info("Deleting $entityName with ID '$entryId'")
 
         try {
             connection.prepareStatement("DELETE FROM $tableName WHERE ID = ?").use { statement ->
-                statement.setInt(1, (entry.id)!!)
+                statement.setInt(1, entryId)
                 statement.executeUpdate()
             }
         } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_DELETE_ENTRY, "Failed to delete $entityName with ID '${entry.id}'!", e)
+            throw STException(STExceptionID.DBSTORAGE_DELETE_ENTRY, "Failed to delete $entityName with ID '$entryId'!", e)
         }
     }
 
