@@ -54,6 +54,8 @@ SQLite migration:
     -> SportSubType and Equipment would always know their parent SportType
     -> Handling of persisted entities would be simpler when maintenance of lists is not needed anymore
 
+- Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
+
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"
   option of the operating system
