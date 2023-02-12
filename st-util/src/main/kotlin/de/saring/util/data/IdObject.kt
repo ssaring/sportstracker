@@ -12,16 +12,28 @@ import java.util.Objects
 abstract class IdObject(val id: Long?) {
 
     /**
-     * Compares the specified object with this object. The objects are equal when they are of the same type and when
-     * they have the same ID.
+     * Compares the specified object with this object. The objects are equal when they are of the same instance or when
+     * of same type and they have the same ID.
      *
      * @param other the object to compare with
      * @return true when same type and ID, false otherwise
      */
     override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
         return when(other) {
             null -> false
-            is IdObject -> this.javaClass == other.javaClass && this.id == other.id
+            is IdObject -> {
+                if (this.javaClass == other.javaClass) {
+                    return if (this.id == null && other.id == null) {
+                        this === other
+                    } else {
+                        this.id == other.id
+                    }
+                }
+                return false
+            }
             else -> this === other
         }
     }

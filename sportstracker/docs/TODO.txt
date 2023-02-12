@@ -32,12 +32,9 @@ SQLite migration:
     all views are updated properly afterwards
   - committing database changes works properly
 - TODO:
-  - implement and test CRUD actions in SportTypeRepository and their usage
-    - done for Add, Update and Delete!
-    - see TODOs in SportTypeRepository (testing and refactoring)
-    - Bugs in SportTypeDialogController when deleting sport subtypes or equipments which were not persisted yet
-      -> NPE because their ID is null
   - DbStorage + Repository + RepositoryUtil unit tests
+    - especially for the edge cases in SportTypeRepository::update()
+      -> check proper storage of SportSubTypes and Equipments and updates of Exercises
   - is sorting by date in IdDateObjectList really needed? Might be for filter etc.
   - IdObjectList: remove set() and removeById() methods when all lists were migrated to DbStorage
     - also remove ID generation methods

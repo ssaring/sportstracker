@@ -13,7 +13,9 @@ import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.dialogs.SportTypeDialogController.SpeedModeItem;
 import de.saring.util.StringUtils;
-import de.saring.util.data.IdObjectList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This ViewModel class provides JavaFX properties of all SportType attributes to be edited in the SportType dialog.
@@ -31,9 +33,8 @@ public class SportTypeViewModel {
     public final ObjectProperty<Color> color;
     public final ObjectProperty<FitMappingEntry> fitSportType;
 
-    // ObservableLists are not being used here, the dialog needs features of IdObjectList
-    public final IdObjectList<SportSubType> sportSubtypes;
-    public final IdObjectList<Equipment> equipments;
+    public final List<SportSubType> sportSubtypes;
+    public final List<Equipment> equipments;
 
     /**
      * Creates the SportTypeViewModel with JavaFX properties for the passed SportType object.
@@ -50,8 +51,8 @@ public class SportTypeViewModel {
         this.fitSportType = new SimpleObjectProperty<>(new FitMappingEntry(
                 sportType.getFitId() == null ? Integer.MAX_VALUE : sportType.getFitId(), ""));
 
-        this.sportSubtypes = sportType.getSportSubTypeList();
-        this.equipments = sportType.getEquipmentList();
+        this.sportSubtypes = new ArrayList<>(sportType.getSportSubTypeList().stream().toList());
+        this.equipments = new ArrayList<>(sportType.getEquipmentList().stream().toList());
     }
 
     /**

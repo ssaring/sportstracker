@@ -312,7 +312,7 @@ public class SportTypeDialogController extends AbstractDialogController {
                         && exercise.getSportSubType().equals(selectedSportSubtype))
                 .toList();
 
-        // when there are referenced exercises => these exercises needs to be deleted too
+        // when there are referenced exercises => these exercises needs to be deleted too (done later in storage)
         if (!lRefExercises.isEmpty()) {
 
             // show confirmation message box again
@@ -322,13 +322,10 @@ public class SportTypeDialogController extends AbstractDialogController {
             if (!resultDeleteExistingExercises.isPresent() || resultDeleteExistingExercises.get() != ButtonType.OK) {
                 return;
             }
-
-            // delete reference exercises
-            lRefExercises.forEach(exercise -> document.getExerciseList().removeByID(exercise.getId()));
         }
 
         // finally delete the sport subtype
-        sportTypeViewModel.sportSubtypes.removeByID(selectedSportSubtype.getId());
+        sportTypeViewModel.sportSubtypes.remove(selectedSportSubtype);
         updateSportSubtypeList();
     }
 
@@ -407,7 +404,12 @@ public class SportTypeDialogController extends AbstractDialogController {
                 } else {
                     // the name is OK, store the modified subtype and update the list
                     subType.setName(strName);
-                    sportTypeViewModel.sportSubtypes.set(subType);
+                    var subTypeListIndex = sportTypeViewModel.sportSubtypes.indexOf(subType);
+                    if (subTypeListIndex == -1) {
+                        sportTypeViewModel.sportSubtypes.add(subType);
+                    } else {
+                        sportTypeViewModel.sportSubtypes.set(subTypeListIndex, subType);
+                    }
                     updateSportSubtypeList();
                     return;
                 }
@@ -475,7 +477,7 @@ public class SportTypeDialogController extends AbstractDialogController {
                         && exercise.getEquipment() != null && exercise.getEquipment().equals(selectedEquipment))
                 .toList();
 
-        // when there are referenced exercises => the equipment must be deleted in those too
+        // when there are referenced exercises => the equipment must be deleted in those too (done later in storage)
         if (lRefExercises.size() > 0) {
 
             // show confirmation message box again
@@ -485,13 +487,10 @@ public class SportTypeDialogController extends AbstractDialogController {
             if (!resultDeleteEqInExercises.isPresent() || resultDeleteEqInExercises.get() != ButtonType.OK) {
                 return;
             }
-
-            // delete equipment in all exercises which use it
-            lRefExercises.forEach(exercise -> exercise.setEquipment(null));
         }
 
         // finally delete the equipment
-        sportTypeViewModel.equipments.removeByID(selectedEquipment.getId());
+        sportTypeViewModel.equipments.remove(selectedEquipment);
         updateEquipmentList();
     }
 
@@ -549,7 +548,12 @@ public class SportTypeDialogController extends AbstractDialogController {
                 } else {
                     // the name is OK, store the modified equipment and update the list
                     equipment.setName(strName);
-                    sportTypeViewModel.equipments.set(equipment);
+                    var equipmentIndex = sportTypeViewModel.equipments.indexOf(equipment);
+                    if (equipmentIndex == -1) {
+                        sportTypeViewModel.equipments.add(equipment);
+                    } else {
+                        sportTypeViewModel.equipments.set(equipmentIndex, equipment);
+                    }
                     updateEquipmentList();
                     return;
                 }

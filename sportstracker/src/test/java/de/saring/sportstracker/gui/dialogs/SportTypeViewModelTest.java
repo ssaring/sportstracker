@@ -78,8 +78,8 @@ public class SportTypeViewModelTest {
         viewModel.color.set(Color.color(1.0d, 0.5d, 0d));
         viewModel.fitSportType.set(new FitMappingEntry(Sport.RUNNING.getValue(), ""));
 
-        viewModel.sportSubtypes.removeByID(200);
-        viewModel.equipments.set(new Equipment(302L));
+        viewModel.sportSubtypes.remove(0);
+        viewModel.equipments.add(new Equipment(302L));
 
         SportType modifiedSportType = viewModel.getSportType();
         assertEquals("Bar Foo", modifiedSportType.getName());
