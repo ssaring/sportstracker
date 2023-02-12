@@ -10,7 +10,6 @@ import de.saring.sportstracker.storage.db.RepositoryUtil.getSportTypeById
 import de.saring.util.gui.javafx.ColorUtils
 import de.saring.util.unitcalc.SpeedMode
 import javafx.scene.paint.Color
-import java.lang.UnsupportedOperationException
 import java.sql.*
 import java.util.logging.Logger
 
@@ -85,11 +84,6 @@ class SportTypeRepository(
         }
     }
 
-    override fun executeUpdate(entry: SportType) {
-        // TODO
-        throw UnsupportedOperationException("TODO")
-    }
-
     override fun executeCreate(entry: SportType): SportType {
         var sportType: SportType
 
@@ -137,8 +131,39 @@ class SportTypeRepository(
                 statement.executeUpdate()
             }
         }
-        
+
         return sportType
+    }
+
+    override fun executeUpdate(entry: SportType) {
+        connection.prepareStatement("UPDATE SPORT_TYPE SET " +
+                "NAME = ?, RECORD_DISTANCE = ?, SPEED_MODE = ?, COLOR = ?, ICON = ?, FIT_ID = ? WHERE ID = ?"
+            ).use { statement ->
+            statement.setString(1, entry.getName())
+            statement.setBoolean(2, entry.isRecordDistance)
+            statement.setString(3, entry.speedMode.name)
+            statement.setString(4, if (entry.color == null) null else ColorUtils.toRGBCode(entry.color))
+            statement.setString(5, entry.icon)
+            statement.setObject(6, entry.fitId, Types.INTEGER);
+            statement.setLong(7, entry.id!!);
+            statement.executeUpdate()
+        }
+
+        // TODO update all contained sport subtypes
+        // - query for all deleted sport subtypes of this edited sport type in database
+        //   (sport subtypes in DB are not contained in the edited sport type anymore)
+        // - for each deleted sport subtype:
+        //   - delete all exercises which are using this sport subtypes
+        //   - delete the sport subtype
+        // - create or update all contained sport subtypes
+
+        // TODO update all contained equipments
+        // - query for all deleted equipments of this edited sport type in database
+        //   (equipments in DB are not contained in the edited sport type anymore)
+        // - for each deleted equipment:
+        //   - update all exercises which are using this equipment (set to null)
+        //   - delete the equipment
+        // - create or update all contained equipments
     }
 
     override fun executeDelete(entryId: Long) {

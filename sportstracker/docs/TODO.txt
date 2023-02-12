@@ -33,7 +33,7 @@ SQLite migration:
   - committing database changes works properly
 - TODO:
   - implement and test CRUD actions in SportTypeRepository and their usage
-    - done for Add and Delete, Update is missing
+    - done for Add and Delete, Update is not completed (see TODO in SportTypeRepository)
   - DbStorage + Repository + RepositoryUtil unit tests
   - is sorting by date in IdDateObjectList really needed? Might be for filter etc.
   - IdObjectList: remove set() and removeById() methods when all lists were migrated to DbStorage
