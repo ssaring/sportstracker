@@ -107,34 +107,15 @@ class SportTypeRepository(
         }
 
         // persist also all new sport subtypes
-        entry.sportSubTypeList.forEach { subType ->
-            connection.prepareStatement(
-                "INSERT INTO SPORT_SUBTYPE (SPORT_TYPE_ID, NAME, FIT_ID) VALUES (?, ?, ?)",
-                Statement.RETURN_GENERATED_KEYS
-            ).use { statement ->
-                statement.setLong(1, sportType.id!!)
-                statement.setString(2, subType.getName())
-                statement.setObject(3, subType.fitId, Types.INTEGER);
-                statement.executeUpdate()
-            }
-        }
-
+        entry.sportSubTypeList.forEach { createSportSubType(it, sportType) }
         // persist also all new equipments
-        entry.equipmentList.forEach { equipment ->
-            connection.prepareStatement(
-                "INSERT INTO EQUIPMENT (SPORT_TYPE_ID, NAME, NOT_IN_USE) VALUES (?, ?, ?)",
-                Statement.RETURN_GENERATED_KEYS
-            ).use { statement ->
-                statement.setLong(1, sportType.id!!)
-                statement.setString(2, equipment.getName())
-                statement.setBoolean(3, equipment.isNotInUse);
-                statement.executeUpdate()
-            }
-        }
+        entry.equipmentList.forEach { createEquipment(it, sportType) }
 
         return sportType
     }
 
+    // TODO manual testing for all edge cases (all initial tests were fine)
+    // TODO refactoring of this huge method
     override fun executeUpdate(entry: SportType) {
         connection.prepareStatement("UPDATE SPORT_TYPE SET " +
                 "NAME = ?, RECORD_DISTANCE = ?, SPEED_MODE = ?, COLOR = ?, ICON = ?, FIT_ID = ? WHERE ID = ?"
@@ -149,21 +130,83 @@ class SportTypeRepository(
             statement.executeUpdate()
         }
 
-        // TODO update all contained sport subtypes
-        // - query for all deleted sport subtypes of this edited sport type in database
-        //   (sport subtypes in DB are not contained in the edited sport type anymore)
-        // - for each deleted sport subtype:
-        //   - delete all exercises which are using this sport subtypes
-        //   - delete the sport subtype
-        // - create or update all contained sport subtypes
+        //  update sport subtypes ////////////////////////////////////////////////////
 
-        // TODO update all contained equipments
-        // - query for all deleted equipments of this edited sport type in database
-        //   (equipments in DB are not contained in the edited sport type anymore)
-        // - for each deleted equipment:
-        //   - update all exercises which are using this equipment (set to null)
-        //   - delete the equipment
-        // - create or update all contained equipments
+        // create list of IDs of all contained sport subtypes which were already created before (have an ID)
+        val stillExistingSportSubTypedIds = entry.sportSubTypeList
+            .filter { it.id != null }
+            .map { it.id }
+
+        // delete all exercises which are using sport subtypes which are not in the edited sport type anymore (confirmed by the user)
+        val sqlParamsStillExistingSportSubtyTypeIds = stillExistingSportSubTypedIds
+            .map { "?" }
+            .joinToString(", ")
+
+        connection.prepareStatement("DELETE FROM EXERCISE WHERE SPORT_SUBTYPE_ID IN (" +
+                "SELECT ID FROM SPORT_SUBTYPE WHERE SPORT_TYPE_ID = ? AND ID NOT IN ($sqlParamsStillExistingSportSubtyTypeIds))"
+        ).use { statement ->
+            statement.setLong(1, entry.id!!);
+            var paramIndex = 2
+            stillExistingSportSubTypedIds.forEach { statement.setLong(paramIndex++, it!!) }
+            statement.executeUpdate()
+        }
+
+        // delete all sport subtypes of this sport type which are not in the edited sport type anymore
+        connection.prepareStatement("DELETE FROM SPORT_SUBTYPE WHERE SPORT_TYPE_ID = ? AND ID NOT IN ($sqlParamsStillExistingSportSubtyTypeIds)"
+        ).use { statement ->
+            statement.setLong(1, entry.id!!);
+            var paramIndex = 2
+            stillExistingSportSubTypedIds.forEach { statement.setLong(paramIndex++, it!!) }
+            statement.executeUpdate()
+        }
+
+        // persist all contained sport subtypes (create new ones or update existing ones)
+        entry.sportSubTypeList.forEach { sportSubType ->
+            if (sportSubType.id == null) {
+                createSportSubType(sportSubType, entry)
+            } else {
+                updateSportSubType(sportSubType)
+            }
+        }
+
+        //  update equipments ////////////////////////////////////////////////////
+
+        // create list of IDs of all contained equipments which were already created before (have an ID)
+        val stillExistingEquipmentIds = entry.equipmentList
+            .filter { it.id != null }
+            .map { it.id }
+
+        // delete usage of equipments in all exercises which are not in the edited sport type anymore (confirmed by the user)
+        val sqlParamsStillExistingEquipmentIds = stillExistingEquipmentIds
+            .map { "?" }
+            .joinToString(", ")
+
+        connection.prepareStatement("UPDATE EXERCISE SET EQUIPMENT_ID = NULL WHERE EQUIPMENT_ID IN (" +
+                "SELECT ID FROM EQUIPMENT WHERE SPORT_TYPE_ID = ? AND ID NOT IN ($sqlParamsStillExistingEquipmentIds))"
+        ).use { statement ->
+            statement.setLong(1, entry.id!!);
+            var paramIndex = 2
+            stillExistingEquipmentIds.forEach { statement.setLong(paramIndex++, it!!) }
+            statement.executeUpdate()
+        }
+
+        // delete all equipments of this sport type which are not in the edited sport type anymore
+        connection.prepareStatement("DELETE FROM EQUIPMENT WHERE SPORT_TYPE_ID = ? AND ID NOT IN ($sqlParamsStillExistingEquipmentIds)"
+        ).use { statement ->
+            statement.setLong(1, entry.id!!);
+            var paramIndex = 2
+            stillExistingEquipmentIds.forEach { statement.setLong(paramIndex++, it!!) }
+            statement.executeUpdate()
+        }
+
+        // persist all contained equipments (create new ones or update existing ones)
+        entry.equipmentList.forEach { equipment ->
+            if (equipment.id == null) {
+                createEquipment(equipment, entry)
+            } else {
+                updateEquipment(equipment)
+            }
+        }
     }
 
     override fun executeDelete(entryId: Long) {
@@ -185,5 +228,53 @@ class SportTypeRepository(
         }
 
         super.executeDelete(entryId);
+    }
+
+    private fun createSportSubType(sportSubType: SportSubType, sportType: SportType) {
+        connection.prepareStatement(
+            "INSERT INTO SPORT_SUBTYPE (SPORT_TYPE_ID, NAME, FIT_ID) VALUES (?, ?, ?)",
+            Statement.RETURN_GENERATED_KEYS
+        ).use { statement ->
+            statement.setLong(1, sportType.id!!)
+            statement.setString(2, sportSubType.getName())
+            statement.setObject(3, sportSubType.fitId, Types.INTEGER);
+            statement.executeUpdate()
+        }
+    }
+
+    private fun updateSportSubType(sportSubType: SportSubType) {
+        connection.prepareStatement(
+            "UPDATE SPORT_SUBTYPE SET " +
+                    "NAME = ?, FIT_ID = ? WHERE ID = ?"
+        ).use { statement ->
+            statement.setString(1, sportSubType.getName())
+            statement.setObject(2, sportSubType.fitId, Types.INTEGER);
+            statement.setLong(3, sportSubType.id!!);
+            statement.executeUpdate()
+        }
+    }
+
+    private fun createEquipment(equipment: Equipment, sportType: SportType) {
+        connection.prepareStatement(
+            "INSERT INTO EQUIPMENT (SPORT_TYPE_ID, NAME, NOT_IN_USE) VALUES (?, ?, ?)",
+            Statement.RETURN_GENERATED_KEYS
+        ).use { statement ->
+            statement.setLong(1, sportType.id!!)
+            statement.setString(2, equipment.getName())
+            statement.setBoolean(3, equipment.isNotInUse);
+            statement.executeUpdate()
+        }
+    }
+
+    private fun updateEquipment(equipment: Equipment) {
+        connection.prepareStatement(
+            "UPDATE EQUIPMENT SET " +
+                    "NAME = ?, NOT_IN_USE = ? WHERE ID = ?"
+        ).use { statement ->
+            statement.setString(1, equipment.getName())
+            statement.setBoolean(2, equipment.isNotInUse);
+            statement.setLong(3, equipment.id!!);
+            statement.executeUpdate()
+        }
     }
 }
