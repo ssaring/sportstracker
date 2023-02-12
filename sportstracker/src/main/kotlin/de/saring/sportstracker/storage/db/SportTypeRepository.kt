@@ -95,4 +95,25 @@ class SportTypeRepository(
         // TODO
         throw UnsupportedOperationException("TODO")
     }
+
+    override fun executeDelete(entryId: Long) {
+        // SportType might be used in some Exercises, these need to be deleted before (confirmed by the user)
+        connection.prepareStatement("DELETE FROM EXERCISE WHERE SPORT_TYPE_ID = ?").use { statement ->
+            statement.setLong(1, entryId)
+            statement.executeUpdate()
+        }
+
+        // delete all equipments of this sport type
+        connection.prepareStatement("DELETE FROM EQUIPMENT WHERE SPORT_TYPE_ID = ?").use { statement ->
+            statement.setLong(1, entryId)
+            statement.executeUpdate()
+        }
+        // delete all sport subtypes of this sport type
+        connection.prepareStatement("DELETE FROM SPORT_SUBTYPE WHERE SPORT_TYPE_ID = ?").use { statement ->
+            statement.setLong(1, entryId)
+            statement.executeUpdate()
+        }
+
+        super.executeDelete(entryId);
+    }
 }

@@ -1,8 +1,10 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import de.saring.sportstracker.core.STException;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
@@ -18,7 +20,6 @@ import javafx.stage.Window;
 import jakarta.inject.Inject;
 import jakarta.inject.Provider;
 
-import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.SportType;
 import de.saring.sportstracker.gui.STContext;
 import de.saring.sportstracker.gui.STDocument;
@@ -30,6 +31,8 @@ import de.saring.util.gui.javafx.NameableListCell;
  * @author Stefan Saring
  */
 public class SportTypeListDialogController extends AbstractDialogController {
+
+    private static final Logger LOGGER = Logger.getLogger(SportTypeListDialogController.class.getName());
 
     private final STDocument document;
     private Provider<SportTypeDialogController> prSportTypeDialogController;
@@ -136,12 +139,11 @@ public class SportTypeListDialogController extends AbstractDialogController {
 
         // are there any existing exercises for this sport type?
         final SportType sportType = liSportTypes.getSelectionModel().getSelectedItem();
-        final List<Exercise> lRefExercises = document.getExerciseList().stream()
-                .filter(exercise -> exercise.getSportType().equals(sportType))
-                .toList();
+        final boolean isUsedInExercises = document.getExerciseList().stream()
+                .anyMatch(exercise -> exercise.getSportType().equals(sportType));
 
         // when there are referenced exercises => these exercises needs to be deleted too
-        if (!lRefExercises.isEmpty()) {
+        if (isUsedInExercises) {
 
             // show confirmation dialog for deleting exercises
             final Optional<ButtonType> resultDeleteExercises = context.showConfirmationDialog(getWindow(liSportTypes),
@@ -149,13 +151,15 @@ public class SportTypeListDialogController extends AbstractDialogController {
             if (!resultDeleteExercises.isPresent() || resultDeleteExercises.get() != ButtonType.OK) {
                 return;
             }
-
-            // delete reference exercises
-            lRefExercises.forEach(exercise -> document.getExerciseList().removeByID(exercise.getId()));
         }
 
         // finally delete the sport type
-        document.getSportTypeList().removeByID(sportType.getId());
+        try {
+            document.getStorage().getSportTypeRepository().delete(sportType.getId());
+            document.updateApplicationData(null);
+        } catch (STException e) {
+            LOGGER.log(Level.SEVERE, "Failed to delete the selected SportType '" + sportType.getId() + "'!", e);
+        }
         updateSportTypeList();
     }
 

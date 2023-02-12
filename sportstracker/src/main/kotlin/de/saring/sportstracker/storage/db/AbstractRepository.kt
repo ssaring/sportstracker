@@ -80,10 +80,7 @@ abstract class AbstractRepository<T : IdObject>(
         logger.info("Deleting $entityName with ID '$entryId'")
 
         try {
-            connection.prepareStatement("DELETE FROM $tableName WHERE ID = ?").use { statement ->
-                statement.setLong(1, entryId)
-                statement.executeUpdate()
-            }
+            executeDelete(entryId)
         } catch (e: SQLException) {
             throw STException(STExceptionID.DBSTORAGE_DELETE_ENTRY, "Failed to delete $entityName with ID '$entryId'!", e)
         }
@@ -98,4 +95,11 @@ abstract class AbstractRepository<T : IdObject>(
 
     protected abstract fun executeCreate(entry: T): T
     protected abstract fun executeUpdate(entry: T)
+
+    protected open fun executeDelete(entryId: Long) {
+        connection.prepareStatement("DELETE FROM $tableName WHERE ID = ?").use { statement ->
+            statement.setLong(1, entryId)
+            statement.executeUpdate()
+        }
+    }
 }

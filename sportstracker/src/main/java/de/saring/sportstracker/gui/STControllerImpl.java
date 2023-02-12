@@ -6,15 +6,12 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.saring.sportstracker.core.STException;
-import de.saring.sportstracker.data.Entry;
-import de.saring.sportstracker.data.EntryList;
 import de.saring.sportstracker.storage.SQLiteExporter;
 import de.saring.sportstracker.storage.db.AbstractRepository;
 import javafx.beans.property.BooleanProperty;
@@ -358,21 +355,17 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     @Override
     public void onDeleteEntry(final ActionEvent event) {
         long[] selectedEntryIDs = null;
-        EntryList<? extends Entry> entryList = null;
         AbstractRepository repository = null;
 
         // get selected entry IDs and the type of their list
         if (currentViewController.getSelectedExerciseCount() > 0) {
             selectedEntryIDs = currentViewController.getSelectedExerciseIDs();
-            entryList = document.getExerciseList();
             repository = document.getStorage().getExerciseRepository();
         } else if (currentViewController.getSelectedNoteCount() > 0) {
             selectedEntryIDs = currentViewController.getSelectedNoteIDs();
-            entryList = document.getNoteList();
             repository = document.getStorage().getNoteRepository();
         } else if (currentViewController.getSelectedWeightCount() > 0) {
             selectedEntryIDs = currentViewController.getSelectedWeightIDs();
-            entryList = document.getWeightList();
             repository = document.getStorage().getWeightRepository();
         }
 
