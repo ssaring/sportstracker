@@ -3,11 +3,14 @@ package de.saring.sportstracker.gui.dialogs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import com.garmin.fit.Sport;
 import com.garmin.fit.SubSport;
 import de.saring.exerciseviewer.parser.impl.garminfit.FitUtils;
+import de.saring.sportstracker.core.STException;
 import de.saring.util.AppResources;
 import de.saring.util.unitcalc.SpeedMode;
 import javafx.beans.binding.Bindings;
@@ -48,6 +51,8 @@ import de.saring.util.gui.javafx.NameableListCell;
  * @author Stefan Saring
  */
 public class SportTypeDialogController extends AbstractDialogController {
+
+    private static final Logger LOGGER = Logger.getLogger(SportTypeDialogController.class.getName());
 
     private final STDocument document;
 
@@ -211,10 +216,11 @@ public class SportTypeDialogController extends AbstractDialogController {
     protected boolean validateAndStore() {
 
         // make sure that the entered name is not in use by other sport types yet
-        final SportType editedSportType = sportTypeViewModel.getSportType();
+        SportType editedSportType = sportTypeViewModel.getSportType();
+        final var editedSportTypeName = editedSportType.getName();
         Optional<SportType> oSportTypeSameName = document.getSportTypeList().stream()
                 .filter(stTemp -> stTemp.getId() != sportTypeViewModel.id
-                        && stTemp.getName().equals(editedSportType.getName()))
+                        && stTemp.getName().equals(editedSportTypeName))
                 .findFirst();
 
         if (oSportTypeSameName.isPresent()) {
@@ -232,9 +238,19 @@ public class SportTypeDialogController extends AbstractDialogController {
             return false;
         }
 
-        // store the edited SportType in the documents list
-        document.getSportTypeList().set(editedSportType);
-        return true;
+        // store the edited SportType
+        try {
+            if (editedSportType.getId() == null) {
+                editedSportType = document.getStorage().getSportTypeRepository().create(editedSportType);
+            } else {
+                document.getStorage().getSportTypeRepository().update(editedSportType);
+            }
+            document.updateApplicationData(editedSportType);
+            return true;
+        } catch (STException e) {
+            LOGGER.log(Level.SEVERE, "Failed to store SportType '" + editedSportType.getId() + "'!", e);
+            return false;
+        }
     }
 
     private void updateSportSubtypeList() {

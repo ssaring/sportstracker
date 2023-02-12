@@ -7,12 +7,11 @@ import de.saring.sportstracker.data.SportSubType
 import de.saring.sportstracker.data.SportType
 import de.saring.sportstracker.storage.db.RepositoryUtil.getIntegerOrNull
 import de.saring.sportstracker.storage.db.RepositoryUtil.getSportTypeById
+import de.saring.util.gui.javafx.ColorUtils
 import de.saring.util.unitcalc.SpeedMode
 import javafx.scene.paint.Color
 import java.lang.UnsupportedOperationException
-import java.sql.Connection
-import java.sql.ResultSet
-import java.sql.SQLException
+import java.sql.*
 import java.util.logging.Logger
 
 
@@ -92,8 +91,54 @@ class SportTypeRepository(
     }
 
     override fun executeCreate(entry: SportType): SportType {
-        // TODO
-        throw UnsupportedOperationException("TODO")
+        var sportType: SportType
+
+        connection.prepareStatement(
+            "INSERT INTO SPORT_TYPE " +
+                    "(NAME, RECORD_DISTANCE, SPEED_MODE, COLOR, ICON, FIT_ID) VALUES (?, ?, ?, ?, ?, ?)",
+            Statement.RETURN_GENERATED_KEYS
+        ).use { statement ->
+            statement.setString(1, entry.getName())
+            statement.setBoolean(2, entry.isRecordDistance)
+            statement.setString(3, entry.speedMode.name)
+            statement.setString(4, if (entry.color == null) null else ColorUtils.toRGBCode(entry.color))
+            statement.setString(5, entry.icon)
+            statement.setObject(6, entry.fitId, Types.INTEGER);
+            statement.executeUpdate()
+
+            val rs = statement.generatedKeys
+            rs.next()
+            val sportTypeId = rs.getLong(1)
+            sportType = readById(sportTypeId)
+        }
+
+        // persist also all new sport subtypes
+        entry.sportSubTypeList.forEach { subType ->
+            connection.prepareStatement(
+                "INSERT INTO SPORT_SUBTYPE (SPORT_TYPE_ID, NAME, FIT_ID) VALUES (?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS
+            ).use { statement ->
+                statement.setLong(1, sportType.id!!)
+                statement.setString(2, subType.getName())
+                statement.setObject(3, subType.fitId, Types.INTEGER);
+                statement.executeUpdate()
+            }
+        }
+
+        // persist also all new equipments
+        entry.equipmentList.forEach { equipment ->
+            connection.prepareStatement(
+                "INSERT INTO EQUIPMENT (SPORT_TYPE_ID, NAME, NOT_IN_USE) VALUES (?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS
+            ).use { statement ->
+                statement.setLong(1, sportType.id!!)
+                statement.setString(2, equipment.getName())
+                statement.setBoolean(3, equipment.isNotInUse);
+                statement.executeUpdate()
+            }
+        }
+        
+        return sportType
     }
 
     override fun executeDelete(entryId: Long) {
