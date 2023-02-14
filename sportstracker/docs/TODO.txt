@@ -35,11 +35,15 @@ SQLite migration:
   - DbStorage + Repository + RepositoryUtil unit tests
     - especially for the edge cases in SportTypeRepository::update()
       -> check proper storage of SportSubTypes and Equipments and updates of Exercises
+    - use in-memory database for testing => https://www.sqlite.org/inmemorydb.html
   - is sorting by date in IdDateObjectList really needed? Might be for filter etc.
   - IdObjectList: remove set() and removeById() methods when all lists were migrated to DbStorage
     - also remove ID generation methods
     - this lists has to be read only, only refill of lists should be possible
       -> data modification need to happen in the specific repositories
+  - Exercise Class: make optional properties nullable (ascent, descent, heartrate, calories)
+    - database schema update needed?
+    - remove workarounds in dialogs, statistics etc (no values when value is '0')
   - implement initial SQLite database creation when it does not exist yet
   - implement XML to SQLite data migration when SQLite database does not exist yet
   - does SportType object needs to contain all SportSubTypes and Equipments?
