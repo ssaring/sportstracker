@@ -28,6 +28,7 @@ class DbStorage {
         LOGGER.info("Opening database $dbFilename")
         val jdbcUrl = "jdbc:sqlite:$dbFilename"
 
+        // open database connection (new database file will be created if it doesn't exist yet)
         try {
             connection = DriverManager.getConnection(jdbcUrl)
             // AutoCommit is default for SQLite, use own TX management instead
@@ -36,7 +37,13 @@ class DbStorage {
             throw STException(STExceptionID.DBSTORAGE_OPEN_DATABASE, "Failed to open SQLite database '$jdbcUrl'!", e)
         }
 
-        validateSchemaVersion()
+        // create database schema if new database or validate schema version for an existing database
+        if (isNewDatabase()) {
+            createSchema()
+        } else {
+            validateSchemaVersion()
+        }
+
         noteRepository = NoteRepository(connection)
         weightRepository = WeightRepository(connection)
         exerciseRepository = ExerciseRepository(connection)
@@ -67,7 +74,35 @@ class DbStorage {
         }
     }
 
+    private fun isNewDatabase(): Boolean {
+        try {
+            // check by existence of database table 'META'
+            connection.prepareStatement("SELECT name FROM sqlite_master WHERE TYPE='table' AND NAME='META'").use { statement ->
+                val rs = statement.executeQuery()
+                return !rs.next()
+            }
+        } catch (e: SQLException) {
+            throw STException(STExceptionID.DBSTORAGE_INVALID_SCHEMA, "Failed to check whether database is new!", e)
+        }
+    }
+
+    private fun createSchema() {
+        LOGGER.info("Creating database schema")
+
+        try {
+            val schemaText = DbStorage.javaClass.getResource(SCHEMA_FILE).readText()
+            connection.createStatement().use { statement ->
+                statement.executeUpdate(schemaText)
+            }
+            connection.commit()
+        } catch (e: Exception) {
+            throw STException(STExceptionID.DBSTORAGE_CREATE_SCHEMA, "Failed to create database schema!", e)
+        }
+    }
+
     private fun validateSchemaVersion() {
+        LOGGER.info("Validating existing database schema")
+
         try {
             connection.prepareStatement("SELECT SCHEMA_VERSION FROM META").use { statement ->
                 val rs = statement.executeQuery()
@@ -87,6 +122,8 @@ class DbStorage {
 
     companion object {
         private val LOGGER = Logger.getLogger(NoteRepository::class.java.name)
+
+        private const val SCHEMA_FILE = "/sql/st-schema.sql";
         private const val SCHEMA_VERSION = 1
     }
 }

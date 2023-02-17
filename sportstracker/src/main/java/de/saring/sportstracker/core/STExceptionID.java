@@ -49,6 +49,10 @@ public enum STExceptionID {
      */
     DBSTORAGE_OPEN_DATABASE,
     /**
+     * failed to create schema in new database
+     */
+    DBSTORAGE_CREATE_SCHEMA,
+    /**
      * failed to close SportsTracker SQLite database
      */
     DBSTORAGE_CLOSE_DATABASE,

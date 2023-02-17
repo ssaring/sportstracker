@@ -636,22 +636,26 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      */
     private void addInitialSportTypesIfMissing() {
         if (document.getSportTypeList().size() == 0) {
+            try {
+                addInitialSportType("st.initial_sporttypes.cycling", SpeedMode.SPEED, Color.DARKBLUE, //
+                        "st.initial_sporttypes.cycling.mtb_tour", "st.initial_sporttypes.cycling.mtb_race", //
+                        "st.initial_sporttypes.cycling.road_tour", "st.initial_sporttypes.cycling.road_race");
 
-            addInitialSportType("st.initial_sporttypes.cycling", SpeedMode.SPEED, Color.DARKBLUE, //
-                    "st.initial_sporttypes.cycling.mtb_tour", "st.initial_sporttypes.cycling.mtb_race", //
-                    "st.initial_sporttypes.cycling.road_tour", "st.initial_sporttypes.cycling.road_race");
+                addInitialSportType("st.initial_sporttypes.running", SpeedMode.PACE, Color.FIREBRICK, //
+                        "st.initial_sporttypes.running.street_run", "st.initial_sporttypes.running.street_race", //
+                        "st.initial_sporttypes.running.trail_run", "st.initial_sporttypes.running.trail_race");
 
-            addInitialSportType("st.initial_sporttypes.running", SpeedMode.PACE, Color.FIREBRICK, //
-                    "st.initial_sporttypes.running.street_run", "st.initial_sporttypes.running.street_race", //
-                    "st.initial_sporttypes.running.trail_run", "st.initial_sporttypes.running.trail_race");
-
-            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
-                    "common.info", "st.main.info.initial_sporttypes_added");
+                document.updateApplicationData(null);
+                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
+                        "common.info", "st.main.info.initial_sporttypes_added");
+            } catch (STException e) {
+                LOGGER.log(Level.SEVERE, "Failed to create initial sport types!", e);
+            }
         }
     }
 
     /**
-     * Creates the specified sport type and stores it in the document list.
+     * Creates the specified sport type and stores it in the repository.
      *
      * @param nameKey key of the sport type name
      * @param speedMode speed mode
@@ -659,18 +663,18 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @param subtypeNameKeys list of keys for the sport subtype names
      */
     private void addInitialSportType(final String nameKey, final SpeedMode speedMode, final Color color,
-                                     final String... subtypeNameKeys) {
-        final SportType sportType = new SportType(document.getSportTypeList().getNewId());
+                                     final String... subtypeNameKeys) throws STException {
+        final SportType sportType = new SportType(null);
         sportType.setName(context.getResources().getString(nameKey));
         sportType.setSpeedMode(speedMode);
         sportType.setColor(color);
 
         for (String subtypeNameKey : subtypeNameKeys) {
-            final SportSubType sportSubtype = new SportSubType(sportType.getSportSubTypeList().getNewId());
+            final SportSubType sportSubtype = new SportSubType(null);
             sportSubtype.setName(context.getResources().getString(subtypeNameKey));
             sportType.getSportSubTypeList().set(sportSubtype);
         }
-        document.getSportTypeList().set(sportType);
+        document.getStorage().getSportTypeRepository().create(sportType);
     }
 
     /**

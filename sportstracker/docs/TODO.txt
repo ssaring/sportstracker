@@ -31,7 +31,11 @@ SQLite migration:
   - Add/Edit/Delete/Clone actions for Note, Weight and Exercise entries are executed in DBStorage,
     all views are updated properly afterwards
   - committing database changes works properly
+  - new database is created (including schema) when it does not exist yet
 - TODO:
+  - implement XML to SQLite data migration when SQLite database does not exist yet
+  - remove XML storage functionality
+  - remove SQLite Export functionality (incl. schema SQL, error codes, I18N resources?, etc)
   - DbStorage + Repository + RepositoryUtil unit tests
     - especially for the edge cases in SportTypeRepository::update()
       -> check proper storage of SportSubTypes and Equipments and updates of Exercises
@@ -41,8 +45,6 @@ SQLite migration:
     - also remove ID generation methods
     - this lists has to be read only, only refill of lists should be possible
       -> data modification need to happen in the specific repositories
-  - implement initial SQLite database creation when it does not exist yet
-  - implement XML to SQLite data migration when SQLite database does not exist yet
   - does SportType object needs to contain all SportSubTypes and Equipments?
     - add reverse relations instead? (SportSubtype and Equipment have SportType property)
     -> SportType objects would be more lean when dealing without lists (e.g. when referenced in Exercise)
