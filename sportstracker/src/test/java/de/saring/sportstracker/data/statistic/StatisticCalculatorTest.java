@@ -40,12 +40,13 @@ public class StatisticCalculatorTest {
         tempExercise.setSportSubType(sportSubType1);
         tempExercise.setDateTime(LocalDateTime.now());
         tempExercise.setIntensity(Exercise.IntensityType.NORMAL);
-        tempExercise.setDistance(20);
-        tempExercise.setAvgSpeed(20);
+        tempExercise.setDistance(20f);
+        tempExercise.setAvgSpeed(20f);
         tempExercise.setDuration(3600);
         tempExercise.setAscent(350);
         tempExercise.setDescent(330);
         tempExercise.setAvgHeartRate(138);
+        tempExercise.setCalories(830);
         lExercises.set(tempExercise);
 
         tempExercise = new Exercise(2L);
@@ -53,7 +54,7 @@ public class StatisticCalculatorTest {
         tempExercise.setSportSubType(sportSubType1);
         tempExercise.setDateTime(LocalDateTime.now());
         tempExercise.setIntensity(Exercise.IntensityType.NORMAL);
-        tempExercise.setDistance(6);
+        tempExercise.setDistance(6f);
         tempExercise.setAvgSpeed(8.2f);
         tempExercise.setDuration(2634);
         tempExercise.setAvgHeartRate(140);
@@ -65,8 +66,8 @@ public class StatisticCalculatorTest {
         tempExercise.setSportSubType(sportSubType1);
         tempExercise.setDateTime(LocalDateTime.now());
         tempExercise.setIntensity(Exercise.IntensityType.NORMAL);
-        tempExercise.setDistance(31);
-        tempExercise.setAvgSpeed(19);
+        tempExercise.setDistance(31f);
+        tempExercise.setAvgSpeed(19f);
         tempExercise.setDuration(5873);
         tempExercise.setAscent(310);
         tempExercise.setDescent(320);
@@ -81,9 +82,9 @@ public class StatisticCalculatorTest {
         tempExercise.setDistance(0);
         tempExercise.setAvgSpeed(0);
         tempExercise.setDuration(7200);
-        tempExercise.setAscent(0);
-        tempExercise.setDescent(0);
-        tempExercise.setCalories(830);
+        tempExercise.setAscent(null);
+        tempExercise.setDescent(null);
+        tempExercise.setCalories(null);
         lExercises.set(tempExercise);
     }
 
@@ -102,19 +103,19 @@ public class StatisticCalculatorTest {
         assertEquals(660, calculator.getTotalAscent());
         assertEquals(2340, calculator.getTotalCalories());
 
-        assertEquals(57 / 3f, calculator.getAvgDistance(), 0.01f);
-        assertEquals(47.2f / 3, calculator.getAvgSpeed(), 0.01f);
+        assertEquals(57 / 4f, calculator.getAvgDistance(), 0.01f);
+        assertEquals(47.2f / 4, calculator.getAvgSpeed(), 0.01f);
         assertEquals(19307 / 4, calculator.getAvgDuration());
-        assertEquals(660 / 4, calculator.getAvgAscent());
-        assertEquals(650 / 4, calculator.getAvgDescent());
+        assertEquals(660 / 2, calculator.getAvgAscent());
+        assertEquals(650 / 2, calculator.getAvgDescent());
         assertEquals(278 / 2, calculator.getAvgHeartRate());
         assertEquals(2340 / 3, calculator.getAvgCalories());
 
         assertEquals(0f, calculator.getMinDistance(), 0.001f);
         assertEquals(0f, calculator.getMinAvgSpeed(), 0.001f);
         assertEquals(2634, calculator.getMinDuration());
-        assertEquals(0, calculator.getMinAscent());
-        assertEquals(0, calculator.getMinDescent());
+        assertEquals(310, calculator.getMinAscent());
+        assertEquals(320, calculator.getMinDescent());
         assertEquals(138, calculator.getMinAvgHeartRate());
         assertEquals(620, calculator.getMinCalories());
 

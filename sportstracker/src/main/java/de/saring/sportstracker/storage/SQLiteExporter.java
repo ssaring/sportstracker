@@ -204,10 +204,18 @@ public class SQLiteExporter {
             statement.setInt(6, exercise.getDuration());
             statement.setFloat(7, exercise.getDistance());
             statement.setFloat(8, exercise.getAvgSpeed());
-            statement.setInt(9, exercise.getAvgHeartRate());
-            statement.setInt(10, exercise.getAscent());
-            statement.setInt(11, exercise.getDescent());
-            statement.setInt(12, exercise.getCalories());
+            if (exercise.getAvgHeartRate() != null) {
+                statement.setInt(9, exercise.getAvgHeartRate());
+            }
+            if (exercise.getAscent() != null) {
+                statement.setInt(10, exercise.getAscent());
+            }
+            if (exercise.getDescent() != null) {
+                statement.setInt(11, exercise.getDescent());
+            }
+            if (exercise.getCalories() != null) {
+                statement.setInt(12, exercise.getCalories());
+            }
             if (!StringUtils.isNullOrEmpty(exercise.getHrmFile())) {
                 statement.setString(13, exercise.getHrmFile());
             }

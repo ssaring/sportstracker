@@ -41,22 +41,22 @@ public final class Exercise extends Entry implements Cloneable {
     /**
      * Average heartrate of exercise in beats per minute (optional).
      */
-    private int avgHeartRate;
+    private Integer avgHeartRate;
 
     /**
      * Ascent (height meters) of exercise in meters (optional).
      */
-    private int ascent;
+    private Integer ascent;
 
     /**
      * Descent (height meters) of exercise in meters (optional).
      */
-    private int descent;
+    private Integer descent;
 
     /**
      * Amount of kCalories consumed (optional).
      */
-    private int calories;
+    private Integer calories;
 
     /**
      * Name of heart rate monitor file (optional).
@@ -162,35 +162,35 @@ public final class Exercise extends Entry implements Cloneable {
         this.avgSpeed = avgSpeed;
     }
 
-    public int getAvgHeartRate() {
+    public Integer getAvgHeartRate() {
         return avgHeartRate;
     }
 
-    public void setAvgHeartRate(int avgHeartRate) {
+    public void setAvgHeartRate(Integer avgHeartRate) {
         this.avgHeartRate = avgHeartRate;
     }
 
-    public int getAscent() {
+    public Integer getAscent() {
         return ascent;
     }
 
-    public void setAscent(int ascent) {
+    public void setAscent(Integer ascent) {
         this.ascent = ascent;
     }
 
-    public int getDescent() {
+    public Integer getDescent() {
         return descent;
     }
 
-    public void setDescent(int descent) {
+    public void setDescent(Integer descent) {
         this.descent = descent;
     }
 
-    public int getCalories() {
+    public Integer getCalories() {
         return calories;
     }
 
-    public void setCalories(int calories) {
+    public void setCalories(Integer calories) {
         this.calories = calories;
     }
 
@@ -258,5 +258,4 @@ public final class Exercise extends Entry implements Cloneable {
         sBuilder.append("  comment=").append(this.getComment()).append("]\n");
         return sBuilder.toString();
     }
-
 }

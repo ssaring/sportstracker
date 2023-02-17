@@ -448,9 +448,9 @@ public class OverviewDialogController extends AbstractDialogController {
             for (Exercise tempExercise : lExercises) {
                 sumDistance += tempExercise.getDistance();
                 sumDuration += tempExercise.getDuration();
-                sumAscent += tempExercise.getAscent();
-                sumDescent += tempExercise.getDescent();
-                sumCalories += tempExercise.getCalories();
+                sumAscent += tempExercise.getAscent() == null ? 0 : tempExercise.getAscent();
+                sumDescent += tempExercise.getDescent() == null ? 0: tempExercise.getDescent();
+                sumCalories += tempExercise.getCalories() == null ? 0 : tempExercise.getCalories();
             }
 
             // set value of time step depending on value type

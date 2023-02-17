@@ -5,6 +5,7 @@ import de.saring.sportstracker.core.STExceptionID
 import de.saring.sportstracker.data.Exercise
 import de.saring.sportstracker.data.SportType
 import de.saring.sportstracker.storage.db.RepositoryUtil.getEquipmentById
+import de.saring.sportstracker.storage.db.RepositoryUtil.getIntegerOrNull
 import de.saring.sportstracker.storage.db.RepositoryUtil.getLongOrNull
 import de.saring.sportstracker.storage.db.RepositoryUtil.getSportSubTypeById
 import de.saring.sportstracker.storage.db.RepositoryUtil.getSportTypeById
@@ -71,10 +72,10 @@ class ExerciseRepository(
         exercise.duration = rs.getInt("DURATION")
         exercise.distance = rs.getFloat("DISTANCE")
         exercise.avgSpeed = rs.getFloat("AVG_SPEED")
-        exercise.avgHeartRate = rs.getInt("AVG_HEARTRATE")
-        exercise.ascent = rs.getInt("ASCENT")
-        exercise.descent = rs.getInt("DESCENT")
-        exercise.calories = rs.getInt("CALORIES")
+        exercise.avgHeartRate = getIntegerOrNull(rs, "AVG_HEARTRATE")
+        exercise.ascent = getIntegerOrNull(rs, "ASCENT")
+        exercise.descent = getIntegerOrNull(rs, "DESCENT")
+        exercise.calories = getIntegerOrNull(rs, "CALORIES")
         exercise.hrmFile = rs.getString("HRM_FILE")
         exercise.comment = rs.getString("COMMENT")
         return exercise
@@ -94,10 +95,10 @@ class ExerciseRepository(
             statement.setInt(5, entry.duration)
             statement.setFloat(6, entry.distance)
             statement.setFloat(7, entry.avgSpeed)
-            statement.setInt(8, entry.avgHeartRate)
-            statement.setInt(9, entry.ascent)
-            statement.setInt(10, entry.descent)
-            statement.setInt(11, entry.calories)
+            statement.setObject(8, entry.avgHeartRate, Types.INTEGER)
+            statement.setObject(9, entry.ascent, Types.INTEGER)
+            statement.setObject(10, entry.descent, Types.INTEGER)
+            statement.setObject(11, entry.calories, Types.INTEGER)
             statement.setString(12, entry.hrmFile)
             statement.setObject(13, entry.equipment?.id, Types.INTEGER);
             statement.setString(14, entry.comment)
@@ -123,10 +124,10 @@ class ExerciseRepository(
             statement.setInt(5, entry.duration)
             statement.setFloat(6, entry.distance)
             statement.setFloat(7, entry.avgSpeed)
-            statement.setInt(8, entry.avgHeartRate)
-            statement.setInt(9, entry.ascent)
-            statement.setInt(10, entry.descent)
-            statement.setInt(11, entry.calories)
+            statement.setObject(8, entry.avgHeartRate, Types.INTEGER)
+            statement.setObject(9, entry.ascent, Types.INTEGER)
+            statement.setObject(10, entry.descent, Types.INTEGER)
+            statement.setObject(11, entry.calories, Types.INTEGER)
             statement.setString(12, entry.hrmFile)
             statement.setObject(13, entry.equipment?.id, Types.INTEGER);
             statement.setString(14, entry.comment)

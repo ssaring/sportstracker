@@ -207,7 +207,7 @@ public class ExerciseDialogController extends AbstractDialogController {
         btViewHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
         btImportHrmFile.disableProperty().bind(Bindings.isEmpty(tfHrmFile.textProperty()));
 
-        // don't display value '0' for optional inputs when no data available
+        // don't display value '0' for optional inputs when no data available (IntegerProperty can't handle null values)
         if (exerciseViewModel.ascent.get() == 0) {
             tfAscent.setText("");
         }

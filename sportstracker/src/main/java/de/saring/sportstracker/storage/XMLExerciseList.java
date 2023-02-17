@@ -203,16 +203,16 @@ public class XMLExerciseList {
             XMLUtils.addElement(eExercise, "avg-speed", String.valueOf(exercise.getAvgSpeed()));
 
             // create optional exercise elements
-            if (exercise.getAvgHeartRate() != 0) {
+            if (exercise.getAvgHeartRate() != null) {
                 XMLUtils.addElement(eExercise, "avg-heartrate", String.valueOf(exercise.getAvgHeartRate()));
             }
-            if (exercise.getAscent() != 0) {
+            if (exercise.getAscent() != null) {
                 XMLUtils.addElement(eExercise, "ascent", String.valueOf(exercise.getAscent()));
             }
-            if (exercise.getDescent() != 0) {
+            if (exercise.getDescent() != null) {
                 XMLUtils.addElement(eExercise, "descent", String.valueOf(exercise.getDescent()));
             }
-            if (exercise.getCalories() != 0) {
+            if (exercise.getCalories() != null) {
                 XMLUtils.addElement(eExercise, "calories", String.valueOf(exercise.getCalories()));
             }
             if (exercise.getHrmFile() != null) {

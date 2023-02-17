@@ -90,10 +90,11 @@ public class ExerciseViewModel {
         this.distance = new SimpleFloatProperty(exercise.getDistance());
         this.duration = new SimpleIntegerProperty(exercise.getDuration());
         this.equipment = new SimpleObjectProperty<>(exercise.getEquipment());
-        this.avgHeartRate = new SimpleIntegerProperty(exercise.getAvgHeartRate());
-        this.ascent = new SimpleIntegerProperty(exercise.getAscent());
-        this.descent = new SimpleIntegerProperty(exercise.getDescent());
-        this.calories = new SimpleIntegerProperty(exercise.getCalories());
+        // set optional Integer properties to 0 when value is null (IntegerProperty can't handle null values)
+        this.avgHeartRate = new SimpleIntegerProperty(exercise.getAvgHeartRate() == null ? 0 : exercise.getAvgHeartRate());
+        this.ascent = new SimpleIntegerProperty(exercise.getAscent() == null ? 0 : exercise.getAscent());
+        this.descent = new SimpleIntegerProperty(exercise.getDescent() == null ? 0 : exercise.getDescent());
+        this.calories = new SimpleIntegerProperty(exercise.getCalories() == null ? 0 : exercise.getCalories());
         this.hrmFile = new SimpleStringProperty(StringUtils.getTextOrEmptyString(exercise.getHrmFile()));
         this.comment = new SimpleStringProperty(StringUtils.getTextOrEmptyString(exercise.getComment()));
 
@@ -102,8 +103,8 @@ public class ExerciseViewModel {
         if (formatUtils.getUnitSystem() == UnitSystem.ENGLISH) {
             this.distance.set((float) ConvertUtils.convertKilometer2Miles(exercise.getDistance(), false));
             fAvgSpeed = (float) ConvertUtils.convertKilometer2Miles(fAvgSpeed, false);
-            this.ascent.set(ConvertUtils.convertMeter2Feet(exercise.getAscent()));
-            this.descent.set(ConvertUtils.convertMeter2Feet(exercise.getDescent()));
+            this.ascent.set(ConvertUtils.convertMeter2Feet(this.ascent.get()));
+            this.descent.set(ConvertUtils.convertMeter2Feet(this.descent.get()));
         }
 
         // convert avg speed value to string property by using the proper speed mode
@@ -147,6 +148,12 @@ public class ExerciseViewModel {
             exercise.setAscent(ConvertUtils.convertFeet2Meter(exercise.getAscent()));
             exercise.setDescent(ConvertUtils.convertFeet2Meter(exercise.getDescent()));
         }
+
+        // set optional Integer values to null when value is null (IntegerProperty can't handle null values)
+        exercise.setAvgHeartRate(exercise.getAvgHeartRate() == 0 ? null : exercise.getAvgHeartRate());
+        exercise.setAscent(exercise.getAscent() == 0 ? null : exercise.getAscent());
+        exercise.setDescent(exercise.getDescent() == 0 ? null : exercise.getDescent());
+        exercise.setCalories(exercise.getCalories() == 0 ? null : exercise.getCalories());
         return exercise;
     }
 

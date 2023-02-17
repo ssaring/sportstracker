@@ -229,9 +229,9 @@ public class XMLStorageTest {
         assertEquals(exe3.getIntensity(), Exercise.IntensityType.NORMAL);
         assertEquals(exe3.getDistance(), 61.5f, 0.01f);
         assertEquals(exe3.getAvgSpeed(), 21.3f, 0.01f);
-        assertEquals(exe3.getAvgHeartRate(), 0);
-        assertEquals(exe3.getAscent(), 0);
-        assertEquals(exe3.getCalories(), 0);
+        assertNull(exe3.getAvgHeartRate());
+        assertNull(exe3.getAscent());
+        assertNull(exe3.getCalories());
         assertNull(exe3.getHrmFile());
         assertNull(exe3.getEquipment());
         assertNull(exe3.getComment());

@@ -2,6 +2,7 @@ package de.saring.sportstracker.gui.dialogs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
@@ -108,6 +109,35 @@ public class ExerciseViewModelTest {
         assertEquals(LocalDateTime.of(2014, 10, 20, 14, 45, 0), modifiedExercise.getDateTime());
         assertEquals(150f, modifiedExercise.getDistance(), 0.0001f);
         assertEquals("Bar Foo", modifiedExercise.getComment());
+    }
+
+    /**
+     * Test of method getExercise() with optional Integer values set to null.
+     */
+    @Test
+    public void testGetExerciseWithOptionalNullValues() {
+
+        exercise.setAvgHeartRate(null);
+        exercise.setAscent(null);
+        exercise.setDescent(null);
+        exercise.setCalories(null);
+
+        ExerciseViewModel viewModel = new ExerciseViewModel(exercise,
+                new FormatUtils(UnitSystem.METRIC), SpeedMode.SPEED);
+
+        // test ViewModel, null values needs to be 0 there
+        assertEquals(Integer.valueOf(0), viewModel.avgHeartRate.getValue());
+        assertEquals(Integer.valueOf(0), viewModel.ascent.getValue());
+        assertEquals(Integer.valueOf(0), viewModel.descent.getValue());
+        assertEquals(Integer.valueOf(0), viewModel.calories.getValue());
+
+        // test created Exercise, all 0 values must be null
+        Exercise createdExercise = viewModel.getExercise();
+        assertNull(createdExercise.getAvgHeartRate());
+        assertNull(createdExercise.getAscent());
+        assertNull(createdExercise.getDescent());
+        assertNull(createdExercise.getCalories());
+
     }
 
     /**

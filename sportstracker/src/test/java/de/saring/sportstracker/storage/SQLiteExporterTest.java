@@ -85,8 +85,8 @@ public class SQLiteExporterTest {
         exercise.setSportType(sportType);
         exercise.setSportSubType(sportSubType);
         exercise.setIntensity(Exercise.IntensityType.HIGH);
-        exercise.setDistance(42);
-        exercise.setAvgSpeed(20);
+        exercise.setDistance(42f);
+        exercise.setAvgSpeed(20f);
         exercise.setDuration(7600);
         exercise.setAscent(321);
         exercise.setDescent(333);

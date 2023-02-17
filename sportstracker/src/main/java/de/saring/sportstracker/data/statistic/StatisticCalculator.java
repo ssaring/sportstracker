@@ -161,353 +161,259 @@ public class StatisticCalculator {
             return;
         }
 
-        double totalAvgSpeed = 0;
-        long totalHeartRate = 0;
+        // compute distance statistics
+        totalDistance = exercises.stream()
+                .mapToDouble(it -> it.getDistance())
+                .sum();
 
-        int numberOfExerciseWithDistance = 0;
-        int numberOfExercisesWithHeartRate = 0;
-        int numberOfExercisesWithCalories = 0;
+        minDistance = (float) exercises.stream()
+                .mapToDouble(it -> it.getDistance())
+                .min()
+                .orElse(0);
 
-        // start with 1st exercise for minimum values
-        Exercise firstExercise = exercises.getAt(0);
-        minDistance = firstExercise.getDistance();
-        minAvgSpeed = firstExercise.getAvgSpeed();
-        minDuration = firstExercise.getDuration();
-        minAscent = firstExercise.getAscent();
-        minDescent = firstExercise.getDescent();
-        minAvgHeartRate = firstExercise.getAvgHeartRate();
+        maxDistance = (float) exercises.stream()
+                .mapToDouble(it -> it.getDistance())
+                .max()
+                .orElse(0);
 
-        // process all exercises
-        for (Exercise currExercise : exercises) {
+        avgDistance = (float) exercises.stream()
+                .mapToDouble(it -> it.getDistance())
+                .average()
+                .orElse(0);
 
-            // count number of exercises with recorded distance
-            boolean fDistanceRecorded = currExercise.getDistance() > 0 && currExercise.getAvgSpeed() > 0;
-            if (fDistanceRecorded) {
-                numberOfExerciseWithDistance++;
-            }
+        // compute AVG speed statistics
+        minAvgSpeed = (float) exercises.stream()
+                .mapToDouble(it -> it.getAvgSpeed())
+                .min()
+                .orElse(0);
 
-            // calculate total values
-            totalDistance += currExercise.getDistance();
-            totalAvgSpeed += currExercise.getAvgSpeed();
-            totalDuration += currExercise.getDuration();
-            totalAscent += currExercise.getAscent();
-            totalDescent += currExercise.getDescent();
+        maxAvgSpeed = (float) exercises.stream()
+                .mapToDouble(it -> it.getAvgSpeed())
+                .max()
+                .orElse(0);
 
-            // include heartrate in statistic only when specified
-            if (currExercise.getAvgHeartRate() > 0) {
-                totalHeartRate += currExercise.getAvgHeartRate();
-                numberOfExercisesWithHeartRate++;
-            }
+        avgSpeed = (float) exercises.stream()
+                .mapToDouble(it -> it.getAvgSpeed())
+                .average()
+                .orElse(0);
 
-            // include calories in statistic only when specified
-            if (currExercise.getCalories() > 0) {
-                totalCalories += currExercise.getCalories();
-                numberOfExercisesWithCalories++;
-            }
+        // compute duration statistics
+        totalDuration = exercises.stream()
+                .mapToInt(it -> it.getDuration())
+                .sum();
 
-            // check for minimum values
-            if (currExercise.getDistance() < minDistance) {
-                minDistance = currExercise.getDistance();
-            }
+        minDuration = exercises.stream()
+                .mapToInt(it -> it.getDuration())
+                .min()
+                .orElse(0);
 
-            if (currExercise.getAvgSpeed() < minAvgSpeed) {
-                minAvgSpeed = currExercise.getAvgSpeed();
-            }
+        maxDuration = exercises.stream()
+                .mapToInt(it -> it.getDuration())
+                .max()
+                .orElse(0);
 
-            if (currExercise.getDuration() < minDuration) {
-                minDuration = currExercise.getDuration();
-            }
+        avgDuration = (int) exercises.stream()
+                .mapToInt(it -> it.getDuration())
+                .average()
+                .orElse(0);
 
-            if (currExercise.getAscent() < minAscent) {
-                minAscent = currExercise.getAscent();
-            }
+        // compute ascent statistics (optional values)
+        totalAscent = exercises.stream()
+                .filter(it -> it.getAscent() != null)
+                .mapToInt(it -> it.getAscent())
+                .sum();
 
-            if (currExercise.getDescent() < minDescent) {
-                minDescent = currExercise.getDescent();
-            }
+        minAscent = exercises.stream()
+                .filter(it -> it.getAscent() != null)
+                .mapToInt(it -> it.getAscent())
+                .min()
+                .orElse(0);
 
-            // avg heartrate value '0' needs to be ignored, it's not entered by user
-            if ((minAvgHeartRate <= 0) ||
-                    ((currExercise.getAvgHeartRate() > 0) &&
-                            (currExercise.getAvgHeartRate() < minAvgHeartRate))) {
-                minAvgHeartRate = currExercise.getAvgHeartRate();
-            }
+        maxAscent = exercises.stream()
+                .filter(it -> it.getAscent() != null)
+                .mapToInt(it -> it.getAscent())
+                .max()
+                .orElse(0);
 
-            // calories value '0' needs to be ignored, it's not entered by user
-            if ((minCalories <= 0) ||
-                    ((currExercise.getCalories() > 0) &&
-                            (currExercise.getCalories() < minCalories))) {
-                minCalories = currExercise.getCalories();
-            }
+        avgAscent = (int) exercises.stream()
+                .filter(it -> it.getAscent() != null)
+                .mapToInt(it -> it.getAscent())
+                .average()
+                .orElse(0);
 
-            // check for maximum values
-            if (currExercise.getDistance() > maxDistance) {
-                maxDistance = currExercise.getDistance();
-            }
+        // compute descent statistics (optional values)
+        totalDescent = exercises.stream()
+                .filter(it -> it.getDescent() != null)
+                .mapToInt(it -> it.getDescent())
+                .sum();
 
-            if (currExercise.getAvgSpeed() > maxAvgSpeed) {
-                maxAvgSpeed = currExercise.getAvgSpeed();
-            }
+        minDescent = exercises.stream()
+                .filter(it -> it.getDescent() != null)
+                .mapToInt(it -> it.getDescent())
+                .min()
+                .orElse(0);
 
-            if (currExercise.getDuration() > maxDuration) {
-                maxDuration = currExercise.getDuration();
-            }
+        maxDescent = exercises.stream()
+                .filter(it -> it.getDescent() != null)
+                .mapToInt(it -> it.getDescent())
+                .max()
+                .orElse(0);
 
-            if (currExercise.getAscent() > maxAscent) {
-                maxAscent = currExercise.getAscent();
-            }
+        avgDescent = (int) exercises.stream()
+                .filter(it -> it.getDescent() != null)
+                .mapToInt(it -> it.getDescent())
+                .average()
+                .orElse(0);
 
-            if (currExercise.getDescent() > maxDescent) {
-                maxDescent = currExercise.getDescent();
-            }
+        // compute AVG heartrate statistics (optional values)
+        minAvgHeartRate = exercises.stream()
+                .filter(it -> it.getAvgHeartRate() != null)
+                .mapToInt(it -> it.getAvgHeartRate())
+                .min()
+                .orElse(0);
 
-            if (currExercise.getAvgHeartRate() > maxAvgHeartRate) {
-                maxAvgHeartRate = currExercise.getAvgHeartRate();
-            }
+        maxAvgHeartRate = exercises.stream()
+                .filter(it -> it.getAvgHeartRate() != null)
+                .mapToInt(it -> it.getAvgHeartRate())
+                .max()
+                .orElse(0);
 
-            if (currExercise.getCalories() > maxCalories) {
-                maxCalories = currExercise.getCalories();
-            }
-        }
+        avgHeartRate = (int) exercises.stream()
+                .filter(it -> it.getAvgHeartRate() != null)
+                .mapToInt(it -> it.getAvgHeartRate())
+                .average()
+                .orElse(0);
 
-        // compute AVG distance values when such exercises were in the list
-        if (numberOfExerciseWithDistance > 0) {
-            avgDistance = (float) (totalDistance / numberOfExerciseWithDistance);
-            avgSpeed = (float) (totalAvgSpeed / numberOfExerciseWithDistance);
-        } else {
-            avgDistance = 0;
-            avgSpeed = 0;
-        }
+        // compute calories statistics (optional values)
+        totalCalories = exercises.stream()
+                .filter(it -> it.getCalories() != null)
+                .mapToInt(it -> it.getCalories())
+                .sum();
 
-        // compute AVG duration, ascent and descent
-        avgDuration = totalDuration / exerciseCount;
-        avgAscent = totalAscent / exerciseCount;
-        avgDescent = totalDescent / exerciseCount;
+        minCalories = exercises.stream()
+                .filter(it -> it.getCalories() != null)
+                .mapToInt(it -> it.getCalories())
+                .min()
+                .orElse(0);
 
-        // compute AVG heartrate only when it was specified in at least one exercise
-        if (numberOfExercisesWithHeartRate > 0) {
-            avgHeartRate = (int) (totalHeartRate / numberOfExercisesWithHeartRate);
-        }
+        maxCalories = exercises.stream()
+                .filter(it -> it.getCalories() != null)
+                .mapToInt(it -> it.getCalories())
+                .max()
+                .orElse(0);
 
-        // compute average calories only when it was specified in at least one exercise
-        if (numberOfExercisesWithCalories > 0) {
-            avgCalories = totalCalories / numberOfExercisesWithCalories;
-        }
+        avgCalories = (int) exercises.stream()
+                .filter(it -> it.getCalories() != null)
+                .mapToInt(it -> it.getCalories())
+                .average()
+                .orElse(0);
     }
 
     public int getAvgAscent() {
         return avgAscent;
     }
 
-    public void setAvgAscent(int avgAscent) {
-        this.avgAscent = avgAscent;
-    }
-
     public int getAvgDescent() {
         return avgDescent;
-    }
-
-    public void setAvgDescent(int avgDescent) {
-        this.avgDescent = avgDescent;
     }
 
     public int getAvgCalories() {
         return avgCalories;
     }
 
-    public void setAvgCalories(int avgCalories) {
-        this.avgCalories = avgCalories;
-    }
-
     public float getAvgDistance() {
         return avgDistance;
-    }
-
-    public void setAvgDistance(float avgDistance) {
-        this.avgDistance = avgDistance;
     }
 
     public int getAvgDuration() {
         return avgDuration;
     }
 
-    public void setAvgDuration(int avgDuration) {
-        this.avgDuration = avgDuration;
-    }
-
     public int getAvgHeartRate() {
         return avgHeartRate;
-    }
-
-    public void setAvgHeartRate(int avgHeartRate) {
-        this.avgHeartRate = avgHeartRate;
     }
 
     public float getAvgSpeed() {
         return avgSpeed;
     }
 
-    public void setAvgSpeed(float avgSpeed) {
-        this.avgSpeed = avgSpeed;
-    }
-
     public int getExerciseCount() {
         return exerciseCount;
-    }
-
-    public void setExerciseCount(int exerciseCount) {
-        this.exerciseCount = exerciseCount;
     }
 
     public int getMaxAscent() {
         return maxAscent;
     }
 
-    public void setMaxAscent(int maxAscent) {
-        this.maxAscent = maxAscent;
-    }
-
     public int getMaxDescent() {
         return maxDescent;
-    }
-
-    public void setMaxDescent(int maxDescent) {
-        this.maxDescent = maxDescent;
     }
 
     public int getMaxAvgHeartRate() {
         return maxAvgHeartRate;
     }
 
-    public void setMaxAvgHeartRate(int maxAvgHeartRate) {
-        this.maxAvgHeartRate = maxAvgHeartRate;
-    }
-
     public float getMaxAvgSpeed() {
         return maxAvgSpeed;
-    }
-
-    public void setMaxAvgSpeed(float maxAvgSpeed) {
-        this.maxAvgSpeed = maxAvgSpeed;
     }
 
     public int getMaxCalories() {
         return maxCalories;
     }
 
-    public void setMaxCalories(int maxCalories) {
-        this.maxCalories = maxCalories;
-    }
-
     public float getMaxDistance() {
         return maxDistance;
-    }
-
-    public void setMaxDistance(float maxDistance) {
-        this.maxDistance = maxDistance;
     }
 
     public int getMaxDuration() {
         return maxDuration;
     }
 
-    public void setMaxDuration(int maxDuration) {
-        this.maxDuration = maxDuration;
-    }
-
     public int getMinAscent() {
         return minAscent;
-    }
-
-    public void setMinAscent(int minAscent) {
-        this.minAscent = minAscent;
     }
 
     public int getMinDescent() {
         return minDescent;
     }
 
-    public void setMinDescent(int minDescent) {
-        this.minDescent = minDescent;
-    }
-
     public int getMinAvgHeartRate() {
         return minAvgHeartRate;
-    }
-
-    public void setMinAvgHeartRate(int minAvgHeartRate) {
-        this.minAvgHeartRate = minAvgHeartRate;
     }
 
     public float getMinAvgSpeed() {
         return minAvgSpeed;
     }
 
-    public void setMinAvgSpeed(float minAvgSpeed) {
-        this.minAvgSpeed = minAvgSpeed;
-    }
-
     public int getMinCalories() {
         return minCalories;
-    }
-
-    public void setMinCalories(int minCalories) {
-        this.minCalories = minCalories;
     }
 
     public float getMinDistance() {
         return minDistance;
     }
 
-    public void setMinDistance(float minDistance) {
-        this.minDistance = minDistance;
-    }
-
     public int getMinDuration() {
         return minDuration;
-    }
-
-    public void setMinDuration(int minDuration) {
-        this.minDuration = minDuration;
     }
 
     public int getTotalAscent() {
         return totalAscent;
     }
 
-    public void setTotalAscent(int totalAscent) {
-        this.totalAscent = totalAscent;
-    }
-
     public int getTotalDescent() {
         return totalDescent;
-    }
-
-    public void setTotalDescent(int totalDescent) {
-        this.totalDescent = totalDescent;
     }
 
     public int getTotalCalories() {
         return totalCalories;
     }
 
-    public void setTotalCalories(int totalCalories) {
-        this.totalCalories = totalCalories;
-    }
-
     public double getTotalDistance() {
         return totalDistance;
     }
 
-    public void setTotalDistance(double totalDistance) {
-        this.totalDistance = totalDistance;
-    }
-
     public int getTotalDuration() {
         return totalDuration;
-    }
-
-    public void setTotalDuration(int totalDuration) {
-        this.totalDuration = totalDuration;
     }
 }
