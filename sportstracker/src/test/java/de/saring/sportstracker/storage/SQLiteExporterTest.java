@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.time.LocalDateTime;
 
 import de.saring.sportstracker.storage.db.DbStorage;
+import de.saring.sportstracker.storage.db.DbApplicationDataImporter;
 import javafx.scene.paint.Color;
 
 import org.junit.jupiter.api.AfterEach;
@@ -33,7 +34,7 @@ import de.saring.sportstracker.gui.STDocumentImpl;
 public class SQLiteExporterTest {
 
     private STDocument document;
-    private SQLiteExporter exporter;
+    private DbApplicationDataImporter exporter;
 
     @BeforeEach
     public void setUp() throws IOException {
@@ -42,7 +43,7 @@ public class SQLiteExporterTest {
         document = new STDocumentImpl(contextMock, null, mock(DbStorage.class));
         fillDocumentWithTestData();
 
-        exporter = new SQLiteExporter(document);
+        exporter = new DbApplicationDataImporter(document);
     }
 
     @AfterEach

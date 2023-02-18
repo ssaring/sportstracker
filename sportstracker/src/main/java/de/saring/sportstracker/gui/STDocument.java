@@ -130,8 +130,9 @@ public interface STDocument {
      * afterwards.
      *
      * @throws STException thrown on import problems
+     * @return true when application data has been imported
      */
-    void importApplicationDataFromXml() throws STException;
+    boolean importApplicationDataFromXml() throws STException;
 
     /**
      * Reloads all application data (notes, weights, exercises, sport types) from the storage. Needs to be called

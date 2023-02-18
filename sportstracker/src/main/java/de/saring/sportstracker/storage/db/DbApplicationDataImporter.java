@@ -1,27 +1,22 @@
-package de.saring.sportstracker.storage;
+package de.saring.sportstracker.storage.db;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
 import de.saring.sportstracker.data.Equipment;
 import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.ExerciseList;
 import de.saring.sportstracker.data.Note;
+import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportSubType;
 import de.saring.sportstracker.data.SportType;
+import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
-import de.saring.sportstracker.gui.STDocument;
+import de.saring.sportstracker.data.WeightList;
 import de.saring.util.StringUtils;
 import de.saring.util.data.IdObject;
 import de.saring.util.gui.javafx.ColorUtils;
-import jakarta.inject.Singleton;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,19 +24,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 /**
- * Exporter for the SportsTracker application data to a SQLite database. The exporter uses the plain
- * JDBC API (no ORM) and the xerial/sqlite-jdbc library (contains the native SQLite libraries).
+ * Importer for the SportsTracker application data to the SQLite application database. It's used for data migration
+ * from the previous XML files to the new SQLite database storage.
  *
  * @author Stefan Saring
  */
-@Singleton
-public class SQLiteExporter {
+public class DbApplicationDataImporter {
 
-    private static final String SCHEMA_FILE = "/sql/st-export.sql";
-    private static final String DATABASE_FILE = System.getProperty("user.home") + "/st-export.sqlite";
     private static final DateTimeFormatter SQLITE_DATETIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private STDocument document;
+    private final Connection connection;
 
     private HashMap <String, Long> sportSubTypePrimaryKeyMap;
     private HashMap <String, Long> equipmentPrimaryKeyMap;
@@ -49,84 +41,47 @@ public class SQLiteExporter {
     /**
      * C'tor for dependency injection
      *
-     * @param document SportsTracker document (model) instance
+     * @param connection JDBC database connection
      */
-    public SQLiteExporter(final STDocument document) {
-        this.document = document;
+    public DbApplicationDataImporter(final Connection connection) {
+        this.connection = connection;
     }
 
     /**
-     * Returns the absolute Path of the created SQLite database.
+     * Imports the specified application data to the SQLite database storage. The database needs to be created
+     * (incl. schema) before and has to contain no application data yet.
      *
-     * @return absolute database path
+     * @param sportTypes list of sport types to be imported
+     * @param exercises list of exercises to be imported
+     * @param notes list of notes to be imported
+     * @param weights weights of exercises to be imported
+     * @throws STException on import errors
      */
-    public Path getDatabasePath() {
-        return Paths.get(DATABASE_FILE).toAbsolutePath();
-    }
+    public void importApplicationData(
+            SportTypeList sportTypes,
+            ExerciseList exercises,
+            NoteList notes,
+            WeightList weights) throws STException {
 
-    /**
-     * Exports the application data to a new SQLite database, an already existing database will be overwritten.
-     *
-     * @throws STException on export errors
-     */
-    public void exportToSqlite() throws STException {
-
-        deleteExistingDatabase();
         sportSubTypePrimaryKeyMap = new HashMap<>();
         equipmentPrimaryKeyMap = new HashMap<>();
 
-        // create database connection
-        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_FILE)) {
-
-            // create database schema
-            final String dbSchema = readDatabaseSchema();
-            final Statement statement = connection.createStatement();
-            statement.setQueryTimeout(10);
-            statement.executeUpdate(dbSchema);
-
-            // export data
-            exportSportTypes(connection);
-            exportExercises(connection);
-            exportNotes(connection);
-            exportWeights(connection);
-        } catch (SQLException e) {
-            throw new STException(STExceptionID.SQLITE_EXPORT, "Failed to export application data to SQLite!", e);
-        }
-    }
-
-    private void deleteExistingDatabase() throws STException {
         try {
-            Files.deleteIfExists(Paths.get(DATABASE_FILE));
-        } catch (IOException e) {
-            throw new STException(STExceptionID.SQLITE_EXPORT, //
-                    "Failed to delete the already existing database '" + DATABASE_FILE + "'!", e);
+            exportSportTypes(sportTypes);
+            exportExercises(exercises);
+            exportNotes(notes);
+            exportWeights(weights);
+        } catch (SQLException e) {
+            throw new STException(STExceptionID.DBSTORAGE_IMPORT_APPLICATION_DATA, "Failed to import application data to SQLite database!", e);
         }
     }
 
-    private String readDatabaseSchema() throws STException {
-
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                this.getClass().getResourceAsStream(SCHEMA_FILE)))) {
-
-            StringBuffer fileContent = new StringBuffer();
-            String line;
-            while((line = reader.readLine()) != null) {
-                fileContent.append(line).append('\n');
-            }
-
-            return fileContent.toString();
-        } catch (IOException e) {
-            throw new STException(STExceptionID.SQLITE_EXPORT, //
-                    "Failed to read the database schema file '" + SCHEMA_FILE + "'!", e);
-        }
-    }
-
-    private void exportSportTypes(final Connection connection) throws SQLException {
+    private void exportSportTypes(SportTypeList sportTypes) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
                 "INSERT INTO SPORT_TYPE (ID, NAME, RECORD_DISTANCE, SPEED_MODE, COLOR, ICON, FIT_ID) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-        for (SportType sportType : document.getSportTypeList()) {
+        for (SportType sportType : sportTypes) {
             statement.clearParameters();
 
             statement.setLong(1, sportType.getId());
@@ -142,12 +97,12 @@ public class SQLiteExporter {
             }
             statement.executeUpdate();
 
-            exportSportSubTypes(connection, sportType);
-            exportEquipments(connection, sportType);
+            exportSportSubTypes(sportType);
+            exportEquipments(sportType);
         }
     }
 
-    private void exportSportSubTypes(final Connection connection, final SportType sportType) throws SQLException {
+    private void exportSportSubTypes(SportType sportType) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
                 "INSERT INTO SPORT_SUBTYPE (SPORT_TYPE_ID, NAME, FIT_ID) VALUES (?, ?, ?)",
@@ -168,7 +123,7 @@ public class SQLiteExporter {
         }
     }
 
-    private void exportEquipments(final Connection connection, final SportType sportType) throws SQLException {
+    private void exportEquipments(SportType sportType) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
                 "INSERT INTO EQUIPMENT (SPORT_TYPE_ID, NAME, NOT_IN_USE) VALUES (?, ?, ?)");
@@ -186,14 +141,14 @@ public class SQLiteExporter {
         }
     }
 
-    private void exportExercises(final Connection connection) throws SQLException {
+    private void exportExercises(ExerciseList exercises) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement("""
                 INSERT INTO EXERCISE (ID, DATE_TIME, SPORT_TYPE_ID, SPORT_SUBTYPE_ID, INTENSITY, DURATION, DISTANCE, 
                 AVG_SPEED, AVG_HEARTRATE, ASCENT, DESCENT, CALORIES, HRM_FILE, EQUIPMENT_ID, COMMENT) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""");
 
-        for (Exercise exercise : document.getExerciseList()) {
+        for (Exercise exercise : exercises) {
             statement.clearParameters();
 
             statement.setLong(1, exercise.getId());
@@ -229,12 +184,12 @@ public class SQLiteExporter {
         }
     }
 
-    private void exportNotes(final Connection connection) throws SQLException {
+    private void exportNotes(NoteList notes) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
                 "INSERT INTO NOTE (ID, DATE_TIME, COMMENT) VALUES (?, ?, ?)");
 
-        for (Note note : document.getNoteList()) {
+        for (Note note : notes) {
             statement.clearParameters();
 
             statement.setLong(1, note.getId());
@@ -244,12 +199,12 @@ public class SQLiteExporter {
         }
     }
 
-    private void exportWeights(final Connection connection) throws SQLException {
+    private void exportWeights(WeightList weights) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
                 "INSERT INTO WEIGHT (ID, DATE_TIME, VALUE, COMMENT) VALUES (?, ?, ?, ?)");
 
-        for (Weight weight : document.getWeightList()) {
+        for (Weight weight : weights) {
             statement.clearParameters();
 
             statement.setLong(1, weight.getId());

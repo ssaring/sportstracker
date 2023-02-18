@@ -34,9 +34,14 @@ SQLite migration:
   - new database is created (including schema) when it does not exist yet
 - TODO:
   - implement XML to SQLite data migration when SQLite database does not exist yet
-    - started, see TODOs in DbStorage
+    - done, works fine (tested manually)
+    - many float values (in table EXERCISE and WEIGHT have strange values
+      - e.g. 75.30000305175781 instead of 75.3 (as stored in XML files)
+      - can this be improved by switching all float values to double precision?
+    - fix existing unit tests
   - remove XML storage functionality
   - remove SQLite Export functionality (incl. schema SQL, error codes, I18N resources?, etc)
+  - remove IStorage implementation?
   - DbStorage + Repository + RepositoryUtil unit tests
     - especially for the edge cases in SportTypeRepository::update()
       -> check proper storage of SportSubTypes and Equipments and updates of Exercises
@@ -52,7 +57,8 @@ SQLite migration:
     -> SportType objects would be more lean when dealing without lists (e.g. when referenced in Exercise)
     -> SportSubType and Equipment would always know their parent SportType
     -> Handling of persisted entities would be simpler when maintenance of lists is not needed anymore
-
+  - update application version to 8.0.0
+  - update documentation and change log
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 ExerciseViewer standalone mode:

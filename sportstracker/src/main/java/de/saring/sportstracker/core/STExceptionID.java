@@ -91,9 +91,9 @@ public enum STExceptionID {
     DOCUMENT_CREATE_APP_DIRECTORY,
 
     /**
-     * failed to export application data to SQLite
+     * failed to import application data to the SQLite database
      */
-    SQLITE_EXPORT,
+    DBSTORAGE_IMPORT_APPLICATION_DATA,
 
     /**
      * failed to parse the distance entry in the exercise dialog

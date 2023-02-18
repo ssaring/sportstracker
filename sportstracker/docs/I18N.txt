@@ -49,6 +49,7 @@ SportsTracker 7.9.2:
 
 st.main.error.load_data (removed)
 st.main.error.open_load_data (new)
+st.main.info.app_data_imported (new)
 
 SportsTracker 7.9.1:
 

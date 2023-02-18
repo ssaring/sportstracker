@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.saring.sportstracker.core.STException;
-import de.saring.sportstracker.storage.SQLiteExporter;
 import de.saring.sportstracker.storage.db.AbstractRepository;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -72,7 +71,6 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
 
     private final STContext context;
     private final STDocument document;
-    private final SQLiteExporter exporter;
 
     private CalendarViewController calendarViewController;
     private ExerciseListViewController exerciseListViewController;
@@ -171,7 +169,6 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      *
      * @param context the SportsTracker context
      * @param document the document component
-     * @param exporter the SQLite exporter
      * @param calendarViewController controller of the calendar view
      * @param exerciseListViewController controller of the exercise list view
      * @param noteListViewController controller of the note list view
@@ -180,7 +177,8 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
      * @param dialogProvider provider of all dialogs
      */
     @Inject
-    public STControllerImpl(final STContext context, final STDocument document, final SQLiteExporter exporter,
+    public STControllerImpl(final STContext context,
+                            final STDocument document,
                             final CalendarViewController calendarViewController,
                             final ExerciseListViewController exerciseListViewController,
                             final NoteListViewController noteListViewController,
@@ -189,7 +187,6 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
                             final DialogProvider dialogProvider) {
         this.context = context;
         this.document = document;
-        this.exporter = exporter;
         this.calendarViewController = calendarViewController;
         this.exerciseListViewController = exerciseListViewController;
         this.noteListViewController = noteListViewController;
@@ -866,14 +863,16 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private class LoadTask extends Task<Void> {
 
         private List<Exercise> corruptExercises;
+        private boolean appDataImportedFromXml = false;
 
         @Override
         protected Void call() throws Exception {
             LOGGER.info("Loading application data...");
             document.readApplicationData();
 
+            // when no data exists yet, try to import application data from XML files (if they exist)
             if (document.getSportTypeList().size() == 0) {
-                document.importApplicationDataFromXml();
+                appDataImportedFromXml = document.importApplicationDataFromXml();
             }
 
             corruptExercises = document.checkExerciseFiles();
@@ -888,6 +887,12 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             updateView();
             // listener must be registered after loading data, because new lists are created
             registerListenerForDataChanges();
+
+            if (appDataImportedFromXml) {
+                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
+                        "common.info", "st.main.info.app_data_imported");
+            }
+
             displayCorruptExercises();
             addInitialSportTypesIfMissing();
         }
@@ -978,7 +983,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
         @Override
         protected Void call() throws Exception {
             LOGGER.info("Exporting application data to SQLite...");
-            exporter.exportToSqlite();
+            // exporter.exportToSqlite();
             return null;
         }
 
@@ -987,8 +992,8 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             super.succeeded();
             context.blockMainWindow(false);
 
-            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
-                    "common.info", "st.main.info.export_sqlite_success", exporter.getDatabasePath().toString());
+            //context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
+            //        "common.info", "st.main.info.export_sqlite_success", exporter.getDatabasePath().toString());
         }
 
         @Override

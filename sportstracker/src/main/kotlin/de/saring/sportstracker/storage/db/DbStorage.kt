@@ -130,8 +130,8 @@ class DbStorage {
                                       notes: NoteList,
                                       weights: WeightList) {
         LOGGER.info("Importing existing application data to database")
-
-        // TODO (reuse SQLiteExporter logic for IDs etc)
+        var dbImporter = DbApplicationDataImporter(connection)
+        dbImporter.importApplicationData(sportTypes, exercises, notes, weights)
     }
 
     companion object {

@@ -304,15 +304,6 @@ public class STDocumentImpl implements STDocument {
         readListsFromStorage();
         var msDataRead = System.currentTimeMillis();
         LOGGER.info("Loaded all data in " + (msDataRead - msOpened) + " msec");
-
-        // TODO remove reading from XML, reuse for data migration
-        /* read application data from XML files
-        sportTypeList = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
-                options.getPreferredSpeedMode());
-        exerciseList = storage.readExerciseList(dataDirectory + "/" + FILENAME_EXERCISE_LIST, sportTypeList);
-        noteList = storage.readNoteList(dataDirectory + "/" + FILENAME_NOTE_LIST);
-        weightList = storage.readWeightList(dataDirectory + "/" + FILENAME_WEIGHT_LIST); */
-
         dirtyData = false;
     }
 
@@ -335,22 +326,15 @@ public class STDocumentImpl implements STDocument {
         LOGGER.info("Storing application data");
         dbStorage.commitChanges();
         dirtyData = false;
-
-        // TODO remove XML storage
-        /* store application data in XML files
-        storage.storeSportTypeList(sportTypeList, dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST);
-        storage.storeExerciseList(exerciseList, dataDirectory + "/" + FILENAME_EXERCISE_LIST);
-        storage.storeNoteList(noteList, dataDirectory + "/" + FILENAME_NOTE_LIST);
-        storage.storeWeightList(weightList, dataDirectory + "/" + FILENAME_WEIGHT_LIST); */
     }
 
     @Override
-    public void importApplicationDataFromXml() throws STException {
+    public boolean importApplicationDataFromXml() throws STException {
         LOGGER.info("Importing application data from XML");
 
         if (!isApplicationDataInXmlAvailable()) {
             LOGGER.info("No application data from XML available for import");
-            return;
+            return false;
         }
 
         try {
@@ -365,7 +349,10 @@ public class STDocumentImpl implements STDocument {
             dbStorage.importExistingApplicationData(
                     importedSportTypes, importedExercises, importedNotes, importedWeights);
             dbStorage.commitChanges();
+
+            readListsFromStorage();
             dirtyData = false;
+            return true;
         } catch (STException e) {
             throw new STException(STExceptionID.DBSTORAGE_COMMIT_CHANGES, "Failed to import application data from XML!'", e);
         }
