@@ -29,8 +29,9 @@ class DbStorage {
 
     @Throws(STException::class)
     fun openDatabase(dbFilename: String) {
-        LOGGER.info("Opening database $dbFilename")
+
         val jdbcUrl = "jdbc:sqlite:$dbFilename"
+        LOGGER.info("Opening database $jdbcUrl")
 
         // open database connection (new database file will be created if it doesn't exist yet)
         try {
@@ -135,6 +136,9 @@ class DbStorage {
     }
 
     companion object {
+        /** Filename for opening the database in in-memory mode, useful for unit testing. */
+        const val IN_MEMORY_FILENAME = ":memory:"
+
         private val LOGGER = Logger.getLogger(NoteRepository::class.java.name)
 
         private const val SCHEMA_FILE = "/sql/st-schema.sql";

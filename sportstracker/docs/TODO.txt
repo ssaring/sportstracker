@@ -32,15 +32,15 @@ SQLite migration:
     all views are updated properly afterwards
   - committing database changes works properly
   - new database is created (including schema) when it does not exist yet
+  - when new database is created, the application data from XML is imported (if XML files exist)
 - TODO:
   - implement XML to SQLite data migration when SQLite database does not exist yet
-    - done, works fine (tested manually)
+    - done, works fine (tested manually and unit test)
     - many float values (in table EXERCISE and WEIGHT have strange values
       - e.g. 75.30000305175781 instead of 75.3 (as stored in XML files)
       - can this be improved by switching all float values to double precision?
-    - fix existing unit tests
+    - remove SQLite Export functionality (incl. schema SQL, error codes, I18N resources?, etc)
   - remove XML storage functionality
-  - remove SQLite Export functionality (incl. schema SQL, error codes, I18N resources?, etc)
   - remove IStorage implementation?
   - DbStorage + Repository + RepositoryUtil unit tests
     - especially for the edge cases in SportTypeRepository::update()
