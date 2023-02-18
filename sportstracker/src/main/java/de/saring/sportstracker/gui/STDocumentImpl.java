@@ -345,6 +345,40 @@ public class STDocumentImpl implements STDocument {
     }
 
     @Override
+    public void importApplicationDataFromXml() throws STException {
+        LOGGER.info("Importing application data from XML");
+
+        if (!isApplicationDataInXmlAvailable()) {
+            LOGGER.info("No application data from XML available for import");
+            return;
+        }
+
+        try {
+            // read application data from XML files
+            var importedSportTypes = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
+                    options.getPreferredSpeedMode());
+            var importedExercises = storage.readExerciseList(dataDirectory + "/" + FILENAME_EXERCISE_LIST, importedSportTypes);
+            var importedNotes = storage.readNoteList(dataDirectory + "/" + FILENAME_NOTE_LIST);
+            var importedWeights = storage.readWeightList(dataDirectory + "/" + FILENAME_WEIGHT_LIST);
+
+            // import data to database and persist
+            dbStorage.importExistingApplicationData(
+                    importedSportTypes, importedExercises, importedNotes, importedWeights);
+            dbStorage.commitChanges();
+            dirtyData = false;
+        } catch (STException e) {
+            throw new STException(STExceptionID.DBSTORAGE_COMMIT_CHANGES, "Failed to import application data from XML!'", e);
+        }
+    }
+
+    private boolean isApplicationDataInXmlAvailable() {
+        return Files.exists(Paths.get(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST)) &&
+                Files.exists(Paths.get(dataDirectory + "/" + FILENAME_EXERCISE_LIST)) &&
+                Files.exists(Paths.get(dataDirectory + "/" + FILENAME_NOTE_LIST)) &&
+                Files.exists(Paths.get(dataDirectory + "/" + FILENAME_WEIGHT_LIST));
+    }
+
+    @Override
     public void updateApplicationData(IdObject changedObject) throws STException {
         LOGGER.info("Updating application data");
         dirtyData = true;

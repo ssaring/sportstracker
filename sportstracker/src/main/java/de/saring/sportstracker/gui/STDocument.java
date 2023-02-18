@@ -109,20 +109,29 @@ public interface STDocument {
     EntryList<Weight> getFilterableWeightList();
 
     /**
-     * This method reads both the exercise and the sport-type list from the
-     * storage (e.g. XML files). On read problems empty lists will be created.
+     * This method reads all application data (notes, weights, exercises, sport types) from the database storage.
      *
      * @throws STException thrown on read problems
      */
     void readApplicationData() throws STException;
 
     /**
-     * This method stores both the exercise and the sport-type list in the storage
-     * (e.g. XML files). On success the dirty data flag will be set to false.
+     * This method stores / commits all application data changes (notes, weights, exercises, sport types) in the
+     * database storage. All data changes done by the repository classes before were not committed to the database,
+     * this is done here.
      *
-     * @throws STException thrown on store problems
+     * @throws STException thrown on store / commit problems
      */
     void storeApplicationData() throws STException;
+
+    /**
+     * This method imports the application data changes (notes, weights, exercises, sport types) from the XML files
+     * used before the database storage was introduced. All imported data is persisted in the database storage
+     * afterwards.
+     *
+     * @throws STException thrown on import problems
+     */
+    void importApplicationDataFromXml() throws STException;
 
     /**
      * Reloads all application data (notes, weights, exercises, sport types) from the storage. Needs to be called

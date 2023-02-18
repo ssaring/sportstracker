@@ -871,6 +871,11 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
         protected Void call() throws Exception {
             LOGGER.info("Loading application data...");
             document.readApplicationData();
+
+            if (document.getSportTypeList().size() == 0) {
+                document.importApplicationDataFromXml();
+            }
+
             corruptExercises = document.checkExerciseFiles();
             return null;
         }

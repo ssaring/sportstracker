@@ -2,6 +2,10 @@ package de.saring.sportstracker.storage.db
 
 import de.saring.sportstracker.core.STException
 import de.saring.sportstracker.core.STExceptionID
+import de.saring.sportstracker.data.ExerciseList
+import de.saring.sportstracker.data.NoteList
+import de.saring.sportstracker.data.SportTypeList
+import de.saring.sportstracker.data.WeightList
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
@@ -118,6 +122,16 @@ class DbStorage {
         } catch (e: SQLException) {
             throw STException(STExceptionID.DBSTORAGE_INVALID_SCHEMA, "Failed to read DB schema version!", e)
         }
+    }
+
+    @Throws(STException::class)
+    fun importExistingApplicationData(sportTypes: SportTypeList,
+                                      exercises: ExerciseList,
+                                      notes: NoteList,
+                                      weights: WeightList) {
+        LOGGER.info("Importing existing application data to database")
+
+        // TODO (reuse SQLiteExporter logic for IDs etc)
     }
 
     companion object {

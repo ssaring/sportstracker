@@ -34,12 +34,14 @@ SQLite migration:
   - new database is created (including schema) when it does not exist yet
 - TODO:
   - implement XML to SQLite data migration when SQLite database does not exist yet
+    - started, see TODOs in DbStorage
   - remove XML storage functionality
   - remove SQLite Export functionality (incl. schema SQL, error codes, I18N resources?, etc)
   - DbStorage + Repository + RepositoryUtil unit tests
     - especially for the edge cases in SportTypeRepository::update()
       -> check proper storage of SportSubTypes and Equipments and updates of Exercises
     - use in-memory database for testing => https://www.sqlite.org/inmemorydb.html
+  - Is the SaveTask logic still needed just for the commit-action?
   - is sorting by date in IdDateObjectList really needed? Might be for filter etc.
   - IdObjectList: remove set() and removeById() methods when all lists were migrated to DbStorage
     - also remove ID generation methods
