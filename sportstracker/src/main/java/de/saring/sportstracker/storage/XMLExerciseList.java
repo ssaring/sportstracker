@@ -108,8 +108,8 @@ public class XMLExerciseList {
         }
 
         exercise.setDuration(Integer.parseInt(eExercise.getChildText("duration")));
-        exercise.setDistance(Float.parseFloat(eExercise.getChildText("distance")));
-        exercise.setAvgSpeed(Float.parseFloat(eExercise.getChildText("avg-speed")));
+        exercise.setDistance(Double.parseDouble(eExercise.getChildText("distance")));
+        exercise.setAvgSpeed(Double.parseDouble(eExercise.getChildText("avg-speed")));
 
         // get and parse intensity type
         String strIntensity = eExercise.getChildText("intensity");

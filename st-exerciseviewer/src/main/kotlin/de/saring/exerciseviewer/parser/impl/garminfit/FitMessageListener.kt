@@ -506,14 +506,14 @@ internal class FitMessageListener : MesgListener {
         val exerciseDuration = exercise.duration
         if (exerciseSpeed != null && exerciseDuration != null && exerciseSpeed.speedAvg == 0f) {
             exerciseSpeed.speedAvg = CalculationUtils.calculateAvgSpeed(
-                    exerciseSpeed.distance / 1000f, Math.round(exerciseDuration / 10f))
+                    exerciseSpeed.distance / 1000.0, Math.round(exerciseDuration / 10f)).toFloat()
         }
 
         for (lap in exercise.lapList) {
             lap.speed?.let { lapSpeed ->
                 if (lapSpeed.speedAVG == 0f) {
                     lapSpeed.speedAVG = CalculationUtils.calculateAvgSpeed(
-                            lapSpeed.distance / 1000f, Math.round(lap.timeSplit / 10f))
+                            lapSpeed.distance / 1000.0, Math.round(lap.timeSplit / 10f)).toFloat()
                 }
             }
         }

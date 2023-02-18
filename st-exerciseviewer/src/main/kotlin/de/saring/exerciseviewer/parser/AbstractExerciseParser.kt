@@ -78,7 +78,7 @@ abstract class AbstractExerciseParser : ExerciseParser {
                 timeSplitBefore = lap.timeSplit
 
                 lap.speed!!.speedAVG = CalculationUtils.calculateAvgSpeed(
-                        lapDistance / 1000f, Math.round(lapDuration / 10f))
+                        lapDistance / 1000.0, Math.round(lapDuration / 10.0f)).toFloat()
             }
         }
     }

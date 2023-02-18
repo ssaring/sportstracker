@@ -130,7 +130,7 @@ class GarminTcxParser : AbstractExerciseParser() {
                             val tpDistanceDiff = Math.max(tpDistanceMeters - previousTrackpointDistanceMeters, 0.0)
 
                             evSample.speed = CalculationUtils.calculateAvgSpeed(
-                                    (tpDistanceDiff / 1000.0).toFloat(), Math.round(tpTimestampDiff / 1000.0).toInt())
+                                    tpDistanceDiff / 1000.0, Math.round(tpTimestampDiff / 1000.0).toInt()).toFloat()
                         }
                         previousTrackpointTimestamp = tpMillis
                         previousTrackpointDistanceMeters = tpDistanceMeters
@@ -229,8 +229,8 @@ class GarminTcxParser : AbstractExerciseParser() {
 
         // calculate average speed of lap
         val lapSpeedAVG = CalculationUtils.calculateAvgSpeed(
-                (distanceMeters / 1000.0).toFloat(),
-                Math.round(lapDurationSeconds).toInt())
+                distanceMeters / 1000.0,
+                Math.round(lapDurationSeconds).toInt()).toFloat()
 
         evLap.speed = LapSpeed(0f, lapSpeedAVG, lapSpeedDistance)
 
@@ -289,7 +289,7 @@ class GarminTcxParser : AbstractExerciseParser() {
 
     private fun calculateAvgSpeed(exercise: EVExercise) {
         exercise.speed!!.speedAvg = CalculationUtils.calculateAvgSpeed(
-                exercise.speed!!.distance / 1000f, Math.round(exercise.duration!! / 10f))
+                exercise.speed!!.distance / 1000.0, Math.round(exercise.duration!! / 10f)).toFloat()
     }
 
     /**

@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import de.saring.util.unitcalc.UnitSystem;
-import javafx.beans.property.FloatProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -29,7 +29,7 @@ public class WeightViewModel {
 
     public final ObjectProperty<LocalDate> date;
     public final ObjectProperty<LocalTime> time;
-    public final FloatProperty value;
+    public final DoubleProperty value;
     public final StringProperty comment;
 
     /**
@@ -42,7 +42,7 @@ public class WeightViewModel {
         this.id = weight.getId();
         this.date = new SimpleObjectProperty<>(weight.getDateTime().toLocalDate());
         this.time = new SimpleObjectProperty<>(weight.getDateTime().toLocalTime());
-        this.value = new SimpleFloatProperty(weight.getValue());
+        this.value = new SimpleDoubleProperty(weight.getValue());
         this.comment = new SimpleStringProperty(StringUtils.getTextOrEmptyString(weight.getComment()));
 
         // convert weight value when english unit system is enabled

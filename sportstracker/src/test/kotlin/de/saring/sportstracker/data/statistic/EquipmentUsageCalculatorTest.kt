@@ -100,21 +100,21 @@ class EquipmentUsageCalculatorTest {
             // cycling exercises (2x Road Bike, 1x MTB)
             set(Exercise(0).apply {
                 dateTime = LocalDateTime.of(2019, 5, 15, 14, 30, 0)
-                distance = 40.0f
+                distance = 40.0
                 duration = (1.5 * 3600).toInt()
                 sportType = stCycling
                 equipment = eqRoadBike
             })
             set(Exercise(1).apply {
                 dateTime = LocalDateTime.of(2019, 3, 20, 14, 30, 0)
-                distance = 25.0f
+                distance = 25.0
                 duration = (1 * 3600).toInt()
                 sportType = stCycling
                 equipment = eqRoadBike
             })
             set(Exercise(2).apply {
                 dateTime = LocalDateTime.of(2019, 7, 18, 14, 30, 0)
-                distance = 44.0f
+                distance = 44.0
                 duration = (2 * 3600).toInt()
                 sportType = stCycling
                 equipment = eqMTB
@@ -123,21 +123,21 @@ class EquipmentUsageCalculatorTest {
             // running exercises (2x Trail Shoes, 1x without equipment)
             set(Exercise(10).apply {
                 dateTime = LocalDateTime.of(2019, 7, 15, 14, 30, 0)
-                distance = 13.5f
+                distance = 13.5
                 duration = (1.2 * 3600).toInt()
                 sportType = stRunning
                 equipment = eqTrailShoes
             })
             set(Exercise(11).apply {
                 dateTime = LocalDateTime.of(2019, 6, 20, 14, 30, 0)
-                distance = 15.5f
+                distance = 15.5
                 duration = (1.5 * 3600).toInt()
                 sportType = stRunning
                 equipment = eqTrailShoes
             })
             set(Exercise(12).apply {
                 dateTime = LocalDateTime.of(2019, 10, 18, 14, 30, 0)
-                distance = 20.0f
+                distance = 20.0
                 duration = (1.8 * 3600).toInt()
                 sportType = stRunning
                 equipment = null

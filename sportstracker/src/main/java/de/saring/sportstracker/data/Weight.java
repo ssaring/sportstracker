@@ -10,7 +10,7 @@ public final class Weight extends Entry {
     /**
      * The weight value in kilograms.
      */
-    private float value;
+    private double value;
 
     /**
      * Standard c'tor.
@@ -21,11 +21,11 @@ public final class Weight extends Entry {
         super(id);
     }
 
-    public float getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

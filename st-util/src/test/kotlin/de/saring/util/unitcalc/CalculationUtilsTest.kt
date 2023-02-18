@@ -15,9 +15,9 @@ class CalculationUtilsTest {
      */
     @Test
     fun testCalculateDistance() {
-        assertEquals(0f, CalculationUtils.calculateDistance(0f, 0))
-        assertEquals(20f, CalculationUtils.calculateDistance(20f, 3600), 0.01f)
-        assertEquals(49.165054f, CalculationUtils.calculateDistance(35.3.toFloat(), 5014), 0.0001f)
+        assertEquals(0.0, CalculationUtils.calculateDistance(0.0, 0))
+        assertEquals(20.0, CalculationUtils.calculateDistance(20.0, 3600), 0.01)
+        assertEquals(49.165054, CalculationUtils.calculateDistance(35.3, 5014), 0.0001)
     }
 
     /**
@@ -25,9 +25,9 @@ class CalculationUtilsTest {
      */
     @Test
     fun testCalculateAvgSpeed() {
-        assertEquals(java.lang.Float.NaN, CalculationUtils.calculateAvgSpeed(0f, 0))
-        assertEquals(20f, CalculationUtils.calculateAvgSpeed(20f, 3600), 0.01f)
-        assertEquals(35.3f, CalculationUtils.calculateAvgSpeed(49.165054.toFloat(), 5014), 0.00001f)
+        assertEquals(java.lang.Double.NaN, CalculationUtils.calculateAvgSpeed(0.0, 0))
+        assertEquals(20.0, CalculationUtils.calculateAvgSpeed(20.0, 3600), 0.01)
+        assertEquals(35.3, CalculationUtils.calculateAvgSpeed(49.165054, 5014), 0.00001)
     }
 
     /**
@@ -35,8 +35,8 @@ class CalculationUtilsTest {
      */
     @Test
     fun testCalculateDuration() {
-        assertEquals(0, CalculationUtils.calculateDuration(0f, 0f))
-        assertEquals(3600, CalculationUtils.calculateDuration(20f, 20f))
-        assertEquals(5017, CalculationUtils.calculateDuration(49.2.toFloat(), 35.3.toFloat()))
+        assertEquals(0, CalculationUtils.calculateDuration(0.0, 0.0))
+        assertEquals(3600, CalculationUtils.calculateDuration(20.0, 20.0))
+        assertEquals(5017, CalculationUtils.calculateDuration(49.2, 35.3))
     }
 }

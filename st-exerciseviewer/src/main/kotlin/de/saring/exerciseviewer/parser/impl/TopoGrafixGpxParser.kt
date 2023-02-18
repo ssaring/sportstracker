@@ -277,7 +277,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
             val lastSample = exercise.sampleList[exercise.sampleList.size - 1]
             val distance = lastSample.distance!!
             val speedAvg = CalculationUtils.calculateAvgSpeed(
-                    distance / 1000f, Math.round(lastSample.timestamp!! / 1000f))
+                    distance / 1000.0, Math.round(lastSample.timestamp!! / 1000f)).toFloat()
 
             exercise.speed = ExerciseSpeed(speedAvg, speedMax, distance)
         }

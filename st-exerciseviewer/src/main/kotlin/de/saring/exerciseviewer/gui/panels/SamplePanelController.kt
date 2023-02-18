@@ -74,7 +74,7 @@ class SamplePanelController(
         }
 
         tcSpeed.cellFactory = FormattedNumberCellFactory {
-            if (it != null) context.formatUtils.speedToString(it.toFloat(), 2, document.speedMode) else null
+            if (it != null) context.formatUtils.speedToString(it.toDouble(), 2, document.speedMode) else null
         }
 
         tcDistance.cellFactory = FormattedNumberCellFactory {

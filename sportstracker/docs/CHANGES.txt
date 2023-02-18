@@ -9,10 +9,13 @@ v7.9.2:
  - updated Mockito to version 5.0.0
  - updated JFreeChart to version 1.5.3 and JFreeChart-FX to 2.0.1
  SportsTracker changes:
- - Exercise: optional values (ascent, descent, AVG heartrate, calories) are now nullable
+ - Exercise: optional values are now nullable
+   (ascent, descent, AVG heartrate, calories)
    - no more workarounds for persistence and statistics needed
    - ExerciseList doesn't display 0 values anymore when no values are given
    - Statistic calculation was improved, missing values (null) are now excluded
+ - Exercise and Weight model classes: changed value types from float to double
+   to prevent precision and rounding issues when persisting in SQLite database
  ExerciseViewer changes:
 
 v7.9.1:

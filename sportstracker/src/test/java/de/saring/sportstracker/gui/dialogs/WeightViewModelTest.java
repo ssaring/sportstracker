@@ -47,7 +47,7 @@ public class WeightViewModelTest {
 
         // test after modifications
         viewModel.time.set(LocalTime.of(14, 45));
-        viewModel.value.set(67.5f);
+        viewModel.value.set(67.5);
         viewModel.comment.set("  Bar Foo  ");
 
         Weight modifiedWeight = viewModel.getWeight();

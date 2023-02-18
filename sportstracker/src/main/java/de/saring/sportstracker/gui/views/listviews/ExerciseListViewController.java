@@ -242,17 +242,17 @@ public class ExerciseListViewController extends AbstractListViewController<Exerc
      * Container class for storing both the speed value and the speed mode (for displaying) in one table column.
      */
     private static class SpeedInfo implements Comparable<SpeedInfo> {
-        final float speedValue;
+        final double speedValue;
         final SpeedMode speedMode;
 
-        public SpeedInfo(float speedValue, SpeedMode speedMode) {
+        public SpeedInfo(double speedValue, SpeedMode speedMode) {
             this.speedValue = speedValue;
             this.speedMode = speedMode;
         }
 
         @Override
         public int compareTo(SpeedInfo other) {
-            return Float.compare(this.speedValue, other.speedValue);
+            return Double.compare(this.speedValue, other.speedValue);
         }
     }
 }

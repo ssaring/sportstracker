@@ -519,13 +519,13 @@ public class ExerciseDialogController extends AbstractDialogController {
                         importedDuration);
             } else {
                 exerciseViewModel.distance.set(0f);
-                exerciseViewModel.setAvgSpeedFloatValue(0f);
+                exerciseViewModel.setAvgSpeedDoubleValue(0f);
                 exerciseViewModel.duration.set(importedDuration);
             }
         }
         else {
             exerciseViewModel.distance.set(0f);
-            exerciseViewModel.setAvgSpeedFloatValue(0f);
+            exerciseViewModel.setAvgSpeedDoubleValue(0f);
             exerciseViewModel.duration.set(0);
         }
 

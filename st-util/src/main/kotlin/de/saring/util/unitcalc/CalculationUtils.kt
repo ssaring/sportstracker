@@ -15,8 +15,8 @@ object CalculationUtils {
      * @return the distance (km)
      */
     @JvmStatic
-    fun calculateDistance(avgSpeed: Float, duration: Int): Float =
-            duration / 3600f * avgSpeed
+    fun calculateDistance(avgSpeed: Double, duration: Int): Double =
+            duration / 3600.0 * avgSpeed
 
     /**
      * Calculates the AVG speed for the given distance and duration.
@@ -26,8 +26,8 @@ object CalculationUtils {
      * @return the AVG speed (km/h)
      */
     @JvmStatic
-    fun calculateAvgSpeed(distance: Float, duration: Int): Float =
-            distance / (duration / 3600f)
+    fun calculateAvgSpeed(distance: Double, duration: Int): Double =
+            distance / (duration / 3600.0)
 
     /**
      * Calculates the duration for the given distance and AVG speed.
@@ -37,6 +37,6 @@ object CalculationUtils {
      * @return the duration (seconds)
      */
     @JvmStatic
-    fun calculateDuration(distance: Float, avgSpeed: Float): Int =
+    fun calculateDuration(distance: Double, avgSpeed: Double): Int =
             (distance / avgSpeed * 3600).toInt()
 }

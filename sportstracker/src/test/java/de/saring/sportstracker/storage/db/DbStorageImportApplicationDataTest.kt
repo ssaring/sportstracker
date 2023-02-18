@@ -51,8 +51,8 @@ class DbStorageImportApplicationDataTest {
         assertEquals(1, exercises.size)
         assertEquals(1, exercises[0].sportType.id)
         assertEquals(1, exercises[0].sportSubType.id)
-        assertEquals(42f, exercises[0].distance)
-        assertEquals(20f, exercises[0].avgSpeed)
+        assertEquals(42.0, exercises[0].distance)
+        assertEquals(20.0, exercises[0].avgSpeed)
 
         val notes = dbStorage.noteRepository.readAll()
         assertEquals(1, notes.size)
@@ -60,7 +60,7 @@ class DbStorageImportApplicationDataTest {
 
         val weights = dbStorage.weightRepository.readAll()
         assertEquals(1, weights.size)
-        assertEquals(123.4f, weights[0].value)
+        assertEquals(123.4, weights[0].value)
         assertEquals("Some other comment...", weights[0].comment)
     }
 
@@ -84,8 +84,8 @@ class DbStorageImportApplicationDataTest {
         exercise.sportType = sportType
         exercise.sportSubType = sportSubType
         exercise.intensity = Exercise.IntensityType.HIGH
-        exercise.distance = 42f
-        exercise.avgSpeed = 20f
+        exercise.distance = 42.0
+        exercise.avgSpeed = 20.0
         exercise.duration = 7600
         exercise.ascent = 321
         exercise.descent = 333
@@ -97,7 +97,7 @@ class DbStorageImportApplicationDataTest {
         note.comment = "Some comment..."
 
         val weight = Weight(1)
-        weight.value = 123.4f
+        weight.value = 123.4
         weight.dateTime = LocalDateTime.now()
         weight.comment = "Some other comment..."
 

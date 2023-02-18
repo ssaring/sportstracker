@@ -31,12 +31,12 @@ public final class Exercise extends Entry implements Cloneable {
     /**
      * Distance of exercise in kilometers.
      */
-    private float distance;
+    private double distance;
 
     /**
      * Average speed of exercise in kilometers per hour.
      */
-    private float avgSpeed;
+    private double avgSpeed;
 
     /**
      * Average heartrate of exercise in beats per minute (optional).
@@ -146,19 +146,19 @@ public final class Exercise extends Entry implements Cloneable {
         this.intensity = intensity;
     }
 
-    public float getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
-    public float getAvgSpeed() {
+    public double getAvgSpeed() {
         return avgSpeed;
     }
 
-    public void setAvgSpeed(float avgSpeed) {
+    public void setAvgSpeed(double avgSpeed) {
         this.avgSpeed = avgSpeed;
     }
 

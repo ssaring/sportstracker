@@ -95,10 +95,10 @@ object ValidationUtils {
     @JvmStatic
     fun isValueSpeed(value: String?, speedConverter: SpeedToStringConverter, required: Boolean): Boolean {
 
-        val fSpeedValue = speedConverter.stringSpeedToFloat(value)
+        val dSpeedValue = speedConverter.stringSpeedToDouble(value)
         if (required) {
-            return fSpeedValue != null && fSpeedValue > 0f
+            return dSpeedValue != null && dSpeedValue > 0.0
         }
-        return fSpeedValue != null && fSpeedValue == 0f
+        return dSpeedValue != null && dSpeedValue == 0.0
     }
 }

@@ -124,12 +124,12 @@ class FormatUtils(val unitSystem: UnitSystem) {
      * @param speedMode speed mode
      * @return the speed as text
      */
-    fun speedToStringWithoutUnitName(speed: Float, decimals: Int, speedMode: SpeedMode): String {
+    fun speedToStringWithoutUnitName(speed: Double, decimals: Int, speedMode: SpeedMode): String {
         numberFormat.maximumFractionDigits = decimals
 
         return if (this.unitSystem == UnitSystem.ENGLISH) {
             if (speedMode == SpeedMode.PACE) {
-                if (speed == 0f) {
+                if (speed == 0.0) {
                     "N/A"
                 }
                 else {
@@ -140,7 +140,7 @@ class FormatUtils(val unitSystem: UnitSystem) {
             }
         } else { // UnitSystem.METRIC
             if (speedMode == SpeedMode.PACE) {
-                if (speed == 0f) {
+                if (speed == 0.0) {
                     "N/A"
                 }
                 else {
@@ -161,8 +161,8 @@ class FormatUtils(val unitSystem: UnitSystem) {
      * @param speedMode speed mode
      * @return the speed as text
      */
-    fun speedToString(speed: Float, decimals: Int, speedMode: SpeedMode): String {
-        return if (speed == 0f) {
+    fun speedToString(speed: Double, decimals: Int, speedMode: SpeedMode): String {
+        return if (speed == 0.0) {
             speedToStringWithoutUnitName(speed, decimals, speedMode)
         } else {
             speedToStringWithoutUnitName(speed, decimals, speedMode) + " " + getSpeedUnitName(speedMode)
@@ -248,11 +248,11 @@ class FormatUtils(val unitSystem: UnitSystem) {
      * @param maxFractionDigits maximum fraction digits to be shown in the text
      * @return the weight as text
      */
-    fun weightToStringWithoutUnitName(weight: Float, maxFractionDigits: Int): String {
+    fun weightToStringWithoutUnitName(weight: Double, maxFractionDigits: Int): String {
         numberFormat.maximumFractionDigits = maxFractionDigits
 
         return if (this.unitSystem == UnitSystem.ENGLISH) {
-            numberFormat.format(ConvertUtils.convertKilogram2Lbs(weight.toDouble()))
+            numberFormat.format(ConvertUtils.convertKilogram2Lbs(weight))
         } else {
             numberFormat.format(weight)
         }
@@ -266,6 +266,6 @@ class FormatUtils(val unitSystem: UnitSystem) {
      * @param maxFractionDigits maximum fraction digits to be shown in the text
      * @return the weight as text
      */
-    fun weightToString(weight: Float, maxFractionDigits: Int): String =
+    fun weightToString(weight: Double, maxFractionDigits: Int): String =
             "${weightToStringWithoutUnitName(weight, maxFractionDigits)} ${getWeightUnitName()}"
 }

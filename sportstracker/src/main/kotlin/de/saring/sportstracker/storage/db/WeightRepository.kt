@@ -27,7 +27,7 @@ class WeightRepository(
     override fun readFromResultSet(rs: ResultSet): Weight {
         val weight = Weight(rs.getLong("ID"))
         weight.dateTime = dateToLocalDateTime(rs.getDate("DATE_TIME"))
-        weight.value = rs.getFloat("VALUE")
+        weight.value = rs.getDouble("VALUE")
         weight.comment = rs.getString("COMMENT")
         return weight
     }
@@ -37,7 +37,7 @@ class WeightRepository(
             Statement.RETURN_GENERATED_KEYS
         ).use { statement ->
             statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
-            statement.setFloat(2, entry.value)
+            statement.setDouble(2, entry.value)
             statement.setString(3, entry.comment)
             statement.executeUpdate()
 
@@ -52,7 +52,7 @@ class WeightRepository(
         connection.prepareStatement("UPDATE WEIGHT SET DATE_TIME = ?, VALUE = ?, COMMENT = ? WHERE ID = ?"
         ).use { statement ->
             statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
-            statement.setFloat(2, entry.value)
+            statement.setDouble(2, entry.value)
             statement.setString(3, entry.comment)
             statement.setLong(4, entry.id!!)
             statement.executeUpdate()

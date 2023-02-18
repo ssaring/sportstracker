@@ -804,7 +804,7 @@ public class TimexPwxParser extends AbstractExerciseParser {
 
             ExerciseSample lastSample = exercise.getSampleList().get(exercise.getSampleList().size() - 1);
             int distance = lastSample.getDistance();
-            float speedAvg = (CalculationUtils.calculateAvgSpeed(distance / 1000f,
+            float speedAvg = (float) (CalculationUtils.calculateAvgSpeed(distance / 1000.0,
                     Math.round(exercise.getDuration() / 10f)));
 
             exercise.setSpeed(new ExerciseSpeed(speedAvg, speedMax, distance));

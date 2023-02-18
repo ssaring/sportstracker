@@ -157,8 +157,8 @@ public class DbApplicationDataImporter {
             statement.setLong(4, getPrimaryKeyForSportType(exercise.getSportSubType(), exercise.getSportType()));
             statement.setString(5, String.valueOf(exercise.getIntensity()));
             statement.setInt(6, exercise.getDuration());
-            statement.setFloat(7, exercise.getDistance());
-            statement.setFloat(8, exercise.getAvgSpeed());
+            statement.setDouble(7, exercise.getDistance());
+            statement.setDouble(8, exercise.getAvgSpeed());
             if (exercise.getAvgHeartRate() != null) {
                 statement.setInt(9, exercise.getAvgHeartRate());
             }
@@ -209,7 +209,7 @@ public class DbApplicationDataImporter {
 
             statement.setLong(1, weight.getId());
             statement.setString(2, weight.getDateTime().format(SQLITE_DATETIME_FORMATTER));
-            statement.setFloat(3, weight.getValue());
+            statement.setDouble(3, weight.getValue());
             if (!StringUtils.isNullOrEmpty(weight.getComment())) {
                 statement.setString(4, weight.getComment());
             }

@@ -53,7 +53,7 @@ class TopoGrafixGpxParserTest {
         assertFalse(exercise.recordingMode.isIntervalExercise)
 
         // Check exercise time and duration
-        assertEquals(LocalDateTime.of(2010, 8, 10, 17, 27, 47), exercise.dateTime);
+        assertEquals(LocalDateTime.of(2010, 8, 10, 17, 27, 47), exercise.dateTime)
         assertEquals(((47 * 60) + 6) * 10, exercise.duration)
 
         // check altitude data
@@ -65,7 +65,7 @@ class TopoGrafixGpxParserTest {
         // check speed summary data
         assertEquals(39.38832f, exercise.speed!!.speedMax)
         assertEquals(16484, exercise.speed!!.distance)
-        assertEquals(20.998724f, exercise.speed!!.speedAvg)
+        assertEquals(20.998724f, exercise.speed!!.speedAvg, 0.0001f)
 
         // check sample data
         assertEquals(199, exercise.sampleList.size)
@@ -115,7 +115,7 @@ class TopoGrafixGpxParserTest {
         assertFalse(exercise.recordingMode.isIntervalExercise)
 
         // Check exercise time and duration
-        assertEquals(LocalDateTime.of(2012, 3, 2, 6, 53, 51), exercise.dateTime);
+        assertEquals(LocalDateTime.of(2012, 3, 2, 6, 53, 51), exercise.dateTime)
         assertEquals(6090, exercise.duration)
 
         // check altitude data
@@ -185,7 +185,7 @@ class TopoGrafixGpxParserTest {
         assertFalse(exercise.recordingMode.isIntervalExercise)
 
         // Check exercise time and duration
-        assertEquals(LocalDateTime.of(2011, 11, 3, 9, 9, 25), exercise.dateTime);
+        assertEquals(LocalDateTime.of(2011, 11, 3, 9, 9, 25), exercise.dateTime)
         assertEquals(1780, exercise.duration)
 
         // check altitude data

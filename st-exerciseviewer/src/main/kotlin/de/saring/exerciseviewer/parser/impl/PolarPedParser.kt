@@ -84,7 +84,7 @@ class PolarPedParser : AbstractExerciseParser() {
 
         // calculate average speed
         val speedAvg = if (exerciseDuration > 0) {
-            CalculationUtils.calculateAvgSpeed((distance / 1000.0).toFloat(), exerciseDuration)
+            CalculationUtils.calculateAvgSpeed(distance / 1000.0, exerciseDuration).toFloat()
         } else 0f
 
         exercise.speed = ExerciseSpeed(speedAvg, 0f, distance)

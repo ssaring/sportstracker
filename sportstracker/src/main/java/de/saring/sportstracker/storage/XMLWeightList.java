@@ -69,7 +69,7 @@ public class XMLWeightList {
      */
     private Weight readWeight(Element eWeight) {
         Weight weight = new Weight(Long.parseLong(eWeight.getChildText("id")));
-        weight.setValue(Float.parseFloat(eWeight.getChildText("value")));
+        weight.setValue(Double.parseDouble(eWeight.getChildText("value")));
         weight.setComment(eWeight.getChildText("comment"));
 
         // get and convert date (format allready checked by XSD schema)

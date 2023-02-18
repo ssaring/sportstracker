@@ -94,25 +94,25 @@ class FormatUtilsTest {
     @Test
     fun testSpeedToString() {
         var formatUtils = FormatUtils(UnitSystem.METRIC)
-        assertEquals("0", formatUtils.speedToString(0f, 0, SpeedMode.SPEED))
-        assertEquals("100 km/h", formatUtils.speedToString(100f, 0, SpeedMode.SPEED))
-        assertEquals("100 km/h", formatUtils.speedToString(100.0f, 2, SpeedMode.SPEED))
-        assertEquals("100.55 km/h", formatUtils.speedToString(100.55f, 2, SpeedMode.SPEED))
-        assertEquals("100.56 km/h", formatUtils.speedToString(100.555f, 2, SpeedMode.SPEED))
-        assertEquals("100,234.55 km/h", formatUtils.speedToString(100234.55f, 2, SpeedMode.SPEED))
+        assertEquals("0", formatUtils.speedToString(0.0, 0, SpeedMode.SPEED))
+        assertEquals("100 km/h", formatUtils.speedToString(100.0, 0, SpeedMode.SPEED))
+        assertEquals("100 km/h", formatUtils.speedToString(100.0, 2, SpeedMode.SPEED))
+        assertEquals("100.55 km/h", formatUtils.speedToString(100.55, 2, SpeedMode.SPEED))
+        assertEquals("100.56 km/h", formatUtils.speedToString(100.555, 2, SpeedMode.SPEED))
+        assertEquals("100,234.55 km/h", formatUtils.speedToString(100234.55, 2, SpeedMode.SPEED))
 
         formatUtils = FormatUtils(UnitSystem.METRIC)
-        assertEquals("05:00 min/km", formatUtils.speedToString(12f, 0, SpeedMode.PACE))
-        assertEquals("N/A", formatUtils.speedToString(0f, 0, SpeedMode.PACE))
+        assertEquals("05:00 min/km", formatUtils.speedToString(12.0, 0, SpeedMode.PACE))
+        assertEquals("N/A", formatUtils.speedToString(0.0, 0, SpeedMode.PACE))
 
         formatUtils = FormatUtils(UnitSystem.ENGLISH)
-        assertEquals("0", formatUtils.speedToString(0f, 0, SpeedMode.SPEED))
-        assertEquals("62 mph", formatUtils.speedToString(100f, 0, SpeedMode.SPEED))
-        assertEquals("62.45 mph", formatUtils.speedToString(100.50f, 2, SpeedMode.SPEED))
+        assertEquals("0", formatUtils.speedToString(0.0, 0, SpeedMode.SPEED))
+        assertEquals("62 mph", formatUtils.speedToString(100.0, 0, SpeedMode.SPEED))
+        assertEquals("62.45 mph", formatUtils.speedToString(100.50, 2, SpeedMode.SPEED))
 
         formatUtils = FormatUtils(UnitSystem.ENGLISH)
-        assertEquals("08:02 min/m", formatUtils.speedToString(12f, 0, SpeedMode.PACE))
-        assertEquals("N/A", formatUtils.speedToString(0f, 0, SpeedMode.PACE))
+        assertEquals("08:02 min/m", formatUtils.speedToString(12.0, 0, SpeedMode.PACE))
+        assertEquals("N/A", formatUtils.speedToString(0.0, 0, SpeedMode.PACE))
     }
 
     /**
@@ -122,21 +122,21 @@ class FormatUtilsTest {
     @Test
     fun testSpeedToStringWithoutUnitName() {
         var formatUtils = FormatUtils(UnitSystem.METRIC)
-        assertEquals("0", formatUtils.speedToString(0f, 0, SpeedMode.SPEED))
-        assertEquals("100", formatUtils.speedToStringWithoutUnitName(100f, 0, SpeedMode.SPEED))
-        assertEquals("100.56", formatUtils.speedToStringWithoutUnitName(100.555f, 2, SpeedMode.SPEED))
+        assertEquals("0", formatUtils.speedToString(0.0, 0, SpeedMode.SPEED))
+        assertEquals("100", formatUtils.speedToStringWithoutUnitName(100.0, 0, SpeedMode.SPEED))
+        assertEquals("100.56", formatUtils.speedToStringWithoutUnitName(100.555, 2, SpeedMode.SPEED))
 
         formatUtils = FormatUtils(UnitSystem.METRIC)
-        assertEquals("05:00", formatUtils.speedToStringWithoutUnitName(12f, 0, SpeedMode.PACE))
-        assertEquals("N/A", formatUtils.speedToStringWithoutUnitName(0f, 0, SpeedMode.PACE))
+        assertEquals("05:00", formatUtils.speedToStringWithoutUnitName(12.0, 0, SpeedMode.PACE))
+        assertEquals("N/A", formatUtils.speedToStringWithoutUnitName(0.0, 0, SpeedMode.PACE))
 
         formatUtils = FormatUtils(UnitSystem.ENGLISH)
-        assertEquals("0", formatUtils.speedToString(0f, 0, SpeedMode.SPEED))
-        assertEquals("62.45", formatUtils.speedToStringWithoutUnitName(100.50f, 2, SpeedMode.SPEED))
+        assertEquals("0", formatUtils.speedToString(0.0, 0, SpeedMode.SPEED))
+        assertEquals("62.45", formatUtils.speedToStringWithoutUnitName(100.50, 2, SpeedMode.SPEED))
 
         formatUtils = FormatUtils(UnitSystem.ENGLISH)
-        assertEquals("08:02", formatUtils.speedToStringWithoutUnitName(12f, 0, SpeedMode.PACE))
-        assertEquals("N/A", formatUtils.speedToStringWithoutUnitName(0f, 0, SpeedMode.PACE))
+        assertEquals("08:02", formatUtils.speedToStringWithoutUnitName(12.0, 0, SpeedMode.PACE))
+        assertEquals("N/A", formatUtils.speedToStringWithoutUnitName(0.0, 0, SpeedMode.PACE))
     }
 
     /**
@@ -255,12 +255,12 @@ class FormatUtilsTest {
      */
     @Test
     fun testweightToString() {
-        assertEquals("0 kg", FormatUtils(UnitSystem.METRIC).weightToString(0f, 0))
-        assertEquals("100 kg", FormatUtils(UnitSystem.METRIC).weightToString(100f, 2))
-        assertEquals("100.24 kg", FormatUtils(UnitSystem.METRIC).weightToString(100.2373f, 2))
-        assertEquals("0 lbs", FormatUtils(UnitSystem.ENGLISH).weightToString(0f, 2))
-        assertEquals("220.46 lbs", FormatUtils(UnitSystem.ENGLISH).weightToString(100f, 2))
-        assertEquals("220 lbs", FormatUtils(UnitSystem.ENGLISH).weightToString(100f, 0))
+        assertEquals("0 kg", FormatUtils(UnitSystem.METRIC).weightToString(0.0, 0))
+        assertEquals("100 kg", FormatUtils(UnitSystem.METRIC).weightToString(100.0, 2))
+        assertEquals("100.24 kg", FormatUtils(UnitSystem.METRIC).weightToString(100.2373, 2))
+        assertEquals("0 lbs", FormatUtils(UnitSystem.ENGLISH).weightToString(0.0, 2))
+        assertEquals("220.46 lbs", FormatUtils(UnitSystem.ENGLISH).weightToString(100.0, 2))
+        assertEquals("220 lbs", FormatUtils(UnitSystem.ENGLISH).weightToString(100.0, 0))
     }
 
     /**
@@ -269,8 +269,8 @@ class FormatUtilsTest {
      */
     @Test
     fun testWeightToStringWithoutUnitName() {
-        assertEquals("100", FormatUtils(UnitSystem.METRIC).weightToStringWithoutUnitName(100f, 2))
-        assertEquals("100.24", FormatUtils(UnitSystem.METRIC).weightToStringWithoutUnitName(100.2373f, 2))
-        assertEquals("220.46", FormatUtils(UnitSystem.ENGLISH).weightToStringWithoutUnitName(100f, 2))
+        assertEquals("100", FormatUtils(UnitSystem.METRIC).weightToStringWithoutUnitName(100.0, 2))
+        assertEquals("100.24", FormatUtils(UnitSystem.METRIC).weightToStringWithoutUnitName(100.2373, 2))
+        assertEquals("220.46", FormatUtils(UnitSystem.ENGLISH).weightToStringWithoutUnitName(100.0, 2))
     }
 }

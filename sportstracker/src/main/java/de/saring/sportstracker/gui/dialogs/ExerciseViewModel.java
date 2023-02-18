@@ -7,11 +7,11 @@ import java.time.LocalTime;
 import de.saring.util.unitcalc.SpeedToStringConverter;
 import de.saring.util.unitcalc.UnitSystem;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.FloatProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -45,7 +45,7 @@ public class ExerciseViewModel {
     public final ObjectProperty<SportType> sportType;
     public final ObjectProperty<SportSubType> sportSubType;
     public final ObjectProperty<Exercise.IntensityType> intensity;
-    public final FloatProperty distance;
+    public final DoubleProperty distance;
     public final IntegerProperty duration;
     public final IntegerProperty avgHeartRate;
     public final IntegerProperty ascent;
@@ -56,7 +56,7 @@ public class ExerciseViewModel {
     public final StringProperty comment;
 
     /**
-     * Unfortunately the average speed needs to be handled as a StringProperty and the float to string conversion can't
+     * Unfortunately the average speed needs to be handled as a StringProperty and the double to string conversion can't
      * be done automatically by using a converter in the binding. Although JavaFX supports such a conversion, it's not
      * possible to switch the speed modes for this automatic conversion. The text input throws weird exceptions then and
      * is not usable anymore.
@@ -87,7 +87,7 @@ public class ExerciseViewModel {
         this.sportType = new SimpleObjectProperty<>(exercise.getSportType());
         this.sportSubType = new SimpleObjectProperty<>(exercise.getSportSubType());
         this.intensity = new SimpleObjectProperty<>(exercise.getIntensity());
-        this.distance = new SimpleFloatProperty(exercise.getDistance());
+        this.distance = new SimpleDoubleProperty(exercise.getDistance());
         this.duration = new SimpleIntegerProperty(exercise.getDuration());
         this.equipment = new SimpleObjectProperty<>(exercise.getEquipment());
         // set optional Integer properties to 0 when value is null (IntegerProperty can't handle null values)
@@ -99,10 +99,10 @@ public class ExerciseViewModel {
         this.comment = new SimpleStringProperty(StringUtils.getTextOrEmptyString(exercise.getComment()));
 
         // convert exercise values when english unit system is enabled
-        float fAvgSpeed = exercise.getAvgSpeed();
+        double dAvgSpeed = exercise.getAvgSpeed();
         if (formatUtils.getUnitSystem() == UnitSystem.ENGLISH) {
-            this.distance.set((float) ConvertUtils.convertKilometer2Miles(exercise.getDistance(), false));
-            fAvgSpeed = (float) ConvertUtils.convertKilometer2Miles(fAvgSpeed, false);
+            this.distance.set(ConvertUtils.convertKilometer2Miles(exercise.getDistance(), false));
+            dAvgSpeed = ConvertUtils.convertKilometer2Miles(dAvgSpeed, false);
             this.ascent.set(ConvertUtils.convertMeter2Feet(this.ascent.get()));
             this.descent.set(ConvertUtils.convertMeter2Feet(this.descent.get()));
         }
@@ -111,7 +111,7 @@ public class ExerciseViewModel {
         final SpeedMode speedMode = exercise.getSportType() == null ?
                 preferredSpeedMode : exercise.getSportType().getSpeedMode();
         this.speedConverter = new SpeedToStringConverter(speedMode);
-        this.avgSpeed = new SimpleStringProperty(speedConverter.floatSpeedtoString(fAvgSpeed));
+        this.avgSpeed = new SimpleStringProperty(speedConverter.doubleSpeedtoString(dAvgSpeed));
 
         setupSportTypeRecordDistance();
         setupChangeListenersForAutoCalculation();
@@ -130,7 +130,7 @@ public class ExerciseViewModel {
         exercise.setSportSubType(sportSubType.getValue());
         exercise.setIntensity(intensity.getValue());
         exercise.setDistance(distance.getValue());
-        exercise.setAvgSpeed(speedConverter.stringSpeedToFloat(avgSpeed.getValue()));
+        exercise.setAvgSpeed(speedConverter.stringSpeedToDouble(avgSpeed.getValue()));
         exercise.setDuration(duration.getValue());
         exercise.setAvgHeartRate(avgHeartRate.getValue());
         exercise.setAscent(ascent.getValue());
@@ -143,8 +143,8 @@ public class ExerciseViewModel {
 
         // convert weight value when english unit system is enabled
         if (this.formatUtils.getUnitSystem() == UnitSystem.ENGLISH) {
-            exercise.setDistance((float) ConvertUtils.convertMiles2Kilometer(exercise.getDistance()));
-            exercise.setAvgSpeed((float) ConvertUtils.convertMiles2Kilometer(exercise.getAvgSpeed()));
+            exercise.setDistance(ConvertUtils.convertMiles2Kilometer(exercise.getDistance()));
+            exercise.setAvgSpeed(ConvertUtils.convertMiles2Kilometer(exercise.getAvgSpeed()));
             exercise.setAscent(ConvertUtils.convertFeet2Meter(exercise.getAscent()));
             exercise.setDescent(ConvertUtils.convertFeet2Meter(exercise.getDescent()));
         }
@@ -174,17 +174,17 @@ public class ExerciseViewModel {
      * @param newAvgSpeed new avg speed in km/h (will be converted when english unit system is used)
      * @param newDuration new duration in seconds
      */
-    public void setAutoCalcFields(final float newDistance, final float newAvgSpeed, final int newDuration) {
+    public void setAutoCalcFields(final double newDistance, final double newAvgSpeed, final int newDuration) {
 
         if (!autoCalcDistance.get()) {
             if (this.formatUtils.getUnitSystem() == UnitSystem.ENGLISH) {
-                this.distance.set((float) ConvertUtils.convertKilometer2Miles(newDistance, false));
+                this.distance.set(ConvertUtils.convertKilometer2Miles(newDistance, false));
             } else {
                 this.distance.set(newDistance);
             }
         }
         if (!autoCalcAvgSpeed.get()) {
-            setAvgSpeedFloatValue(newAvgSpeed);
+            setAvgSpeedDoubleValue(newAvgSpeed);
         }
         if (!autoCalcDuration.get()) {
             this.duration.set(newDuration);
@@ -192,17 +192,17 @@ public class ExerciseViewModel {
     }
 
     /**
-     * Sets the specified average speed float value. This is converted by using the current speed mode and unit system.
+     * Sets the specified average speed double value. This is converted by using the current speed mode and unit system.
      * The auto calculation field will not be handled here!
      *
-     * @param fAvgSpeedMetric avg speed value in metric unit
+     * @param dAvgSpeedMetric avg speed value in metric unit
      */
-    public void setAvgSpeedFloatValue(float fAvgSpeedMetric) {
-        float fAvgSpeedCurrentUnit = fAvgSpeedMetric;
+    public void setAvgSpeedDoubleValue(double dAvgSpeedMetric) {
+        double fAvgSpeedCurrentUnit = dAvgSpeedMetric;
         if (this.formatUtils.getUnitSystem() == UnitSystem.ENGLISH) {
-            fAvgSpeedCurrentUnit = (float) ConvertUtils.convertKilometer2Miles(fAvgSpeedMetric, false);
+            fAvgSpeedCurrentUnit = ConvertUtils.convertKilometer2Miles(dAvgSpeedMetric, false);
         }
-        this.avgSpeed.set(speedConverter.floatSpeedtoString(fAvgSpeedCurrentUnit));
+        this.avgSpeed.set(speedConverter.doubleSpeedtoString(fAvgSpeedCurrentUnit));
     }
 
     /**
@@ -218,7 +218,7 @@ public class ExerciseViewModel {
 
             if (!sportTypeRecordDistance.get()) {
                 distance.set(0);
-                avgSpeed.set(speedConverter.floatSpeedtoString(0f));
+                avgSpeed.set(speedConverter.doubleSpeedtoString(0.0));
             }
 
             autoCalculate();
@@ -264,15 +264,15 @@ public class ExerciseViewModel {
     private void setupSpeedModeUpdateOnSportTypeChanges() {
         sportType.addListener((observable, oldValue, newValue) -> {
 
-            // If speed mode has changed: get the current avg speed float value by using the old speed mode.
-            // Then switch the converter to the new speed mode and reset the float value - this does the conversion.
+            // If speed mode has changed: get the current avg speed double value by using the old speed mode.
+            // Then switch the converter to the new speed mode and reset the double value - this does the conversion.
             SpeedMode oldSpeedMode = speedConverter.getSpeedMode();
             SpeedMode newSpeedMode = newValue == null ? null : newValue.getSpeedMode();
             if (oldSpeedMode != newSpeedMode) {
 
-                Float fOldAvgSpeed = speedConverter.stringSpeedToFloat(avgSpeed.get());
+                Double dOldAvgSpeed = speedConverter.stringSpeedToDouble(avgSpeed.get());
                 speedConverter.setSpeedMode(newSpeedMode);
-                avgSpeed.set(speedConverter.floatSpeedtoString(fOldAvgSpeed));
+                avgSpeed.set(speedConverter.doubleSpeedtoString(dOldAvgSpeed));
             }
         });
     }
@@ -285,25 +285,25 @@ public class ExerciseViewModel {
      * the distance!
      */
     private void autoCalculate() {
-        Float fAvgSpeed = speedConverter.stringSpeedToFloat(avgSpeed.get());
-        fAvgSpeed = fAvgSpeed == null ? 0f : fAvgSpeed;
+        Double dAvgSpeed = speedConverter.stringSpeedToDouble(avgSpeed.get());
+        dAvgSpeed = dAvgSpeed == null ? 0f : dAvgSpeed;
 
-        if (sportTypeRecordDistance.get() && fAvgSpeed != null) {
+        if (sportTypeRecordDistance.get() && dAvgSpeed != null) {
             if (autoCalcDistance.get()) {
-                if (fAvgSpeed > 0 && duration.get() > 0) {
-                    distance.set(CalculationUtils.calculateDistance(fAvgSpeed, duration.get()));
+                if (dAvgSpeed > 0 && duration.get() > 0) {
+                    distance.set(CalculationUtils.calculateDistance(dAvgSpeed, duration.get()));
                 } else {
                     distance.set(0);
                 }
             } else if (autoCalcAvgSpeed.get()) {
-                float fCalculatedAvgSpeed = 0;
+                double fCalculatedAvgSpeed = 0;
                 if (distance.get() > 0 && duration.get() > 0) {
                     fCalculatedAvgSpeed = CalculationUtils.calculateAvgSpeed(distance.get(), duration.get());
                 }
-                avgSpeed.set(speedConverter.floatSpeedtoString(fCalculatedAvgSpeed));
+                avgSpeed.set(speedConverter.doubleSpeedtoString(fCalculatedAvgSpeed));
             } else if (autoCalcDuration.get()) {
-                if (distance.get() > 0 && fAvgSpeed > 0) {
-                    duration.set(CalculationUtils.calculateDuration(distance.get(), fAvgSpeed));
+                if (distance.get() > 0 && dAvgSpeed > 0) {
+                    duration.set(CalculationUtils.calculateDuration(distance.get(), dAvgSpeed));
                 } else {
                     duration.set(0);
                 }

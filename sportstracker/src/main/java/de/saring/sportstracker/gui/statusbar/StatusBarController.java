@@ -57,8 +57,8 @@ public class StatusBarController {
         // create status bar text only when exercises are selected
         if (selectedExerciseIds.length > 0) {
 
-            float sumDistance = 0;
-            float sumAvgSpeed = 0;
+            double sumDistance = 0;
+            double sumAvgSpeed = 0;
             int sumDuration = 0;
 
             // calculate summary distance, AVG speed and duration for all selected exercises
