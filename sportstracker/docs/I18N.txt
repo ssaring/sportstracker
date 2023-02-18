@@ -47,9 +47,13 @@ History of resource changes for each release
 
 SportsTracker 7.9.2:
 
-st.main.error.load_data (removed)
-st.main.error.open_load_data (new)
-st.main.info.app_data_imported (new)
+- st.main.error.load_data (removed)
+- st.main.error.open_load_data (new)
+- st.main.info.app_data_imported (new)
+
+- st.main.error.export_sqlite (removed)
+- st.main.info.export_sqlite_success (removed)
+- st.view.export_sqlite.Action.text (removed)
 
 SportsTracker 7.9.1:
 

@@ -33,11 +33,6 @@
                                         <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN"/>
                                     </accelerator>
                                 </MenuItem>
-                                <MenuItem fx:id="miExportSqlite" mnemonicParsing="true" onAction="#onExportSqlite" styleClass="menuBarItem" text="%st.view.export_sqlite.Action.text">
-                                    <accelerator>
-                                        <KeyCodeCombination alt="UP" code="E" control="UP" meta="UP" shift="UP" shortcut="DOWN"/>
-                                    </accelerator>
-                                </MenuItem>
                                 <SeparatorMenuItem/>
                                 <MenuItem fx:id="miPrint" mnemonicParsing="true" onAction="#onPrint" styleClass="menuBarItem" text="%st.view.print.Action.text">
                                     <accelerator>

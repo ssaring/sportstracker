@@ -39,8 +39,7 @@ SQLite migration:
     - many float values (in table EXERCISE and WEIGHT have strange values
       - e.g. 75.30000305175781 instead of 75.3 (as stored in XML files)
       - can this be improved by switching all float values to double precision?
-    - remove SQLite Export functionality (incl. schema SQL, error codes, I18N resources?, etc)
-  - remove XML storage functionality
+  - remove XML storage save functionality
   - remove IStorage implementation?
   - DbStorage + Repository + RepositoryUtil unit tests
     - especially for the edge cases in SportTypeRepository::update()
@@ -58,7 +57,7 @@ SQLite migration:
     -> SportSubType and Equipment would always know their parent SportType
     -> Handling of persisted entities would be simpler when maintenance of lists is not needed anymore
   - update application version to 8.0.0
-  - update documentation and change log
+  - update documentation (also remove DB export there) and change log
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 ExerciseViewer standalone mode:

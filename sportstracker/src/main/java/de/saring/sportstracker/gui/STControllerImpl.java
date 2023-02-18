@@ -269,12 +269,6 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     }
 
     @Override
-    public void onExportSqlite(final ActionEvent event) {
-        context.blockMainWindow(true);
-        new Thread(new ExportSqliteTask()).start();
-    }
-
-    @Override
     public void onPrint(final ActionEvent event) {
         currentViewController.print();
     }
@@ -972,38 +966,6 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             LOGGER.log(Level.SEVERE, "Failed to store application data!", getException());
             context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
                     "common.error", "st.main.error.save_data");
-        }
-    }
-
-    /**
-     * This class executes the Export to SQLite action inside a background task without blocking the UI thread.
-     */
-    private class ExportSqliteTask extends Task<Void> {
-
-        @Override
-        protected Void call() throws Exception {
-            LOGGER.info("Exporting application data to SQLite...");
-            // exporter.exportToSqlite();
-            return null;
-        }
-
-        @Override
-        protected void succeeded() {
-            super.succeeded();
-            context.blockMainWindow(false);
-
-            //context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
-            //        "common.info", "st.main.info.export_sqlite_success", exporter.getDatabasePath().toString());
-        }
-
-        @Override
-        protected void failed() {
-            super.failed();
-            context.blockMainWindow(false);
-
-            LOGGER.log(Level.SEVERE, "Failed to export application data to SQLite!", getException());
-            context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.ERROR, //
-                    "common.error", "st.main.error.export_sqlite");
         }
     }
 }

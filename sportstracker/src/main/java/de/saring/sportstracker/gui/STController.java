@@ -34,11 +34,6 @@ public interface STController extends EntryViewEventHandler {
     void onSave(ActionEvent event);
 
     /**
-     * Event handler for action "Export to SQLite".
-     */
-    void onExportSqlite(ActionEvent event);
-
-    /**
      * Event handler for action "Print current view".
      */
     void onPrint(ActionEvent event);
