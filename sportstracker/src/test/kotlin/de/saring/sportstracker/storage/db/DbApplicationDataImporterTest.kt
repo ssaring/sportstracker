@@ -2,6 +2,7 @@ package de.saring.sportstracker.storage.db
 
 import de.saring.sportstracker.data.*
 import javafx.scene.paint.Color
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,7 +13,7 @@ import java.time.LocalDateTime
  *
  * @author Stefan Saring
  */
-class DbStorageImportApplicationDataTest {
+class DbApplicationDataImporterTest {
 
     private val dbStorage = DbStorage()
     private val sportTypes = SportTypeList()
@@ -24,6 +25,11 @@ class DbStorageImportApplicationDataTest {
     fun setUp() {
         dbStorage.openDatabase(DbStorage.IN_MEMORY_FILENAME)
         createTestData()
+    }
+
+    @AfterEach
+    fun tearDown() {
+        dbStorage.closeDatabase()
     }
 
     /**
