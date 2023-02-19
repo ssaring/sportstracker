@@ -13,64 +13,14 @@ import java.time.LocalDateTime
  *
  * @author Stefan Saring
  */
-class DbApplicationDataImporterTest {
+class DbApplicationDataImporterTest : DbStorageTestBase() {
 
-    private val dbStorage = DbStorage()
     private val sportTypes = SportTypeList()
     private val exercises = ExerciseList()
     private val notes = NoteList()
     private val weights = WeightList()
 
-    @BeforeEach
-    fun setUp() {
-        dbStorage.openDatabase(DbStorage.IN_MEMORY_FILENAME)
-        createTestData()
-    }
-
-    @AfterEach
-    fun tearDown() {
-        dbStorage.closeDatabase()
-    }
-
-    /**
-     * Test of method importExistingApplicationData(): All specified application data must be imported successfully to
-     * the SQLite database storage. The test verifies the import by checking the database content afterwards.
-     */
-    @Test
-    fun testImportApplicationData() {
-        dbStorage.importExistingApplicationData(sportTypes, exercises, notes, weights)
-
-        val sportTypes = dbStorage.sportTypeRepository.readAll()
-        assertEquals(1, sportTypes.size)
-        assertEquals("Cycling", sportTypes[0].getName())
-        assertEquals(Color.BLUE, sportTypes[0].color)
-
-        assertEquals(1, sportTypes[0].sportSubTypeList.size())
-        assertEquals(1, sportTypes[0].sportSubTypeList.getAt(0).id)
-        assertEquals("MTB", sportTypes[0].sportSubTypeList.getAt(0).getName())
-
-        assertEquals(1, sportTypes[0].equipmentList.size())
-        assertEquals(1, sportTypes[0].equipmentList.getAt(0).id)
-        assertEquals("Bike 1", sportTypes[0].equipmentList.getAt(0).getName())
-
-        val exercises = dbStorage.exerciseRepository.readAll(sportTypes)
-        assertEquals(1, exercises.size)
-        assertEquals(1, exercises[0].sportType.id)
-        assertEquals(1, exercises[0].sportSubType.id)
-        assertEquals(42.0, exercises[0].distance)
-        assertEquals(20.0, exercises[0].avgSpeed)
-
-        val notes = dbStorage.noteRepository.readAll()
-        assertEquals(1, notes.size)
-        assertEquals("Some comment...", notes[0].comment)
-
-        val weights = dbStorage.weightRepository.readAll()
-        assertEquals(1, weights.size)
-        assertEquals(123.4, weights[0].value)
-        assertEquals("Some other comment...", weights[0].comment)
-    }
-
-    private fun createTestData() {
+    override fun setUpTestData() {
         val sportSubType = SportSubType(1)
         sportSubType.setName("MTB")
         sportSubType.fitId = 8
@@ -111,5 +61,43 @@ class DbApplicationDataImporterTest {
         exercises.set(exercise)
         notes.set(note)
         weights.set(weight)
+    }
+
+    /**
+     * Test of method importExistingApplicationData(): All specified application data must be imported successfully to
+     * the SQLite database storage. The test verifies the import by checking the database content afterwards.
+     */
+    @Test
+    fun testImportApplicationData() {
+        dbStorage.importExistingApplicationData(sportTypes, exercises, notes, weights)
+
+        val sportTypes = dbStorage.sportTypeRepository.readAll()
+        assertEquals(1, sportTypes.size)
+        assertEquals("Cycling", sportTypes[0].getName())
+        assertEquals(Color.BLUE, sportTypes[0].color)
+
+        assertEquals(1, sportTypes[0].sportSubTypeList.size())
+        assertEquals(1, sportTypes[0].sportSubTypeList.getAt(0).id)
+        assertEquals("MTB", sportTypes[0].sportSubTypeList.getAt(0).getName())
+
+        assertEquals(1, sportTypes[0].equipmentList.size())
+        assertEquals(1, sportTypes[0].equipmentList.getAt(0).id)
+        assertEquals("Bike 1", sportTypes[0].equipmentList.getAt(0).getName())
+
+        val exercises = dbStorage.exerciseRepository.readAll(sportTypes)
+        assertEquals(1, exercises.size)
+        assertEquals(1, exercises[0].sportType.id)
+        assertEquals(1, exercises[0].sportSubType.id)
+        assertEquals(42.0, exercises[0].distance)
+        assertEquals(20.0, exercises[0].avgSpeed)
+
+        val notes = dbStorage.noteRepository.readAll()
+        assertEquals(1, notes.size)
+        assertEquals("Some comment...", notes[0].comment)
+
+        val weights = dbStorage.weightRepository.readAll()
+        assertEquals(1, weights.size)
+        assertEquals(123.4, weights[0].value)
+        assertEquals("Some other comment...", weights[0].comment)
     }
 }

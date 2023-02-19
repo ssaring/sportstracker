@@ -37,7 +37,7 @@ SQLite migration:
   - DbStorage + Repository + RepositoryUtil unit tests
     - especially for the edge cases in SportTypeRepository::update()
       -> check proper storage of SportSubTypes and Equipments and updates of Exercises
-    - started => create DbStorageTestBase
+    - started
   - remove XML storage save functionality
   - remove IStorage implementation?
   - Is the SaveTask logic still needed just for the commit-action?

@@ -1,9 +1,7 @@
 package de.saring.sportstracker.storage.db
 
 import de.saring.sportstracker.data.Note
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
@@ -13,19 +11,7 @@ import java.time.LocalDateTime
  *
  * @author Stefan Saring
  */
-class DbStorageTest {
-
-    private val dbStorage = DbStorage()
-
-    @BeforeEach
-    fun setUp() {
-        dbStorage.openDatabase(DbStorage.IN_MEMORY_FILENAME)
-    }
-
-    @AfterEach
-    fun tearDown() {
-        dbStorage.closeDatabase()
-    }
+class DbStorageTest : DbStorageTestBase() {
 
     /**
      * Basic storage tests for creating a new Note entity, commit the change and read from database.
