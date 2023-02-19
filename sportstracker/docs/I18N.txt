@@ -45,7 +45,7 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
-SportsTracker 7.9.2:
+SportsTracker 8.0.0:
 
 - st.main.error.load_data (removed)
 - st.main.error.open_load_data (new)

@@ -27,6 +27,11 @@ SQLite migration:
       - Loaded all data in 111 msec
       - Converted all data in 5 msec
     - loading of all data from XML: 350 msec => similar to opening SQLite database and read from there
+  - memory usage comparison, tested with native packages on macOS 13 and OpenJDK 19
+    - Test scenario: usage of all views, many exercise updates, reloads, ExerciseViewer and Statistic usages
+    - SportsTracker 7.9.1 with XML based storage: 490 MB
+    - SportsTracker 8.0.0 with SQLite based storage: 481 MB
+    - conclusion: storage in SQLite does not consumes more memory
   - DB schema version is validated on startup
   - Add/Edit/Delete/Clone actions for Note, Weight and Exercise entries are executed in DBStorage,
     all views are updated properly afterwards
@@ -46,8 +51,8 @@ SQLite migration:
     -> SportType objects would be more lean when dealing without lists (e.g. when referenced in Exercise)
     -> SportSubType and Equipment would always know their parent SportType
     -> Handling of persisted entities would be simpler when maintenance of lists is not needed anymore
-  - update application version to 8.0.0
   - update documentation (also remove DB export there) and change log
+  - close sqlute-storage branch
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 ExerciseViewer standalone mode:

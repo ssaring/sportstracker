@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v7.9.2:
+v8.0.0:
  Project changes:
  - updated Kotlin to version 1.8.0
  - updated ControlsFX to version 11.1.2

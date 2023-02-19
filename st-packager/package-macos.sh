@@ -4,7 +4,7 @@ ST_PROJECT_DIR=../sportstracker
 BUILD_DIR=./build
 PACKAGE_DIR=./package
 
-ST_VERSION=7.9.1
+ST_VERSION=8.0.0-SNAPSHOT
 
 # cleanup
 rm -fr $BUILD_DIR
