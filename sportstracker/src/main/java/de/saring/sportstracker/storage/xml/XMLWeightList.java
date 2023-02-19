@@ -1,4 +1,4 @@
-package de.saring.sportstracker.storage;
+package de.saring.sportstracker.storage.xml;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.core.STExceptionID;
@@ -16,7 +16,6 @@ import java.util.ArrayList;
  * This class is for reading or writing a WeightList object from or to a XML file.
  *
  * @author Stefan Saring
- * @version 1.0
  */
 public class XMLWeightList {
 
@@ -90,7 +89,7 @@ public class XMLWeightList {
      * @param destination name of xml file to write to
      * @throws STException thrown on store problems
      */
-    public void storeWeightList(WeightList weightList, String destination) throws STException {
+    void storeWeightList(WeightList weightList, String destination) throws STException {
 
         // create JDOM element with all weights
         Element eWeightList = createWeightListElement(weightList);

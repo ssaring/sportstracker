@@ -1,4 +1,4 @@
-package de.saring.sportstracker.storage;
+package de.saring.sportstracker.storage.xml;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -21,7 +21,6 @@ import java.time.format.DateTimeFormatter;
  * Helper class for common functions when reading and writing XML files.
  *
  * @author Stefan Saring
- * @version 1.0
  */
 public final class XMLUtils {
 

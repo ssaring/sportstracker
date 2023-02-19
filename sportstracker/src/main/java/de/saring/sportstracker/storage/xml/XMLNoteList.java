@@ -1,4 +1,4 @@
-package de.saring.sportstracker.storage;
+package de.saring.sportstracker.storage.xml;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,6 @@ import de.saring.sportstracker.data.NoteList;
  * This class is for reading or writing a NoteList object from or to a XML file.
  *
  * @author Stefan Saring
- * @version 1.0
  */
 public class XMLNoteList {
     /**
@@ -90,7 +89,7 @@ public class XMLNoteList {
      * @param destination name of xml file to write to
      * @throws STException thrown on store problems
      */
-    public void storeNoteList(NoteList noteList, String destination) throws STException {
+    void storeNoteList(NoteList noteList, String destination) throws STException {
 
         // create JDOM element with all notes
         Element eNoteList = createNoteListElement(noteList);

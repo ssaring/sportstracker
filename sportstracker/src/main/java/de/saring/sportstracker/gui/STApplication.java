@@ -7,8 +7,6 @@ import de.saring.exerciseviewer.core.EVOptions;
 import de.saring.exerciseviewer.gui.EVContext;
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.gui.update.STUpdateChecker;
-import de.saring.sportstracker.storage.IStorage;
-import de.saring.sportstracker.storage.XMLStorage;
 import de.saring.util.gui.javafx.WindowBoundsPersistence;
 import de.saring.util.unitcalc.FormatUtils;
 import eu.lestard.easydi.EasyDI;
@@ -39,7 +37,6 @@ public class STApplication extends Application {
         // setup EasyDI for dependency injection
         var easyDI = new EasyDI();
         easyDI.bindInstance(STApplication.class, this);
-        easyDI.bindInterface(IStorage.class, XMLStorage.class);
         easyDI.bindInterface(STContext.class, STContextImpl.class);
         easyDI.bindInterface(EVContext.class, STContextImpl.class);
         easyDI.bindInterface(STDocument.class, STDocumentImpl.class);

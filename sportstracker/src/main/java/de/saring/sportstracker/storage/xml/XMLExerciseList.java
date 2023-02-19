@@ -1,4 +1,4 @@
-package de.saring.sportstracker.storage;
+package de.saring.sportstracker.storage.xml;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,6 @@ import de.saring.sportstracker.data.SportTypeList;
  * This class is for reading or writing an ExerciseList object from or to an XML file.
  *
  * @author Stefan Saring
- * @version 2.0
  */
 public class XMLExerciseList {
 
@@ -166,7 +165,7 @@ public class XMLExerciseList {
      * @param destination name of the XML file to write to
      * @throws STException thrown on store problems
      */
-    public void storeExerciseList(ExerciseList exerciseList, String destination) throws STException {
+    void storeExerciseList(ExerciseList exerciseList, String destination) throws STException {
 
         // create JDOM element with all exercises
         Element eExerciseList = createExerciseListElement(exerciseList);

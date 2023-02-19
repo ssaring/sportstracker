@@ -35,8 +35,6 @@ SQLite migration:
   - when new database is created, the application data from XML is imported (if XML files exist)
   - integration unit tests are done for DbStorage, all Repository classes and DbApplicationDataImporter
 - TODO:
-  - remove XML storage save functionality
-  - remove IStorage implementation?
   - Is the SaveTask logic still needed just for the commit-action?
   - is sorting by date in IdDateObjectList really needed? Might be for filter etc.
   - IdObjectList: remove set() and removeById() methods when all lists were migrated to DbStorage

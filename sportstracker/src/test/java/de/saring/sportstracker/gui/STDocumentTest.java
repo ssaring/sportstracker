@@ -29,7 +29,7 @@ public class STDocumentTest {
     public void setUp() {
         // STContext needs to be mocked
         STContext contextMock = mock(STContext.class);
-        document = new STDocumentImpl(contextMock, null, mock(DbStorage.class));
+        document = new STDocumentImpl(contextMock, mock(DbStorage.class));
         document.loadOptions();
     }
 

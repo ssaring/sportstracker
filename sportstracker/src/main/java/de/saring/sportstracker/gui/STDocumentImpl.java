@@ -11,6 +11,7 @@ import java.util.stream.LongStream;
 
 import de.saring.sportstracker.core.ApplicationDataChangeListener;
 import de.saring.sportstracker.storage.db.DbStorage;
+import de.saring.sportstracker.storage.xml.XMLStorage;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -26,7 +27,6 @@ import de.saring.sportstracker.data.NoteList;
 import de.saring.sportstracker.data.SportTypeList;
 import de.saring.sportstracker.data.Weight;
 import de.saring.sportstracker.data.WeightList;
-import de.saring.sportstracker.storage.IStorage;
 import de.saring.util.XmlBeanStorage;
 import de.saring.util.data.IdObject;
 import de.saring.util.unitcalc.SpeedMode;
@@ -50,6 +50,8 @@ public class STDocumentImpl implements STDocument {
 
     private final STContext context;
 
+    private final DbStorage dbStorage;
+
     /**
      * The sport type list of the user.
      */
@@ -70,13 +72,6 @@ public class STDocumentImpl implements STDocument {
      * The body weight entry list of the user.
      */
     private WeightList weightList;
-
-    /**
-     * The data storage instance of the application.
-     */
-    private final IStorage storage;
-
-    private final DbStorage dbStorage;
 
     /**
      * List of listeners which will be notified on each application data change.
@@ -109,12 +104,10 @@ public class STDocumentImpl implements STDocument {
      * Standard c'tor.
      *
      * @param context the SportsTracker context
-     * @param storage the data storage instance to be used
      */
     @Inject
-    public STDocumentImpl(final STContext context, final IStorage storage, final DbStorage dbStorage) {
+    public STDocumentImpl(final STContext context, final DbStorage dbStorage) {
         this.context = context;
-        this.storage = storage;
         this.dbStorage = dbStorage;
 
         // create name of directory where the data is stored
@@ -339,11 +332,13 @@ public class STDocumentImpl implements STDocument {
 
         try {
             // read application data from XML files
-            var importedSportTypes = storage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
+            var xmlStorage = new XMLStorage();
+            var importedSportTypes = xmlStorage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
                     options.getPreferredSpeedMode());
-            var importedExercises = storage.readExerciseList(dataDirectory + "/" + FILENAME_EXERCISE_LIST, importedSportTypes);
-            var importedNotes = storage.readNoteList(dataDirectory + "/" + FILENAME_NOTE_LIST);
-            var importedWeights = storage.readWeightList(dataDirectory + "/" + FILENAME_WEIGHT_LIST);
+            var importedExercises = xmlStorage.readExerciseList(dataDirectory + "/" + FILENAME_EXERCISE_LIST,
+                    importedSportTypes);
+            var importedNotes = xmlStorage.readNoteList(dataDirectory + "/" + FILENAME_NOTE_LIST);
+            var importedWeights = xmlStorage.readWeightList(dataDirectory + "/" + FILENAME_WEIGHT_LIST);
 
             // import data to database and persist
             dbStorage.importExistingApplicationData(

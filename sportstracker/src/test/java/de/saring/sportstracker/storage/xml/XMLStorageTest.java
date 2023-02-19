@@ -1,4 +1,4 @@
-package de.saring.sportstracker.storage;
+package de.saring.sportstracker.storage.xml;
 
 import de.saring.sportstracker.core.STException;
 import de.saring.sportstracker.data.*;
