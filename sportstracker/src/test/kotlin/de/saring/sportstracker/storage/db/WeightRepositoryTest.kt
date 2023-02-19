@@ -27,8 +27,8 @@ class WeightRepositoryTest : DbStorageTestBase() {
      */
     @Test
     fun testReadAll() {
-        val notes = dbStorage.weightRepository.readAll()
-        Assertions.assertEquals(2, notes.size)
+        val weights = dbStorage.weightRepository.readAll()
+        Assertions.assertEquals(2, weights.size)
     }
 
     /**

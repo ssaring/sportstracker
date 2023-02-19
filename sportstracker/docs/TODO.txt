@@ -33,11 +33,8 @@ SQLite migration:
   - committing database changes works properly
   - new database is created (including schema) when it does not exist yet
   - when new database is created, the application data from XML is imported (if XML files exist)
+  - integration unit tests are done for DbStorage, all Repository classes and DbApplicationDataImporter
 - TODO:
-  - DbStorage + Repository + RepositoryUtil unit tests
-    - especially for the edge cases in SportTypeRepository::update()
-      -> check proper storage of SportSubTypes and Equipments and updates of Exercises
-    - started
   - remove XML storage save functionality
   - remove IStorage implementation?
   - Is the SaveTask logic still needed just for the commit-action?

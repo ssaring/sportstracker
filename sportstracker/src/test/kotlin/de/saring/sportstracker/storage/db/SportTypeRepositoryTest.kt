@@ -24,7 +24,7 @@ class SportTypeRepositoryTest : DbStorageTestBase() {
         creatSportType("Cycling", Color.BLUE, SpeedMode.SPEED, 3)
         creatSportType("Running", Color.GREEN, SpeedMode.PACE, 5)
 
-        // reload of updated sportType must be done via readAll(), otherwise the sport subtypes and equipments are not loaded
+        // reload of created sport types must be done via readAll(), otherwise the sport subtypes and equipments are not loaded
         val sportTypes = dbStorage.sportTypeRepository.readAll()
         sportType1 = sportTypes[0]
         sportType2 = sportTypes[1]
