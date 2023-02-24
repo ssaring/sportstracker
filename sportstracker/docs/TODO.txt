@@ -39,8 +39,8 @@ SQLite migration:
   - new database is created (including schema) when it does not exist yet
   - when new database is created, the application data from XML is imported (if XML files exist)
   - integration unit tests are done for DbStorage, all Repository classes and DbApplicationDataImporter
+  - removed sorting by date order management in IdDateObjectList, not needed anymore
 - TODO:
-  - is sorting by date in IdDateObjectList really needed? Might be for filter etc.
   - IdObjectList: remove set() and removeById() methods when all lists were migrated to DbStorage
     - this lists has to be read only, only refill of lists should be possible
       -> data modification need to happen in the specific repositories

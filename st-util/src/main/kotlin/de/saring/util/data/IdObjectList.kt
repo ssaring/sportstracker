@@ -60,7 +60,7 @@ open class IdObjectList<T : IdObject> : Iterable<T> {
      *
      * @param t the IdObject to store
      */
-    open fun set(t: T) {
+    fun set(t: T) {
 
         val index = idObjects.indexOf(t)
         if (index >= 0) {
@@ -78,7 +78,7 @@ open class IdObjectList<T : IdObject> : Iterable<T> {
      *
      * @param entries list of IdObjects to store (must not be null, entries must not be null and all entries and must have a valid ID)
      */
-    open fun clearAndAddAll(entries: List<T>) {
+    fun clearAndAddAll(entries: List<T>) {
         idObjects.clear()
         idObjects.addAll(entries)
     }
