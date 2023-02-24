@@ -40,19 +40,12 @@ SQLite migration:
   - when new database is created, the application data from XML is imported (if XML files exist)
   - integration unit tests are done for DbStorage, all Repository classes and DbApplicationDataImporter
 - TODO:
-  - Is the SaveTask logic still needed just for the commit-action?
   - is sorting by date in IdDateObjectList really needed? Might be for filter etc.
   - IdObjectList: remove set() and removeById() methods when all lists were migrated to DbStorage
-    - also remove ID generation methods
     - this lists has to be read only, only refill of lists should be possible
       -> data modification need to happen in the specific repositories
-  - does SportType object needs to contain all SportSubTypes and Equipments?
-    - add reverse relations instead? (SportSubtype and Equipment have SportType property)
-    -> SportType objects would be more lean when dealing without lists (e.g. when referenced in Exercise)
-    -> SportSubType and Equipment would always know their parent SportType
-    -> Handling of persisted entities would be simpler when maintenance of lists is not needed anymore
   - update documentation (also remove DB export there) and change log
-  - close sqlute-storage branch
+  - close sqlite-storage branch
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 ExerciseViewer standalone mode:

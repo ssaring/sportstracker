@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 public class STDocumentTest {
 
     private STDocument document;
+    private long nextEntityId = 1;
 
     @BeforeEach
     public void setUp() {
@@ -31,6 +32,7 @@ public class STDocumentTest {
         STContext contextMock = mock(STContext.class);
         document = new STDocumentImpl(contextMock, mock(DbStorage.class));
         document.loadOptions();
+        nextEntityId = 1;
     }
 
     /**
@@ -93,9 +95,9 @@ public class STDocumentTest {
     }
 
     private long appendExerciseWithSpeedMode(SpeedMode speedMode) {
-        final Exercise exercise = new Exercise(document.getExerciseList().getNewId());
+        final Exercise exercise = new Exercise(nextEntityId++);
         exercise.setDateTime(LocalDateTime.now());
-        final SportType sportType = new SportType(document.getSportTypeList().getNewId());
+        final SportType sportType = new SportType(nextEntityId++);
         sportType.setSpeedMode(speedMode);
         exercise.setSportType(sportType);
         document.getExerciseList().set(exercise);

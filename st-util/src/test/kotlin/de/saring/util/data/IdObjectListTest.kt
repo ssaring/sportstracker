@@ -115,25 +115,6 @@ class IdObjectListTest {
     }
 
     /**
-     * Test of getNewID method, of class IdObjectList.
-     */
-    @Test
-    fun getNewID() {
-
-        // ID's 1-3 in use => next needs to be 4
-        assertEquals(list.getNewId(), 4)
-
-        // add ID's 4 and 6 to list => next needs to be 5
-        list.set(NameObject(4, "four"))
-        list.set(NameObject(6, "six"))
-        assertEquals(5, list.getNewId())
-
-        // remove ID 2 from list => next needs to be 2
-        list.removeByID(2)
-        assertEquals(2, list.getNewId())
-    }
-
-    /**
      * Subclass of abstract class IdObject for testing.
      */
     internal class NameObject(id: Long, val name: String) : IdObject(id)

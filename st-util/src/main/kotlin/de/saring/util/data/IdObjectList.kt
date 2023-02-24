@@ -1,12 +1,10 @@
 package de.saring.util.data
 
-import java.util.stream.Collectors
 import java.util.stream.Stream
 
 /**
- * This list contains unique instances of IdObject subclasses. It will never contain multiple instances with  the same
- * ID. It also provides useful methods for getting and removing instances by ID or by their index and for getting new
- * unique IDs.
+ * This list contains unique instances of IdObject subclasses. It will never contain multiple instances with the same
+ * ID. It also provides useful methods for getting and removing instances by ID or by their index.
  *
  * @param <T> the object type to store in this list, must be a subclass of IdObject
  *
@@ -18,24 +16,6 @@ open class IdObjectList<T : IdObject> : Iterable<T> {
      * Generic list of subclasses of IdObject. Only subclasses can directly access this list.
      */
     protected val idObjects = mutableListOf<T>()
-
-    /**
-     * This method returns an unique ID, which is not in use yet.
-     *
-     * @return a new unused ID
-     */
-    fun getNewId(): Long {
-
-        val hsIDsInUse = stream()
-                .map { it.id }
-                .collect(Collectors.toSet())
-
-        var newID = 1L
-        while (hsIDsInUse.contains(newID)) {
-            newID++
-        }
-        return newID
-    }
 
     /**
      * Returns the IdObject with the specified ID.
