@@ -1,49 +1,7 @@
 SportsTracker-TODO
 ==================
 
-SQLite migration:
-- Documentation: https://www.sqlitetutorial.net/sqlite-java/
-- Data management concept:
-  - STDocument contains all application data for read access, will be read on application start
-    -> no further database queries for displaying, search, filter etc. needed
-  - all data modification is done via the specific repositories, not in the lists handled by STDocument
-    -> STDocument:updateApplicationData() needs to be called manually after every application data change
-       -> STDocument will reload all application data for read access and notify all views for updates
-       -> STDocument will mark the application data as dirty
-  - advantages:
-    - repository classes are very simple, no caching and no change management is needed there
-      - most repository implementation is similar and can be done in an abstract base class
-    - no performance issues, as the lists in STDocument are just loaded once on start or data changes
-    - search and filter features can stay as they are implemented in STDocument and EntryList,
-      no complicated repository queries needed
-  - disadvantages:
-    - STDocument:updateApplicationData() needs to be called manually on every application data change
-    - all application data is reloaded after every change action (performance is good enough)
-- Status:
-  - all application data is read from SQLite database and displayed in SportsTracker
-  - performance tests with production database export:
-    - loading of all data from SQLite: 270 msec => very fast
-      - Opened database in 156 msec
-      - Loaded all data in 111 msec
-      - Converted all data in 5 msec
-    - loading of all data from XML: 350 msec => similar to opening SQLite database and read from there
-  - memory usage comparison, tested with native packages on macOS 13 and OpenJDK 19
-    - Test scenario: usage of all views, many exercise updates, reloads, ExerciseViewer and Statistic usages
-    - SportsTracker 7.9.1 with XML based storage: 490 MB
-    - SportsTracker 8.0.0 with SQLite based storage: 481 MB
-    - conclusion: storage in SQLite does not consumes more memory
-  - DB schema version is validated on startup
-  - Add/Edit/Delete/Clone actions for Note, Weight and Exercise entries are executed in DBStorage,
-    all views are updated properly afterwards
-  - committing database changes works properly
-  - new database is created (including schema) when it does not exist yet
-  - when new database is created, the application data from XML is imported (if XML files exist)
-  - integration unit tests are done for DbStorage, all Repository classes and DbApplicationDataImporter
-  - removed sorting by date order management in IdDateObjectList, not needed anymore
-- TODO:
-  - update documentation (also remove DB export there) and change log
-  - close sqlite-storage branch
-- Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
+Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"

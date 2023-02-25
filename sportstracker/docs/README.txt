@@ -10,9 +10,14 @@ diagrams and statistics for specific date ranges and sport types. In the
 calendar you can also track your body weight or create note entries, e.g.
 the training plan or upcoming sport events.
 
-All the application data is stored in XML files. So it is very easy to access
-them with other tools or to write importers and exporters for other
-applications. The users data can be exported to a SQLite database as well.
+All the application data is stored in a local SQLite database. So it is very
+easy to access them with SQLite database tools or to write importers and
+exporters for other applications. Users with SQL experience can also create
+easily custom statistics by using an SQLite database browser application.
+Prior to SportsTracker 8.0.0 the application data was stored in XML files.
+The migration from XML to SQLite storage is done automatically on first
+startup of SportsTracker >= 8.0.0. The XML files will not be deleted due to
+backup reasons.
 
 If you are using a heartrate monitor with a computer interface you can display
 the recorded exercise files and evaluate the diagrams with the integrated
@@ -44,7 +49,7 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - CicloSport HAC4Pro (tested)
   - CicloSport HAC5    (tested)
   - Garmin Edge        (tested with Edge 500, 520, 530, 705, 820, FIT and TCX files)
-  - Garmin Forerunner  (tested with Forerunner 35, 305, 910XT, 645, FIT and TCX files)
+  - Garmin Forerunner  (tested with Forerunner 35, 305, 910XT, 645, 955, FIT and TCX files)
   - Garmin Oregon      (tested with Oregon 450, GPX files)
   - Garmin Fenix       (tested with Fenix 2, 5x, 6, 6S Pro, FIT files)
   - Timex Ironmen Race Trainer (tested)
@@ -461,7 +466,7 @@ The SportsTracker project uses the following libraries:
   - EasyDI 0.6.0 (https://github.com/lestard/EasyDI)
       Includes: jakarta.inject 2.0.1
       License: Apache License v2.0
-  - Kotlin 1.8.0 (http://kotlinlang.org/)
+  - Kotlin 1.8.10 (http://kotlinlang.org/)
       License: Apache License v2.0
   - JDOM 2.0.6.1 (http://www.jdom.org)
       License: Apache-style open source license
@@ -476,7 +481,7 @@ The SportsTracker project uses the following libraries:
     - License: not specified
   - commons-cli 1.5.0 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - sqlite-jdbc 3.40.0.0 (https://github.com/xerial/sqlite-jdbc)
+  - sqlite-jdbc 3.41.0.0 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
   - JUnit 5.9.2 (http://www.junit.org)
       License: Eclipse Public License v2.0. and Apache License v2.0
@@ -491,7 +496,6 @@ All dependencies will be downloaded automatically by Maven. The Garmin FIT
 library is missing in the Maven central repository, so I've created my own
 repository for it. It's available at: http://saring.de/st-maven-repo/
 
-
 If you're wondering why the complete application has been ported from the .NET
 platform (C# language, running on Mono) to the Java platform, here are the most
 important reasons:
@@ -504,6 +508,37 @@ important reasons:
     no GTK+ libraries required on Windows and macOS)
   - I18N support on all operating systems
   - the Java platform is much more mature and reliable than Mono
+
+
+Application Data Management
+---------------------------
+
+All application data is stored in a local SQLite database which is created on
+initial application startup.
+The data can be processed and evaluated easily by using 3rd party SQLite
+database browsers (e.g. for custom statistics via SQL).
+
+Development notes:
+- SQLite storage implementation was done in plain JDBC to avoid further
+  complexity, dependencies and performance impacts
+- class STDocument contains all application data for read access, will be read
+  on application start
+  -> no further database queries for displaying, search, filter etc. needed
+- all data modification is done via specific repositories, not in the lists
+  handled by STDocument
+  - STDocument:updateApplicationData() needs to be called manually after every
+    application data change
+  - STDocument will reload all application data for read access and notify all
+    views for updates
+- application data can be processed and evaluated easily by using 3rd party
+  SQLite database browsers (e.g. for custom statistics via SQL)
+- Documentation: https://www.sqlitetutorial.net/sqlite-java/
+
+Comparison with prior XML file storage:
+- SQLite storage provides faster loading times, almost no saving times
+- database schema provides foreign keys between exercises, sport types etc. to
+  ensure data consistency
+- application memory consumption has not been increased compared to XML storage
 
 
 Source Code Management
