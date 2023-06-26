@@ -439,6 +439,10 @@ class DiagramPanelController(
                     val lapSplitSeconds = lap.timeSplit / 10
                     lapSplitValue = createJFreeChartSecond(lapSplitSeconds).firstMillisecond.toDouble()
                 } else {
+                    if (lap.speed == null) {
+                        // ignore laps without speed data, can happen when the lap contains just a break
+                        continue
+                    }
                     lapSplitValue = lap.speed!!.distance / 1000.0
                     if (context.formatUtils.unitSystem == UnitSystem.ENGLISH) {
                         lapSplitValue = ConvertUtils.convertKilometer2Miles(lapSplitValue, false)
@@ -452,7 +456,7 @@ class DiagramPanelController(
                 lapMarker.label = context.resources.getString("pv.diagram.lap", i + 1)
                 lapMarker.labelAnchor = RectangleAnchor.TOP_LEFT
                 lapMarker.labelTextAnchor = TextAnchor.TOP_RIGHT
-                lapMarker.setLabelBackgroundColor(java.awt.Color.WHITE)
+                lapMarker.labelBackgroundColor = java.awt.Color.WHITE
                 plot.addDomainMarker(lapMarker)
             }
         }
