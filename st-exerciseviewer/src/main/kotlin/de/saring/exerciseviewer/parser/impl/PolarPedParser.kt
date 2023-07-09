@@ -45,7 +45,8 @@ class PolarPedParser : AbstractExerciseParser() {
 
     private fun readPedFile(filename: String): Element {
         try {
-            val document = SAXBuilder().build(filename)
+            // create a File of the filename string to avoid URL problems when filename contains spaces or umlauts
+            val document = SAXBuilder().build(java.io.File(filename))
             return document.rootElement
         } catch (e: Exception) {
             throw EVException("Failed to parse the Polar Personal Trainer exercise file '$filename' ...", e)

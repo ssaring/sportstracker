@@ -1,9 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Bug: exception when opening or importing HRM files with "Umlauts" in the pathname (at least in macOS):
-- java.net.MalformedURLException: no protocol: /Users/stefan/Desktop/Jörg/2023-06-30 Rambin.gpx
-
 Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 ExerciseViewer standalone mode:

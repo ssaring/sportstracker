@@ -40,7 +40,8 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
     fun parseExercise(filename: String): EVExercise {
 
         try {
-            val document = SAXBuilder().build(filename)
+            // create a File of the filename string to avoid URL problems when filename contains spaces or umlauts
+            val document = SAXBuilder().build(java.io.File(filename))
             return parseExerciseElement(document.rootElement)
         }
         catch (e: Exception) {

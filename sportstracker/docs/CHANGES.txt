@@ -35,6 +35,8 @@ v8.0.0:
  ExerciseViewer changes:
  - Garmin FIT parser: bugfix for handling laps without any speed data
    (when the lap contains just a break without any activity)
+ - All XML-based parsers (GPX, TCX, Polar): fixed error when opening files with
+   spaces or special characters in the filename
 
 v7.9.1:
  Project changes:
