@@ -269,7 +269,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
      * Calculates the speed summary (only when samples contain timestamps, from which speed is derived).
      */
     private fun calculateSpeedSummary(exercise: EVExercise) {
-        if (!exercise.sampleList.isEmpty()) {
+        if (exercise.sampleList.isNotEmpty()) {
 
             val speedMax = exercise.sampleList
                     .map { it.speed!! }
@@ -292,21 +292,16 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
         val sampleHeartrates:List<Short> = exercise.sampleList
                 .mapNotNull { it.heartRate }
 
-        if (!sampleHeartrates.isEmpty()) {
+        if (sampleHeartrates.isNotEmpty()) {
             exercise.heartRateAVG = sampleHeartrates.average().roundToInt().toShort()
             exercise.heartRateMax = sampleHeartrates.maxOrNull()
         }
     }
 
     /**
-     * Parses the date time in ISO format specified in the passed text and returns the appropriate LocalDateTime.
+     * Parses the specified date time in ISO format and returns the appropriate LocalDateTime.
      */
     private fun parseDateTime(dateTimeText: String): LocalDateTime {
-        // remove the suffix 'Z' if contained in the passed text, can't be ignored by ISO_LOCAL_DATE_TIME
-        val dateTimeTextFixed = if (dateTimeText.endsWith('Z'))
-            dateTimeText.substring(0, dateTimeText.length - 1)
-        else
-            dateTimeText
-        return LocalDateTime.parse(dateTimeTextFixed, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        return LocalDateTime.parse(dateTimeText, DateTimeFormatter.ISO_DATE_TIME)
     }
 }
