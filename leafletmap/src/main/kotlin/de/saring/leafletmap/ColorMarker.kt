@@ -10,6 +10,7 @@ package de.saring.leafletmap
 enum class ColorMarker(override val iconName: String) : Marker {
 
     BLUE_MARKER("blueIcon"),
+    GOLD_MARKER("goldIcon"),
     RED_MARKER("redIcon"),
     GREEN_MARKER("greenIcon"),
     ORANGE_MARKER("orangeIcon"),

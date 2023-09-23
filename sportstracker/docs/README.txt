@@ -120,8 +120,8 @@ The OpenJDK can be downloaded e.g. from: https://adoptium.net/
 If you want to download exercise files from your heartrate monitor you might
 need one of the download tools listed above.
 
-The application was tested on GNU/Linux (e.g. Ubuntu 20.04), Windows 10 and
-macOS (10.15 - 11), although it should work on all systems with the required
+The application was tested on GNU/Linux (e.g. Ubuntu 22.04), Windows 10 and
+macOS (12 - 13), although it should work on all systems with the required
 Java Runtime Environment.
 
 
@@ -412,14 +412,14 @@ Developer Requirements
 ----------------------
 
 For compilation of the SportsTracker sources you need:
-  - Java SE Development Kit (JDK) 16 or greater
+  - Java SE Development Kit (JDK) 21 or greater
     (from http://jdk.java.net or https://adoptium.net)
-  - Maven 3.6.0 or greater
+  - Maven 3.8.0 or greater
     (from http://maven.apache.org)
 
 Tested IDE's (should work an any IDE with Maven support)
   - IntelliJ IDEA Community Edition (http://www.jetbrains.com/idea/)
-    => preferred IDE, tested with version 2021.1
+    => preferred IDE, tested with version 2023.2
   - NetBeans IDE (from http://www.netbeans.org), Kotlin support not tested
   - Eclipse (from http://eclipse.org), Kotlin support not tested
 
@@ -461,12 +461,12 @@ All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
 The SportsTracker project uses the following libraries:
 
-  - OpenJFX 19.0.2.1 (https://openjfx.io/)
+  - OpenJFX 21 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
   - EasyDI 0.6.0 (https://github.com/lestard/EasyDI)
       Includes: jakarta.inject 2.0.1
       License: Apache License v2.0
-  - Kotlin 1.8.10 (http://kotlinlang.org/)
+  - Kotlin 1.9.10 (http://kotlinlang.org/)
       License: Apache License v2.0
   - JDOM 2.0.6.1 (http://www.jdom.org)
       License: Apache-style open source license
@@ -474,18 +474,18 @@ The SportsTracker project uses the following libraries:
       License: BSD 3-Clause License
   - JFreeChart 1.5.3 and JFreeChart-FX 2.0.1 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
-  - LeafletMap 1.0.5 (https://github.com/ssaring/sportstracker)
+  - LeafletMap 1.0.8 (https://github.com/ssaring/sportstracker)
       License: Apache License v2.0
   - leaflet-color-markers (https://github.com/pointhi/leaflet-color-markers)
     - Modified version, included in leafletmap
-    - License: not specified
+    - License: BSD 2-Clause License
   - commons-cli 1.5.0 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - sqlite-jdbc 3.41.0.0 (https://github.com/xerial/sqlite-jdbc)
+  - sqlite-jdbc 3.42.0.0 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
-  - JUnit 5.9.2 (http://www.junit.org)
+  - JUnit 5.10.0 (http://www.junit.org)
       License: Eclipse Public License v2.0. and Apache License v2.0
-  - Mockito 5.0.0 (http://code.google.com/p/mockito/)
+  - Mockito 5.4.0 (http://code.google.com/p/mockito/)
       License: MIT License
   - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.94.0
       URL: https://www.thisisant.com/developer/

@@ -1,8 +1,21 @@
 SportsTracker-TODO
 ==================
 
-Update to Kotlin 1.9.0
+JDK 21 + JavaFX 21 migration
+- Status:
+  - updated all dependencies
+  - updated Kotlin to 1.9.10 and fixed warnings
+  - switched compiler to Java 21 language mode
+- Update Leaflet.js, remove unsupported map types (Hike&Bike, MapBox)
+  - => update documentation and Changes
+- create branch for update, commit all changes
+- update Java in GitHub workflow to version 21 (when Temurin OpenJDK builds are available)
+
 Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
+
+LeafletMap:
+- version 1.9.4 contains a bug where the tiles are not rendered properly in JavaFX WebView browser
+  - therefore stick to version 1.9.3 (OK there) as long no update version with bugfix is available
 
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"

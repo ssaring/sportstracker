@@ -9,8 +9,8 @@ enum class MapLayer(val displayName: String, val javaScriptCode: String) {
 
     /** OpenStreetMap layer. */
     OPENSTREETMAP("OpenStreetMap", """
-        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; OpenStreetMap and contributors',
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         })"""),
 
     /** OpenCycleMap layer. */
