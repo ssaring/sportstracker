@@ -39,6 +39,9 @@ v8.0.0:
    spaces or special characters in the filename
  - GPX parser (TopoGrafixGpxParser): bugfix for issue #260
    - support for GPX files where timestamps contain timezone / offset info
+ - Updated LeafletMap component to version 1.0.8
+   - adds new map layer OpenTopoMap
+   - removed Hike&Bike map layer (not active anymore)
 
 v7.9.1:
  Project changes:

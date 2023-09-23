@@ -109,7 +109,7 @@ class TrackPanelController(
         val metric = document.options.unitSystem == UnitSystem.METRIC
 
         mapConfig = MapConfig(
-                listOf(MapLayer.OPENSTREETMAP, MapLayer.OPENCYCLEMAP, MapLayer.HIKE_BIKE_MAP, MapLayer.MTB_MAP),
+                listOf(MapLayer.OPENSTREETMAP, MapLayer.OPEN_TOPO_MAP, MapLayer.OPENCYCLEMAP, MapLayer.MTB_MAP),
                 ZoomControlConfig(true, ControlPosition.BOTTOM_LEFT),
                 ScaleControlConfig(true, ControlPosition.BOTTOM_LEFT, metric))
     }
