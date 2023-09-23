@@ -11,20 +11,20 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Dependencies and used libraries
 
-* Java SE 11 (tested with OpenJDK 17)
-* OpenJFX 19.0.2.1
+* Java SE 17 (tested with OpenJDK 21)
+* OpenJFX 21
     * Homepage: https://openjfx.io/
     * License: GPL v2 + Classpath Exception
-* Kotlin 1.8.0
+* Kotlin 1.9.10
     * Homepage: http://kotlinlang.org/
     * License: Apache License v2.0
-* Leaflet 1.6.0 (included)
+* Leaflet 1.9.3 (included)
     * Homepage: http://leafletjs.com/
     * License: BSD 2-Clause License
-    * Documentation: http://leafletjs.com/reference-1.6.0.html
+    * Documentation: https://leafletjs.com/reference.html
 * leaflet-color-markers (included, modified)
     * Homepage: https://github.com/pointhi/leaflet-color-markers
-    * License: not specified
+    * License: BSD 2-Clause License
 * kotlinx.serialization 1.4.1 (for the demo only)
     * Homepage: https://github.com/Kotlin/kotlinx.serialization
     * License: Apache License 2.0
@@ -33,10 +33,8 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 #### Status
 
 * map viewer features:
-    * supports OpenStreetMap, OpenCycleMap, HikeBikeMap, MtbMap and MapBox 
-      layers, more can be added easily 
-    * MapBox layer: a project specific token is required for MapBox! A test
-      token for a limited time can be found in the Leaflet tutorial.
+    * supports OpenStreetMap, OpenTopoMap OpenCycleMap and MtbMap layers, more
+      can be added easily 
     * layers can be switched at runtime by the user
     * zoom and scale controls can be configured
     * scale supports metric and imperial units
@@ -45,7 +43,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
     * the map is zoomed properly to fit the track
     * tooltips can be displayed on the map
 * colored markers are supported by the embedded "leaflet-color-markers" library
-  (modified, e.g. added proper retina icon support)
+  (modified)
 * the leaflet and the leaflet-color-markers libraries are included locally, no
   download at runtime needed
 * map viewer can be used offline, the route and the markers are shown without
@@ -59,7 +57,14 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 #### Changelog
 
 LeafletMap 1.0.8:
-* Updated Kotlin to version 1.8.10
+* Updated JavaFX / OpenJFX to version 21
+* Updated Kotlin to version 1.9.10
+* Updated Leaflet to version 1.9.3
+* Updated library leaflet-color-markers (GitHub development version)
+* Updated MapLayer definitions
+  * added new OpenTopoMap layer
+  * removed MapBox layer due to API key limitations (can be added manually)
+  * updated URLs (use of HTTPS) and attributions
 
 LeafletMap 1.0.7:
 * Updated JavaFX / OpenJFX to version 19

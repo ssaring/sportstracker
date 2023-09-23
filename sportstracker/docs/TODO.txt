@@ -1,8 +1,13 @@
 SportsTracker-TODO
 ==================
 
-Update to Kotlin 1.9.0
-Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
+- Test GitHub Actions build with Java v21 (when Temurin OpenJDK builds are available there)
+
+- Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
+
+LeafletMap:
+- version 1.9.4 contains a bug where the tiles are not rendered properly in JavaFX WebView browser
+  - therefore stick to version 1.9.3 (OK there) as long no update version with bugfix is available
 
 ExerciseViewer standalone mode:
 - add support for viewing just a single HRM file by using the "Open with"

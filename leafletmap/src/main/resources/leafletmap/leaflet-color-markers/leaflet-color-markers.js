@@ -1,7 +1,15 @@
 var blueIcon = new L.Icon({
-	iconUrl: 'leaflet-color-markers/images/marker-icon-blue.png',
-	iconRetinaUrl: 'leaflet-color-markers/images/marker-icon-blue-2x.png',
-	shadowUrl: 'leaflet/images/marker-shadow.png',
+	iconUrl: 'leaflet-color-markers/img/marker-icon-2x-blue.png',
+	shadowUrl: 'leaflet-color-markers/img/marker-shadow.png',
+	iconSize: [25, 41],
+	iconAnchor: [12, 41],
+	popupAnchor: [1, -34],
+	shadowSize: [41, 41]
+});
+
+var goldIcon = new L.Icon({
+	iconUrl: 'leaflet-color-markers/img/marker-icon-2x-gold.png',
+	shadowUrl: 'leaflet-color-markers/img/marker-shadow.png',
 	iconSize: [25, 41],
 	iconAnchor: [12, 41],
 	popupAnchor: [1, -34],
@@ -9,9 +17,8 @@ var blueIcon = new L.Icon({
 });
 
 var redIcon = new L.Icon({
-	iconUrl: 'leaflet-color-markers/images/marker-icon-red.png',
-	iconRetinaUrl: 'leaflet-color-markers/images/marker-icon-red-2x.png',
-	shadowUrl: 'leaflet/images/marker-shadow.png',
+	iconUrl: 'leaflet-color-markers/img/marker-icon-2x-red.png',
+	shadowUrl: 'leaflet-color-markers/img/marker-shadow.png',
 	iconSize: [25, 41],
 	iconAnchor: [12, 41],
 	popupAnchor: [1, -34],
@@ -19,9 +26,8 @@ var redIcon = new L.Icon({
 });
 
 var greenIcon = new L.Icon({
-	iconUrl: 'leaflet-color-markers/images/marker-icon-green.png',
-	iconRetinaUrl: 'leaflet-color-markers/images/marker-icon-green-2x.png',
-	shadowUrl: 'leaflet/images/marker-shadow.png',
+	iconUrl: 'leaflet-color-markers/img/marker-icon-2x-green.png',
+	shadowUrl: 'leaflet-color-markers/img/marker-shadow.png',
 	iconSize: [25, 41],
 	iconAnchor: [12, 41],
 	popupAnchor: [1, -34],
@@ -29,9 +35,8 @@ var greenIcon = new L.Icon({
 });
 
 var orangeIcon = new L.Icon({
-	iconUrl: 'leaflet-color-markers/images/marker-icon-orange.png',
-	iconRetinaUrl: 'leaflet-color-markers/images/marker-icon-orange-2x.png',
-	shadowUrl: 'leaflet/images/marker-shadow.png',
+	iconUrl: 'leaflet-color-markers/img/marker-icon-2x-orange.png',
+	shadowUrl: 'leaflet-color-markers/img/marker-shadow.png',
 	iconSize: [25, 41],
 	iconAnchor: [12, 41],
 	popupAnchor: [1, -34],
@@ -39,9 +44,8 @@ var orangeIcon = new L.Icon({
 });
 
 var yellowIcon = new L.Icon({
-	iconUrl: 'leaflet-color-markers/images/marker-icon-yellow.png',
-	iconRetinaUrl: 'leaflet-color-markers/images/marker-icon-yellow-2x.png',
-	shadowUrl: 'leaflet/images/marker-shadow.png',
+	iconUrl: 'leaflet-color-markers/img/marker-icon-2x-yellow.png',
+	shadowUrl: 'leaflet-color-markers/img/marker-shadow.png',
 	iconSize: [25, 41],
 	iconAnchor: [12, 41],
 	popupAnchor: [1, -34],
@@ -49,9 +53,8 @@ var yellowIcon = new L.Icon({
 });
 
 var violetIcon = new L.Icon({
-	iconUrl: 'leaflet-color-markers/images/marker-icon-violet.png',
-	iconRetinaUrl: 'leaflet-color-markers/images/marker-icon-violet-2x.png',
-	shadowUrl: 'leaflet/images/marker-shadow.png',
+	iconUrl: 'leaflet-color-markers/img/marker-icon-2x-violet.png',
+	shadowUrl: 'leaflet-color-markers/img/marker-shadow.png',
 	iconSize: [25, 41],
 	iconAnchor: [12, 41],
 	popupAnchor: [1, -34],
@@ -59,9 +62,8 @@ var violetIcon = new L.Icon({
 });
 
 var greyIcon = new L.Icon({
-	iconUrl: 'leaflet-color-markers/images/marker-icon-grey.png',
-	iconRetinaUrl: 'leaflet-color-markers/images/marker-icon-grey-2x.png',
-	shadowUrl: 'leaflet/images/marker-shadow.png',
+	iconUrl: 'leaflet-color-markers/img/marker-icon-2x-grey.png',
+	shadowUrl: 'leaflet-color-markers/img/marker-shadow.png',
 	iconSize: [25, 41],
 	iconAnchor: [12, 41],
 	popupAnchor: [1, -34],
@@ -69,9 +71,8 @@ var greyIcon = new L.Icon({
 });
 
 var blackIcon = new L.Icon({
-	iconUrl: 'leaflet-color-markers/images/marker-icon-black.png',
-	iconRetinaUrl: 'leaflet-color-markers/images/marker-icon-black-2x.png',
-	shadowUrl: 'leaflet/images/marker-shadow.png',
+	iconUrl: 'leaflet-color-markers/img/marker-icon-2x-black.png',
+	shadowUrl: 'leaflet-color-markers/img/marker-shadow.png',
 	iconSize: [25, 41],
 	iconAnchor: [12, 41],
 	popupAnchor: [1, -34],

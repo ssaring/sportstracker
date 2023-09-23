@@ -59,7 +59,7 @@ class DbStorage {
         LOGGER.info("Closing database")
 
         // connection might be null on application exit when opening the database has failed
-        connection?.let {
+        connection.let {
             try {
                 it.close()
             } catch (e: Exception) {
@@ -95,7 +95,7 @@ class DbStorage {
         LOGGER.info("Creating database schema")
 
         try {
-            val schemaText = DbStorage.javaClass.getResource(SCHEMA_FILE).readText()
+            val schemaText = DbStorage::class.java.getResource(SCHEMA_FILE).readText()
             connection.createStatement().use { statement ->
                 statement.executeUpdate(schemaText)
             }
@@ -131,7 +131,7 @@ class DbStorage {
                                       notes: NoteList,
                                       weights: WeightList) {
         LOGGER.info("Importing existing application data to database")
-        var dbImporter = DbApplicationDataImporter(connection)
+        val dbImporter = DbApplicationDataImporter(connection)
         dbImporter.importApplicationData(sportTypes, exercises, notes, weights)
     }
 
@@ -141,7 +141,7 @@ class DbStorage {
 
         private val LOGGER = Logger.getLogger(NoteRepository::class.java.name)
 
-        private const val SCHEMA_FILE = "/sql/st-schema.sql";
+        private const val SCHEMA_FILE = "/sql/st-schema.sql"
         private const val SCHEMA_VERSION = 1
     }
 }
