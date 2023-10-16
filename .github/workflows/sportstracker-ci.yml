@@ -11,15 +11,15 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
+          distribution: 'temurin'
           java-version: '21'
-          distribution: 'adopt'
           cache: maven
       - name: Build with Maven
-        # XVFB needed for tests, see https://remarkablemark.org/blog/2020/12/12/headless-test-in-github-actions-workflow/
-        uses: GabrielBB/xvfb-action@v1
+        # XVFB needed for unit tests, see https://github.com/coactions/setup-xvfb
+        uses: coactions/setup-xvfb@v1
         with:
           run: mvn -B package
