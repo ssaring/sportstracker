@@ -119,6 +119,7 @@ public class DbApplicationDataImporter {
             var primaryKey = statement.getResultSet().getLong(1);
             storeSportSubTypePrimaryKey(sportSubType, sportType, primaryKey);
         }
+        statement.close();
     }
 
     private void exportEquipments(SportType sportType) throws SQLException {
@@ -137,6 +138,7 @@ public class DbApplicationDataImporter {
             var primaryKey = statement.getResultSet().getLong(1);
             storeEquipmentPrimaryKey(equipment, sportType, primaryKey);
         }
+        statement.close();
     }
 
     private void exportExercises(ExerciseList exercises) throws SQLException {
