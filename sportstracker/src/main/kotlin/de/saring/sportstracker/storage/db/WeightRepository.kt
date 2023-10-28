@@ -33,17 +33,15 @@ class WeightRepository(
     }
 
     override fun executeCreate(entry: Weight): Weight {
-        connection.prepareStatement("INSERT INTO WEIGHT (DATE_TIME, VALUE, COMMENT) VALUES (?, ?, ?)",
+        connection.prepareStatement("INSERT INTO WEIGHT (DATE_TIME, VALUE, COMMENT) VALUES (?, ?, ?) RETURNING ID",
             Statement.RETURN_GENERATED_KEYS
         ).use { statement ->
             statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
             statement.setDouble(2, entry.value)
             statement.setString(3, entry.comment)
-            statement.executeUpdate()
+            statement.execute()
 
-            val rs = statement.generatedKeys
-            rs.next()
-            val weightID = rs.getLong(1)
+            val weightID = statement.resultSet.getLong(1)
             return readById(weightID)
         }
     }

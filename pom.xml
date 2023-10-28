@@ -19,7 +19,7 @@
         <application.mainClass>de.saring.sportstracker.STMain</application.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.9.10</kotlin.version>
-        <javafx.version>21</javafx.version>
+        <javafx.version>21.0.1</javafx.version>
         <junit.version>5.10.0</junit.version>
     </properties>
     
@@ -97,7 +97,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.4.0</version>
+            <version>5.6.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

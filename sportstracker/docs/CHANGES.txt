@@ -3,12 +3,14 @@ Changelog
 
 v8.0.0:
  Project changes:
+ - updated Java to version 21
+ - updated JavaFX / OpenJFX to version 21.0.1
  - updated Kotlin to version 1.9.10
  - updated ControlsFX to version 11.1.2
  - updated JUnit to version 5.10.0
  - updated Mockito to version 5.4.0
  - updated JFreeChart to version 1.5.3 and JFreeChart-FX to 2.0.1
- - updated sqlite-jdbc to version 3.42.0.0
+ - updated sqlite-jdbc to version 3.43.2.1
  SportsTracker changes:
  - Exercise: optional values are now nullable
    (ascent, descent, AVG heartrate, calories)

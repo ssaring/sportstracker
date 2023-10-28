@@ -85,7 +85,7 @@ class ExerciseRepository(
         connection.prepareStatement("INSERT INTO EXERCISE " +
                 "(DATE_TIME, SPORT_TYPE_ID, SPORT_SUBTYPE_ID, INTENSITY, DURATION, DISTANCE, AVG_SPEED, " +
                 "AVG_HEARTRATE, ASCENT, DESCENT, CALORIES, HRM_FILE, EQUIPMENT_ID, COMMENT) VALUES " +
-                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING ID",
             Statement.RETURN_GENERATED_KEYS
         ).use { statement ->
             statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
@@ -102,11 +102,9 @@ class ExerciseRepository(
             statement.setString(12, entry.hrmFile)
             statement.setObject(13, entry.equipment?.id, Types.INTEGER);
             statement.setString(14, entry.comment)
-            statement.executeUpdate()
+            statement.execute()
 
-            val rs = statement.generatedKeys
-            rs.next()
-            val exerciseId = rs.getLong(1)
+            val exerciseId = statement.resultSet.getLong(1)
             return readById(exerciseId)
         }
     }

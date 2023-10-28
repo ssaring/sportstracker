@@ -89,7 +89,7 @@ class SportTypeRepository(
 
         connection.prepareStatement(
             "INSERT INTO SPORT_TYPE " +
-                    "(NAME, RECORD_DISTANCE, SPEED_MODE, COLOR, ICON, FIT_ID) VALUES (?, ?, ?, ?, ?, ?)",
+                    "(NAME, RECORD_DISTANCE, SPEED_MODE, COLOR, ICON, FIT_ID) VALUES (?, ?, ?, ?, ?, ?) RETURNING ID",
             Statement.RETURN_GENERATED_KEYS
         ).use { statement ->
             statement.setString(1, entry.getName())
@@ -98,11 +98,9 @@ class SportTypeRepository(
             statement.setString(4, if (entry.color == null) null else ColorUtils.toRGBCode(entry.color))
             statement.setString(5, entry.icon)
             statement.setObject(6, entry.fitId, Types.INTEGER);
-            statement.executeUpdate()
+            statement.execute()
 
-            val rs = statement.generatedKeys
-            rs.next()
-            val sportTypeId = rs.getLong(1)
+            val sportTypeId = statement.resultSet.getLong(1)
             sportType = readById(sportTypeId)
         }
 

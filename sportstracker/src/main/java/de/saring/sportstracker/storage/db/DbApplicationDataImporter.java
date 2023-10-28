@@ -19,7 +19,6 @@ import de.saring.util.gui.javafx.ColorUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
@@ -95,7 +94,7 @@ public class DbApplicationDataImporter {
             if (sportType.getFitId() != null) {
                 statement.setInt(7, sportType.getFitId());
             }
-            statement.executeUpdate();
+            statement.execute();
 
             exportSportSubTypes(sportType);
             exportEquipments(sportType);
@@ -105,8 +104,7 @@ public class DbApplicationDataImporter {
     private void exportSportSubTypes(SportType sportType) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
-                "INSERT INTO SPORT_SUBTYPE (SPORT_TYPE_ID, NAME, FIT_ID) VALUES (?, ?, ?)",
-                Statement.RETURN_GENERATED_KEYS);
+                "INSERT INTO SPORT_SUBTYPE (SPORT_TYPE_ID, NAME, FIT_ID) VALUES (?, ?, ?) RETURNING ID");
 
         for (SportSubType sportSubType : sportType.getSportSubTypeList()) {
             statement.clearParameters();
@@ -116,9 +114,9 @@ public class DbApplicationDataImporter {
             if (sportSubType.getFitId() != null) {
                 statement.setInt(3, sportSubType.getFitId());
             }
-            statement.executeUpdate();
+            statement.execute();
 
-            var primaryKey = getGeneratedPrimaryKey(statement);
+            var primaryKey = statement.getResultSet().getLong(1);
             storeSportSubTypePrimaryKey(sportSubType, sportType, primaryKey);
         }
     }
@@ -126,7 +124,7 @@ public class DbApplicationDataImporter {
     private void exportEquipments(SportType sportType) throws SQLException {
 
         final PreparedStatement statement = connection.prepareStatement( //
-                "INSERT INTO EQUIPMENT (SPORT_TYPE_ID, NAME, NOT_IN_USE) VALUES (?, ?, ?)");
+                "INSERT INTO EQUIPMENT (SPORT_TYPE_ID, NAME, NOT_IN_USE) VALUES (?, ?, ?) RETURNING ID");
 
         for (Equipment equipment : sportType.getEquipmentList()) {
             statement.clearParameters();
@@ -134,9 +132,9 @@ public class DbApplicationDataImporter {
             statement.setLong(1, sportType.getId());
             statement.setString(2, equipment.getName());
             statement.setInt(3, equipment.isNotInUse() ? 1 : 0);
-            statement.executeUpdate();
+            statement.execute();
 
-            var primaryKey = getGeneratedPrimaryKey(statement);
+            var primaryKey = statement.getResultSet().getLong(1);
             storeEquipmentPrimaryKey(equipment, sportType, primaryKey);
         }
     }
@@ -180,7 +178,7 @@ public class DbApplicationDataImporter {
             if (!StringUtils.isNullOrEmpty(exercise.getComment())) {
                 statement.setString(15, exercise.getComment());
             }
-            statement.executeUpdate();
+            statement.execute();
         }
     }
 
@@ -195,7 +193,7 @@ public class DbApplicationDataImporter {
             statement.setLong(1, note.getId());
             statement.setString(2, note.getDateTime().format(SQLITE_DATETIME_FORMATTER));
             statement.setString(3, note.getComment());
-            statement.executeUpdate();
+            statement.execute();
         }
     }
 
@@ -213,16 +211,7 @@ public class DbApplicationDataImporter {
             if (!StringUtils.isNullOrEmpty(weight.getComment())) {
                 statement.setString(4, weight.getComment());
             }
-            statement.executeUpdate();
-        }
-    }
-
-    private long getGeneratedPrimaryKey(Statement statement) throws SQLException {
-        var resultSet = statement.getGeneratedKeys();
-        if (resultSet.next()) {
-            return resultSet.getLong(1);
-        } else {
-            throw new SQLException("Generated primary key was not returned!");
+            statement.execute();
         }
     }
 

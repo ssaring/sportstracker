@@ -33,16 +33,14 @@ class NoteRepository(
     }
 
     override fun executeCreate(entry: Note): Note {
-        connection.prepareStatement("INSERT INTO NOTE (DATE_TIME, COMMENT) VALUES (?, ?)",
+        connection.prepareStatement("INSERT INTO NOTE (DATE_TIME, COMMENT) VALUES (?, ?) RETURNING ID",
             Statement.RETURN_GENERATED_KEYS
         ).use { statement ->
             statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
             statement.setString(2, entry.comment)
-            statement.executeUpdate()
+            statement.execute()
 
-            val rs = statement.generatedKeys
-            rs.next()
-            val noteId = rs.getLong(1)
+            val noteId = statement.resultSet.getLong(1)
             return readById(noteId)
         }
     }

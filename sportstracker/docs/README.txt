@@ -461,7 +461,7 @@ All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
 The SportsTracker project uses the following libraries:
 
-  - OpenJFX 21 (https://openjfx.io/)
+  - OpenJFX 21.0.1 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
   - EasyDI 0.6.0 (https://github.com/lestard/EasyDI)
       Includes: jakarta.inject 2.0.1
@@ -481,7 +481,7 @@ The SportsTracker project uses the following libraries:
     - License: BSD 2-Clause License
   - commons-cli 1.5.0 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - sqlite-jdbc 3.42.0.0 (https://github.com/xerial/sqlite-jdbc)
+  - sqlite-jdbc 3.43.2.1 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
   - JUnit 5.10.0 (http://www.junit.org)
       License: Eclipse Public License v2.0. and Apache License v2.0
