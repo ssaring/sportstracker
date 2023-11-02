@@ -7,9 +7,8 @@ GitHub Actions CI Build problem:
   - problem does not occur locally on macOS + JDK 21
 - temporary solution: switched CI build to be executed on macOS images (macos-latest)
   - CI build succeeds, tests are executed without any errors
-- TODO: test Linux images (ubuntu-latest) again once Open JDK 21.0.1 is available
-  - -> rollback changes in sportstracker-ci.yml (use of ubuntu-latest + setup-xvfb)
-  - if still fails with JDK 21.0.1: might setup-xvfb cause the problem?
+- problem still exists with latest OpenJDK 21.0.1 and Kotlin 1.9.20
+  - -> might setup-xvfb cause the problem?
 
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
