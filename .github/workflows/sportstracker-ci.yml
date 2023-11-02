@@ -9,7 +9,7 @@ on:
 
 jobs:
   build_and_test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK
@@ -19,7 +19,4 @@ jobs:
           java-version: '21'
           cache: maven
       - name: Build with Maven
-        # XVFB needed for unit tests, see https://github.com/coactions/setup-xvfb
-        uses: coactions/setup-xvfb@v1
-        with:
-          run: mvn -B package
+        run: mvn -B package
