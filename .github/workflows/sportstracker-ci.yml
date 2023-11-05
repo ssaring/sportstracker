@@ -19,4 +19,7 @@ jobs:
           java-version: '21'
           cache: maven
       - name: Build with Maven
-        run: mvn -B package
+        # XVFB needed for unit tests, see https://github.com/coactions/setup-xvfb
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: mvn -B package
