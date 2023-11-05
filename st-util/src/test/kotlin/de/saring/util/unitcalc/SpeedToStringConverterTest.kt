@@ -42,6 +42,7 @@ class SpeedToStringConverterTest {
      */
     @Test
     fun testDoubleSpeedToStringDistancePerHour() {
+        print("----------- testDoubleSpeedToStringDistancePerHour executed")
 
         val converter = SpeedToStringConverter(SpeedMode.SPEED)
 
