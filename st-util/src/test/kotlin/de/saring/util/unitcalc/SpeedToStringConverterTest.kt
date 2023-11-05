@@ -13,7 +13,27 @@ import java.util.Locale
  *
  * @author Stefan Saring
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SpeedToStringConverterTest {
+
+    private lateinit var defaultLocale: Locale
+
+    /**
+     * Set default locale to GERMAN, because the number validation tests are locale dependent.
+     */
+    @BeforeAll
+    fun initLocale() {
+        defaultLocale = Locale.getDefault()
+        Locale.setDefault(Locale.GERMAN)
+    }
+
+    /**
+     * Reset default locale to previous value.
+     */
+    @AfterAll
+    fun resetLocale() {
+        Locale.setDefault(defaultLocale)
+    }
 
     /**
      * Tests of method doubleSpeedtoString() when using SpeedMode speed.
@@ -79,29 +99,5 @@ class SpeedToStringConverterTest {
         assertEquals(30.0, converter.stringSpeedToDouble("02:00"))
         assertEquals(24.0, converter.stringSpeedToDouble("02:30"))
         assertEquals(124.138, converter.stringSpeedToDouble("00:29")!!, 0.0001)
-    }
-
-    companion object {
-
-        private lateinit var defaultLocale: Locale
-
-        /**
-         * Set default locale to GERMAN, because the number validation tests are locale dependent.
-         */
-        @BeforeAll
-        @JvmStatic
-        fun initLocale() {
-            defaultLocale = Locale.getDefault()
-            Locale.setDefault(Locale.GERMAN)
-        }
-
-        /**
-         * Reset default locale to previous value.
-         */
-        @AfterAll
-        @JvmStatic
-        fun resetLocale() {
-            Locale.setDefault(defaultLocale)
-        }
     }
 }
