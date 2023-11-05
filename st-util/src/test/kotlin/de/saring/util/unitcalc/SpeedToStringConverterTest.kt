@@ -23,6 +23,7 @@ class SpeedToStringConverterTest {
      */
     @BeforeAll
     fun initLocale() {
+        print("----------- initLocale executed")
         defaultLocale = Locale.getDefault()
         Locale.setDefault(Locale.GERMAN)
     }
@@ -32,6 +33,7 @@ class SpeedToStringConverterTest {
      */
     @AfterAll
     fun resetLocale() {
+        print("----------- resetLocale executed")
         Locale.setDefault(defaultLocale)
     }
 
