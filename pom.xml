@@ -166,6 +166,7 @@
             </plugin>
 
             <!-- Surefire and Failsafe plugins are needed for proper JUnit 5 test execution -->
+            <!-- (otherwise GitHub Actions CI build on Linux fails) -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>

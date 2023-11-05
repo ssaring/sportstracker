@@ -23,7 +23,6 @@ class SpeedToStringConverterTest {
      */
     @BeforeAll
     fun initLocale() {
-        print("----------- initLocale executed")
         defaultLocale = Locale.getDefault()
         Locale.setDefault(Locale.GERMAN)
     }
@@ -33,7 +32,6 @@ class SpeedToStringConverterTest {
      */
     @AfterAll
     fun resetLocale() {
-        print("----------- resetLocale executed")
         Locale.setDefault(defaultLocale)
     }
 
@@ -42,8 +40,6 @@ class SpeedToStringConverterTest {
      */
     @Test
     fun testDoubleSpeedToStringDistancePerHour() {
-        print("----------- testDoubleSpeedToStringDistancePerHour executed")
-
         val converter = SpeedToStringConverter(SpeedMode.SPEED)
 
         assertEquals(null, converter.doubleSpeedtoString(null))
