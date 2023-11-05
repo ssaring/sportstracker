@@ -19,7 +19,4 @@ jobs:
           java-version: '21'
           cache: maven
       - name: Build with Maven
-        # XVFB needed for tests, see https://remarkablemark.org/blog/2020/12/12/headless-test-in-github-actions-workflow/
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          run: mvn -B package
+        run: mvn -B package
