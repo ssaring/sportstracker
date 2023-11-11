@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>st-util</artifactId>
     <name>st-util</name>
-    <version>8.0.0-SNAPSHOT</version>
+    <version>8.0.0</version>
     <build>
         <plugins>
             <plugin>

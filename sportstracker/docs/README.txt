@@ -19,17 +19,21 @@ The migration from XML to SQLite storage is done automatically on first
 startup of SportsTracker >= 8.0.0. The XML files will not be deleted due to
 backup reasons.
 
-If you are using a heartrate monitor with a computer interface you can display
-the recorded exercise files and evaluate the diagrams with the integrated
-ExerciseViewer application. 
-You can organize them by attaching the recorded files to the exercise 
-entries. When adding new exercises you can import the data from the 
-recorded exercise files.
+If you are using a sport watch or another tracking device with a computer
+interface you can display the recorded exercise files and evaluate the diagrams
+with the integrated ExerciseViewer application.
+You can organize them by attaching the recorded files to the exercise entries.
+When adding new exercises you can import the data from the recorded exercise
+files.
 
-ExerciseViewer supports Polar, CicloSport, Garmin, Timex, Suunto, Oregon, HOLUX
-and Kalenji heartrate monitors. This is the current compatibility list (other
-monitors might work too, but I can't test them, user feedback is welcome):
+ExerciseViewer supports Garmin, Polar, Timex, Suunto, CicloSport, Oregon, HOLUX
+and Kalenji tracking devices. This is the current compatibility list (other
+devices might work too, but I can't test them, user feedback is welcome):
 
+  - Garmin Edge        (tested with Edge 500, 520, 530, 705, 820, FIT and TCX files)
+  - Garmin Forerunner  (tested with Forerunner 35, 305, 910XT, 645, 955, FIT and TCX files)
+  - Garmin Oregon      (tested with Oregon 450, GPX files)
+  - Garmin Fenix       (tested with Fenix 2, 5x, 6, 6S Pro, FIT files)
   - Polar S610(i)      (tested)
   - Polar S710(i)      (tested)
   - Polar S720i        (tested)
@@ -48,10 +52,6 @@ monitors might work too, but I can't test them, user feedback is welcome):
   - CicloSport HAC4    (tested)
   - CicloSport HAC4Pro (tested)
   - CicloSport HAC5    (tested)
-  - Garmin Edge        (tested with Edge 500, 520, 530, 705, 820, FIT and TCX files)
-  - Garmin Forerunner  (tested with Forerunner 35, 305, 910XT, 645, 955, FIT and TCX files)
-  - Garmin Oregon      (tested with Oregon 450, GPX files)
-  - Garmin Fenix       (tested with Fenix 2, 5x, 6, 6S Pro, FIT files)
   - Timex Ironmen Race Trainer (tested)
   - Timex Ironmen Run Trainer (tested)
   - Timex Ironman Global Trainer  (tested)
@@ -67,12 +67,12 @@ monitors might work too, but I can't test them, user feedback is welcome):
 It's also possible to view HRM exercise files (downloaded with the Polar
 Software for Windows).
 
-Users of heartrate monitors with an integrated GPS receiver (e.g. the Garmin
-Edge series) can also view and replay the track of the recorded exercises in
-the interactive map viewer component.
+Users of tracking devices with an integrated GPS receiver (e.g. the Garmin Edge
+series) can also view and replay the track of the recorded exercises in the
+interactive map viewer component.
 
-SportsTracker itself is not able to download the exercise files from the 
-heartrate monitor. Some monitors (e.g. Garmin) allow the direct download via
+SportsTracker itself is not able to download the exercise files from the
+tracking device. Some monitors (e.g. Garmin) allow the direct download via
 USB. For other monitors you might need one of these tools:
 
   - 's710' for many Polar models (S6XX, S7XX, ...), at least version 0.19
@@ -121,7 +121,7 @@ If you want to download exercise files from your heartrate monitor you might
 need one of the download tools listed above.
 
 The application was tested on GNU/Linux (e.g. Ubuntu 22.04), Windows 10 and
-macOS (12 - 13), although it should work on all systems with the required
+macOS (12 - 14), although it should work on all systems with the required
 Java Runtime Environment.
 
 
@@ -351,7 +351,7 @@ Notes for Timex users
 The ExerciseViewer is able to parse and display PWX exercise files. These
 files are generated when the watch data is transferred from the watch to your
 computer using the Timex Device Agent software (available only for Windows
-and Mac OS X systems.)  
+and macOS systems.)
 If you are connected to the Internet when transferring data from your watch,
 the files are uploaded to the Training Peaks website and saved on your local
 hard disk.  If you are not connected to to the Internet, the Timex Device
@@ -588,4 +588,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2023/01/23
+2023/11/11
