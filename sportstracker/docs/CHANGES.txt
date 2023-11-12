@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+v8.0.1:
+ Project changes:
+ SportsTracker changes:
+ ExerciseViewer changes:
+
 v8.0.0:
  Project changes:
  - updated Java to version 21
