@@ -3,6 +3,9 @@ Changelog
 
 v8.0.1:
  Project changes:
+ - downgraded JavaFX / OpenJFX to version 20.0.2 due to NoSuchMethodError
+   errors in all TableView's when selecting rows in tables
+   (e.g. opening an Exercise in ExerciseList)
  SportsTracker changes:
  ExerciseViewer changes:
 
