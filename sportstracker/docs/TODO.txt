@@ -1,23 +1,7 @@
 SportsTracker-TODO
 ==================
 
-macOS 14 issue: Slow app startup and app window in background
-- caused by https://bugs.openjdk.org/browse/JDK-8315657 => fixed in JavaFX 22 and 21.0.1
-- => test with JavaFX update 21.0.2 (release planned for 16.01.2024) due to TableView issue listed below
-
-Bug in SportsTracker and ExerciseViewer:
-- Exception in all TableViews (e.g. Note List in EV, Sample List in EV) when selecting a table row (e.g. opening a note with double click):
-  Exception in thread "JavaFX Application Thread" java.lang.NoSuchMethodError: 'void com.sun.javafx.collections.MappingChange.<init>(javafx.collections.ListChangeListener$Change, java.util.function.Function, javafx.collections.ObservableList)'
-	at javafx.scene.control.TableView$TableViewArrayListSelectionModel.fireCustomSelectedCellsListChangeEvent(TableView.java:3191)
-	at javafx.scene.control.TableView$TableViewArrayListSelectionModel.clearAndSelect(TableView.java:2639)
-- Dialogs opened from the TableViews can't be closed anymore => subsequent exceptions
-- Bug was introduced by using OpenJFX version 21, still exists in 21.0.1
-- Bug does not exists in OpenJFX 20.0.2, therefore SportsTracker is using OpenJFX 20.0.2 meanwhile
-- TODO: check whether bug has been fixed in next OpenJFX 21.0.2
-- If not, report a bug in  OpenJDK Java Bug System or on the OpenJFX mailing list
-  - https://bugs.openjdk.org/browse/JDK-8321573?filter=39543
-    - see https://github.com/openjdk/jfx/blob/master/CONTRIBUTING.md
-  - https://mail.openjdk.org/pipermail/openjfx-dev/
+Release SportsTracker 8.0.1 with essential bugfixes
 
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 

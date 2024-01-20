@@ -57,9 +57,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 #### Changelog
 
 LeafletMap 1.0.9:
-- downgraded JavaFX / OpenJFX to version 20.0.2 due to NoSuchMethodError
-  in SportsTracker when selecting TableView rows
-  -not an issue here, but LeafletMap should use the same OpenJFX version  
+* Updated JavaFX / OpenJFX to version 21.0.2 (in sync with SportsTracker)
 
 LeafletMap 1.0.8:
 * Updated JavaFX / OpenJFX to version 21

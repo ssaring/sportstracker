@@ -27,7 +27,7 @@ REM (WiX 3.0 Installer is needed for types exe and msi, needs to be in PATH)
     --name SportsTracker ^
     --app-version %ST_PACKAGE_VERSION% ^
     --vendor "Saring.de" ^
-    --copyright "(C) 2023 Stefan Saring" ^
+    --copyright "(C) 2024 Stefan Saring" ^
     --description "Application for tracking your sporting activities." ^
     --icon ./icons/windows/SportsTracker.ico ^
     --license-file %BUILD_DIR%/docs/LICENSE.txt ^
