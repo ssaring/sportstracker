@@ -1,8 +1,6 @@
 SportsTracker-TODO
 ==================
 
-Release SportsTracker 8.0.1 with essential bugfixes
-
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 LeafletMap:

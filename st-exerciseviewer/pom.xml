@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>st-exerciseviewer</artifactId>
     <name>st-exerciseviewer</name>
-    <version>8.0.1-SNAPSHOT</version>
+    <version>8.0.1</version>
     <build>
         <plugins>
             <plugin>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>de.saring</groupId>
             <artifactId>leafletmap</artifactId>
-            <version>1.0.9-SNAPSHOT</version>
+            <version>1.0.9</version>
         </dependency>
         <dependency>
             <groupId>com.garmin.fit</groupId>
