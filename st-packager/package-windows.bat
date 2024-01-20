@@ -2,9 +2,9 @@ SET ST_PROJECT_DIR=..\sportstracker
 SET BUILD_DIR=.\build
 SET PACKAGE_DIR=.\package
 
-SET ST_VERSION=8.0.0
+SET ST_VERSION=8.0.1
 REM Packager fails, when package version contains any suffixes, e.g. -SNAPSHOT
-SET ST_PACKAGE_VERSION=8.0.0
+SET ST_PACKAGE_VERSION=8.0.1
 
 # cleanup
 RMDIR /S/Q %BUILD_DIR%
