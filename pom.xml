@@ -18,9 +18,9 @@
         <application.name>SportsTracker</application.name>
         <application.mainClass>de.saring.sportstracker.STMain</application.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.9.20</kotlin.version>
+        <kotlin.version>1.9.22</kotlin.version>
         <javafx.version>21.0.2</javafx.version>
-        <junit.version>5.10.0</junit.version>
+        <junit.version>5.10.1</junit.version>
     </properties>
     
     <modules>
@@ -79,7 +79,7 @@
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>11.1.2</version>
+            <version>11.2.0</version>
             <exclusions>
                 <!-- exclude all OpenJFX dependencies because SportsTracker uses a newer OpenJFX version -->
                 <exclusion>
@@ -104,7 +104,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.6.0</version>
+            <version>5.9.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -142,7 +142,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.12.1</version>
                 <configuration>
                     <verbose>false</verbose>
                     <release>21</release>
@@ -176,11 +176,11 @@
             <!-- (otherwise GitHub Actions CI build on Linux fails) -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.2.5</version>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.2.5</version>
             </plugin>
         </plugins>
     </build>

@@ -466,26 +466,26 @@ The SportsTracker project uses the following libraries:
   - EasyDI 0.6.0 (https://github.com/lestard/EasyDI)
       Includes: jakarta.inject 2.0.1
       License: Apache License v2.0
-  - Kotlin 1.9.20 (http://kotlinlang.org/)
+  - Kotlin 1.9.22 (http://kotlinlang.org/)
       License: Apache License v2.0
   - JDOM 2.0.6.1 (http://www.jdom.org)
       License: Apache-style open source license
-  - ControlsFX 11.1.2 (http://controlsfx.org/)
+  - ControlsFX 11.2.0 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - JFreeChart 1.5.3 and JFreeChart-FX 2.0.1 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
-  - LeafletMap 1.0.8 (https://github.com/ssaring/sportstracker)
+  - LeafletMap 1.0.9 (https://github.com/ssaring/sportstracker)
       License: Apache License v2.0
   - leaflet-color-markers (https://github.com/pointhi/leaflet-color-markers)
     - Modified version, included in leafletmap
     - License: BSD 2-Clause License
-  - commons-cli 1.5.0 (http://commons.apache.org/cli/)
+  - commons-cli 1.6.0 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - sqlite-jdbc 3.43.2.1 (https://github.com/xerial/sqlite-jdbc)
+  - sqlite-jdbc 3.45.0.0 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
-  - JUnit 5.10.0 (http://www.junit.org)
+  - JUnit 5.10.1 (http://www.junit.org)
       License: Eclipse Public License v2.0. and Apache License v2.0
-  - Mockito 5.4.0 (http://code.google.com/p/mockito/)
+  - Mockito 5.9.0 (http://code.google.com/p/mockito/)
       License: MIT License
   - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.94.0
       URL: https://www.thisisant.com/developer/
