@@ -4,6 +4,8 @@ Changelog
 v8.0.2:
  Project changes:
  SportsTracker changes:
+ - added slf4j-jdk14 dependency for logging in sqlite-jdbc
+   (uses the slf4j-nop provider otherwise, which silently discards all logging)
  ExerciseViewer changes:
 
 v8.0.1:
