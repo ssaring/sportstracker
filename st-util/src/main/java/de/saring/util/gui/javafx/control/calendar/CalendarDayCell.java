@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
@@ -175,14 +176,16 @@ class CalendarDayCell extends AbstractCalendarCell {
             if (dragboard.hasFiles() && calendarActionListener != null) {
                 success = true;
                 final String filePath = dragboard.getFiles().get(0).getAbsolutePath();
-
                 final CalendarEntry droppedOnEntry = getEntryAtScreenPosition(event.getScreenX(), event.getScreenY());
+
                 if (droppedOnEntry == null) {
-                    calendarActionListener.onDraggedFileDroppedOnCalendarDay(filePath);
+                    Platform.runLater(() -> calendarActionListener.onDraggedFileDroppedOnCalendarDay(filePath));
                 } else {
-                    calendarActionListener.onDraggedFileDroppedOnCalendarEntry(droppedOnEntry.getEntry(), filePath);
+                    Platform.runLater(() -> calendarActionListener.onDraggedFileDroppedOnCalendarEntry(
+                            droppedOnEntry.getEntry(), filePath));
                 }
             }
+
             event.setDropCompleted(success);
             event.consume();
         });
