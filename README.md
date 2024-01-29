@@ -9,13 +9,14 @@ diagrams and statistics for specific time ranges and sport types. In the
 calendar you can also track your body weight or create note entries, e.g. the
 training plan or upcoming sport events.
 
-All the application data is stored in XML files. So it is very easy to access
-them with other tools or to write importers and exporters for other
-applications.
+All the application data is stored in a SQLite database. So it is easy to 
+access them with database tools or to implement importers and exporters for 
+other apps. Users with SQL experience can also create easily custom statistics
+by using an SQLite database browser application.
 
-If you own a heartrate monitor with a computer interface you can import the
-recorded exercise files and evaluate the diagrams with the integrated
-ExerciseViewer application.
+Users of sport watches or other tracking devices with a computer interface
+can import the recorded exercise files and evaluate the diagrams and tracks 
+with the integrated ExerciseViewer application.
 
 
 ## Links

@@ -20,8 +20,8 @@ startup of SportsTracker >= 8.0.0. The XML files will not be deleted due to
 backup reasons.
 
 If you are using a sport watch or another tracking device with a computer
-interface you can display the recorded exercise files and evaluate the diagrams
-with the integrated ExerciseViewer application.
+interface, you can import the recorded exercise files and evaluate the
+diagrams and tracks with the integrated ExerciseViewer application.
 You can organize them by attaching the recorded files to the exercise entries.
 When adding new exercises you can import the data from the recorded exercise
 files.
