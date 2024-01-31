@@ -505,7 +505,15 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     @Override
     public void onAssignDroppedHrmFileToExercise(final String hrmFilePath, final Exercise exercise) {
         exercise.setHrmFile(hrmFilePath);
-        document.getExerciseList().set(exercise);
+
+        try {
+            document.getStorage().getExerciseRepository().update(exercise);
+            document.updateApplicationData(exercise);
+        } catch (STException e) {
+            LOGGER.log(Level.SEVERE, "Failed to store Exercise '" + exercise.getId() + "'!", e);
+            return;
+        }
+
         context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
                 "common.info", "st.calview.draganddrop.assigned");
     }
