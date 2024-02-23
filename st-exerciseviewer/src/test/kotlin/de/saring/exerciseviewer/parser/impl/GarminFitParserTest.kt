@@ -130,7 +130,7 @@ class GarminFitParserTest {
 
         // check lap data
         assertEquals(5, exercise.lapList.size)
-        assertEquals((0 * 3600 + 29 * 60 + 15) * 10, exercise.lapList[0].timeSplit)
+        assertEquals(0 * 36000 + 29 * 600 + 14 * 10 + 9, exercise.lapList[0].timeSplit)
         assertEquals(126, exercise.lapList[0].heartRateAVG?.toInt())
         assertEquals(146, exercise.lapList[0].heartRateMax?.toInt())
         assertEquals(122, exercise.lapList[0].heartRateSplit?.toInt())
@@ -144,7 +144,7 @@ class GarminFitParserTest {
         assertEquals(51.05553, exercise.lapList[0].positionSplit?.latitude!!, 0.001)
         assertEquals(13.93589, exercise.lapList[0].positionSplit?.longitude!!, 0.001)
 
-        assertEquals((2 * 3600 + 11 * 60 + 46) * 10, exercise.lapList[2].timeSplit)
+        assertEquals(2 * 36000 + 11 * 600 + 45 * 10 + 4, exercise.lapList[2].timeSplit)
         assertEquals(124, exercise.lapList[2].heartRateAVG!!.toInt())
         assertEquals(145, exercise.lapList[2].heartRateMax!!.toInt())
         assertEquals(98, exercise.lapList[2].heartRateSplit!!.toInt())
@@ -158,7 +158,7 @@ class GarminFitParserTest {
         assertEquals(51.00746, exercise.lapList[2].positionSplit!!.latitude, 0.001)
         assertEquals(14.20151, exercise.lapList[2].positionSplit!!.longitude, 0.001)
 
-        assertEquals((4 * 3600 + 28 * 60 + 16) * 10, exercise.lapList[4].timeSplit)
+        assertEquals(4 * 36000 + 28 * 600 + 14 * 10 + 7, exercise.lapList[4].timeSplit)
         assertEquals(120, exercise.lapList[4].heartRateAVG!!.toInt())
         assertEquals(144, exercise.lapList[4].heartRateMax!!.toInt())
         assertEquals(94, exercise.lapList[4].heartRateSplit!!.toInt())
@@ -252,12 +252,12 @@ class GarminFitParserTest {
         // check some lap data
         assertEquals(10, exercise.lapList.size)
 
-        assertEquals((0 * 3600 + 25 * 60 + 53) * 10, exercise.lapList[4].timeSplit)
+        assertEquals(0 * 36000 + 25 * 600 + 55 * 10 + 4, exercise.lapList[4].timeSplit)
         assertEquals(155, exercise.lapList[4].heartRateAVG!!.toInt())
         assertEquals(159, exercise.lapList[4].heartRateMax!!.toInt())
         assertEquals(159, exercise.lapList[4].heartRateSplit!!.toInt())
         assertEquals(5000, exercise.lapList[4].speed!!.distance)
-        assertEquals(11.5905, exercise.lapList[4].speed!!.speedAVG.toDouble(), 0.001)
+        assertEquals(11.5756, exercise.lapList[4].speed!!.speedAVG.toDouble(), 0.001)
         assertEquals(11.5848, exercise.lapList[4].speed!!.speedEnd.toDouble(), 0.001)
         assertEquals(5, exercise.lapList[4].altitude!!.ascent)
         assertEquals(2, exercise.lapList[4].altitude!!.descent)
@@ -340,15 +340,15 @@ class GarminFitParserTest {
         assertEquals(7, exercise.lapList.size)
 
         val lap5 = exercise.lapList[4]
-        assertEquals(19520, lap5.timeSplit)
+        assertEquals(19480, lap5.timeSplit)
 
         // average values of heart rate are still missing
         // assertEquals(169, lap5.getHeartRateAVG());
         // assertEquals(173, lap5.getHeartRateMax());
         assertEquals(170, lap5.heartRateSplit!!.toInt())
         assertEquals(5000, lap5.speed!!.distance)
-        assertEquals(9.22, lap5.speed!!.speedAVG.toDouble(), 0.01)
-        assertEquals(8.35, lap5.speed!!.speedEnd.toDouble(), 0.01)
+        assertEquals(9.24, lap5.speed!!.speedAVG.toDouble(), 0.01)
+        assertEquals(8.46, lap5.speed!!.speedEnd.toDouble(), 0.01)
         assertEquals(0, lap5.altitude!!.ascent)
         assertEquals(0, lap5.altitude!!.descent)
         assertEquals(305, lap5.altitude!!.altitude.toInt())
@@ -431,7 +431,7 @@ class GarminFitParserTest {
         assertEquals(1, exercise.lapList.size)
 
         val lap1 = exercise.lapList[0]
-        assertEquals(76570, lap1.timeSplit)
+        assertEquals(76472, lap1.timeSplit)
         assertEquals(107, lap1.heartRateSplit!!.toInt())
         assertEquals(51110, lap1.speed!!.distance)
         assertEquals(25.93, lap1.speed!!.speedAVG.toDouble(), 0.01)

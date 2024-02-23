@@ -9,6 +9,9 @@ v8.0.2:
  ExerciseViewer changes:
  - Bugfix for drag & drop of activity files to the Calendar View
    (timeout issue when completing the drag event)
+ - Garmin FIT parser: bugfix for issue #266
+   - fixed calculation of lap split times and lap speeds
+     (lap time can include breaks)
 
 v8.0.1:
  Project changes:

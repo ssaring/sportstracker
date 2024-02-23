@@ -8,6 +8,7 @@ import de.saring.exerciseviewer.data.*
 import de.saring.util.Date310Utils
 import de.saring.util.unitcalc.CalculationUtils
 import de.saring.util.unitcalc.ConvertUtils
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 /**
@@ -21,7 +22,10 @@ internal class FitMessageListener : MesgListener {
     private val exercise = EVExercise(EVExercise.ExerciseFileType.GARMIN_FIT)
 
     /** List of created laps (collected in a LinkedList and not in EVExercise array, much faster). */
-    private val lFitLaps = LinkedList<FitLap>()
+    private val lLaps = LinkedList<Lap>()
+
+    /** Accumulated elapsed time (incl. breaks) at lap end (sum for all laps) in msecs. */
+    private var lapElapsedTimeAccumulated = 0.0
 
     /** List of created exercise samples (collected in a LinkedList and not in EVExercise array, much faster). */
     private val lSamples = LinkedList<ExerciseSample>()
@@ -137,6 +141,11 @@ internal class FitMessageListener : MesgListener {
      */
     private fun readLapMessage(mesg: LapMesg) {
         val lap = Lap()
+        lLaps.add(lap)
+
+        // calculate lap time split (needs to be accumulated)
+        lapElapsedTimeAccumulated += mesg.totalElapsedTime
+        lap.timeSplit =  Math.round(lapElapsedTimeAccumulated * 10).toInt()
 
         // read optional heartrate data
         mesg.avgHeartRate?.let { lap.heartRateAVG = it }
@@ -169,8 +178,6 @@ internal class FitMessageListener : MesgListener {
             val powerNormalized = mesg.normalizedPower?.toShort()
             lap.power = LapPower(powerAvg.toShort(), powerMax, powerNormalized)
         }
-
-        lFitLaps.add(FitLap(lap, Date310Utils.dateToLocalDateTime(mesg.timestamp.date)))
     }
 
     /**
@@ -351,7 +358,7 @@ internal class FitMessageListener : MesgListener {
         storeLaps()
 
         calculateMissingAverageSpeed()
-        if (!exercise.sampleList.isEmpty()) {
+        if (exercise.sampleList.isNotEmpty()) {
             calculateAltitudeSummary()
             calculateTemperatureSummary()
             calculateMissingMaxSpeed()
@@ -380,18 +387,7 @@ internal class FitMessageListener : MesgListener {
     private fun storeLaps() {
         var lapDistanceSum = 0
 
-        // convert FitLap to Lap objects
-        val lLaps = LinkedList<Lap>()
-        val startTime = Date310Utils.getMilliseconds(exercise.dateTime!!)
-
-        for (fitLap in lFitLaps) {
-            val lap = fitLap.lap
-            lLaps.add(lap)
-
-            // fix the split time in all Laps, it must be the offset from the start time
-            val lapSplitDateTimeMillis = Date310Utils.getMilliseconds(fitLap.splitDatTime)
-            lap.timeSplit = ((lapSplitDateTimeMillis - startTime) / 100).toInt()
-
+        for (lap in this.lLaps) {
             // get all the missing lap data from the sample at lap end time
             val sampleAtLapEnd = getExerciseSampleForLapEnd(lap)
             if (sampleAtLapEnd != null) {
@@ -434,7 +430,7 @@ internal class FitMessageListener : MesgListener {
 
         for (sample in exercise.sampleList) {
             sample.timestamp?.let {
-                val timeDistance = Math.abs(it - lapSplitTimestamp)
+                val timeDistance = abs(it - lapSplitTimestamp)
                 if (timeDistance < closestTimeDistance) {
                     closestTimeDistance = timeDistance
                     closestSample = sample
