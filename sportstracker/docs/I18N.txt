@@ -45,6 +45,10 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 8.0.2:
+
+pv.main.total_duration.text (new)
+
 SportsTracker 8.0.0:
 
 - st.main.error.load_data (removed)

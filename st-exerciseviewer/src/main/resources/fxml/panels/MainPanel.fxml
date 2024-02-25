@@ -34,12 +34,14 @@
                                 <Label fx:id="laDateTimeValue" text="%common.n_a_" GridPane.columnIndex="1" />
                                 <Label text="%pv.main.duration.text" GridPane.rowIndex="1" />
                                 <Label fx:id="laDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Label text="%pv.main.energy.text" GridPane.rowIndex="2" />
-                                <Label fx:id="laEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <Label text="%pv.main.device.text" GridPane.rowIndex="3" />
-                                <Label fx:id="laDeviceValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <Label text="%pv.main.sport_type.text" GridPane.rowIndex="4" />
-                                <Label fx:id="laSportTypeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <Label text="%pv.main.total_duration.text" GridPane.rowIndex="2" />
+                                <Label fx:id="laTotalDurationValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label text="%pv.main.energy.text" GridPane.rowIndex="3" />
+                                <Label fx:id="laEnergyValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <Label text="%pv.main.device.text" GridPane.rowIndex="4" />
+                                <Label fx:id="laDeviceValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <Label text="%pv.main.sport_type.text" GridPane.rowIndex="5" />
+                                <Label fx:id="laSportTypeValue" text="%common.n_a_" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                             </children>
                             <VBox.margin>
                                 <Insets left="24.0" />

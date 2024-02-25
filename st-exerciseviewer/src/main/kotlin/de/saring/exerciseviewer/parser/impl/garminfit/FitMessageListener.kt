@@ -55,6 +55,7 @@ internal class FitMessageListener : MesgListener {
 
         exercise.dateTime = Date310Utils.dateToLocalDateTime(mesg.startTime.date)
         exercise.duration = Math.round(mesg.totalTimerTime * 10)
+        exercise.totalDuration = Math.round(mesg.totalElapsedTime * 10)
 
         // read optional sport and subsport names and IDs
         mesg.sport?.let { sport ->

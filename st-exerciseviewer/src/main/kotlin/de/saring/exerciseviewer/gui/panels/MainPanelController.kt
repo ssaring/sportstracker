@@ -33,6 +33,8 @@ class MainPanelController(
     @FXML
     private lateinit var laDurationValue: Label
     @FXML
+    private lateinit var laTotalDurationValue: Label
+    @FXML
     private lateinit var laEnergyValue: Label
     @FXML
     private lateinit var laDeviceValue: Label
@@ -121,6 +123,10 @@ class MainPanelController(
 
         exercise.duration?.let {
             laDurationValue.text = TimeUtils.tenthSeconds2TimeString(it)
+        }
+
+        exercise.totalDuration?.let {
+            laTotalDurationValue.text = TimeUtils.tenthSeconds2TimeString(it)
         }
 
         // fill heartrate data

@@ -1,6 +1,16 @@
 SportsTracker-TODO
 ==================
 
+ExerciseViewer / Garmin FIT: Support for total (elapsed) duration
+- EVExercise: add property totalDuration => DONE
+- GarminFitParser: parse total duration => DONE
+- GarminFitParser tests: test total duration
+- EV Main Panel: display total duration => DONE
+- EV Main Panel: display stop/pause time (next to total duration?)
+- Other HRM parsers: can total duration be added as well?
+- add to CHANGES (supported for all FIT files)
+- close branch ev-total-duration
+
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 LeafletMap:
