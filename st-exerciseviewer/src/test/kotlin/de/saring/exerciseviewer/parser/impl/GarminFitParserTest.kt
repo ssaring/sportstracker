@@ -101,6 +101,7 @@ class GarminFitParserTest {
 
         assertEquals(LocalDateTime.of(2010, 7, 4, 6, 7, 36), exercise.dateTime)
         assertEquals(146499, exercise.duration)
+        assertEquals(160947, exercise.totalDuration)
 
         assertEquals(121, exercise.heartRateAVG?.toInt())
         assertEquals(180, exercise.heartRateMax?.toInt())
@@ -227,6 +228,7 @@ class GarminFitParserTest {
 
         assertEquals(LocalDateTime.of(2012, 9, 29, 17, 2, 19), exercise.dateTime)
         assertEquals(30067, exercise.duration!!.toInt())
+        assertEquals(30106, exercise.totalDuration!!.toInt())
 
         assertEquals(155, exercise.heartRateAVG!!.toInt())
         assertEquals(168, exercise.heartRateMax!!.toInt())
@@ -311,6 +313,7 @@ class GarminFitParserTest {
 
         assertEquals(LocalDateTime.of(2015, 7, 21, 19, 8, 50), exercise.dateTime)
         assertEquals(23960, exercise.duration!!.toInt())
+        assertEquals(23960, exercise.totalDuration!!.toInt())
 
         assertEquals(169, exercise.heartRateAVG!!.toInt())
         assertEquals(192, exercise.heartRateMax!!.toInt())
@@ -400,6 +403,7 @@ class GarminFitParserTest {
 
         assertEquals(LocalDateTime.of(2017, 5, 13, 8, 18, 55), exercise.dateTime)
         assertEquals(70963, exercise.duration!!.toInt())
+        assertEquals(76472, exercise.totalDuration!!.toInt())
 
         assertEquals(134, exercise.heartRateAVG!!.toInt())
         assertEquals(173, exercise.heartRateMax!!.toInt())
@@ -512,6 +516,7 @@ class GarminFitParserTest {
 
         assertEquals(LocalDateTime.of(2019, 12, 12, 20, 0, 1, 0), exercise.dateTime)
         assertEquals(1238, exercise.duration!!.toInt())
+        assertEquals(1238, exercise.totalDuration!!.toInt())
 
         assertEquals(120, exercise.heartRateAVG!!.toInt())
         assertEquals(23, exercise.energy!!.toInt())
@@ -567,6 +572,7 @@ class GarminFitParserTest {
         // check some basic data
         assertEquals(LocalDateTime.of(2021, 2, 6, 12, 3, 55, 0), exercise.dateTime)
         assertEquals(3140, exercise.duration!!.toInt())
+        assertEquals(3540, exercise.totalDuration!!.toInt())
 
         assertEquals("Running / Generic", exercise.sportType)
         assertEquals(Sport.RUNNING.value.toInt(), exercise.sportTypeFit!!.sportTypeId)
@@ -616,6 +622,7 @@ class GarminFitParserTest {
 
         assertEquals(LocalDateTime.of(2020, 10, 23, 14, 34, 58, 0), exercise.dateTime)
         assertEquals(22404, exercise.duration!!.toInt())
+        assertEquals(22404, exercise.totalDuration!!.toInt())
 
         assertEquals(112, exercise.heartRateAVG!!.toInt())
         assertEquals(282, exercise.energy!!.toInt())
@@ -698,6 +705,7 @@ class GarminFitParserTest {
         // check some basic data
         assertEquals(LocalDateTime.of(2021, 12, 12, 10, 15, 49, 0), exercise.dateTime)
         assertEquals(3700, exercise.duration!!.toInt())
+        assertEquals(3690, exercise.totalDuration!!.toInt())
 
         // check power and cadence data on exercise level
         assertEquals(118, exercise.power!!.powerAvg.toInt())
@@ -750,6 +758,7 @@ class GarminFitParserTest {
         // check some basic data
         assertEquals(LocalDateTime.of(2021, 12, 12, 10, 15, 53, 0), exercise.dateTime)
         assertEquals(3548, exercise.duration!!.toInt())
+        assertEquals(3548, exercise.totalDuration!!.toInt())
 
         // check power and cadence data on exercise level
         assertEquals(122, exercise.power!!.powerAvg.toInt())
