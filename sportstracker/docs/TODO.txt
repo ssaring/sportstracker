@@ -6,8 +6,7 @@ ExerciseViewer / Garmin FIT: Support for total (elapsed) duration
 - GarminFitParser: parse total duration => DONE
 - GarminFitParser tests: test total duration => DONE
 - EV Main Panel: display total duration => DONE
-- EV Main Panel: display stop/pause time (next to total duration?)
-  - stop time might be negative for specific Zwift activities (see unit test) => display 00:00:00 then
+- EV Main Panel: display stop/pause time (next to total duration) => DONE
 - Other HRM parsers: can total duration be added as well?
 - add to CHANGES (supported for all FIT files)
 - close branch ev-total-duration

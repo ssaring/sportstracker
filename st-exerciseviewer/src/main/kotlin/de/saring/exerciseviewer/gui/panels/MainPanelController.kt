@@ -125,8 +125,17 @@ class MainPanelController(
             laDurationValue.text = TimeUtils.tenthSeconds2TimeString(it)
         }
 
-        exercise.totalDuration?.let {
-            laTotalDurationValue.text = TimeUtils.tenthSeconds2TimeString(it)
+        exercise.totalDuration?.let { totalDuration ->
+            laTotalDurationValue.text = TimeUtils.tenthSeconds2TimeString(totalDuration)
+
+            // display pause duration time if total and active duration are available
+            exercise.duration?.let { duration ->
+                // for some exercises (e.g. in Zwift) the total duration might be shorter => prevent a negative pause
+                val pauses = Math.max(0, Math.round((totalDuration - duration) / 10.0))
+                val pausesLabel = context.resources.getString("pv.main.pauses.text")
+                val pausesTimeString = TimeUtils.seconds2TimeString(pauses.toInt())
+                laTotalDurationValue.text += "   ($pausesLabel  $pausesTimeString)"
+            }
         }
 
         // fill heartrate data
