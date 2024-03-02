@@ -9,7 +9,8 @@ import java.time.LocalDateTime
  * @property deviceName Name of the HRM device (optional).
  * @property dateTime Timestamp of exercise.
  * @property recordingMode Record mode (what was recorded in exercise).
- * @property duration Duration of exercise in tenths of a second.
+ * @property duration Duration of exercise (without any breaks) in tenths of a second.
+ * @property totalDuration Total duration of exercise (including breaks) in tenths of a second (if recorded).
  * @property recordingInterval Recording interval in seconds (e.g. 5s, 15s, 60s or DYNAMIC_RECORDING_INTERVAL).
  * @property heartRateAVG Average heart rate of exercise.
  * @property heartRateMax Maximum heart rate of exercise.
@@ -38,6 +39,7 @@ data class EVExercise(
     var dateTime: LocalDateTime? = null,
     var recordingMode: RecordingMode = RecordingMode(),
     var duration: Int? = null,
+    var totalDuration: Int? = null,
     var recordingInterval: Short? = null,
     var heartRateAVG: Short? = null,
     var heartRateMax: Short? = null,
