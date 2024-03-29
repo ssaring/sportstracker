@@ -6,6 +6,8 @@ v8.0.2:
  SportsTracker changes:
  - added slf4j-jdk14 dependency for logging in sqlite-jdbc
    (uses the slf4j-nop provider otherwise, which silently discards all logging)
+ - Equipment Usage Dialog: fixed font width and alignment in table header
+
  ExerciseViewer changes:
  - Bugfix for drag & drop of activity files to the Calendar View
    (timeout issue when completing the drag event)
