@@ -18,8 +18,8 @@
         <application.name>SportsTracker</application.name>
         <application.mainClass>de.saring.sportstracker.STMain</application.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.9.22</kotlin.version>
-        <javafx.version>21.0.2</javafx.version>
+        <kotlin.version>2.0.0</kotlin.version>
+        <javafx.version>21.0.3</javafx.version>
         <junit.version>5.10.1</junit.version>
     </properties>
     
