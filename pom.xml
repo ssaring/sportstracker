@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>2.0.0</kotlin.version>
         <javafx.version>21.0.3</javafx.version>
-        <junit.version>5.10.1</junit.version>
+        <junit.version>5.10.2</junit.version>
     </properties>
     
     <modules>
@@ -79,7 +79,7 @@
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>11.2.0</version>
+            <version>11.2.1</version>
             <exclusions>
                 <!-- exclude all OpenJFX dependencies because SportsTracker uses a newer OpenJFX version -->
                 <exclusion>
@@ -104,7 +104,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.9.0</version>
+            <version>5.12.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -142,7 +142,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>3.13.0</version>
                 <configuration>
                     <verbose>false</verbose>
                     <release>21</release>

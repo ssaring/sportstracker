@@ -1,16 +1,6 @@
 SportsTracker-TODO
 ==================
 
-- Kotlin 2.0 update
-  - Compilation time for full project in Maven ``mvn clean package` (executed in IDEA terminal):
-    - Kotlin 1.9.22: 24,0; 22,9; 23,1 sec => AVG: 23,33 sec
-    - Kotlin 2.0.0: 20,9; 20,5; 20,6 sec => AVG: 20,66 sec
-    - => Kotlin 2.0.0 makes full build about 12% faster
-  - update all other deps as well
-  - update docs
-  - file PR / close branch / etc.
-
-
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 LeafletMap:
