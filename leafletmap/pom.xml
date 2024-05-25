@@ -17,7 +17,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javafx.version>21.0.2</javafx.version>
+        <javafx.version>21.0.3</javafx.version>
         <kotlin.version>2.0.0</kotlin.version>
         <kotlinx.serialization.version>1.6.3</kotlinx.serialization.version>
     </properties>
