@@ -14,6 +14,8 @@ v8.0.2:
  - added slf4j-jdk14 dependency for logging in sqlite-jdbc
    (uses the slf4j-nop provider otherwise, which silently discards all logging)
  - Equipment Usage Dialog: fixed font width and alignment in table header
+ - Overview Dialog: chart stops for future dates with no data instead of
+   dropping to zero (improved readability)
 
  ExerciseViewer changes:
  - Bugfix for drag & drop of activity files to the Calendar View
