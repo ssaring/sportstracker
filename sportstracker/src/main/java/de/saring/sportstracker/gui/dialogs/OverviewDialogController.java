@@ -427,13 +427,6 @@ public class OverviewDialogController extends AbstractDialogController {
 
             // create the EntryFilter for the time range of the current time step
             EntryFilter filter = createExerciseFilterForTimeStep(timeType, year, timeStep);
-
-            // when time period is in future => don't add any graph value to prevent the chart from dropping to zero
-            if (filter.getDateStart().isAfter(LocalDate.now())) {
-                dataset.add(timePeriod, Double.NaN, seriesName);
-                continue;
-            }
-
             filter.setSportType(sportType);
             mergeExerciseFilterIfEnabled(filter);
 
@@ -574,13 +567,6 @@ public class OverviewDialogController extends AbstractDialogController {
 
             // create the EntryFilter for the time range of the current time step
             EntryFilter filter = createExerciseFilterForTimeStep(timeType, year, timeStep);
-
-            // when time period is in future => don't add any graph value to prevent the chart from dropping to zero
-            if (filter.getDateStart().isAfter(LocalDate.now())) {
-                dataset.add(timePeriod, Double.NaN, seriesName);
-                continue;
-            }
-
             filter.setSportType(sportType);
             filter.setSportSubType(sportSubType);
             mergeExerciseFilterIfEnabled(filter);
@@ -658,13 +644,6 @@ public class OverviewDialogController extends AbstractDialogController {
 
             // create the EntryFilter for the time range of the current time step
             EntryFilter filter = createExerciseFilterForTimeStep(timeType, year, timeStep);
-
-            // when time period is in future => don't add any graph value to prevent the chart from dropping to zero
-            if (filter.getDateStart().isAfter(LocalDate.now())) {
-                dataset.add(timePeriod, Double.NaN, seriesName);
-                continue;
-            }
-
             filter.setSportType(sportType);
             filter.setEquipment(equipment);
             mergeExerciseFilterIfEnabled(filter);
