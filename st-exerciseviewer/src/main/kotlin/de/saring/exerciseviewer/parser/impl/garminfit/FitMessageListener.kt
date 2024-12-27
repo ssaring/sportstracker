@@ -104,7 +104,7 @@ internal class FitMessageListener : MesgListener {
         mesg.avgCadence?.let { avgCadence ->
             exercise.recordingMode.isCadence = true
             val maxCadence = mesg.maxCadence ?: 0
-            val totalCycles = mesg.totalCycles ?: null
+            val totalCycles = mesg.totalCycles
             exercise.cadence = ExerciseCadence(avgCadence, maxCadence, totalCycles)
         }
 
@@ -522,9 +522,8 @@ internal class FitMessageListener : MesgListener {
             if (exerciseSpeed.speedMax < 0.01) {
 
                 exercise.sampleList
-                        .map { it.speed ?: 0f }
-                        .maxOrNull()
-                        ?.let { exerciseSpeed.speedMax = it }
+                    .maxOfOrNull { it.speed ?: 0f }
+                    ?.let { exerciseSpeed.speedMax = it }
             }
         }
     }
@@ -550,9 +549,8 @@ internal class FitMessageListener : MesgListener {
         if (exercise.heartRateMax == null) {
 
             exercise.sampleList
-                    .map { it.heartRate ?: 0 }
-                    .maxOrNull()
-                    ?.let { exercise.heartRateMax = it }
+                .maxOfOrNull { it.heartRate ?: 0 }
+                ?.let { exercise.heartRateMax = it }
         }
     }
 
