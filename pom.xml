@@ -175,10 +175,12 @@
             <!-- Surefire and Failsafe plugins are needed for proper JUnit 5 test execution -->
             <!-- (otherwise GitHub Actions CI build on Linux fails) -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.2</version>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.5.2</version>
             </plugin>
