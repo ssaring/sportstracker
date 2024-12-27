@@ -590,7 +590,7 @@ class GarminFitParserTest {
         assertEquals(121, exercise.heartRateLimits[2].lowerHeartRate)
         assertEquals(140, exercise.heartRateLimits[2].upperHeartRate)
         assertNull(exercise.heartRateLimits[2].timeBelow)
-        assertEquals(240, exercise.heartRateLimits[2].timeWithin)
+        assertEquals(239, exercise.heartRateLimits[2].timeWithin)
         assertNull(exercise.heartRateLimits[2].timeAbove)
 
         assertEquals(157, exercise.heartRateLimits[4].lowerHeartRate)

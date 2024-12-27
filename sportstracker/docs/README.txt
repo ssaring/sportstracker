@@ -461,12 +461,12 @@ All user interfaces are defined in FXML by using the JavaFX Scene Builder 9.x.
 
 The SportsTracker project uses the following libraries:
 
-  - OpenJFX 21.0.3 (https://openjfx.io/)
+  - OpenJFX 23.0.1 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
   - EasyDI 0.6.0 (https://github.com/lestard/EasyDI)
       Includes: jakarta.inject 2.0.1
       License: Apache License v2.0
-  - Kotlin 2.0.0 (http://kotlinlang.org/)
+  - Kotlin 2.1.0 (http://kotlinlang.org/)
       License: Apache License v2.0
   - JDOM 2.0.6.1 (http://www.jdom.org)
       License: Apache-style open source license
@@ -482,15 +482,15 @@ The SportsTracker project uses the following libraries:
   - leaflet-color-markers (https://github.com/pointhi/leaflet-color-markers)
     - Modified version, included in leafletmap
     - License: BSD 2-Clause License
-  - commons-cli 1.8.0 (http://commons.apache.org/cli/)
+  - commons-cli 1.9.0 (http://commons.apache.org/cli/)
       License: Apache License v2.0
-  - sqlite-jdbc 3.45.3.0 (https://github.com/xerial/sqlite-jdbc)
+  - sqlite-jdbc 3.47.1.0 (https://github.com/xerial/sqlite-jdbc)
       License: Apache License v2.0
-  - JUnit 5.10.2 (http://www.junit.org)
+  - JUnit 5.11.4 (http://www.junit.org)
       License: Eclipse Public License v2.0. and Apache License v2.0
-  - Mockito 5.12.0 (http://code.google.com/p/mockito/)
+  - Mockito 5.14.2 (http://code.google.com/p/mockito/)
       License: MIT License
-  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.94.0
+  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.158.0
       URL: https://www.thisisant.com/developer/
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: https://developer.garmin.com/fit/download/
@@ -591,4 +591,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2024/01/20
+2024/12/27

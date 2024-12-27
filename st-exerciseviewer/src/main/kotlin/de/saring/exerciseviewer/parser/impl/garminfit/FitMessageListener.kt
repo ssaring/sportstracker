@@ -323,9 +323,9 @@ internal class FitMessageListener : MesgListener {
                         HeartRateLimit(
                             hrZoneSplits[i],
                             hrZoneSplits[i + 1],
-                            if (i == 0) convertMillisToSeconds(hrZoneTimes.first()) else null,
-                            convertMillisToSeconds(hrZoneTimes[i + 1]),
-                            if (i == hrZoneSplits.size - 2) convertMillisToSeconds(hrZoneTimes.last()) else null,
+                            if (i == 0) hrZoneTimes.first().toInt() else null,
+                            hrZoneTimes[i + 1].toInt(),
+                            if (i == hrZoneSplits.size - 2) hrZoneTimes.last().toInt() else null,
                             true
                         )
                     )
@@ -339,8 +339,6 @@ internal class FitMessageListener : MesgListener {
             // const val FIELD_NUM_HR_LACTATE_THRESHOLD = 13 // contains 1 value of type Short (unit: bpm)
         }
     }
-
-    private fun convertMillisToSeconds(msec: Long) = (msec / 1000.0).roundToInt()
 
     /**
      * Returns the EVExercise created from the received message. It sets up all lap and sample data and calculates the
