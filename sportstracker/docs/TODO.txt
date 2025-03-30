@@ -1,6 +1,16 @@
 SportsTracker-TODO
 ==================
 
+SportType- and Equipment-specific Notes
+- Status:
+  - Schema update has been implemented and successfully tested
+  - Foreign Key constraints tested successfully via SQL commands (ignored in IDEA DB browser)
+- TODO:
+  - Implement schema update in DBStorage:validateSchemaVersion + unit test
+  - Extend data model for Note object
+  - ...
+  - create PR / close branch
+
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 LeafletMap:
