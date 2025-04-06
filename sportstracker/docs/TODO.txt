@@ -5,8 +5,10 @@ SportType- and Equipment-specific Notes
 - Status:
   - Schema update has been implemented and successfully tested
   - Foreign Key constraints tested successfully via SQL commands (ignored in IDEA DB browser)
+  - Schema update process and new database creation + schema updates were tested successfully (manually!)
 - TODO:
-  - Implement schema update in DBStorage:validateSchemaVersion + unit test
+  - Implement unit tests for schema creation and update process in DBStorage
+  - Re-enable NextCloud syncs for local SQLite database
   - Extend data model for Note object
   - ...
   - create PR / close branch

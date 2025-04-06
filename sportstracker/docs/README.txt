@@ -536,6 +536,8 @@ Development notes:
 - application data can be processed and evaluated easily by using 3rd party
   SQLite database browsers (e.g. for custom statistics via SQL)
 - Documentation: https://www.sqlitetutorial.net/sqlite-java/
+- All database schema changes will be implemented in schema update files.
+  New databases will be created from the initial schema and all schema updates.
 
 Comparison with prior XML file storage:
 - SQLite storage provides faster loading times, almost no saving times
