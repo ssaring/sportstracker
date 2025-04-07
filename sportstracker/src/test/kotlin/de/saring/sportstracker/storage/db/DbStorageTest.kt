@@ -1,6 +1,6 @@
 package de.saring.sportstracker.storage.db
 
-import de.saring.sportstracker.data.Note
+import de.saring.sportstracker.data.Weight
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -22,20 +22,22 @@ class DbStorageTest : DbStorageTestBase() {
     }
 
     /**
-     * Basic storage tests for creating a new Note entity, commit the change and read from database.
+     * Basic storage tests for creating a new Weight entity, commit the change and read from database.
      */
     @Test
     fun testStorage() {
 
-        val note = Note(null);
-        note.dateTime = LocalDateTime.now()
-        note.comment = "FooBar"
+        val weight = Weight(null);
+        weight.dateTime = LocalDateTime.now()
+        weight.value = 75.0
+        weight.comment = "FooBar"
 
-        dbStorage.noteRepository.create(note)
+        dbStorage.weightRepository.create(weight)
         dbStorage.commitChanges()
 
-        val notes = dbStorage.noteRepository.readAll()
-        Assertions.assertEquals(1, notes.size)
-        Assertions.assertEquals("FooBar", notes[0].comment)
+        val weights = dbStorage.weightRepository.readAll()
+        Assertions.assertEquals(1, weights.size)
+        Assertions.assertEquals(75.0, weights[0].value)
+        Assertions.assertEquals("FooBar", weights[0].comment)
     }
 }

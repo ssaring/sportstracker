@@ -5,10 +5,17 @@ SportType- and Equipment-specific Notes
 - Status:
   - Schema update has been implemented and successfully tested
   - Foreign Key constraints tested successfully via SQL commands (ignored in IDEA DB browser)
-  - Schema update process and new database creation + schema updates were tested successfully (manually!)
+  - Schema update process and new database creation + schema updates were tested successfully (manually and unit test)
+  - Note Entity class and NoteRepository class have been extended by SportType and Equipment (incl. unit tests)
 - TODO:
+  - Extend NoteDialog for selecting SportType and Equipment
+  - Extend NoteList for SportType and Equipment columns
+  - Extend Calendar for showing SportType prefix for SportType specific notes
+  - Extend Filter dialog for SportType and Equipment specific notes
+  - Add feature for counting exercise summary (count, time, distance) since a SportType/Equipment specific note
+  - Extend SportsTracker-Flutter app (must be at least compatible)
+  - Extend SportsTracker-Angular app (must be at least compatible)
   - Re-enable NextCloud syncs for local SQLite database
-  - Extend data model for Note object
   - ...
   - Can the XML import be removed?
     - Then document in Readme that Users of ST < 8.0 needs to update to 8.0 first before updating to 8.1 (due to missing XML import)

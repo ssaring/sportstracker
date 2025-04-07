@@ -91,7 +91,7 @@ class DbApplicationDataImporterTest : DbStorageTestBase() {
         assertEquals(42.0, exercises[0].distance)
         assertEquals(20.0, exercises[0].avgSpeed)
 
-        val notes = dbStorage.noteRepository.readAll()
+        val notes = dbStorage.noteRepository.readAll(sportTypes)
         assertEquals(1, notes.size)
         assertEquals("Some comment...", notes[0].comment)
 

@@ -4,8 +4,6 @@ import de.saring.sportstracker.data.Equipment
 import de.saring.sportstracker.data.Exercise
 import de.saring.sportstracker.data.SportSubType
 import de.saring.sportstracker.data.SportType
-import de.saring.util.unitcalc.SpeedMode
-import javafx.scene.paint.Color
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -134,34 +132,5 @@ class ExerciseRepositoryTest : DbStorageTestBase() {
         exercise.equipment = equipment
         exercise.comment = comment
         return dbStorage.exerciseRepository.create(exercise)
-    }
-
-    private fun creatSportType(name: String): SportType {
-        var sportType = SportType(null)
-        sportType.setName(name)
-        sportType.isRecordDistance = true
-        sportType.color = Color.BLUE
-        sportType.icon = "$name.png"
-        sportType.speedMode = SpeedMode.SPEED
-        sportType.fitId = 12
-
-        sportType.sportSubTypeList.set(creatSportSubType("$name Subtype 1"))
-        sportType.equipmentList.set(createEquipment("$name Equipment 1"))
-
-        return dbStorage.sportTypeRepository.create(sportType)
-    }
-
-    private fun creatSportSubType(name: String): SportSubType {
-        val sportSubType = SportSubType(null)
-        sportSubType.setName(name)
-        sportSubType.fitId = 23
-        return sportSubType
-    }
-
-    private fun createEquipment(name: String): Equipment {
-        val equipment = Equipment(null)
-        equipment.setName(name)
-        equipment.isNotInUse = false
-        return equipment
     }
 }

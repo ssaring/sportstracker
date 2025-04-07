@@ -307,7 +307,7 @@ public class STDocumentImpl implements STDocument {
         var dbExercises = dbStorage.getExerciseRepository().readAll(dbSportTypes);
         exerciseList.clearAndAddAll(dbExercises);
 
-        var dbNotes = dbStorage.getNoteRepository().readAll();
+        var dbNotes = dbStorage.getNoteRepository().readAll(dbSportTypes);
         noteList.clearAndAddAll(dbNotes);
 
         var dbWeights = dbStorage.getWeightRepository().readAll();
