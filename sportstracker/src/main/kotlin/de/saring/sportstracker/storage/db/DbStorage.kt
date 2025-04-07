@@ -32,12 +32,13 @@ class DbStorage {
         val jdbcUrl = "jdbc:sqlite:$dbFilename"
         openDatabaseConnection(jdbcUrl)
 
-        // create database schema if new database or validate schema version for an existing database
+        // create initial database schema if new database was created
         if (isNewDatabase()) {
-            LOGGER.info("Creating database schema")
-            executeSchemaFile(SCHEMA_FILE)
+            LOGGER.info("Creating initial database schema")
+            executeSchemaFile(1)
         }
-        // check schema version and execute updates when needed
+
+        // check schema version of new or existing database and execute updates when needed
         validateSchemaVersion()
 
         noteRepository = NoteRepository(connection)
@@ -99,11 +100,12 @@ class DbStorage {
         }
     }
 
-    private fun executeSchemaFile(filename: String) {
-        LOGGER.info("Executing schema file '$filename'")
+    private fun executeSchemaFile(schemaVersion: Int) {
+        val schemaFilename = SCHEMA_FILE_PREFIX + String.format("%03d", schemaVersion) + ".sql"
+        LOGGER.info("Executing database schema version $schemaVersion from file '$schemaFilename'")
 
         try {
-            val schemaText = DbStorage::class.java.getResource(filename).readText()
+            val schemaText = DbStorage::class.java.getResource(schemaFilename).readText()
             connection.createStatement().use { statement ->
                 statement.executeUpdate(schemaText)
             }
@@ -126,19 +128,13 @@ class DbStorage {
 
         if (currentSchemaVersion < SCHEMA_VERSION) {
             LOGGER.info("Database schema needs to get updated from version $currentSchemaVersion to $SCHEMA_VERSION")
-
             while (currentSchemaVersion < SCHEMA_VERSION) {
-                currentSchemaVersion++
-                LOGGER.info("Updating database schema to version $currentSchemaVersion")
-                val updateFilename = SCHEMA_FILE_UPDATE_PREFIX + String.format("%03d", currentSchemaVersion) + ".sql"
-                executeSchemaFile(updateFilename);
+                executeSchemaFile(++currentSchemaVersion);
             }
         }
     }
 
     private fun getSchemaVersion(): Int {
-        LOGGER.info("Getting database schema version")
-
         try {
             connection.prepareStatement("SELECT SCHEMA_VERSION FROM META").use { statement ->
                 val rs = statement.executeQuery()
@@ -166,8 +162,7 @@ class DbStorage {
 
         private val LOGGER = Logger.getLogger(NoteRepository::class.java.name)
 
-        private const val SCHEMA_FILE = "/sql/st-schema.sql"
-        private const val SCHEMA_FILE_UPDATE_PREFIX = "/sql/st-schema-"
+        private const val SCHEMA_FILE_PREFIX = "/sql/st-schema-"
         private const val SCHEMA_VERSION = 2
     }
 }

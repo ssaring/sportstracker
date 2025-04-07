@@ -378,36 +378,6 @@ this case, the data files will be stored as though you were not connected to
 the Internet.
 
 
-SQLite export
--------------
-
-Advances users with SQL skills can export all SportsTracker application data to
-a SQLite v3 database. This provides much more capabilities for data analysis,
-statistics or migration.
-On each export a new database will be created in the users home directory, an
-existing database will be overwritten. The database schema is defined in the
-source file 'st-schema.sql'.
-
-The SportsTracker application already contains the native SQLite libraries for
-Windows, macOS and Linux (part of the sqlite-jdbc library). Users of other
-systems must provide the native libraries manually.
-
-There are many command line and graphical tools available for working with
-SQLite. If you´re looking for a handy, cross platform, open source application
-you should try 'DB Browser for SQLite' (http://sqlitebrowser.org/).
-
-Note: SQLite does not provide a date and time data type, the export uses a
-string in ISO 8601 format "yyyy-MM-dd HH:mm:ss" (see
-https://www.sqlite.org/datatype3.html).
-The queries can use the built-in functions for conversion and formatting (see
-https://www.sqlite.org/lang_datefunc.html).
-
-Example for a date query:
-  select e.id, e.date_time, max(e.distance)
-  from exercise e
-  where date(e.date_time) between date('2015-06-29') and date('2015-12-31');
-
-
 Developer Requirements
 ----------------------
 
@@ -536,8 +506,10 @@ Development notes:
 - application data can be processed and evaluated easily by using 3rd party
   SQLite database browsers (e.g. for custom statistics via SQL)
 - Documentation: https://www.sqlitetutorial.net/sqlite-java/
-- All database schema changes will be implemented in schema update files.
-  New databases will be created from the initial schema and all schema updates.
+- The initial database schema and all schema updates are defined in the files
+  'sportstracker/src/main/resources/sql/st-schema-***.sql'
+- New databases will be created from the initial schema and all schema updates.
+- Existing databases will be updated automatically to the newest schema.
 
 Comparison with prior XML file storage:
 - SQLite storage provides faster loading times, almost no saving times
@@ -593,4 +565,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2024/12/27
+2025/04/07
