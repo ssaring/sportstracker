@@ -71,6 +71,19 @@ class DbStorage {
         }
     }
 
+    @Throws(STException::class)
+    fun getSchemaVersion(): Int {
+        try {
+            connection.prepareStatement("SELECT SCHEMA_VERSION FROM META").use { statement ->
+                val rs = statement.executeQuery()
+                rs.next()
+                return rs.getInt("SCHEMA_VERSION")
+            }
+        } catch (e: SQLException) {
+            throw STException(STExceptionID.DBSTORAGE_INVALID_SCHEMA, "Failed to read DB schema version!", e)
+        }
+    }
+
     private fun openDatabaseConnection(jdbcUrl: String) {
         LOGGER.info("Opening database $jdbcUrl")
 
@@ -134,18 +147,6 @@ class DbStorage {
         }
     }
 
-    private fun getSchemaVersion(): Int {
-        try {
-            connection.prepareStatement("SELECT SCHEMA_VERSION FROM META").use { statement ->
-                val rs = statement.executeQuery()
-                rs.next()
-                return rs.getInt("SCHEMA_VERSION")
-            }
-        } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_INVALID_SCHEMA, "Failed to read DB schema version!", e)
-        }
-    }
-
     @Throws(STException::class)
     fun importExistingApplicationData(sportTypes: SportTypeList,
                                       exercises: ExerciseList,
@@ -157,12 +158,13 @@ class DbStorage {
     }
 
     companion object {
+        /** Current database schema version of this application version. */
+        const val SCHEMA_VERSION = 2
         /** Filename for opening the database in in-memory mode, useful for unit testing. */
         const val IN_MEMORY_FILENAME = ":memory:"
 
         private val LOGGER = Logger.getLogger(NoteRepository::class.java.name)
 
         private const val SCHEMA_FILE_PREFIX = "/sql/st-schema-"
-        private const val SCHEMA_VERSION = 2
     }
 }

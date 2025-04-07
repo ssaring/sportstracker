@@ -14,6 +14,14 @@ import java.time.LocalDateTime
 class DbStorageTest : DbStorageTestBase() {
 
     /**
+     * Test database schema version, which also ensures that all schema update files have been executed properly.
+     */
+    @Test
+    fun testGetSchemaVersion() {
+        Assertions.assertEquals(DbStorage.SCHEMA_VERSION, dbStorage.getSchemaVersion())
+    }
+
+    /**
      * Basic storage tests for creating a new Note entity, commit the change and read from database.
      */
     @Test
