@@ -15,7 +15,6 @@ SportType- and Equipment-specific Notes
   - Add feature for counting exercise summary (count, time, distance) since a SportType/Equipment specific note
   - Extend SportsTracker-Flutter app (must be at least compatible)
   - Extend SportsTracker-Angular app (must be at least compatible)
-  - Re-enable NextCloud syncs for local SQLite database
   - ...
   - Can the XML import be removed?
     - Then document in Readme that Users of ST < 8.0 needs to update to 8.0 first before updating to 8.1 (due to missing XML import)
