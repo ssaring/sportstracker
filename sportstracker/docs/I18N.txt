@@ -45,6 +45,13 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
+SportsTracker 8.0.3:
+
+st.dlg.note.sport_type.text (new)
+st.dlg.note.sport_type.none.text (new)
+st.dlg.note.equipment.text (new)
+st.dlg.note.equipment.none.text (new)
+
 SportsTracker 8.0.2:
 
 pv.main.total_duration.text (new)

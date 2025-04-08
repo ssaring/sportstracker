@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox spacing="16.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.saring.sportstracker.gui.dialogs.NoteDialogController">
@@ -22,6 +26,26 @@
                 <TextField fx:id="tfTime" prefColumnCount="5" HBox.hgrow="NEVER"/>
             </children>
         </HBox>
+        <GridPane hgap="12.0" vgap="12.0">
+            <padding>
+                <Insets top="16.0"/>
+            </padding>
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER"/>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES"/>
+                <RowConstraints vgrow="SOMETIMES"/>
+                <RowConstraints vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Label text="%st.dlg.note.sport_type.text"/>
+                <ChoiceBox fx:id="cbSportType" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"/>
+                <Label text="%st.dlg.note.equipment.text" GridPane.rowIndex="1"/>
+                <ChoiceBox fx:id="cbEquipment" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"/>
+            </children>
+        </GridPane>
         <VBox spacing="8.0" VBox.vgrow="ALWAYS">
             <children>
                 <Label text="%st.dlg.note.text.text"/>

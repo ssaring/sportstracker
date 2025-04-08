@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.SportType;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,6 +24,8 @@ public class NoteViewModel {
     private final Long id;
     public final ObjectProperty<LocalDate> date;
     public final ObjectProperty<LocalTime> time;
+    public final ObjectProperty<SportType> sportType;
+    public final ObjectProperty<Equipment> equipment;
     public final StringProperty comment;
 
     /**
@@ -33,6 +37,8 @@ public class NoteViewModel {
         this.id = note.getId();
         this.date = new SimpleObjectProperty<>(note.getDateTime().toLocalDate());
         this.time = new SimpleObjectProperty<>(note.getDateTime().toLocalTime());
+        this.sportType = new SimpleObjectProperty<>(note.getSportType());
+        this.equipment = new SimpleObjectProperty<>(note.getEquipment());
         this.comment = new SimpleStringProperty(note.getComment());
     }
 
@@ -44,6 +50,8 @@ public class NoteViewModel {
     public Note getNote() {
         final Note note = new Note(id);
         note.setDateTime(LocalDateTime.of(date.get(), time.get()));
+        note.setSportType(sportType.getValue());
+        note.setEquipment(equipment.getValue());
         note.setComment(comment.getValue().trim());
         return note;
     }
