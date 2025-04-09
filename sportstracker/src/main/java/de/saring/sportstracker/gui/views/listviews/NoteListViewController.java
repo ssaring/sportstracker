@@ -9,6 +9,7 @@ import de.saring.util.data.IdObject;
 import de.saring.util.gui.javafx.LocalDateCellFactory;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -34,6 +35,10 @@ public class NoteListViewController extends AbstractListViewController<Note> {
 
     @FXML
     private TableColumn<Note, LocalDateTime> tcDate;
+    @FXML
+    private TableColumn<Note, Object> tcSportType;
+    @FXML
+    private TableColumn<Note, Object> tcEquipment;
     @FXML
     private TableColumn<Note, String> tcComment;
 
@@ -86,6 +91,10 @@ public class NoteListViewController extends AbstractListViewController<Note> {
 
         // setup factories for providing cell values
         tcDate.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
+        tcSportType.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
+                cellData.getValue().getSportType() == null ? null : cellData.getValue().getSportType().getName()));
+        tcEquipment.setCellValueFactory(cellData -> new SimpleObjectProperty<>( //
+                cellData.getValue().getEquipment() == null ? null : cellData.getValue().getEquipment().getName()));
         tcComment.setCellValueFactory(cellData -> new SimpleStringProperty( //
                 StringUtils.getFirstLineOfText(cellData.getValue().getComment())));
 

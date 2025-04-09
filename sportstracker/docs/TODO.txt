@@ -8,9 +8,11 @@ SportType- and Equipment-specific Notes
   - Schema update process and new database creation + schema updates were tested successfully (manually and unit test)
   - Note Entity class and NoteRepository class have been extended by SportType and Equipment (incl. unit tests)
   - Note Dialog contains selection for sport type and equipment (both optional)
+  - Note List display SportType and Equipment columns (sortable)
 - TODO:
-  - Extend NoteList for SportType and Equipment columns
-  - Extend Calendar for showing SportType prefix for SportType specific notes
+  - CalendarView:
+    - extend for showing SportType prefix for SportType specific notes?
+    - extend tooltip for notes with sport type and equipment (if set)
   - Extend Filter dialog for SportType and Equipment specific notes
   - Add feature for counting exercise summary (count, time, distance) since a SportType/Equipment specific note
   - Extend SportsTracker-Flutter app (already tested, is compatible with the DB schema update)

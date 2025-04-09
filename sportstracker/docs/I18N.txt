@@ -52,6 +52,9 @@ st.dlg.note.sport_type.none.text (new)
 st.dlg.note.equipment.text (new)
 st.dlg.note.equipment.none.text (new)
 
+st.notelistview.type (new)
+st.notelistview.equipment (new)
+
 SportsTracker 8.0.2:
 
 pv.main.total_duration.text (new)
