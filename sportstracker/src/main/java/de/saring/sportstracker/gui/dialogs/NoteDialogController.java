@@ -57,6 +57,8 @@ public class NoteDialogController extends AbstractDialogController {
     /** ViewModel of the edited Note. */
     private NoteViewModel noteViewModel;
 
+    /** SportType for selection "none". */
+    private final SportType sportTypeNone;
     /** Equipment for selection "none", same for all sport types. */
     private final Equipment equipmentNone;
 
@@ -71,6 +73,8 @@ public class NoteDialogController extends AbstractDialogController {
         super(context);
         this.document = document;
 
+        sportTypeNone = new SportType(Long.MAX_VALUE);
+        sportTypeNone.setName(context.getResources().getString("st.dlg.note.sport_type.none.text"));
         equipmentNone = new Equipment(Long.MAX_VALUE);
         equipmentNone.setName(context.getResources().getString("st.dlg.note.equipment.none.text"));
     }
@@ -128,7 +132,10 @@ public class NoteDialogController extends AbstractDialogController {
         // store the new Note, no further validation needed
         Note newNote = noteViewModel.getNote();
 
-        // check for "none" equipment selection => replace this dummy by null
+        // check for "none" sport type and equipment selection => replace this dummy by null
+        if (sportTypeNone.equals(newNote.getSportType())) {
+            newNote.setSportType(null);
+        }
         if (equipmentNone.equals(newNote.getEquipment())) {
             newNote.setEquipment(null);
         }
@@ -155,7 +162,13 @@ public class NoteDialogController extends AbstractDialogController {
         cbSportType.setConverter(new NameableStringConverter<>());
         cbEquipment.setConverter(new NameableStringConverter<>());
 
+        cbSportType.getItems().add(sportTypeNone);
         document.getSportTypeList().forEach(sportType -> cbSportType.getItems().add(sportType));
+
+        // select sport type "none" when note contains no sport type
+        if (noteViewModel.sportType.get() == null) {
+            noteViewModel.sportType.set(sportTypeNone);
+        }
 
         // update the sport type dependent controls on each sport type selection change
         cbSportType.addEventHandler(ActionEvent.ACTION, event -> fillSportTypeDependentControls());
@@ -184,6 +197,6 @@ public class NoteDialogController extends AbstractDialogController {
         }
 
         // disable equipment choice box when no sport type selected
-        cbEquipment.setDisable(selectedSportType == null);
+        cbEquipment.setDisable(selectedSportType == null || sportTypeNone.equals(selectedSportType));
     }
 }

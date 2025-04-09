@@ -7,11 +7,8 @@ SportType- and Equipment-specific Notes
   - Foreign Key constraints tested successfully via SQL commands (ignored in IDEA DB browser)
   - Schema update process and new database creation + schema updates were tested successfully (manually and unit test)
   - Note Entity class and NoteRepository class have been extended by SportType and Equipment (incl. unit tests)
+  - Note Dialog contains selection for sport type and equipment (both optional)
 - TODO:
-  - Extend NoteDialog for selecting SportType and Equipment
-    - Almost completed, selected sport type and equipment are already persisted properly
-    - TODO: provide "none" selection for sport type choicebox, disable equipment then in case
-    - TODO: Extend NoteViewModelTest class for SportType and Equipment
   - Extend NoteList for SportType and Equipment columns
   - Extend Calendar for showing SportType prefix for SportType specific notes
   - Extend Filter dialog for SportType and Equipment specific notes
