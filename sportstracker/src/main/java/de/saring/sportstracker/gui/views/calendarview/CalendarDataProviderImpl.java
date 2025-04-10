@@ -93,9 +93,15 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
 
     private CalendarEntry createCalendarEntryForNote(final Note note) {
         final StringBuilder sbText = new StringBuilder();
-        sbText.append(context.getResources().getString("st.calview.note_short")) //
-                .append(" ") //
-                .append(StringUtils.getFirstLineOfText(note.getComment()));
+        sbText.append(context.getResources().getString("st.calview.note_short"))
+                .append(' ');
+
+        if (note.getSportType() != null) {
+            sbText.append('(')
+                    .append(note.getSportType().getName().charAt(0))
+                    .append(") ");
+        }
+        sbText.append(StringUtils.getFirstLineOfText(note.getComment()));
 
         final StringBuilder sbTooltip = new StringBuilder();
         if (note.getSportType() != null) {
