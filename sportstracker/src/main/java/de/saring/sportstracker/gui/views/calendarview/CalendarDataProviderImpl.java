@@ -97,7 +97,25 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
                 .append(" ") //
                 .append(StringUtils.getFirstLineOfText(note.getComment()));
 
-        return new CalendarEntry(note, sbText.toString(), note.getComment(), null);
+        final StringBuilder sbTooltip = new StringBuilder();
+        if (note.getSportType() != null) {
+            sbTooltip.append(context.getResources().getString("st.calview.note_tooltip.sport_type"))
+                    .append(' ')
+                    .append(note.getSportType().getName())
+                    .append('\n');
+
+            if (note.getEquipment() != null) {
+                sbTooltip.append(context.getResources().getString("st.calview.note_tooltip.equipment"))
+                        .append(' ')
+                        .append(note.getEquipment().getName())
+                        .append('\n');
+            }
+
+            sbTooltip.append('\n');
+        }
+        sbTooltip.append(note.getComment());
+
+        return new CalendarEntry(note, sbText.toString(), sbTooltip.toString(), null);
     }
 
     private CalendarEntry createCalendarEntryForWeight(final Weight weight) {

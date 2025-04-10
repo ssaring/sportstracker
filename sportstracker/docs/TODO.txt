@@ -12,7 +12,6 @@ SportType- and Equipment-specific Notes
 - TODO:
   - CalendarView:
     - extend for showing SportType prefix for SportType specific notes?
-    - extend tooltip for notes with sport type and equipment (if set)
   - Extend Filter dialog for SportType and Equipment specific notes
   - Add feature for counting exercise summary (count, time, distance) since a SportType/Equipment specific note
   - Extend SportsTracker-Flutter app (already tested, is compatible with the DB schema update)
