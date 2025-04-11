@@ -52,6 +52,11 @@ public interface EntryViewEventHandler {
     void onDeleteEntry(ActionEvent event);
 
     /**
+     * Event handler for action "Statistics since selected Entry".
+     */
+    void onStatisticsSinceEntry(ActionEvent event);
+
+    /**
      * Starts the action for adding a new exercise for the specified HRM file (called when
      * a HRM file has been dropped on a day cell in the calendar view). The new exercise
      * will contain the data imported from the specified HRM file.

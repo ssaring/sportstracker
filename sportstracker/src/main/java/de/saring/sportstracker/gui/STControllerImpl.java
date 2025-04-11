@@ -94,6 +94,8 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     @FXML
     private MenuItem miDeleteEntry;
     @FXML
+    private MenuItem miStatisticsSinceEntry;
+    @FXML
     private MenuItem miViewHrm;
     @FXML
     private MenuItem miCalendarView;
@@ -381,6 +383,16 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     }
 
     @Override
+    public void onStatisticsSinceEntry(final ActionEvent event) {
+        if (!checkForExistingExercises()) {
+            return;
+        }
+
+        // TODO
+        dialogProvider.prStatisticDialogController.get().show(context.getPrimaryStage());
+    }
+
+    @Override
     public void onViewHrmFile(final ActionEvent event) {
         // get selected exercise and start ExerciseViewer for it's HRM file
         // (special checks not needed here, done by action status property)
@@ -570,6 +582,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
         btCopyEntry.disableProperty().bind(actionEditEntryDisabled);
         miDeleteEntry.disableProperty().bind(actionDeleteEntryDisabled);
         btDeleteEntry.disableProperty().bind(actionDeleteEntryDisabled);
+        miStatisticsSinceEntry.disableProperty().bind(actionEditEntryDisabled);
 
         miViewHrm.disableProperty().bind(actionViewHrmDisabled);
         btViewHrm.disableProperty().bind(actionViewHrmDisabled);

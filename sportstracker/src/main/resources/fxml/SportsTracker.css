@@ -156,6 +156,10 @@
     -fx-graphic: url("../icons/16/0173-bin.png");
 }
 
+#miCtxStatisticsEntry .label {
+    -fx-graphic: url("../icons/16/0065-calculator.png");
+}
+
 /*******************************************/
 /*   Calendar View styles                  */
 /*******************************************/

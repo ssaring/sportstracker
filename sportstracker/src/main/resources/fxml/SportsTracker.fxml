@@ -56,6 +56,8 @@
                                 <MenuItem fx:id="miCopyEntry" mnemonicParsing="true" onAction="#onCopyEntry" styleClass="menuBarItem" text="%st.view.entry_copy.Action.text"/>
                                 <MenuItem fx:id="miDeleteEntry" mnemonicParsing="true" onAction="#onDeleteEntry" styleClass="menuBarItem" text="%st.view.entry_delete.Action.text"/>
                                 <SeparatorMenuItem/>
+                                <MenuItem fx:id="miStatisticsSinceEntry" mnemonicParsing="true" onAction="#onStatisticsSinceEntry" styleClass="menuBarItem" text="%st.view.entry_statistics.Action.text"/>
+                                <SeparatorMenuItem/>
                                 <MenuItem fx:id="miViewHrm" mnemonicParsing="true" onAction="#onViewHrmFile" styleClass="menuBarItem" text="%st.view.view_hrm.Action.text"/>
                                 <SeparatorMenuItem/>
                                 <MenuItem mnemonicParsing="true" onAction="#onPreferences" styleClass="menuBarItem" text="%st.view.preferences.Action.text"/>

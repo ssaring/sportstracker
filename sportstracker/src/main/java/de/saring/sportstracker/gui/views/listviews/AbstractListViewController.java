@@ -227,4 +227,14 @@ public abstract class AbstractListViewController<T extends IdObject> extends Abs
     private void onDeleteEntry(final ActionEvent event) {
         getEventHandler().onDeleteEntry(event);
     }
+
+    /**
+     * Event handler for the context menu item 'Statistics since Entry', it delegates the event to the STController.
+     *
+     * @param event ActionEvent
+     */
+    @FXML
+    private void onStatisticsSinceEntry(final ActionEvent event) {
+        getEventHandler().onStatisticsSinceEntry(event);
+    }
 }

@@ -10,9 +10,11 @@ SportType- and Equipment-specific Notes
   - Note Dialog contains selection for sport type and equipment (both optional)
   - Note List display SportType and Equipment columns (sortable)
   - Calendar View displays sport type and equipment info in note entry and tooltip
+  - Application menu and context menu now show the action "Statistics since Entry"
 - TODO:
+  - Implement "Statistics since Entry" in STControllerImpl (see TODO)
+  - Document "Statistics since Entry" action in README and add to CHANGES
   - Extend Filter dialog for SportType and Equipment specific notes
-  - Add feature for counting exercise summary (count, time, distance) since a SportType/Equipment specific note
   - Extend SportsTracker-Flutter app (already tested, is compatible with the DB schema update)
   - Extend SportsTracker-Angular app (already tested, is compatible with the DB schema update)
   - ...
