@@ -75,14 +75,14 @@ public class StatisticDialogController extends AbstractDialogController {
      * Displays the Statistic dialog for the current Exercise filter.
      *
      * @param parent parent window of the dialog
+     * @param statisticFilter prefilled statistics filter (optional)
      */
-    public void show(final Window parent) {
+    public void show(final Window parent, final EntryFilter statisticFilter) {
+        this.statisticFilter = statisticFilter;
 
-        // start with current exercise filter criteria stored in document => user can change it
-        // (create a new default exercise filter, if current filter is not for exercises)
-        statisticFilter = document.getCurrentFilter();
-        if (statisticFilter.getEntryType() != EntryFilter.EntryType.EXERCISE) {
-            statisticFilter = EntryFilter.createDefaultExerciseFilter();
+        // create a new default exercise filter, if no filter has been passed or passed filter is not for exercises
+        if (statisticFilter == null || statisticFilter.getEntryType() != EntryFilter.EntryType.EXERCISE) {
+            this.statisticFilter = EntryFilter.createDefaultExerciseFilter();
         }
 
         showInfoDialog("/fxml/dialogs/StatisticDialog.fxml", parent,

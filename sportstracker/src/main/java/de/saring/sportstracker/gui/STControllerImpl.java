@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.saring.sportstracker.core.STException;
+import de.saring.sportstracker.data.EntryFilter;
 import de.saring.sportstracker.storage.db.AbstractRepository;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -388,8 +389,31 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             return;
         }
 
-        // TODO
-        dialogProvider.prStatisticDialogController.get().show(context.getPrimaryStage());
+        // create the statistics filter from entry date until today and apply filter criteria
+        var statisticFilter = EntryFilter.createDefaultExerciseFilter();
+        statisticFilter.setDateEnd(LocalDate.now());
+
+        if (currentViewController.getSelectedExerciseCount() == 1) {
+            var exercise = document.getExerciseList().getByID(currentViewController.getSelectedExerciseIDs()[0]);
+            statisticFilter.setDateStart(exercise.getDateTime().toLocalDate());
+            statisticFilter.setSportType(exercise.getSportType());
+            statisticFilter.setSportSubType(exercise.getSportSubType());
+            statisticFilter.setIntensity(exercise.getIntensity());
+            statisticFilter.setEquipment(exercise.getEquipment());
+        } else if (currentViewController.getSelectedNoteCount() == 1) {
+            var note = document.getNoteList().getByID(currentViewController.getSelectedNoteIDs()[0]);
+            statisticFilter.setDateStart(note.getDateTime().toLocalDate());
+            statisticFilter.setSportType(note.getSportType());
+            statisticFilter.setEquipment(note.getEquipment());
+        } else if (currentViewController.getSelectedWeightCount() == 1) {
+            var weight = document.getWeightList().getByID(currentViewController.getSelectedWeightIDs()[0]);
+            statisticFilter.setDateStart(weight.getDateTime().toLocalDate());
+        } else {
+            // no action on multiple selected entries
+            return;
+        }
+
+        dialogProvider.prStatisticDialogController.get().show(context.getPrimaryStage(), statisticFilter);
     }
 
     @Override
@@ -470,7 +494,8 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             return;
         }
 
-        dialogProvider.prStatisticDialogController.get().show(context.getPrimaryStage());
+        // start statistics with current exercise filter criteria stored in document (if set)
+        dialogProvider.prStatisticDialogController.get().show(context.getPrimaryStage(), document.getCurrentFilter());
     }
 
     @Override
