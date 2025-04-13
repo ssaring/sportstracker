@@ -219,9 +219,13 @@ exercise when there is equipment defined for the selected sport type.
 Data such as the route description can be added to the comment text.
 
 Note entries can be added for special dates, so you can e.g. enter your
-training plan or descriptions of sport events. You can also track your body
-weight by adding weight entries for special dates. Note and weight entries
-don't need the definition of sport types.
+training plan or descriptions of sport events. Notes can be created for
+specific sport types or equipments of a sport type. This makes them
+useful for e.g. tracking the maintenance cycles of e.g. bicycle chain
+replacements.
+
+You can also track your body weight by adding weight entries for special dates.
+Note and weight entries don't need the definition of sport types.
 
 Entries of all types can be simply copied. This is very useful when you have
 many similar exercises or weight entries. You just select the entry to copy 
@@ -277,6 +281,15 @@ calculation filter for the time range, e.g. the current month. It's also
 possible to set filters for the sport type, the subtype, the intensity, the
 equipment and the comment, so only the specified exercises will be included in
 the statistic calculation.
+
+Statistics can also be created from the date of an specific entry until today
+by using the action "Statistics since Entry" on that entry (e.g. via context
+menu). The statistics filter gets then prefilled with the entry properties,
+e.g. the sport type and equipment. This makes it very easy to calculate the
+exercise summary for specific purposes.
+Example: By using equipment-specific notes for replacing your bike parts (e.g.
+chain) you can calculate the total distance ridden with that bike since the
+note entry.
 
 The user can create overview diagrams for the last 12 months, for all months
 or weeks of a selected year or for a selectable time range of 10 years. 
@@ -565,4 +578,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2025/04/07
+2025/04/13
