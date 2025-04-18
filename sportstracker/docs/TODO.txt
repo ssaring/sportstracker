@@ -1,23 +1,6 @@
 SportsTracker-TODO
 ==================
 
-SportType- and Equipment-specific Notes
-- Status:
-  - Schema update has been implemented and successfully tested
-  - Foreign Key constraints tested successfully via SQL commands (ignored in IDEA DB browser)
-  - Schema update process and new database creation + schema updates were tested successfully (manually and unit test)
-  - Note Entity class and NoteRepository class have been extended by SportType and Equipment (incl. unit tests)
-  - Note Dialog contains selection for sport type and equipment (both optional)
-  - Note List display SportType and Equipment columns (sortable)
-  - Calendar View displays sport type and equipment info in note entry and tooltip
-  - Application menu and context menu now show the action "Statistics since Entry"
-  - "Statistics since Entry" action has been implemented and tested
-- TODO:
-  - Extend SportsTracker-Flutter app (already tested, is compatible with the DB schema update)
-  - Extend SportsTracker-Angular app (already tested, is compatible with the DB schema update)
-  - ...
-  - create PR / close branch
-
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 LeafletMap:
