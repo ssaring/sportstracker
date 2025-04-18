@@ -10,6 +10,8 @@ v8.0.3:
  - User can now easily track the maintenance periods when creating equipment-
    specific notes and creating statistics since that note entry
    (e.g. ridden distance since chain replacement on bike X)
+ - Filter Dialog: Sport type and Equipment can be set for filtering Note
+   entries
  ExerciseViewer changes:
 
 v8.0.2:
