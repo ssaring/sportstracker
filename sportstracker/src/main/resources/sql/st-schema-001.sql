@@ -1,4 +1,5 @@
 -- SQLite schema definition for the SportsTracker database.
+-- This is the initial schema version 1, all future changes are defined in the update files.
 
 -- All date-time values are stored as an TEXT with format "yyyy-MM-dd HH:mm:ss"
 -- All boolean values are stored as an INTEGER, 0 is false, 1 is true.

@@ -5,9 +5,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.saring.sportstracker.core.STException;
+import de.saring.sportstracker.data.Equipment;
+import de.saring.sportstracker.data.SportType;
 import de.saring.util.gui.javafx.FxWorkarounds;
+import de.saring.util.gui.javafx.NameableStringConverter;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -41,10 +46,21 @@ public class NoteDialogController extends AbstractDialogController {
     private TextField tfTime;
 
     @FXML
+    private ChoiceBox<SportType> cbSportType;
+
+    @FXML
+    private ChoiceBox<Equipment> cbEquipment;
+
+    @FXML
     private TextArea taText;
 
     /** ViewModel of the edited Note. */
     private NoteViewModel noteViewModel;
+
+    /** SportType for selection "none". */
+    private final SportType sportTypeNone;
+    /** Equipment for selection "none", same for all sport types. */
+    private final Equipment equipmentNone;
 
     /**
      * Standard c'tor for dependency injection.
@@ -56,6 +72,11 @@ public class NoteDialogController extends AbstractDialogController {
     public NoteDialogController(final STContext context, final STDocument document) {
         super(context);
         this.document = document;
+
+        sportTypeNone = new SportType(Long.MAX_VALUE);
+        sportTypeNone.setName(context.getResources().getString("st.dlg.note.sport_type.none.text"));
+        equipmentNone = new Equipment(Long.MAX_VALUE);
+        equipmentNone.setName(context.getResources().getString("st.dlg.note.equipment.none.text"));
     }
 
     /**
@@ -76,6 +97,9 @@ public class NoteDialogController extends AbstractDialogController {
     @Override
     protected void setupDialogControls() {
 
+        setupChoiceBoxes();
+        fillSportTypeDependentControls();
+
         // setup binding between view model and the UI controls
         dpDate.valueProperty().bindBidirectional(noteViewModel.date);
 
@@ -84,6 +108,8 @@ public class NoteDialogController extends AbstractDialogController {
         timeTextFormatter.valueProperty().bindBidirectional(noteViewModel.time);
         tfTime.setTextFormatter(timeTextFormatter);
 
+        cbSportType.valueProperty().bindBidirectional(noteViewModel.sportType);
+        cbEquipment.valueProperty().bindBidirectional(noteViewModel.equipment);
         taText.textProperty().bindBidirectional(noteViewModel.comment);
 
         FxWorkarounds.fixDatePickerTextEntry(dpDate);
@@ -106,6 +132,14 @@ public class NoteDialogController extends AbstractDialogController {
         // store the new Note, no further validation needed
         Note newNote = noteViewModel.getNote();
 
+        // check for "none" sport type and equipment selection => replace this dummy by null
+        if (sportTypeNone.equals(newNote.getSportType())) {
+            newNote.setSportType(null);
+        }
+        if (equipmentNone.equals(newNote.getEquipment())) {
+            newNote.setEquipment(null);
+        }
+
         try {
             if (newNote.getId() == null) {
                 newNote = document.getStorage().getNoteRepository().create(newNote);
@@ -118,5 +152,51 @@ public class NoteDialogController extends AbstractDialogController {
             LOGGER.log(Level.SEVERE, "Failed to store Note '" + newNote.getId() + "'!", e);
             return false;
         }
+    }
+
+    /**
+     * Initializes all ChoiceBoxes by defining the String converters. SportType ChoiceBox with fixed values
+     *  will be filled with possible values.
+     */
+    private void setupChoiceBoxes() {
+        cbSportType.setConverter(new NameableStringConverter<>());
+        cbEquipment.setConverter(new NameableStringConverter<>());
+
+        cbSportType.getItems().add(sportTypeNone);
+        document.getSportTypeList().forEach(sportType -> cbSportType.getItems().add(sportType));
+
+        // select sport type "none" when note contains no sport type
+        if (noteViewModel.sportType.get() == null) {
+            noteViewModel.sportType.set(sportTypeNone);
+        }
+
+        // update the sport type dependent controls on each sport type selection change
+        cbSportType.addEventHandler(ActionEvent.ACTION, event -> fillSportTypeDependentControls());
+    }
+
+    /**
+     * Fills equipment controls with values dependent on the selected sport type.
+     */
+    private void fillSportTypeDependentControls() {
+        cbEquipment.getItems().clear();
+        cbEquipment.getItems().add(equipmentNone);
+
+        final SportType selectedSportType = cbSportType.getValue();
+        if (selectedSportType != null) {
+
+            // add all active equipments or if the equipment is set in the note (even if notInUse has been set)
+            Equipment selectedEquipment = noteViewModel.equipment.get();
+            cbEquipment.getItems().addAll(selectedSportType.getEquipmentList().stream()
+                    .filter(equipment -> !equipment.isNotInUse() || equipment.equals(selectedEquipment))
+                    .toList());
+        }
+
+        // select equipment "none" when note contains no equipment
+        if (noteViewModel.equipment.get() == null) {
+            noteViewModel.equipment.set(equipmentNone);
+        }
+
+        // disable equipment choice box when no sport type selected
+        cbEquipment.setDisable(selectedSportType == null || sportTypeNone.equals(selectedSportType));
     }
 }

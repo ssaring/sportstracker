@@ -93,11 +93,35 @@ public class CalendarDataProviderImpl implements CalendarDataProvider {
 
     private CalendarEntry createCalendarEntryForNote(final Note note) {
         final StringBuilder sbText = new StringBuilder();
-        sbText.append(context.getResources().getString("st.calview.note_short")) //
-                .append(" ") //
-                .append(StringUtils.getFirstLineOfText(note.getComment()));
+        sbText.append(context.getResources().getString("st.calview.note_short"))
+                .append(' ');
 
-        return new CalendarEntry(note, sbText.toString(), note.getComment(), null);
+        if (note.getSportType() != null) {
+            sbText.append('(')
+                    .append(note.getSportType().getName().charAt(0))
+                    .append(") ");
+        }
+        sbText.append(StringUtils.getFirstLineOfText(note.getComment()));
+
+        final StringBuilder sbTooltip = new StringBuilder();
+        if (note.getSportType() != null) {
+            sbTooltip.append(context.getResources().getString("st.calview.note_tooltip.sport_type"))
+                    .append(' ')
+                    .append(note.getSportType().getName())
+                    .append('\n');
+
+            if (note.getEquipment() != null) {
+                sbTooltip.append(context.getResources().getString("st.calview.note_tooltip.equipment"))
+                        .append(' ')
+                        .append(note.getEquipment().getName())
+                        .append('\n');
+            }
+
+            sbTooltip.append('\n');
+        }
+        sbTooltip.append(note.getComment());
+
+        return new CalendarEntry(note, sbText.toString(), sbTooltip.toString(), null);
     }
 
     private CalendarEntry createCalendarEntryForWeight(final Weight weight) {

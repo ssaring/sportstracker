@@ -212,13 +212,17 @@ public class FilterDialogController extends AbstractDialogController {
             filterViewModel.sportType.set(sportTypeAll);
         }
 
-        // sport type, subtype, itensity and equipment selection is enabled for entry type "exercise" only
+        // sport type and equipment selection has to be disabled for entry types "weight"
+        final BooleanBinding entryTypeWeight = Bindings.equal(
+                EntryFilter.EntryType.WEIGHT, filterViewModel.entryType);
+        cbSportType.disableProperty().bind(entryTypeWeight);
+        cbEquipment.disableProperty().bind(entryTypeWeight);
+
+        // sport subtype and intensity selection is enabled for entry type "exercise" only
         final BooleanBinding entryTypeNotExercise = Bindings.notEqual(
                 EntryFilter.EntryType.EXERCISE, filterViewModel.entryType);
-        cbSportType.disableProperty().bind(entryTypeNotExercise);
         cbSportSubtype.disableProperty().bind(entryTypeNotExercise);
         cbIntensity.disableProperty().bind(entryTypeNotExercise);
-        cbEquipment.disableProperty().bind(entryTypeNotExercise);
     }
 
     /**

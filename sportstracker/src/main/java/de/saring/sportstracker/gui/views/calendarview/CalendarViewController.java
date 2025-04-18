@@ -1,22 +1,5 @@
 package de.saring.sportstracker.gui.views.calendarview;
 
-import java.time.LocalDate;
-
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.layout.StackPane;
-
-import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
-
 import de.saring.sportstracker.data.Exercise;
 import de.saring.sportstracker.data.Note;
 import de.saring.sportstracker.data.Weight;
@@ -30,6 +13,22 @@ import de.saring.util.data.IdObject;
 import de.saring.util.gui.javafx.control.calendar.CalendarActionListener;
 import de.saring.util.gui.javafx.control.calendar.CalendarControl;
 import de.saring.util.gui.javafx.control.calendar.CalendarEntry;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.layout.StackPane;
+
+import java.time.LocalDate;
 
 /**
  * Controller class of the Calendar View, which displays all (or a filtered list) exercises, notes and
@@ -248,8 +247,15 @@ public class CalendarViewController extends AbstractEntryViewController {
                 event -> getEventHandler().onDeleteEntry(event));
         miCtxDeleteEntry.disableProperty().bind(bindingNoEntrySelected);
 
+        final MenuItem miCtxStatisticsEntry = createContextMenuItem( //
+                "miCtxStatisticsEntry", "st.view.entry_statistics.Action.text", //
+                event -> getEventHandler().onStatisticsSinceEntry(event));
+        miCtxStatisticsEntry.disableProperty().bind(bindingNoEntrySelected);
+
         calendarControl.setContextMenu(new ContextMenu( //
-                miCtxAddExercise, miCtxAddNote, miCtxAddWeight, miCtxEditEntry, miCtxCopyEntry, miCtxDeleteEntry));
+                miCtxAddExercise, miCtxAddNote, miCtxAddWeight, miCtxEditEntry, miCtxCopyEntry, miCtxDeleteEntry,
+                new SeparatorMenuItem(),
+                miCtxStatisticsEntry));
     }
 
     private MenuItem createContextMenuItem(final String id, final String resourceKey, //

@@ -125,16 +125,6 @@ public interface STDocument {
     void storeApplicationData() throws STException;
 
     /**
-     * This method imports the application data changes (notes, weights, exercises, sport types) from the XML files
-     * used before the database storage was introduced. All imported data is persisted in the database storage
-     * afterwards.
-     *
-     * @throws STException thrown on import problems
-     * @return true when application data has been imported
-     */
-    boolean importApplicationDataFromXml() throws STException;
-
-    /**
      * Reloads all application data (notes, weights, exercises, sport types) from the storage. Needs to be called
      * whenever some application data has been modified by one of the storage repositories.
      * After reload all registered {@link ApplicationDataChangeListener} will be notified.

@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.saring.sportstracker.core.STException;
+import de.saring.sportstracker.data.EntryFilter;
 import de.saring.sportstracker.storage.db.AbstractRepository;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -93,6 +94,8 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private MenuItem miCopyEntry;
     @FXML
     private MenuItem miDeleteEntry;
+    @FXML
+    private MenuItem miStatisticsSinceEntry;
     @FXML
     private MenuItem miViewHrm;
     @FXML
@@ -381,6 +384,39 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     }
 
     @Override
+    public void onStatisticsSinceEntry(final ActionEvent event) {
+        if (!checkForExistingExercises()) {
+            return;
+        }
+
+        // create the statistics filter from entry date until today and apply filter criteria
+        var statisticFilter = EntryFilter.createDefaultExerciseFilter();
+        statisticFilter.setDateEnd(LocalDate.now());
+
+        if (currentViewController.getSelectedExerciseCount() == 1) {
+            var exercise = document.getExerciseList().getByID(currentViewController.getSelectedExerciseIDs()[0]);
+            statisticFilter.setDateStart(exercise.getDateTime().toLocalDate());
+            statisticFilter.setSportType(exercise.getSportType());
+            statisticFilter.setSportSubType(exercise.getSportSubType());
+            statisticFilter.setIntensity(exercise.getIntensity());
+            statisticFilter.setEquipment(exercise.getEquipment());
+        } else if (currentViewController.getSelectedNoteCount() == 1) {
+            var note = document.getNoteList().getByID(currentViewController.getSelectedNoteIDs()[0]);
+            statisticFilter.setDateStart(note.getDateTime().toLocalDate());
+            statisticFilter.setSportType(note.getSportType());
+            statisticFilter.setEquipment(note.getEquipment());
+        } else if (currentViewController.getSelectedWeightCount() == 1) {
+            var weight = document.getWeightList().getByID(currentViewController.getSelectedWeightIDs()[0]);
+            statisticFilter.setDateStart(weight.getDateTime().toLocalDate());
+        } else {
+            // no action on multiple selected entries
+            return;
+        }
+
+        dialogProvider.prStatisticDialogController.get().show(context.getPrimaryStage(), statisticFilter);
+    }
+
+    @Override
     public void onViewHrmFile(final ActionEvent event) {
         // get selected exercise and start ExerciseViewer for it's HRM file
         // (special checks not needed here, done by action status property)
@@ -458,7 +494,8 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             return;
         }
 
-        dialogProvider.prStatisticDialogController.get().show(context.getPrimaryStage());
+        // start statistics with current exercise filter criteria stored in document (if set)
+        dialogProvider.prStatisticDialogController.get().show(context.getPrimaryStage(), document.getCurrentFilter());
     }
 
     @Override
@@ -570,6 +607,7 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
         btCopyEntry.disableProperty().bind(actionEditEntryDisabled);
         miDeleteEntry.disableProperty().bind(actionDeleteEntryDisabled);
         btDeleteEntry.disableProperty().bind(actionDeleteEntryDisabled);
+        miStatisticsSinceEntry.disableProperty().bind(actionEditEntryDisabled);
 
         miViewHrm.disableProperty().bind(actionViewHrmDisabled);
         btViewHrm.disableProperty().bind(actionViewHrmDisabled);
@@ -865,18 +903,11 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private class LoadTask extends Task<Void> {
 
         private List<Exercise> corruptExercises;
-        private boolean appDataImportedFromXml = false;
 
         @Override
         protected Void call() throws Exception {
             LOGGER.info("Loading application data...");
             document.readApplicationData();
-
-            // when no data exists yet, try to import application data from XML files (if they exist)
-            if (document.getSportTypeList().size() == 0) {
-                appDataImportedFromXml = document.importApplicationDataFromXml();
-            }
-
             corruptExercises = document.checkExerciseFiles();
             return null;
         }
@@ -889,11 +920,6 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             updateView();
             // listener must be registered after loading data, because new lists are created
             registerListenerForDataChanges();
-
-            if (appDataImportedFromXml) {
-                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
-                        "common.info", "st.main.info.app_data_imported");
-            }
 
             displayCorruptExercises();
             addInitialSportTypesIfMissing();

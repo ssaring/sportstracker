@@ -15,9 +15,14 @@ easy to access them with SQLite database tools or to write importers and
 exporters for other applications. Users with SQL experience can also create
 easily custom statistics by using an SQLite database browser application.
 Prior to SportsTracker 8.0.0 the application data was stored in XML files.
+
 The migration from XML to SQLite storage is done automatically on first
-startup of SportsTracker >= 8.0.0. The XML files will not be deleted due to
+startup of SportsTracker 8.0.x. The XML files will not be deleted due to
 backup reasons.
+SportsTracker 8.1.0 and newer can't migrate user data from old XML files
+anymore. If the migration was missed, then SportsTracker 8.0.x. needs to
+be used for the automatic import. Afterward it's possible to update to newer
+SportsTracker versions.
 
 If you are using a sport watch or another tracking device with a computer
 interface, you can import the recorded exercise files and evaluate the
@@ -219,9 +224,13 @@ exercise when there is equipment defined for the selected sport type.
 Data such as the route description can be added to the comment text.
 
 Note entries can be added for special dates, so you can e.g. enter your
-training plan or descriptions of sport events. You can also track your body
-weight by adding weight entries for special dates. Note and weight entries
-don't need the definition of sport types.
+training plan or descriptions of sport events. Notes can be created for
+specific sport types or equipments of a sport type. This makes them
+useful for e.g. tracking the maintenance cycles of e.g. bicycle chain
+replacements.
+
+You can also track your body weight by adding weight entries for special dates.
+Note and weight entries don't need the definition of sport types.
 
 Entries of all types can be simply copied. This is very useful when you have
 many similar exercises or weight entries. You just select the entry to copy 
@@ -277,6 +286,15 @@ calculation filter for the time range, e.g. the current month. It's also
 possible to set filters for the sport type, the subtype, the intensity, the
 equipment and the comment, so only the specified exercises will be included in
 the statistic calculation.
+
+Statistics can also be created from the date of an specific entry until today
+by using the action "Statistics since Entry" on that entry (e.g. via context
+menu). The statistics filter gets then prefilled with the entry properties,
+e.g. the sport type and equipment. This makes it very easy to calculate the
+exercise summary for specific purposes.
+Example: By using equipment-specific notes for replacing your bike parts (e.g.
+chain) you can calculate the total distance ridden with that bike since the
+note entry.
 
 The user can create overview diagrams for the last 12 months, for all months
 or weeks of a selected year or for a selectable time range of 10 years. 
@@ -378,36 +396,6 @@ this case, the data files will be stored as though you were not connected to
 the Internet.
 
 
-SQLite export
--------------
-
-Advances users with SQL skills can export all SportsTracker application data to
-a SQLite v3 database. This provides much more capabilities for data analysis,
-statistics or migration.
-On each export a new database will be created in the users home directory, an
-existing database will be overwritten. The database schema is defined in the
-source file 'st-schema.sql'.
-
-The SportsTracker application already contains the native SQLite libraries for
-Windows, macOS and Linux (part of the sqlite-jdbc library). Users of other
-systems must provide the native libraries manually.
-
-There are many command line and graphical tools available for working with
-SQLite. If you´re looking for a handy, cross platform, open source application
-you should try 'DB Browser for SQLite' (http://sqlitebrowser.org/).
-
-Note: SQLite does not provide a date and time data type, the export uses a
-string in ISO 8601 format "yyyy-MM-dd HH:mm:ss" (see
-https://www.sqlite.org/datatype3.html).
-The queries can use the built-in functions for conversion and formatting (see
-https://www.sqlite.org/lang_datefunc.html).
-
-Example for a date query:
-  select e.id, e.date_time, max(e.distance)
-  from exercise e
-  where date(e.date_time) between date('2015-06-29') and date('2015-12-31');
-
-
 Developer Requirements
 ----------------------
 
@@ -468,8 +456,6 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - Kotlin 2.1.0 (http://kotlinlang.org/)
       License: Apache License v2.0
-  - JDOM 2.0.6.1 (http://www.jdom.org)
-      License: Apache-style open source license
   - ControlsFX 11.2.1 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - JFreeChart 1.5.3 and JFreeChart-FX 2.0.1 (http://www.jfree.org/)
@@ -536,6 +522,10 @@ Development notes:
 - application data can be processed and evaluated easily by using 3rd party
   SQLite database browsers (e.g. for custom statistics via SQL)
 - Documentation: https://www.sqlitetutorial.net/sqlite-java/
+- The initial database schema and all schema updates are defined in the files
+  'sportstracker/src/main/resources/sql/st-schema-***.sql'
+- New databases will be created from the initial schema and all schema updates.
+- Existing databases will be updated automatically to the newest schema.
 
 Comparison with prior XML file storage:
 - SQLite storage provides faster loading times, almost no saving times
@@ -591,4 +581,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2024/12/27
+2025/04/18

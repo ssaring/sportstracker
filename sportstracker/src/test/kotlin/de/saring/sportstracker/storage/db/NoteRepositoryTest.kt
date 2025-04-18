@@ -1,6 +1,8 @@
 package de.saring.sportstracker.storage.db
 
+import de.saring.sportstracker.data.Equipment
 import de.saring.sportstracker.data.Note
+import de.saring.sportstracker.data.SportType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -17,9 +19,24 @@ class NoteRepositoryTest : DbStorageTestBase() {
     private lateinit var note1: Note
     private lateinit var note2: Note
 
+    private lateinit var sportTypes: List<SportType>
+    private lateinit var sportType1: SportType
+
     override fun setUpTestData() {
-        note1 = createNote("Note 1")
-        note2 = createNote("Note 2")
+        // create a sport type first (needed for notes)
+        creatSportType("Cycling")
+
+        // reload of updated sportType must be done via readAll(), otherwise the sport subtypes and equipments are not loaded
+        sportTypes = dbStorage.sportTypeRepository.readAll()
+        sportType1 = sportTypes[0]
+
+        createNote(sportType1,  sportType1.equipmentList.first(), "Note 1")
+        createNote(null, null, "Note 2")
+
+        // reload of created notes must be done via readAll(), otherwise the sport type and equipment are not loaded
+        val notes = dbStorage.noteRepository.readAll(sportTypes)
+        note1 = notes[0]
+        note2 = notes[1]
     }
 
     /**
@@ -27,8 +44,16 @@ class NoteRepositoryTest : DbStorageTestBase() {
      */
     @Test
     fun testReadAll() {
-        val notes = dbStorage.noteRepository.readAll()
+        val notes = dbStorage.noteRepository.readAll(sportTypes)
         Assertions.assertEquals(2, notes.size)
+
+        // note 1 must have the stored references to SportType and Equipment
+        Assertions.assertEquals(sportType1.id, notes[0].sportType.id)
+        Assertions.assertEquals(sportType1.equipmentList.first().id, notes[0].equipment.id)
+
+        // note 2 must not have any references to SportType and Equipment
+        Assertions.assertNull(notes[1].sportType)
+        Assertions.assertNull(notes[1].equipment)
     }
 
     /**
@@ -40,6 +65,9 @@ class NoteRepositoryTest : DbStorageTestBase() {
 
         Assertions.assertEquals(note1.id, note.id)
         Assertions.assertEquals(note1.dateTime, note.dateTime)
+        // sportType and equipment are provided by readAll(List<SportType>) only
+        Assertions.assertNull(note.sportType)
+        Assertions.assertNull(note.equipment)
         Assertions.assertEquals(note1.comment, note.comment)
     }
 
@@ -62,14 +90,16 @@ class NoteRepositoryTest : DbStorageTestBase() {
     fun testDelete() {
         dbStorage.noteRepository.delete(note1.id!!)
 
-        val notes = dbStorage.noteRepository.readAll()
+        val notes = dbStorage.noteRepository.readAll(sportTypes)
         Assertions.assertEquals(1, notes.size)
         Assertions.assertEquals(note2.id, notes[0].id)
     }
 
-    private fun createNote(comment: String): Note {
+    private fun createNote(sportType: SportType?, equipment: Equipment?, comment: String): Note {
         val note = Note(null)
         note.dateTime = LocalDateTime.now()
+        note.sportType = sportType
+        note.equipment = equipment
         note.comment = comment
         return dbStorage.noteRepository.create(note)
     }

@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
@@ -35,6 +36,8 @@
                         <MenuItem fx:id="miCtxEditEntry" onAction="#onEditEntry" styleClass="contextMenuItem" text="%st.view.entry_edit.Action.text"/>
                         <MenuItem fx:id="miCtxCopyEntry" onAction="#onCopyEntry" styleClass="contextMenuItem" text="%st.view.entry_copy.Action.text"/>
                         <MenuItem fx:id="miCtxDeleteEntry" onAction="#onDeleteEntry" styleClass="contextMenuItem" text="%st.view.entry_delete.Action.text"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem fx:id="miCtxStatisticsEntry" onAction="#onStatisticsSinceEntry" styleClass="contextMenuItem" text="%st.view.entry_statistics.Action.text"/>
                     </items>
                 </ContextMenu>
             </contextMenu>

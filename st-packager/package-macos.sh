@@ -4,7 +4,7 @@ ST_PROJECT_DIR=../sportstracker
 BUILD_DIR=./build
 PACKAGE_DIR=./package
 
-ST_VERSION=8.0.3
+ST_VERSION=8.1.0
 
 # cleanup
 rm -fr $BUILD_DIR
@@ -26,7 +26,7 @@ $JAVA_HOME/bin/jpackage \
     --name SportsTracker \
     --app-version ${ST_VERSION%-*} \
     --vendor "Saring.de" \
-    --copyright "(C) 2024 Stefan Saring" \
+    --copyright "(C) 2025 Stefan Saring" \
     --description "Application for tracking your sporting activities." \
     --icon ./icons/macosx/SportsTracker.icns \
     --license-file $BUILD_DIR/docs/LICENSE.txt \

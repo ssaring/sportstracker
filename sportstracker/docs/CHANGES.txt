@@ -1,9 +1,21 @@
 Changelog
 ---------
 
-v8.0.3:
+v8.1.0:
  Project changes:
  SportsTracker changes:
+ - Statistics can be created easily from any entry (e.g. Exercise or Note) by
+   using the action "Statistics since Entry"
+ - Notes can now be created for specific sport types and equipments
+ - User can now easily track the maintenance periods when creating equipment-
+   specific notes and creating statistics since that note entry
+   (e.g. ridden distance since chain replacement on bike X)
+ - Filter Dialog: Sport type and Equipment can be set for filtering Note
+   entries
+ - Removed the obsolete XMLStorage implementation
+   - also removed all schema files, tests, etc.
+   - Users who need to migrate user data from XML to SQLite need to use
+     SportsTracker version 8.0.x for migration and can update ST afterwards
  ExerciseViewer changes:
 
 v8.0.2:
