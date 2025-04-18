@@ -903,18 +903,11 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
     private class LoadTask extends Task<Void> {
 
         private List<Exercise> corruptExercises;
-        private boolean appDataImportedFromXml = false;
 
         @Override
         protected Void call() throws Exception {
             LOGGER.info("Loading application data...");
             document.readApplicationData();
-
-            // when no data exists yet, try to import application data from XML files (if they exist)
-            if (document.getSportTypeList().size() == 0) {
-                appDataImportedFromXml = document.importApplicationDataFromXml();
-            }
-
             corruptExercises = document.checkExerciseFiles();
             return null;
         }
@@ -927,11 +920,6 @@ public class STControllerImpl implements STController, EntryViewEventHandler {
             updateView();
             // listener must be registered after loading data, because new lists are created
             registerListenerForDataChanges();
-
-            if (appDataImportedFromXml) {
-                context.showMessageDialog(context.getPrimaryStage(), Alert.AlertType.INFORMATION, //
-                        "common.info", "st.main.info.app_data_imported");
-            }
 
             displayCorruptExercises();
             addInitialSportTypesIfMissing();

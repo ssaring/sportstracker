@@ -15,9 +15,14 @@ easy to access them with SQLite database tools or to write importers and
 exporters for other applications. Users with SQL experience can also create
 easily custom statistics by using an SQLite database browser application.
 Prior to SportsTracker 8.0.0 the application data was stored in XML files.
+
 The migration from XML to SQLite storage is done automatically on first
-startup of SportsTracker >= 8.0.0. The XML files will not be deleted due to
+startup of SportsTracker 8.0.x. The XML files will not be deleted due to
 backup reasons.
+SportsTracker 8.1.0 and newer can't migrate user data from old XML files
+anymore. If the migration was missed, then SportsTracker 8.0.x. needs to
+be used for the automatic import. Afterward it's possible to update to newer
+SportsTracker versions.
 
 If you are using a sport watch or another tracking device with a computer
 interface, you can import the recorded exercise files and evaluate the
@@ -451,8 +456,6 @@ The SportsTracker project uses the following libraries:
       License: Apache License v2.0
   - Kotlin 2.1.0 (http://kotlinlang.org/)
       License: Apache License v2.0
-  - JDOM 2.0.6.1 (http://www.jdom.org)
-      License: Apache-style open source license
   - ControlsFX 11.2.1 (http://controlsfx.org/)
       License: BSD 3-Clause License
   - JFreeChart 1.5.3 and JFreeChart-FX 2.0.1 (http://www.jfree.org/)
@@ -578,4 +581,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2025/04/13
+2025/04/18

@@ -45,25 +45,27 @@ Stefan Saring
 History of resource changes for each release
 --------------------------------------------
 
-SportsTracker 8.0.3:
+SportsTracker 8.1.0:
 
-st.dlg.note.sport_type.text (new)
-st.dlg.note.sport_type.none.text (new)
-st.dlg.note.equipment.text (new)
-st.dlg.note.equipment.none.text (new)
+- st.dlg.note.sport_type.text (new)
+- st.dlg.note.sport_type.none.text (new)
+- st.dlg.note.equipment.text (new)
+- st.dlg.note.equipment.none.text (new)
 
-st.notelistview.type (new)
-st.notelistview.equipment (new)
+- st.notelistview.type (new)
+- st.notelistview.equipment (new)
 
-st.calview.note_tooltip.sport_type (new)
-st.calview.note_tooltip.equipment (new)
+- st.calview.note_tooltip.sport_type (new)
+- st.calview.note_tooltip.equipment (new)
 
-st.view.entry_statistics.Action.text (new)
+- st.view.entry_statistics.Action.text (new)
+
+- st.main.info.app_data_imported (removed)
 
 SportsTracker 8.0.2:
 
-pv.main.total_duration.text (new)
-pv.main.pauses.text (new)
+- pv.main.total_duration.text (new)
+- pv.main.pauses.text (new)
 
 SportsTracker 8.0.0:
 

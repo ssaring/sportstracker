@@ -16,9 +16,6 @@ SportType- and Equipment-specific Notes
   - Extend SportsTracker-Flutter app (already tested, is compatible with the DB schema update)
   - Extend SportsTracker-Angular app (already tested, is compatible with the DB schema update)
   - ...
-  - Can the XML import be removed?
-    - Then document in Readme that Users of ST < 8.0 needs to update to 8.0 first before updating to 8.1 (due to missing XML import)
-    - Remove the XML classes and JDOM dependency
   - create PR / close branch
 
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)

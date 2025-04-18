@@ -7,42 +7,6 @@ package de.saring.sportstracker.core;
  * @version 1.0
  */
 public enum STExceptionID {
-    /**
-     * schema validation error while parsing XML files
-     */
-    XMLSTORAGE_SCHEMA_VALIDATION,
-    /**
-     * failed to read sport type list from XML file
-     */
-    XMLSTORAGE_READ_SPORT_TYPE_LIST,
-    /**
-     * failed to write sport type list to XML file
-     */
-    XMLSTORAGE_STORE_SPORT_TYPE_LIST,
-    /**
-     * failed to read exercise list from XML file
-     */
-    XMLSTORAGE_READ_EXERCISE_LIST,
-    /**
-     * failed to write exercise list to XML file
-     */
-    XMLSTORAGE_STORE_EXERCISE_LIST,
-    /**
-     * failed to read note list from XML file
-     */
-    XMLSTORAGE_READ_NOTE_LIST,
-    /**
-     * failed to write note list to XML file
-     */
-    XMLSTORAGE_STORE_NOTE_LIST,
-    /**
-     * failed to read weight list from XML file
-     */
-    XMLSTORAGE_READ_WEIGHT_LIST,
-    /**
-     * failed to write weight list to XML file
-     */
-    XMLSTORAGE_STORE_WEIGHT_LIST,
 
     /**
      * failed to open SportsTracker SQLite database

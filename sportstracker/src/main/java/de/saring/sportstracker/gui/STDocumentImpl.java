@@ -11,7 +11,6 @@ import java.util.stream.LongStream;
 
 import de.saring.sportstracker.core.ApplicationDataChangeListener;
 import de.saring.sportstracker.storage.db.DbStorage;
-import de.saring.sportstracker.storage.xml.XMLStorage;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -41,10 +40,6 @@ import de.saring.util.unitcalc.SpeedMode;
 public class STDocumentImpl implements STDocument {
     private static final Logger LOGGER = Logger.getLogger(STDocumentImpl.class.getName());
 
-    private static final String FILENAME_SPORT_TYPE_LIST = "sport-types.xml";
-    private static final String FILENAME_EXERCISE_LIST = "exercises.xml";
-    private static final String FILENAME_NOTE_LIST = "notes.xml";
-    private static final String FILENAME_WEIGHT_LIST = "weights.xml";
     private static final String FILENAME_OPTIONS = "st-options.xml";
     private static final String FILENAME_ST_DATABASE = "sportstracker.sqlite";
 
@@ -319,45 +314,6 @@ public class STDocumentImpl implements STDocument {
         LOGGER.info("Storing application data");
         dbStorage.commitChanges();
         dirtyData = false;
-    }
-
-    @Override
-    public boolean importApplicationDataFromXml() throws STException {
-        LOGGER.info("Importing application data from XML");
-
-        if (!isApplicationDataInXmlAvailable()) {
-            LOGGER.info("No application data from XML available for import");
-            return false;
-        }
-
-        try {
-            // read application data from XML files
-            var xmlStorage = new XMLStorage();
-            var importedSportTypes = xmlStorage.readSportTypeList(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST,
-                    options.getPreferredSpeedMode());
-            var importedExercises = xmlStorage.readExerciseList(dataDirectory + "/" + FILENAME_EXERCISE_LIST,
-                    importedSportTypes);
-            var importedNotes = xmlStorage.readNoteList(dataDirectory + "/" + FILENAME_NOTE_LIST);
-            var importedWeights = xmlStorage.readWeightList(dataDirectory + "/" + FILENAME_WEIGHT_LIST);
-
-            // import data to database and persist
-            dbStorage.importExistingApplicationData(
-                    importedSportTypes, importedExercises, importedNotes, importedWeights);
-            dbStorage.commitChanges();
-
-            readListsFromStorage();
-            dirtyData = false;
-            return true;
-        } catch (STException e) {
-            throw new STException(STExceptionID.DBSTORAGE_COMMIT_CHANGES, "Failed to import application data from XML!'", e);
-        }
-    }
-
-    private boolean isApplicationDataInXmlAvailable() {
-        return Files.exists(Paths.get(dataDirectory + "/" + FILENAME_SPORT_TYPE_LIST)) &&
-                Files.exists(Paths.get(dataDirectory + "/" + FILENAME_EXERCISE_LIST)) &&
-                Files.exists(Paths.get(dataDirectory + "/" + FILENAME_NOTE_LIST)) &&
-                Files.exists(Paths.get(dataDirectory + "/" + FILENAME_WEIGHT_LIST));
     }
 
     @Override
