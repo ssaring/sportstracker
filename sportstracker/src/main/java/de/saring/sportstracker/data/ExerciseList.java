@@ -46,7 +46,7 @@ public final class ExerciseList extends EntryList<Exercise> {
      * It extends the default filter (date time and comment) by sport type, subtype, intensity and equipment criteria.
      *
      * @param exercise the exercise to check
-     * @param filter the entry filter criterias
+     * @param filter the entry filter criteria
      * @return true if the exercise matches the filter criteria
      * @throws PatternSyntaxException thrown on parsing problems of the regular expression for comment searching
      */

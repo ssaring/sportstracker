@@ -13,7 +13,6 @@ SportType- and Equipment-specific Notes
   - Application menu and context menu now show the action "Statistics since Entry"
   - "Statistics since Entry" action has been implemented and tested
 - TODO:
-  - Extend Filter dialog for SportType and Equipment specific notes
   - Extend SportsTracker-Flutter app (already tested, is compatible with the DB schema update)
   - Extend SportsTracker-Angular app (already tested, is compatible with the DB schema update)
   - ...
