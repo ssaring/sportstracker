@@ -3,6 +3,16 @@ Changelog
 
 v8.1.0:
  Project changes:
+ - updated JDK for build and packaging to version 25 LTS (Temurin JDK)
+ - updated Java language level to version 25
+ - updated JavaFX / OpenJFX to version 25
+ - updated Kotlin to version 2.2.20
+ - updated ControlsFX to version 11.2.2
+ - updated JFreeChart to version 1.5.6 and JFreeChart-FX to 2.0.2
+ - updated sqlite-jdbc to version 3.50.3.0
+ - updated commons-cli to version 1.10.0
+ - updated JUnit to version 6.0.0
+ - updated Mockito to version 5.20.0
  SportsTracker changes:
  - Statistics can be created easily from any entry (e.g. Exercise or Note) by
    using the action "Statistics since Entry"

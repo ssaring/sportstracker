@@ -1,6 +1,17 @@
 SportsTracker-TODO
 ==================
 
+ST 8.1.0 Release:
+- All dependencies are updated and documented in CHANGES/README
+- TODO:
+  - Test Java language level version 25 features
+  - Test all app features
+  - Update and test GitHub CI build and package creation actions
+  - Update FIT dependency?
+  - Finalize artefact versions to 8.1.0
+  - Create release notes
+  - Build and test packages
+
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 LeafletMap:
