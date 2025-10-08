@@ -460,7 +460,7 @@ The SportsTracker project uses the following libraries:
       License: BSD 3-Clause License
   - JFreeChart 1.5.6 and JFreeChart-FX 2.0.2 (http://www.jfree.org/)
       License: Lesser General Public License (LGPL)
-  - LeafletMap 1.0.11 (https://github.com/ssaring/sportstracker)
+  - LeafletMap 1.0.12 (https://github.com/ssaring/sportstracker)
       License: Apache License v2.0
   - Leaflet 1.9.3 (https://leafletjs.com/)
     - Included in leafletmap

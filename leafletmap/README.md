@@ -56,6 +56,10 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Changelog
 
+LeafletMap 1.0.11:
+* Updated JavaFX / OpenJFX to version 25 (in sync with SportsTracker)
+* Updated Kotlin to version 2.2.20
+
 LeafletMap 1.0.10:
 * Updated JavaFX / OpenJFX to version 23.0.1 (in sync with SportsTracker)
 * Updated Kotlin to version 2.1.0

@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+v8.1.1:
+ Project changes:
+ SportsTracker changes:
+ ExerciseViewer changes:
+ Translations:
+
 v8.1.0:
  Project changes:
  - updated JDK for build and packaging to version 25 LTS (Temurin JDK)
