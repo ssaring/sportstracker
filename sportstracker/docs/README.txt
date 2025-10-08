@@ -125,8 +125,8 @@ The OpenJDK can be downloaded e.g. from: https://adoptium.net/
 If you want to download exercise files from your heartrate monitor you might
 need one of the download tools listed above.
 
-The application was tested on GNU/Linux (e.g. Ubuntu 22.04), Windows 10 and
-macOS (12 - 15), although it should work on all systems with the required
+The application was tested on GNU/Linux (e.g. Ubuntu 24.04), Windows 11 and
+macOS (13 - 15), although it should work on all systems with the required
 Java Runtime Environment.
 
 
@@ -176,12 +176,12 @@ executing this command in the terminal:
 
   sudo xattr -cr /Applications/SportsTracker.app
 
-On Windows 10 the Microsoft Defender SmartScreen might try to prevent the
+Since Windows 10 the Microsoft Defender SmartScreen might try to prevent the
 SportsTracker installation, because it has no trusted code signing certificate.
 This SmartScreen warning needs to be bypassed by clicking on 'More info' and
 then 'Run anyway'.
 
-If these workarounds can't be used for some reasons, then the application needs
+If these workarounds can't be used for some reason, then the application needs
 to be build and packaged locally by the user. The locally created packages can
 be installed without problems.
 
@@ -476,7 +476,7 @@ The SportsTracker project uses the following libraries:
       License: Eclipse Public License v2.0
   - Mockito 5.20.0 (http://code.google.com/p/mockito/)
       License: MIT License
-  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.158.0
+  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.171.0
       URL: https://www.thisisant.com/developer/
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: https://developer.garmin.com/fit/download/
@@ -581,4 +581,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2025/10/06
+2025/10/08

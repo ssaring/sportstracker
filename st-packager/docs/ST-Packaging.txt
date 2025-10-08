@@ -12,13 +12,13 @@ Info
   * jpackage is the replacement for the JavaFX packager which has been removed
     from the JDK, there is also no ANT plugin available anymore
 * the created packages contain the required Java Runtime Environment (JRE)
-* has been tested with Adoptium / Temurin OpenJDK 17 on:
-  * macOS 12, Ubuntu Linux 20.04 and Windows 10
+* has been tested with Adoptium / Temurin OpenJDK 25 on:
+  * macOS 15, Ubuntu Linux 24.04 and Windows 11
   * the packaged app and the installers are running perfectly without problems
 
 * this directory contains the scripts for automatic SportsTracker packaging
 * each os-specific package scripts creates an installer package
-  (e.g. SportsTracker-7.x.x.dmg on macOS)
+  (e.g. SportsTracker-8.x.x.dmg on macOS)
 * only the following java modules (jmod) are needed:
   java.base,java.desktop,java.logging,java.net.http,java.scripting,java.sql,
   java.xml,jdk.crypto.ec,jdk.localedata,jdk.jsobject,jdk.unsupported
