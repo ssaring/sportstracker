@@ -476,7 +476,7 @@ The SportsTracker project uses the following libraries:
       License: Eclipse Public License v2.0
   - Mockito 5.20.0 (http://code.google.com/p/mockito/)
       License: MIT License
-  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.158.0
+  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.171.0
       URL: https://www.thisisant.com/developer/
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: https://developer.garmin.com/fit/download/
@@ -581,4 +581,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2025/10/06
+2025/10/08

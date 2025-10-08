@@ -27,6 +27,8 @@ v8.1.0:
    - Users who need to migrate user data from XML to SQLite need to use
      SportsTracker version 8.0.x for migration and can update ST afterwards
  ExerciseViewer changes:
+ - updated Garmin FIT SDK library to version 21.171.0
+   - provides support for newer Garmin devices
  Translations:
   - updated spanish translation provided by Luis Llorente Campo
     <luisllorente (at) luisllorente (dot) com>

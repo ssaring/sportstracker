@@ -40,7 +40,7 @@
         <dependency>
             <groupId>com.garmin.fit</groupId>
             <artifactId>fit</artifactId>
-            <version>21.158.0</version>
+            <version>21.171.0</version>
         </dependency>
         <dependency>
             <groupId>org.jdom</groupId>
