@@ -1,16 +1,6 @@
 SportsTracker-TODO
 ==================
 
-ST 8.1.0 Release:
-- All dependencies are updated and documented in CHANGES/README
-- CI build and packaging is updated and tested
-  - Linux build fails => manual build, packaging and test works on real Ubuntu 24.04 system
-- TODO:
-  - Finalize artefact versions to 8.1.0
-  - Create release notes
-  - Build and test packages
-  - Tag release and switch to new SNAPSHOT versions
-
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 LeafletMap:
