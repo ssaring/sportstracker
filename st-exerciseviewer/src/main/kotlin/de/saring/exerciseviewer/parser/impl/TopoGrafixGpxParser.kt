@@ -31,7 +31,8 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
     private val earthRadiosInMeter: Double = 6371000.0
 
     private val namespace = Namespace.getNamespace("http://www.topografix.com/GPX/1/1")
-    private val namespaceExt = Namespace.getNamespace("http://www.garmin.com/xmlschemas/TrackPointExtension/v1")
+    private val namespaceExtV1 = Namespace.getNamespace("http://www.garmin.com/xmlschemas/TrackPointExtension/v1")
+    private val namespaceExtV2 = Namespace.getNamespace("http://www.garmin.com/xmlschemas/TrackPointExtension/v2")
 
     override
     val info = ExerciseParserInfo("TopoGrafix GPX", listOf("gpx", "GPX"))
@@ -136,7 +137,10 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
                     }
 
                     // try to get heartrate in Garmin Oregon format if present
-                    var strHeartrate = eTrkPt.getChild("extensions", namespace)?.getChild("TrackPointExtension", namespaceExt)?.getChildText("hr", namespaceExt)
+                    var strHeartrate = eTrkPt.getChild("extensions", namespace)?.getChild("TrackPointExtension", namespaceExtV1)?.getChildText("hr", namespaceExtV1)
+                    if (strHeartrate == null) {
+                        strHeartrate = eTrkPt.getChild("extensions", namespace)?.getChild("TrackPointExtension", namespaceExtV2)?.getChildText("hr", namespaceExtV2)
+                    }
                     // if not present, try to get heartrate in Holux FunTrek 130 pro format if present
                     if (strHeartrate == null) {
                         strHeartrate = eTrkPt.getChild("extensions", namespace)?.getChildText("bpm", namespace)
