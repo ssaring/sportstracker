@@ -159,6 +159,74 @@ class TopoGrafixGpxParserTest {
         assertEquals(32.644943f, exercise.sampleList[203].speed)
         assertEquals(154.toShort(), exercise.sampleList[203].heartRate)
     }
+	
+	/**
+     * This test parses a GPX file for a bike tour created by Garmin Oregon with heart rate monitor using TrackPointExtension v2.
+     * It contains track (location), time, altitude and heart rate data.
+     */
+    @Test
+    fun testGpxGarminOregonHeartRateBikeTourv2() {
+        val exercise = parser.parseExercise("misc/testdata/gpx/bike-tour-garmin-oregon-with-heartrate_v2.gpx")
+
+        // check basic exercise data
+        assertEquals(EVExercise.ExerciseFileType.GPX, exercise.fileType)
+        assertEquals("Garmin GPX", exercise.deviceName)
+        assertEquals(EVExercise.DYNAMIC_RECORDING_INTERVAL, exercise.recordingInterval)
+        assertTrue(exercise.recordingMode.isHeartRate)
+        assertTrue(exercise.recordingMode.isAltitude)
+        assertTrue(exercise.recordingMode.isSpeed)
+        assertTrue(exercise.recordingMode.isHeartRate)
+        assertFalse(exercise.recordingMode.isCadence)
+        assertFalse(exercise.recordingMode.isPower)
+        assertFalse(exercise.recordingMode.isTemperature)
+        assertTrue(exercise.recordingMode.isLocation)
+        assertFalse(exercise.recordingMode.isIntervalExercise)
+
+        // Check exercise time and duration
+        assertEquals(LocalDateTime.of(2012, 3, 2, 6, 53, 51), exercise.dateTime)
+        assertEquals(6090, exercise.duration)
+
+        // check altitude data
+        assertEquals(32.toShort(), exercise.altitude!!.altitudeMin)
+        assertEquals(41.toShort(), exercise.altitude!!.altitudeAvg)
+        assertEquals(53.toShort(), exercise.altitude!!.altitudeMax)
+        assertEquals(41, exercise.altitude!!.ascent)
+
+        // check speed summary data
+        assertEquals(37.978153f, exercise.speed!!.speedMax)
+        assertEquals(4494, exercise.speed!!.distance)
+        assertEquals(26.565517f, exercise.speed!!.speedAvg)
+
+        // check heartRate data
+        assertEquals(152.toShort(), exercise.heartRateAVG)
+        assertEquals(169.toShort(), exercise.heartRateMax)
+
+        // check sample data
+        assertEquals(204, exercise.sampleList.size)
+
+        assertEquals(0L, exercise.sampleList[0].timestamp)
+        assertEquals(50.823521, exercise.sampleList[0].position!!.latitude, 0.00001)
+        assertEquals(4.672067, exercise.sampleList[0].position!!.longitude, 0.00001)
+        assertEquals(52.toShort(), exercise.sampleList[0].altitude)
+        assertEquals(0f, exercise.sampleList[0].speed)
+        assertEquals(158.toShort(), exercise.sampleList[0].heartRate)
+        assertNull(exercise.sampleList[0].cadence)
+        assertEquals(0, exercise.sampleList[0].distance)
+
+        assertEquals(303000L, exercise.sampleList[101].timestamp)
+        assertEquals(50.816284, exercise.sampleList[101].position!!.latitude, 0.00001)
+        assertEquals(4.65173, exercise.sampleList[101].position!!.longitude, 0.00001)
+        assertEquals(45.toShort(), exercise.sampleList[101].altitude)
+        assertEquals(36.26108f, exercise.sampleList[101].speed)
+        assertEquals(156.toShort(), exercise.sampleList[101].heartRate)
+
+        assertEquals(609000L, exercise.sampleList[203].timestamp)
+        assertEquals(50.802288, exercise.sampleList[203].position!!.latitude, 0.00001)
+        assertEquals(4.639261, exercise.sampleList[203].position!!.longitude, 0.00001)
+        assertEquals(33.toShort(), exercise.sampleList[203].altitude)
+        assertEquals(32.644943f, exercise.sampleList[203].speed)
+        assertEquals(154.toShort(), exercise.sampleList[203].heartRate)
+    }
 
     /**
      * This test parses a GPX file for a bike tour created by Holux FunTrek 130 pro with heart rate monitor.
