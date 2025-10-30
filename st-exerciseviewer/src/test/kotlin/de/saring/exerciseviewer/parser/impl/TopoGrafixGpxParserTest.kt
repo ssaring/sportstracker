@@ -161,12 +161,14 @@ class TopoGrafixGpxParserTest {
     }
 	
 	/**
-     * This test parses a GPX file for a bike tour created by Garmin Oregon with heart rate monitor using TrackPointExtension v2.
-     * It contains track (location), time, altitude and heart rate data.
+     * This test parses a GPX file for a bike tour created by Garmin Oregon with heart rate monitor.
+     * It's almost identical to the file "bike-tour-garmin-oregon-with-heartrate.gpx", but it's using the
+     * "TrackPointExtensionv2" XML schema instead of v1. The v2 schema is being used by modern GPS tools, e.g. the
+     * GPX export of the OpenTracks app.
      */
     @Test
-    fun testGpxGarminOregonHeartRateBikeTourv2() {
-        val exercise = parser.parseExercise("misc/testdata/gpx/bike-tour-garmin-oregon-with-heartrate_v2.gpx")
+    fun testGpxTrackPointExtensionv2() {
+        val exercise = parser.parseExercise("misc/testdata/gpx/bike-tour-garmin-oregon-trackpointextension-v2.gpx")
 
         // check basic exercise data
         assertEquals(EVExercise.ExerciseFileType.GPX, exercise.fileType)

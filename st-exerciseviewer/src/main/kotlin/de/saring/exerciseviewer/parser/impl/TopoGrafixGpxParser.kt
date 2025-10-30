@@ -138,6 +138,7 @@ class TopoGrafixGpxParser : AbstractExerciseParser() {
 
                     // try to get heartrate in Garmin Oregon format if present
                     var strHeartrate = eTrkPt.getChild("extensions", namespace)?.getChild("TrackPointExtension", namespaceExtV1)?.getChildText("hr", namespaceExtV1)
+                    // if not present, try to get heartrate by using the TrackPointExtension/v2 schema namespace
                     if (strHeartrate == null) {
                         strHeartrate = eTrkPt.getChild("extensions", namespace)?.getChild("TrackPointExtension", namespaceExtV2)?.getChildText("hr", namespaceExtV2)
                     }

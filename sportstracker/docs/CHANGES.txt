@@ -5,6 +5,10 @@ v8.1.1:
  Project changes:
  SportsTracker changes:
  ExerciseViewer changes:
+ - GPX parser (TopoGrafixGpxParser): added support for reading heartrate data
+   from TrackPointExtension/v2 schema namespace
+   - v2 is used in newer tools, e.g. in GPX exports of the OpenTracks app
+   - was contributed by user 'mavenh80' in pull request #272
  Translations:
 
 v8.1.0:
