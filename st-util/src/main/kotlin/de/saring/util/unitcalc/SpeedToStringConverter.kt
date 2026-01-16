@@ -56,11 +56,17 @@ class SpeedToStringConverter(
             if (speedMode === SpeedMode.SPEED) {
                 NumberFormat.getInstance().parse(strSpeed).toDouble()
             } else { // PACE
-                if (ZERO_SPEED_TIME == strSpeedTrimmed) {
-                    0.0
+                val splittedPaceSpeed = strSpeedTrimmed.split(':')
+                if (splittedPaceSpeed.size == 2) {
+                    val minutes = splittedPaceSpeed[0].toInt()
+                    val seconds = splittedPaceSpeed[1].toInt()
+                    if (minutes == 0 && seconds == 0) {
+                        0.0
+                    } else {
+                        3600 / (minutes * 60 + seconds).toDouble()
+                    }
                 } else {
-                    val time = LocalTime.parse("00:$strSpeedTrimmed", DateTimeFormatter.ISO_LOCAL_TIME)
-                    3600 / (time.minute * 60 + time.second).toDouble()
+                    null
                 }
             }
         } catch (e: Exception) {

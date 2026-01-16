@@ -4,6 +4,8 @@ Changelog
 v8.1.1:
  Project changes:
  SportsTracker changes:
+ - ExerciseDialog: Bugfix for issue #273
+   - fixed auto-calculation when AVG speed in PACE mode is slower than 60:00
  ExerciseViewer changes:
  - GPX parser (TopoGrafixGpxParser): added support for reading heartrate data
    from TrackPointExtension/v2 schema namespace

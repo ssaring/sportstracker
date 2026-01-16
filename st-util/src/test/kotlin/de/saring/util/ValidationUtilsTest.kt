@@ -155,7 +155,7 @@ class ValidationUtilsTest {
         assertTrue(ValidationUtils.isValueSpeed("00:00", speedConverterPace, false))
         assertTrue(ValidationUtils.isValueSpeed("00:01", speedConverterPace, true))
         assertTrue(ValidationUtils.isValueSpeed("05:30", speedConverterPace, true))
-        assertTrue(ValidationUtils.isValueSpeed("05", speedConverterPace, true))
+        assertTrue(ValidationUtils.isValueSpeed("5:8", speedConverterPace, true))
     }
 
     /**

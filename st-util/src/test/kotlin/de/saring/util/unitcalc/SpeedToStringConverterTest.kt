@@ -91,12 +91,16 @@ class SpeedToStringConverterTest {
         assertNull(converter.stringSpeedToDouble(null))
         assertNull(converter.stringSpeedToDouble(""))
         assertNull(converter.stringSpeedToDouble("A1"))
-        assertNull(converter.stringSpeedToDouble("0:0"))
-        assertNull(converter.stringSpeedToDouble("2:2"))
+        assertNull(converter.stringSpeedToDouble("01"))
+        assertNull(converter.stringSpeedToDouble("01:02:03"))
 
         assertEquals(0.0, converter.stringSpeedToDouble("00:00"))
+        assertEquals(0.0, converter.stringSpeedToDouble("0:0"))
         assertEquals(30.0, converter.stringSpeedToDouble("02:00"))
+        assertEquals(30.0, converter.stringSpeedToDouble("2:0"))
         assertEquals(24.0, converter.stringSpeedToDouble("02:30"))
+        assertEquals(24.0, converter.stringSpeedToDouble("2:30"))
         assertEquals(124.138, converter.stringSpeedToDouble("00:29")!!, 0.0001)
+        assertEquals(0.5, converter.stringSpeedToDouble("120:00"))
     }
 }
