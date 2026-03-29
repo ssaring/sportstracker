@@ -133,10 +133,10 @@ class FormatUtils(val unitSystem: UnitSystem) {
                     "N/A"
                 }
                 else {
-                    TimeUtils.seconds2MinuteTimeString((3600 / ConvertUtils.convertKilometer2Miles(speed.toDouble(), false)).toInt())
+                    TimeUtils.seconds2MinuteTimeString((3600 / ConvertUtils.convertKilometer2Miles(speed, false)).toInt())
                 }
             } else { // SpeedMode.Speed
-                numberFormat.format(ConvertUtils.convertKilometer2Miles(speed.toDouble(), false))
+                numberFormat.format(ConvertUtils.convertKilometer2Miles(speed, false))
             }
         } else { // UnitSystem.METRIC
             if (speedMode == SpeedMode.PACE) {
@@ -147,7 +147,7 @@ class FormatUtils(val unitSystem: UnitSystem) {
                     TimeUtils.seconds2MinuteTimeString((3600 / speed).toInt())
                 }
             } else { // SpeedMode.Speed
-                numberFormat.format(speed.toDouble())
+                numberFormat.format(speed)
             }
         }
     }

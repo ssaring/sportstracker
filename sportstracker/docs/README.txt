@@ -454,7 +454,7 @@ The SportsTracker project uses the following libraries:
   - EasyDI 0.6.0 (https://github.com/lestard/EasyDI)
       Includes: jakarta.inject 2.0.1
       License: Apache License v2.0
-  - Kotlin 2.2.20 (http://kotlinlang.org/)
+  - Kotlin 2.3.20 (http://kotlinlang.org/)
       License: Apache License v2.0
   - ControlsFX 11.2.2 (http://controlsfx.org/)
       License: BSD 3-Clause License

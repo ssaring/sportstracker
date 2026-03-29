@@ -108,14 +108,14 @@ class EquipmentUsageCalculatorTest {
             set(Exercise(1).apply {
                 dateTime = LocalDateTime.of(2019, 3, 20, 14, 30, 0)
                 distance = 25.0
-                duration = (1 * 3600).toInt()
+                duration = 1 * 3600
                 sportType = stCycling
                 equipment = eqRoadBike
             })
             set(Exercise(2).apply {
                 dateTime = LocalDateTime.of(2019, 7, 18, 14, 30, 0)
                 distance = 44.0
-                duration = (2 * 3600).toInt()
+                duration = 2 * 3600
                 sportType = stCycling
                 equipment = eqMTB
             })
