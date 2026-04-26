@@ -3,8 +3,8 @@ Changelog
 
 v8.1.1:
  Project changes:
- - updated JavaFX / OpenJFX to version 26
-   - macOS: uses the new Metal rendering pipeline now
+ - updated JavaFX / OpenJFX to version 26.0.1
+   - provides security fixes and improvements
  - updated Kotlin to version 2.3.20
  SportsTracker changes:
  - ExerciseDialog: Bugfix for issue #273
