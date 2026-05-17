@@ -241,11 +241,11 @@ new date.
 The calendar view displays all exercise, note and weight entries of the 
 selected month. The last column contains the distance and duration summary for
 all exercises of the appropriate week. New exercise entries can be added by
-double clicking the appropriate day cell. Note and weight entries can be added
+double-clicking the appropriate day cell. Note and weight entries can be added
 by using the context menu inside a day cell. An existing entry can be edited
-by double clicking it.
+by double-clicking it.
 
-Additionally there are special list views for all exercise, note and weight
+Additionally, there are special list views for all exercise, note and weight
 entries. These list views are very helpful for the analysis, especially when
 using sorting and filters.
 Filters can be used in all views, all entry types are filterable. The filter
