@@ -1,6 +1,7 @@
 SportsTracker-TODO
 ==================
 
+- Get Garmin FIT SDK library from Maven Central, is being provided by Garmin now
 - Add Export of all data to a Markdown document => enables the usage of LLM tooling for data analysis
 
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
