@@ -14,6 +14,8 @@ v8.1.1:
    from TrackPointExtension/v2 schema namespace
    - v2 is used in newer tools, e.g. in GPX exports of the OpenTracks app
    - was contributed by user 'mavenh80' in pull request #272
+ - updated Garmin FIT SDK library to version 21.205.0
+   - Garmin FIT SDK provided by Maven Central now
  Translations:
 
 v8.1.0:

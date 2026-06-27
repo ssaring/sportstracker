@@ -38,9 +38,9 @@
             <version>1.0.12-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.garmin.fit</groupId>
+            <groupId>com.garmin</groupId>
             <artifactId>fit</artifactId>
-            <version>21.171.0</version>
+            <version>21.205.0</version>
         </dependency>
         <dependency>
             <groupId>org.jdom</groupId>

@@ -476,14 +476,12 @@ The SportsTracker project uses the following libraries:
       License: Eclipse Public License v2.0
   - Mockito 5.20.0 (http://code.google.com/p/mockito/)
       License: MIT License
-  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.171.0
+  - Flexible & Interoperable Data Transfer (FIT) Protocol SDK 21.205.0
       URL: https://www.thisisant.com/developer/
       License: FIT Protocol License (open source by Dynastream / Garmin)
       License URL: https://developer.garmin.com/fit/download/
 
-All dependencies will be downloaded automatically by Maven. The Garmin FIT
-library is missing in the Maven central repository, so I've created my own
-repository for it. It's available at: http://saring.de/st-maven-repo/
+All dependencies will be downloaded automatically by Maven.
 
 If you're wondering why the complete application has been ported from the .NET
 platform (C# language, running on Mono) to the Java platform, here are the most
@@ -581,4 +579,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2026/04/26
+2026/06/27
