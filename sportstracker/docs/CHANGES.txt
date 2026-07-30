@@ -3,7 +3,7 @@ Changelog
 
 v8.1.1:
  Project changes:
- - updated JavaFX / OpenJFX to version 26.0.1
+ - updated JavaFX / OpenJFX to version 26.0.2
    - provides security fixes and improvements
  - updated Kotlin to version 2.3.20
  SportsTracker changes:

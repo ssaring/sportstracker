@@ -12,7 +12,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 #### Dependencies and used libraries
 
 * Java SE 17 (tested with OpenJDK 21)
-* OpenJFX 26.0.1
+* OpenJFX 26.0.2
     * Homepage: https://openjfx.io/
     * License: GPL v2 + Classpath Exception
 * Kotlin 2.3.20
