@@ -3,18 +3,21 @@ Changelog
 
 v8.1.1:
  Project changes:
- - updated JavaFX / OpenJFX to version 26.0.2
+ - updated JavaFX / OpenJFX to version 27
+   - uses Metal as default JavaFX rendering pipeline for macOS
    - provides security fixes and improvements
- - updated Kotlin to version 2.3.20
+ - updated Kotlin to version 2.4.20
  SportsTracker changes:
  - ExerciseDialog: Bugfix for issue #273
    - fixed auto-calculation when AVG speed in PACE mode is slower than 60:00
+ - updated sqlite-jdbc to version 3.53.4.0
+ - updated JUnit to version 6.1.3
  ExerciseViewer changes:
  - GPX parser (TopoGrafixGpxParser): added support for reading heartrate data
    from TrackPointExtension/v2 schema namespace
    - v2 is used in newer tools, e.g. in GPX exports of the OpenTracks app
    - was contributed by user 'mavenh80' in pull request #272
- - updated Garmin FIT SDK library to version 21.205.0
+ - updated Garmin FIT SDK library to version 21.214.0
    - Garmin FIT SDK provided by Maven Central now
  Translations:
 

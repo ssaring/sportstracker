@@ -11,11 +11,11 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 #### Dependencies and used libraries
 
-* Java SE 17 (tested with OpenJDK 21)
-* OpenJFX 26.0.2
+* Java SE 25 (tested with OpenJDK 25)
+* OpenJFX 27
     * Homepage: https://openjfx.io/
     * License: GPL v2 + Classpath Exception
-* Kotlin 2.3.20
+* Kotlin 2.4.20
     * Homepage: http://kotlinlang.org/
     * License: Apache License v2.0
 * Leaflet 1.9.3 (included)
@@ -25,7 +25,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 * leaflet-color-markers (included, modified)
     * Homepage: https://github.com/pointhi/leaflet-color-markers
     * License: BSD 2-Clause License
-* kotlinx-serialization 1.10.0 (for the demo only)
+* kotlinx-serialization 1.11.0 (for the demo only)
     * Homepage: https://github.com/Kotlin/kotlinx.serialization
     * License: Apache License 2.0
 
@@ -57,8 +57,8 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 #### Changelog
 
 LeafletMap 1.0.12:
-* Updated Kotlin to version 2.3.20
-* Updated JavaFX / OpenJFX to version 26.0.1 (in sync with SportsTracker)
+* Updated Kotlin to version 2.4.20
+* Updated JavaFX / OpenJFX to version 27 (in sync with SportsTracker)clea
 
 LeafletMap 1.0.11:
 * Updated JavaFX / OpenJFX to version 25 (in sync with SportsTracker)
