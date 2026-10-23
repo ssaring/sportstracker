@@ -12,7 +12,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 #### Dependencies and used libraries
 
 * Java SE 25 (tested with OpenJDK 25)
-* OpenJFX 27
+* OpenJFX 27.0.1
     * Homepage: https://openjfx.io/
     * License: GPL v2 + Classpath Exception
 * Kotlin 2.4.20
@@ -58,7 +58,7 @@ Both the LeafletMap component and the demo application are written in Kotlin.
 
 LeafletMap 1.0.12:
 * Updated Kotlin to version 2.4.20
-* Updated JavaFX / OpenJFX to version 27 (in sync with SportsTracker)clea
+* Updated JavaFX / OpenJFX to version 27.0.1 (in sync with SportsTracker)
 
 LeafletMap 1.0.11:
 * Updated JavaFX / OpenJFX to version 25 (in sync with SportsTracker)
