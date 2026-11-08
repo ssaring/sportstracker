@@ -145,7 +145,32 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.6.0</version>
             </plugin>
+
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>3.11.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <java>
+                        <googleJavaFormat>
+                            <maxLineLength>120</maxLineLength>
+                        </googleJavaFormat>
+                    </java>
+                    <kotlin>
+                        <ktfmt>
+                            <maxWidth>120</maxWidth>
+                        </ktfmt>
+                    </kotlin>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
 </project>
