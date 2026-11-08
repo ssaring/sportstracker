@@ -9,33 +9,33 @@ import de.saring.util.data.IdDateObject;
  */
 public abstract class Entry extends IdDateObject {
 
-    /** Comment of the entry (optional). */
-    private String comment;
+  /** Comment of the entry (optional). */
+  private String comment;
 
-    /**
-     * Standard c'tor.
-     *
-     * @param id the ID of the object (null for new, not persisted objects)
-     */
-    public Entry(Long id) {
-        super(id);
-    }
+  /**
+   * Standard c'tor.
+   *
+   * @param id the ID of the object (null for new, not persisted objects)
+   */
+  public Entry(Long id) {
+    super(id);
+  }
 
-    public String getComment() {
-        return comment;
-    }
+  public String getComment() {
+    return comment;
+  }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
 
-    @Override
-    public String toString() {
-        StringBuilder sBuilder = new StringBuilder();
-        sBuilder.append(this.getClass().getName()).append(":\n");
-        sBuilder.append(" [id=").append(this.getId()).append("\n");
-        sBuilder.append("  dateTime=").append(this.getDateTime()).append("\n");
-        sBuilder.append("  comment=").append(this.comment).append("]\n");
-        return sBuilder.toString();
-    }
+  @Override
+  public String toString() {
+    StringBuilder sBuilder = new StringBuilder();
+    sBuilder.append(this.getClass().getName()).append(":\n");
+    sBuilder.append(" [id=").append(this.getId()).append("\n");
+    sBuilder.append("  dateTime=").append(this.getDateTime()).append("\n");
+    sBuilder.append("  comment=").append(this.comment).append("]\n");
+    return sBuilder.toString();
+  }
 }

@@ -7,8 +7,8 @@ package de.saring.util.unitcalc
  */
 enum class UnitSystem {
 
-    /** Metric unit system. Examples: kilometers for distance or celsius for temperature. */
-    METRIC,
-    /** English unit system. Examples: miles for distance and fahrenheit for temperature. */
-    ENGLISH
+  /** Metric unit system. Examples: kilometers for distance or celsius for temperature. */
+  METRIC,
+  /** English unit system. Examples: miles for distance and fahrenheit for temperature. */
+  ENGLISH,
 }

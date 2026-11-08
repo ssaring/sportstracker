@@ -9,114 +9,96 @@ import javafx.scene.control.Label
  * Controller (MVC) class of the "Optional" panel, which displays all the optional exercise data, such as speed,
  * altitude ...
  *
- * @constructor constructor for dependency injection
  * @param context the ExerciseViewer UI context
  * @param document the ExerciseViewer document / model
- *
+ * @constructor constructor for dependency injection
  * @author Stefan Saring
  */
- class OptionalPanelController(
-        context: EVContext,
-        document: EVDocument) : AbstractPanelController(context, document) {
+class OptionalPanelController(
+    context: EVContext,
+    document: EVDocument,
+) : AbstractPanelController(context, document) {
 
-    @FXML
-    private lateinit var laSpeedAvgValue: Label
-    @FXML
-    private lateinit var laSpeedMaxValue: Label
-    @FXML
-    private lateinit var laDistanceValue: Label
-    @FXML
-    private lateinit var laBikeNrValue: Label
+  @FXML private lateinit var laSpeedAvgValue: Label
+  @FXML private lateinit var laSpeedMaxValue: Label
+  @FXML private lateinit var laDistanceValue: Label
+  @FXML private lateinit var laBikeNrValue: Label
 
-    @FXML
-    private lateinit var laCadenceAvgValue: Label
-    @FXML
-    private lateinit var laCadenceMaxValue: Label
-    @FXML
-    private lateinit var laCyclesTotalValue: Label
+  @FXML private lateinit var laCadenceAvgValue: Label
+  @FXML private lateinit var laCadenceMaxValue: Label
+  @FXML private lateinit var laCyclesTotalValue: Label
 
-    @FXML
-    private lateinit var laPowerAvgValue: Label
-    @FXML
-    private lateinit var laPowerMaxValue: Label
-    @FXML
-    private lateinit var laPowerNormalizedValue: Label
+  @FXML private lateinit var laPowerAvgValue: Label
+  @FXML private lateinit var laPowerMaxValue: Label
+  @FXML private lateinit var laPowerNormalizedValue: Label
 
-    @FXML
-    private lateinit var laAltitudeMinValue: Label
-    @FXML
-    private lateinit var laAltitudeAvgValue: Label
-    @FXML
-    private lateinit var laAltitudeMaxValue: Label
-    @FXML
-    private lateinit var laAscentValue: Label
-    @FXML
-    private lateinit var laDescentValue: Label
+  @FXML private lateinit var laAltitudeMinValue: Label
+  @FXML private lateinit var laAltitudeAvgValue: Label
+  @FXML private lateinit var laAltitudeMaxValue: Label
+  @FXML private lateinit var laAscentValue: Label
+  @FXML private lateinit var laDescentValue: Label
 
-    @FXML
-    private lateinit var laTemperatureMinValue: Label
-    @FXML
-    private lateinit var laTemperatureAvgValue: Label
-    @FXML
-    private lateinit var laTemperatureMaxValue: Label
+  @FXML private lateinit var laTemperatureMinValue: Label
+  @FXML private lateinit var laTemperatureAvgValue: Label
+  @FXML private lateinit var laTemperatureMaxValue: Label
 
-    override val fxmlFilename: String = "/fxml/panels/OptionalPanel.fxml"
+  override val fxmlFilename: String = "/fxml/panels/OptionalPanel.fxml"
 
-    override fun setupPanel() = showExerciseData()
+  override fun setupPanel() = showExerciseData()
 
-    private fun showExerciseData() {
-        val exercise = document.exercise
-        val formatUtils = context.formatUtils
+  private fun showExerciseData() {
+    val exercise = document.exercise
+    val formatUtils = context.formatUtils
 
-        // fill speed data
-        exercise.speed?.let {
-            laSpeedAvgValue.text = formatUtils.speedToString(it.speedAvg.toDouble(), 2, document.speedMode)
-            laSpeedMaxValue.text = formatUtils.speedToString(it.speedMax.toDouble(), 2, document.speedMode)
-            laDistanceValue.text = formatUtils.distanceToString((it.distance / 1000.0), 2)
-        }
-
-        exercise.recordingMode.bikeNumber?.let {
-            laBikeNrValue.text = it.toString()
-        }
-
-        // fill cadence data
-        exercise.cadence?.let {
-            laCadenceAvgValue.text = formatUtils.cadenceToString(it.cadenceAvg.toInt())
-            laCadenceMaxValue.text = formatUtils.cadenceToString(it.cadenceMax.toInt())
-        }
-
-        // fill power data
-        exercise.power?.let { power ->
-            laPowerAvgValue.text = formatUtils.powerToString(power.powerAvg)
-
-            power.powerMax?.let { powerMax ->
-                laPowerMaxValue.text = formatUtils.powerToString(powerMax)
-            }
-
-            power.powerNormalized?.let { powerNormalized ->
-                laPowerNormalizedValue.text = formatUtils.powerToString(powerNormalized)
-            }
-        }
-
-        // fill total cycles data
-        exercise.cadence?.cyclesTotal?.let {
-            laCyclesTotalValue.text = formatUtils.cyclesToString(it)
-        }
-
-        // fill altitude data
-        exercise.altitude?.let {
-            laAltitudeMinValue.text = formatUtils.heightToString(it.altitudeMin.toInt())
-            laAltitudeAvgValue.text = formatUtils.heightToString(it.altitudeAvg.toInt())
-            laAltitudeMaxValue.text = formatUtils.heightToString(it.altitudeMax.toInt())
-            laAscentValue.text = formatUtils.heightToString(it.ascent)
-            laDescentValue.text = formatUtils.heightToString(it.descent)
-        }
-
-        // fill temperature data
-        exercise.temperature?.let {
-            laTemperatureMinValue.text = formatUtils.temperatureToString(it.temperatureMin)
-            laTemperatureAvgValue.text = formatUtils.temperatureToString(it.temperatureAvg)
-            laTemperatureMaxValue.text = formatUtils.temperatureToString(it.temperatureMax)
-        }
+    // fill speed data
+    exercise.speed?.let {
+      laSpeedAvgValue.text = formatUtils.speedToString(it.speedAvg.toDouble(), 2, document.speedMode)
+      laSpeedMaxValue.text = formatUtils.speedToString(it.speedMax.toDouble(), 2, document.speedMode)
+      laDistanceValue.text = formatUtils.distanceToString((it.distance / 1000.0), 2)
     }
+
+    exercise.recordingMode.bikeNumber?.let {
+      laBikeNrValue.text = it.toString()
+    }
+
+    // fill cadence data
+    exercise.cadence?.let {
+      laCadenceAvgValue.text = formatUtils.cadenceToString(it.cadenceAvg.toInt())
+      laCadenceMaxValue.text = formatUtils.cadenceToString(it.cadenceMax.toInt())
+    }
+
+    // fill power data
+    exercise.power?.let { power ->
+      laPowerAvgValue.text = formatUtils.powerToString(power.powerAvg)
+
+      power.powerMax?.let { powerMax ->
+        laPowerMaxValue.text = formatUtils.powerToString(powerMax)
+      }
+
+      power.powerNormalized?.let { powerNormalized ->
+        laPowerNormalizedValue.text = formatUtils.powerToString(powerNormalized)
+      }
+    }
+
+    // fill total cycles data
+    exercise.cadence?.cyclesTotal?.let {
+      laCyclesTotalValue.text = formatUtils.cyclesToString(it)
+    }
+
+    // fill altitude data
+    exercise.altitude?.let {
+      laAltitudeMinValue.text = formatUtils.heightToString(it.altitudeMin.toInt())
+      laAltitudeAvgValue.text = formatUtils.heightToString(it.altitudeAvg.toInt())
+      laAltitudeMaxValue.text = formatUtils.heightToString(it.altitudeMax.toInt())
+      laAscentValue.text = formatUtils.heightToString(it.ascent)
+      laDescentValue.text = formatUtils.heightToString(it.descent)
+    }
+
+    // fill temperature data
+    exercise.temperature?.let {
+      laTemperatureMinValue.text = formatUtils.temperatureToString(it.temperatureMin)
+      laTemperatureAvgValue.text = formatUtils.temperatureToString(it.temperatureAvg)
+      laTemperatureMaxValue.text = formatUtils.temperatureToString(it.temperatureMax)
+    }
+  }
 }

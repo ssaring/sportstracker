@@ -23,17 +23,15 @@ import java.time.LocalDateTime
  * @property energyTotal Cumulative "wasted" energy of all exercises (in kCal).
  * @property sumExerciseTime Cumulative workout time (in minutes).
  * @property sumRideTime Cumulative ride time (in minutes).
- * @property odometer  Odometer (cumulative ride distance) in km.
+ * @property odometer Odometer (cumulative ride distance) in km.
  * @property sportType Exercise sport type (optional).
  * @property sportTypeFit FIT-protocol specific sport type and subtype info (optional).
  * @property heartRateLimits List of heartrate limit data (can be more then one).
  * @property lapList List containing the data of all exercise laps.
  * @property sampleList List containing the data of all recorded exercise samples (for each interval).
- *
  * @author Stefan Saring
  */
 data class EVExercise(
-
     var fileType: ExerciseFileType,
     var deviceName: String? = null,
     var dateTime: LocalDateTime? = null,
@@ -55,71 +53,72 @@ data class EVExercise(
     var odometer: Int? = null,
     var sportType: String? = null,
     var sportTypeFit: SportTypeFit? = null,
-
     var heartRateLimits: MutableList<HeartRateLimit> = mutableListOf(),
     var lapList: MutableList<Lap> = mutableListOf(),
-    var sampleList: MutableList<ExerciseSample> = mutableListOf())
-{
-    /**
-     * Secondary constructor for easier creation of instances from Java code, otherwise all attributes needs to get passed.
-     *
-     * @param fileType exercise file type
-     */
-    constructor(fileType: ExerciseFileType) : this(fileType, null)
+    var sampleList: MutableList<ExerciseSample> = mutableListOf(),
+) {
+  /**
+   * Secondary constructor for easier creation of instances from Java code, otherwise all attributes needs to get
+   * passed.
+   *
+   * @param fileType exercise file type
+   */
+  constructor(fileType: ExerciseFileType) : this(fileType, null)
 
-    /**
-     * This is the list of possible file types of an exercise.
-     */
-    enum class ExerciseFileType {
-        S710RAW,
-        S610RAW,
-        S510RAW,
-        HRM,
-        HAC4TUR,
-        RS200SDRAW,
-        F6RAW,
-        SSCSV,
-        GARMIN_FIT,
-        GARMIN_TCX,
-        PED,
-        TIMEX_PWX,
-        GPX
+  /** This is the list of possible file types of an exercise. */
+  enum class ExerciseFileType {
+    S710RAW,
+    S610RAW,
+    S510RAW,
+    HRM,
+    HAC4TUR,
+    RS200SDRAW,
+    F6RAW,
+    SSCSV,
+    GARMIN_FIT,
+    GARMIN_TCX,
+    PED,
+    TIMEX_PWX,
+    GPX,
+  }
+
+  /**
+   * In most file formats (e.g. S710Raw, HRM) there are no distance values for each recorded sample. So they need to be
+   * calculated from the sample time and speed. This calculation is sometimes not total precise, the distance of last
+   * sample is smaller/larger then the exercise distance. So all the sample distances needs to get recalculated in
+   * relation to the exercise distance.
+   */
+  fun repairSamples() {
+    // is all the required speed data available ?
+    if (
+        this.speed == null ||
+            this.speed!!.distance == 0 ||
+            this.sampleList.isEmpty() ||
+            this.duration == null ||
+            this.recordingInterval == null
+    ) {
+      return
     }
 
-    /**
-     * In most file formats (e.g. S710Raw, HRM) there are no distance values for each recorded sample. So they need
-     * to be calculated from the sample time and speed. This calculation is sometimes not total precise, the distance
-     * of last sample is smaller/larger then the exercise distance. So all the sample distances needs to get
-     * recalculated in relation to the exercise distance.
-     */
-    fun repairSamples() {
-        // is all the required speed data available ?
-        if (this.speed == null || this.speed!!.distance == 0 || this.sampleList.isEmpty()
-                || this.duration == null || this.recordingInterval == null) {
-            return
-        }
-
-        // it's possible that there are not recorded samples for the whole exercise time
-        // (e.g. connection problems) => in this case we can't repair the sample distances
-        if (this.sampleList.size < this.duration!! / 10 / this.recordingInterval!!.toInt()) {
-            return
-        }
-
-        // calculate relation of exercise distance to last sample distance
-        val (_, _, _, _, _, _, distance) = this.sampleList[this.sampleList.size - 1]
-        val fRelation = distance!! / this.speed!!.distance.toDouble()
-
-        // process all samples and recalculate the sample distance in relation to exercise distance
-        for (sample in this.sampleList) {
-            sample.distance = Math.round(sample.distance!! / fRelation).toInt()
-        }
+    // it's possible that there are not recorded samples for the whole exercise time
+    // (e.g. connection problems) => in this case we can't repair the sample distances
+    if (this.sampleList.size < this.duration!! / 10 / this.recordingInterval!!.toInt()) {
+      return
     }
 
-    companion object {
+    // calculate relation of exercise distance to last sample distance
+    val (_, _, _, _, _, _, distance) = this.sampleList[this.sampleList.size - 1]
+    val fRelation = distance!! / this.speed!!.distance.toDouble()
 
-        /**
-         * Constant for dynamic exercise sample recording interval (e.g. in Garmin TCX files).
-         */
-        const val DYNAMIC_RECORDING_INTERVAL: Short = -1
+    // process all samples and recalculate the sample distance in relation to exercise distance
+    for (sample in this.sampleList) {
+      sample.distance = Math.round(sample.distance!! / fRelation).toInt()
     }
+  }
+
+  companion object {
+
+    /** Constant for dynamic exercise sample recording interval (e.g. in Garmin TCX files). */
+    const val DYNAMIC_RECORDING_INTERVAL: Short = -1
+  }
 }

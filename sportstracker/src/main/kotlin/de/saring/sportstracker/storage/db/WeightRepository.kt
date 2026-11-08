@@ -11,49 +11,54 @@ import java.util.logging.Logger
  * Database repository for the Weight data.
  *
  * @property connection database connection
- *
  * @author Stefan Saring
  */
 class WeightRepository(
-    connection: Connection
+    connection: Connection,
 ) : AbstractRepository<Weight>(connection) {
 
-    override val entityName = "Weight"
+  override val entityName = "Weight"
 
-    override val tableName = "WEIGHT"
+  override val tableName = "WEIGHT"
 
-    override val logger: Logger = Logger.getLogger(WeightRepository::class.java.name)
+  override val logger: Logger = Logger.getLogger(WeightRepository::class.java.name)
 
-    override fun readFromResultSet(rs: ResultSet): Weight {
-        val weight = Weight(rs.getLong("ID"))
-        weight.dateTime = dateToLocalDateTime(rs.getDate("DATE_TIME"))
-        weight.value = rs.getDouble("VALUE")
-        weight.comment = rs.getString("COMMENT")
-        return weight
-    }
+  override fun readFromResultSet(rs: ResultSet): Weight {
+    val weight = Weight(rs.getLong("ID"))
+    weight.dateTime = dateToLocalDateTime(rs.getDate("DATE_TIME"))
+    weight.value = rs.getDouble("VALUE")
+    weight.comment = rs.getString("COMMENT")
+    return weight
+  }
 
-    override fun executeCreate(entry: Weight): Weight {
-        connection.prepareStatement("INSERT INTO WEIGHT (DATE_TIME, VALUE, COMMENT) VALUES (?, ?, ?) RETURNING ID",
-            Statement.RETURN_GENERATED_KEYS
-        ).use { statement ->
-            statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
-            statement.setDouble(2, entry.value)
-            statement.setString(3, entry.comment)
-            statement.execute()
+  override fun executeCreate(entry: Weight): Weight {
+    connection
+        .prepareStatement(
+            "INSERT INTO WEIGHT (DATE_TIME, VALUE, COMMENT) VALUES (?, ?, ?) RETURNING ID",
+            Statement.RETURN_GENERATED_KEYS,
+        )
+        .use { statement ->
+          statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
+          statement.setDouble(2, entry.value)
+          statement.setString(3, entry.comment)
+          statement.execute()
 
-            val weightID = statement.resultSet.getLong(1)
-            return readById(weightID)
+          val weightID = statement.resultSet.getLong(1)
+          return readById(weightID)
         }
-    }
+  }
 
-    override fun executeUpdate(entry: Weight) {
-        connection.prepareStatement("UPDATE WEIGHT SET DATE_TIME = ?, VALUE = ?, COMMENT = ? WHERE ID = ?"
-        ).use { statement ->
-            statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
-            statement.setDouble(2, entry.value)
-            statement.setString(3, entry.comment)
-            statement.setLong(4, entry.id!!)
-            statement.executeUpdate()
+  override fun executeUpdate(entry: Weight) {
+    connection
+        .prepareStatement(
+            "UPDATE WEIGHT SET DATE_TIME = ?, VALUE = ?, COMMENT = ? WHERE ID = ?",
+        )
+        .use { statement ->
+          statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
+          statement.setDouble(2, entry.value)
+          statement.setString(3, entry.comment)
+          statement.setLong(4, entry.id!!)
+          statement.executeUpdate()
         }
-    }
+  }
 }

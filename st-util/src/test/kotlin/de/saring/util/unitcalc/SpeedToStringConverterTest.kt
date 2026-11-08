@@ -1,12 +1,12 @@
 package de.saring.util.unitcalc
 
+import java.util.Locale
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import java.util.Locale
 
 /**
  * Unit tests of class SpeedToStringConverter.
@@ -16,91 +16,79 @@ import java.util.Locale
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SpeedToStringConverterTest {
 
-    private lateinit var defaultLocale: Locale
+  private lateinit var defaultLocale: Locale
 
-    /**
-     * Set default locale to GERMAN, because the number validation tests are locale dependent.
-     */
-    @BeforeAll
-    fun initLocale() {
-        defaultLocale = Locale.getDefault()
-        Locale.setDefault(Locale.GERMAN)
-    }
+  /** Set default locale to GERMAN, because the number validation tests are locale dependent. */
+  @BeforeAll
+  fun initLocale() {
+    defaultLocale = Locale.getDefault()
+    Locale.setDefault(Locale.GERMAN)
+  }
 
-    /**
-     * Reset default locale to previous value.
-     */
-    @AfterAll
-    fun resetLocale() {
-        Locale.setDefault(defaultLocale)
-    }
+  /** Reset default locale to previous value. */
+  @AfterAll
+  fun resetLocale() {
+    Locale.setDefault(defaultLocale)
+  }
 
-    /**
-     * Tests of method doubleSpeedtoString() when using SpeedMode speed.
-     */
-    @Test
-    fun testDoubleSpeedToStringDistancePerHour() {
-        val converter = SpeedToStringConverter(SpeedMode.SPEED)
+  /** Tests of method doubleSpeedtoString() when using SpeedMode speed. */
+  @Test
+  fun testDoubleSpeedToStringDistancePerHour() {
+    val converter = SpeedToStringConverter(SpeedMode.SPEED)
 
-        assertEquals(null, converter.doubleSpeedtoString(null))
-        assertEquals("0", converter.doubleSpeedtoString(0.0))
-        assertEquals("24,3", converter.doubleSpeedtoString(24.3))
-        assertEquals("12.345,679", converter.doubleSpeedtoString(12345.6789)) // must round the 3. digit
-    }
+    assertEquals(null, converter.doubleSpeedtoString(null))
+    assertEquals("0", converter.doubleSpeedtoString(0.0))
+    assertEquals("24,3", converter.doubleSpeedtoString(24.3))
+    assertEquals("12.345,679", converter.doubleSpeedtoString(12345.6789)) // must round the 3. digit
+  }
 
-    /**
-     * Tests of method doubleSpeedtoString() when using SpeedMode pace.
-     */
-    @Test
-    fun testDoubleSpeedToStringMinutesPerDistance() {
+  /** Tests of method doubleSpeedtoString() when using SpeedMode pace. */
+  @Test
+  fun testDoubleSpeedToStringMinutesPerDistance() {
 
-        val converter = SpeedToStringConverter(SpeedMode.PACE)
+    val converter = SpeedToStringConverter(SpeedMode.PACE)
 
-        assertEquals(null, converter.doubleSpeedtoString(null))
-        assertEquals("00:00", converter.doubleSpeedtoString(0.0))
-        assertEquals("03:00", converter.doubleSpeedtoString(20.0))
-        assertEquals("02:30", converter.doubleSpeedtoString(24.0))
-        assertEquals("00:29", converter.doubleSpeedtoString(123.456))
-    }
+    assertEquals(null, converter.doubleSpeedtoString(null))
+    assertEquals("00:00", converter.doubleSpeedtoString(0.0))
+    assertEquals("03:00", converter.doubleSpeedtoString(20.0))
+    assertEquals("02:30", converter.doubleSpeedtoString(24.0))
+    assertEquals("00:29", converter.doubleSpeedtoString(123.456))
+  }
 
-    /**
-     * Tests of method stringSpeedToDouble() when using SpeedMode speed.
-     */
-    @Test
-    fun testStringSpeedToDoubleDistancePerHour() {
+  /** Tests of method stringSpeedToDouble() when using SpeedMode speed. */
+  @Test
+  fun testStringSpeedToDoubleDistancePerHour() {
 
-        val converter = SpeedToStringConverter(SpeedMode.SPEED)
+    val converter = SpeedToStringConverter(SpeedMode.SPEED)
 
-        assertNull(converter.stringSpeedToDouble(null))
-        assertNull(converter.stringSpeedToDouble(""))
-        assertNull(converter.stringSpeedToDouble("A1"))
+    assertNull(converter.stringSpeedToDouble(null))
+    assertNull(converter.stringSpeedToDouble(""))
+    assertNull(converter.stringSpeedToDouble("A1"))
 
-        assertEquals(0.0, converter.stringSpeedToDouble("0"))
-        assertEquals(20.0, converter.stringSpeedToDouble("20"))
-        assertEquals(12345.678, converter.stringSpeedToDouble("12.345,678"))
-    }
+    assertEquals(0.0, converter.stringSpeedToDouble("0"))
+    assertEquals(20.0, converter.stringSpeedToDouble("20"))
+    assertEquals(12345.678, converter.stringSpeedToDouble("12.345,678"))
+  }
 
-    /**
-     * Tests of method stringSpeedToDouble() when using SpeedMode pace.
-     */
-    @Test
-    fun testStringSpeedToDoubleMinutesPerDistance() {
+  /** Tests of method stringSpeedToDouble() when using SpeedMode pace. */
+  @Test
+  fun testStringSpeedToDoubleMinutesPerDistance() {
 
-        val converter = SpeedToStringConverter(SpeedMode.PACE)
+    val converter = SpeedToStringConverter(SpeedMode.PACE)
 
-        assertNull(converter.stringSpeedToDouble(null))
-        assertNull(converter.stringSpeedToDouble(""))
-        assertNull(converter.stringSpeedToDouble("A1"))
-        assertNull(converter.stringSpeedToDouble("01"))
-        assertNull(converter.stringSpeedToDouble("01:02:03"))
+    assertNull(converter.stringSpeedToDouble(null))
+    assertNull(converter.stringSpeedToDouble(""))
+    assertNull(converter.stringSpeedToDouble("A1"))
+    assertNull(converter.stringSpeedToDouble("01"))
+    assertNull(converter.stringSpeedToDouble("01:02:03"))
 
-        assertEquals(0.0, converter.stringSpeedToDouble("00:00"))
-        assertEquals(0.0, converter.stringSpeedToDouble("0:0"))
-        assertEquals(30.0, converter.stringSpeedToDouble("02:00"))
-        assertEquals(30.0, converter.stringSpeedToDouble("2:0"))
-        assertEquals(24.0, converter.stringSpeedToDouble("02:30"))
-        assertEquals(24.0, converter.stringSpeedToDouble("2:30"))
-        assertEquals(124.138, converter.stringSpeedToDouble("00:29")!!, 0.0001)
-        assertEquals(0.5, converter.stringSpeedToDouble("120:00"))
-    }
+    assertEquals(0.0, converter.stringSpeedToDouble("00:00"))
+    assertEquals(0.0, converter.stringSpeedToDouble("0:0"))
+    assertEquals(30.0, converter.stringSpeedToDouble("02:00"))
+    assertEquals(30.0, converter.stringSpeedToDouble("2:0"))
+    assertEquals(24.0, converter.stringSpeedToDouble("02:30"))
+    assertEquals(24.0, converter.stringSpeedToDouble("2:30"))
+    assertEquals(124.138, converter.stringSpeedToDouble("00:29")!!, 0.0001)
+    assertEquals(0.5, converter.stringSpeedToDouble("120:00"))
+  }
 }

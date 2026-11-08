@@ -5,227 +5,203 @@ import de.saring.exerciseviewer.gui.EVContext
 import de.saring.exerciseviewer.gui.EVDocument
 import de.saring.util.StringUtils
 import de.saring.util.unitcalc.TimeUtils
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Label
 import javafx.util.StringConverter
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 /**
  * Controller (MVC) class of the "Main" panel, which displays all the main exercise data.
  *
- * @constructor constructor for dependency injection
  * @param context the ExerciseViewer UI context
  * @param document the ExerciseViewer document / model
- *
+ * @constructor constructor for dependency injection
  * @author Stefan Saring
  */
 class MainPanelController(
-        context: EVContext,
-        document: EVDocument) : AbstractPanelController(context, document) {
+    context: EVContext,
+    document: EVDocument,
+) : AbstractPanelController(context, document) {
 
-    lateinit var diagramPanelController: DiagramPanelController
+  lateinit var diagramPanelController: DiagramPanelController
 
-    @FXML
-    private lateinit var laDateTimeValue: Label
-    @FXML
-    private lateinit var laDurationValue: Label
-    @FXML
-    private lateinit var laTotalDurationValue: Label
-    @FXML
-    private lateinit var laEnergyValue: Label
-    @FXML
-    private lateinit var laDeviceValue: Label
-    @FXML
-    private lateinit var laSportTypeValue: Label
+  @FXML private lateinit var laDateTimeValue: Label
+  @FXML private lateinit var laDurationValue: Label
+  @FXML private lateinit var laTotalDurationValue: Label
+  @FXML private lateinit var laEnergyValue: Label
+  @FXML private lateinit var laDeviceValue: Label
+  @FXML private lateinit var laSportTypeValue: Label
 
-    @FXML
-    private lateinit var laHeartrateAvgValue: Label
-    @FXML
-    private lateinit var laHeartrateMaxValue: Label
+  @FXML private lateinit var laHeartrateAvgValue: Label
+  @FXML private lateinit var laHeartrateMaxValue: Label
 
-    @FXML
-    private lateinit var cbHeartrateRanges: ChoiceBox<HeartRateZone>
-    @FXML
-    private lateinit var laTimeBelowValue: Label
-    @FXML
-    private lateinit var laTimeWithinValue: Label
-    @FXML
-    private lateinit var laTimeAboveValue: Label
+  @FXML private lateinit var cbHeartrateRanges: ChoiceBox<HeartRateZone>
+  @FXML private lateinit var laTimeBelowValue: Label
+  @FXML private lateinit var laTimeWithinValue: Label
+  @FXML private lateinit var laTimeAboveValue: Label
 
-    @FXML
-    private lateinit var laModeHeartrateValue: Label
-    @FXML
-    private lateinit var laModeSpeedValue: Label
-    @FXML
-    private lateinit var laModeAltitudeValue: Label
-    @FXML
-    private lateinit var laModeCadendeValue: Label
-    @FXML
-    private lateinit var laModePowerValue: Label
+  @FXML private lateinit var laModeHeartrateValue: Label
+  @FXML private lateinit var laModeSpeedValue: Label
+  @FXML private lateinit var laModeAltitudeValue: Label
+  @FXML private lateinit var laModeCadendeValue: Label
+  @FXML private lateinit var laModePowerValue: Label
 
-    @FXML
-    private lateinit var laTotalExerciseTimeValue: Label
-    @FXML
-    private lateinit var laTotalRidingTimeValue: Label
-    @FXML
-    private lateinit var laTotalEnergyValue: Label
-    @FXML
-    private lateinit var laOdometerValue: Label
+  @FXML private lateinit var laTotalExerciseTimeValue: Label
+  @FXML private lateinit var laTotalRidingTimeValue: Label
+  @FXML private lateinit var laTotalEnergyValue: Label
+  @FXML private lateinit var laOdometerValue: Label
 
+  override val fxmlFilename: String = "/fxml/panels/MainPanel.fxml"
 
-    override val fxmlFilename: String = "/fxml/panels/MainPanel.fxml"
+  override fun setupPanel() {
+    showExerciseData()
+    setupHeartrateRangeSelection()
+  }
 
-    override fun setupPanel() {
-        showExerciseData()
-        setupHeartrateRangeSelection()
+  private fun showExerciseData() {
+    val exercise = document.exercise
+    val formatUtils = context.formatUtils
+
+    // fill energy data
+    exercise.energy?.let {
+      laEnergyValue.text = formatUtils.caloriesToString(it)
     }
 
-    private fun showExerciseData() {
-        val exercise = document.exercise
-        val formatUtils = context.formatUtils
-
-        // fill energy data
-        exercise.energy?.let {
-            laEnergyValue.text = formatUtils.caloriesToString(it)
-        }
-
-        // fill statistics data
-        exercise.sumExerciseTime?.let {
-            laTotalExerciseTimeValue.text = TimeUtils.minutes2TimeString(it)
-        }
-        // fill total riding time (available only in S710 exercises)
-        exercise.sumRideTime?.let {
-            laTotalRidingTimeValue.text = TimeUtils.minutes2TimeString(it)
-        }
-        exercise.energyTotal?.let {
-            laTotalEnergyValue.text = formatUtils.caloriesToString(it)
-        }
-        // fill odometer data (if available, e.g. not on Polar S410 or S610)
-        exercise.odometer?.let {
-            laOdometerValue.text = formatUtils.distanceToString(it.toDouble(), 2)
-        }
-
-        // fill device and type data
-        if (!StringUtils.isNullOrEmpty(exercise.deviceName)) {
-            laDeviceValue.text = exercise.deviceName
-        }
-        exercise.sportType?.let {
-            laSportTypeValue.text = it
-        }
-
-        // fill time data
-        exercise.dateTime?.let {
-            laDateTimeValue.text = it.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))
-        }
-
-        exercise.duration?.let {
-            laDurationValue.text = TimeUtils.tenthSeconds2TimeString(it)
-        }
-
-        exercise.totalDuration?.let { totalDuration ->
-            laTotalDurationValue.text = TimeUtils.tenthSeconds2TimeString(totalDuration)
-
-            // display pause duration time if total and active duration are available
-            exercise.duration?.let { duration ->
-                // for some exercises (e.g. in Zwift) the total duration might be shorter => prevent a negative pause
-                val pauses = Math.max(0, Math.round((totalDuration - duration) / 10.0))
-                val pausesLabel = context.resources.getString("pv.main.pauses.text")
-                val pausesTimeString = TimeUtils.seconds2TimeString(pauses.toInt())
-                laTotalDurationValue.text += "   ($pausesLabel  $pausesTimeString)"
-            }
-        }
-
-        // fill heartrate data
-        exercise.heartRateAVG?.let {
-            laHeartrateAvgValue.text = formatUtils.heartRateToString(it.toInt())
-        }
-        exercise.heartRateMax?.let {
-            laHeartrateMaxValue.text = formatUtils.heartRateToString(it.toInt())
-        }
-
-        // fill recording mode data
-        laModeHeartrateValue.text = boolean2EnabledString(exercise.recordingMode.isHeartRate)
-        laModeSpeedValue.text = boolean2EnabledString(exercise.recordingMode.isSpeed)
-        laModeAltitudeValue.text = boolean2EnabledString(exercise.recordingMode.isAltitude)
-        laModeCadendeValue.text = boolean2EnabledString(exercise.recordingMode.isCadence)
-        laModePowerValue.text = boolean2EnabledString(exercise.recordingMode.isPower)
+    // fill statistics data
+    exercise.sumExerciseTime?.let {
+      laTotalExerciseTimeValue.text = TimeUtils.minutes2TimeString(it)
+    }
+    // fill total riding time (available only in S710 exercises)
+    exercise.sumRideTime?.let {
+      laTotalRidingTimeValue.text = TimeUtils.minutes2TimeString(it)
+    }
+    exercise.energyTotal?.let {
+      laTotalEnergyValue.text = formatUtils.caloriesToString(it)
+    }
+    // fill odometer data (if available, e.g. not on Polar S410 or S610)
+    exercise.odometer?.let {
+      laOdometerValue.text = formatUtils.distanceToString(it.toDouble(), 2)
     }
 
-    /**
-     * Fills the heartrate range selection choicebox with the ranges stored in the exercise and selects
-     * the first one. When no ranges are available, the selection will be disabled.
-     */
-    private fun setupHeartrateRangeSelection() {
+    // fill device and type data
+    if (!StringUtils.isNullOrEmpty(exercise.deviceName)) {
+      laDeviceValue.text = exercise.deviceName
+    }
+    exercise.sportType?.let {
+      laSportTypeValue.text = it
+    }
 
-        cbHeartrateRanges.addEventHandler(ActionEvent.ACTION) { _ -> updateHeartRateRangeTimes() }
+    // fill time data
+    exercise.dateTime?.let {
+      laDateTimeValue.text = it.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))
+    }
 
-        val exercise = document.exercise
-        if (exercise.heartRateLimits.isNotEmpty()) {
+    exercise.duration?.let {
+      laDurationValue.text = TimeUtils.tenthSeconds2TimeString(it)
+    }
 
-            cbHeartrateRanges.converter = object : StringConverter<HeartRateZone>() {
-                override fun toString(hrZone: HeartRateZone): String {
-                    val hrLimit = hrZone.heartRateLimit
-                    // display the zone name when the hr zone boundaries are not available
-                    if (!hrLimit.isAbsoluteRange && hrLimit.lowerHeartRate.toInt() == 0 && hrLimit.upperHeartRate.toInt() == 0) {
-                        return hrZone.name
-                    }
-                    val unitName = if (hrLimit.isAbsoluteRange) "bpm" else "%"
-                    return "${hrLimit.lowerHeartRate} - ${hrLimit.upperHeartRate} $unitName"
-                }
+    exercise.totalDuration?.let { totalDuration ->
+      laTotalDurationValue.text = TimeUtils.tenthSeconds2TimeString(totalDuration)
 
-                override fun fromString(string: String): HeartRateZone =
-                        throw UnsupportedOperationException()
+      // display pause duration time if total and active duration are available
+      exercise.duration?.let { duration ->
+        // for some exercises (e.g. in Zwift) the total duration might be shorter => prevent a negative pause
+        val pauses = Math.max(0, Math.round((totalDuration - duration) / 10.0))
+        val pausesLabel = context.resources.getString("pv.main.pauses.text")
+        val pausesTimeString = TimeUtils.seconds2TimeString(pauses.toInt())
+        laTotalDurationValue.text += "   ($pausesLabel  $pausesTimeString)"
+      }
+    }
+
+    // fill heartrate data
+    exercise.heartRateAVG?.let {
+      laHeartrateAvgValue.text = formatUtils.heartRateToString(it.toInt())
+    }
+    exercise.heartRateMax?.let {
+      laHeartrateMaxValue.text = formatUtils.heartRateToString(it.toInt())
+    }
+
+    // fill recording mode data
+    laModeHeartrateValue.text = boolean2EnabledString(exercise.recordingMode.isHeartRate)
+    laModeSpeedValue.text = boolean2EnabledString(exercise.recordingMode.isSpeed)
+    laModeAltitudeValue.text = boolean2EnabledString(exercise.recordingMode.isAltitude)
+    laModeCadendeValue.text = boolean2EnabledString(exercise.recordingMode.isCadence)
+    laModePowerValue.text = boolean2EnabledString(exercise.recordingMode.isPower)
+  }
+
+  /**
+   * Fills the heartrate range selection choicebox with the ranges stored in the exercise and selects the first one.
+   * When no ranges are available, the selection will be disabled.
+   */
+  private fun setupHeartrateRangeSelection() {
+
+    cbHeartrateRanges.addEventHandler(ActionEvent.ACTION) { _ -> updateHeartRateRangeTimes() }
+
+    val exercise = document.exercise
+    if (exercise.heartRateLimits.isNotEmpty()) {
+
+      cbHeartrateRanges.converter =
+          object : StringConverter<HeartRateZone>() {
+            override fun toString(hrZone: HeartRateZone): String {
+              val hrLimit = hrZone.heartRateLimit
+              // display the zone name when the hr zone boundaries are not available
+              if (
+                  !hrLimit.isAbsoluteRange && hrLimit.lowerHeartRate.toInt() == 0 && hrLimit.upperHeartRate.toInt() == 0
+              ) {
+                return hrZone.name
+              }
+              val unitName = if (hrLimit.isAbsoluteRange) "bpm" else "%"
+              return "${hrLimit.lowerHeartRate} - ${hrLimit.upperHeartRate} $unitName"
             }
 
-            val zonePrefix = context.resources.getString("pv.main.zone_prefix")
-            exercise.heartRateLimits.forEachIndexed { index, limit ->
-                cbHeartrateRanges.items.add(HeartRateZone(limit, "$zonePrefix ${index + 1}"))
-            }
-            cbHeartrateRanges.selectionModel.select(0)
-        } else {
-            cbHeartrateRanges.setDisable(true)
-        }
+            override fun fromString(string: String): HeartRateZone = throw UnsupportedOperationException()
+          }
+
+      val zonePrefix = context.resources.getString("pv.main.zone_prefix")
+      exercise.heartRateLimits.forEachIndexed { index, limit ->
+        cbHeartrateRanges.items.add(HeartRateZone(limit, "$zonePrefix ${index + 1}"))
+      }
+      cbHeartrateRanges.selectionModel.select(0)
+    } else {
+      cbHeartrateRanges.setDisable(true)
+    }
+  }
+
+  /** Updates the heartrate time value labels with the values of the current selected range. */
+  private fun updateHeartRateRangeTimes() {
+
+    val limit = cbHeartrateRanges.value.heartRateLimit
+
+    // calculate percentages of times below, within and above
+    document.exercise.duration?.let { duration ->
+      displayHeartRateRangeTime(limit.timeBelow, duration, laTimeBelowValue)
+      displayHeartRateRangeTime(limit.timeWithin, duration, laTimeWithinValue)
+      displayHeartRateRangeTime(limit.timeAbove, duration, laTimeAboveValue)
     }
 
-    /**
-     * Updates the heartrate time value labels with the values of the current selected range.
-     */
-    private fun updateHeartRateRangeTimes() {
+    // update heartrate range in diagram
+    diagramPanelController.displayDiagramForHeartrateRange(limit)
+  }
 
-        val limit = cbHeartrateRanges.value.heartRateLimit
+  private fun displayHeartRateRangeTime(time: Int?, duration: Int, label: Label) {
 
-        // calculate percentages of times below, within and above
-        document.exercise.duration?.let { duration ->
-            displayHeartRateRangeTime(limit.timeBelow, duration, laTimeBelowValue)
-            displayHeartRateRangeTime(limit.timeWithin, duration, laTimeWithinValue)
-            displayHeartRateRangeTime(limit.timeAbove, duration, laTimeAboveValue)
-        }
-
-        // update heartrate range in diagram
-        diagramPanelController.displayDiagramForHeartrateRange(limit)
+    if (time != null) {
+      val percents = Math.round(time / duration.toDouble() * 10.0 * 100.0).toInt()
+      label.text = TimeUtils.seconds2TimeString(time) + "   ($percents %)"
+    } else {
+      label.text = context.resources.getString("common.n_a_")
     }
+  }
 
-    private fun displayHeartRateRangeTime(time: Int?, duration: Int, label: Label) {
+  private fun boolean2EnabledString(enabled: Boolean) =
+      context.resources.getString(if (enabled) "common.enabled" else "common.disabled")
 
-        if (time != null) {
-            val percents = Math.round(time / duration.toDouble() * 10.0 * 100.0).toInt()
-            label.text = TimeUtils.seconds2TimeString(time) + "   ($percents %)"
-        } else {
-            label.text = context.resources.getString("common.n_a_")
-        }
-    }
-
-    private fun boolean2EnabledString(enabled: Boolean) =
-        context.resources.getString(if (enabled) "common.enabled" else "common.disabled")
-
-    /**
-     * Container class for storing the heartrate zone intems in the choicebox.
-     */
-    private class HeartRateZone(
-        val heartRateLimit: HeartRateLimit,
-        val name: String
-    )
+  /** Container class for storing the heartrate zone intems in the choicebox. */
+  private class HeartRateZone(
+      val heartRateLimit: HeartRateLimit,
+      val name: String,
+  )
 }

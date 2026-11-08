@@ -1,5 +1,6 @@
 package de.saring.sportstracker.gui.dialogs;
 
+import de.saring.sportstracker.core.STOptions;
 import de.saring.util.unitcalc.SpeedMode;
 import de.saring.util.unitcalc.UnitSystem;
 import javafx.beans.property.BooleanProperty;
@@ -7,94 +8,90 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-import de.saring.sportstracker.core.STOptions;
-
 /**
- * This ViewModel class provides JavaFX properties of all STOptions attributes to be edited in the dialog.
- * So they can be bound to the appropriate dialog view controls.
+ * This ViewModel class provides JavaFX properties of all STOptions attributes to be edited in the dialog. So they can
+ * be bound to the appropriate dialog view controls.
  *
  * @author Stefan Saring
  */
 public class PreferencesViewModel {
 
-    /**
-     * List of possible week start days.
-     */
-    public enum WeekStart {
+  /** List of possible week start days. */
+  public enum WeekStart {
 
-        /** Week starts at monday. */
-        MONDAY,
-        /** Week starts at sunday. */
-        SUNDAY
-    }
-    
-    public final ObjectProperty<STOptions.View> initialView;
-    public final ObjectProperty<STOptions.AutoCalculation> defaultAutoCalculation;
-    public final BooleanProperty saveOnExit;
+    /** Week starts at monday. */
+    MONDAY,
+    /** Week starts at sunday. */
+    SUNDAY
+  }
 
-    public final ObjectProperty<UnitSystem> unitSystem;
-    public final ObjectProperty<SpeedMode> preferredSpeedMode;
-    public final ObjectProperty<WeekStart> weekStart;
+  public final ObjectProperty<STOptions.View> initialView;
+  public final ObjectProperty<STOptions.AutoCalculation> defaultAutoCalculation;
+  public final BooleanProperty saveOnExit;
 
-    public final BooleanProperty listViewShowAvgHeartrate;
-    public final BooleanProperty listViewShowAscent;
-    public final BooleanProperty listViewShowDescent;
-    public final BooleanProperty listViewShowEnergy;
-    public final BooleanProperty listViewShowEquipment;
-    public final BooleanProperty listViewShowComment;
+  public final ObjectProperty<UnitSystem> unitSystem;
+  public final ObjectProperty<SpeedMode> preferredSpeedMode;
+  public final ObjectProperty<WeekStart> weekStart;
 
-    public final BooleanProperty evDisplaySecondChart;
-    public final BooleanProperty evDisplaySmoothedCharts;
+  public final BooleanProperty listViewShowAvgHeartrate;
+  public final BooleanProperty listViewShowAscent;
+  public final BooleanProperty listViewShowDescent;
+  public final BooleanProperty listViewShowEnergy;
+  public final BooleanProperty listViewShowEquipment;
+  public final BooleanProperty listViewShowComment;
 
-    /**
-     * Creates the PreferencesViewModel with JavaFX properties for the passed STOptions object.
-     *
-     * @param options options to be edited
-     */
-    public PreferencesViewModel(final STOptions options) {
+  public final BooleanProperty evDisplaySecondChart;
+  public final BooleanProperty evDisplaySmoothedCharts;
 
-        this.initialView = new SimpleObjectProperty<>(options.getInitialView());
-        this.defaultAutoCalculation = new SimpleObjectProperty<>(options.getDefaultAutoCalcuation());
-        this.saveOnExit = new SimpleBooleanProperty(options.isSaveOnExit());
+  /**
+   * Creates the PreferencesViewModel with JavaFX properties for the passed STOptions object.
+   *
+   * @param options options to be edited
+   */
+  public PreferencesViewModel(final STOptions options) {
 
-        this.unitSystem = new SimpleObjectProperty<>(options.getUnitSystem());
-        this.preferredSpeedMode = new SimpleObjectProperty<>(options.getPreferredSpeedMode());
-        this.weekStart = new SimpleObjectProperty<>(options.isWeekStartSunday() ? WeekStart.SUNDAY : WeekStart.MONDAY);
+    this.initialView = new SimpleObjectProperty<>(options.getInitialView());
+    this.defaultAutoCalculation = new SimpleObjectProperty<>(options.getDefaultAutoCalcuation());
+    this.saveOnExit = new SimpleBooleanProperty(options.isSaveOnExit());
 
-        this.listViewShowAvgHeartrate = new SimpleBooleanProperty(options.isListViewShowAvgHeartrate());
-        this.listViewShowAscent = new SimpleBooleanProperty(options.isListViewShowAscent());
-        this.listViewShowDescent = new SimpleBooleanProperty(options.isListViewShowDescent());
-        this.listViewShowEnergy = new SimpleBooleanProperty(options.isListViewShowEnergy());
-        this.listViewShowEquipment = new SimpleBooleanProperty(options.isListViewShowEquipment());
-        this.listViewShowComment = new SimpleBooleanProperty(options.isListViewShowComment());
+    this.unitSystem = new SimpleObjectProperty<>(options.getUnitSystem());
+    this.preferredSpeedMode = new SimpleObjectProperty<>(options.getPreferredSpeedMode());
+    this.weekStart = new SimpleObjectProperty<>(options.isWeekStartSunday() ? WeekStart.SUNDAY : WeekStart.MONDAY);
 
-        this.evDisplaySecondChart = new SimpleBooleanProperty(options.isDisplaySecondChart());
-        this.evDisplaySmoothedCharts = new SimpleBooleanProperty(options.isDisplaySmoothedCharts());
-    }
+    this.listViewShowAvgHeartrate = new SimpleBooleanProperty(options.isListViewShowAvgHeartrate());
+    this.listViewShowAscent = new SimpleBooleanProperty(options.isListViewShowAscent());
+    this.listViewShowDescent = new SimpleBooleanProperty(options.isListViewShowDescent());
+    this.listViewShowEnergy = new SimpleBooleanProperty(options.isListViewShowEnergy());
+    this.listViewShowEquipment = new SimpleBooleanProperty(options.isListViewShowEquipment());
+    this.listViewShowComment = new SimpleBooleanProperty(options.isListViewShowComment());
 
-    /**
-     * Stores the value of the edited JavaFX properties in the passed STOptions object.
-     *
-     * @param options options object for storing
-     */
-    public void storeInOptions(final STOptions options) {
+    this.evDisplaySecondChart = new SimpleBooleanProperty(options.isDisplaySecondChart());
+    this.evDisplaySmoothedCharts = new SimpleBooleanProperty(options.isDisplaySmoothedCharts());
+  }
 
-        options.setInitialView(initialView.get());
-        options.setDefaultAutoCalcuation(defaultAutoCalculation.get());
-        options.setSaveOnExit(saveOnExit.get());
+  /**
+   * Stores the value of the edited JavaFX properties in the passed STOptions object.
+   *
+   * @param options options object for storing
+   */
+  public void storeInOptions(final STOptions options) {
 
-        options.setUnitSystem(unitSystem.get());
-        options.setPreferredSpeedMode(preferredSpeedMode.get());
-        options.setWeekStartSunday(weekStart.get() == WeekStart.SUNDAY);
+    options.setInitialView(initialView.get());
+    options.setDefaultAutoCalcuation(defaultAutoCalculation.get());
+    options.setSaveOnExit(saveOnExit.get());
 
-        options.setListViewShowAvgHeartrate(listViewShowAvgHeartrate.get());
-        options.setListViewShowAscent(listViewShowAscent.get());
-        options.setListViewShowDescent(listViewShowDescent.get());
-        options.setListViewShowEnergy(listViewShowEnergy.get());
-        options.setListViewShowEquipment(listViewShowEquipment.get());
-        options.setListViewShowComment(listViewShowComment.get());
+    options.setUnitSystem(unitSystem.get());
+    options.setPreferredSpeedMode(preferredSpeedMode.get());
+    options.setWeekStartSunday(weekStart.get() == WeekStart.SUNDAY);
 
-        options.setDisplaySecondChart(evDisplaySecondChart.get());
-        options.setDisplaySmoothedCharts(evDisplaySmoothedCharts.get());
-    }
+    options.setListViewShowAvgHeartrate(listViewShowAvgHeartrate.get());
+    options.setListViewShowAscent(listViewShowAscent.get());
+    options.setListViewShowDescent(listViewShowDescent.get());
+    options.setListViewShowEnergy(listViewShowEnergy.get());
+    options.setListViewShowEquipment(listViewShowEquipment.get());
+    options.setListViewShowComment(listViewShowComment.get());
+
+    options.setDisplaySecondChart(evDisplaySecondChart.get());
+    options.setDisplaySmoothedCharts(evDisplaySmoothedCharts.get());
+  }
 }
