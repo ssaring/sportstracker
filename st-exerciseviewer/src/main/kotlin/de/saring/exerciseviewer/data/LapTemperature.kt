@@ -5,9 +5,8 @@ package de.saring.exerciseviewer.data
  * optionally.
  *
  * @property temperature Temperature at lap (in celsius degrees).
- *
  * @author Stefan Saring
  */
 data class LapTemperature(
-
-        var temperature: Short)
+    var temperature: Short,
+)

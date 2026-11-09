@@ -12,17 +12,16 @@ package de.saring.exerciseviewer.data
  * @property temperature Lap temperature (if recorded).
  * @property power Lap power data (if recorded).
  * @property positionSplit The geographical location at lap split time (if recorded).
- *
  * @author Stefan Saring
  */
 data class Lap(
-
-        var timeSplit: Int = 0,
-        var heartRateSplit: Short? = null,
-        var heartRateAVG: Short? = null,
-        var heartRateMax: Short? = null,
-        var speed: LapSpeed? = null,
-        var altitude: LapAltitude? = null,
-        var temperature: LapTemperature? = null,
-        var power: LapPower? = null,
-        var positionSplit: Position? = null)
+    var timeSplit: Int = 0,
+    var heartRateSplit: Short? = null,
+    var heartRateAVG: Short? = null,
+    var heartRateMax: Short? = null,
+    var speed: LapSpeed? = null,
+    var altitude: LapAltitude? = null,
+    var temperature: LapTemperature? = null,
+    var power: LapPower? = null,
+    var positionSplit: Position? = null,
+)

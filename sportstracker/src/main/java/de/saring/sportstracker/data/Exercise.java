@@ -8,254 +8,227 @@ package de.saring.sportstracker.data;
  */
 public final class Exercise extends Entry implements Cloneable {
 
-    /**
-     * The related SportType object.
-     */
-    private SportType sportType;
+  /** The related SportType object. */
+  private SportType sportType;
 
-    /**
-     * The related SportSubType object.
-     */
-    private SportSubType sportSubType;
+  /** The related SportSubType object. */
+  private SportSubType sportSubType;
 
-    /**
-     * Duration of exercise in seconds.
-     */
-    private int duration;
+  /** Duration of exercise in seconds. */
+  private int duration;
 
-    /**
-     * Intensity of exercise.
-     */
-    private IntensityType intensity;
+  /** Intensity of exercise. */
+  private IntensityType intensity;
 
-    /**
-     * Distance of exercise in kilometers.
-     */
-    private double distance;
+  /** Distance of exercise in kilometers. */
+  private double distance;
 
-    /**
-     * Average speed of exercise in kilometers per hour.
-     */
-    private double avgSpeed;
+  /** Average speed of exercise in kilometers per hour. */
+  private double avgSpeed;
 
-    /**
-     * Average heartrate of exercise in beats per minute (optional).
-     */
-    private Integer avgHeartRate;
+  /** Average heartrate of exercise in beats per minute (optional). */
+  private Integer avgHeartRate;
 
-    /**
-     * Ascent (height meters) of exercise in meters (optional).
-     */
-    private Integer ascent;
+  /** Ascent (height meters) of exercise in meters (optional). */
+  private Integer ascent;
 
-    /**
-     * Descent (height meters) of exercise in meters (optional).
-     */
-    private Integer descent;
+  /** Descent (height meters) of exercise in meters (optional). */
+  private Integer descent;
 
-    /**
-     * Amount of kCalories consumed (optional).
-     */
-    private Integer calories;
+  /** Amount of kCalories consumed (optional). */
+  private Integer calories;
 
-    /**
-     * Name of heart rate monitor file (optional).
-     */
-    private String hrmFile;
+  /** Name of heart rate monitor file (optional). */
+  private String hrmFile;
 
-    /**
-     * The equipment used in this exercise (optional).
-     */
-    private Equipment equipment;
+  /** The equipment used in this exercise (optional). */
+  private Equipment equipment;
 
-    /**
-     * This is the list of possible file types of an exercise.
-     */
-    public enum IntensityType {
+  /** This is the list of possible file types of an exercise. */
+  public enum IntensityType {
+    MINIMUM(0, "st.intensity.minimum"),
+    LOW(1, "st.intensity.low"),
+    NORMAL(2, "st.intensity.normal"),
+    HIGH(3, "st.intensity.high"),
+    MAXIMUM(4, "st.intensity.maximum"),
+    INTERVALS(5, "st.intensity.intervals");
 
-        MINIMUM(0, "st.intensity.minimum"),
-        LOW(1, "st.intensity.low"),
-        NORMAL(2, "st.intensity.normal"),
-        HIGH(3, "st.intensity.high"),
-        MAXIMUM(4, "st.intensity.maximum"),
-        INTERVALS(5, "st.intensity.intervals");
+    /** Value of the intensity type (needed for sorting). */
+    private final int value;
 
-        /** Value of the intensity type (needed for sorting). */
-        private final int value;
+    /** Resource key of the intensity name. */
+    private final String resourceKey;
 
-        /** Resource key of the intensity name. */
-        private final String resourceKey;
+    private IntensityType(int value, String resourceKey) {
+      this.value = value;
+      this.resourceKey = resourceKey;
+    }
 
-        private IntensityType(int value, String resourceKey) {
-            this.value = value;
-            this.resourceKey = resourceKey;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        /**
-         * Returns the I18N resource key of the intensity name.
-         *
-         * @return resource key
-         */
-        public String getResourceKey() {
-            return resourceKey;
-        }
+    public int getValue() {
+      return value;
     }
 
     /**
-     * Standard c'tor.
+     * Returns the I18N resource key of the intensity name.
      *
-     * @param id the ID of the object
+     * @return resource key
      */
-    public Exercise(Long id) {
-        super(id);
+    public String getResourceKey() {
+      return resourceKey;
     }
+  }
 
-    public SportType getSportType() {
-        return sportType;
-    }
+  /**
+   * Standard c'tor.
+   *
+   * @param id the ID of the object
+   */
+  public Exercise(Long id) {
+    super(id);
+  }
 
-    public void setSportType(SportType sportType) {
-        this.sportType = sportType;
-    }
+  public SportType getSportType() {
+    return sportType;
+  }
 
-    public SportSubType getSportSubType() {
-        return sportSubType;
-    }
+  public void setSportType(SportType sportType) {
+    this.sportType = sportType;
+  }
 
-    public void setSportSubType(SportSubType sportSubType) {
-        this.sportSubType = sportSubType;
-    }
+  public SportSubType getSportSubType() {
+    return sportSubType;
+  }
 
-    public int getDuration() {
-        return duration;
-    }
+  public void setSportSubType(SportSubType sportSubType) {
+    this.sportSubType = sportSubType;
+  }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
+  public int getDuration() {
+    return duration;
+  }
 
-    public IntensityType getIntensity() {
-        return intensity;
-    }
+  public void setDuration(int duration) {
+    this.duration = duration;
+  }
 
-    public void setIntensity(IntensityType intensity) {
-        this.intensity = intensity;
-    }
+  public IntensityType getIntensity() {
+    return intensity;
+  }
 
-    public double getDistance() {
-        return distance;
-    }
+  public void setIntensity(IntensityType intensity) {
+    this.intensity = intensity;
+  }
 
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
+  public double getDistance() {
+    return distance;
+  }
 
-    public double getAvgSpeed() {
-        return avgSpeed;
-    }
+  public void setDistance(double distance) {
+    this.distance = distance;
+  }
 
-    public void setAvgSpeed(double avgSpeed) {
-        this.avgSpeed = avgSpeed;
-    }
+  public double getAvgSpeed() {
+    return avgSpeed;
+  }
 
-    public Integer getAvgHeartRate() {
-        return avgHeartRate;
-    }
+  public void setAvgSpeed(double avgSpeed) {
+    this.avgSpeed = avgSpeed;
+  }
 
-    public void setAvgHeartRate(Integer avgHeartRate) {
-        this.avgHeartRate = avgHeartRate;
-    }
+  public Integer getAvgHeartRate() {
+    return avgHeartRate;
+  }
 
-    public Integer getAscent() {
-        return ascent;
-    }
+  public void setAvgHeartRate(Integer avgHeartRate) {
+    this.avgHeartRate = avgHeartRate;
+  }
 
-    public void setAscent(Integer ascent) {
-        this.ascent = ascent;
-    }
+  public Integer getAscent() {
+    return ascent;
+  }
 
-    public Integer getDescent() {
-        return descent;
-    }
+  public void setAscent(Integer ascent) {
+    this.ascent = ascent;
+  }
 
-    public void setDescent(Integer descent) {
-        this.descent = descent;
-    }
+  public Integer getDescent() {
+    return descent;
+  }
 
-    public Integer getCalories() {
-        return calories;
-    }
+  public void setDescent(Integer descent) {
+    this.descent = descent;
+  }
 
-    public void setCalories(Integer calories) {
-        this.calories = calories;
-    }
+  public Integer getCalories() {
+    return calories;
+  }
 
-    public String getHrmFile() {
-        return hrmFile;
-    }
+  public void setCalories(Integer calories) {
+    this.calories = calories;
+  }
 
-    public void setHrmFile(String hrmFile) {
-        this.hrmFile = hrmFile;
-    }
+  public String getHrmFile() {
+    return hrmFile;
+  }
 
-    public Equipment getEquipment() {
-        return equipment;
-    }
+  public void setHrmFile(String hrmFile) {
+    this.hrmFile = hrmFile;
+  }
 
-    public void setEquipment(Equipment equipment) {
-        this.equipment = equipment;
-    }
+  public Equipment getEquipment() {
+    return equipment;
+  }
 
-    /**
-     * Returns a complete clone of this Exercise object. All the attributes are
-     * the same, but the ID of the clone is the specified one.
-     *
-     * @param cloneId ID of the cloned Exercise
-     * @return the Exercise clone
-     */
-    public Exercise clone(Long cloneId) {
-        Exercise clone = new Exercise(cloneId);
-        clone.setDateTime(this.getDateTime());
-        clone.setSportType(this.getSportType());
-        clone.setSportSubType(this.getSportSubType());
-        clone.setDuration(this.getDuration());
-        clone.setIntensity(this.getIntensity());
-        clone.setDistance(this.getDistance());
-        clone.setAvgSpeed(this.getAvgSpeed());
-        clone.setAvgHeartRate(this.getAvgHeartRate());
-        clone.setAscent(this.getAscent());
-        clone.setDescent(this.getDescent());
-        clone.setCalories(this.getCalories());
-        clone.setHrmFile(this.getHrmFile());
-        clone.setEquipment(this.getEquipment());
-        clone.setComment(this.getComment());
-        return clone;
-    }
+  public void setEquipment(Equipment equipment) {
+    this.equipment = equipment;
+  }
 
-    @Override
-    public String toString() {
+  /**
+   * Returns a complete clone of this Exercise object. All the attributes are the same, but the ID of the clone is the
+   * specified one.
+   *
+   * @param cloneId ID of the cloned Exercise
+   * @return the Exercise clone
+   */
+  public Exercise clone(Long cloneId) {
+    Exercise clone = new Exercise(cloneId);
+    clone.setDateTime(this.getDateTime());
+    clone.setSportType(this.getSportType());
+    clone.setSportSubType(this.getSportSubType());
+    clone.setDuration(this.getDuration());
+    clone.setIntensity(this.getIntensity());
+    clone.setDistance(this.getDistance());
+    clone.setAvgSpeed(this.getAvgSpeed());
+    clone.setAvgHeartRate(this.getAvgHeartRate());
+    clone.setAscent(this.getAscent());
+    clone.setDescent(this.getDescent());
+    clone.setCalories(this.getCalories());
+    clone.setHrmFile(this.getHrmFile());
+    clone.setEquipment(this.getEquipment());
+    clone.setComment(this.getComment());
+    return clone;
+  }
 
-        StringBuilder sBuilder = new StringBuilder();
-        sBuilder.append(this.getClass().getName()).append(":\n");
-        sBuilder.append(" [id=").append(this.getId()).append("\n");
-        sBuilder.append("  date=").append(this.getDateTime()).append("\n");
-        sBuilder.append("  sportType=").append(this.sportType).append("\n");
-        sBuilder.append("  sportSubType=").append(this.sportSubType).append("\n");
-        sBuilder.append("  duration=").append(this.duration).append("\n");
-        sBuilder.append("  intensity=").append(this.intensity).append("\n");
-        sBuilder.append("  distance=").append(this.distance).append("\n");
-        sBuilder.append("  avgSpeed=").append(this.avgSpeed).append("\n");
-        sBuilder.append("  avgHeartRate=").append(this.avgHeartRate).append("\n");
-        sBuilder.append("  ascent=").append(this.ascent).append("\n");
-        sBuilder.append("  descent=").append(this.descent).append("\n");
-        sBuilder.append("  calories=").append(this.calories).append("\n");
-        sBuilder.append("  hrmFile=").append(this.hrmFile).append("\n");
-        sBuilder.append("  equipment=").append(this.equipment).append("\n");
-        sBuilder.append("  comment=").append(this.getComment()).append("]\n");
-        return sBuilder.toString();
-    }
+  @Override
+  public String toString() {
+
+    StringBuilder sBuilder = new StringBuilder();
+    sBuilder.append(this.getClass().getName()).append(":\n");
+    sBuilder.append(" [id=").append(this.getId()).append("\n");
+    sBuilder.append("  date=").append(this.getDateTime()).append("\n");
+    sBuilder.append("  sportType=").append(this.sportType).append("\n");
+    sBuilder.append("  sportSubType=").append(this.sportSubType).append("\n");
+    sBuilder.append("  duration=").append(this.duration).append("\n");
+    sBuilder.append("  intensity=").append(this.intensity).append("\n");
+    sBuilder.append("  distance=").append(this.distance).append("\n");
+    sBuilder.append("  avgSpeed=").append(this.avgSpeed).append("\n");
+    sBuilder.append("  avgHeartRate=").append(this.avgHeartRate).append("\n");
+    sBuilder.append("  ascent=").append(this.ascent).append("\n");
+    sBuilder.append("  descent=").append(this.descent).append("\n");
+    sBuilder.append("  calories=").append(this.calories).append("\n");
+    sBuilder.append("  hrmFile=").append(this.hrmFile).append("\n");
+    sBuilder.append("  equipment=").append(this.equipment).append("\n");
+    sBuilder.append("  comment=").append(this.getComment()).append("]\n");
+    return sBuilder.toString();
+  }
 }

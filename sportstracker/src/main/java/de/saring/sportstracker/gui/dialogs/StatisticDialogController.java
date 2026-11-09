@@ -1,11 +1,17 @@
 package de.saring.sportstracker.gui.dialogs;
 
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-
 import de.saring.sportstracker.data.EntryFilter;
 import de.saring.sportstracker.data.EntryList;
+import de.saring.sportstracker.data.Exercise;
+import de.saring.sportstracker.data.statistic.StatisticCalculator;
+import de.saring.sportstracker.gui.STContext;
+import de.saring.sportstracker.gui.STDocument;
+import de.saring.util.StringUtils;
 import de.saring.util.unitcalc.SpeedMode;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -16,15 +22,6 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.stage.Window;
 
-import jakarta.inject.Inject;
-import jakarta.inject.Provider;
-
-import de.saring.sportstracker.data.Exercise;
-import de.saring.sportstracker.data.statistic.StatisticCalculator;
-import de.saring.sportstracker.gui.STContext;
-import de.saring.sportstracker.gui.STDocument;
-import de.saring.util.StringUtils;
-
 /**
  * Controller (MVC) class of the Statistic dialog.
  *
@@ -32,181 +29,180 @@ import de.saring.util.StringUtils;
  */
 public class StatisticDialogController extends AbstractDialogController {
 
-    private final STDocument document;
-    private Provider<FilterDialogController> prFilterDialogController;
-    private Provider<StatisticResultDialogController> prStatisticResultDialogController;
+  private final STDocument document;
+  private Provider<FilterDialogController> prFilterDialogController;
+  private Provider<StatisticResultDialogController> prStatisticResultDialogController;
 
-    @FXML
-    private Label laTimespanValue;
-    @FXML
-    private Label laSportTypeValue;
-    @FXML
-    private Label laSportSubtypeValue;
-    @FXML
-    private Label laIntensityValue;
-    @FXML
-    private Label laEquipmentValue;
-    @FXML
-    private Label laCommentValue;
+  @FXML private Label laTimespanValue;
+  @FXML private Label laSportTypeValue;
+  @FXML private Label laSportSubtypeValue;
+  @FXML private Label laIntensityValue;
+  @FXML private Label laEquipmentValue;
+  @FXML private Label laCommentValue;
 
-    /** The entry filter used for statistic calculation. */
-    private EntryFilter statisticFilter;
+  /** The entry filter used for statistic calculation. */
+  private EntryFilter statisticFilter;
 
+  /**
+   * Standard c'tor for dependency injection.
+   *
+   * @param context the SportsTracker UI context
+   * @param document the SportsTracker model/document
+   * @param prFilterDialogController provider of the filter dialog controller
+   * @param prStatisticResultDialogController provider of the statistics result dialog controller
+   */
+  @Inject
+  public StatisticDialogController(
+      final STContext context,
+      final STDocument document,
+      final Provider<FilterDialogController> prFilterDialogController,
+      final Provider<StatisticResultDialogController> prStatisticResultDialogController) {
+    super(context);
+    this.document = document;
+    this.prFilterDialogController = prFilterDialogController;
+    this.prStatisticResultDialogController = prStatisticResultDialogController;
+  }
 
-    /**
-     * Standard c'tor for dependency injection.
-     *
-     * @param context the SportsTracker UI context
-     * @param document the SportsTracker model/document
-     * @param prFilterDialogController provider of the filter dialog controller
-     * @param prStatisticResultDialogController provider of the statistics result dialog controller
-     */
-    @Inject
-    public StatisticDialogController(final STContext context, final STDocument document,
-                                     final Provider<FilterDialogController> prFilterDialogController,
-                                     final Provider<StatisticResultDialogController> prStatisticResultDialogController) {
-        super(context);
-        this.document = document;
-        this.prFilterDialogController = prFilterDialogController;
-        this.prStatisticResultDialogController = prStatisticResultDialogController;
+  /**
+   * Displays the Statistic dialog for the current Exercise filter.
+   *
+   * @param parent parent window of the dialog
+   * @param statisticFilter prefilled statistics filter (optional)
+   */
+  public void show(final Window parent, final EntryFilter statisticFilter) {
+    this.statisticFilter = statisticFilter;
+
+    // create a new default exercise filter, if no filter has been passed or passed filter is not for exercises
+    if (statisticFilter == null || statisticFilter.getEntryType() != EntryFilter.EntryType.EXERCISE) {
+      this.statisticFilter = EntryFilter.createDefaultExerciseFilter();
     }
 
-    /**
-     * Displays the Statistic dialog for the current Exercise filter.
-     *
-     * @param parent parent window of the dialog
-     * @param statisticFilter prefilled statistics filter (optional)
-     */
-    public void show(final Window parent, final EntryFilter statisticFilter) {
-        this.statisticFilter = statisticFilter;
+    showInfoDialog(
+        "/fxml/dialogs/StatisticDialog.fxml", parent, context.getResources().getString("st.dlg.statistic.title"));
+  }
 
-        // create a new default exercise filter, if no filter has been passed or passed filter is not for exercises
-        if (statisticFilter == null || statisticFilter.getEntryType() != EntryFilter.EntryType.EXERCISE) {
-            this.statisticFilter = EntryFilter.createDefaultExerciseFilter();
-        }
+  @Override
+  protected void setupDialogControls() {
+    // the controls are read only, so binding and view model is not needed here
+    displayFilterValues();
+  }
 
-        showInfoDialog("/fxml/dialogs/StatisticDialog.fxml", parent,
-                context.getResources().getString("st.dlg.statistic.title"));
-    }
+  @Override
+  protected void addCustomButtons(final DialogPane dialogPane) {
 
-    @Override
-    protected void setupDialogControls() {
-        // the controls are read only, so binding and view model is not needed here
-        displayFilterValues();
-    }
+    // add 'Calculate' button to button bar
+    final ButtonType bTypeCalculate =
+        new ButtonType(
+            context.getResources().getString("st.dlg.statistic.calculate.Action.text"), ButtonBar.ButtonData.OK_DONE);
+    dialogPane.getButtonTypes().add(bTypeCalculate);
+    final Button buttonCalculate = (Button) dialogPane.lookupButton(bTypeCalculate);
 
-    @Override
-    protected void addCustomButtons(final DialogPane dialogPane) {
-
-        // add 'Calculate' button to button bar
-        final ButtonType bTypeCalculate = new ButtonType(context.getResources().getString(
-                "st.dlg.statistic.calculate.Action.text"), ButtonBar.ButtonData.OK_DONE);
-        dialogPane.getButtonTypes().add(bTypeCalculate);
-        final Button buttonCalculate = (Button) dialogPane.lookupButton(bTypeCalculate);
-
-        // set action event filter for this custom button
-        // => the event must be consumed, otherwise the dialog will be closed
-        buttonCalculate.addEventFilter(ActionEvent.ACTION, (event) -> {
-            event.consume();
-            onCalculate(event);
+    // set action event filter for this custom button
+    // => the event must be consumed, otherwise the dialog will be closed
+    buttonCalculate.addEventFilter(
+        ActionEvent.ACTION,
+        event -> {
+          event.consume();
+          onCalculate(event);
         });
+  }
+
+  /** Displays the values of the current filter. */
+  private void displayFilterValues() {
+
+    // create string for filter timespan
+    final DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
+    final String strTimeSpan =
+        statisticFilter.getDateStart().format(dateFormatter)
+            + " - "
+            + statisticFilter.getDateEnd().format(dateFormatter);
+
+    // create strings for sport type, subtype, intensity, equipment
+    final String strAll = context.getResources().getString("st.dlg.statistic.all.text");
+    final String strSportType =
+        statisticFilter.getSportType() == null ? strAll : statisticFilter.getSportType().getName();
+
+    final String strSportSubtype =
+        statisticFilter.getSportSubType() == null ? strAll : statisticFilter.getSportSubType().getName();
+
+    final String strIntensity =
+        statisticFilter.getIntensity() == null
+            ? strAll
+            : context.getResources().getString(statisticFilter.getIntensity().getResourceKey());
+
+    final String strEquipment =
+        statisticFilter.getEquipment() == null ? strAll : statisticFilter.getEquipment().getName();
+
+    // create comment string
+    String strComment = context.getResources().getString("st.dlg.statistic.no_comment.text");
+    if (StringUtils.getTrimmedTextOrNull(statisticFilter.getCommentSubString()) != null) {
+      strComment = statisticFilter.getCommentSubString();
+      if (statisticFilter.isRegularExpressionMode()) {
+        strComment += " " + context.getResources().getString("st.dlg.statistic.reg_expression.text");
+      }
     }
 
-    /**
-     * Displays the values of the current filter.
-     */
-    private void displayFilterValues() {
+    // display created strings
+    laTimespanValue.setText(strTimeSpan);
+    laSportTypeValue.setText(strSportType);
+    laSportSubtypeValue.setText(strSportSubtype);
+    laIntensityValue.setText(strIntensity);
+    laEquipmentValue.setText(strEquipment);
+    laCommentValue.setText(strComment);
+  }
 
-        // create string for filter timespan
-        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
-        final String strTimeSpan = statisticFilter.getDateStart().format(dateFormatter) +
-                " - " + statisticFilter.getDateEnd().format(dateFormatter);
+  /** Action for changing the exercise filter for the statistic calculation. */
+  @FXML
+  private void onChange(final ActionEvent event) {
 
-        // create strings for sport type, subtype, intensity, equipment
-        final String strAll = context.getResources().getString("st.dlg.statistic.all.text");
-        final String strSportType = statisticFilter.getSportType() == null ? strAll :
-            statisticFilter.getSportType().getName();
+    // show Filter dialog for current filter and use the selected filter afterwards
+    final FilterDialogController controller = prFilterDialogController.get();
+    controller.show(context.getPrimaryStage(), statisticFilter, false);
 
-        final String strSportSubtype = statisticFilter.getSportSubType() == null ? strAll :
-            statisticFilter.getSportSubType().getName();
-
-        final String strIntensity = statisticFilter.getIntensity() == null ? strAll :
-                context.getResources().getString(statisticFilter.getIntensity().getResourceKey());
-
-        final String strEquipment = statisticFilter.getEquipment() == null ? strAll :
-            statisticFilter.getEquipment().getName();
-
-        // create comment string
-        String strComment = context.getResources().getString("st.dlg.statistic.no_comment.text");
-        if (StringUtils.getTrimmedTextOrNull(statisticFilter.getCommentSubString()) != null) {
-            strComment = statisticFilter.getCommentSubString();
-            if (statisticFilter.isRegularExpressionMode()) {
-                strComment += " " + context.getResources().getString("st.dlg.statistic.reg_expression.text");
-            }
-        }
-
-        // display created strings
-        laTimespanValue.setText(strTimeSpan);
-        laSportTypeValue.setText(strSportType);
-        laSportSubtypeValue.setText(strSportSubtype);
-        laIntensityValue.setText(strIntensity);
-        laEquipmentValue.setText(strEquipment);
-        laCommentValue.setText(strComment);
-    }
-
-    /**
-     * Action for changing the exercise filter for the statistic calculation.
-     */
-    @FXML
-    private void onChange(final ActionEvent event) {
-
-        // show Filter dialog for current filter and use the selected filter afterwards
-        final FilterDialogController controller = prFilterDialogController.get();
-        controller.show(context.getPrimaryStage(), statisticFilter, false);
-
-        controller.getSelectedFilter().ifPresent(selectedFilter -> {
-            statisticFilter = selectedFilter;
-            displayFilterValues();
+    controller
+        .getSelectedFilter()
+        .ifPresent(selectedFilter -> {
+          statisticFilter = selectedFilter;
+          displayFilterValues();
         });
+  }
+
+  /** Action for calculation of the statistic and displaying the result. */
+  private void onCalculate(final ActionEvent event) {
+
+    // search for exercises with the selected filter criteria
+    final EntryList<Exercise> lFoundExercises = document.getExerciseList().getEntriesForFilter(statisticFilter);
+
+    // make sure that at least one exercise was found
+    if (lFoundExercises.size() == 0) {
+      context.showMessageDialog(
+          getWindow(laTimespanValue),
+          Alert.AlertType.INFORMATION,
+          "common.info",
+          "st.dlg.statistic.info.no_exercises_found");
+      return;
     }
 
-    /**
-     * Action for calculation of the statistic and displaying the result.
-     */
-    private void onCalculate(final ActionEvent event) {
+    // calculate statistic
+    final StatisticCalculator statistic = new StatisticCalculator(lFoundExercises);
+    SpeedMode speedMode = getSpeedModeForCalculatedExercises(lFoundExercises);
 
-        // search for exercises with the selected filter criteria
-        final EntryList<Exercise> lFoundExercises =
-                document.getExerciseList().getEntriesForFilter(statisticFilter);
+    // finally display results in dialog
+    prStatisticResultDialogController.get().show(getWindow(laTimespanValue), statistic, speedMode);
+  }
 
-        // make sure that at least one exercise was found
-        if (lFoundExercises.size() == 0) {
-            context.showMessageDialog(getWindow(laTimespanValue), Alert.AlertType.INFORMATION,
-                    "common.info", "st.dlg.statistic.info.no_exercises_found");
-            return;
-        }
+  /**
+   * Returns the speed mode to be used for displaying the results of the calculated exercises.
+   *
+   * @param exercises exercises for calculation
+   * @return speed mode for results
+   */
+  private SpeedMode getSpeedModeForCalculatedExercises(EntryList<Exercise> exercises) {
 
-        // calculate statistic
-        final StatisticCalculator statistic = new StatisticCalculator(lFoundExercises);
-        SpeedMode speedMode = getSpeedModeForCalculatedExercises(lFoundExercises);
-
-
-        // finally display results in dialog
-        prStatisticResultDialogController.get().show(getWindow(laTimespanValue), statistic, speedMode);
+    long[] exerciseIds = new long[exercises.size()];
+    for (int i = 0; i < exerciseIds.length; i++) {
+      exerciseIds[i] = exercises.getAt(i).getId();
     }
-
-    /**
-     * Returns the speed mode to be used for displaying the results of the calculated exercises.
-     *
-     * @param exercises exercises for calculation
-     * @return speed mode for results
-     */
-    private SpeedMode getSpeedModeForCalculatedExercises(EntryList<Exercise> exercises) {
-
-        long[] exerciseIds = new long[exercises.size()];
-        for (int i = 0; i < exerciseIds.length; i++) {
-            exerciseIds[i] = exercises.getAt(i).getId();
-        }
-        return document.getSpeedModeForExercises(exerciseIds);
-    }
+    return document.getSpeedModeForExercises(exerciseIds);
+  }
 }

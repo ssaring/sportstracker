@@ -7,7 +7,6 @@ package de.saring.exerciseviewer.data
  *
  * @property sportTypeId FIT ID of the sport type.
  * @property sportSubTypeId FIT ID of the sport subtype.
- *
  * @author Stefan Saring
  */
 data class SportTypeFit(

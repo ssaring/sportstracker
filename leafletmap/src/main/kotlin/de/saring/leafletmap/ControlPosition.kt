@@ -7,8 +7,8 @@ package de.saring.leafletmap
  */
 enum class ControlPosition(val positionName: String) {
 
-    TOP_LEFT("topleft"),
-    TOP_RIGHT("topright"),
-    BOTTOM_LEFT("bottomleft"),
-    BOTTOM_RIGHT("bottomright")
+  TOP_LEFT("topleft"),
+  TOP_RIGHT("topright"),
+  BOTTOM_LEFT("bottomleft"),
+  BOTTOM_RIGHT("bottomright"),
 }

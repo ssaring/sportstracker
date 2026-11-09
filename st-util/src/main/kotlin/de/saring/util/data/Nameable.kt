@@ -7,10 +7,10 @@ package de.saring.util.data
  */
 interface Nameable {
 
-    /**
-     * Returns the name of the instance.
-     *
-     * @return name
-     */
-    fun getName(): String
+  /**
+   * Returns the name of the instance.
+   *
+   * @return name
+   */
+  fun getName(): String
 }

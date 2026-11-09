@@ -22,115 +22,120 @@ import java.util.logging.Logger
  * Database repository for the Exercise data.
  *
  * @property connection database connection
- *
  * @author Stefan Saring
  */
 class ExerciseRepository(
-    connection: Connection
+    connection: Connection,
 ) : AbstractRepository<Exercise>(connection) {
 
-    @Throws(STException::class)
-    fun readAll(sportTypes: List<SportType>): List<Exercise> {
-        logger.info("Reading all Exercises")
-        val exercises = ArrayList<Exercise>()
+  @Throws(STException::class)
+  fun readAll(sportTypes: List<SportType>): List<Exercise> {
+    logger.info("Reading all Exercises")
+    val exercises = ArrayList<Exercise>()
 
-        try {
-            connection.prepareStatement("SELECT * FROM EXERCISE").use { statement ->
-                val rs = statement.executeQuery()
-                while (rs.next()) {
-                    val exercise = readFromResultSet(rs)
+    try {
+      connection.prepareStatement("SELECT * FROM EXERCISE").use { statement ->
+        val rs = statement.executeQuery()
+        while (rs.next()) {
+          val exercise = readFromResultSet(rs)
 
-                    val sportType = getSportTypeById(sportTypes, rs.getLong("SPORT_TYPE_ID"))
-                    exercise.sportType = sportType
-                    exercise.sportSubType = getSportSubTypeById(sportType, rs.getLong("SPORT_SUBTYPE_ID"))
+          val sportType = getSportTypeById(sportTypes, rs.getLong("SPORT_TYPE_ID"))
+          exercise.sportType = sportType
+          exercise.sportSubType = getSportSubTypeById(sportType, rs.getLong("SPORT_SUBTYPE_ID"))
 
-                    val equipmentID = getLongOrNull(rs, "EQUIPMENT_ID")
-                    exercise.equipment = if (equipmentID == null) null else getEquipmentById(sportType, equipmentID)
-                    exercises.add(exercise)
-                }
-            }
-        } catch (e: SQLException) {
-            throw STException(STExceptionID.DBSTORAGE_READ_ALL, "Failed to read all Exercises!", e)
+          val equipmentID = getLongOrNull(rs, "EQUIPMENT_ID")
+          exercise.equipment = if (equipmentID == null) null else getEquipmentById(sportType, equipmentID)
+          exercises.add(exercise)
         }
-        return exercises
+      }
+    } catch (e: SQLException) {
+      throw STException(STExceptionID.DBSTORAGE_READ_ALL, "Failed to read all Exercises!", e)
     }
+    return exercises
+  }
 
-    override fun readAll(): List<Exercise> {
-        throw UnsupportedOperationException("Use readAll(List<SportType>) for reading all Exercises!")
-    }
+  override fun readAll(): List<Exercise> {
+    throw UnsupportedOperationException("Use readAll(List<SportType>) for reading all Exercises!")
+  }
 
-    override val entityName = "Exercise"
+  override val entityName = "Exercise"
 
-    override val tableName = "EXERCISE"
+  override val tableName = "EXERCISE"
 
-    override val logger: Logger = Logger.getLogger(ExerciseRepository::class.java.name)
+  override val logger: Logger = Logger.getLogger(ExerciseRepository::class.java.name)
 
-    override fun readFromResultSet(rs: ResultSet): Exercise {
-        val exercise = Exercise(rs.getLong("ID"))
-        exercise.dateTime = dateToLocalDateTime(rs.getDate("DATE_TIME"))
-        exercise.intensity = Exercise.IntensityType.valueOf(rs.getString("INTENSITY"))
-        exercise.duration = rs.getInt("DURATION")
-        exercise.distance = rs.getDouble("DISTANCE")
-        exercise.avgSpeed = rs.getDouble("AVG_SPEED")
-        exercise.avgHeartRate = getIntegerOrNull(rs, "AVG_HEARTRATE")
-        exercise.ascent = getIntegerOrNull(rs, "ASCENT")
-        exercise.descent = getIntegerOrNull(rs, "DESCENT")
-        exercise.calories = getIntegerOrNull(rs, "CALORIES")
-        exercise.hrmFile = rs.getString("HRM_FILE")
-        exercise.comment = rs.getString("COMMENT")
-        return exercise
-    }
+  override fun readFromResultSet(rs: ResultSet): Exercise {
+    val exercise = Exercise(rs.getLong("ID"))
+    exercise.dateTime = dateToLocalDateTime(rs.getDate("DATE_TIME"))
+    exercise.intensity = Exercise.IntensityType.valueOf(rs.getString("INTENSITY"))
+    exercise.duration = rs.getInt("DURATION")
+    exercise.distance = rs.getDouble("DISTANCE")
+    exercise.avgSpeed = rs.getDouble("AVG_SPEED")
+    exercise.avgHeartRate = getIntegerOrNull(rs, "AVG_HEARTRATE")
+    exercise.ascent = getIntegerOrNull(rs, "ASCENT")
+    exercise.descent = getIntegerOrNull(rs, "DESCENT")
+    exercise.calories = getIntegerOrNull(rs, "CALORIES")
+    exercise.hrmFile = rs.getString("HRM_FILE")
+    exercise.comment = rs.getString("COMMENT")
+    return exercise
+  }
 
-    override fun executeCreate(entry: Exercise): Exercise {
-        connection.prepareStatement("INSERT INTO EXERCISE " +
+  override fun executeCreate(entry: Exercise): Exercise {
+    connection
+        .prepareStatement(
+            "INSERT INTO EXERCISE " +
                 "(DATE_TIME, SPORT_TYPE_ID, SPORT_SUBTYPE_ID, INTENSITY, DURATION, DISTANCE, AVG_SPEED, " +
                 "AVG_HEARTRATE, ASCENT, DESCENT, CALORIES, HRM_FILE, EQUIPMENT_ID, COMMENT) VALUES " +
                 "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING ID",
-            Statement.RETURN_GENERATED_KEYS
-        ).use { statement ->
-            statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
-            statement.setLong(2, entry.sportType.id!!)
-            statement.setLong(3, entry.sportSubType.id!!)
-            statement.setString(4, entry.intensity.name)
-            statement.setInt(5, entry.duration)
-            statement.setDouble(6, entry.distance)
-            statement.setDouble(7, entry.avgSpeed)
-            statement.setObject(8, entry.avgHeartRate, Types.INTEGER)
-            statement.setObject(9, entry.ascent, Types.INTEGER)
-            statement.setObject(10, entry.descent, Types.INTEGER)
-            statement.setObject(11, entry.calories, Types.INTEGER)
-            statement.setString(12, entry.hrmFile)
-            statement.setObject(13, entry.equipment?.id, Types.INTEGER);
-            statement.setString(14, entry.comment)
-            statement.execute()
+            Statement.RETURN_GENERATED_KEYS,
+        )
+        .use { statement ->
+          statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
+          statement.setLong(2, entry.sportType.id!!)
+          statement.setLong(3, entry.sportSubType.id!!)
+          statement.setString(4, entry.intensity.name)
+          statement.setInt(5, entry.duration)
+          statement.setDouble(6, entry.distance)
+          statement.setDouble(7, entry.avgSpeed)
+          statement.setObject(8, entry.avgHeartRate, Types.INTEGER)
+          statement.setObject(9, entry.ascent, Types.INTEGER)
+          statement.setObject(10, entry.descent, Types.INTEGER)
+          statement.setObject(11, entry.calories, Types.INTEGER)
+          statement.setString(12, entry.hrmFile)
+          statement.setObject(13, entry.equipment?.id, Types.INTEGER)
+          statement.setString(14, entry.comment)
+          statement.execute()
 
-            val exerciseId = statement.resultSet.getLong(1)
-            return readById(exerciseId)
+          val exerciseId = statement.resultSet.getLong(1)
+          return readById(exerciseId)
         }
-    }
+  }
 
-    override fun executeUpdate(entry: Exercise) {
-        connection.prepareStatement("UPDATE EXERCISE SET " +
+  override fun executeUpdate(entry: Exercise) {
+    connection
+        .prepareStatement(
+            "UPDATE EXERCISE SET " +
                 "DATE_TIME = ?, SPORT_TYPE_ID = ?, SPORT_SUBTYPE_ID = ?, INTENSITY = ?, DURATION = ?, " +
                 "DISTANCE = ?, AVG_SPEED = ?, AVG_HEARTRATE = ?, ASCENT = ?, DESCENT = ?, " +
-                "CALORIES = ?, HRM_FILE = ?, EQUIPMENT_ID = ?, COMMENT = ? WHERE ID = ?"
-        ).use { statement ->
-            statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
-            statement.setLong(2, entry.sportType.id!!)
-            statement.setLong(3, entry.sportSubType.id!!)
-            statement.setString(4, entry.intensity.name)
-            statement.setInt(5, entry.duration)
-            statement.setDouble(6, entry.distance)
-            statement.setDouble(7, entry.avgSpeed)
-            statement.setObject(8, entry.avgHeartRate, Types.INTEGER)
-            statement.setObject(9, entry.ascent, Types.INTEGER)
-            statement.setObject(10, entry.descent, Types.INTEGER)
-            statement.setObject(11, entry.calories, Types.INTEGER)
-            statement.setString(12, entry.hrmFile)
-            statement.setObject(13, entry.equipment?.id, Types.INTEGER);
-            statement.setString(14, entry.comment)
-            statement.setLong(15, entry.id!!)
-            statement.executeUpdate()
+                "CALORIES = ?, HRM_FILE = ?, EQUIPMENT_ID = ?, COMMENT = ? WHERE ID = ?",
+        )
+        .use { statement ->
+          statement.setString(1, RepositoryUtil.dateTimeToString(entry.dateTime))
+          statement.setLong(2, entry.sportType.id!!)
+          statement.setLong(3, entry.sportSubType.id!!)
+          statement.setString(4, entry.intensity.name)
+          statement.setInt(5, entry.duration)
+          statement.setDouble(6, entry.distance)
+          statement.setDouble(7, entry.avgSpeed)
+          statement.setObject(8, entry.avgHeartRate, Types.INTEGER)
+          statement.setObject(9, entry.ascent, Types.INTEGER)
+          statement.setObject(10, entry.descent, Types.INTEGER)
+          statement.setObject(11, entry.calories, Types.INTEGER)
+          statement.setString(12, entry.hrmFile)
+          statement.setObject(13, entry.equipment?.id, Types.INTEGER)
+          statement.setString(14, entry.comment)
+          statement.setLong(15, entry.id!!)
+          statement.executeUpdate()
         }
-    }
+  }
 }

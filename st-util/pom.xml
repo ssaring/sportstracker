@@ -2,27 +2,14 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>st-util</artifactId>
-    <name>st-util</name>
-    <version>8.1.1-SNAPSHOT</version>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>25</source>
-                    <target>25</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    <packaging>jar</packaging>
-
     <parent>
         <groupId>de.saring</groupId>
         <artifactId>st-parent</artifactId>
         <version>1.0.0</version>
     </parent>
 
+    <artifactId>st-util</artifactId>
+    <name>st-util</name>
+    <version>8.1.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 </project>

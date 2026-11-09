@@ -12,27 +12,25 @@ import javafx.scene.control.Label;
  */
 class CalendarHeaderCell extends Label {
 
-    private static final PseudoClass PSEUDO_CLASS_SUMMARY = PseudoClass.getPseudoClass("summary");
+  private static final PseudoClass PSEUDO_CLASS_SUMMARY = PseudoClass.getPseudoClass("summary");
 
-    /**
-     * C'tor.
-     */
-    public CalendarHeaderCell() {
-        setAlignment(Pos.CENTER);
-        setMaxWidth(Double.MAX_VALUE);
-        setPadding(new Insets(3));
+  /** C'tor. */
+  public CalendarHeaderCell() {
+    setAlignment(Pos.CENTER);
+    setMaxWidth(Double.MAX_VALUE);
+    setPadding(new Insets(3));
 
-        getStyleClass().addAll("calendar-control-cell", "calendar-control-header-cell");
-    }
+    getStyleClass().addAll("calendar-control-cell", "calendar-control-header-cell");
+  }
 
-    /**
-     * Sets the text to be shown in the header cell. The column for sunday will use a special color.
-     *
-     * @param text text
-     * @param summary true when this is the summary column
-     */
-    public void setText(final String text, final boolean summary) {
-        setText(text);
-        pseudoClassStateChanged(PSEUDO_CLASS_SUMMARY, summary);
-    }
+  /**
+   * Sets the text to be shown in the header cell. The column for sunday will use a special color.
+   *
+   * @param text text
+   * @param summary true when this is the summary column
+   */
+  public void setText(final String text, final boolean summary) {
+    setText(text);
+    pseudoClassStateChanged(PSEUDO_CLASS_SUMMARY, summary);
+  }
 }
