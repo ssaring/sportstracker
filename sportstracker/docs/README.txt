@@ -125,8 +125,8 @@ The OpenJDK can be downloaded e.g. from: https://adoptium.net/
 If you want to download exercise files from your heartrate monitor you might
 need one of the download tools listed above.
 
-The application was tested on GNU/Linux (e.g. Ubuntu 24.04), Windows 11 and
-macOS (13 - 15), although it should work on all systems with the required
+The application was tested on GNU/Linux (e.g. Ubuntu 26.04), Windows 11 and
+macOS (26, 27), although it should work on all systems with the required
 Java Runtime Environment.
 
 
@@ -160,7 +160,7 @@ Console start example for macOS: Start a Terminal and enter:
   './SportsTracker'
 
 
-Installer security notes for macOS and Windows 10 users
+Installer security notes for macOS and Windows users
 -------------------------------------------------------
 
 The SportsTracker installer packages doesn't contain trusted code signing
@@ -168,7 +168,7 @@ certificates. This can't be provided by an individual open source project, the
 expense and the effort are just too high.
 
 This causes problems on recent macOS versions (since macOS 10.15) when
-executing the downloaded and installed SportsTracker application. By default
+executing the downloaded and installed SportsTracker application. By default,
 macOS marks all unsigned applications as quarantine, the user will get an error
 when executing them.
 This can be fixed easily be removing the quarantine flag on command line by
@@ -408,7 +408,7 @@ For compilation of the SportsTracker sources you need:
 Tested IDE's (should work an any IDE with Maven support)
   - IntelliJ IDEA Community Edition (http://www.jetbrains.com/idea/)
     => preferred IDE, tested with version 2023.2
-  - NetBeans IDE (from http://www.netbeans.org), Kotlin support not tested
+  - VS Code (from https://code.visualstudio.com), Kotlin support not tested
   - Eclipse (from http://eclipse.org), Kotlin support not tested
 
 The Maven build configuration supports all typical goals (clean, compile,
@@ -431,7 +431,7 @@ multi project), so it's not possible to create circular module dependencies.
     Module for the JavaFX wrapper component of the Leaflet map viewer
 
 The configuration of your IDE (IDEA or Eclipse) is documented in the folder
-'misc/ide-configuration'. It contains instructions how to import the project
+'misc/dev-configuration'. It contains instructions how to import the project
 into your IDE and how to setup the code formatter properly.
 It's important to ensure a consistent code format and style all over the
 project. That's why all developers need to use the same configuration for their
@@ -447,7 +447,7 @@ with the command (inside the project root directory):
 
 All user interfaces are defined in FXML by using the JavaFX Scene Builder 25.x.
 
-The SportsTracker project uses the following libraries:
+The SportsTracker application uses the following libraries:
 
   - OpenJFX 27.0.1 (https://openjfx.io/)
       License: GPL v2 + Classpath Exception
@@ -579,4 +579,4 @@ based on the IcoMoon icons.
 
 
 Stefan Saring
-2026/10/23
+2026/11/09

@@ -1,14 +1,6 @@
 SportsTracker-TODO
 ==================
 
-- Automated Formatter:
-  - Add auto format in IDE
-    - Google Java Formatter plugin works => document installation
-    - ktfmt plugins => does not work well with the project settings, custom setup needed which mimics the settings
-      - Probably better to edit the Kotlin Editor Settings to mimic the ktfmt rules (120 width, 2 chars ident, ...)
-  - Update documentation
-  - Push & merge in Garmin branch
-
 - Remove all interfaces which are not really needed and don't provide advantages (e.g. STDocument etc.)
 
 LeafletMap:
